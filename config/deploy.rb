@@ -1,5 +1,5 @@
 set :application, "one_click_orgs"
-set :repository,  "git://github.com/emmapersky/one-click-orgs"
+set :repository,  "git://github.com/oneclickorgs/one-click-orgs"
 
 set :scm, :git
 
