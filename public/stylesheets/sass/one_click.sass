@@ -19,6 +19,59 @@ body
 div.clear
   :clear left
 
+/* Induction
+
+#overlay
+  :-webkit-border-bottom-right-radius 8px
+  :-webkit-border-bottom-left-radius 8px
+  :-moz-border-radius-bottomright 8px
+  :-moz-border-radius-bottomleft 8px
+  :border-bottom-right-radius 8px
+  :border-bottom-left-radius 8px
+  :background #E0E0AF
+  :background -moz-linear-gradient(100% 100% 90deg, #9D9D75, #E0E0AF)
+  :background -webkit-gradient(linear, left bottom, left top, from(#9D9D75), to(#E0E0AF))
+  :border-bottom 1px solid #111
+  :border-left 1px solid #111
+  :border-right 1px solid #111
+  :margin -12px 0 12px
+  a
+    :background #333
+    :background rgba(0, 0, 0, 0.6)
+    :-webkit-border-radius 2px
+    :-moz-border-radius 2px
+    :border-radius 2px
+    :border 1px solid #000
+    :color #fff
+    :margin 0 2px
+    :padding 2px 6px
+    :text-decoration none
+    :text-shadow none
+    &:hover
+      :background #444
+      :background rgba(0, 0, 0, 0.8)
+      :text-decoration none
+  form
+    input
+      :float right
+      :margin-right 8px
+  p
+    :color #000
+    :font-size 1em
+    :margin 0
+    :padding 18px 12px
+    :text-shadow #fff -1px -1px 2px
+
+#overlay.proposed
+  :background #AFE0BC
+  :background -moz-linear-gradient(100% 100% 90deg, #779D75, #AFE0BC)
+  :background -webkit-gradient(linear, left bottom, left top, from(#779D75), to(#AFE0BC))
+
+#overlay.failed
+  :background #E0AFB7
+  :background -moz-linear-gradient(100% 100% 90deg, #9D757F, #E0AFB7)
+  :background -webkit-gradient(linear, left bottom, left top, from(#9D757F), to(#E0AFB7))
+
 /* Header
 
 .control_bar

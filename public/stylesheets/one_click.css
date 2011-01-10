@@ -19,6 +19,57 @@ body {
 div.clear {
   clear: left; }
 
+/* Induction */
+#overlay {
+  -webkit-border-bottom-right-radius: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -moz-border-radius-bottomleft: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background: #e0e0af;
+  background: -moz-linear-gradient(100% 100% 90deg, #9d9d75, #e0e0af);
+  background: -webkit-gradient(linear, left bottom, left top, from(#9d9d75), to(#e0e0af));
+  border-bottom: 1px solid #111111;
+  border-left: 1px solid #111111;
+  border-right: 1px solid #111111;
+  margin: -12px 0 12px; }
+  #overlay a {
+    background: #333333;
+    background: rgba(0, 0, 0, 0.6);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid black;
+    color: white;
+    margin: 0 2px;
+    padding: 2px 6px;
+    text-decoration: none;
+    text-shadow: none; }
+    #overlay a:hover {
+      background: #444444;
+      background: rgba(0, 0, 0, 0.8);
+      text-decoration: none; }
+  #overlay form input {
+    float: right;
+    margin-right: 8px; }
+  #overlay p {
+    color: black;
+    font-size: 1em;
+    margin: 0;
+    padding: 18px 12px;
+    text-shadow: white -1px -1px 2px; }
+
+#overlay.proposed {
+  background: #afe0bc;
+  background: -moz-linear-gradient(100% 100% 90deg, #779d75, #afe0bc);
+  background: -webkit-gradient(linear, left bottom, left top, from(#779d75), to(#afe0bc)); }
+
+#overlay.failed {
+  background: #e0afb7;
+  background: -moz-linear-gradient(100% 100% 90deg, #9d757f, #e0afb7);
+  background: -webkit-gradient(linear, left bottom, left top, from(#9d757f), to(#e0afb7)); }
+
 /* Header */
 .control_bar {
   color: #666666;
@@ -39,19 +90,6 @@ h1.header {
     text-decoration: none; }
     h1.header a:hover {
       text-decoration: underline; }
-
-#control_bar {
-  font-size: 1em;
-  padding: 1em;
-  text-align: right; }
-
-#overlay {
-  font-size: 1em;
-  margin: 0 1em 2em 1em;
-  padding: 1em;
-  background: #eedd33;
-  border: 1px solid black;
-  text-align: justify; }
 
 #doc,
 #hd #bd .footer {
