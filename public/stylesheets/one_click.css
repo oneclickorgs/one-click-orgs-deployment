@@ -336,6 +336,12 @@ form.login {
 form.login label, form.login input {
   margin-left: 0; }
 
+/* Members */
+#member_info {
+  margin: 1em 0; }
+  #member_info img {
+    float: right; }
+
 /* Footer */
 .footer {
   border-top: 1px solid black;

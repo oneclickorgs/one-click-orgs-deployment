@@ -183,8 +183,8 @@ class Member < ActiveRecord::Base
   
   # GRAVATAR
   
-  def gravatar_url
+  def gravatar_url(size)
     hash = Digest::MD5.hexdigest(email.downcase)
-    "http://www.gravatar.com/avatar/#{hash}?d=mm"
+    "http://www.gravatar.com/avatar/#{hash}?s=#{size}&d=mm"
   end
 end
