@@ -8,7 +8,9 @@
     %th Last login
   - for member in @members
     %tr
-      %td= link_to "#{member.name}", member_path(member)
+      %td
+        = image_tag("#{member.gravatar_url(18)}", :class => 'gravatar', :alt => "#{member.name}", :width => '18', :height => '18')
+        = link_to "#{member.name}", member_path(member)
       %td
         = member.proposals_count
         (
