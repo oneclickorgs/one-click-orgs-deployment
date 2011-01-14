@@ -91,10 +91,6 @@ h1.header {
     h1.header a:hover {
       text-decoration: underline; }
 
-#doc,
-#hd #bd .footer {
-  margin: auto; }
-
 #hd {
   border-bottom: 1px solid #999999;
   margin-bottom: 12px;
@@ -108,13 +104,6 @@ h1.header {
     text-decoration: none; }
     #hd p a:hover {
       text-decoration: underline; }
-
-br,
-form,
-form p,
-h2,
-h4 {
-  clear: left; }
 
 br.clear {
   clear: both; }
@@ -294,7 +283,8 @@ input[type="button"] {
     background-color: #cccccc; }
 
 input[type="submit"] {
-  background-color: #c9dcc0; }
+  background-color: #c9dcc0;
+  cursor: pointer; }
   input[type="submit"]:hover {
     background-color: #a1c2a3; }
 
