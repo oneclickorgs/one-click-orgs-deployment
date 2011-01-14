@@ -179,17 +179,41 @@ a {
   color: #666666;
   font-size: 0.8em;
   font-weight: normal; }
-#bd .open-proposals div.description {
+#bd .open-proposals p.votes {
+  float: left;
+  margin-right: 24px; }
+#bd div.description {
   border-left: 1px dashed #333333;
   margin: 1em 0.5em;
   padding: 0.5em 1em;
   font-size: 0.8em; }
-  #bd .open-proposals div.description p {
+  #bd div.description.missing {
+    border-left: 1px dashed red; }
+    #bd div.description.missing p {
+      color: red; }
+  #bd div.description p {
     margin: 0.4em 0; }
-#bd .open-proposals p.votes {
-  float: left;
-  margin-right: 24px; }
 
+img.gravatar {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-left: 3px;
+  margin-right: 3px;
+  vertical-align: middle; }
+
+#bd .comment {
+  background: #f6f6f6;
+  border: 1px solid #666666;
+  margin: 0.8em 0;
+  padding: 0.4em;
+  width: 60%; }
+  #bd .comment p {
+    margin: 0 0 0.6em 1em; }
+  #bd .comment p.attribution {
+    margin: 0 0 0.6em 0; }
+
+/* Constitution page highlighting */
 span.dynamic {
   background-color: #f3f3f3;
   color: #9d8942;
@@ -210,10 +234,6 @@ table {
     white-space: nowrap; }
   table tr.even td {
     background: #e9e9f4; }
-
-table.members img.gravatar {
-  margin-right: 6px;
-  vertical-align: middle; }
 
 table.proposals, table.decisions, table.failed_proposals {
   border: 1px #004422 solid;
@@ -375,8 +395,3 @@ dl.settings dt {
 
 div.field_with_errors input {
   border: 1px solid red; }
-
-#bd p.attribution {
-  font-size: 0.8em;
-  font-style: italic;
-  margin-bottom: 0; }

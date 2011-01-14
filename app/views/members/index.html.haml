@@ -9,7 +9,7 @@
   - for member in @members
     %tr
       %td
-        = image_tag("#{member.gravatar_url(18)}", :class => 'gravatar', :alt => "#{member.name}", :width => '18', :height => '18')
+        = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
         = link_to "#{member.name}", member_path(member)
       %td
         = member.proposals_count
