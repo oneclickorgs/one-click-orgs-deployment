@@ -10,8 +10,8 @@ $(document).ready(function () {
     $(event.target).parents('.constitution_proposal').children('.proposal_form').slideUp();
     event.preventDefault();
   });
-  //
-  // Hide the forms at the top of the main page
+
+  // Forms at the top of the dashboard
   // (If JavaScript is disabled, they all show by default)
   $('.form-to-hide').hide();
   $('.button-form-show').show();
@@ -31,5 +31,13 @@ $(document).ready(function () {
   })
   $('#button-constitution-change').click(function() {
     $(location).attr('href','/settings');
+  });
+  
+  // Setup a new org: autofill subdomain while typing org name
+  $('body.setup input#organisation_name').keyup(function() {
+    var text = $('input#organisation_name').val();
+    text = text.toLowerCase();
+    text = text.replace(/ /g,'');
+    $('input#organisation_subdomain').val(text);
   });
 });

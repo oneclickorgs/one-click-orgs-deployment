@@ -214,6 +214,30 @@ img.gravatar {
   #bd .comment p.attribution {
     margin: 0 0 0.6em 0; }
 
+/* Set up a new organisation */
+body.setup h1.header {
+  margin-bottom: 12px; }
+  body.setup h1.header img {
+    vertical-align: middle; }
+body.setup h2, body.setup h3 {
+  color: #9e005d; }
+body.setup input[type="submit"] {
+  background-color: #9e005d;
+  color: white;
+  float: right;
+  margin: 5em 2em 0 0; }
+body.setup div.footer {
+  position: relative;
+  top: 4em; }
+
+div.left {
+  float: left;
+  width: 45%; }
+
+div.right {
+  float: right;
+  width: 51%; }
+
 /* Constitution page highlighting */
 span.dynamic {
   background-color: #f3f3f3;
