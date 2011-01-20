@@ -150,7 +150,8 @@ a {
   clear: both; }
 
 #error {
-  background-color: #df4242; }
+  background-color: #df4242;
+  color: white; }
 
 /* Body */
 #bd a.cancel {

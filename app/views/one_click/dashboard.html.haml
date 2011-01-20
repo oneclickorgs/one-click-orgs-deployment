@@ -6,9 +6,14 @@
   .section.open-proposals
     %h3 Votes in progress
     %p.explanation
-      These proposals are currently undergoing voting by
-      = @current_organisation.name
-      members.
+      - if @proposals.count == 0
+        No proposals are currently undergoing voting by
+        = @current_organisation.name
+        members.
+      - else
+        These proposals are currently undergoing voting by
+        = @current_organisation.name
+        members.
     - @proposals.each do |proposal|
       %h4
         = proposal.title
