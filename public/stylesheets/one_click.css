@@ -219,24 +219,44 @@ body.setup h1.header {
   margin-bottom: 12px; }
   body.setup h1.header img {
     vertical-align: middle; }
-body.setup h2, body.setup h3 {
+body.setup #bd h2 {
   color: #9e005d; }
-body.setup input[type="submit"] {
-  background-color: #9e005d;
-  color: white;
-  float: right;
-  margin: 5em 2em 0 0; }
-body.setup div.footer {
-  position: relative;
-  top: 4em; }
-
-div.left {
+body.setup #bd input, body.setup #bd label {
+  width: 90%; }
+body.setup #bd p.explanation {
+  color: #666666;
+  font-size: 0.8em;
+  margin: -12px 0 4px 20px;
+  padding: 0.2em; }
+body.setup #bd div.left {
   float: left;
   width: 45%; }
-
-div.right {
+body.setup #bd div.right {
   float: right;
   width: 51%; }
+  body.setup #bd div.right input[type="submit"] {
+    background-color: #9e005d;
+    color: white;
+    float: right;
+    font-size: 1.1em;
+    margin: 2em 2em 0 0;
+    padding: 0.8em 0;
+    width: 12em; }
+body.setup #bd #subdomain_wrapper {
+  border: 1px solid black;
+  margin: 0 4px 10px 20px;
+  padding: 0.4em;
+  width: 90%; }
+  body.setup #bd #subdomain_wrapper input {
+    border: 0;
+    margin-top: 1px;
+    padding: 0;
+    width: 270px;
+    width: 62%; }
+  body.setup #bd #subdomain_wrapper #base_domain {
+    color: #999999;
+    font-size: 0.9em;
+    margin-left: -3px; }
 
 /* Constitution page highlighting */
 span.dynamic {
