@@ -55,6 +55,9 @@ class OrganisationsController < ApplicationController
 
     # continue
     self.current_user = @founder # TODO: do we still need this?
+    
+    # send welcome email
+    MembersMailer.welcome_founder(@founder).deliver
 
     if Setting[:single_organisation_mode]
       redirect_to(:controller => 'one_click', :action => 'constitution')
