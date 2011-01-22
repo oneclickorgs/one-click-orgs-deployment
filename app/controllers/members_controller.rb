@@ -8,6 +8,7 @@ class MembersController < ApplicationController
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
+    @page_title = "Members"
     @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending

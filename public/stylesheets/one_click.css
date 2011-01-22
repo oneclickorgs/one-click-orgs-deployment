@@ -150,7 +150,8 @@ a {
   clear: both; }
 
 #error {
-  background-color: #df4242; }
+  background-color: #df4242;
+  color: white; }
 
 /* Body */
 #bd a.cancel {
@@ -212,6 +213,50 @@ img.gravatar {
     margin: 0 0 0.6em 1em; }
   #bd .comment p.attribution {
     margin: 0 0 0.6em 0; }
+
+/* Set up a new organisation */
+body.setup h1.header {
+  margin-bottom: 12px; }
+  body.setup h1.header img {
+    vertical-align: middle; }
+body.setup #bd h2 {
+  color: #9e005d; }
+body.setup #bd input, body.setup #bd label {
+  width: 90%; }
+body.setup #bd p.explanation {
+  color: #666666;
+  font-size: 0.8em;
+  margin: -12px 0 4px 20px;
+  padding: 0.2em; }
+body.setup #bd div.left {
+  float: left;
+  width: 45%; }
+body.setup #bd div.right {
+  float: right;
+  width: 51%; }
+  body.setup #bd div.right input[type="submit"] {
+    background-color: #9e005d;
+    color: white;
+    float: right;
+    font-size: 1.1em;
+    margin: 2em 2em 0 0;
+    padding: 0.8em 0;
+    width: 12em; }
+body.setup #bd #subdomain_wrapper {
+  border: 1px solid black;
+  margin: 0 4px 10px 20px;
+  padding: 0.4em;
+  width: 90%; }
+  body.setup #bd #subdomain_wrapper input {
+    border: 0;
+    margin-top: 1px;
+    padding: 0;
+    width: 270px;
+    width: 62%; }
+  body.setup #bd #subdomain_wrapper #base_domain {
+    color: #999999;
+    font-size: 0.9em;
+    margin-left: -3px; }
 
 /* Constitution page highlighting */
 span.dynamic {
@@ -308,6 +353,13 @@ input[type="submit"] {
   input[type="submit"]:hover {
     background-color: #a1c2a3; }
 
+input[type="radio"] {
+  clear: both;
+  float: left;
+  margin-bottom: 0.3em;
+  margin-right: 0.6em;
+  width: auto; }
+
 input[type=hidden] {
   display: inline; }
 
@@ -359,11 +411,16 @@ form.login label, form.login input {
 /* Footer */
 .footer {
   border-top: 1px solid black;
+  clear: both;
   color: #666666;
   font-size: 0.7em;
   margin-top: 1em;
-  padding: 1em;
-  clear: both; }
+  padding: 1em; }
+  .footer a {
+    text-decoration: none; }
+  .footer img {
+    margin-right: 4px;
+    vertical-align: middle; }
 
 ul.constitution li input[type=hidden] {
   float: right;
