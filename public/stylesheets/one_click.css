@@ -165,7 +165,7 @@ a {
 #bd ul {
   margin: 0 0 1em 2em; }
   #bd ul li {
-    margin: 0.3em 0; }
+    line-height: 1.6em; }
 #bd .section {
   background: #f5f5fe;
   border: 1px solid #999999;
@@ -189,9 +189,9 @@ a {
   padding: 0.5em 1em;
   font-size: 0.8em; }
   #bd div.description.missing {
-    border-left: 1px dashed red; }
+    border-left: 0; }
     #bd div.description.missing p {
-      color: red; }
+      color: #666666; }
   #bd div.description p {
     margin: 0.4em 0; }
 
@@ -419,6 +419,7 @@ form.login label, form.login input {
   .footer a {
     text-decoration: none; }
   .footer img {
+    border: none;
     margin-right: 4px;
     vertical-align: middle; }
 

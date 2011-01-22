@@ -1,5 +1,9 @@
 %h2 Settings
 
+- if current_organisation.pending?
+  %p
+    Only the founder can make changes on this page while the Association is pending.
+
 %p Changing the settings on this page will create proposals that can be voted on by the community.
 
 %h3 Organisation name

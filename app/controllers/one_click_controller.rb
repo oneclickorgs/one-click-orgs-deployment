@@ -13,6 +13,11 @@ class OneClickController < ApplicationController
   def dashboard
     # only_provides :html
     
+    if current_organisation.pending?
+      redirect_to(:action => 'constitution')
+      return
+    end
+            
     # Fetch open proposals
     @proposals = co.proposals.currently_open
     
