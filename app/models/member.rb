@@ -187,4 +187,11 @@ class Member < ActiveRecord::Base
     hash = Digest::MD5.hexdigest(email.downcase)
     "http://www.gravatar.com/avatar/#{hash}?s=#{size}&d=mm"
   end
+  
+  # FOUNDING VOTE
+  
+  def founding_vote
+    # The first vote of a founder will always be the founding vote
+    self.votes.first
+  end
 end
