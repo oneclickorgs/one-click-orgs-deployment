@@ -11,6 +11,14 @@ class MemberClass < ActiveRecord::Base
   def set_permission(type, value)
     organisation.clauses.set_boolean(get_permission_name(type), value)
   end
+
+  def destroy
+    super
+    # Delete clauses that codify this member class's abilities
+    # (if we modelled member classes as relation we could simply cascade...)
+    clauses = organisation.clauses.where('name LIKE :name', { :name => get_permission_name('%') })
+    clauses.each { |c| c.destroy }
+  end
   
 private
   

@@ -123,6 +123,10 @@ class Organisation < ActiveRecord::Base
   def active!
     #clauses.get_text('organisation_state', 'active')
     clauses.build(:name => 'organisation_state', :text_value => 'active')
+
+    # Delete Founder and Founding Member member classes
+    member_classes.find_by_name('Founder').destroy
+    member_classes.find_by_name('Founding Member').destroy
   end
   
   def constitution
