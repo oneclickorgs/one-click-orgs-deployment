@@ -13,26 +13,18 @@
     %div#container
       - if current_user
         - if current_organisation.pending? 
-          - if current_user.has_permission(:found_organisation_proposal)
-            %div#overlay.pending
-              %p
-                Your organisation
-                = '(' + @current_organisation.name + ')'
-                is in a pending state.
-                You can
-                = link_to 'add more founding members', members_path
-                and
-                = link_to 'customise your organisation', settings_path
-                = '.'
-                Once you’re happy with your changes you can make a proposal to found the organisation.
+          %div#overlay.pending
+            %p
+              The Association is currently in a draft state. When there at least three
+              = link_to 'Founding Members', members_path
+              and they are happy with the
+              = link_to 'Draft Constitution', constitution_path
+              = co.members.first.name
+              can call a Founding Vote to create the Association.
+            - if current_user.has_permission(:found_organisation_proposal)
               = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
-                = submit_tag "Propose to Found This Organisation", :id => 'submit'
+                = submit_tag "Hold the Founding Vote", :id => 'submit'
               %br.clear
-          - else
-            %div#overlay.pending
-              %p
-                This organisation is in a pending state. 
-                You can already review the current version of the constitution.
         - if current_organisation.proposed?
           %div#overlay.proposed
             %p
