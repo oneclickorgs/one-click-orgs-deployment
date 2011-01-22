@@ -1,39 +1,69 @@
-%h2
-  Existing Members
-%table.members
-  %tr
-    %th Name
-    %th Proposals made (succeeded/failed)
-    %th Votes cast
-    %th Last login
-  - for member in @members
-    %tr
-      %td
-        = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
-        = link_to "#{member.name}", member_path(member)
-      %td
-        = member.proposals_count
-        (
-        = member.succeeded_proposals_count
-        \/
-        = member.failed_proposals_count
-        )
-      %td= member.votes_count
-      %td
-        - if member.last_logged_in_at
-          = member.last_logged_in_at.to_s(:short)
-- unless @pending_members.empty?
+- if current_organisation.pending? or current_organisation.proposed?
+  %p Only the founder can make changes on this page
+  
+  %h3 Founding members
+  
+  %p At least three Founding Members are needed to form the Association
+  
+  - unless @pending_members.empty?
+    %table.pending_members
+      %tr
+        %th Name
+        %th Email
+        %th Last logged in
+        - if current_organisation.proposed?
+          %th Founding vote
+      - for member in @pending_members
+        %tr
+          %td
+            = link_to "#{member.name}", member_path(member)
+          %td
+            = member.email
+          %td
+            = member.last_logged_in_at
+          - if current_organisation.proposed?
+            %td
+              - if !member.founding_vote.nil?
+                = member.founding_vote.for_or_against
+              - else
+                Not yet voted
+  
+- else
   %h2
-    Pending Members
-  %p.explanation
-    These members still need to agree to the constitution
-  %table.pending_members
+    Existing Members
+  %table.members
     %tr
       %th Name
-    - for member in @pending_members
+      %th Proposals made (succeeded/failed)
+      %th Votes cast
+      %th Last login
+    - for member in @members
       %tr
         %td
+          = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
           = link_to "#{member.name}", member_path(member)
+        %td
+          = member.proposals_count
+          (
+          = member.succeeded_proposals_count
+          \/
+          = member.failed_proposals_count
+          )
+        %td= member.votes_count
+        %td
+          - if member.last_logged_in_at
+            = member.last_logged_in_at.to_s(:short)
+  - unless @pending_members.empty?
+    %h2
+      Pending Members
+    %p.explanation
+      These members still need to agree to the constitution
+    %table.pending_members
+      %tr
+        %th Name
+      - for member in @pending_members
+        %tr
+          %td
+            = link_to "#{member.name}", member_path(member)
 
 = render :partial => 'shared/propose_new_member_form'
-

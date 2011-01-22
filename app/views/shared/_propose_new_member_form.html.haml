@@ -1,7 +1,7 @@
 - if current_user.has_permission(:membership_proposal) and !current_organisation.proposed?
   - if @current_organisation.pending?
     %h3
-      Invite a founding member
+      Invite another Founding Member
     %p
       = form_for(@new_member, :as => :member, :url => { :controller => :members, :action => :create_founding_member }) do |f|
         %p
@@ -22,7 +22,7 @@
         -#     = f.label(:class)
         -#     = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
         %p
-          = submit_tag "Invite member", :id => 'submit'
+          = submit_tag "Send invitation", :id => 'submit'
   - else
     %h3
       Propose a new member

@@ -26,7 +26,7 @@ class OrganisationsController < ApplicationController
       errors << "Please complete your account details: #{@founder.errors.full_messages.to_sentence}."
     end
     if @founder.password != params[:founder][:password_confirmation]
-      errors << "Your password and password confirmation do no match."
+      errors << "Your password and password confirmation do not match."
     end
     if !@organisation.valid?
       errors << "Please complete the details of your organisation: #{@organisation.errors.full_messages.to_sentence}."
@@ -55,11 +55,14 @@ class OrganisationsController < ApplicationController
 
     # continue
     self.current_user = @founder # TODO: do we still need this?
+    
+    # send welcome email
+    MembersMailer.welcome_founder(@founder).deliver
 
     if Setting[:single_organisation_mode]
-      redirect_to(:controller => 'one_click')
+      redirect_to(:controller => 'one_click', :action => 'constitution')
     else
-      redirect_to(:host => @organisation.host, :controller => 'one_click')
+      redirect_to(:host => @organisation.host, :controller => 'one_click', :action => 'constitution')
     end
   end
 
