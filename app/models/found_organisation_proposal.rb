@@ -45,4 +45,8 @@ class FoundOrganisationProposal < Proposal
   def voting_system
     VotingSystems.get('Founding')
   end
+  
+  def member_count
+    organisation.members.count
+  end
 end

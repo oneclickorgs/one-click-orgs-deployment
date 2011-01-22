@@ -134,6 +134,7 @@ describe VotingSystems do
       
       should_close_early make_proposal(3, 0, 3)
       should_not_close_early make_proposal(2, 1, 4)
+      should_not_close_early make_proposal(1, 0, 3)
       
       # Also close early when there aren't enough members left to vote
       # to make up the required supporting votes
