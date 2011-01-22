@@ -58,8 +58,14 @@
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
         - if current_user
-          - if current_organisation.proposed?
+          - if current_organisation.pending?
             %ul#nav
+              %li#navitem= link_to 'Settings', settings_path
+              %li#navitem= link_to 'Constitution', constitution_path
+              %li#navitem= link_to 'Members', members_path
+          - elsif current_organisation.proposed?
+            %ul#nav
+              %li#navitem= link_to 'Dashboard', root_path
               %li#navitem= link_to 'Constitution', constitution_path
               %li#navitem= link_to 'Members', members_path
           - else
