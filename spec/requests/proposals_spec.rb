@@ -205,7 +205,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
 
         ChangeVotingPeriodProposal.count.should == 1
-        ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 24 hours'
+        ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 1 day'
         proposal_parameters = ChangeVotingPeriodProposal.all.first.parameters
         proposal_parameters['new_voting_period'].to_i.should == 86400
       end
