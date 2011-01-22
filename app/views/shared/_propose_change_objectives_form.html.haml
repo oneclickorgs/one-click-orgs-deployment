@@ -1,4 +1,4 @@
-- if current_user.has_permission(:constitution_proposal)
+- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
   =form_tag(:controller => 'proposals', :action => 'create_text_amendment') do
     %div.constitution_proposal
       %p.reveal_link
