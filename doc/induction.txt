@@ -116,9 +116,6 @@ next steps:
   * new members should be sent to welcome page where they get inducted (agree to constitution & EULA)
 
 TODO
-* auto-select appropriate member classes during induction
-  * "Founder" class at /induction/founder
-  * "Founding Member" class at /induction/members
 * remove dedicated timeline page during induction (currently it just throws a NPE)
 * set org state to 'failed' if not enough members voted for it
 

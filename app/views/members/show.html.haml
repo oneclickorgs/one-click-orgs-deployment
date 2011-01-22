@@ -21,25 +21,26 @@
   = @member.votes_count
 
 - if current_user.has_permission(:membership_proposal)
-  - if co.member_classes.count > 1
-    .section
-      %h3
-        Change Member Class
+  -# Cf. issue #146: don't display member class form
+  -# - if co.member_classes.count > 1
+  -#   .section
+  -#     %h3
+  -#       Change Member Class
 
-      %p
-        Create a proposal to change the member class of this member. Current class: 
-        = @member.member_class.name
+  -#     %p
+  -#       Create a proposal to change the member class of this member. Current class: 
+  -#       = @member.member_class.name
 
-      = form_tag(change_class_member_path(@member)) do
-        %p
-          = label_tag(:description)
-          = text_area_tag :description
-        %p
-          = label_tag(:class)
-          = collection_select(:member, :member_class_id, 
-            co.member_classes.all.reject {|mc| mc==@member.member_class }, :id, :name)
-        %p
-          = submit_tag "Create Proposal", :id => 'submit'
+  -#     = form_tag(change_class_member_path(@member)) do
+  -#       %p
+  -#         = label_tag(:description)
+  -#         = text_area_tag :description
+  -#       %p
+  -#         = label_tag(:class)
+  -#         = collection_select(:member, :member_class_id, 
+  -#           co.member_classes.all.reject {|mc| mc==@member.member_class }, :id, :name)
+  -#       %p
+  -#         = submit_tag "Create Proposal", :id => 'submit'
   - unless current_user == @member
     .section
       %h3
