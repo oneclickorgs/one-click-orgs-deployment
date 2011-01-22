@@ -1,3 +1,5 @@
+$oco_burgundy: #9e005d
+
 *
   :margin 0
   :padding 0
@@ -18,6 +20,59 @@ body
 
 div.clear
   :clear left
+
+/* Induction
+
+#overlay
+  :-webkit-border-bottom-right-radius 8px
+  :-webkit-border-bottom-left-radius 8px
+  :-moz-border-radius-bottomright 8px
+  :-moz-border-radius-bottomleft 8px
+  :border-bottom-right-radius 8px
+  :border-bottom-left-radius 8px
+  :background #E0E0AF
+  :background -moz-linear-gradient(100% 100% 90deg, #9D9D75, #E0E0AF)
+  :background -webkit-gradient(linear, left bottom, left top, from(#9D9D75), to(#E0E0AF))
+  :border-bottom 1px solid #111
+  :border-left 1px solid #111
+  :border-right 1px solid #111
+  :margin -12px 0 12px
+  a
+    :background #333
+    :background rgba(0, 0, 0, 0.6)
+    :-webkit-border-radius 2px
+    :-moz-border-radius 2px
+    :border-radius 2px
+    :border 1px solid #000
+    :color #fff
+    :margin 0 2px
+    :padding 2px 6px
+    :text-decoration none
+    :text-shadow none
+    &:hover
+      :background #444
+      :background rgba(0, 0, 0, 0.8)
+      :text-decoration none
+  form
+    input
+      :float right
+      :margin-right 8px
+  p
+    :color #000
+    :font-size 1em
+    :margin 0
+    :padding 18px 12px
+    :text-shadow #fff -1px -1px 2px
+
+#overlay.proposed
+  :background #AFE0BC
+  :background -moz-linear-gradient(100% 100% 90deg, #779D75, #AFE0BC)
+  :background -webkit-gradient(linear, left bottom, left top, from(#779D75), to(#AFE0BC))
+
+#overlay.failed
+  :background #E0AFB7
+  :background -moz-linear-gradient(100% 100% 90deg, #9D757F, #E0AFB7)
+  :background -webkit-gradient(linear, left bottom, left top, from(#9D757F), to(#E0AFB7))
 
 /* Header
 
@@ -41,10 +96,6 @@ h1.header
     &:hover
       :text-decoration underline
 
-#doc,
-#hd #bd .footer
-  :margin auto
-
 #hd
   :border-bottom 1px solid #999
   :margin-bottom 12px
@@ -58,13 +109,6 @@ h1.header
     :text-decoration none
     &:hover
       :text-decoration underline
-
-br,
-form,
-form p,
-h2,
-h4
-  :clear left
 
 br.clear
   :clear both
@@ -114,6 +158,7 @@ a
 
 #error
   :background-color #DF4242
+  :color #fff
 
 /* Body
 
@@ -146,16 +191,89 @@ a
       :color #666
       :font-size 0.8em
       :font-weight normal
-    div.description
-      :border-left 1px dashed #333
-      :margin 1em 0.5em
-      :padding 0.5em 1em
-      :font-size .8em
-      p
-        :margin 0.4em 0
     p.votes
       :float left
       :margin-right 24px
+  div.description
+    :border-left 1px dashed #333
+    :margin 1em 0.5em
+    :padding 0.5em 1em
+    :font-size .8em
+    &.missing
+      :border-left 1px dashed #f00
+      p
+        :color #f00
+    p
+      :margin 0.4em 0
+
+img.gravatar
+  :-webkit-border-radius 2px
+  :-moz-border-radius 2px
+  :border-radius 2px
+  :margin-left 3px
+  :margin-right 3px
+  :vertical-align middle
+
+#bd
+  .comment
+    :background #f6f6f6
+    :border 1px solid #666
+    :margin 0.8em 0
+    :padding 0.4em
+    :width 60%
+    p
+      :margin 0 0 0.6em 1em
+    p.attribution
+      :margin 0 0 0.6em 0
+
+/* Set up a new organisation
+
+body.setup
+  h1.header
+    :margin-bottom 12px
+    img
+      :vertical-align middle
+  #bd
+    h2
+      :color $oco_burgundy
+    input, label
+      :width 90%
+    p.explanation
+      :color #666
+      :font-size 0.8em
+      :margin -12px 0 4px 20px
+      :padding 0.2em
+    div.left
+      :float left
+      :width 45%
+    div.right
+      :float right
+      :width 51%
+      input[type="submit"]
+        :background-color $oco_burgundy
+        :color #fff
+        :float right
+        :font-size 1.1em
+        :margin 2em 2em 0 0
+        :padding 0.8em 0
+        :width 12em
+    #subdomain_wrapper
+      :border 1px solid #000
+      :margin 0 4px 10px 20px
+      :padding .4em
+      :width 90%
+      input
+        :border 0
+        :margin-top 1px
+        :padding 0
+        :width 270px
+        :width 62%
+      #base_domain
+        :color #999
+        :font-size .9em
+        :margin-left -3px
+
+/* Constitution page highlighting
 
 span.dynamic
   :background-color #f3f3f3
@@ -250,8 +368,16 @@ input[type="button"]
 
 input[type="submit"]
   :background-color #c9dcc0
+  :cursor pointer
   &:hover
     :background-color #a1c2a3
+
+input[type="radio"]
+  :clear both
+  :float left
+  :margin-bottom 0.3em
+  :margin-right 0.6em 
+  :width auto
 
 input[type=hidden]
   :display inline
@@ -295,15 +421,27 @@ form.login
 form.login label, form.login input
   :margin-left 0
 
+/* Members
+
+#member_info
+  :margin 1em 0
+  img
+    :float right
+
 /* Footer
 
 .footer
   :border-top 1px solid #000
+  :clear both
   :color #666
   :font-size .7em
   :margin-top 1em
   :padding 1em
-  :clear both
+  a
+    :text-decoration none
+  img
+    :margin-right 4px
+    :vertical-align middle
 
 ul.constitution li  
   input[type=hidden]
@@ -337,8 +475,3 @@ dl.settings
 
 div.field_with_errors input
   :border 1px solid red
-
-#bd p.attribution
-  :font-size 0.8em
-  :font-style italic
-  :margin-bottom 0

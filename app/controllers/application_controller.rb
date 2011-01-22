@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_organisation_url(:host => Setting[:base_domain]))
+      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
     end
   end
   

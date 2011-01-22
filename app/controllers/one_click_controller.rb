@@ -6,6 +6,7 @@ class OneClickController < ApplicationController
   end
   
   def constitution
+    @page_title = "Constitution"
     prepare_constitution_view
   end
   
@@ -26,6 +27,7 @@ class OneClickController < ApplicationController
   end
   
   def settings
+    @page_title = "Settings"
     prepare_constitution_view
   end
   

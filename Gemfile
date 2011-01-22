@@ -26,7 +26,7 @@ gem "mysql"
 gem "haml", "~>3.0.18"
 gem "daemons", "~>1.0.10"
 
-gem "delayed_job", "2.0.3"
+gem "delayed_job", "2.1.3"
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

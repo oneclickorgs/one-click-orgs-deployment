@@ -8,11 +8,13 @@
     = stylesheet_link_tag 'one_click'
     = javascript_include_tag 'jquery', 'rails', 'application'
     = csrf_meta_tag
-  %body
+  %body.setup
     %div#container
       %div#doc
         %div#hd
-          %h1.header One Click Orgs
+          %h1.header
+            = image_tag 'oco-logo-48.png'
+            One Click Orgs
         - if flash[:notice]
           %div#notice
             = flash[:notice]
@@ -22,10 +24,10 @@
         
         %div#bd
           = yield
-        %div.footer
-          = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
-          = "#{OneClickOrgs.version}."
-          Licensed under the
-          %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
-          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
+          %div.footer
+            = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
+            = "#{OneClickOrgs.version}."
+            Licensed under the
+            %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
+            %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
       = get_satisfaction_widget

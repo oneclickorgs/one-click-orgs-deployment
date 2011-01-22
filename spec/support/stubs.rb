@@ -2,6 +2,7 @@
 
 def stub_setup!
   Setting[:base_domain] ||= "oneclickorgs.com"
+  Setting[:signup_domain] ||= "signup.oneclickorgs.com"
 end
 
 def default_member_class

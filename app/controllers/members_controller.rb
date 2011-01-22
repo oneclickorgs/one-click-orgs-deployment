@@ -8,6 +8,7 @@ class MembersController < ApplicationController
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
+    @page_title = "Members"
     @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
@@ -79,7 +80,7 @@ class MembersController < ApplicationController
     id, member = params[:id], params[:member]
     @member = co.members.find(id)
     if @member.update_attributes(member)
-       redirect_to member_path(@member), :notice => "Member updated"
+       redirect_to member_path(@member), :notice => "Account updated."
     else
       flash[:error] = "There was a problem with your new details."
       render(:action => :edit)

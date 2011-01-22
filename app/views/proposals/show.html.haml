@@ -1,30 +1,34 @@
-- if @proposal.open?
-  %h2
-    Proposal:
-    = @proposal.title
-- elsif @proposal.accepted?
-  %h2
-    Decision:
-    = @proposal.title
-- else
-  %h2
-    Failed proposal:
-    = @proposal.title
-
-= render 'description', :proposal => @proposal
+%h2
+  = @proposal.title
 
 %p
-  Proposed by
+  A
+  - if @proposal.open?
+    proposal
+  - elsif @proposal.accepted?
+    decision
+  - else
+    failed proposal
+  submitted by
+  = image_tag(@proposal.proposer.gravatar_url(24), :alt => @proposal.proposer.name, :class => 'gravatar', :width => '24', :height => '24')
   = link_to(@proposal.proposer.name, @proposal.proposer)
   = @proposal.creation_date.to_s(:at_on)
 
+%h3 Description
+= render 'description', :proposal => @proposal
+
+%h3 Voting
+
+%p
+  Votes:
+  = render 'vote_count', :proposal => @proposal
+
 - if @proposal.open?
   %p
-    Voting ends
-    = @proposal.end_date.to_s(:at_on)
-  %p
-    Time remaining:
-    = distance_of_time_in_words_to_now(@proposal.end_date)
+    Voting ends in
+    %strong
+      = distance_of_time_in_words_to_now(@proposal.end_date)
+    = "(" + @proposal.end_date.to_s(:at_on) + ")"
 
 - if @proposal.open?
   - if current_user.has_permission(:vote)
@@ -37,24 +41,21 @@
   %p
     This proposal
     -if @proposal.accepted?
-      %strong SUCCEEDED
+      %strong succeeded
     -else
-      %strong FAILED
-
-%p
-  Vote count:
-  = render 'vote_count', :proposal => @proposal
+      %strong failed
     
 %h3 Comments
 - @comments.each do |comment|
   .comment
     %p.attribution
+      = image_tag(comment.author.gravatar_url(24), :alt => comment.author.name, :class => 'gravatar', :width => '24', :height => '24')
       = link_to(comment.author.name, member_path(comment.author))
       = comment.created_at.to_s(:at_on) + ':'
     = simple_format(comment.body)
 = form_for(@comment, :url => proposal_comments_path(:proposal_id => @proposal)) do |f|
   %p
-    = f.label :body, "Add a comment"
+    = f.label :body, "Add a comment to this proposal:"
     = f.text_area :body
   %p
-    = f.submit "Submit comment"
+    = f.submit "Save comment"

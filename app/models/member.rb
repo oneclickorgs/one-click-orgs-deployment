@@ -145,6 +145,7 @@ class Member < ActiveRecord::Base
   end
   
   def has_permission(type)
+    return false if member_class.nil? # XXX should always have a member class?
     member_class.has_permission(type)
   end
   
@@ -183,8 +184,8 @@ class Member < ActiveRecord::Base
   
   # GRAVATAR
   
-  def gravatar_url
+  def gravatar_url(size)
     hash = Digest::MD5.hexdigest(email.downcase)
-    "http://www.gravatar.com/avatar/#{hash}?d=mm"
+    "http://www.gravatar.com/avatar/#{hash}?s=#{size}&d=mm"
   end
 end
