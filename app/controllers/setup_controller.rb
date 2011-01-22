@@ -10,16 +10,19 @@ class SetupController < ApplicationController
   
   def index
     @base_domain = request.host_with_port
+    @signup_domain = request.host_with_port
   end
   
-  def create_base_domain
+  def create_domains
     @base_domain = params[:base_domain]
-    if @base_domain.present?
+    @signup_domain = params[:signup_domain]
+    if @base_domain.present? && @signup_domain.present?
       Setting[:base_domain] = @base_domain
-      flash[:notice] = "Base domain set. Now you can make an organisation."
-      redirect_to(new_organisation_path)
+      Setting[:signup_domain] = @signup_domain
+      flash[:notice] = "Domains set. Now you can make an organisation."
+      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
     else
-      flash[:error] = "You must choose a base domain."
+      flash[:error] = "You must choose both a base domain and a sign-up domain."
       render(:action => :index)
     end
   end
@@ -28,6 +31,5 @@ class SetupController < ApplicationController
     Setting[:single_organisation_mode] = "true"
     Setting[:base_domain] = request.host_with_port
     redirect_to(new_organisation_path)
-    #redirect_to(:controller => 'one_click')
   end
 end
