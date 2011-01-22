@@ -2,21 +2,67 @@
 
 - if current_organisation.pending?
   %p
-    Only the founder can make changes on this page while the Association is pending.
+    Only
+    = co.convener
+    can make changes on this page while the Association is pending.
+- else
+  %p Changing the settings on this page will create proposals that can be voted on by the community.
 
-%p Changing the settings on this page will create proposals that can be voted on by the community.
+%h3 Name of the Association
 
-%h3 Organisation name
-
-= render :partial => 'shared/propose_change_org_name_form'
+- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
+  = form_tag(:controller => 'proposals', :action => 'create_text_amendment') do
+    %p
+      %label{:for => 'value'}
+        Change the organisation’s name to
+    %input{:name => 'value', :value => @organisation_name}
+    %input{:type => 'hidden', :name => 'name', :value => 'organisation_name'}
+    %p
+      = submit_tag "Propose change", :id => 'submit'
 
 %h3 Objectives
 
-= render :partial => 'shared/propose_change_objectives_form'
+- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
+  = form_tag(:controller => 'proposals', :action => 'create_text_amendment') do
+    %p
+      %label{:for => 'value'}
+        Change the organisation's objectives to
+    %textarea{:name => 'value'}= @objectives
+    %input{:type => 'hidden', :name => 'name', :value => 'organisation_objectives'}
+    %p
+      = submit_tag "Propose change", :id => 'submit'
 
 %h3 Assets
 
-= render :partial => 'shared/propose_hold_assets_form'
+- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
+  / This is not a good way of doing things. Acknowledged.
+  = form_tag(:controller => 'proposals', :action => 'create_assets_amendment') do
+    - if @assets
+      %input{:type => 'radio', :name => 'new_assets_value', :value => '1', :checked => true }
+        The Organisation
+        %strong
+          may
+        hold, transfer and dispose of material assets and intangible assets.
+      %br
+      %input{:type => 'radio', :name => 'new_assets_value', :value => '0' }
+        The Organisation
+        %strong
+          may not
+        hold, transfer and dispose of material assets and intangible assets.
+    - else
+      %input{:type => 'radio', :name => 'new_assets_value', :value => '1' }
+        The Organisation
+        %strong
+          may
+        hold, transfer and dispose of material assets and intangible assets.
+      %br
+      %input{:type => 'radio', :name => 'new_assets_value', :value => '0', :checked => true }
+        The Organisation
+        %strong
+          may not
+        hold, transfer and dispose of material assets and intangible assets.
+    %p
+      = submit_tag "Propose change", :id => 'submit'
 
 %h3 Making decisions
 
@@ -44,7 +90,27 @@
 
 %h3 Voting period
 
-= render :partial => 'shared/propose_change_voting_period_form'
+- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
+  =form_tag(:controller => 'proposals', :action => 'create_voting_period_amendment') do
+    %div.constitution_proposal
+      %p.reveal_link
+        %a{:href => '#'}
+          Propose an amendment
+      %div.proposal_form{:style => 'display: none;'}
+        %p
+          %label{:for => 'new_voting_period'}
+            Change the voting period to:
+          %select{:name => 'new_voting_period'}
+            - VotingPeriods.all do |vp|
+              - if vp[:value] == @period
+                %option{:value => vp[:value], :selected => true}= vp[:name]
+              - else
+                %option{:value => vp[:value]}= vp[:name]
+        %p
+          = submit_tag "Propose change", :id => 'submit'
+        %p
+          %a{:href => '#', :class => 'cancel_link'}
+            Cancel
 
 %p
   = @voting_period
