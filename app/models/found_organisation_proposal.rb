@@ -42,9 +42,7 @@ class FoundOrganisationProposal < Proposal
     end
   end
   
-  # TODO Need a special voting system for FoundOrganisationProposal
-  # which simply requires three or more yes votes
   def voting_system
-    organisation.constitution.voting_system(:constitution)
+    VotingSystems.get('Founding')
   end
 end

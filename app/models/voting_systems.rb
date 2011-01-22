@@ -140,6 +140,30 @@ module VotingSystems
     self.fraction_needed = 1.0
   end
   
+  class Founding < VotingSystem
+    def self.description(options={})
+      "At least three supporting votes"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "at least three votes#{are_received} during the Voting Period."
+    end
+    
+    def self.can_be_closed_early?(proposal)
+      return true if proposal.votes_for >= 3
+      
+      undecided_members = proposal.member_count - (proposal.votes_for + proposal.votes_against)
+      additional_votes_needed = 3 - proposal.votes_for
+      
+      undecided_members < additional_votes_needed
+    end
+    
+    def self.passed?(proposal)
+      proposal.votes_for >= 3
+    end
+  end
+  
   def self.all(&block)
     [
       RelativeMajority,
