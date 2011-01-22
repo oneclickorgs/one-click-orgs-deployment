@@ -44,9 +44,9 @@ $(document).ready(function () {
   $('body.setup input#organisation_name').keyup(function() {
     var text = $('input#organisation_name').val();
     text = text.toLowerCase();
-    // Regex to remove the most horrendous and obvious special characters
+    // Regex to whitelist organisation name to generate a subdomain
     // Obviously, we still need to validate this in the app
-    text = text.replace(/[ \'\‘\’\@\"\“\”\!\&\*\(\)\[\]]/g,'');
+    text = text.replace(/[^a-z0-9]/g,'');
     $('input#organisation_subdomain').val(text);
   });
 });
