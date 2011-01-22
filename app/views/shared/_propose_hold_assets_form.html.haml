@@ -1,4 +1,4 @@
-- if current_user.has_permission(:constitution_proposal)
+- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
   / This is not a good way of doing things. Acknowledged.
   = form_tag(:controller => 'proposals', :action => 'create_assets_amendment') do
     - if @assets

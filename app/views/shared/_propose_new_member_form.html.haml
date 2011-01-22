@@ -1,4 +1,4 @@
-- if current_user.has_permission(:membership_proposal)
+- if current_user.has_permission(:membership_proposal) and !current_organisation.proposed?
   - if @current_organisation.pending?
     %h3
       Invite a founding member
