@@ -145,6 +145,7 @@ class Member < ActiveRecord::Base
   end
   
   def has_permission(type)
+    return false if member_class.nil? # XXX should always have a member class?
     member_class.has_permission(type)
   end
   

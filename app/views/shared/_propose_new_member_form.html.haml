@@ -13,6 +13,14 @@
         %p
           = f.label(:last_name)
           = f.text_field :last_name
+        -# Cf. issue #146: don't display member class form
+          = f.hidden_field :member_class_id
+        -# - if co.member_classes.count == 1
+        -#   = f.hidden_field :member_class_id
+        -# - else
+        -#   %p
+        -#     = f.label(:class)
+        -#     = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
         %p
           = submit_tag "Send invitation", :id => 'submit'
   - else
