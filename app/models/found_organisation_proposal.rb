@@ -34,10 +34,7 @@ class FoundOrganisationProposal < Proposal
     organisation.members.each do |m|
       # TODO replace this with a tailored email message about the successful foundation
       # of the org
-      # TODO Don't need to reset their passwords at this point
       Rails.logger.info("sending welcome message to #{m}")
-      m.new_password!
-      m.save
       m.send_welcome
     end
   end
