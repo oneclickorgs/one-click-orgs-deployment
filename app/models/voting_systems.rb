@@ -36,7 +36,7 @@ module VotingSystems
   
   class RelativeMajority < VotingSystem
     def self.description(options={})
-      "More supporting votes than opposing votes"
+      "Simple majority: decisions need more supporting votes than opposing votes"
     end
     
     def self.long_description(options={})
@@ -55,7 +55,7 @@ module VotingSystems
   
   class Veto < VotingSystem
     def self.description(options={})
-      "No opposing votes"
+      "Nobody opposes: decisions blocked if there are any opposing votes"
     end
     
     def self.long_description(options={})
@@ -103,7 +103,7 @@ module VotingSystems
   
   class AbsoluteMajority < Majority
     def self.description(options={})
-      "Supporting votes from more than half the members"
+      "Absolute majority: decisions need supporting votes from more than 50% of members"
     end
     
     def self.long_description(options={})
@@ -116,7 +116,7 @@ module VotingSystems
   
   class AbsoluteTwoThirdsMajority < Majority
     def self.description(options={})
-      "Supporting votes from more than two thirds of the members"
+      "Two thirds majority: decisions need supporting votes from more than 66% of members"
     end
     
     def self.long_description(options={})
@@ -129,7 +129,7 @@ module VotingSystems
   
   class Unanimous < Majority
     def self.description(options={})
-      "Supporting votes from every single member"
+      "Unanimous: decisions need supporting votes from 100% of members"
     end
     
     def self.long_description(options={})

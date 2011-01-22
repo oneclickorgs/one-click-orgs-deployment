@@ -159,7 +159,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.first.title.should == 'Change general voting system to Supporting votes from every single member'
+        ChangeVotingSystemProposal.first.title.should == 'Change general voting system to Unanimous: decisions need supporting votes from 100% of members'
         proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'general'
         proposal_parameters['proposed_system'].should == 'Unanimous'
@@ -175,7 +175,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.all.first.title.should == 'Change membership voting system to No opposing votes'
+        ChangeVotingSystemProposal.all.first.title.should == 'Change membership voting system to Nobody opposes: decisions blocked if there are any opposing votes'
         proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'membership'
         proposal_parameters['proposed_system'].should == 'Veto'
@@ -190,7 +190,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.all.first.title.should == 'Change constitution voting system to Supporting votes from more than half the members'
+        ChangeVotingSystemProposal.all.first.title.should == 'Change constitution voting system to Absolute majority: decisions need supporting votes from more than 50% of members'
         proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'constitution'
         proposal_parameters['proposed_system'].should == 'AbsoluteMajority'
