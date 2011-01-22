@@ -59,7 +59,8 @@
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
         - if current_user
           %ul#nav
-            %li#navitem= link_to 'Dashboard', root_path
+            - unless current_organisation.pending?
+              %li#navitem= link_to 'Dashboard', root_path
             %li#navitem= link_to 'Settings', settings_path
             %li#navitem= link_to 'Constitution', constitution_path
             %li#navitem= link_to 'Members', members_path
