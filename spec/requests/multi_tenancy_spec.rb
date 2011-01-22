@@ -102,7 +102,7 @@ describe "Multi-tenancy" do
       
       it "should redirect to the induction process for that domain" do
         post 'http://signup.oneclickorgs.com/organisations', org_parameters
-        response.should redirect_to 'http://neworganisation.oneclickorgs.com/one_click'
+        response.should redirect_to 'http://neworganisation.oneclickorgs.com/constitution'
       end
     end
   end
