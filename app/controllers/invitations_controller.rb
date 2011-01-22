@@ -1,3 +1,5 @@
+require 'lib/not_found'
+
 class InvitationsController < ApplicationController
   skip_before_filter :ensure_authenticated
   
@@ -8,7 +10,7 @@ class InvitationsController < ApplicationController
     @member = Member.find_by_invitation_code(@invitation_code)
     
     unless @member
-      render(:action => :not_found)
+      raise NotFound
     end
   end
   
