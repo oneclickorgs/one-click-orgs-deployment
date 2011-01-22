@@ -98,6 +98,8 @@ OneClickOrgs::Application.routes.draw do
   
   match '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
   resources :password_resets
+
+  match '/admin/test_email' => 'admin', :conditions => { :method => :post }, :action => :test_email
   
   root :to => 'one_click#dashboard'
 end
