@@ -1,9 +1,12 @@
+- content_for(:head) do
+  = javascript_include_tag 'organisations_new'
+
 %h2 Set up a new organisation
 
 %p
   Fill out the form below to create your draft constitution. It’s quick and easy.
 
-= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post") do
+= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post", :id => 'new_organisation') do
 
   %div.left
     %h3 Founder
@@ -23,6 +26,7 @@
       %p
         = f.label :password_confirmation, "Confirm your password"
         = f.password_field :password_confirmation
+      = f.hidden_field :terms_and_conditions
 
   %div.right
     %h3 Organisation
@@ -45,3 +49,5 @@
       %p
         = submit_tag "Next stage: create", :id => 'submit'
   
+- content_for(:lightbox) do
+  = render(:partial => 'shared/convener_disclaimer')

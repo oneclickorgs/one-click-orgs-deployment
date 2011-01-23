@@ -12,6 +12,10 @@ class OrganisationsController < ApplicationController
   def new
     @organisation = Organisation.new
     @founder = @organisation.members.first || @organisation.members.new
+    
+    # Require acceptance of the terms and conditions
+    @founder.terms_and_conditions = false
+    
     #@single_organisation_mode = Setting[:single_organisation_mode]
   end
   
