@@ -36,11 +36,11 @@ div.clear {
   margin: -12px 0 12px; }
   #overlay a {
     background: #333333;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    border: 1px solid black;
+    border: 1px solid #333333;
     color: white;
     margin: 0 2px;
     padding: 2px 6px;
@@ -48,7 +48,7 @@ div.clear {
     text-shadow: none; }
     #overlay a:hover {
       background: #444444;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.7);
       text-decoration: none; }
   #overlay form input {
     float: right;

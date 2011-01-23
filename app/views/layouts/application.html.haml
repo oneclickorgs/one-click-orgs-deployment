@@ -19,7 +19,10 @@
               = link_to 'Founding Members', members_path
               and they are happy with the
               = link_to 'Draft Constitution', constitution_path
-              = co.members.first.name
+              - if current_user == co.members.first
+                = 'you'
+              - else
+                = co.members.first.name
               can call a Founding Vote to create the Association.
             - if current_user.has_permission(:found_organisation_proposal)
               = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
