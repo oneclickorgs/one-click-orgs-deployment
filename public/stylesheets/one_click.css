@@ -234,13 +234,16 @@ body.setup #bd div.left {
 body.setup #bd div.right {
   float: right;
   width: 51%; }
+  body.setup #bd div.right textarea {
+    height: 3em;
+    width: 90%; }
   body.setup #bd div.right input[type="submit"] {
     background-color: #9e005d;
     color: white;
     font-size: 1.1em;
-    margin: 2em auto 0;
+    margin: 1em auto 0;
     padding: 0.8em 0;
-    width: 12em; }
+    width: 16em; }
 body.setup #bd #subdomain_wrapper {
   border: 1px solid black;
   margin: 0 4px 10px 20px;
@@ -348,6 +351,8 @@ input[type="button"] {
 
 input[type="submit"] {
   background-color: #c9dcc0;
+  background-color: #9e005d;
+  color: white;
   cursor: pointer; }
   input[type="submit"]:hover {
     background-color: #a1c2a3; }
