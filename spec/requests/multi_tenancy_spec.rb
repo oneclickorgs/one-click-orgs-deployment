@@ -74,7 +74,7 @@ describe "Multi-tenancy" do
           form.should have_selector("input[name='founder[password_confirmation]']")
           form.should have_selector("input[name='organisation[name]']")
           form.should have_selector("input[name='organisation[subdomain]']")
-          form.should have_selector("input[name='organisation[objectives]']")
+          form.should have_selector("textarea[name='organisation[objectives]']")
           form.should have_selector("input[type=submit]")
         end
       end
