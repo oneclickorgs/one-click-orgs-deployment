@@ -11,36 +11,31 @@
     = csrf_meta_tag
   %body
     %div#container
-      - if current_organisation.pending? 
-        - if current_user and current_user.has_permission(:found_organisation_proposal)
+      - if current_user
+        - if current_organisation.pending? 
           %div#overlay.pending
             %p
-              Your organisation
-              = '(' + @current_organisation.name + ')'
-              is in a pending state.
-              You can
-              = link_to 'add more founding members', members_path
-              and
-              = link_to 'customise your organisation', settings_path
-              = '.'
-              Once you’re happy with your changes you can make a proposal to found the organisation.
-            = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
-              = submit_tag "Propose to Found This Organisation", :id => 'submit'
-            %br.clear
-        - else
-          %div#overlay.pending
+              The Association is currently in a draft state. When there at least three
+              = link_to 'Founding Members', members_path
+              and they are happy with the
+              = link_to 'Draft Constitution', constitution_path
+              = co.members.first.name
+              can call a Founding Vote to create the Association.
+            - if current_user.has_permission(:found_organisation_proposal)
+              = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
+                = submit_tag "Hold the Founding Vote", :id => 'submit'
+              %br.clear
+        - if current_organisation.proposed?
+          %div#overlay.proposed
             %p
-              This organisation is in a pending state. 
-              You can already review the current version of the constitution.
-      - if current_organisation.proposed?
-        %div#overlay.proposed
-          %p
-            This organisation has been proposed for foundation. 
-            Founding members can now vote until the end of the voting period.
-      - if current_organisation.failed?
-        %div#overlay.failed
-          %p
-            This organisation is inactive: the founding vote did not pass.
+              The Founding Vote to create the Association is now in progress.
+              No further changes can be made to the Draft Constitution at this stage.
+              If three or more Founding Members vote to found the Association they will
+              become its first Members.
+        - if current_organisation.failed?
+          %div#overlay.failed
+            %p
+              This organisation is inactive: the founding vote did not pass.
       %div.control_bar
         - if current_user
           %p
@@ -58,14 +53,21 @@
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
         - if current_user
-          %ul#nav
-            - unless current_organisation.pending?
+          - if current_organisation.pending?
+            %ul#nav
+              %li#navitem= link_to 'Settings', settings_path
+              %li#navitem= link_to 'Draft Constitution', constitution_path
+              %li#navitem= link_to 'Members', members_path
+          - elsif current_organisation.proposed?
+            %ul#nav
               %li#navitem= link_to 'Dashboard', root_path
-            %li#navitem= link_to 'Settings', settings_path
-            %li#navitem= link_to 'Constitution', constitution_path
-            - if current_organisation.pending?
-              %li#navitem= link_to 'Founding Members', members_path
-            - else
+              %li#navitem= link_to 'Constitution', constitution_path
+              %li#navitem= link_to 'Members', members_path
+          - else
+            %ul#nav
+              %li#navitem= link_to 'Dashboard', root_path
+              %li#navitem= link_to 'Settings', settings_path
+              %li#navitem= link_to 'Constitution', constitution_path
               %li#navitem= link_to 'Members', members_path
 
         - if flash[:notice]
