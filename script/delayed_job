@@ -11,4 +11,5 @@ if RUBY_VERSION.to_f >= 1.9
   STDERR.puts "!!! delayed_job has only been successfully tested with Ruby 1.8.x !!!"
 end
 
+RAILS_ROOT = Rails.root
 Delayed::Command.new(ARGV).daemonize
