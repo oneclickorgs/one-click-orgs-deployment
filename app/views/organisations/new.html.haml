@@ -33,7 +33,7 @@
       - if !Setting[:single_organisation_mode]
         %p
           = f.label :subdomain, "Your One Click Orgs web address will be"
-        %p#help_subdomain.explanation (We’ll have a guess, but you can change this before you go to the next stage)
+        %p#help_subdomain.explanation (You can change this before you go to the next stage)
         %div#subdomain_wrapper
           = f.text_field(:subdomain, :placeholder => 'mygroup')
           %span#base_domain
@@ -42,6 +42,5 @@
         = f.label :objectives, "Your group’s objectives"
         = f.text_field :objectives, :placeholder => 'What will you be doing?'
   
-      %p
-        = submit_tag "Next stage: create", :id => 'submit'
-  
+      = submit_tag "Create →", :id => 'submit'
+      
