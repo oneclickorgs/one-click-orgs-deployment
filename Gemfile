@@ -35,6 +35,10 @@ gem "delayed_job", "2.1.3"
 #   gem 'webrat'
 # end
 
+group :development do
+  gem "capistrano", "~>2.5.19"
+end
+
 group :test do
   gem "rspec-rails", "~>2.0.1"
   gem "webrat", "~>0.7.1"

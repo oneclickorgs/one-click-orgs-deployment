@@ -2,49 +2,52 @@
 
 - if current_organisation.pending?
   %p
-    Only the founder can make changes on this page while the Association is pending.
+    Only
+    = co.convener.name
+    can make changes on this page while the Association is in a draft state.
+- else
+  %p Changing the settings on this page will create proposals that can be voted on by the community.
 
-%p Changing the settings on this page will create proposals that can be voted on by the community.
+= form_tag(:controller => 'proposals', :action => 'create_settings_proposals') do
 
-%h3 Organisation name
+  %h3 Name of the Association
+  = text_field_tag('organisation_name', @organisation_name, :disabled => !@allow_editing)
 
-= render :partial => 'shared/propose_change_org_name_form'
+  %h3 One Click Orgs web address
+  %p= @website
+  
+  %h3 Objectives
+  = text_area_tag('organisation_objectives', @objectives, :disabled => !@allow_editing)
 
-%h3 Objectives
+  %h3 Property
+  %p
+    = radio_button_tag('assets', '1', @assets, :disabled => !@allow_editing)
+    = label_tag('assets_1', "Association can have a bank account and own assets")
+  %p
+    = radio_button_tag('assets', '0', !@assets, :disabled => !@allow_editing)
+    = label_tag('assets_0', "Association cannot have a bank account and own assets")
+  
+  %h3 Making decisions
+  = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general'})
+  
+  %h3 Admitting and rejecting members
+  = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership'})
+  
 
-= render :partial => 'shared/propose_change_objectives_form'
+  %h3 Changing the constitution
+  = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution'})
 
-%h3 Assets
+  %h3 Voting period
+  - VotingPeriods.all do |vp|
+    %p
+      = radio_button_tag('voting_period', vp[:value], vp[:value] == @period, :disabled => !@allow_editing)
+      = label_tag("voting_period_#{vp[:value]}", vp[:name])
 
-= render :partial => 'shared/propose_hold_assets_form'
+  %p
+    - if @allow_editing
+      - if current_organisation.pending?
+        = submit_tag "Save changes", :id => 'submit'
+      - else
+        = submit_tag "Propose changes", :id => 'submit'
+      = link_to("Cancel", root_path)
 
-%h3 Making decisions
-
-= render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general', :description => 'Change the way decisions are made:'}
-
-%p
-  A decision is made if a proposal receives
-  = @general_voting_system.long_description
-
-%h3 Changing the constitution
-
-= render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution', :description => 'Change the way the constitution is changed:'}
-
-%p
-  The constitution may only be amended by a decision where
-  = @constitution_voting_system.long_description(:include_received => true)
-
-%h3 Admitting and rejecting members
-
-= render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership', :description => 'Change the way membership decisions are made:'}
-
-%p
-  New members may be appointed and exiting members ejected only by a decision where
-  = @membership_voting_system.long_description(:include_received => true)
-
-%h3 Voting period
-
-= render :partial => 'shared/propose_change_voting_period_form'
-
-%p
-  = @voting_period

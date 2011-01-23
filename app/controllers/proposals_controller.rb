@@ -5,6 +5,7 @@ class ProposalsController < ApplicationController
   before_filter :require_freeform_proposal_permission, :only => [:create]
   
   before_filter :require_constitutional_proposal_permission, :only => [
+    :create_settings_proposals,
     :create_text_amendment, :create_assets_amendment, :create_voting_period_amendment,
     :create_voting_system_amendment]
   
@@ -61,6 +62,124 @@ class ProposalsController < ApplicationController
       redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "The founding vote has now begun.")
     else
       redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+    end
+  end
+  
+  def create_settings_proposals
+    # TODO: DRY
+    
+    proposals = []
+    
+    # Organisation name
+    proposals.push(co.change_text_proposals.new(
+      :title => "Change organisation name to '#{params[:organisation_name]}'",
+      :proposer_member_id => current_user.id,
+      :parameters => {
+        'name' => 'organisation_name',
+        'value' => params[:organisation_name]
+      }
+    ))
+    
+    # Objectives
+    proposals.push(co.change_text_proposals.new(
+      :title => "Change organisation objectives to '#{params[:organisation_objectives]}'",
+      :proposer_member_id => current_user.id,
+      :parameters => {
+        'name' => 'organisation_objectives',
+        'value' => params[:organisation_objectives]
+      }
+    ))
+    
+    # Assets
+    if params[:assets] == '1'
+      title = "Change the constitution to allow holding, transferral and disposal of material assets and intangible assets"
+      new_assets_value = true
+    else
+      title = "Change the constitution to prohibit holding, transferral or disposal of material assets and intangible assets"
+      new_assets_value = false
+    end
+    
+    proposals.push(co.change_boolean_proposals.new(
+      :title => title,
+      :proposer_member_id => current_user.id,
+      :parameters => {
+        'name' => 'assets',
+        'value' => new_assets_value
+      }
+    ))
+    
+    # General voting system
+    proposed_system = VotingSystems.get(params[:general_voting_system])
+    current_system = co.constitution.voting_system :general
+    
+    if current_system != proposed_system
+      proposals.push(co.change_voting_system_proposals.new(
+        :title => "Change general voting system to #{proposed_system.description}",
+        :proposer_member_id => current_user.id,
+        :parameters => {'type'=>'general', 'proposed_system'=> proposed_system.simple_name}
+      ))
+    end
+    
+    # Membership voting system
+    proposed_system = VotingSystems.get(params[:membership_voting_system])
+    current_system = co.constitution.voting_system :membership
+    
+    if current_system != proposed_system
+      proposals.push(co.change_voting_system_proposals.new(
+        :title => "Change membership voting system to #{proposed_system.description}",
+        :proposer_member_id => current_user.id,
+        :parameters => {'type'=>'membership', 'proposed_system'=> proposed_system.simple_name}
+      ))
+    end
+    
+    # Constitution voting system
+    proposed_system = VotingSystems.get(params[:constitution_voting_system])
+    current_system = co.constitution.voting_system :constitution
+    
+    if current_system != proposed_system
+      proposals.push(co.change_voting_system_proposals.new(
+        :title => "Change constitution voting system to #{proposed_system.description}",
+        :proposer_member_id => current_user.id,
+        :parameters => {'type'=>'constitution', 'proposed_system'=> proposed_system.simple_name}
+      ))
+    end
+    
+    # Voting period
+    proposals.push(co.change_voting_period_proposals.new(
+      :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:voting_period])}",
+      :proposer_member_id => current_user.id,
+      :parameters => {'new_voting_period'=>params[:voting_period]}
+    ))
+    
+    # Save all proposals; consolidate resulting messages
+    accepted = 0
+    saved = 0
+    error_messages = []
+    proposals.each do |proposal|
+      if proposal.start
+        if proposal.accepted?
+          accepted += 1
+        else
+          saved += 1
+        end
+      else
+        error_messages.push(proposal.errors.full_messages.to_sentence)
+      end
+    end
+    
+    if error_messages.empty?
+      success_messages = []
+      success_messages.unshift("constitutional changes were made") if accepted > 0
+      success_messages.unshift("constitutional amendment proposals succesfully created") if saved > 0
+      if saved > 0
+        redirect_to(root_path, :notice => success_messages.to_sentence.capitalize)
+      else
+        redirect_to(constitution_path, :notice => success_messages.to_sentence.capitalize)
+      end
+    else
+      error_messages.unshift("constitutional changes were made") if accepted > 0
+      error_messages.unshift("constitutional amendment proposals succesfully created") if saved > 0
+      redirect_to(settings_path, :flash => {:error => error_messages.to_sentence.capitalize})
     end
   end
   
