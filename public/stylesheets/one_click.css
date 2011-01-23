@@ -238,8 +238,6 @@ body.setup #bd div.right {
     height: 3em;
     width: 90%; }
   body.setup #bd div.right input[type="submit"] {
-    background-color: #9e005d;
-    color: white;
     font-size: 1.1em;
     margin: 1em auto 0;
     padding: 0.8em 0;
@@ -350,12 +348,11 @@ input[type="button"] {
     background-color: #cccccc; }
 
 input[type="submit"] {
-  background-color: #c9dcc0;
   background-color: #9e005d;
   color: white;
   cursor: pointer; }
   input[type="submit"]:hover {
-    background-color: #a1c2a3; }
+    background-color: #5e0037; }
 
 input[type="radio"] {
   clear: both;

@@ -1,4 +1,5 @@
 $oco_burgundy: #9e005d
+$oco_burgundy_hover: #5e0037
 
 *
   :margin 0
@@ -253,8 +254,6 @@ body.setup
         :height 3em
         :width 90%
       input[type="submit"]
-        :background-color $oco_burgundy
-        :color #fff
         :font-size 1.1em
         :margin 1em auto 0
         :padding 0.8em 0
@@ -369,12 +368,11 @@ input[type="button"]
     :background-color #ccc
 
 input[type="submit"]
-  :background-color #c9dcc0
   :background-color $oco_burgundy
   :color #fff
   :cursor pointer
   &:hover
-    :background-color #a1c2a3
+    :background-color $oco_burgundy_hover
 
 input[type="radio"]
   :clear both
