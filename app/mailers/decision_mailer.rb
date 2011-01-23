@@ -11,6 +11,6 @@ class DecisionMailer < OcoMailer
 
     raise ArgumentError, "need decision" unless @decision and @member
     raise ArgumentError, "decision has no attached proposal" unless @proposal
-    mail(:to => @member.email, :subject => "new one click decision", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    mail(:to => @member.email, :subject => "Decision for proposal: #{@proposal.title}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
   end
 end
