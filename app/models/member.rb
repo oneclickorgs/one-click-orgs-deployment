@@ -12,6 +12,7 @@ class Member < ActiveRecord::Base
   scope :active, where("active = 1 AND inducted_at IS NOT NULL")
   scope :inactive, where("active <> 1")
   scope :pending, where("inducted_at IS NULL")
+  scope :founder, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   
   validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
   
@@ -109,14 +110,13 @@ class Member < ActiveRecord::Base
   end
 
   def send_welcome
-    MembersMailer.welcome_new_member(self).deliver
+    if self.organisation.pending? then
+      MembersMailer.welcome_new_founding_member(self).deliver
+    else
+      MembersMailer.welcome_new_member(self).deliver
+    end
   end
   
-  # only to be backwards compatible with systems running older versions of delayed job
-  def self.send_new_member_email(member_id, password)
-    Member.find(member_id).send_welcome_without_send_later
-  end
-    
   def eject!
     self.active = false
     save!
