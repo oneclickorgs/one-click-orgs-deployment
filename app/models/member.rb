@@ -20,6 +20,13 @@ class Member < ActiveRecord::Base
   
   attr_accessor :terms_and_conditions
   validates_acceptance_of :terms_and_conditions
+  
+  before_save :timestamp_terms_acceptance
+  def timestamp_terms_acceptance
+    if terms_and_conditions && terms_and_conditions != 0 && terms_and_conditions != '0'
+      self.terms_accepted_at ||= Time.now.utc
+    end
+  end
 
   def proposals_count
     proposals.count
