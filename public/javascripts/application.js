@@ -50,3 +50,14 @@ $(document).ready(function () {
     $('input#organisation_subdomain').val(text);
   });
 });
+var OneClickOrgs = {};
+
+OneClickOrgs.activateLightbox = function () {
+  $('#lightbox_screen').fadeIn();
+  $('#lightbox').css('top', 100).css('opacity', 0.0).fadeIn().animate({top: 50, opacity: 1.0}, {queue: false});
+  $.scrollTo('#lightbox', 'medium');
+}
+OneClickOrgs.dismissLightbox = function () {
+  $('#lightbox_screen').fadeOut();
+  $('#lightbox').css('top', 50).css('opacity', 1.0).animate({top: 100, opacity: 0.0}, {queue: false});
+}

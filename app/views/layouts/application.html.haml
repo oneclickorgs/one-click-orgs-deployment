@@ -7,7 +7,7 @@
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
-    = javascript_include_tag 'jquery', 'rails', 'application'
+    = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
     = csrf_meta_tag
   %body
     %div#container
@@ -87,3 +87,6 @@
           %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
           %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
       = get_satisfaction_widget
+    #lightbox_screen{:style => 'display: none;'}
+    #lightbox{:style => 'display: none;'}
+      = yield(:lightbox)
