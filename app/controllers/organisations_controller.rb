@@ -59,9 +59,9 @@ class OrganisationsController < ApplicationController
 
     # continue
     self.current_user = @founder # TODO: do we still need this?
-    
-    # send welcome email
-    MembersMailer.welcome_founder(@founder).deliver
+
+    MembersMailer.welcome_founder(@founder).deliver # send welcome email    
+    current_user.update_attribute(:last_logged_in_at, Time.now.utc) # update login datetime
 
     if Setting[:single_organisation_mode]
       redirect_to(:controller => 'one_click', :action => 'constitution')
