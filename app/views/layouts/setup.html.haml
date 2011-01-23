@@ -14,7 +14,7 @@
       %div#doc
         %div#hd
           %h1.header
-            = image_tag 'oco-logo-48.png'
+            = image_tag('oco-logo-48.png', :height => '48', :width => '48', :alt => 'One Click Orgs logo')
             One Click Orgs
         - if flash[:notice]
           %div#notice
@@ -29,7 +29,7 @@
           #lightbox{:style => 'display: none;'}
             = yield(:lightbox)
         %div.footer
-          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
+          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
           = "#{OneClickOrgs.version}."
           Licensed under the
           %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.

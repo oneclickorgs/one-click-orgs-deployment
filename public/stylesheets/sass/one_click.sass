@@ -1,4 +1,5 @@
 $oco_burgundy: #9e005d
+$oco_burgundy_hover: #5e0037
 
 *
   :margin 0
@@ -39,11 +40,11 @@ div.clear
   :margin -12px 0 12px
   a
     :background #333
-    :background rgba(0, 0, 0, 0.6)
+    :background rgba(0, 0, 0, 0.4)
     :-webkit-border-radius 2px
     :-moz-border-radius 2px
     :border-radius 2px
-    :border 1px solid #000
+    :border 1px solid #333
     :color #fff
     :margin 0 2px
     :padding 2px 6px
@@ -51,7 +52,7 @@ div.clear
     :text-shadow none
     &:hover
       :background #444
-      :background rgba(0, 0, 0, 0.8)
+      :background rgba(0, 0, 0, 0.7)
       :text-decoration none
   form
     input
@@ -249,14 +250,14 @@ body.setup
     div.right
       :float right
       :width 51%
+      textarea
+        :height 3em
+        :width 90%
       input[type="submit"]
-        :background-color $oco_burgundy
-        :color #fff
-        :float right
         :font-size 1.1em
-        :margin 2em 2em 0 0
+        :margin 1em auto 0
         :padding 0.8em 0
-        :width 12em
+        :width 16em
     #subdomain_wrapper
       :border 1px solid #000
       :margin 0 4px 10px 20px
@@ -367,16 +368,18 @@ input[type="button"], button
     :background-color #ccc
 
 input[type="submit"]
-  :background-color #c9dcc0
+  :background-color $oco_burgundy
+  :color #fff
   :cursor pointer
   &:hover
-    :background-color #a1c2a3
+    :background-color $oco_burgundy_hover
 
 input[type="radio"]
   :clear both
   :float left
   :margin-bottom 0.3em
-  :margin-right 0.6em 
+  :margin-right 0.6em
+  :margin-top 0.3em 
   :width auto
 
 input[type=hidden]
@@ -420,6 +423,14 @@ form.login
 
 form.login label, form.login input
   :margin-left 0
+
+/* Settings
+
+div#settings_fields
+  p
+    :margin 0.3em 0
+  label
+    :width 90%
 
 /* Members
 
@@ -478,6 +489,7 @@ div.field_with_errors input
   :border 1px solid red
 
 /* Lightbox
+
 #lightbox_screen
   :background-color black
   :opacity 0.7
@@ -489,12 +501,15 @@ div.field_with_errors input
   :z-index 10
 
 #lightbox
-  :border 2px solid black
-  :background-color white
+  :background #fff
+  :border 2px solid $oco_burgundy
+  :font-size 0.9em
+  :left 16%
+  :padding 1%
   :position absolute
-  :top 50px
-  :left 50%
-  :margin 0 0 0 -301px
-  :padding 1em
-  :width 600px
+  :width 66%
   :z-index 11
+  p
+    button
+      :float right
+      :margin 0 0.4em
