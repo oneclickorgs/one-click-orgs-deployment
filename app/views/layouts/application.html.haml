@@ -81,6 +81,10 @@
         %div#bd
           
           = yield
+          
+          #lightbox_screen{:style => 'display: none;'}
+          #lightbox{:style => 'display: none;'}
+            = yield(:lightbox)
         %div.footer
           = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
           = "#{OneClickOrgs.version}."
@@ -88,6 +92,3 @@
           %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
           %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
       = get_satisfaction_widget
-    #lightbox_screen{:style => 'display: none;'}
-    #lightbox{:style => 'display: none;'}
-      = yield(:lightbox)

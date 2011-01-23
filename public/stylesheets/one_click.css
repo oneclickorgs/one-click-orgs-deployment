@@ -162,9 +162,9 @@ a {
   margin-bottom: 12px; }
   #bd p.helper {
     font-size: 0.9em; }
-#bd ul {
+#bd ul, #bd ol {
   margin: 0 0 1em 2em; }
-  #bd ul li {
+  #bd ul li, #bd ol li {
     line-height: 1.6em; }
 #bd .section {
   background: #f5f5fe;
