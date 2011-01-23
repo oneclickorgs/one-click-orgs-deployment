@@ -40,7 +40,7 @@
             = '.' + Setting[:base_domain]
       %p
         = f.label :objectives, "Your group’s objectives"
-        = text_area_tag :objectives
+        %textarea{:name => 'organisation[objectives]', :id => 'objectives', :placeholder => 'What will you be doing?'}
   
       = submit_tag "Create draft constitution →", :id => 'submit'
       
