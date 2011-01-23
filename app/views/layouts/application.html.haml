@@ -20,7 +20,10 @@
               = link_to 'Founding Members', members_path
               and they are happy with the
               = link_to 'Draft Constitution', constitution_path
-              = co.members.first.name
+              - if current_user == co.members.first
+                = 'you'
+              - else
+                = co.members.first.name
               can call a Founding Vote to create the Association.
             - if current_user.has_permission(:found_organisation_proposal)
               = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
@@ -86,7 +89,7 @@
           #lightbox{:style => 'display: none;'}
             = yield(:lightbox)
         %div.footer
-          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
+          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
           = "#{OneClickOrgs.version}."
           Licensed under the
           %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.

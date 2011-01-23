@@ -12,6 +12,9 @@ class InvitationsController < ApplicationController
     unless @member
       raise NotFound
     end
+    
+    # Require acceptance of terms and conditions
+    @member.terms_and_conditions = '0'
   end
   
   def update
@@ -21,6 +24,7 @@ class InvitationsController < ApplicationController
     if @member.save
       @member.clear_invitation_code!
       self.current_user = @member
+      current_user.update_attribute(:last_logged_in_at, Time.now.utc)
       flash[:notice] = "Your new password has been saved."
       redirect_to(root_path)
     else
