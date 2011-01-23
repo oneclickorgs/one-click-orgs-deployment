@@ -36,12 +36,23 @@ $(document).ready(function () {
 
 var OneClickOrgs = {};
 
-OneClickOrgs.activateLightbox = function () {
+OneClickOrgs.activateLightbox = function (completionCallback) {
   $('#lightbox_screen').fadeIn();
-  $('#lightbox').css('top', 100).css('opacity', 0.0).fadeIn().animate({top: 50, opacity: 1.0}, {queue: false});
-  $.scrollTo('#lightbox', 'medium');
+  $('#lightbox').css('top', 100).animate(
+    {top: 50, opacity: 'show'},
+    {
+      queue: false,
+      complete: function () {
+        $.scrollTo('#lightbox', 'medium');
+        completionCallback.call();
+      }
+    }
+  );
 }
 OneClickOrgs.dismissLightbox = function () {
   $('#lightbox_screen').fadeOut();
-  $('#lightbox').css('top', 50).css('opacity', 1.0).animate({top: 100, opacity: 0.0}, {queue: false});
+  $('#lightbox').animate(
+    {top: 100, opacity: 'hide'},
+    {queue: false}
+  );
 }
