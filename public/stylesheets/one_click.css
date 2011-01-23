@@ -249,7 +249,7 @@ body.setup #bd #subdomain_wrapper {
   width: 90%; }
   body.setup #bd #subdomain_wrapper input {
     border: 0;
-    margin-top: 1px;
+    margin-top: 2px;
     padding: 0;
     width: 270px;
     width: 62%; }
@@ -477,8 +477,7 @@ div.field_with_errors input {
   background: white;
   border: 2px solid #9e005d;
   font-size: 0.9em;
-  left: 13%;
-  margin: 1em 0;
+  left: 16%;
   padding: 1%;
   position: absolute;
   width: 66%;

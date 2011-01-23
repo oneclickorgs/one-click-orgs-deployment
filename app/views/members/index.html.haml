@@ -20,7 +20,8 @@
           %td
             = member.email
           %td
-            = member.last_logged_in_at
+            - if member.last_logged_in_at
+              = member.last_logged_in_at.to_s(:short)
           - if current_organisation.proposed?
             %td
               - if !member.founding_vote.nil?
