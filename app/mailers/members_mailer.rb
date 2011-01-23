@@ -3,8 +3,9 @@ class MembersMailer < OcoMailer
     default_url_options[:host] = member.organisation.domain(:only_host => true)
 
     @member = member
+    @organisation = member.organisation
     @organisation_name = member.organisation.name
-    mail(:to => @member.email, :subject => "Successfully created #{@organisation_name}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    mail(:to => @member.email, :subject => "#{@organisation_name} on One Click Orgs", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
   end
   
   def welcome_new_member(member)
