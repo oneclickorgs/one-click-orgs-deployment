@@ -359,6 +359,7 @@ input[type="radio"] {
   float: left;
   margin-bottom: 0.3em;
   margin-right: 0.6em;
+  margin-top: 0.3em;
   width: auto; }
 
 input[type=hidden] {
@@ -402,6 +403,12 @@ form.login {
 
 form.login label, form.login input {
   margin-left: 0; }
+
+/* Settings */
+div#settings_fields p {
+  margin: 0.3em 0; }
+div#settings_fields label {
+  width: 90%; }
 
 /* Members */
 #member_info {

@@ -1,53 +1,54 @@
 %h2 Settings
 
-- if current_organisation.pending?
-  %p
-    Only
-    = co.convener.name
-    can make changes on this page while the Association is in a draft state.
-- else
-  %p Changing the settings on this page will create proposals that can be voted on by the community.
-
-= form_tag(:controller => 'proposals', :action => 'create_settings_proposals') do
-
-  %h3 Name of the Association
-  = text_field_tag('organisation_name', @organisation_name, :disabled => !@allow_editing)
-
-  %h3 One Click Orgs web address
-  %p= @website
-  
-  %h3 Objectives
-  = text_area_tag('organisation_objectives', @objectives, :disabled => !@allow_editing)
-
-  %h3 Property
-  %p
-    = radio_button_tag('assets', '1', @assets, :disabled => !@allow_editing)
-    = label_tag('assets_1', "Association can have a bank account and own assets")
-  %p
-    = radio_button_tag('assets', '0', !@assets, :disabled => !@allow_editing)
-    = label_tag('assets_0', "Association cannot have a bank account and own assets")
-  
-  %h3 Making decisions
-  = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general'})
-  
-  %h3 Admitting and rejecting members
-  = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership'})
-  
-
-  %h3 Changing the constitution
-  = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution'})
-
-  %h3 Voting period
-  - VotingPeriods.all do |vp|
+%div#settings_fields
+  - if current_organisation.pending?
     %p
-      = radio_button_tag('voting_period', vp[:value], vp[:value] == @period, :disabled => !@allow_editing)
-      = label_tag("voting_period_#{vp[:value]}", vp[:name])
+      Only
+      = co.convener.name
+      can make changes on this page while the Association is in a draft state.
+  - else
+    %p Changing the settings on this page will create proposals that can be voted on by the community.
 
-  %p
-    - if @allow_editing
-      - if current_organisation.pending?
-        = submit_tag "Save changes", :id => 'submit'
-      - else
-        = submit_tag "Propose changes", :id => 'submit'
-      = link_to("Cancel", root_path)
+  = form_tag(:controller => 'proposals', :action => 'create_settings_proposals') do
+
+    %h3 Name of the Association
+    = text_field_tag('organisation_name', @organisation_name, :disabled => !@allow_editing)
+
+    %h3 One Click Orgs web address
+    %p= @website
+  
+    %h3 Objectives
+    = text_area_tag('organisation_objectives', @objectives, :disabled => !@allow_editing)
+
+    %h3 Property
+    %p
+      = radio_button_tag('assets', '1', @assets, :disabled => !@allow_editing)
+      = label_tag('assets_1', "Association can have a bank account and own assets")
+    %p
+      = radio_button_tag('assets', '0', !@assets, :disabled => !@allow_editing)
+      = label_tag('assets_0', "Association cannot have a bank account and own assets")
+  
+    %h3 Making decisions
+    = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general'})
+  
+    %h3 Admitting and rejecting members
+    = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership'})
+  
+
+    %h3 Changing the constitution
+    = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution'})
+
+    %h3 Voting period
+    - VotingPeriods.all do |vp|
+      %p
+        = radio_button_tag('voting_period', vp[:value], vp[:value] == @period, :disabled => !@allow_editing)
+        = label_tag("voting_period_#{vp[:value]}", vp[:name])
+
+    %p
+      - if @allow_editing
+        - if current_organisation.pending?
+          = submit_tag "Save changes", :id => 'submit'
+        - else
+          = submit_tag "Propose changes", :id => 'submit'
+        = link_to("Cancel", root_path, :class => 'cancel')
 
