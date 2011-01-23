@@ -1,6 +1,14 @@
 # Remove any founding members that did not vote in favour,
 # and move organisation to 'active' state.
 class FoundOrganisationProposal < Proposal
+
+  def send_email
+    # This one goes to all members (who are founding members)
+    self.organisation.members.each do |m|
+      # only notify members who can vote
+      ProposalMailer.notify_foundation_proposal(m, self).deliver if m.has_permission(:vote)
+    end
+  end  
   
   def reject!(params)
     organisation.failed!

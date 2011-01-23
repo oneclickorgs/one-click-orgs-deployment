@@ -1,0 +1,15 @@
+
+<%=raw( @founder.name )%> has initiated a Founding Vote to create an Association with the draft constitution in its current form. 
+
+You now have 3 days to vote. If 3 or more people vote in support the constitution will be adopted and those people will become the Association’s first members. 
+
+<% if @member.last_logged_in_at.nil? %>
+Please select a password, then review the draft constitution and cast your vote at <%=raw( short_invitation_url(:id => @member.invitation_code) )%>
+<% else %>
+Review the draft constitution and cast your vote at <%=raw( @organisation.domain ) %>
+<% end %>
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs

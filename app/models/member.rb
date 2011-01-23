@@ -12,7 +12,7 @@ class Member < ActiveRecord::Base
   scope :active, where("active = 1 AND inducted_at IS NOT NULL")
   scope :inactive, where("active <> 1")
   scope :pending, where("inducted_at IS NULL")
-  scope :founder, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
+  scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   
   validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
   
