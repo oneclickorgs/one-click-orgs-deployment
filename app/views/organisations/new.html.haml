@@ -1,9 +1,12 @@
+- content_for(:head) do
+  = javascript_include_tag 'organisations_new'
+
 %h2 Set up a new Association
 
 %p
   Just enter your details with the name and objectives of your group, then One Click Orgs will automatically generate a draft constitution ready to form an Association.
 
-= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post") do
+= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post", :id => 'new_organisation') do
 
   %div.left
     %h3 Founder
@@ -23,6 +26,7 @@
       %p
         = f.label :password_confirmation, "Confirm your password"
         = f.password_field :password_confirmation
+      = f.hidden_field :terms_and_conditions
 
   %div.right
     %h3 Association
@@ -42,5 +46,8 @@
         = f.label :objectives, "Your group’s objectives"
         %textarea{:name => 'organisation[objectives]', :id => 'objectives', :placeholder => 'What will you be doing?'}
   
-      = submit_tag "Create draft constitution →", :id => 'submit'
-      
+      %p
+        = submit_tag "Create draft constitution →", :id => 'submit'
+  
+- content_for(:lightbox) do
+  = render(:partial => 'shared/convener_disclaimer')
