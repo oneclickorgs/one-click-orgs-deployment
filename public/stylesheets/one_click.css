@@ -335,16 +335,16 @@ input, textarea {
   border: 1px solid black;
   padding: 0.4em; }
 
-input[type="button"], input[type="submit"] {
+input[type="button"], input[type="submit"], button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
   padding: 0.3em 1.2em 0.2em 1.2em;
   width: auto; }
 
-input[type="button"] {
+input[type="button"], button {
   background-color: #eeeeee; }
-  input[type="button"]:hover {
+  input[type="button"]:hover, button:hover {
     background-color: #cccccc; }
 
 input[type="submit"] {
