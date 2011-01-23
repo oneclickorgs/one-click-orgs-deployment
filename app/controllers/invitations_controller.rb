@@ -12,6 +12,9 @@ class InvitationsController < ApplicationController
     unless @member
       raise NotFound
     end
+    
+    # Require acceptance of terms and conditions
+    @member.terms_and_conditions = '0'
   end
   
   def update
