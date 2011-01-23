@@ -41,7 +41,7 @@ end
 
 group :test do
   gem "rspec-rails", "~>2.0.1"
-  gem "webrat", "~>0.7.1"
+  gem "webrat", "=0.7.1"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.3.1'
   gem "rcov", "~>0.9.8"
