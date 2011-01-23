@@ -21,6 +21,7 @@ class InvitationsController < ApplicationController
     if @member.save
       @member.clear_invitation_code!
       self.current_user = @member
+      current_user.update_attribute(:last_logged_in_at, Time.now.utc)
       flash[:notice] = "Your new password has been saved."
       redirect_to(root_path)
     else
