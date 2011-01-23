@@ -17,6 +17,9 @@ class Member < ActiveRecord::Base
   
   validates_confirmation_of :password
   # validates_presence_of :password_confirmation, :if => :password_required?
+  
+  attr_accessor :terms_and_conditions
+  validates_acceptance_of :terms_and_conditions
 
   def proposals_count
     proposals.count
