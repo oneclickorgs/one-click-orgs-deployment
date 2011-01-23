@@ -13,7 +13,6 @@ class FoundOrganisationProposal < Proposal
   def reject!(params)
     organisation.failed!
     organisation.save
-    # TODO email all founding members: failed to agree to found org
   end
   
   def enact!(params)
@@ -21,7 +20,7 @@ class FoundOrganisationProposal < Proposal
     # members who abstained.)
     confirmed_member_ids = []
     Vote.all.each do |v|
-      confirmed_member_ids << v.member_id unless v.for == false
+      confirmed_member_ids << v.member_id unless v.for? == false
     end
     
     organisation.members.each do |member|
@@ -29,21 +28,13 @@ class FoundOrganisationProposal < Proposal
         member.member_class = organisation.member_classes.find_by_name('Member')
         member.save!
       else
-        member.destroy 
+        #member.destroy
+        member.eject! # So we can still send a goodbye message
       end
     end
     
     organisation.active!
     organisation.save
-    
-    # send out emails to announce org creation to all remaining members
-    # TODO send separate email to members who voted "no"
-    organisation.members.each do |m|
-      # TODO replace this with a tailored email message about the successful foundation
-      # of the org
-      Rails.logger.info("sending welcome message to #{m}")
-      m.send_welcome
-    end
   end
   
   def voting_system
