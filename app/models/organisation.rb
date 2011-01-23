@@ -80,6 +80,10 @@ class Organisation < ActiveRecord::Base
     members.count > 0
   end
   
+  def convener
+    members.first
+  end
+  
   def under_construction?
     clauses.get_text('organisation_state').nil?
   end

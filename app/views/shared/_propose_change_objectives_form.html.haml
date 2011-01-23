@@ -1,9 +1,0 @@
-- if current_user.has_permission(:constitution_proposal) and !current_organisation.proposed?
-  = form_tag(:controller => 'proposals', :action => 'create_text_amendment') do
-    %p
-      %label{:for => 'value'}
-        Change the organisation's objectives to
-    %textarea{:name => 'value'}= @objectives
-    %input{:type => 'hidden', :name => 'name', :value => 'organisation_objectives'}
-    %p
-      = submit_tag "Propose change", :id => 'submit'

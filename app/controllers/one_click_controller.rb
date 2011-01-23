@@ -34,6 +34,9 @@ class OneClickController < ApplicationController
   def settings
     @page_title = "Settings"
     prepare_constitution_view
+    
+    @allow_editing = current_user.has_permission(:constitution_proposal) &&
+      !current_organisation.proposed?
   end
   
 end
