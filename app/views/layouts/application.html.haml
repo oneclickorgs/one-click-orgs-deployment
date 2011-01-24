@@ -88,10 +88,11 @@
           #lightbox_screen{:style => 'display: none;'}
           #lightbox{:style => 'display: none;'}
             - if @notification
+              - current_user.has_seen_notification!(@notification)
               .notification
                 = render(:partial => "shared/notifications/#{@notification}")
                 %p
-                  %button#close_notification Close
+                  %button#close_notification{'data-notification' => @notification} Close
             - else
               = yield(:lightbox)
         %div.footer

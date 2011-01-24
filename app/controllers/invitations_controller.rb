@@ -2,6 +2,7 @@ require 'lib/not_found'
 
 class InvitationsController < ApplicationController
   skip_before_filter :ensure_authenticated
+  skip_before_filter :prepare_notifications
   
   before_filter :set_up_organisation_name
   
