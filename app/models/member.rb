@@ -205,4 +205,18 @@ class Member < ActiveRecord::Base
     # The first vote of a founder will always be the founding vote
     self.votes.first
   end
+  
+  # NOTIFICATIONS
+  
+  has_many :seen_notifications
+  
+  def has_seen_notification?(notification)
+    seen_notifications.exists?(:notification => notification)
+  end
+  
+  def has_seen_notification!(notification)
+    unless has_seen_notification?(notification)
+      seen_notifications.create(:notification => notification)
+    end
+  end
 end

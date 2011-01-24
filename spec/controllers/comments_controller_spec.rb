@@ -10,7 +10,7 @@ describe CommentsController do
       controller.stub(:ensure_organisation_active).and_return(true)
       controller.stub(:ensure_member_inducted).and_return(true)
       
-      @organisation = mock_model(Organisation)
+      @organisation = mock_model(Organisation, :pending? => false)
       controller.stub!(:co).and_return(@organisation)
       
       @proposals_association = mock("proposals association")
