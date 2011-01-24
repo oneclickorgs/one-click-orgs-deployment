@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110123193457) do
+ActiveRecord::Schema.define(:version => 20110123231211) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -88,6 +88,15 @@ ActiveRecord::Schema.define(:version => 20110123193457) do
     t.integer  "proposer_member_id"
     t.integer  "organisation_id"
   end
+
+  create_table "seen_notifications", :force => true do |t|
+    t.integer  "member_id"
+    t.string   "notification"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "seen_notifications", ["member_id", "notification"], :name => "index_seen_notifications_on_member_id_and_notification"
 
   create_table "settings", :force => true do |t|
     t.string   "key"

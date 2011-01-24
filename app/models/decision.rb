@@ -10,8 +10,16 @@ class Decision < ActiveRecord::Base
   end 
   
   def send_email
-    self.organisation.members.active.each do |m|
-      DecisionMailer.notify_new_decision(m, self).deliver
+    if proposal.voting_system==VotingSystems.get('Founding') then
+      # Decision on the Founding Proposal.
+      # At this point the proposal has already been enacted.
+      self.organisation.members.active.each do |m|
+        DecisionMailer.notify_foundation_decision(m, self).deliver
+      end
+    else
+      self.organisation.members.active.each do |m|
+        DecisionMailer.notify_new_decision(m, self).deliver
+      end
     end
   end
   

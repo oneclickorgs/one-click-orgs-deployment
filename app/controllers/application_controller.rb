@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_member_active
   #before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
+  before_filter :prepare_notifications
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
@@ -74,6 +75,41 @@ class ApplicationController < ActionController::Base
     @general_voting_system = co.constitution.voting_system(:general)
     @membership_voting_system = co.constitution.voting_system(:membership)
     @constitution_voting_system = co.constitution.voting_system(:constitution)
+  end
+  
+  # Notifications
+  
+  def prepare_notifications
+    return unless current_user
+    
+    # If you have a notification you want to show the user, put the
+    # logic in here, and the template in shared/notifications.
+    # 
+    # Call show_notification_once if you only want the user to
+    # see your notification once ever (e.g. a 'welcome to the
+    # system' notification).
+    # 
+    # Call show_notification if it doesn't matter whether the user
+    # has seen this notification before (e.g. a 'you have a new
+    # message' notification).
+    
+    if co.pending? && current_user.member_class.name == "Founder"
+      show_notification_once(:convener_welcome)
+    end
+    
+    if co.pending? && current_user.member_class.name == "Founding Member"
+      show_notification_once(:founding_member_welcome)
+    end
+  end
+  
+  def show_notification_once(notification)
+    return unless current_user
+    return if current_user.has_seen_notification?(notification)
+    show_notification(notification)
+  end
+  
+  def show_notification(notification)
+    @notification = notification
   end
   
   protected

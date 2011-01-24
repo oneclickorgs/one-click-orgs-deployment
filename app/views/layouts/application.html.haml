@@ -87,7 +87,14 @@
           
           #lightbox_screen{:style => 'display: none;'}
           #lightbox{:style => 'display: none;'}
-            = yield(:lightbox)
+            - if @notification
+              - current_user.has_seen_notification!(@notification)
+              .notification
+                = render(:partial => "shared/notifications/#{@notification}")
+                %p
+                  %button#close_notification{'data-notification' => @notification} Close
+            - else
+              = yield(:lightbox)
         %div.footer
           = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
           = "#{OneClickOrgs.version}."

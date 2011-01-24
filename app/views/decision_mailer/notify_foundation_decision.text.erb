@@ -1,0 +1,26 @@
+
+In the vote to form <%=raw( @organisation_name )%> as an Association held between <%=raw( @proposal.creation_date.strftime('%H:%M:%S') )%> on <%=raw( @proposal.creation_date.strftime('%Y-%m-%d') )%> and <%=raw( @proposal.close_date.strftime('%H:%M:%S') )%> on <%=raw( @proposal.close_date.strftime('%Y-%m-%d') )%> <%=raw( @proposal.votes_for )%> people voted for and <%=raw( @proposal.votes_against )%> people voted against formation. 
+
+<% if @proposal.passed? %>
+The Association has therefore been formed with the following members: 
+<% @members.each do |m| %>
+<%=raw( @m.name )%>
+<% end %>
+
+<% if @member_vote and @member_vote.for? %>
+You can now log in and manage your organisation at <%=raw( @organisation.domain ) %>
+<% end %>
+<% else %>
+Therefore the Association was not formed. 
+
+<% if @member.invitation_code %>
+Select a password, then you can modify the constitution, invite new Founding Members and hold another Founding Vote at <%=raw( short_invitation_url(:id => @member.invitation_code) )%>
+<% else %>
+You can modify the constitution, invite new Founding Members and hold another Founding Vote at <%=raw( @organisation.domain ) %>
+<% end %>
+<% end %>
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs

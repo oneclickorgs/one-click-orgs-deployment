@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   skip_before_filter :ensure_member_inducted
+  skip_before_filter :prepare_notifications
 
   def index
     @organisation_name = co.name
