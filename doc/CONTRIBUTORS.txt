@@ -1,8 +1,9 @@
 Chris Mear <chris@feedmechocolate.com>
 Jan Berkel <jan.berkel@gmail.com>
 Martin Dittus <martin@dekstop.de>
+Alex Muller <alexlmuller@gmail.com>
 Emma Persky <emma.persky@gmail.com>
 Ben Summers <ben@fluffy.co.uk>
-Muz <mustaqila@yahoo.co.uk>
 James Darling <james@abscond.org>
-Alex Muller <alexlmuller@googlemail.com>
+Dave Menninger <dave@domU-12-31-39-03-40-86.compute-1.internal>
+Muz <mustaqila@yahoo.co.uk>
