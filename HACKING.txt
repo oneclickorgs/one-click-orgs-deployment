@@ -97,7 +97,7 @@ a. Put your changes in a branch with an appropriate name, and push it to your Gi
 
 b. Open or reply to an issue in the issue tracker, and tell us where to find your commits:
 
-http://github.com/emmapersky/one-click-orgs/issues
+http://github.com/oneclickorgs/one-click-orgs/issues
 
 c. Send a patch to the mailing list:
 
