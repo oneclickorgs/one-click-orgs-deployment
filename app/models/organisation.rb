@@ -170,7 +170,7 @@ class Organisation < ActiveRecord::Base
 
   def set_default_voting_systems
     constitution.set_voting_system(:general, 'RelativeMajority')
-    constitution.set_voting_system(:membership, 'AbsoluteTwoThirdsMajority')
+    constitution.set_voting_system(:membership, 'Veto')
     constitution.set_voting_system(:constitution, 'AbsoluteTwoThirdsMajority')
     constitution.set_voting_period(259200)
   end

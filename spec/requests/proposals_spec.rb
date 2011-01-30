@@ -82,7 +82,7 @@ describe "Proposals" do
     end
     
     def post_create_settings_proposals
-      post '/proposals/create_settings_proposals', {"organisation_objectives"=>"New objectives", "constitution_voting_system"=>"Unanimous", "assets"=>"1", "voting_period"=>"1209600", "organisation_name"=>"New name", "general_voting_system"=>"AbsoluteMajority", "membership_voting_system"=>"Veto"}
+      post '/proposals/create_settings_proposals', {"organisation_objectives"=>"New objectives", "constitution_voting_system"=>"Unanimous", "assets"=>"1", "voting_period"=>"1209600", "organisation_name"=>"New name", "general_voting_system"=>"AbsoluteMajority", "membership_voting_system"=>"AbsoluteTwoThirdsMajority"}
     end
     
     it "should create a proposal to change the organisation name" do
@@ -134,10 +134,10 @@ describe "Proposals" do
       ChangeVotingSystemProposal.should_receive(:new).with(
         :parameters => {
           'type' => 'membership',
-          'proposed_system' => 'Veto'
+          'proposed_system' => 'AbsoluteTwoThirdsMajority'
         },
         :proposer_member_id => @user.id,
-        :title => "Change membership voting system to Nobody opposes: decisions blocked if there are any opposing votes"
+        :title => "Change membership voting system to Two thirds majority: decisions need supporting votes from more than 66% of members"
       ).and_return(@proposal)
       @proposal.should_receive(:start).and_return(true)
       @proposal.should_receive(:accepted?).and_return(false)

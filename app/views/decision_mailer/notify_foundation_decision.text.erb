@@ -8,15 +8,18 @@ The Association has therefore been formed with the following members:
 <% end %>
 
 <% if @member_vote and @member_vote.for? %>
-You can now log in and manage your organisation at <%=raw( @organisation.domain ) %>
+Click the link to confirm your membership of the new Association and access your Association's voting and record-keeping facilities on One Click Orgs:
+
+<%=raw( @organisation.domain ) %>
+
 <% end %>
 <% else %>
-Therefore the Association was not formed. 
+A minimum of three supporting votes is required to form an Association. You could consider modifying the Draft Constitution or inviting additional Founding Members. When everyone's ready you can try another Founding Vote.
 
 <% if @member.invitation_code %>
-Select a password, then you can modify the constitution, invite new Founding Members and hold another Founding Vote at <%=raw( short_invitation_url(:id => @member.invitation_code) )%>
+<%=raw( short_invitation_url(:id => @member.invitation_code) )%>
 <% else %>
-You can modify the constitution, invite new Founding Members and hold another Founding Vote at <%=raw( @organisation.domain ) %>
+<%=raw( @organisation.domain ) %>
 <% end %>
 <% end %>
 
