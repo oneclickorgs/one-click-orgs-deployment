@@ -1,38 +1,39 @@
 - content_for(:head) do
   = javascript_include_tag 'organisations_new'
 
-%h2 Set up a new Association
+%h2 Create an Association
 
 %p
-  Just enter your details with the name and objectives of your group, then One Click Orgs will automatically generate a draft constitution ready to form an Association.
+  Provide details for yourself and your group then One Click Orgs will automatically create a draft constitution. You can tailor this with other members of your group then hold a vote to found the Association. For more information see
+  = link_to('the FAQ.', 'http://www.oneclickorgs.com/faq', :target => '_blank')
 
 = form_tag({:controller => 'organisations', :action => 'create'}, :method => "post", :id => 'new_organisation') do
 
   %div.left
-    %h3 Founder
+    %h3 Your details
     = fields_for(:founder, @founder) do |f|
       %p
-        = f.label :first_name, "Your first name"
+        = f.label :first_name, "First name"
         = f.text_field :first_name, :placeholder => 'Robert'
       %p
-        = f.label :last_name, "Your last name"
+        = f.label :last_name, "Last name"
         = f.text_field :last_name, :placeholder => 'Smith'
       %p
-        = f.label :email, "Your email address"
+        = f.label :email, "Email address"
         = f.text_field :email, :type => 'email', :placeholder => 'robert@example.com'
       %p
-        = f.label :password, "Choose a password"
+        = f.label :password, "Choose password"
         = f.password_field :password
       %p
-        = f.label :password_confirmation, "Confirm your password"
+        = f.label :password_confirmation, "Confirm password"
         = f.password_field :password_confirmation
       = f.hidden_field :terms_and_conditions
 
   %div.right
-    %h3 Association
+    %h3 Your group’s details
     = fields_for(:organisation, @organisation) do |f|
       %p
-        = f.label :name, "Your group’s name"
+        = f.label :name, "Name for the Association"
         = f.text_field :name
       - if !Setting[:single_organisation_mode]
         %p
@@ -43,7 +44,7 @@
           %span#base_domain
             = '.' + Setting[:base_domain]
       %p
-        = f.label :objectives, "Your group’s objectives"
+        = f.label :objectives, "Group objectives"
         %textarea{:name => 'organisation[objectives]', :id => 'objectives', :placeholder => 'What will you be doing?'}
   
       %p
