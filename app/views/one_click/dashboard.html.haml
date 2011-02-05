@@ -1,4 +1,4 @@
-%h2 Voting and Proposals
+%h2.purple Voting and Proposals
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
@@ -32,9 +32,9 @@
 
 - if current_organisation.active?
   .section
-    %input{:type => 'button', :value => 'Make a proposal', :id => 'button-proposal', :class => 'button-form-show'}  
-    %input{:type => 'button', :value => 'Invite a new member', :id => 'button-member-invite', :class => 'button-form-show'}
-    %input{:type => 'button', :value => 'Change the constitution', :id => 'button-constitution-change', :class => 'button-form-show'}
+    %input{:type => 'button', :value => 'Propose a vote', :id => 'button-proposal', :class => 'button-form-show'}  
+    %input{:type => 'button', :value => 'Propose a new member', :id => 'button-member-invite', :class => 'button-form-show'}
+    %input{:type => 'button', :value => 'Propose an amendment to the constitution', :id => 'button-constitution-change', :class => 'button-form-show'}
     %br.clear
 
     %div#propose_freeform_form.form-to-hide
