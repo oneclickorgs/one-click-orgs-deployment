@@ -180,5 +180,8 @@ class Proposal < ActiveRecord::Base
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => (closed? && !accepted?) ? :failed_proposal : :proposal }
   end
-  
+
+  def duration
+    creation_date && end_date && (end_date - creation_date)
+  end  
 end

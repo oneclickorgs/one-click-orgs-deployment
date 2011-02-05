@@ -100,6 +100,15 @@ class ApplicationController < ActionController::Base
     if co.pending? && current_user.member_class.name == "Founding Member"
       show_notification_once(:founding_member_welcome)
     end
+
+    fop = co.found_organisation_proposals.last
+    if co.pending? && fop && fop.closed? && !fop.accepted?
+      show_notification_once(:founding_proposal_failed)
+    end
+
+    if co.active?
+      show_notification_once(:founding_proposal_passed)
+    end
   end
   
   def show_notification_once(notification)

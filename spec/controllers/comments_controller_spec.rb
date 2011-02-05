@@ -3,6 +3,8 @@ require 'spec_helper'
 describe CommentsController do
   describe "POST create" do
     before(:each) do
+      controller.class.skip_before_filter :prepare_notifications # This filter introduses method call noise that we can ignore for this spec. 
+
       controller.stub(:ensure_set_up).and_return(true)
       controller.stub(:ensure_organisation_exists).and_return(true)
       controller.stub(:ensure_authenticated).and_return(true)

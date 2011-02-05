@@ -57,7 +57,6 @@ class ProposalsController < ApplicationController
       current_user.save!
       
       co.proposed!
-      co.save
       
       redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "The founding vote has now begun.")
     else
