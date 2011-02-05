@@ -11,8 +11,8 @@ class FoundOrganisationProposal < Proposal
   end  
   
   def reject!(params)
-    organisation.failed!
-    organisation.save
+    organisation.pending! # Switching back to 'pending' org state.
+    # The existence of a failed 'Found Organisation' proposal is the only record we keep of this.
   end
   
   def enact!(params)

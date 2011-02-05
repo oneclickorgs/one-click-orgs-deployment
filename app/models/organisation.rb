@@ -109,14 +109,6 @@ class Organisation < ActiveRecord::Base
     clauses.set_text!('organisation_state', 'proposed')
   end
     
-  def failed?
-    clauses.get_text('organisation_state') == 'failed'
-  end
-    
-  def failed!
-    clauses.set_text!('organisation_state', 'failed')
-  end
-    
   def active?
     clauses.get_text('organisation_state') == 'active'
   end
