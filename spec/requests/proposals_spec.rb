@@ -5,7 +5,7 @@ module ProposalsSpecHelper
     Proposal.destroy_all
     user = login
     
-    set_permission(user, :freeform_proposal, true)
+    set_permission!(user, :freeform_proposal, true)
     post(proposals_path, {:proposal => {:id => nil, :proposer_member_id => user.id, :title => 'proposal'}})
     @proposal = Proposal.first or raise "can't create a proposal"
   end
@@ -23,11 +23,11 @@ describe "Proposals" do
   
   describe "/proposals/1, given a proposal exists" do
     before(:each) do
-      set_permission(@user, :vote, true)
+      set_permission!(@user, :vote, true)
       @member_two = @organisation.members.make(:member_class => @default_member_class)
-      set_permission(@member_two, :vote, true)
+      set_permission!(@member_two, :vote, true)
       @member_three = @organisation.members.make(:member_class => @default_member_class)
-      set_permission(@member_two, :vote, true)
+      set_permission!(@member_two, :vote, true)
       
       a_proposal_exists
     end
@@ -72,7 +72,7 @@ describe "Proposals" do
   describe "creating settings proposals in bulk" do
     before(:each) do
       @user = login
-      set_permission(@user, :constitution_proposal, true)
+      set_permission!(@user, :constitution_proposal, true)
       @proposal = mock('proposal', :save => true, :start => true, :accepted? => false)
       
       ChangeTextProposal.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
@@ -193,7 +193,7 @@ describe "Proposals" do
   describe "proposing text amendments" do
     before(:each) do
       @user = login
-      set_permission(@user, :constitution_proposal, true)
+      set_permission!(@user, :constitution_proposal, true)
       @proposal = mock('proposal', :save => true)
     end
     
@@ -252,7 +252,7 @@ describe "Proposals" do
   describe "proposing text amendments without having permission" do
     before(:each) do
       @user = login
-      set_permission(@user, :constitution_proposal, false)
+      set_permission!(@user, :constitution_proposal, false)
     end
     
     it "should fail" do      
@@ -265,7 +265,7 @@ describe "Proposals" do
   describe "proposing voting system amendments" do
     before do
       login
-      set_permission(@user, :constitution_proposal, true)
+      set_permission!(@user, :constitution_proposal, true)
       @general_voting_system = @organisation.clauses.set_text!('general_voting_system', 'RelativeMajority')
       @membership_voting_system = @organisation.clauses.set_text!('membership_voting_system', 'RelativeMajority')
       @constitution_voting_system = @organisation.clauses.set_text!('constitution_voting_system', 'RelativeMajority')
@@ -336,7 +336,7 @@ describe "Proposals" do
   describe "proposing voting system amendments without having permission" do
     before(:each) do
       @user = login
-      set_permission(@user, :constitution_proposal, false)
+      set_permission!(@user, :constitution_proposal, false)
     end
     
     it "should fail" do      

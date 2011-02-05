@@ -4,7 +4,7 @@ describe "everything" do
   before(:each) do 
     @user = login
     @proposal = @organisation.proposals.make
-    set_permission(@user, :vote, true)
+    set_permission!(@user, :vote, true)
   end
       
   describe "vote casting" do
@@ -23,7 +23,7 @@ describe "everything" do
   
   describe "vote casting without having permission" do
     before(:each) do 
-      set_permission(@user, :vote, false)
+      set_permission!(@user, :vote, false)
     end
 
     it "should fail to cast a vote" do

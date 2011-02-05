@@ -42,7 +42,7 @@ describe Proposal do
   
   it "should send out an email to each member after a Proposal has been made" do
     @organisation.members.count.should > 0
-    @member.member_class.set_permission(:vote, true)
+    @member.member_class.set_permission!(:vote, true)
     
     ProposalMailer.should_receive(:notify_creation).and_return(mock('email', :deliver => nil))
     @organisation.proposals.make(:proposer => @member)

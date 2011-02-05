@@ -8,7 +8,7 @@ class MemberClass < ActiveRecord::Base
     organisation.clauses.get_boolean(get_permission_name(type)) || false
   end
   
-  def set_permission(type, value)
+  def set_permission!(type, value)
     organisation.clauses.set_boolean!(get_permission_name(type), value)
   end
 

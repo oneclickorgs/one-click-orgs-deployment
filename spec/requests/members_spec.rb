@@ -5,7 +5,7 @@ describe "everything" do
     stub_constitution!
     stub_organisation!
     login
-    set_permission(default_user, :membership_proposal, true)
+    set_permission!(default_user, :membership_proposal, true)
   end
   
   describe "/members" do
@@ -102,7 +102,7 @@ describe "everything" do
   describe "/members/1, given a member exists" do
     before(:each) do
       @member = @organisation.members.make
-      set_permission(@user, :membership_proposal, true)
+      set_permission!(@user, :membership_proposal, true)
     end
     
     describe "GET" do
