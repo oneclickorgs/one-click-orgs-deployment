@@ -66,13 +66,12 @@
               %li#navitem= link_to 'Members', members_path
           - elsif current_organisation.proposed?
             %ul#nav
-              %li#navitem= link_to 'Dashboard', root_path
+              %li#navitem= link_to 'Voting & proposals', root_path
               %li#navitem= link_to 'Constitution', constitution_path
               %li#navitem= link_to 'Members', members_path
           - else
             %ul#nav
-              %li#navitem= link_to 'Dashboard', root_path
-              %li#navitem= link_to 'Settings', settings_path
+              %li#navitem= link_to 'Voting & proposals', root_path
               %li#navitem= link_to 'Constitution', constitution_path
               %li#navitem= link_to 'Members', members_path
 
