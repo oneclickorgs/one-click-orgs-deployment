@@ -40,6 +40,10 @@ class FoundOrganisationProposal < Proposal
   def voting_system
     VotingSystems.get('Founding')
   end
+
+  def voting_period
+    60 * 60 * 24 * 3 # Founding vote period is fixed at three days.
+  end
   
   def member_count
     organisation.members.count
