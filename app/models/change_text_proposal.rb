@@ -8,7 +8,7 @@ class ChangeTextProposal < Proposal
   end
 
   def enact!(params)
-    organisation.clauses.set_text(params['name'], params['value'])
+    organisation.clauses.set_text!(params['name'], params['value'])
   end
   
   def voting_system

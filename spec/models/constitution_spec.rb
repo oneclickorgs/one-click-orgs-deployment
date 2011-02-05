@@ -8,7 +8,7 @@ describe Constitution do
   describe 'voting systems' do
     before do
       #avoid using the db in specs?
-      @organisation.clauses.set_text('general_voting_system', 'RelativeMajority')        
+      @organisation.clauses.set_text!('general_voting_system', 'RelativeMajority')        
     end
   
     describe "getting voting systems" do
@@ -38,7 +38,7 @@ describe Constitution do
   
   describe "voting period" do
     before(:each) do
-      @organisation.clauses.set_integer('voting_period', 1000)
+      @organisation.clauses.set_integer!('voting_period', 1000)
     end
     
     it "should get the current voting period" do

@@ -98,8 +98,7 @@ class Organisation < ActiveRecord::Base
   end
     
   def pending!
-    #clauses.set_text('organisation_state', 'pending')
-    clauses.build(:name => 'organisation_state', :text_value => 'pending')
+    clauses.set_text!('organisation_state', 'pending')
   end
     
   def proposed?
@@ -107,8 +106,7 @@ class Organisation < ActiveRecord::Base
   end
     
   def proposed!
-    #clauses.set_text('organisation_state', 'proposed')
-    clauses.build(:name => 'organisation_state', :text_value => 'proposed')
+    clauses.set_text!('organisation_state', 'proposed')
   end
     
   def failed?
@@ -116,8 +114,7 @@ class Organisation < ActiveRecord::Base
   end
     
   def failed!
-    #clauses.set_text('organisation_state', 'failed')
-    clauses.build(:name => 'organisation_state', :text_value => 'failed')
+    clauses.set_text!('organisation_state', 'failed')
   end
     
   def active?
@@ -125,8 +122,7 @@ class Organisation < ActiveRecord::Base
   end
   
   def active!
-    #clauses.get_text('organisation_state', 'active')
-    clauses.build(:name => 'organisation_state', :text_value => 'active')
+    clauses.set_text!('organisation_state', 'active')
 
     # Delete Founder and Founding Member member classes
     member_classes.find_by_name('Founder').destroy

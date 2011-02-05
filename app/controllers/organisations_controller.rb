@@ -39,7 +39,6 @@ class OrganisationsController < ApplicationController
     # validation succeeded -> store
     if errors.size == 0
       @organisation.members << @founder
-      @organisation.pending!
       if !@organisation.save
         errors << "Cannot create your organisation: #{@organisation.errors.full_messages.to_sentence}."
       end
@@ -48,6 +47,7 @@ class OrganisationsController < ApplicationController
       if !@founder.save
         errors << "Cannot create your account: #{@founder.errors.full_messages.to_sentence}."
       end
+      @organisation.pending!
     end
     
     # display errors

@@ -3,12 +3,12 @@ require 'spec_helper'
 describe ChangeTextProposal do
   before(:each) do
     stub_organisation!
-    @objectives = @organisation.clauses.set_integer('voting_period', 30*60)
-    @objectives = @organisation.clauses.set_text('objectives', 'eat all the cheese')
+    @objectives = @organisation.clauses.set_integer!('voting_period', 30*60)
+    @objectives = @organisation.clauses.set_text!('objectives', 'eat all the cheese')
   end
   
   it "should use the constitution voting system" do
-    @organisation.clauses.set_text('constitution_voting_system', 'Veto')
+    @organisation.clauses.set_text!('constitution_voting_system', 'Veto')
     @organisation.change_text_proposals.new.voting_system.should == VotingSystems::Veto
   end
   

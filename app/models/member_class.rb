@@ -9,7 +9,7 @@ class MemberClass < ActiveRecord::Base
   end
   
   def set_permission(type, value)
-    organisation.clauses.set_boolean(get_permission_name(type), value)
+    organisation.clauses.set_boolean!(get_permission_name(type), value)
   end
 
   def destroy

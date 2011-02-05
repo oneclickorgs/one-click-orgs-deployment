@@ -266,9 +266,9 @@ describe "Proposals" do
     before do
       login
       set_permission(@user, :constitution_proposal, true)
-      @general_voting_system = @organisation.clauses.set_text('general_voting_system', 'RelativeMajority')
-      @membership_voting_system = @organisation.clauses.set_text('membership_voting_system', 'RelativeMajority')
-      @constitution_voting_system = @organisation.clauses.set_text('constitution_voting_system', 'RelativeMajority')
+      @general_voting_system = @organisation.clauses.set_text!('general_voting_system', 'RelativeMajority')
+      @membership_voting_system = @organisation.clauses.set_text!('membership_voting_system', 'RelativeMajority')
+      @constitution_voting_system = @organisation.clauses.set_text!('constitution_voting_system', 'RelativeMajority')
     end
     
     describe "for general decisions" do

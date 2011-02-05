@@ -27,14 +27,14 @@ end
 
 def stub_constitution!
   stub_organisation!
-  @organisation.clauses.set_integer(:voting_period, 3 * 86400)
+  @organisation.clauses.set_integer!(:voting_period, 3 * 86400)
 end
 
 def stub_voting_systems!
   stub_constitution!
-  @organisation.clauses.set_text(:general_voting_system, 'RelativeMajority')
-  @organisation.clauses.set_text(:constitution_voting_system, 'RelativeMajority')
-  @organisation.clauses.set_text(:membership_voting_system, 'RelativeMajority')
+  @organisation.clauses.set_text!(:general_voting_system, 'RelativeMajority')
+  @organisation.clauses.set_text!(:constitution_voting_system, 'RelativeMajority')
+  @organisation.clauses.set_text!(:membership_voting_system, 'RelativeMajority')
 end
 
 def stub_organisation!(active=true, name='test', stub_host_lookup=true, new_organisation=false)
@@ -43,9 +43,9 @@ def stub_organisation!(active=true, name='test', stub_host_lookup=true, new_orga
     @organisation = Organisation.make(:subdomain => name, :name => name, :objectives => 'our objectives')
     
     # TODO remove this; we don't use this clause anymore
-    #@organisation.clauses.set_text(:domain, "#{name}.oneclickorgs.com")
+    #@organisation.clauses.set_text!(:domain, "#{name}.oneclickorgs.com")
     
-    #@organisation.clauses.set_text(:organisation_name, name)
+    #@organisation.clauses.set_text!(:organisation_name, name)
   
     organisation_is_active if active
   
@@ -74,12 +74,12 @@ end
 
 def organisation_is_pending
   stub_organisation!(false) unless @organisation
-  @organisation.clauses.set_text('organisation_state', "pending")
+  @organisation.clauses.set_text!('organisation_state', "pending")
 end
 
 def organisation_is_active
   stub_organisation!(false) unless @organisation
-  @organisation.clauses.set_text('organisation_state', "active")
+  @organisation.clauses.set_text!('organisation_state', "active")
   @organisation.should be_active
 end
 

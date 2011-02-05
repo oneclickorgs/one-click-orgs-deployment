@@ -26,7 +26,7 @@ class Constitution
   def set_voting_system(type, new_system)
     raise ArgumentError, "system #{type} not found" unless ['general', 'membership', 'constitution'].include?(type.to_s)
     raise ArgumentError, "invalid voting system: #{new_system}" unless VotingSystems.get(new_system)
-    organisation.clauses.set_text("#{type}_voting_system", new_system)
+    organisation.clauses.set_text!("#{type}_voting_system", new_system)
   end
   
   def change_voting_system(type, new_system)
@@ -42,7 +42,7 @@ class Constitution
   
   def set_voting_period(new_period)
     raise ArgumentError, "invalid voting period #{new_period}" unless new_period > 0
-    organisation.clauses.set_integer('voting_period', new_period)
+    organisation.clauses.set_integer!('voting_period', new_period)
   end
 
   def change_voting_period(new_period)
