@@ -1,10 +1,15 @@
-- if current_organisation.pending? or current_organisation.proposed?
-  %p Only the founder can make changes on this page
-  
-  %h3 Founding members
+- if current_organisation.pending? or current_organisation.proposed?  
+  %h2.purple Members
+    
+  %p
+    - if current_user == co.members.first
+      = 'You'
+    - else
+      = co.members.first.name
+    can invite new founding members and re-issue invitations on this page.
   
   %p
-    Adding additional Founding Members on this page lets them view the Draft Constitution and suggest changes. Once everyone's happy the group can hold the Founding Vote and form the Association. Bear in mind the law says an Association cannot be formed with fewer than three people.
+    Adding additional founding members on this page lets them view the draft constitution. Once everyone’s happy the group can hold the founding vote and form the Association. Bear in mind the law says an Association cannot be formed with fewer than three people.
   
   - unless @pending_members.empty?
     %table.pending_members
@@ -17,7 +22,7 @@
       - for member in @pending_members
         %tr
           %td
-            = link_to "#{member.name}", member_path(member)
+            = member.name
           %td
             = member.email
           %td
