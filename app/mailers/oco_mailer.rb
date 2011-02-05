@@ -17,7 +17,7 @@ class OcoMailer < ActionMailer::Base
   end
 
   def self.deliver_mail(mail)
-    if worker_running?
+    if !Rails.env.test? && worker_running?
       Delayed::Job.enqueue EmailJob.new(mail)
     else
       Rails.logger.debug "Worker not running, falling back to direct sending"

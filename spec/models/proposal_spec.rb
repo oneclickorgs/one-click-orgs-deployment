@@ -76,6 +76,19 @@ describe Proposal do
         @p.close!
       end
     end
+    
+    context "when proposal is a Founding Proposal" do
+      before(:each) do
+        @p = @organisation.found_organisation_proposals.make(:proposer => @member)
+        @p.stub!(:passed?).and_return(true)
+        @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
+      end
+      
+      it "asks the decision to send notification emails" do
+        @decision.should_receive(:send_email)
+        @p.close!
+      end
+    end
   end
   
   
