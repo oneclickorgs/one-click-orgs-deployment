@@ -1,8 +1,9 @@
 !!!
 %html
   %head
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
     %title
-      One Click Orgs Setup
+      Form a new Association - One Click Orgs
       
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}            
     = stylesheet_link_tag 'one_click'
@@ -11,6 +12,20 @@
     = csrf_meta_tag
   %body.setup
     %div#container
+      -#/[if lt IE 7]
+      -#  %div#browser_warning
+      -#    %h3 You are using an outdated version of Microsoft Internet Explorer
+      -#    %p
+      -#      The software running One Click Orgs is created by volunteers, and we do not have the resources to test in web browsers as old as the one you are using. As a result,
+      -#      %strong One Click Orgs may not work properly or appear correctly in your browser.
+      -#    %p
+      -#      If you are using your home computer, please install
+      -#      = link_to('Internet Explorer 8', 'http://www.microsoft.com/uk/windows/internet-explorer/') + ','
+      -#      = link_to('Firefox', 'http://www.firefox.com')
+      -#      = 'or'
+      -#      = link_to('Google Chrome', 'http://www.google.com/chrome') + '.'
+      -#    %p
+      -#      If you are at work, consider contacting whoever looks after your IT to ask when your web browser will be upgraded.
       %div#doc
         %div#hd
           %h1.header
@@ -29,9 +44,9 @@
           #lightbox{:style => 'display: none;'}
             = yield(:lightbox)
         %div.footer
-          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
+          = link_to(image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/', :target => '_blank')
           = "#{OneClickOrgs.version}."
           Licensed under the
-          %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
-          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
+          %a{:href => 'http://www.gnu.org/licenses/agpl.html', :target => '_blank'} AGPL.
+          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs', :target => '_blank'} Source code.
       = get_satisfaction_widget
