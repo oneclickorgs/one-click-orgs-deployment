@@ -66,24 +66,28 @@ class ProposalsController < ApplicationController
     proposals = []
     
     # Organisation name
-    proposals.push(co.change_text_proposals.new(
-      :title => "Change organisation name to '#{params[:organisation_name]}'",
-      :proposer_member_id => current_user.id,
-      :parameters => {
-        'name' => 'organisation_name',
-        'value' => params[:organisation_name]
-      }
-    ))
+    if co.name != params[:organisation_name]
+      proposals.push(co.change_text_proposals.new(
+        :title => "Change organisation name to '#{params[:organisation_name]}'",
+        :proposer_member_id => current_user.id,
+        :parameters => {
+          'name' => 'organisation_name',
+          'value' => params[:organisation_name]
+        }
+      ))
+    end
     
     # Objectives
-    proposals.push(co.change_text_proposals.new(
-      :title => "Change organisation objectives to '#{params[:organisation_objectives]}'",
-      :proposer_member_id => current_user.id,
-      :parameters => {
-        'name' => 'organisation_objectives',
-        'value' => params[:organisation_objectives]
-      }
-    ))
+    if co.objectives != params[:organisation_objectives]
+      proposals.push(co.change_text_proposals.new(
+        :title => "Change organisation objectives to '#{params[:organisation_objectives]}'",
+        :proposer_member_id => current_user.id,
+        :parameters => {
+          'name' => 'organisation_objectives',
+          'value' => params[:organisation_objectives]
+        }
+      ))
+    end
     
     # Assets
     if params[:assets] == '1'
@@ -93,15 +97,17 @@ class ProposalsController < ApplicationController
       title = "Change the constitution to prohibit holding, transferral or disposal of material assets and intangible assets"
       new_assets_value = false
     end
-    
-    proposals.push(co.change_boolean_proposals.new(
-      :title => title,
-      :proposer_member_id => current_user.id,
-      :parameters => {
-        'name' => 'assets',
-        'value' => new_assets_value
-      }
-    ))
+   
+    if (co.assets && !new_assets_value) || (!co.assets && new_assets_value) # Bit verbose, to cope with null values
+      proposals.push(co.change_boolean_proposals.new(
+        :title => title,
+        :proposer_member_id => current_user.id,
+        :parameters => {
+          'name' => 'assets',
+          'value' => new_assets_value
+        }
+      ))
+    end
     
     # General voting system
     proposed_system = VotingSystems.get(params[:general_voting_system])
@@ -140,12 +146,20 @@ class ProposalsController < ApplicationController
     end
     
     # Voting period
-    proposals.push(co.change_voting_period_proposals.new(
-      :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:voting_period])}",
-      :proposer_member_id => current_user.id,
-      :parameters => {'new_voting_period'=>params[:voting_period]}
-    ))
-    
+    if co.constitution.voting_period != params[:voting_period].to_i
+      proposals.push(co.change_voting_period_proposals.new(
+        :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:voting_period])}",
+        :proposer_member_id => current_user.id,
+        :parameters => {'new_voting_period'=>params[:voting_period]}
+      ))
+    end
+
+    # Early exit?
+    if proposals.empty?
+      redirect_to(root_path, :notice => 'No changes were made to the constitution.')
+      return
+    end
+      
     # Save all proposals; consolidate resulting messages
     accepted = 0
     saved = 0
@@ -165,7 +179,7 @@ class ProposalsController < ApplicationController
     if error_messages.empty?
       success_messages = []
       success_messages.unshift("constitutional changes were made") if accepted > 0
-      success_messages.unshift("constitutional amendment proposals succesfully created") if saved > 0
+      success_messages.unshift("constitutional amendment proposals successfully created") if saved > 0
       if saved > 0
         redirect_to(root_path, :notice => success_messages.to_sentence.capitalize)
       else
@@ -173,7 +187,7 @@ class ProposalsController < ApplicationController
       end
     else
       error_messages.unshift("constitutional changes were made") if accepted > 0
-      error_messages.unshift("constitutional amendment proposals succesfully created") if saved > 0
+      error_messages.unshift("constitutional amendment proposals successfully created") if saved > 0
       redirect_to(settings_path, :flash => {:error => error_messages.to_sentence.capitalize})
     end
   end
