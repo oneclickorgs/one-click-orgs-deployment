@@ -1,4 +1,4 @@
-%h2 Settings
+%h2 Amend the constitution
 
 %div#settings_fields
   - if current_organisation.pending?
@@ -15,9 +15,6 @@
 
     %h3 Name of the Association
     = text_field_tag('organisation_name', @organisation_name, :disabled => !@allow_editing)
-
-    %h3 One Click Orgs web address
-    %p= @website
   
     %h3 Objectives
     %p.explanation This should be a brief summary of your group's main objectives which everyone can sign up to.
@@ -58,5 +55,3 @@
           = submit_tag "Save changes", :id => 'submit'
         - else
           = submit_tag "Propose changes", :id => 'submit'
-        = link_to("Cancel", root_path, :class => 'cancel')
-
