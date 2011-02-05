@@ -4,7 +4,7 @@ In the vote to form <%=raw( @organisation_name )%> as an Association held betwee
 <% if @proposal.passed? %>
 The Association has therefore been formed with the following members: 
 <% @members.each do |m| %>
-<%=raw( @m.name )%>
+<%=raw( m.name )%>
 <% end %>
 
 <% if @member_vote and @member_vote.for? %>
