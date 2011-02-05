@@ -76,10 +76,6 @@ class Organisation < ActiveRecord::Base
     subdomain ? [subdomain, Setting[:base_domain]].join('.') : Setting[:base_domain]
   end
   
-  def has_founding_member?
-    members.count > 0
-  end
-  
   def convener
     members.first
   end

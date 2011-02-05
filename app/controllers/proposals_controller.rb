@@ -52,10 +52,6 @@ class ProposalsController < ApplicationController
     if proposal.start
       # Founding proposal has no need for direct enactment logic during pending stage.
       
-      # TODO: Why do we change the founding member's member class here?
-      current_user.member_class = co.member_classes.find_by_name('Member')
-      current_user.save!
-      
       co.proposed!
       
       redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "The founding vote has now begun.")
