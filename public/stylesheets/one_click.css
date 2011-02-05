@@ -122,6 +122,7 @@ br.clear {
   clear: both; }
 
 h2 {
+  color: #9e005d;
   font-size: 2em; }
 
 h3 {
@@ -174,8 +175,6 @@ hr {
   color: white; }
 
 /* Body */
-#bd h2.purple {
-  color: #9e005d; }
 #bd a.cancel {
   color: red;
   font-size: 0.9em; }
