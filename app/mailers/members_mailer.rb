@@ -31,7 +31,7 @@ class MembersMailer < OcoMailer
     raise ArgumentError, "No member provided" unless @member
     @organisation_name = member.organisation.name
 
-    mail(:to => @member.email, :subject => "Welcome to #{@organisation_name} on One Click Orgs", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    mail(:to => @member.email, :subject => "Invitation to become a member of #{@organisation_name}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
   end
   
   def password_reset(member)
