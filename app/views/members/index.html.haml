@@ -34,7 +34,9 @@
                 = member.founding_vote.for_or_against
               - else
                 Not yet voted
-  
+                
+  = render :partial => 'shared/propose_new_member_form'
+
 - else
   %h2 Members
   %table.members
@@ -71,5 +73,3 @@
         %tr
           %td
             = link_to "#{member.name}", member_path(member)
-
-= render :partial => 'shared/propose_new_member_form'
