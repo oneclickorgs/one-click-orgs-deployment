@@ -25,6 +25,8 @@ $(document).ready(function () {
     OneClickOrgs.dismissLightbox();
   });
   $('button#confirm_terms').click(function (event) {
+    $('p#loading').show();
+    
     $(event.target).attr('disabled', true);
     $('button#cancel_terms').attr('disabled', true);
     

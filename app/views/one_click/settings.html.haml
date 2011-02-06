@@ -1,4 +1,4 @@
-%h2 Settings
+%h2 Propose an amendment
 
 %div#settings_fields
   - if current_organisation.pending?
@@ -9,15 +9,12 @@
     %p.explanation
       One Click Orgs lets you tailor the constitution to suit your group. Choose the settings you want to start off with on this page. Don't worry if you're not sure which options will work best, the group can always fine-tune the choices by voting once the Association is formed.
   - else
-    %p.explanation Changing the settings on this page will create proposals that can be voted on by the community.
+    %p.explanation Changing the settings on this page will create proposals that can be voted on by members.
 
   = form_tag(:controller => 'proposals', :action => 'create_settings_proposals') do
 
     %h3 Name of the Association
     = text_field_tag('organisation_name', @organisation_name, :disabled => !@allow_editing)
-
-    %h3 One Click Orgs web address
-    %p= @website
   
     %h3 Objectives
     %p.explanation This should be a brief summary of your group's main objectives which everyone can sign up to.
@@ -58,5 +55,3 @@
           = submit_tag "Save changes", :id => 'submit'
         - else
           = submit_tag "Propose changes", :id => 'submit'
-        = link_to("Cancel", root_path, :class => 'cancel')
-

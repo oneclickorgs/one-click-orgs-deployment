@@ -22,6 +22,18 @@ body
 div.clear
   :clear left
 
+/* Browser warning
+
+#browser_warning
+  :background-color #f6f5d1
+  :border 1px solid $oco_burgundy
+  :font-size 0.9em
+  :margin 0 0 1em 0
+  :padding 0.4em 2em
+  :text-align center
+  p
+    :margin 0.4em
+
 /* Induction
 
 #overlay
@@ -61,6 +73,7 @@ div.clear
   p
     :color #000
     :font-size 1em
+    :line-height 1.6em
     :margin 0
     :padding 18px 12px
     :text-shadow #fff -1px -1px 2px
@@ -111,10 +124,13 @@ h1.header
     &:hover
       :text-decoration underline
 
+/* Basic styles
+
 br.clear
   :clear both
 
 h2
+  :color $oco_burgundy
   :font-size 2em
   
 h3
@@ -128,6 +144,13 @@ a
   &:hover
     :color #333
     :text-decoration underline
+
+hr
+  :background-color $oco_burgundy
+  :border none
+  :color $oco_burgundy
+  :height 1px
+  :margin 0.8em 0
 
 /* Navigation
 
@@ -513,3 +536,10 @@ div.field_with_errors input
     button
       :float right
       :margin 0 0.4em
+  p#loading
+    :display none
+    :float left
+    :font-weight bold
+    :margin 0 1em 0
+    img
+      :margin 0 1em 0 0

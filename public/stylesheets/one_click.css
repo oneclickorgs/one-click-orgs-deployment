@@ -19,6 +19,17 @@ body {
 div.clear {
   clear: left; }
 
+/* Browser warning */
+#browser_warning {
+  background-color: #f6f5d1;
+  border: 1px solid #9e005d;
+  font-size: 0.9em;
+  margin: 0 0 1em 0;
+  padding: 0.4em 2em;
+  text-align: center; }
+  #browser_warning p {
+    margin: 0.4em; }
+
 /* Induction */
 #overlay {
   -webkit-border-bottom-right-radius: 8px;
@@ -56,6 +67,7 @@ div.clear {
   #overlay p {
     color: black;
     font-size: 1em;
+    line-height: 1.6em;
     margin: 0;
     padding: 18px 12px;
     text-shadow: white -1px -1px 2px; }
@@ -100,10 +112,12 @@ h1.header {
     #hd p a:hover {
       text-decoration: underline; }
 
+/* Basic styles */
 br.clear {
   clear: both; }
 
 h2 {
+  color: #9e005d;
   font-size: 2em; }
 
 h3 {
@@ -117,6 +131,13 @@ a {
   a:hover {
     color: #333333;
     text-decoration: underline; }
+
+hr {
+  background-color: #9e005d;
+  border: none;
+  color: #9e005d;
+  height: 1px;
+  margin: 0.8em 0; }
 
 /* Navigation */
 #nav {
@@ -480,3 +501,10 @@ div.field_with_errors input {
   #lightbox p button {
     float: right;
     margin: 0 0.4em; }
+  #lightbox p#loading {
+    display: none;
+    float: left;
+    font-weight: bold;
+    margin: 0 1em 0; }
+    #lightbox p#loading img {
+      margin: 0 1em 0 0; }

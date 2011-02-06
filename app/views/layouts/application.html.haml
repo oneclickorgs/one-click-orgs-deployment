@@ -1,6 +1,7 @@
 !!!
 %html
   %head
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
     %title
       = @page_title ? @page_title + " - " : ""
       = @current_organisation ? @current_organisation.name : "One Click Orgs"
@@ -16,15 +17,14 @@
         - if current_organisation.pending? 
           %div#overlay.pending
             %p
-              The Association is currently in a draft state. When there at least three
-              = link_to 'Founding Members', members_path
-              and they are happy with the
-              = link_to 'Draft Constitution', constitution_path
+              To form an Association there must be a founding vote where at least
+              three founding members vote in support. For now only
               - if current_user == co.members.first
                 = 'you'
               - else
-                = co.members.first.name
-              can call a Founding Vote to create the Association.
+                = co.members.first.name + ' (the first founding member)'
+              can amend the constitution or call a founding vote. When the Association
+              is formed all members gain equal voting rights.
             - if current_user.has_permission(:found_organisation_proposal)
               = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
                 = submit_tag "Hold the Founding Vote", :id => 'submit'
@@ -32,10 +32,12 @@
         - if current_organisation.proposed?
           %div#overlay.proposed
             %p
-              The Founding Vote to create the Association is now in progress.
-              No further changes can be made to the Draft Constitution at this stage.
-              If three or more Founding Members vote to found the Association they will
-              become its first Members.
+              The
+              = link_to 'founding vote', root_path
+              to create the Association is now in progress.
+              No further changes can be made to the draft constitution at this stage.
+              If three or more founding members vote to found the Association they will
+              become its first members.
       %div.control_bar
         - if current_user
           %p
@@ -53,20 +55,14 @@
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
         - if current_user
-          - if current_organisation.pending?
+          - if current_organisation.pending? or current_organisation.proposed?
             %ul#nav
-              %li#navitem= link_to 'Settings', settings_path
-              %li#navitem= link_to 'Draft Constitution', constitution_path
-              %li#navitem= link_to 'Members', members_path
-          - elsif current_organisation.proposed?
-            %ul#nav
-              %li#navitem= link_to 'Dashboard', root_path
               %li#navitem= link_to 'Constitution', constitution_path
+              %li#navitem= link_to 'Amendments', settings_path
               %li#navitem= link_to 'Members', members_path
           - else
             %ul#nav
-              %li#navitem= link_to 'Dashboard', root_path
-              %li#navitem= link_to 'Settings', settings_path
+              %li#navitem= link_to 'Voting & proposals', root_path
               %li#navitem= link_to 'Constitution', constitution_path
               %li#navitem= link_to 'Members', members_path
 

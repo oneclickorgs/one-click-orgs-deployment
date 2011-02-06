@@ -1,50 +1,52 @@
 - content_for(:head) do
   = javascript_include_tag 'organisations_new'
 
-%h2 Set up a new Association
+%h2 Form a new Association
 
 %p
-  Just enter your details with the name and objectives of your group, then One Click Orgs will automatically generate a draft constitution ready to form an Association.
+  Provide details for yourself and the Association to be formed then One Click Orgs will automatically create a draft constitution. You can invite other “founding members” from your group to view the constitution and suggest changes. When everyone’s ready you can hold a vote to found the Association. Please see
+  = link_to('the FAQ', 'http://www.oneclickorgs.com/faq', :target => '_blank')
+  if you have any questions.
 
 = form_tag({:controller => 'organisations', :action => 'create'}, :method => "post", :id => 'new_organisation') do
 
   %div.left
-    %h3 Founder
+    %h3 Your details
     = fields_for(:founder, @founder) do |f|
       %p
-        = f.label :first_name, "Your first name"
+        = f.label :first_name, "First name"
         = f.text_field :first_name, :placeholder => 'Robert'
       %p
-        = f.label :last_name, "Your last name"
+        = f.label :last_name, "Last name"
         = f.text_field :last_name, :placeholder => 'Smith'
       %p
-        = f.label :email, "Your email address"
+        = f.label :email, "Email address"
         = f.text_field :email, :type => 'email', :placeholder => 'robert@example.com'
       %p
-        = f.label :password, "Choose a password"
+        = f.label :password, "Choose password"
         = f.password_field :password
       %p
-        = f.label :password_confirmation, "Confirm your password"
+        = f.label :password_confirmation, "Confirm password"
         = f.password_field :password_confirmation
       = f.hidden_field :terms_and_conditions
 
   %div.right
-    %h3 Association
+    %h3 The Association
     = fields_for(:organisation, @organisation) do |f|
       %p
-        = f.label :name, "Your group’s name"
-        = f.text_field :name
+        = f.label :name, "Association's official name"
+        = f.text_field(:name, :placeholder => 'Penzance Sardine Appreciation Society')
       - if !Setting[:single_organisation_mode]
         %p
           = f.label :subdomain, "Your One Click Orgs web address will be"
         %p#help_subdomain.explanation (You can change this before you go to the next stage)
         %div#subdomain_wrapper
-          = f.text_field(:subdomain, :placeholder => 'mygroup')
+          = f.text_field(:subdomain, :placeholder => 'penzancesardine')
           %span#base_domain
             = '.' + Setting[:base_domain]
       %p
-        = f.label :objectives, "Your group’s objectives"
-        %textarea{:name => 'organisation[objectives]', :id => 'objectives', :placeholder => 'What will you be doing?'}
+        = f.label :objectives, "What the Association exists for"
+        %textarea{:name => 'organisation[objectives]', :id => 'objectives', :placeholder => 'Strengthen a common enjoyment of oily fish'}
   
       %p
         = submit_tag "Create draft constitution →", :id => 'submit'

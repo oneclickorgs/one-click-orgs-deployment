@@ -1,5 +1,5 @@
 - if current_user.has_permission(:freeform_proposal) and !current_organisation.proposed?
-  %h3 New proposal
+  %h3 Propose a vote
   = form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
     %p
       = f.label(:title)

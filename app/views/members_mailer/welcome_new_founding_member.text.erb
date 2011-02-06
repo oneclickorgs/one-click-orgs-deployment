@@ -1,11 +1,8 @@
 
-<%=raw( @founder.name )%> has created a draft constitution for <%=raw( @organisation_name )%> on One Click Orgs. 
+You've been invited by <%=raw( @founder.name )%> to become a founding member of "<%=raw( @organisation_name )%>". Click the link below to view the draft constitution on the One Click Orgs website and vote on forming the Association.
 
-They have invited you as a Founding Member. If you go to <%=raw( short_invitation_url(:id => @member.invitation_code) )%> you will be able to choose a password and access the draft constitution created by One Click Orgs. 
+View the draft constitution at <%=raw( short_invitation_url(:id => @member.invitation_code) )%> (this link will only work once)
 
-Once everyone's happy with the constitution <%=raw( @founder.name )%> can call a Founding Vote to create the Association.
+If you don't know <%=raw( @founder.name )%> (<%=raw( @founder.email )%>) or "<%=raw( @organisation_name )%>" please ignore this email.
 
-Thanks
-
-<%=raw @organisation_name%>
-Powered by One Click Orgs
+Find out more about One Click Orgs and contact the team at http://www.oneclickorgs.com/

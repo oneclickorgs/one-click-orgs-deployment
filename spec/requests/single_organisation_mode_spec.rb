@@ -49,7 +49,7 @@ describe "Single-organisation mode" do
       
       get 'http://oneclickorgs.com/'
       response.should be_successful
-      response.body.should contain "Dashboard"
+      response.body.should contain "Voting & proposals"
     end
     
     # TODO: More tests needed here?
