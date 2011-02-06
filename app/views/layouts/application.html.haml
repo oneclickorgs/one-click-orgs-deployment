@@ -9,6 +9,11 @@
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
     = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
+    - if current_user && current_organisation.pending? && current_user.has_permission(:found_organisation_proposal)
+      - if @current_organisation.can_hold_founding_vote?
+        = javascript_include_tag 'start_founding_vote_confirmation'
+      - else
+        = javascript_include_tag 'start_founding_vote_alert'
     = yield(:head)
     = csrf_meta_tag
   %body
@@ -26,7 +31,7 @@
               can amend the constitution or call a founding vote. When the Association
               is formed all members gain equal voting rights.
             - if current_user.has_permission(:found_organisation_proposal)
-              = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
+              = form_tag({:controller => 'proposals', :action => 'propose_foundation'}, :id => 'start_founding_vote_form') do
                 = submit_tag "Hold the Founding Vote", :id => 'submit'
               %br.clear
         - if current_organisation.proposed?
@@ -87,6 +92,13 @@
                   %button#close_notification{'data-notification' => @notification} Close
             - else
               = yield(:lightbox)
+          - if current_user && current_organisation.pending? && current_user.has_permission(:found_organisation_proposal)
+            - if @current_organisation.can_hold_founding_vote?
+              #start_founding_vote_confirmation_lightbox.lightbox{:style => 'display: none;'}
+                = render(:partial => "shared/start_founding_vote_confirmation")
+            - else
+              #start_founding_vote_alert_lightbox.lightbox{:style => 'display: none;'}
+                = render(:partial => "shared/start_founding_vote_alert")
         %div.footer
           = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
           = "#{OneClickOrgs.version}."
