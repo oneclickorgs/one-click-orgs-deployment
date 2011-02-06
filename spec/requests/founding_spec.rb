@@ -4,6 +4,7 @@ describe "Founding process" do
   describe "Found Organisation Proposal decision email" do
     before(:each) do
       @organisation = stub_organisation!(false)
+      @organisation.pending!
       @founding_member_member_class = @organisation.member_classes.find_by_name("Founding Member")
       @founder_member_class = @organisation.member_classes.find_by_name("Founder")
       @founder = @organisation.members.make(:member_class => @founder_member_class)

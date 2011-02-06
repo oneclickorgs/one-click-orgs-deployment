@@ -62,4 +62,32 @@ describe Organisation do
       end
     end
   end
+  
+  describe "can_hold_founding_vote?" do
+    before(:each) do
+      @organisation.members.destroy_all
+      @organisation.members.make_n(3)
+      @organisation.pending!
+    end
+    
+    it "returns false unless the organisation is pending" do
+      @organisation.can_hold_founding_vote?.should be_true
+      @organisation.proposed!
+      @organisation.can_hold_founding_vote?.should be_false
+    end
+    
+    it "returns true when there are at least three members" do
+      @organisation.members.destroy_all
+      @organisation.members.make_n(3)
+      @organisation.reload.can_hold_founding_vote?.should be_true
+      
+      @organisation.members.destroy_all
+      @organisation.members.make_n(2)
+      @organisation.reload.can_hold_founding_vote?.should be_false
+      
+      @organisation.members.destroy_all
+      @organisation.members.make_n(5)
+      @organisation.reload.can_hold_founding_vote?.should be_true
+    end
+  end
 end

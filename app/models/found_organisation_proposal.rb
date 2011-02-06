@@ -1,7 +1,13 @@
 # Remove any founding members that did not vote in favour,
 # and move organisation to 'active' state.
 class FoundOrganisationProposal < Proposal
-
+  validate :organisation_must_be_ready
+  def organisation_must_be_ready
+    if new_record? && !organisation.can_hold_founding_vote?
+      errors.add(:base, "Organisation not ready to hold founding vote")
+    end
+  end
+  
   def send_email
     # This one goes to all members (who are founding members)
     self.organisation.members.each do |m|

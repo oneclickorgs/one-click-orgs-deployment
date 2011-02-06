@@ -117,6 +117,10 @@ class Organisation < ActiveRecord::Base
     member_classes.find_by_name('Founding Member').destroy
   end
   
+  def can_hold_founding_vote?
+    pending? && members.count >= 3
+  end
+  
   def constitution
     @constitution ||= Constitution.new(self)
   end

@@ -79,7 +79,8 @@ describe Proposal do
     
     context "when proposal is a Founding Proposal" do
       before(:each) do
-        @p = @organisation.found_organisation_proposals.make(:proposer => @member)
+        @organisation.stub!(:can_hold_founding_vote?).and_return(true)
+        @p = FoundOrganisationProposal.make(:proposer => @member, :organisation => @organisation)
         @p.stub!(:passed?).and_return(true)
         @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
       end
