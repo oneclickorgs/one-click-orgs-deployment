@@ -1,13 +1,11 @@
-%h2 
-  Constitution of 
-  = @organisation_name
-
+%h2 Confirm membership
+  
 %p
-  In joining
-  = @organisation_name
-  you agree to abide by their constitution. Please read it carefully before you continue. Note
-  that this constitution is a living document: members of the organisation may propose changes
-  at any time.
+  I,
+  = current_user.name + ','
+  accept the invitation to become a member of the Association
+  = "\"#{@organisation_name}\""
+  and agree to abide by its constitution.
 
 = render :partial => 'shared/constitution', :locals => {:allow_changes => false}
 

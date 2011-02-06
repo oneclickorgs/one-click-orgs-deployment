@@ -1,0 +1,50 @@
+!!!
+%html
+  %head
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
+    %title
+      = @page_title ? @page_title + " - " : ""
+      = @current_organisation ? @current_organisation.name : "One Click Orgs"
+
+    %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
+    = stylesheet_link_tag 'one_click'
+    = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
+    = yield(:head)
+    = csrf_meta_tag
+  %body
+    %div#container
+      %div#doc
+        %div#hd
+          %h1.header
+            = link_to(@current_organisation.name, root_path)
+          %p
+            powered by
+            = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
+        - if flash[:notice]
+          %div#notice
+            = flash[:notice]
+        - if flash[:error]
+          %div#error
+            = flash[:error]
+        
+        %div#bd
+          
+          = yield
+          
+          #lightbox_screen{:style => 'display: none;'}
+          #lightbox{:style => 'display: none;'}
+            - if @notification
+              - current_user.has_seen_notification!(@notification)
+              .notification
+                = render(:partial => "shared/notifications/#{@notification}")
+                %p
+                  %button#close_notification{'data-notification' => @notification} Close
+            - else
+              = yield(:lightbox)
+        %div.footer
+          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
+          = "#{OneClickOrgs.version}."
+          Licensed under the
+          %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
+          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
+      = get_satisfaction_widget
