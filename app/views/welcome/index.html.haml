@@ -10,6 +10,8 @@
   at any time.
 
 = render :partial => 'shared/constitution', :locals => {:allow_changes => false}
-  
-%p= link_to("I agree to abide by the constitution of #{@organisation_name}.", :action => 'induct_member')
+
+= form_tag(:controller => :welcome, :action => :induct_member) do
+  = submit_tag "I agree to abide by the constitution of #{@organisation_name}"
+
 %p= link_to("Cancel", {:action => 'cancel_membership'}, {:class => 'cancel'})
