@@ -71,7 +71,7 @@ $(document).ready(function () {
     $(this).addClass('clicked');
   })
   $('#button-constitution-change').click(function() {
-    $(location).attr('href','/settings');
+    $(location).attr('href','/amendments');
   });
   
   // Notifications

@@ -188,7 +188,7 @@ class ProposalsController < ApplicationController
     else
       error_messages.unshift("constitutional changes were made") if accepted > 0
       error_messages.unshift("constitutional amendment proposals successfully created") if saved > 0
-      redirect_to(settings_path, :flash => {:error => error_messages.to_sentence.capitalize})
+      redirect_to(amendments_path, :flash => {:error => error_messages.to_sentence.capitalize})
     end
   end
   

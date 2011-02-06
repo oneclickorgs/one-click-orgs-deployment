@@ -6,8 +6,8 @@ describe "/one_click" do
     stub_organisation!
   end
   
-  describe "settings" do
-    pending "TODO: spec one_click/settings"
+  describe "amendments" do
+    pending "TODO: spec one_click/amendments"
   end
   
   describe "dashboard" do
