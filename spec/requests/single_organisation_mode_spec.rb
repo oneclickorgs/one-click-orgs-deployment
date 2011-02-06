@@ -34,7 +34,7 @@ describe "Single-organisation mode" do
       
       # TODO: Roll stubbing of single-organisation-mode organisations into stubs.rb
       @organisation = Organisation.make(:subdomain => nil, :name => 'abc', :objectives => 'def')
-      @organisation.clauses.set_text('organisation_state', "active")
+      @organisation.clauses.set_text!('organisation_state', "active")
       
       @member_class = @organisation.member_classes.make
       
@@ -49,7 +49,7 @@ describe "Single-organisation mode" do
       
       get 'http://oneclickorgs.com/'
       response.should be_successful
-      response.body.should contain "Dashboard"
+      response.body.should contain "Voting & proposals"
     end
     
     # TODO: More tests needed here?

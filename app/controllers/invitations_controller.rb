@@ -10,12 +10,13 @@ class InvitationsController < ApplicationController
     @invitation_code = params[:id]
     @member = Member.find_by_invitation_code(@invitation_code)
     
-    unless @member
-      raise NotFound
+    if @member
+      # Require acceptance of terms and conditions.
+      @member.terms_and_conditions = '0'
+    else
+      # Invitation code expired, member probably already has an account.
+      redirect_to(root_path)
     end
-    
-    # Require acceptance of terms and conditions
-    @member.terms_and_conditions = '0'
   end
   
   def update

@@ -13,7 +13,7 @@ class Decision < ActiveRecord::Base
     if proposal.voting_system==VotingSystems.get('Founding') then
       # Decision on the Founding Proposal.
       # At this point the proposal has already been enacted.
-      self.organisation.members.active.each do |m|
+      self.organisation.members.each do |m|
         DecisionMailer.notify_foundation_decision(m, self).deliver
       end
     else

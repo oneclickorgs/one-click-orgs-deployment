@@ -20,7 +20,7 @@ class Proposal < ActiveRecord::Base
   before_create :set_close_date
   private
   def set_close_date
-    self.close_date ||= Time.now.utc + organisation.constitution.voting_period
+    self.close_date ||= Time.now.utc + voting_period
   end
   public
   
@@ -28,6 +28,10 @@ class Proposal < ActiveRecord::Base
 
   def allows_direct_edit?
     false
+  end
+
+  def voting_period
+    organisation.constitution.voting_period
   end
  
   # Call this to kick off a proposal.
@@ -180,5 +184,8 @@ class Proposal < ActiveRecord::Base
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => (closed? && !accepted?) ? :failed_proposal : :proposal }
   end
-  
+
+  def duration
+    creation_date && end_date && (end_date - creation_date)
+  end  
 end

@@ -36,14 +36,20 @@ Proposal.blueprint do
   proposer {Member.make}
 end
 
-Decision.blueprint do
-  proposal {Proposal.make}
-end
-
 AddMemberProposal.blueprint do
   title "a proposal title"
   self.send(:assign_attribute, :open, 1)
   proposer {Member.make}
+end
+
+FoundOrganisationProposal.blueprint do
+  title "a proposal title"
+  self.send(:assign_attribute, :open, 1)
+  proposer {Member.make}
+end
+
+Decision.blueprint do
+  proposal {Proposal.make}
 end
 
 Clause.blueprint do

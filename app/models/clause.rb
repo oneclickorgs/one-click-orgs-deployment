@@ -50,7 +50,7 @@ class Clause < ActiveRecord::Base
     !!get_current(name)
   end
   
-  def self.set_text(name, value)
+  def self.set_text!(name, value)
     create!(:name => name.to_s, :text_value => value)
   end
   
@@ -59,7 +59,7 @@ class Clause < ActiveRecord::Base
     (v ? v.text_value : nil)
   end
   
-  def self.set_boolean(name, value)
+  def self.set_boolean!(name, value)
     create!(:name => name.to_s, :boolean_value => value)
   end
   
@@ -68,7 +68,7 @@ class Clause < ActiveRecord::Base
     (v ? v.boolean_value != 0 : nil)
   end
   
-  def self.set_integer(name, value)
+  def self.set_integer!(name, value)
     create!(:name => name.to_s, :integer_value => value)
   end
 

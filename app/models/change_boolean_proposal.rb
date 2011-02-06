@@ -7,7 +7,7 @@ class ChangeBooleanProposal < Proposal
   end
 
   def enact!(params)
-    organisation.clauses.set_boolean(params['name'], params['value'])
+    organisation.clauses.set_boolean!(params['name'], params['value'])
   end
   
   def voting_system

@@ -7,7 +7,7 @@ describe EjectMemberProposal do
   end
     
   it "should use the membership voting system" do
-    @organisation.clauses.set_text('membership_voting_system', 'Veto')
+    @organisation.clauses.set_text!('membership_voting_system', 'Veto')
     @organisation.eject_member_proposals.new.voting_system.should == VotingSystems::Veto
   end
   

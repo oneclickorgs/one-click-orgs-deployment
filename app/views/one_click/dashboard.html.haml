@@ -43,7 +43,7 @@
     %div#propose_new_member_form.form-to-hide
       = render :partial => 'shared/propose_new_member_form'
 
-- if current_organisation.active? || current_organisation.failed?
+- if current_organisation.active?
   %div.section
     %h3 Timeline
     %table.timeline

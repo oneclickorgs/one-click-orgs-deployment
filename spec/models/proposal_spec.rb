@@ -42,7 +42,7 @@ describe Proposal do
   
   it "should send out an email to each member after a Proposal has been made" do
     @organisation.members.count.should > 0
-    @member.member_class.set_permission(:vote, true)
+    @member.member_class.set_permission!(:vote, true)
     
     ProposalMailer.should_receive(:notify_creation).and_return(mock('email', :deliver => nil))
     @organisation.proposals.make(:proposer => @member)
@@ -73,6 +73,19 @@ describe Proposal do
       
       it "should ensure the proposal is enacted" do
         @p.should_receive(:enact!)
+        @p.close!
+      end
+    end
+    
+    context "when proposal is a Founding Proposal" do
+      before(:each) do
+        @p = @organisation.found_organisation_proposals.make(:proposer => @member)
+        @p.stub!(:passed?).and_return(true)
+        @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
+      end
+      
+      it "asks the decision to send notification emails" do
+        @decision.should_receive(:send_email)
         @p.close!
       end
     end

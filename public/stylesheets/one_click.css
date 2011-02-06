@@ -77,11 +77,6 @@ div.clear {
   background: -moz-linear-gradient(100% 100% 90deg, #779d75, #afe0bc);
   background: -webkit-gradient(linear, left bottom, left top, from(#779d75), to(#afe0bc)); }
 
-#overlay.failed {
-  background: #e0afb7;
-  background: -moz-linear-gradient(100% 100% 90deg, #9d757f, #e0afb7);
-  background: -webkit-gradient(linear, left bottom, left top, from(#9d757f), to(#e0afb7)); }
-
 /* Header */
 .control_bar {
   color: #666666;

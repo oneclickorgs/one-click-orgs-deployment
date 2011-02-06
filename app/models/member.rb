@@ -100,7 +100,7 @@ class Member < ActiveRecord::Base
     proposal = organisation.proposals.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
     unless can_vote?(proposal)
-      raise VoteError, "Can not vote on proposals created before member inducted"
+      raise VoteError, "Can not vote on proposals created before member is inducted and the organisation has been proposed."
     end
 
     case action

@@ -76,10 +76,6 @@ class Organisation < ActiveRecord::Base
     subdomain ? [subdomain, Setting[:base_domain]].join('.') : Setting[:base_domain]
   end
   
-  def has_founding_member?
-    members.count > 0
-  end
-  
   def convener
     members.first
   end
@@ -98,8 +94,7 @@ class Organisation < ActiveRecord::Base
   end
     
   def pending!
-    #clauses.set_text('organisation_state', 'pending')
-    clauses.build(:name => 'organisation_state', :text_value => 'pending')
+    clauses.set_text!('organisation_state', 'pending')
   end
     
   def proposed?
@@ -107,17 +102,7 @@ class Organisation < ActiveRecord::Base
   end
     
   def proposed!
-    #clauses.set_text('organisation_state', 'proposed')
-    clauses.build(:name => 'organisation_state', :text_value => 'proposed')
-  end
-    
-  def failed?
-    clauses.get_text('organisation_state') == 'failed'
-  end
-    
-  def failed!
-    #clauses.set_text('organisation_state', 'failed')
-    clauses.build(:name => 'organisation_state', :text_value => 'failed')
+    clauses.set_text!('organisation_state', 'proposed')
   end
     
   def active?
@@ -125,8 +110,7 @@ class Organisation < ActiveRecord::Base
   end
   
   def active!
-    #clauses.get_text('organisation_state', 'active')
-    clauses.build(:name => 'organisation_state', :text_value => 'active')
+    clauses.set_text!('organisation_state', 'active')
 
     # Delete Founder and Founding Member member classes
     member_classes.find_by_name('Founder').destroy
@@ -143,28 +127,28 @@ class Organisation < ActiveRecord::Base
   
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
-    members.set_permission(:constitution_proposal, true)
-    members.set_permission(:membership_proposal, true)
-    members.set_permission(:freeform_proposal, true)
-    members.set_permission(:vote, true)
+    members.set_permission!(:constitution_proposal, true)
+    members.set_permission!(:membership_proposal, true)
+    members.set_permission!(:freeform_proposal, true)
+    members.set_permission!(:vote, true)
     members.save
     
     founder = member_classes.find_or_create_by_name('Founder')
-    founder.set_permission(:direct_edit, true)
-    founder.set_permission(:constitution_proposal, true)
-    founder.set_permission(:membership_proposal, true)
-    founder.set_permission(:freeform_proposal, true)
-    founder.set_permission(:found_organisation_proposal, true)
-    founder.set_permission(:vote, true)
+    founder.set_permission!(:direct_edit, true)
+    founder.set_permission!(:constitution_proposal, true)
+    founder.set_permission!(:membership_proposal, true)
+    founder.set_permission!(:freeform_proposal, true)
+    founder.set_permission!(:found_organisation_proposal, true)
+    founder.set_permission!(:vote, true)
     founder.save
 
     founding_member = member_classes.find_or_create_by_name('Founding Member')
-    founding_member.set_permission(:direct_edit, false)
-    founding_member.set_permission(:constitution_proposal, false)
-    founding_member.set_permission(:membership_proposal, false)
-    founding_member.set_permission(:freeform_proposal, false)
-    founding_member.set_permission(:found_organisation_proposal, false)
-    founding_member.set_permission(:vote, true)
+    founding_member.set_permission!(:direct_edit, false)
+    founding_member.set_permission!(:constitution_proposal, false)
+    founding_member.set_permission!(:membership_proposal, false)
+    founding_member.set_permission!(:freeform_proposal, false)
+    founding_member.set_permission!(:found_organisation_proposal, false)
+    founding_member.set_permission!(:vote, true)
     founding_member.save
   end
 

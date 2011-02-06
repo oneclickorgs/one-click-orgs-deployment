@@ -11,8 +11,8 @@ class FoundOrganisationProposal < Proposal
   end  
   
   def reject!(params)
-    organisation.failed!
-    organisation.save
+    organisation.pending! # Switching back to 'pending' org state.
+    # The existence of a failed 'Found Organisation' proposal is the only record we keep of this.
   end
   
   def enact!(params)
@@ -39,6 +39,10 @@ class FoundOrganisationProposal < Proposal
   
   def voting_system
     VotingSystems.get('Founding')
+  end
+
+  def voting_period
+    60 * 60 * 24 * 3 # Founding vote period is fixed at three days.
   end
   
   def member_count
