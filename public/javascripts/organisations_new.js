@@ -19,7 +19,7 @@ $(document).ready(function () {
   
   $('form#new_organisation').bind('submit', function (event) {
     event.preventDefault();
-    OneClickOrgs.activateLightbox(function () {$('button#cancel_terms').focus();});
+    OneClickOrgs.activateLightbox({complete : function () {$('button#cancel_terms').focus();}});
   });
   $('button#cancel_terms').click(function () {
     OneClickOrgs.dismissLightbox();

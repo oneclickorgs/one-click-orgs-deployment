@@ -489,7 +489,7 @@ div.field_with_errors input {
   height: 100%;
   z-index: 10; }
 
-#lightbox {
+#lightbox, .lightbox {
   background: white;
   border: 2px solid #9e005d;
   font-size: 0.9em;
@@ -498,13 +498,13 @@ div.field_with_errors input {
   position: absolute;
   width: 66%;
   z-index: 11; }
-  #lightbox p button {
+  #lightbox p button, .lightbox p button {
     float: right;
     margin: 0 0.4em; }
-  #lightbox p#loading {
+  #lightbox p#loading, .lightbox p#loading {
     display: none;
     float: left;
     font-weight: bold;
     margin: 0 1em 0; }
-    #lightbox p#loading img {
+    #lightbox p#loading img, .lightbox p#loading img {
       margin: 0 1em 0 0; }

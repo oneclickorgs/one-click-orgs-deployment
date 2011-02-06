@@ -2,14 +2,23 @@
 
 var OneClickOrgs = {};
 
-OneClickOrgs.activateLightbox = function (completionCallback) {
+OneClickOrgs.activateLightbox = function (options) {
+  var completionCallback, lightboxSelector;
+  if (options && options['complete']) {
+    completionCallBack = options['complete'];
+  }
+  if (options && options['id']) {
+    lightboxSelector = '#' + options['id'];
+  } else {
+    lightboxSelector = '#lightbox'
+  }
   $('#lightbox_screen').fadeIn();
-  $('#lightbox').css('top', 100).animate(
+  $(lightboxSelector).css('top', 100).animate(
     {top: 50, opacity: 'show'},
     {
       queue: false,
       complete: function () {
-        $.scrollTo('#lightbox', 'medium');
+        $.scrollTo(lightboxSelector, 'medium');
         if (completionCallback) {
           completionCallback.call();
         }
@@ -17,9 +26,15 @@ OneClickOrgs.activateLightbox = function (completionCallback) {
     }
   );
 }
-OneClickOrgs.dismissLightbox = function () {
+OneClickOrgs.dismissLightbox = function (options) {
+  var lightboxSelector;
+  if (options && options['id']) {
+    lightboxSelector = '#' + options['id'];
+  } else {
+    lightboxSelector = '#lightbox'
+  }
   $('#lightbox_screen').fadeOut();
-  $('#lightbox').animate(
+  $(lightboxSelector).animate(
     {top: 100, opacity: 'hide'},
     {queue: false}
   );
