@@ -96,10 +96,6 @@ class ApplicationController < ActionController::Base
     if co.pending? && current_user.member_class.name == "Founder"
       show_notification_once(:convener_welcome)
     end
-    
-    if co.pending? && current_user.member_class.name == "Founding Member"
-      show_notification_once(:founding_member_welcome)
-    end
 
     fop = co.found_organisation_proposals.last
     if co.pending? && fop && fop.closed? && !fop.accepted?
