@@ -17,7 +17,7 @@
     = member_form.password_field :password_confirmation
   = member_form.hidden_field :terms_and_conditions
   %p
-    = member_form.submit("Save")
+    = member_form.submit("Continue")
 
 - content_for(:lightbox) do
   = render(:partial => 'shared/founding_member_disclaimer')
