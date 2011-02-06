@@ -13,7 +13,7 @@ class OneClickController < ApplicationController
   def dashboard
     # only_provides :html
     
-    if current_organisation.pending?
+    if current_organisation.pending? || current_organisation.proposed?
       redirect_to(:action => 'constitution')
       return
     end

@@ -64,6 +64,10 @@ div.clear {
   #overlay form input {
     float: right;
     margin-right: 8px; }
+  #overlay h3 {
+    margin: 0;
+    padding: 12px 12px 6px;
+    text-shadow: white -1px -1px 2px; }
   #overlay p {
     color: black;
     font-size: 1em;
