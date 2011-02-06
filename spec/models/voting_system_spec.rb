@@ -7,6 +7,7 @@ describe VotingSystems do
     p.stub!(:votes_for).and_return(v_for)
     p.stub!(:votes_against).and_return(v_against)
     p.stub!(:member_count).and_return(total_m)
+    p.stub!(:total_votes).and_return(v_for + v_against)
     p
   end
 
@@ -131,15 +132,12 @@ describe VotingSystems do
     it "requires three or more supporting votes" do
       should_not_pass make_proposal(2, 1, 3)
       should_pass make_proposal(3, 1, 20)
-      
+    end
+    
+    it "closes early only when all members have voted" do
       should_close_early make_proposal(3, 0, 3)
-      should_not_close_early make_proposal(2, 1, 4)
-      should_not_close_early make_proposal(1, 0, 3)
-      
-      # Also close early when there aren't enough members left to vote
-      # to make up the required supporting votes
-      should_not_close_early make_proposal(1, 1, 4)
-      should_close_early make_proposal(1, 2, 3)
+      should_not_close_early make_proposal(3, 0, 4)
+      should_not_close_early make_proposal(1, 1, 3)
     end
   end
 end

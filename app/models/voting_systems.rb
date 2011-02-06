@@ -151,12 +151,10 @@ module VotingSystems
     end
     
     def self.can_be_closed_early?(proposal)
-      return true if proposal.votes_for >= 3
-      
-      undecided_members = proposal.member_count - (proposal.votes_for + proposal.votes_against)
-      additional_votes_needed = 3 - proposal.votes_for
-      
-      undecided_members < additional_votes_needed
+      # We need to give all the founding members an opportunity to vote,
+      # so only close this proposal early if every member has cast a
+      # vote.
+      proposal.total_votes >= proposal.member_count
     end
     
     def self.passed?(proposal)
