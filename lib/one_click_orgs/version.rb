@@ -1,5 +1,5 @@
 module OneClickOrgs
-  VERSION = "0.8.0alpha"
+  VERSION = "1.0.0rc1"
   
   def self.version
     if VERSION =~ /^0/
