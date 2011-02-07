@@ -39,7 +39,7 @@ group :development do
   gem "capistrano", "~>2.5.19"
 end
 
-group :test do
+group :development, :test do
   gem "rspec-rails", "~>2.5.0"
   gem "webrat", "~>0.7.1"
   gem "machinist", "~>1.0.6"
