@@ -72,7 +72,7 @@ describe "everything" do
 
       it "should redirect to the control center" do
         make_request
-        @response.should redirect_to('/one_click/dashboard')
+        @response.should redirect_to('/')
       end
       
       def make_request

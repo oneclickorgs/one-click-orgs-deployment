@@ -101,7 +101,7 @@ class MembersController < ApplicationController
       if proposal.accepted?
         redirect_to(members_path, :notice => "Member successfully ejected")
       else
-        redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
+        redirect_to(root_path, :notice => "Ejection proposal successfully created")
       end
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
