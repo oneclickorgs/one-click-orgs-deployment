@@ -36,7 +36,7 @@
             = flash[:notice]
         - if flash[:error]
           %div#error
-            = flash[:error]
+            = simple_format(flash[:error])
         
         %div#bd
           = yield
