@@ -69,10 +69,27 @@ class Proposal < ActiveRecord::Base
   # returns the number of members who are eligible to vote on this proposal
   def member_count
     # TODO: find out how to do the following in one query
-    # TODO: need a different approach for the "Found organisation" proposal, where nobody has been inducted
     count = 0
-    organisation.members.where(["created_at < ? AND active = 1 AND inducted_at IS NOT NULL", creation_date]).each do |m|
-      count += 1 if m.has_permission(:vote)
+    
+    # To vote, a member must be inducted, and must have been added (created)
+    # before this proposal was made.
+    
+    # Members who were founding members are an exception. They are allowed
+    # to vote in proposals before they have been inducted.
+    # (This is because, by participating in the founding vote, they have
+    # already agreed to the constitution.)
+    # We determine who was a founding member by seeing whether they were
+    # created before the FoundOrganisationProposal for this org.
+    
+    fop = organisation.found_organisation_proposals.last
+    if fop
+      organisation.members.where(["active = 1 AND ((created_at < ? AND inducted_at IS NOT NULL) OR (created_at < ?))", creation_date, fop.creation_date]).each do |m|
+        count += 1 if m.has_permission(:vote)
+      end
+    else
+      organisation.members.where(["(created_at < ? AND active = 1 AND inducted_at IS NOT NULL)", creation_date]).each do |m|
+        count += 1 if m.has_permission(:vote)
+      end
     end
     count
   end
