@@ -82,8 +82,9 @@ OneClickOrgs::Application.routes.draw do
   
   match '/one_click(/:action)' => 'one_click'
   #match '/induction(/:action)' => 'induction'
-  
+ 
   match '/login' => 'member_sessions#new', :as => 'login'
+  match '/logout' => 'member_sessions#destroy', :as => 'logout', :via => "get"
   resource :member_session, :only => [:new, :create, :destroy]
   
   match '/welcome(/:action)' => 'welcome'
