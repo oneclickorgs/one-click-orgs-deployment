@@ -6,7 +6,9 @@ body {
   background-color: #f6f6f6;
   color: #333333;
   font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /* Prevent Feedback tab overlapping content */
+  /* Base font size */
+  font-size: 15px;
+  /* Prevent Get Satisfaction feedback tab overlapping the container */
   padding: 0 40px; }
 
 #container {
@@ -85,7 +87,8 @@ div.clear {
 .control_bar {
   color: #666666;
   float: right;
-  font-size: 0.75em;
+  font-size: 0.8em;
+  line-height: 1.2em;
   padding: 6px 0;
   text-align: right; }
 
@@ -125,7 +128,8 @@ h2 {
   font-size: 2em; }
 
 h3 {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  margin-bottom: 0.2em; }
 
 h4 {
   font-size: 1.2em; }
@@ -425,10 +429,14 @@ form.login label, form.login input {
   margin-left: 0; }
 
 /* Settings */
-div#settings_fields p {
-  margin: 0.3em 0; }
-div#settings_fields label {
-  width: 90%; }
+#settings_fields h3 {
+  margin-top: 1em; }
+#settings_fields p {
+  margin: 0.4em 0; }
+#settings_fields label {
+  width: 84%; }
+#settings_fields input[type="submit"] {
+  margin-top: 2em; }
 
 /* Members */
 #member_info {
