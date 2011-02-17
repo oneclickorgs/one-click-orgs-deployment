@@ -23,7 +23,7 @@ class OcoMailer < ActionMailer::Base
   # * the subject line will be truncated to 200 chars max, and any newlines will be stripped
   def create_mail(from_name, to, subject)
     mail(
-      :from => "\"#{@from_name}\" <notifications@oneclickorgs.com>", 
+      :from => "\"#{from_name}\" <notifications@oneclickorgs.com>", 
       :to => to, 
       :subject => truncate(subject, {:length => 200}).gsub(/[\r\n]+/, ' '))
   end
