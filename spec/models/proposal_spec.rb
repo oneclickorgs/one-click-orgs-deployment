@@ -92,7 +92,6 @@ describe Proposal do
     end
   end
   
-  
   describe "to_event" do
     it "should list open proposals as 'proposal's" do
       @organisation.proposals.make(:open => true, :accepted => false).to_event[:kind].should == :proposal
@@ -125,6 +124,48 @@ describe Proposal do
     
     it "should count the against votes" do
       @proposal.votes_against.should == 4
+    end
+  end
+  
+  describe "#member_count" do
+    before(:each) do
+      @default_member_class.set_permission!(:vote, true)
+    end
+    
+    it "includes active, inducted members who joined before the proposal was created" do
+      @organisation.members.count.should == 1
+      
+      member_2, member_3, member_4 = @organisation.members.make_n(3, :member_class => @default_member_class)
+      
+      @proposal = @organisation.proposals.make(:proposer_member_id => @member.id, :title => 'test', :parameters => nil)
+      
+      @organisation.members.count.should == 4
+      @proposal.member_count.should == 4
+      
+      # Test that newer members aren't included
+      member_5 = @organisation.members.make(:member_class => @default_member_class, :created_at => Time.now.utc, :inducted_at => Time.now.utc)
+      @organisation.members.count.should == 5
+      @proposal.member_count.should == 4
+      
+      # Test that uninducted members aren't included
+      member_2.update_attribute(:inducted_at, nil)
+      @organisation.members.count.should == 5
+      @proposal.member_count.should == 3
+    end
+    
+    it "includes members who were founding members, but who haven't yet been inducted" do
+      # Don't want to deal with FoundOrganisationProposal validation errors
+      ProposalMailer.stub!(:notify_foundation_proposal).and_return(mock('email', :deliver => nil))
+      
+      member_2, member_3 = @organisation.members.make_n(2, :member_class => @default_member_class, :inducted_at => nil)
+      
+      fop = @organisation.found_organisation_proposals.make_unsaved(:proposer_member_id => @member.id)
+      # More validation workarounds
+      fop.stub!(:organisation_must_be_ready).and_return(true)
+      fop.save!
+      
+      proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
+      proposal.member_count.should == 3
     end
   end
 end

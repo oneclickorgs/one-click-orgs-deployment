@@ -7,7 +7,7 @@ class MembersMailer < OcoMailer
     @organisation = member.organisation
     @organisation_name = member.organisation.name
 
-    mail(:to => @member.email, :subject => "#{@organisation_name} on One Click Orgs", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    create_mail(@organisation_name, @member.email, "#{@organisation_name} on One Click Orgs")
   end
   
   def welcome_new_founding_member(member)
@@ -21,7 +21,7 @@ class MembersMailer < OcoMailer
     @founder = Member.founders(@organisation).first
     raise ArgumentError, "Organisation has no founder" unless @founder
 
-    mail(:to => @member.email, :subject => "Become a founding member of #{@organisation_name}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    create_mail(@organisation_name, @member.email, "Become a founding member of #{@organisation_name}")
   end
   
   def welcome_new_member(member)
@@ -31,7 +31,7 @@ class MembersMailer < OcoMailer
     raise ArgumentError, "No member provided" unless @member
     @organisation_name = member.organisation.name
 
-    mail(:to => @member.email, :subject => "Invitation to become a member of #{@organisation_name}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    create_mail(@organisation_name, @member.email, "Invitation to become a member of #{@organisation_name}")
   end
   
   def password_reset(member)
@@ -41,6 +41,6 @@ class MembersMailer < OcoMailer
     raise ArgumentError, "No member provided" unless @member
     @organisation_name = member.organisation.name
 
-    mail(:to => @member.email, :subject => "Your password for #{@organisation_name} on One Click Orgs", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com")
+    create_mail(@organisation_name, @member.email, "Your password for #{@organisation_name} on One Click Orgs")
   end
 end

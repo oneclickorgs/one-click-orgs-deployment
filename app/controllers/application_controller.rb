@@ -98,11 +98,14 @@ class ApplicationController < ActionController::Base
     end
 
     fop = co.found_organisation_proposals.last
+    
     if co.pending? && fop && fop.closed? && !fop.accepted?
       show_notification_once(:founding_proposal_failed)
     end
-
-    if co.active?
+    
+    # Only display founding_proposal_passed notification to
+    # members who were founding members
+    if co.active? && fop && current_user.created_at <= fop.creation_date
       show_notification_once(:founding_proposal_passed)
     end
   end
