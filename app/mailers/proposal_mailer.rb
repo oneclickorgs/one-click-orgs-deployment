@@ -12,7 +12,7 @@ class ProposalMailer < OcoMailer
     @founder = Member.founders(@organisation).first
     raise ArgumentError, "Organisation has no founder" unless @founder
 
-    mail(:to => @member.email, :subject => "Founding Vote for #{@organisation_name}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    create_mail(@organisation_name, @member.email, "Founding Vote for #{@organisation_name}")
   end
 
   def notify_creation(member, proposal)
@@ -23,6 +23,6 @@ class ProposalMailer < OcoMailer
     raise ArgumentError, "need member and proposal" unless @member and @proposal
     @organisation_name = member.organisation.name
 
-    mail(:to => @member.email, :subject => "New proposal: #{@proposal.title}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    create_mail(@organisation_name, @member.email, "New proposal: #{@proposal.title}")
   end
 end

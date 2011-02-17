@@ -18,9 +18,9 @@ class DecisionMailer < OcoMailer
     @member_vote = @member.votes.first
 
     if @proposal.passed? then
-      mail(:to => @member.email, :subject => "Vote passed: #{@organisation_name} has been formed as an Association", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+      create_mail(@organisation_name, @member.email, "Vote passed: #{@organisation_name} has been formed as an Association")
     else
-      mail(:to => @member.email, :subject => "Vote did not pass: #{@organisation_name} has not been formed as an Association", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+      create_mail(@organisation_name, @member.email, "Vote did not pass: #{@organisation_name} has not been formed as an Association")
     end
   end
 
@@ -35,6 +35,6 @@ class DecisionMailer < OcoMailer
 
     raise ArgumentError, "need decision" unless @decision and @member
     raise ArgumentError, "decision has no attached proposal" unless @proposal
-    mail(:to => @member.email, :subject => "Decision for proposal: #{@proposal.title}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
+    create_mail(@organisation_name, @member.email, "Decision for proposal: #{@proposal.title}")
   end
 end
