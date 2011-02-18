@@ -6,10 +6,6 @@ describe "/one_click" do
     stub_organisation!
   end
   
-  describe "amendments" do
-    pending "TODO: spec one_click/amendments"
-  end
-  
   describe "dashboard" do
     before(:each) do
       login
