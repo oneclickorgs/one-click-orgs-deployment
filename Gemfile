@@ -28,6 +28,8 @@ gem "daemons", "~>1.0.10"
 
 gem "delayed_job", "2.1.3"
 
+gem "exception_notification_rails3", :require => 'exception_notifier'
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
