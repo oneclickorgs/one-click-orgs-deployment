@@ -90,4 +90,37 @@ describe Organisation do
       @organisation.reload.can_hold_founding_vote?.should be_true
     end
   end
+  
+  describe "state changes" do
+    before(:each) do
+      @organisation = Organisation.new
+      
+      @clauses_association = mock("clauses association", :set_text! => nil)
+      @organisation.stub!(:clauses).and_return(@clauses_association)
+    end
+    
+    describe "#active!" do
+      before(:each) do
+        @founder_class = mock_model(MemberClass, :name => 'Founder', :description => nil)
+        @founding_member_class = mock_model(MemberClass, :name => 'Founding Member', :description => nil)
+        
+        @member_classes_association = mock("member classes association")
+        @member_classes_association.stub!(:find_by_name).with('Founder').and_return(@founder_class)
+        @member_classes_association.stub!(:find_by_name).with('Founding Member').and_return(@founding_member_class)
+        
+        @organisation.stub!(:member_classes).and_return(@member_classes_association)
+      end
+      
+      it "destroys the 'Founder' member class" do
+        @founder_class.should_receive(:destroy)
+        @organisation.active!
+      end
+
+      it "destroys the 'Founding Member' member class" do
+        @founding_member_class.should_receive(:destroy)
+        @organisation.active!
+      end
+
+    end
+  end
 end
