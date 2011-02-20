@@ -1,4 +1,4 @@
 - VotingSystems.all do |vs|
-  %p
+  %p.radio
     = radio_button_tag("#{type}_voting_system", vs.simple_name, instance_variable_get("@#{type}_voting_system") == vs, :disabled => !@allow_editing)
     = label_tag("#{type}_voting_system_#{vs.simple_name}", vs.description)

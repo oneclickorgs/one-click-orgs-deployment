@@ -7,6 +7,8 @@
       
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}            
     = stylesheet_link_tag 'one_click'
+    /[if lt IE 9]
+      = stylesheet_link_tag 'ie'
     = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
     = yield(:head)
     = csrf_meta_tag

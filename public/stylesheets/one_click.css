@@ -384,7 +384,8 @@ input[type="radio"] {
   margin-bottom: 0.3em;
   margin-right: 0.6em;
   margin-top: 0.3em;
-  width: auto; }
+  width: auto;
+  border: none; }
 
 input[type="hidden"] {
   display: none; }

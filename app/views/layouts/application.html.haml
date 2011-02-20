@@ -8,6 +8,8 @@
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
+    /[if lt IE 9]
+      = stylesheet_link_tag 'ie'
     = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
     - if current_user && current_organisation.pending? && current_user.has_permission(:found_organisation_proposal)
       - if @current_organisation.can_hold_founding_vote?

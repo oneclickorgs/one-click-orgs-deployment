@@ -400,13 +400,16 @@ input[type="submit"]
   &:hover
     :background-color $oco_burgundy_hover
 
+// This declaration is repeated in ie.sass with an IE-compatible selector
+// and some layout tweaks; make sure any important changes go there too.
 input[type="radio"]
   :clear both
   :float left
   :margin-bottom 0.3em
   :margin-right 0.6em
-  :margin-top 0.3em 
+  :margin-top 0.3em
   :width auto
+  :border none
 
 input[type="hidden"]
   :display none

@@ -22,10 +22,10 @@
     
     %h3 Property
     %p.explanation If you want the Association to have its own bank account or own property on behalf of the group you can specify that here.
-    %p
+    %p.radio
       = radio_button_tag('assets', '1', @assets, :disabled => !@allow_editing)
       = label_tag('assets_1', "Association can have a bank account and own assets")
-    %p
+    %p.radio
       = radio_button_tag('assets', '0', !@assets, :disabled => !@allow_editing)
       = label_tag('assets_0', "Association cannot have a bank account and own assets")
     
@@ -45,7 +45,7 @@
     %h3 Voting period
     %p Choose how long you want each vote to run for. "3 days" is good for most groups. Select a longer period if your members have infrequent internet access. "5 minutes" should only be selected by groups intending to hold most of their votes during live face-to-face or online meetings.
     - VotingPeriods.all do |vp|
-      %p
+      %p.radio
         = radio_button_tag('voting_period', vp[:value], vp[:value] == @period, :disabled => !@allow_editing)
         = label_tag("voting_period_#{vp[:value]}", vp[:name])
 
