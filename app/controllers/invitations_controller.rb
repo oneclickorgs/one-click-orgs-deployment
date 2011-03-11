@@ -13,6 +13,12 @@ class InvitationsController < ApplicationController
     if @member
       # Require acceptance of terms and conditions.
       @member.terms_and_conditions = '0'
+      
+      # Show additional warnings if member is a founding member
+      fop = co.found_organisation_proposals.last
+      unless fop && current_user.created_at >= fop.creation_date
+        @show_founding_warnings = true
+      end
     else
       # Invitation code expired, member probably already has an account.
       redirect_to(root_path)

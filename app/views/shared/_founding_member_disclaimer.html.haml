@@ -4,6 +4,11 @@
 %p
   The One Click Orgs platform is provided by the One Click Orgs Association, an unincorporated association with the members listed at
   = link_to('oneclickorgs.com/about-the-project', 'http://oneclickorgs.com/about-the-project', :target => '_blank') + '.'
+
+- if defined?(show_founding_warnings) && show_founding_warnings
+  = render(:partial => 'shared/founding_warnings')
+
+%p
   We offer you the service on the following terms
 
 %ol

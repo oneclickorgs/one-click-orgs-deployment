@@ -20,4 +20,4 @@
     = member_form.submit("Continue")
 
 - content_for(:lightbox) do
-  = render(:partial => 'shared/founding_member_disclaimer')
+  = render(:partial => 'shared/founding_member_disclaimer', :locals => {:show_founding_warnings => @show_founding_warnings})
