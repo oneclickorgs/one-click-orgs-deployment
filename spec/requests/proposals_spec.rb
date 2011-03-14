@@ -345,5 +345,27 @@ describe "Proposals" do
       Proposal.where(:proposer_member_id => @user.id).should be_empty
     end
   end
+  
+  describe "proposing the founding of the organisation" do
+    before(:each) do
+      @user = login
+      set_permission!(@user, :found_organisation_proposal, true)
+      
+      # Need at least three members to propose foundation
+      @organisation.members.make_n(2)
+      
+      @organisation.pending!
+    end
+    
+    it "should add the proposal" do
+      post(url_for(:controller => 'proposals', :action => 'propose_foundation'))
+      
+      # follow_redirect!
+      # raise @response.body
+      
+      FoundOrganisationProposal.count.should == 1
+      FoundOrganisationProposal.first.title.should =~ /test/ # The name of the org
+      FoundOrganisationProposal.first.description.should be_present
+    end
+  end
 end
-
