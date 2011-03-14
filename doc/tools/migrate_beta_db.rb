@@ -59,6 +59,9 @@ puts "Org: #{subdomain}, id: #{org_id}"
 # Clauses
 clause_pks = migrate_rows(DB1[:clauses], DB2[:clauses]) do |row|
   row[:organisation_id] = org_id
+  
+  row[:name] = "organisation_objectives" if row[:name] == "objectives"
+  
   row
 end
 puts "Migrated #{clause_pks.size} clauses."
