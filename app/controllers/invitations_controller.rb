@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
       
       # Show additional warnings if member is a founding member
       fop = co.found_organisation_proposals.last
-      unless fop && current_user.created_at >= fop.creation_date
+      if fop && @member.created_at < fop.creation_date
         @show_founding_warnings = true
       end
     else
