@@ -457,8 +457,9 @@ form.login label, form.login input {
     text-decoration: none; }
   .footer img {
     border: none;
-    margin-right: 4px;
     vertical-align: middle; }
+    .footer img.logo {
+      margin-right: 4px; }
 
 ul.constitution li input[type=hidden] {
   float: right;

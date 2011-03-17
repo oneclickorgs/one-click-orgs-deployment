@@ -47,10 +47,5 @@
           #lightbox{:style => 'display: none;'}
             = yield(:lightbox)
         %div.footer
-          = link_to(image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/', :target => '_blank')
-          = "#{OneClickOrgs.version}."
-          %a{:href => 'http://www.oneclickorgs.com/faq/'} Frequently asked questions.
-          Licensed under the
-          %a{:href => 'http://www.gnu.org/licenses/agpl.html', :target => '_blank'} AGPL.
-          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs', :target => '_blank'} Source code.
+          = render(:partial => 'shared/footer')
       = get_satisfaction_widget
