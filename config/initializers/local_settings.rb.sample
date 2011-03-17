@@ -1,5 +1,7 @@
 # Be sure to restart your server when you modify this file.
 
+require 'one_click_orgs'
+
 OneClickOrgs::Application.configure do
   # SMTP server settings
   config.action_mailer.smtp_settings = {
@@ -25,6 +27,10 @@ OneClickOrgs::Application.configure do
   #   :sender_address => %{"Your One Click Orgs Installation" <notifications@example.com>},
   #   :exception_recipients => %w{you@example.com}
 end
+
+# Uncomment to enable Google Analytics
+# OneClickOrgs::GoogleAnalytics.id = "YOUR_UID_HERE"
+# OneClickOrgs::GoogleAnalytics.domain = ".yourdomain.com"
 
 # You can generate secrets by running
 #   bundle exec rake secret

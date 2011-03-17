@@ -18,6 +18,7 @@
         = javascript_include_tag 'start_founding_vote_alert'
     = yield(:head)
     = csrf_meta_tag
+    = google_analytics_code
   %body
     %div#container
       - if current_user
