@@ -27,7 +27,12 @@ describe Constitution do
         @organisation.constitution.voting_system(:general).should ==(VotingSystems::Unanimous)
       end
       
-      it "should keep track of the previous voting system after changing it"
+      it "should keep track of the previous voting system after changing it" do
+        original_count = @organisation.clauses.where(:name => 'general_voting_system').count
+        @organisation.constitution.change_voting_system(:general, 'Unanimous')
+        @organisation.clauses.where(:name => 'general_voting_system').count.should == original_count + 1
+        @organisation.clauses.where(:name => 'general_voting_system').order('started_at DESC')[1].text_value.should == ('RelativeMajority')
+      end
     
       it "should raise ArgumentError when invalid system is specified" do
         lambda { @organisation.constitution.change_voting_system(:general, nil) }.should raise_error(ArgumentError)              

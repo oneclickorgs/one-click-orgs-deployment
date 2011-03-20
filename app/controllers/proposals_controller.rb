@@ -47,7 +47,8 @@ class ProposalsController < ApplicationController
   def propose_foundation
     proposal = co.found_organisation_proposals.new(
       :title => "Proposal to Found #{co.name}",
-      :proposer_member_id => current_user.id
+      :proposer_member_id => current_user.id,
+      :description => "Found #{co.name}."
     )
     if proposal.start
       # Founding proposal has no need for direct enactment logic during pending stage.

@@ -21,21 +21,19 @@ class FoundOrganisationProposal < Proposal
     # The existence of a failed 'Found Organisation' proposal is the only record we keep of this.
   end
   
-  def enact!(params)
+  def enact!(params={})
     # initial members are all founding members that didn't vote "no" (including 
     # members who abstained.)
     confirmed_member_ids = []
-    Vote.all.each do |v|
+    votes.each do |v|
       confirmed_member_ids << v.member_id unless v.for? == false
     end
     
     organisation.members.each do |member|
-      if confirmed_member_ids.include?(member.id)
-        member.member_class = organisation.member_classes.find_by_name('Member')
-        member.save!
-      else
-        #member.destroy
-        member.eject! # So we can still send a goodbye message
+      member.member_class = organisation.member_classes.find_by_name('Member')
+      member.save!
+      unless confirmed_member_ids.include?(member.id)
+        member.eject! # Rather than destroying, so we can still send a goodbye message
       end
     end
     

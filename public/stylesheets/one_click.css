@@ -384,7 +384,8 @@ input[type="radio"] {
   margin-bottom: 0.3em;
   margin-right: 0.6em;
   margin-top: 0.3em;
-  width: auto; }
+  width: auto;
+  border: none; }
 
 input[type="hidden"] {
   display: none; }
@@ -456,8 +457,9 @@ form.login label, form.login input {
     text-decoration: none; }
   .footer img {
     border: none;
-    margin-right: 4px;
     vertical-align: middle; }
+    .footer img.logo {
+      margin-right: 4px; }
 
 ul.constitution li input[type=hidden] {
   float: right;

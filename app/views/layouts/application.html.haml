@@ -8,6 +8,8 @@
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
+    /[if lt IE 9]
+      = stylesheet_link_tag 'ie'
     = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
     - if current_user && current_organisation.pending? && current_user.has_permission(:found_organisation_proposal)
       - if @current_organisation.can_hold_founding_vote?
@@ -16,6 +18,7 @@
         = javascript_include_tag 'start_founding_vote_alert'
     = yield(:head)
     = csrf_meta_tag
+    = google_analytics_code
   %body
     %div#container
       - if current_user
@@ -83,7 +86,7 @@
             = flash[:notice]
         - if flash[:error]
           %div#error
-            = flash[:error]
+            = simple_format(flash[:error])
         
         %div#bd
           
@@ -107,10 +110,5 @@
               #start_founding_vote_alert_lightbox.lightbox{:style => 'display: none;'}
                 = render(:partial => "shared/start_founding_vote_alert")
         %div.footer
-          = link_to image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/'
-          = "#{OneClickOrgs.version}."
-          %a{:href => 'http://www.oneclickorgs.com/faq/'} Frequently asked questions.
-          Licensed under the
-          %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
-          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
+          = render(:partial => 'shared/footer')
       = get_satisfaction_widget
