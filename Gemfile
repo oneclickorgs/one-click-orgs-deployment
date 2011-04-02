@@ -39,6 +39,8 @@ gem "exception_notification_rails3", :require => 'exception_notifier'
 
 group :development do
   gem "capistrano", "~>2.5.19"
+  gem "railroad"
+  gem "ruby-debug"
 end
 
 group :development, :test do

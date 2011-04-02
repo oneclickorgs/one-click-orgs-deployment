@@ -11,7 +11,7 @@ class Member < ActiveRecord::Base
 
   scope :active, where("active = 1 AND inducted_at IS NOT NULL")
   scope :inactive, where("active <> 1")
-  scope :pending, where("inducted_at IS NULL")
+  scope :pending, where("inducted_at IS NULL and active = 1")
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   
   validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
@@ -86,7 +86,6 @@ class Member < ActiveRecord::Base
   
   def can_vote?(proposal)
     return true if organisation.proposed?
-    
     inducted? && proposal.creation_date >= inducted_at
   end
   

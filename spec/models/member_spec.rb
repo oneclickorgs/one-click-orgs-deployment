@@ -42,6 +42,7 @@ describe Member do
     end
   end
 
+
   describe "ejection" do
     it "should toggle active flag after ejection" do
       lambda { @member.eject! }.should change(@member, :active?).from(true).to(false)
@@ -119,6 +120,21 @@ describe Member do
       it "fails validation when terms are not accepted" do
         @member.terms_and_conditions = '0'
         @member.save.should be_false
+      end
+    end
+  end
+  
+  describe "when a pending member is ejected before they are inducted" do
+    before(:each) do
+      @pending_member = Member.make(:inducted_at => nil)
+      @inducted_member = Member.make
+      @ejected_member = Member.make(:inducted_at => nil)
+      @ejected_member.eject!
+    end
+    describe "pending" do
+      it "should list the pending members" do
+        Member.pending.count.should == 1
+        Member.pending.first.id.should == @pending_member.id
       end
     end
   end
