@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110123231211) do
+ActiveRecord::Schema.define(:version => 20110402134033) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20110123231211) do
     t.integer  "organisation_id"
   end
 
+  add_index "clauses", ["organisation_id"], :name => "index_clauses_on_organisation_id"
+
   create_table "comments", :force => true do |t|
     t.integer  "author_id"
     t.integer  "proposal_id"
@@ -30,9 +32,13 @@ ActiveRecord::Schema.define(:version => 20110123231211) do
     t.datetime "updated_at"
   end
 
+  add_index "comments", ["proposal_id", "author_id"], :name => "index_comments_on_proposal_id_and_author_id"
+
   create_table "decisions", :force => true do |t|
     t.integer "proposal_id"
   end
+
+  add_index "decisions", ["proposal_id"], :name => "index_decisions_on_proposal_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -53,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20110123231211) do
     t.integer "organisation_id"
   end
 
+  add_index "member_classes", ["organisation_id"], :name => "index_member_classes_on_organisation_id"
+
   create_table "members", :force => true do |t|
     t.string   "email",               :limit => 50,                :null => false
     t.datetime "created_at"
@@ -69,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20110123231211) do
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
   end
+
+  add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
 
   create_table "organisations", :force => true do |t|
     t.string   "subdomain"
@@ -97,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20110123231211) do
   end
 
   add_index "seen_notifications", ["member_id", "notification"], :name => "index_seen_notifications_on_member_id_and_notification"
+  add_index "seen_notifications", ["member_id"], :name => "index_seen_notifications_on_member_id"
 
   create_table "settings", :force => true do |t|
     t.string   "key"
@@ -111,5 +122,7 @@ ActiveRecord::Schema.define(:version => 20110123231211) do
     t.integer  "for",         :limit => 1, :null => false
     t.datetime "created_at"
   end
+
+  add_index "votes", ["proposal_id", "member_id"], :name => "index_votes_on_proposal_id_and_member_id"
 
 end
