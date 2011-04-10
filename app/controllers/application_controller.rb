@@ -1,11 +1,36 @@
+require 'lib/one_click_orgs/setup'
+
+require 'lib/unauthenticated'
+require 'lib/not_found'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :ensure_set_up
+  before_filter :ensure_organisation_exists
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
-  before_filter :ensure_organisation_active
+  #before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
-   
+  before_filter :prepare_notifications
+  
+  # Returns the organisation corresponding to the subdomain that the current
+  # request has been made on (or just returns the organisation if the app
+  # is running in single organisation mode).
+  helper_method :current_organisation
+  def current_organisation
+    @current_organisation ||= (
+      if Setting[:single_organisation_mode]
+        Organisation.first
+      else
+        Organisation.find_by_host(request.host_with_port)
+      end
+    )
+  end
+  alias :co :current_organisation
+  
+  helper_method :current_organisation, :co
+  
   def date_format(d)
     d.to_s(:long)
   end
@@ -18,7 +43,7 @@ class ApplicationController < ActionController::Base
   # Returns true if a user is logged in; false otherwise.
   def user_logged_in?
     current_user = @current_user
-    current_user ||= session[:user] ? Member.find_by_id(session[:user]) : false
+    current_user ||= session[:user] && co ? co.members.find_by_id(session[:user]) : false
     @current_user = current_user
     current_user.is_a?(Member)
   end
@@ -39,20 +64,75 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_constitution_view
-    @organisation_name = Organisation.organisation_name
-    @objectives = Organisation.objectives
-    @assets = Organisation.assets
-    @website = Organisation.domain
+    @organisation_name = co.name
+    @objectives = co.objectives
+    @assets = co.assets
+    @website = co.domain
 
-    @period  = Clause.get_integer('voting_period')
+    @period  = co.clauses.get_integer('voting_period')
     @voting_period = VotingPeriods.name_for_value(@period)
 
-    @general_voting_system = Constitution.voting_system(:general)
-    @membership_voting_system = Constitution.voting_system(:membership)
-    @constitution_voting_system = Constitution.voting_system(:constitution)
+    @general_voting_system = co.constitution.voting_system(:general)
+    @membership_voting_system = co.constitution.voting_system(:membership)
+    @constitution_voting_system = co.constitution.voting_system(:constitution)
+  end
+  
+  # Notifications
+  
+  def prepare_notifications
+    return unless current_user
+    
+    # If you have a notification you want to show the user, put the
+    # logic in here, and the template in shared/notifications.
+    # 
+    # Call show_notification_once if you only want the user to
+    # see your notification once ever (e.g. a 'welcome to the
+    # system' notification).
+    # 
+    # Call show_notification if it doesn't matter whether the user
+    # has seen this notification before (e.g. a 'you have a new
+    # message' notification).
+    
+    if co.pending? && current_user.member_class.name == "Founder"
+      show_notification_once(:convener_welcome)
+    end
+
+    fop = co.found_organisation_proposals.last
+    
+    if co.pending? && fop && fop.closed? && !fop.accepted?
+      show_notification_once(:founding_proposal_failed)
+    end
+    
+    # Only display founding_proposal_passed notification to
+    # members who were founding members
+    if co.active? && fop && current_user.created_at <= fop.creation_date
+      show_notification_once(:founding_proposal_passed)
+    end
+  end
+  
+  def show_notification_once(notification)
+    return unless current_user
+    return if current_user.has_seen_notification?(notification)
+    show_notification(notification)
+  end
+  
+  def show_notification(notification)
+    @notification = notification
   end
   
   protected
+  
+  def ensure_set_up
+    unless OneClickOrgs::Setup.complete?
+      redirect_to(:controller => 'setup')
+    end
+  end
+  
+  def ensure_organisation_exists
+    unless current_organisation
+      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
+    end
+  end
   
   def ensure_authenticated
     if user_logged_in?
@@ -63,21 +143,24 @@ class ApplicationController < ActionController::Base
   end
   
   def ensure_member_active
-    raise Unauthenticated if current_user && !current_user.active?
-  end
-  
-  def ensure_organisation_active
-    return if Organisation.active?
-    
-    if Organisation.pending?
-      redirect_to(:controller => 'induction', :action => 'founding_meeting')
-    else
-      redirect_to(:controller => 'induction', :action => 'founder')
+    if current_user && !current_user.active?
+      session[:user] = nil
+      raise Unauthenticated
     end
   end
   
+  # def ensure_organisation_active
+  #   return if co.active?
+  #   
+  #   if co.pending?
+  #     redirect_to(:controller => 'induction', :action => 'founding_meeting')
+  #   else
+  #     redirect_to(:controller => 'induction', :action => 'founder')
+  #   end
+  # end
+  
   def ensure_member_inducted
-    redirect_to_welcome_member if Organisation.active? && current_user && !current_user.inducted?
+    redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
   end
   
   def redirect_to_welcome_member
@@ -94,11 +177,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from Unauthenticated, :with => :handle_unauthenticated
   def handle_unauthenticated
-    if Organisation.has_founding_member?
-      store_location
-      redirect_to login_path
-    else
-      redirect_to(:controller => 'induction', :action => 'founder')
-    end
+    store_location
+    redirect_to login_path
   end
 end

@@ -1,0 +1,11 @@
+- if current_user.has_permission(:freeform_proposal) and !current_organisation.proposed?
+  %h3 Propose a vote
+  = form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
+    %p
+      = f.label(:title)
+      = f.text_field :title
+    %p
+      = f.label(:description)
+      = f. text_area :description
+    %p
+    = submit_tag "Create proposal", :id => 'submit'

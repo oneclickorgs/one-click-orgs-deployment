@@ -1,0 +1,15 @@
+%h3
+  Congratulations, the Founding Vote has passed! 
+
+%p
+  = co.name
+  was formed as an Association 
+  = co.created_at.to_s(:at_on) + "."
+
+%p
+  These are the Founding Members: 
+
+%ul
+  - co.members.each do |member|
+    %li 
+      = member.name

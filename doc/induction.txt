@@ -1,0 +1,92 @@
+2010-08-21 14:34:53
+
+http://github.com/emmapersky/one-click-orgs/issues#issue/118 "Update induction process to use interface closer to core app"
+See "One Click Orgs v1.0 Requirements" on Google Docs for functional spec.
+
+A new organisation is in a "pending" state until the founder marks it as "complete".
+In this state:
+- the founder can modify the organisation/consitution without making proposals
+- the founder can add new founding members without making proposals
+- there is a prominent message that highlights this, and a button to finalise
+- founding members can log in and view the consitution, but cannot make changes
+
+Once the founder marks the organisation as "complete":
+- Changes now require a proposal
+- Members have full access to the system
+
+http://github.com/emmapersky/one-click-orgs/issues/#issue/58 "Multi-org templating: allow the one codebase to support multiple types of organisation"
+
+tbd. 
+
+(For now let's do a quick implementation of #118 and use this to highlight more
+detailed requirements for #58.)
+
+
+ =====================
+ = Induction Process =
+ =====================
+
+Member class: "founder"
+Founder has all possible perms
+Founder has new perm: "make changes without proposal"
+Founder has new perm: "create proposal to found org"
+
+Member class: "founding member"
+Founding member has only one, new perm: "vote on 'found org' proposal"
+
+new banner: "pending org" message, and "found org now" button
+-> Confirmation dialogue
+- create 'found org' proposal
+- migrate founder to 'founding member' class' to prevent org changes
+
+when 'found org' proposal failed:
+- founding members can log in, view the constitution, will see a 'founding vote failed' message
+
+when 'found org' proposal succeeded:
+- all founding members who voted 'yes' or who abstained (including the founder) get migrated to full 'member' status
+- all other founding members receive an email 'sorry that you don't want to be a part of this'
+  - do we need/want to disable these accounts?
+
+ ========
+ = code =
+ ========
+
+CURRENT STATE
+
+DONE
+* code cleanup of misc controller clause setters/getters
+  * co.clauses.get_current||new, set, save!  -> co.clauses.set_text
+* new simple induction: one form for founder and org
+* new proposal to found org
+* new perm and before_filter: found_organisation_permission
+* new state and before_filter: organisation_pending
+* various controller/model/view changes for the above
+* fixed misc typos
+* reorganise induction process according to spec
+* ...?
+
+IN PROGRESS 
+* check latest 1.0 spec and verify our wording, workflow, etc is according to spec
+* single-org mode: should probably ask for login post-signup. OR: don't ask for login after signup in multi-org mode
+* update unit tests before proceeding! (throw away old ones, write new ones)
+  * all induction tests still need to be written
+* try logging in as founding member (not founder) during pending org, proposed org, active org
+* setup form for (org, founder)
+  * should write some tests for OrganisationsController#create, and the org/member/member_class/constitution models
+  * should fix broken tests (esp. where code was removed)
+  * How can we validate Member.password? it's accepted as form value, but actually saved as crypted_password
+* BUG: after creating an org, re-visiting /organisations/new to create the next one leads to a NPE which can be resolved by destroying the current session. -> what's the best fix?
+* pending stage & transition
+  * should use different wording for "direct edit" forms
+  * foundation: should link to founding proposal in header 
+  * if founding fails: allow to retry (banner button: "start again", which resets some/all of the existing state. maybe just the org state.)
+  * ensure we're sending email: 
+    * adding a new member
+    * proposing the org
+    * activating/failing the org 
+* once org is active
+  * new members should be sent to welcome page where they get inducted (agree to constitution & EULA)
+
+NOTES
+* if request fails with "undefined method `members' for nil:NilClass" then delete current session/cookie
+

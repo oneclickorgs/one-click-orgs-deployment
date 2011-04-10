@@ -1,77 +1,328 @@
+$oco_burgundy: #9e005d
+$oco_burgundy_hover: #5e0037
+
+*
+  :margin 0
+  :padding 0
+
 body
-  :color #666
-  :font-family Myriad,Arial,Helvetica,sans-serif
-  :margin 0
-  :padding 0
+  :background-color #f6f6f6
+  :color #333
+  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  /* Base font size
+  :font-size 15px
+  /* Prevent Get Satisfaction feedback tab overlapping the container
+  :padding 0 40px
 
-.control_bar
-  :position absolute
-  :right .5em
-  :top .2em
+#container
+  :background-color #fff
+  :margin 0 auto
+  :max-width 1200px
+  :min-width 800px
+  :padding 12px
 
-h1.header
-  :color #666
-  :font-family Georgia,Times New Roman
-  :font-size 3em
-  :margin 0
-  :padding 0
-  :text-align center
-h2,
-h3,
-h4
-  :color #977c57
-
-h3
-  :font-size 1.5em
-  :margin 20px 0 0
-  :padding 0
-
-#doc,
-#hd #bd .footer
-  :margin auto
-  :width 950px
-
-br,
-form,
-form p,
-h4
+div.clear
   :clear left
 
-form input#submit
-  :margin-left 16em
+/* Browser warning
+
+#browser_warning
+  :background-color #f6f5d1
+  :border 1px solid $oco_burgundy
+  :font-size 0.9em
+  :margin 0 0 1em 0
+  :padding 0.4em 2em
+  :text-align center
+  p
+    :margin 0.4em
+
+/* Induction
+
+#overlay
+  :-webkit-border-bottom-right-radius 8px
+  :-webkit-border-bottom-left-radius 8px
+  :-moz-border-radius-bottomright 8px
+  :-moz-border-radius-bottomleft 8px
+  :border-bottom-right-radius 8px
+  :border-bottom-left-radius 8px
+  :background #E0E0AF
+  :background -moz-linear-gradient(100% 100% 90deg, #9D9D75, #E0E0AF)
+  :background -webkit-gradient(linear, left bottom, left top, from(#9D9D75), to(#E0E0AF))
+  :border-bottom 1px solid #111
+  :border-left 1px solid #111
+  :border-right 1px solid #111
+  :margin -12px 0 12px
+  a
+    :background #333
+    :background rgba(0, 0, 0, 0.4)
+    :-webkit-border-radius 2px
+    :-moz-border-radius 2px
+    :border-radius 2px
+    :border 1px solid #333
+    :color #fff
+    :margin 0 2px
+    :padding 2px 6px
+    :text-decoration none
+    :text-shadow none
+    &:hover
+      :background #444
+      :background rgba(0, 0, 0, 0.7)
+      :text-decoration none
+  form
+    input
+      :float right
+      :margin-right 8px
+  h3
+    :margin 0
+    :padding 12px 12px 6px
+    :text-shadow #fff -1px -1px 2px
+  p
+    :color #000
+    :font-size 1em
+    :line-height 1.6em
+    :margin 0
+    :padding 18px 12px
+    :text-shadow #fff -1px -1px 2px
+
+#overlay.proposed
+  :background #AFE0BC
+  :background -moz-linear-gradient(100% 100% 90deg, #779D75, #AFE0BC)
+  :background -webkit-gradient(linear, left bottom, left top, from(#779D75), to(#AFE0BC))
+
+/* Header
+
+.control_bar
+  :color #666
+  :float right
+  :font-size 0.8em
+  :line-height 1.2em
+  :padding 6px 0
+  :text-align right
+
+.control_bar a
+  :text-decoration none
+
+h1.header
+  :font-size 2.4em
+  :font-family Georgia,'Times New Roman',serif
+  :margin-bottom 4px
+  a
+    :color #000
+    :text-decoration none
+    &:hover
+      :text-decoration underline
+
+#hd
+  :border-bottom 1px solid #999
+  :margin-bottom 12px
+  :padding 6px 0
+
+#hd p
+  :color #666
+  :font-size 0.7em
+  a
+    :color #666
+    :text-decoration none
+    &:hover
+      :text-decoration underline
+
+/* Basic styles
+
+br.clear
+  :clear both
+
+h2
+  :color $oco_burgundy
+  :font-size 2em
+  
+h3
+  :font-size 1.5em
+  :margin-bottom .2em
+
+h4
+  :font-size 1.2em
 
 a
   :color #627fc4
   &:hover
-    :color #69f
+    :color #333
+    :text-decoration underline
+
+hr
+  :background-color $oco_burgundy
+  :border none
+  :color $oco_burgundy
+  :height 1px
+  :margin 0.8em 0
+
+/* Navigation
 
 #nav
-  :text-align center
+  :margin 12px 0
   li
-    :float left
+    :display inline
+    :padding-right 80px
   a
-    :border-bottom 3px #eee solid
-    :display block
-    :font-family georgia
-    :font-size 17px
-    :margin 0
-    :padding 3px 0
-    :text-decoration none !important
-    :width 170px
+    :text-decoration none
     &:hover
-      :border-bottom 3px #cdeb8b solid
-      :text-decoration none
+      :text-decoration underline
 
 #navitem
   :display inline
   :margin 0
   :padding 0
 
+/* Header notifications
+
+#notice, #error
+  :font-size 0.8em
+  :margin 12px 0
+  :padding 12px
+
 #notice
+  :background-color #C9DCC0
   :clear both
 
+#error
+  :background-color #DF4242
+  :color #fff
+
+/* Body
+
+#bd
+  a
+    &.cancel
+      :color #f00
+      :font-size 0.9em
+  p
+    :color #333
+    :margin-bottom 12px
+    &.helper
+      :font-size 0.9em
+  ul, ol
+    :margin 0 0 1em 2em
+    li
+      :line-height 1.6em
+  .section
+    :background #f5f5fe
+    :border 1px solid #999
+    :margin-bottom 18px
+    :padding 12px
+    p.explanation
+      :color #666
+      :font-size 0.8em
+  .open-proposals
+    h4
+      :margin 0.8em 0 0.4em
+    span.time-ends
+      :color #666
+      :font-size 0.8em
+      :font-weight normal
+    p.votes
+      :float left
+      :margin-right 24px
+  div.description
+    :border-left 1px dashed #333
+    :margin 1em 0.5em
+    :padding 0.5em 1em
+    :font-size .8em
+    &.missing
+      :border-left 0
+      p
+        :color #666
+    p
+      :margin 0.4em 0
+
+img.gravatar
+  :-webkit-border-radius 2px
+  :-moz-border-radius 2px
+  :border-radius 2px
+  :margin-left 3px
+  :margin-right 3px
+  :vertical-align middle
+
+#bd
+  .comment
+    :background #f6f6f6
+    :border 1px solid #666
+    :margin 0.8em 0
+    :padding 0.4em
+    :width 60%
+    p
+      :margin 0 0 0.6em 1em
+    p.attribution
+      :margin 0 0 0.6em 0
+
+/* Set up a new organisation
+
+body.setup
+  h1.header
+    :margin-bottom 12px
+    img
+      :vertical-align middle
+  #bd
+    h2
+      :color $oco_burgundy
+    input, label
+      :width 90%
+    p.explanation
+      :color #666
+      :font-size 0.8em
+      :margin -12px 0 4px 20px
+      :padding 0.2em
+    div.left
+      :float left
+      :width 45%
+    div.right
+      :float right
+      :width 51%
+      textarea
+        :height 3em
+        :width 90%
+      input[type="submit"]
+        :font-size 1.1em
+        :margin 1em auto 0
+        :padding 0.8em 0
+        :width 16em
+    #subdomain_wrapper
+      :border 1px solid #000
+      :margin 0 4px 10px 20px
+      :padding .4em
+      :width 90%
+      input
+        :border 0
+        :margin-top 2px
+        :padding 0
+        :width 270px
+        :width 62%
+      #base_domain
+        :color #999
+        :font-size .9em
+        :margin-left -3px
+
+/* Constitution page highlighting
+
+span.dynamic
+  :background-color #f3f3f3
+  :color #9d8942
+  :padding 2px
+
+/* Tables
+
 table
-  :border 1px #ccc solid !important
+  :border-collapse collapse
+  :margin 1em 0 2em 0
+  :text-align left
+  th
+    :border-bottom 1px dashed #ccc
+    :font-weight bold
+    :white-space nowrap
+  th, td
+    :padding 0.4em 0.6em
+  td.timestamp
+    :white-space nowrap
+  tr.even td
+    :background #e9e9f4
 
 table.proposals, table.decisions, table.failed_proposals
   :border 1px #042 solid
@@ -86,62 +337,82 @@ table.proposals, table.decisions, table.failed_proposals
     :margin auto
     :width 7em
   td.proposal_ends_in
-    :text-align :center
+    :text-align center
     :width 14em
-
-th
-  :background #abc969 !important
-  :color #fff !important
-  :font-family georgia,times new roman
-  :font-weight 400
-  :padding 3px 0
-
-tr.even
-  :background #eee !important
-
-tr.odd
-  :background #fff !important
-
-tr:hover td
-  :background #ffc
 
 tr.vote_for
   :background-color #6bba70
-  :color #ffffff
+  :color #fff
   &:hover
     :background-color #499850
 
 tr.vote_against
   :background-color #b02b2c
-  :color #ffffff
+  :color #fff
   &:hover
     :background-color #a0090a
 
 tr.vote_in_progress
   :background-color #c79810
-  :color #ffffff
+  :color #fff
   &:hover
     :background-color #a57600
 
 tr.vote_for, tr.vote_against, tr.vote_in_progress
   a
-    :color #ffffff
+    :color #fff
 
-div.description
-  :font-size .8em
-  :padding-left 1em
-  :padding-right 1em
-  :padding-top 1em
-  :text-align :justify
+/* Forms
 
-label, input, textarea
+label, input, textarea, select
   :display block
-  :float left
+  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  :font-size 0.9em
   :margin-bottom 10px
+  :margin-left 20px
+  :padding 0.2em
   :width 30em
 
-input[type=hidden]
-  :display inline
+label
+  :padding-right 1em
+  :margin-bottom 2px
+
+input, textarea
+  :border 1px solid #000
+  :padding 0.4em
+
+input[type="button"], input[type="submit"], button
+  :-webkit-border-radius 3px
+  :-moz-border-radius 3px
+  :border-radius 3px
+  :padding 0.3em 1.2em 0.2em 1.2em
+  :width auto
+
+input[type="button"], button
+  :background-color #eee
+  &:hover
+    :background-color #ccc
+
+input[type="submit"]
+  :background-color $oco_burgundy
+  :color #fff
+  :cursor pointer
+  &:hover
+    :background-color $oco_burgundy_hover
+
+// This declaration is repeated in ie.sass with an IE-compatible selector
+// and some layout tweaks; make sure any important changes go there too.
+input[type="radio"]
+  :clear both
+  :float left
+  :margin-bottom 0.3em
+  :margin-right 0.6em
+  :margin-top 0.3em
+  :width auto
+  :border none
+
+input[type="hidden"]
+  :display none
 
 input.checkbox
   :display inline
@@ -149,25 +420,76 @@ input.checkbox
   :width auto
   :float none
 
-label
-  :padding-right 1em
-  :text-align right
-  :width 10em
+input.button-form-show
+  :cursor pointer
+  :display none
+  :float left
+  :margin 0 20px 10px 0
+  &.clicked
+    :background-color #ccc
 
 textarea
   :height 10em
-  :width 30em
+
+select
+  :padding 0
+
+div.open-proposals form
+  :clear none
+  :float left
+  :margin -0.2em 0 0
+
+div.open-proposals form input[type="submit"]
+  :padding 0.1em 1em 0.05em 1em
+
+input#organisation_subdomain
+  :float left
+  :margin-right 4px
+  :text-align right
+
+form.login
+  :margin-left 1em
+
+form.login label, form.login input
+  :margin-left 0
+
+/* Settings
+
+#settings_fields
+  h3
+    :margin-top 1em
+  p
+    :margin 0.4em 0
+  label
+    :width 84%
+  input[type="submit"]
+    :margin-top 2em
+
+/* Members
+
+#member_info
+  :margin 1em 0
+  img
+    :float right
+
+/* Footer
 
 .footer
-  :font-size .7em
-  :margin-top 20px
-  :text-align center
+  :border-top 1px solid #000
   :clear both
+  :color #666
+  :font-size .7em
+  :margin-top 1em
+  :padding 1em
+  a
+    :text-decoration none
+  img
+    :border none
+    :vertical-align middle
+    &.logo
+      :margin-right 4px
 
-ul.constitution li
-  :margin 0 0 0.5em
-  :clear right
-  
+ul.constitution li  
   input[type=hidden]
     :float right
     :width 0
@@ -189,3 +511,46 @@ form div.constitution_proposal input#submit
 
 ul.founding_members li
   :clear left
+
+dl.settings
+  dt
+    :font-weight bold
+    :border-top 1px solid #042
+    :margin-top 1em
+    :clear right
+
+div.field_with_errors input
+  :border 1px solid red
+
+/* Lightbox
+
+#lightbox_screen
+  :background-color black
+  :opacity 0.7
+  :position fixed
+  :top 0
+  :left 0
+  :width 100%
+  :height 100%
+  :z-index 10
+
+#lightbox, .lightbox
+  :background #fff
+  :border 2px solid $oco_burgundy
+  :font-size 0.9em
+  :left 16%
+  :padding 1%
+  :position absolute
+  :width 66%
+  :z-index 11
+  p
+    button
+      :float right
+      :margin 0 0.4em
+  p#loading
+    :display none
+    :float left
+    :font-weight bold
+    :margin 0 1em 0
+    img
+      :margin 0 1em 0 0

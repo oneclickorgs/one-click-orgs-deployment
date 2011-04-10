@@ -1,16 +1,4 @@
 module ApplicationHelper
-  def oco_domain
-    Organisation.domain or raise "domain not defined"
-  end
-  
-  def absolute_oco_url(name)
-    oco_domain.concat(url_for(name))
-  end
-  
-  def absolute_oco_resource(name)
-    oco_domain.concat(url_for(name))
-  end
-  
   def get_satisfaction_widget
     raw <<-EOC
       <script type="text/javascript" charset="utf-8">
@@ -28,5 +16,32 @@ module ApplicationHelper
         var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
       </script>
     EOC
+  end
+  
+  def google_analytics_code
+    return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
+    raw <<-EOC
+      <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '#{OneClickOrgs::GoogleAnalytics.id}']);
+        _gaq.push(['_setDomainName', '#{OneClickOrgs::GoogleAnalytics.domain}']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+      </script>
+    EOC
+  end
+  
+  def error_messages_for(object)
+    messages = object.errors.full_messages.map do |message|
+      content_tag(:li, message)
+    end.join
+    content_tag(:ul, messages.html_safe, :class => 'errors')
   end
 end

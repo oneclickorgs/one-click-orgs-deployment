@@ -36,7 +36,7 @@ module VotingSystems
   
   class RelativeMajority < VotingSystem
     def self.description(options={})
-      "More supporting votes than opposing votes"
+      "Simple majority: decisions need more supporting votes than opposing votes"
     end
     
     def self.long_description(options={})
@@ -55,7 +55,7 @@ module VotingSystems
   
   class Veto < VotingSystem
     def self.description(options={})
-      "No opposing votes"
+      "Nobody opposes: decisions blocked if there are any opposing votes"
     end
     
     def self.long_description(options={})
@@ -103,7 +103,7 @@ module VotingSystems
   
   class AbsoluteMajority < Majority
     def self.description(options={})
-      "Supporting votes from more than half the members"
+      "Absolute majority: decisions need supporting votes from more than 50% of members"
     end
     
     def self.long_description(options={})
@@ -116,7 +116,7 @@ module VotingSystems
   
   class AbsoluteTwoThirdsMajority < Majority
     def self.description(options={})
-      "Supporting votes from more than two thirds of the members"
+      "Two thirds majority: decisions need supporting votes from more than 66% of members"
     end
     
     def self.long_description(options={})
@@ -129,7 +129,7 @@ module VotingSystems
   
   class Unanimous < Majority
     def self.description(options={})
-      "Supporting votes from every single member"
+      "Unanimous: decisions need supporting votes from 100% of members"
     end
     
     def self.long_description(options={})
@@ -138,6 +138,28 @@ module VotingSystems
     end
     
     self.fraction_needed = 1.0
+  end
+  
+  class Founding < VotingSystem
+    def self.description(options={})
+      "At least three supporting votes"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "at least three votes#{are_received} during the Voting Period."
+    end
+    
+    def self.can_be_closed_early?(proposal)
+      # We need to give all the founding members an opportunity to vote,
+      # so only close this proposal early if every member has cast a
+      # vote.
+      proposal.total_votes >= proposal.member_count
+    end
+    
+    def self.passed?(proposal)
+      proposal.votes_for >= 3
+    end
   end
   
   def self.all(&block)

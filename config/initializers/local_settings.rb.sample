@@ -1,13 +1,11 @@
 # Be sure to restart your server when you modify this file.
 
+require 'one_click_orgs'
+
 OneClickOrgs::Application.configure do
   # SMTP server settings
   config.action_mailer.smtp_settings = {
-    :address        => 'smtp.gmail.com',
-    :port           => '587',
-    :user_name      => 'info@oneclickor.gs',
-    :password       => 'XXXX',
-    :authentication => :plain
+    :address        => 'localhost'
   }
   
   # Your secret key for verifying the integrity of signed cookies.
@@ -16,13 +14,23 @@ OneClickOrgs::Application.configure do
   # no regular words or you'll be exposed to dictionary attacks.
   config.secret_token = 'YOUR_SECRET_HERE'
   
-  config.session_store :cookie_store, :key => '_oneclickorgs_session'
+  config.session_store :cookie_store, :key => '_oneclickorgs_session', :domain => :all
   
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with "rake db:sessions:create")
   # config.session_store :active_record_store
+  
+  # Deliver an email alert when an exception is raised.
+  # config.middleware.use ExceptionNotifier,
+  #   :email_prefix => "[Exception] ",
+  #   :sender_address => %{"Your One Click Orgs Installation" <notifications@example.com>},
+  #   :exception_recipients => %w{you@example.com}
 end
+
+# Uncomment to enable Google Analytics
+# OneClickOrgs::GoogleAnalytics.id = "YOUR_UID_HERE"
+# OneClickOrgs::GoogleAnalytics.domain = ".yourdomain.com"
 
 # You can generate secrets by running
 #   bundle exec rake secret

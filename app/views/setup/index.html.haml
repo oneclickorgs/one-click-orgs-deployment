@@ -1,0 +1,20 @@
+%h2 Set up this One Click Orgs installation
+
+%h3 To host multiple organisations:
+
+= form_tag(:action => 'create_domains') do
+  %p Confirm or edit the base domain for this installation.
+  %p
+    = label_tag('base_domain', "Base domain")
+    = text_field_tag('base_domain', @base_domain)
+  %p Confirm or edit the sign-up domain for this installation.
+  %p
+    = label_tag('signup_domain', "Sign-up domain")
+    = text_field_tag('signup_domain', @signup_domain)
+  %p
+    = submit_tag("Save domains")
+
+%h3 Or, to host a single organisation:
+
+= form_tag(:action => 'set_single_organisation_mode') do
+  %p= submit_tag("Run OCO in single organisation mode")

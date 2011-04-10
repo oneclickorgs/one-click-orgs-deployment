@@ -2,9 +2,9 @@ Basic get-you-up-and-running instructions.
 
 REQUIREMENTS
 
- * Ruby 1.8.7 or 1.9.1
- * RubyGems >= 1.3.6
- * bundler gem ~> 1.0.0.rc.1 (install with gem install bundler --pre)
+ * Ruby 1.9.2 (recommended) or 1.8.7
+ * RubyGems ~> 1.3.7
+ * bundler gem ~> 1.0.0.rc.6 (install with gem install bundler --pre)
  * MySQL, including client libraries (e.g. libmysqlclient-dev on Debian)
 
 Additionally, on Debian:
@@ -31,7 +31,7 @@ SETUP
 
 1. Grab the source:
 
-  $ git clone git://github.com/emmapersky/one-click-orgs.git
+  $ git clone git://github.com/oneclickorgs/one-click-orgs.git
   $ cd one-click-orgs
 
 2. Install the required gems using Bundler:
@@ -40,11 +40,11 @@ SETUP
 
 or
 
-  $ bundle install vendor/bundle --disable-shared-gems # vendors everything, no system gems
+  $ bundle install --path vendor/bundle # vendors everything, no system gems
 
 3. Create your local config files:
 
-  $ bundle exec rake oco:generate_config
+  $ rake oco:generate_config
 
 4. Set up your database connection settings, by editing config/database.yml as desired.
 
@@ -57,7 +57,7 @@ If your database user doesn't have CREATE DATABASE permissions, create the datab
 
 5. (Create and) migrate the database:
 
-  $ bundle exec rake db:setup
+  $ rake db:setup
 
 RUNNING
 
@@ -67,15 +67,48 @@ RUNNING
 
 2. (Optional) In another shell, start the job server (which sends emails and closes proposals):
 
-  $ bundle exec script/delayed_job run       # run in foreground
-  $ bundle exec script/delayed_job start     # start as daemon (check log/delayed_job.log)
-  $ bundle exec rails jobs:work    # forground, from rake
-  $ bundle exec rails jobs:clear   # clear queue
+  $ script/delayed_job run       # run in foreground
+  $ script/delayed_job start     # start as daemon (check log/delayed_job.log)
+  $ rake jobs:work    # forground, from rake
+  $ rake jobs:clear   # clear queue
 
 3. Visit http://localhost:3000/
+
+You can just choose 'single organisation mode', or if you want to test multi-tenancy mode, you'll need lines in your hosts file point yourorganisation.localhost, etc. to 127.0.0.1.
+
+UPDATING
+
+When you pull updates from the repository, you may need to update your gem bundle (if Gemfile.lock has changed) and/or migrate your database (if db/migrate has changed):
+
+$ bundle install
+$ rake db:migrate
+
+These commands will safely no-op if no changes are necessary.
 
 CONTRIBUTING
 
 Before you submit any patches make sure that no tests fail:
 
-  $ bundle exec rake spec
+  $ rake spec
+
+To submit a patch, you have several options:
+
+a. Put your changes in a branch with an appropriate name, and push it to your GitHub repository, and send a pull request to chrismear.
+
+b. Open or reply to an issue in the issue tracker, and tell us where to find your commits:
+
+http://github.com/oneclickorgs/one-click-orgs/issues
+
+c. Send a patch to the mailing list:
+
+http://groups.google.co.uk/group/oneclickorgs-devspace
+
+CONTACT
+
+There is a mailing list:
+
+http://groups.google.co.uk/group/oneclickorgs-devspace
+
+and an IRC channel:
+
+#oneclickorgs on irc.freenode.net

@@ -1,6 +1,8 @@
 .bundle
 .DS_Store
 ._*
+.rvmrc
+.*.swp
 config/database.yml
 config/initializers/local_settings.rb
 coverage/*
@@ -11,3 +13,5 @@ tmp/**/*
 vendor/bundle/*
 vendor/gems/*
 doc/app
+tmp/restart.txt
+.sass-cache

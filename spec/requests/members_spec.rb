@@ -5,6 +5,7 @@ describe "everything" do
     stub_constitution!
     stub_organisation!
     login
+    set_permission!(default_user, :membership_proposal, true)
   end
   
   describe "/members" do
@@ -19,8 +20,7 @@ describe "everything" do
       end
 
       it "contains a list of members" do
-        # pending
-        @response.should have_xpath("//ol")
+        @response.should have_selector("table.members")
       end
     
     end
@@ -32,15 +32,14 @@ describe "everything" do
       end
     
       it "has a list of members" do
-        # pending
-        @response.should have_xpath("//ol/li")
+        @response.should have_selector("table.members tr")
       end
     end
   
     describe "a successful POST" do
       before(:each) do
 
-        post(members_path, { :member => { :id => nil, :email=>'anemail@example.com', :name=>"test" }})
+        post(members_path, { :member => Member.make })
       end
       
       it "redirects to resource(:members)" do
@@ -56,24 +55,24 @@ describe "everything" do
   describe "/members/1" do 
     describe "a successful DELETE, given a member exists" do
       before(:each) do
-        @member = Member.make
+        @member = @organisation.members.make
       end
       
       it "should create the proposal to eject the member" do
-        EjectMemberProposal.should_receive(:serialize_parameters).with('id' => @member.id).and_return(@serialized_parameters = mock('serialized parameters'))
         EjectMemberProposal.should_receive(:new).with(
-          :parameters => @serialized_parameters,
+          :parameters => {'id' => @member.id},
           :title => "Eject #{@member.name} from test",
           :proposer_member_id => @user.id
         ).and_return(@proposal = mock('proposal'))
-        @proposal.should_receive(:save).and_return(true)
+        @proposal.should_receive(:start).and_return(true)
+        @proposal.should_receive(:accepted?).and_return(false)
         
         make_request
       end
 
       it "should redirect to the control center" do
         make_request
-        @response.should redirect_to('/one_click/control_centre')
+        @response.should redirect_to('/')
       end
       
       def make_request
@@ -84,7 +83,7 @@ describe "everything" do
 
   describe "/members/1/edit, given a member exists" do
     before(:each) do
-      @member = Member.make
+      @member = @organisation.members.make
     end
   
     it "responds successfully if resource == current_user" do
@@ -102,7 +101,8 @@ describe "everything" do
 
   describe "/members/1, given a member exists" do
     before(:each) do
-      @member = Member.make
+      @member = @organisation.members.make
+      set_permission!(@user, :membership_proposal, true)
     end
     
     describe "GET" do
