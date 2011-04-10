@@ -82,7 +82,7 @@ class MembersController < ApplicationController
     if @member.update_attributes(member)
        redirect_to member_path(@member), :notice => "Account updated."
     else
-      flash[:error] = "There was a problem with your new details."
+      flash.now[:error] = "There was a problem with your new details."
       render(:action => :edit)
     end
   end

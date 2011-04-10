@@ -17,7 +17,7 @@ class MemberSessionsController < ApplicationController
       flash[:notice] = "You are logged in"
       redirect_back_or_default
     else
-      flash[:error] = "The email address or password entered were incorrect"
+      flash.now[:error] = "The email address or password entered were incorrect"
       render(:action => :new)
     end
   end

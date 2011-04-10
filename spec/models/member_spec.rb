@@ -19,6 +19,27 @@ describe Member do
       @member.should be_active
     end
   end
+  
+  describe "validation" do
+    it "requires a email address" do
+      @member = Member.make_unsaved(:email => "")
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
+    end
+    
+    it "requires a reasonable email address" do
+      @member = Member.make_unsaved(:email => "bob")
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
+      
+      @member.email = "bob@example"
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
+      
+      @member.email = "bob@example.com"
+      @member.should be_valid
+    end
+  end
 
   it "should not allow votes on members inducted after proposal was made" do
     new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
@@ -75,7 +96,7 @@ describe Member do
     end
   end
   
-  describe " terms and conditions acceptance" do
+  describe "terms and conditions acceptance" do
     context "when creating a new member" do
       before(:each) do
         @member = Member.make_unsaved
