@@ -35,7 +35,7 @@ class PasswordResetsController < ApplicationController
       flash[:notice] = "Your new password has been saved."
       redirect_to(root_path)
     else
-      flash[:error] = "There was a problem with your new details."
+      flash.now[:error] = "There was a problem with your new details."
       render(:action => :edit)
     end
   end
