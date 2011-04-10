@@ -10,8 +10,8 @@ role :web, "us1.okfn.org"                          # Your HTTP server, Apache/et
 role :app, "us1.okfn.org"                          # This may be the same as your `Web` server
 role :db,  "us1.okfn.org", :primary => true # This is where Rails migrations will run
 
-set :deploy_to, "/home/oneclickorgs/var/www/gov.oneclickorgs.com"
-set :branch,    "gov-oneclickorgs-com"
+set :deploy_to, "/home/oneclickorgs/var/www/oco.oneclickorgs.com"
+set :branch,    "oneclickorgs-com"
 
 after 'deploy:update_code' do
   run <<-END
