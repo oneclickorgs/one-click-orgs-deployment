@@ -235,6 +235,10 @@ hr {
     line-height: 1.4em; }
   #bd section.description ul, #bd section.description ol {
     margin: 0.4em 2em; }
+  #bd section.description blockquote {
+    border-left: 1px solid #666666;
+    margin-left: 2em;
+    padding-left: 1em; }
 
 img.gravatar {
   -webkit-border-radius: 2px;
