@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20110523104155) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
     t.string   "state"
   end
 

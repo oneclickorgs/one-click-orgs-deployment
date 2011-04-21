@@ -1,0 +1,3 @@
+class Association < Organisation
+  
+end
