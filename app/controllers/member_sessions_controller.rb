@@ -6,6 +6,7 @@ class MemberSessionsController < ApplicationController
   skip_before_filter :prepare_notifications
   
   def new
+    @page_title = "Login"
     redirect_to root_path if current_user
   end
   

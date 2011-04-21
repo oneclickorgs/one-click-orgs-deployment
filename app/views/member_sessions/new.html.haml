@@ -1,7 +1,7 @@
 %div
   = form_tag(member_session_path, :class => 'login') do
     %h2
-      Login
+      = @page_title
     %p
       = label_tag(:email)
       = text_field_tag(:email)
