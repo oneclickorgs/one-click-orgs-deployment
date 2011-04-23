@@ -25,6 +25,7 @@ gem "mysql"
 
 gem "haml", "~>3.0.18"
 gem "rdiscount"
+gem "pdfkit"
 
 gem "daemons", "~>1.0.10"
 

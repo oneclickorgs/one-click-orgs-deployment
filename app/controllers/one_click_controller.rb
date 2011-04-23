@@ -8,6 +8,17 @@ class OneClickController < ApplicationController
   def constitution
     @page_title = "Constitution"
     prepare_constitution_view
+    
+    respond_to do |format|
+      format.html
+      format.pdf {
+        html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
+        kit = PDFKit.new(html)
+        send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
+          :type => 'application/pdf', :disposition => 'inline')        
+        return
+      }
+    end
   end
   
   def dashboard
