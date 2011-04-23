@@ -14,6 +14,7 @@ class OneClickController < ApplicationController
       format.pdf {
         html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
         kit = PDFKit.new(html)
+        kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
         send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
           :type => 'application/pdf', :disposition => 'inline')        
         return
