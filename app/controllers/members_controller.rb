@@ -13,7 +13,34 @@ class MembersController < ApplicationController
     @members = co.members.active
     @pending_members = co.members.pending
     @new_member = co.members.new
-    respond_with @members
+    
+    respond_to do |format|
+      format.html
+      format.pdf {
+        # If wkhtmltopdf is working...
+        begin
+          html = render_to_string(:layout => false , :action => "index.pdf.haml")
+        
+          # Call PDFKit with any wkhtmltopdf --extended-help options
+          kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
+        
+          # Add our CSS file
+          kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
+
+          send_data(kit.to_pdf, :filename => "#{@organisation_name} Members.pdf",
+            :type => 'application/pdf', :disposition => 'inline')
+            # disposition can be set to `attachment` to force a download
+          
+          return
+        
+        # Fail if it's not installed
+        rescue
+          redirect_to(:action => 'members')
+        
+        end
+      }
+    end
+    
   end
 
   def show

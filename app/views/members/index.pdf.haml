@@ -1,0 +1,16 @@
+%h1
+  = @current_organisation.name
+  Members
+
+%table.members
+  %tr
+    %th Name
+    %th Email address
+    %th Last login
+  - for member in @members
+    %tr
+      %td= member.name
+      %td= member.email
+      %td
+        - if member.last_logged_in_at
+          = member.last_logged_in_at.to_s(:long)
