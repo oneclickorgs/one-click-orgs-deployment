@@ -30,6 +30,8 @@ class OneClickController < ApplicationController
         
         # Fail if it's not installed
         rescue
+          flash[:error] = "The software for generating PDFs (wkhtmltopdf) isn't installed. \
+            Contact the maintainer of your One Click Orgs installation for help."
           redirect_to(:action => 'constitution')
         
         end

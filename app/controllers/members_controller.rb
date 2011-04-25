@@ -35,7 +35,9 @@ class MembersController < ApplicationController
         
         # Fail if it's not installed
         rescue
-          redirect_to(:action => 'members')
+          flash[:error] = "The software for generating PDFs (wkhtmltopdf) isn't installed. \
+            Contact the maintainer of your One Click Orgs installation for help."
+          redirect_to(:action => 'index')
         
         end
       }
