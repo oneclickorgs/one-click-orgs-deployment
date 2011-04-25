@@ -9,34 +9,7 @@ class OneClickController < ApplicationController
     @page_title = "Constitution"
     prepare_constitution_view
     
-    respond_to do |format|
-      format.html
-      format.pdf {
-        # If wkhtmltopdf is working...
-        begin
-          html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
-        
-          # Call PDFKit with any wkhtmltopdf --extended-help options
-          kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
-        
-          # Add our CSS file
-          kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
-
-          send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
-            :type => 'application/pdf', :disposition => 'inline')
-            # disposition can be set to `attachment` to force a download
-          
-          return
-        
-        # Fail if it's not installed
-        rescue
-          flash[:error] = "The software for generating PDFs (wkhtmltopdf) isn't installed. \
-            Contact the maintainer of your One Click Orgs installation for help."
-          redirect_to(:action => 'constitution')
-        
-        end
-      }
-    end
+    generate_responses('Constitution')
   end
   
   def dashboard

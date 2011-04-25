@@ -77,6 +77,40 @@ class ApplicationController < ActionController::Base
     @constitution_voting_system = co.constitution.voting_system(:constitution)
   end
   
+  # Making PDFs
+  
+  def generate_responses(filename = 'Download')
+    @organisation_name = co.name
+    respond_to do |format|
+      format.html
+      format.pdf {
+        # If wkhtmltopdf is working...
+        begin
+          html = render_to_string(:layout => false)
+        
+          # Call PDFKit with any wkhtmltopdf --extended-help options
+          kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
+        
+          # Add our CSS file
+          kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
+
+          send_data(kit.to_pdf, :filename => "#{@organisation_name} #{filename}.pdf",
+            :type => 'application/pdf', :disposition => 'inline')
+            # disposition can be set to 'attachment' to force a download
+          
+          return
+        
+        # Fail if it's not installed
+        rescue
+          flash[:error] = "The software for generating PDFs (wkhtmltopdf) isn't installed. \
+            Contact the maintainer of your One Click Orgs installation for help."
+          redirect_to(root_path)
+        
+        end
+      }
+    end
+  end
+  
   # Notifications
   
   def prepare_notifications
