@@ -12,19 +12,27 @@ class OneClickController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf {
-        html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
+        # If wkhtmltopdf is working...
+        begin
+          html = render_to_string(:layout => false , :action => "constitution.pdf.haml")
         
-        # Call PDFKit with any wkhtmltopdf --extended-help options
-        kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
+          # Call PDFKit with any wkhtmltopdf --extended-help options
+          kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
         
-        # Add our CSS file
-        kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
+          # Add our CSS file
+          kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
 
-        send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
-          :type => 'application/pdf', :disposition => 'inline')
-          # disposition can be set to `attachment` to force a download
+          send_data(kit.to_pdf, :filename => "#{@organisation_name} Constitution.pdf",
+            :type => 'application/pdf', :disposition => 'inline')
+            # disposition can be set to `attachment` to force a download
+          
+          return
         
-        return
+        # Fail if it's not installed
+        rescue
+          redirect_to(:action => 'constitution')
+        
+        end
       }
     end
   end
