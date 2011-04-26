@@ -21,6 +21,6 @@
     by making
     = link_to 'amendments', amendments_path
   %p
-    = link_to 'Download a PDF of the constitution', 'constitution.pdf'
+    = link_to image_tag('pdf-icon-24.png', :height => '24', :width => '24', :alt => 'PDF icon', :class => 'pdf') + 'Download a PDF of the constitution', 'constitution.pdf'
 
 =render :partial => 'shared/constitution'

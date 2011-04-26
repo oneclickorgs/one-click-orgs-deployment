@@ -248,6 +248,10 @@ img.gravatar {
   margin-right: 3px;
   vertical-align: middle; }
 
+img.pdf {
+  margin-right: 6px;
+  vertical-align: middle; }
+
 #bd .comment {
   background: #f6f6f6;
   border: 1px solid #666666;
