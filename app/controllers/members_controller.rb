@@ -14,7 +14,12 @@ class MembersController < ApplicationController
     @pending_members = co.members.pending
     @new_member = co.members.new
     
-    generate_responses('Members')
+    respond_to do |format|
+      format.html
+      format.pdf {
+        generate_pdf(@page_title)
+      }
+    end
   end
 
   def show
