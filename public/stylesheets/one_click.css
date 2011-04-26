@@ -266,13 +266,13 @@ body.setup h1.header {
     vertical-align: middle; }
 body.setup #bd h2 {
   color: #a2005a; }
-body.setup #bd input, body.setup #bd label {
-  width: 90%; }
 body.setup #bd p.explanation {
   color: #666666;
   font-size: 0.8em;
   margin: -12px 0 4px 20px;
   padding: 0.2em; }
+body.setup #bd div.left input, body.setup #bd div.left label, body.setup #bd div.right input, body.setup #bd div.right label {
+  width: 90%; }
 body.setup #bd div.left {
   float: left;
   width: 45%; }
