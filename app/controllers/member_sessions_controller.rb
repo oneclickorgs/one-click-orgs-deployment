@@ -15,7 +15,7 @@ class MemberSessionsController < ApplicationController
     if current_user
       current_user.update_attribute(:last_logged_in_at, Time.now.utc)
       
-      flash[:notice] = "You are logged in"
+      flash[:notice] = "Welcome back, #{current_user.name}!"
       redirect_back_or_default
     else
       flash.now[:error] = "The email address or password entered were incorrect"

@@ -1,7 +1,5 @@
 %h2 Voting & proposals
 
-%p= "Welcome back, #{current_user.name}!" if current_user
-
 - if current_organisation.active? || current_organisation.proposed?
   .section.open-proposals
     %h3 Votes in progress
