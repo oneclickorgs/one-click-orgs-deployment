@@ -1,7 +1,12 @@
 // Colours
+// See also: https://github.com/oneclickorgs/one-click-orgs/wiki/Design-guide
 
-$oco_burgundy: #9e005d
-$oco_burgundy_hover: #5e0037
+$oco_burgundy: #A2005A
+$oco_burgundy_hover: #5E0037
+$black: #000
+$dark_grey: #6C6C6C
+$blue: #627FC4
+$pale_blue: #E0E8EF
 
 // Shorthand
 
@@ -107,9 +112,8 @@ div.clear
   :line-height 1.2em
   :padding 6px 0
   :text-align right
-
-.control_bar a
-  :text-decoration none
+  a
+    :text-decoration none
 
 h1.header
   :font-size 2.4em
@@ -133,6 +137,7 @@ h1.header
     :color #666
     :text-decoration none
     &:hover
+      :color $oco_burgundy
       :text-decoration underline
 
 /* Basic styles
@@ -152,7 +157,7 @@ h4
   :font-size 1.2em
 
 a
-  :color #627fc4
+  :color $blue
   &:hover
     :color #333
     :text-decoration underline

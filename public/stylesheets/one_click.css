@@ -24,7 +24,7 @@ div.clear {
 /* Browser warning */
 #browser_warning {
   background-color: #f6f5d1;
-  border: 1px solid #9e005d;
+  border: 1px solid #a2005a;
   font-size: 0.9em;
   margin: 0 0 1em 0;
   padding: 0.4em 2em;
@@ -91,9 +91,8 @@ div.clear {
   line-height: 1.2em;
   padding: 6px 0;
   text-align: right; }
-
-.control_bar a {
-  text-decoration: none; }
+  .control_bar a {
+    text-decoration: none; }
 
 h1.header {
   font-size: 2.4em;
@@ -117,6 +116,7 @@ h1.header {
     color: #666666;
     text-decoration: none; }
     #hd p a:hover {
+      color: #a2005a;
       text-decoration: underline; }
 
 /* Basic styles */
@@ -124,7 +124,7 @@ br.clear {
   clear: both; }
 
 h2 {
-  color: #9e005d;
+  color: #a2005a;
   font-size: 2em; }
 
 h3 {
@@ -141,9 +141,9 @@ a {
     text-decoration: underline; }
 
 hr {
-  background-color: #9e005d;
+  background-color: #a2005a;
   border: none;
-  color: #9e005d;
+  color: #a2005a;
   height: 1px;
   margin: 0.8em 0; }
 
@@ -265,7 +265,7 @@ body.setup h1.header {
   body.setup h1.header img {
     vertical-align: middle; }
 body.setup #bd h2 {
-  color: #9e005d; }
+  color: #a2005a; }
 body.setup #bd input, body.setup #bd label {
   width: 90%; }
 body.setup #bd p.explanation {
@@ -397,7 +397,7 @@ input[type="button"], button {
     background-color: #cccccc; }
 
 input[type="submit"] {
-  background-color: #9e005d;
+  background-color: #a2005a;
   color: white;
   cursor: pointer; }
   input[type="submit"]:hover {
@@ -532,7 +532,7 @@ div.field_with_errors input {
 
 #lightbox, .lightbox {
   background: white;
-  border: 2px solid #9e005d;
+  border: 2px solid #a2005a;
   font-size: 0.9em;
   left: 16%;
   padding: 1%;
