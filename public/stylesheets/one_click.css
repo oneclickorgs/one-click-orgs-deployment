@@ -48,11 +48,11 @@ div.clear {
   border-right: 1px solid #111111;
   margin: -12px 0 12px; }
   #overlay a {
-    background: #333333;
-    background: rgba(0, 0, 0, 0.4);
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    background: #333333;
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid #333333;
     color: white;
     margin: 0 2px;
@@ -325,7 +325,11 @@ body.setup #bd #subdomain_wrapper {
 
 /* Constitution page highlighting */
 span.dynamic {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   background-color: #f3f3f3;
+  border: 1px solid #cccccc;
   color: #9d8942;
   padding: 2px; }
 
