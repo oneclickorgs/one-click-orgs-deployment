@@ -1,5 +1,16 @@
+// Colours
+
 $oco_burgundy: #9e005d
 $oco_burgundy_hover: #5e0037
+
+// Shorthand
+
+@mixin rounded-corners($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  border-radius: $radius
+
+// And let's begin
 
 *
   :margin 0
@@ -53,11 +64,9 @@ div.clear
   :border-right 1px solid #111
   :margin -12px 0 12px
   a
+    @include rounded-corners(2px)
     :background #333
     :background rgba(0, 0, 0, 0.4)
-    :-webkit-border-radius 2px
-    :-moz-border-radius 2px
-    :border-radius 2px
     :border 1px solid #333
     :color #fff
     :margin 0 2px
@@ -224,9 +233,7 @@ hr
   section.description
     /* We style Markdown in descriptions
     :background rgba(255, 255, 255, .6)
-    :-webkit-border-radius 4px
-    :-moz-border-radius 4px
-    :border-radius 4px
+    @include rounded-corners(4px)
     :margin 1em 2em
     :padding 0.5em 2em
     :font-size .8em
@@ -255,9 +262,7 @@ hr
       :padding-left 1em
 
 img.gravatar
-  :-webkit-border-radius 2px
-  :-moz-border-radius 2px
-  :border-radius 2px
+  @include rounded-corners(2px)
   :margin-left 3px
   :margin-right 3px
   :vertical-align middle
@@ -324,7 +329,9 @@ body.setup
 /* Constitution page highlighting
 
 span.dynamic
+  @include rounded-corners(2px)
   :background-color #f3f3f3
+  :border 1px solid #ccc
   :color #9d8942
   :padding 2px
 
@@ -403,9 +410,7 @@ input, textarea
   :padding 0.4em
 
 input[type="button"], input[type="submit"], button
-  :-webkit-border-radius 3px
-  :-moz-border-radius 3px
-  :border-radius 3px
+  @include rounded-corners(3px)
   :padding 0.3em 1.2em 0.2em 1.2em
   :width auto
 
