@@ -262,9 +262,23 @@ img.gravatar
   :margin-right 3px
   :vertical-align middle
 
-img.pdf
-  :margin-right 6px
-  :vertical-align middle
+#download
+  :font-size 0.85em
+  :margin-top 6px
+  span.download a
+    @include rounded-corners(2px)
+    :padding 5px 6px
+    :text-decoration none  
+  span.pdf a
+    :background-color #c02434
+    :color #fff
+    &:hover
+      :background-color #861924
+  span.csv a
+    :background-color #036f40
+    :color #fff
+    &:hover
+      :background-color #005500
 
 #bd
   .comment

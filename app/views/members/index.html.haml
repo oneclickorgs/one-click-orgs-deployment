@@ -40,8 +40,10 @@
 - else
   %h2 Members
   
-  %p
-    = link_to image_tag('pdf-icon-24.png', :height => '24', :width => '24', :alt => 'PDF icon', :class => 'pdf') + 'Download a PDF list of members', 'members.pdf'
+  %p#download
+    Download:
+    %span.pdf.download
+      = link_to 'PDF', members_path(:format => 'pdf')
   
   %table.members
     %tr
