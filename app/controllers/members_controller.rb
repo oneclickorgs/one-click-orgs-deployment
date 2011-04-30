@@ -54,7 +54,6 @@ class MembersController < ApplicationController
   end
 
   def create
-    # TODO: validate input
     member = params[:member]
     title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
@@ -70,7 +69,9 @@ class MembersController < ApplicationController
         redirect_to members_path, :notice => "Add Member Proposal successfully created"
       end
     else
-      redirect_to root_path, :flash => {:error => "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"}      
+      @member = proposal.draft_member
+      flash[:error] = "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"
+      render :action => :new
     end
   end
   
