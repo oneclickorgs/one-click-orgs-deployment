@@ -38,8 +38,7 @@ describe "everything" do
   
     describe "a successful POST" do
       before(:each) do
-
-        post(members_path, { :member => Member.make })
+        post(members_path, :member => {:first_name => "Bob", :last_name => "Smith", :email => "bob@example.com"})
       end
       
       it "redirects to resource(:members)" do
@@ -48,6 +47,25 @@ describe "everything" do
       
       it "should set a notice flash" do
         flash[:notice].should_not be_blank
+      end
+    end
+    
+    describe "an unsuccessful POST" do
+      before(:each) do
+        # Missing 'email' attribute
+        post(members_path, :member => {:first_name => "Bob", :last_name => "Smith", :email => ""})
+      end
+      
+      it "renders the new member form" do
+        response.should render_template('members/new')
+      end
+      
+      it "sets a helpful error flash" do
+        flash[:error].should =~ /Email/
+      end
+      
+      it "retains the contents of the new member form" do
+        response.should have_selector('input', :name => 'member[first_name]', :value => 'Bob')
       end
     end
   end
@@ -128,6 +146,47 @@ describe "everything" do
   
       it "redirect to the member show action" do
         @response.should redirect_to(member_path(@member))
+      end
+    end
+  end
+  
+  describe "POST /members/create_founding_member" do
+    before(:each) do
+      stub_organisation!(false)
+      set_permission!(default_user, :direct_edit, true)
+      login
+    end
+    
+    context "when valid member attributes are given" do
+      before(:each) do
+        post('/members/create_founding_member', :member => {:first_name => "Bob", :last_name => "Smith", :email => "bob@example.com"})
+      end
+      
+      it "creates a new member" do
+        @organisation.members.last.email.should == "bob@example.com"
+      end
+      
+      it "redirect to members/index" do
+        response.should redirect_to('/members')
+      end
+    end
+    
+    context "when invalid member attributes are given" do
+      before(:each) do
+        # Missing email
+        post('/members/create_founding_member', :member => {:first_name => "Bob", :last_name => "Smith", :email => ""})
+      end
+      
+      it "sets a helpful error flash" do
+        flash[:error].should =~ /Email/
+      end
+      
+      it "renders the new member page" do
+        response.should render_template('members/new')
+      end
+      
+      it "retains the contents of the new member form" do
+        response.should have_selector('input', :name => 'member[first_name]', :value => 'Bob')
       end
     end
   end

@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gem "bundler", "~>1.0.0"
+
 gem "rails", "3.0.6"
 
 # Bundle edge Rails instead:
@@ -24,6 +26,9 @@ gem "mysql"
 # gem 'aws-s3', :require => 'aws/s3'
 
 gem "haml", "~>3.0.18"
+gem "rdiscount"
+gem "pdfkit"
+
 gem "daemons", "~>1.0.10"
 
 gem "delayed_job", "2.1.3"
@@ -40,7 +45,8 @@ gem "exception_notification_rails3", :require => 'exception_notifier'
 group :development do
   gem "capistrano", "~>2.5.19"
   gem "railroad"
-  gem "ruby-debug"
+  gem "ruby-debug", :platforms => :ruby_18
+  gem "ruby-debug19", :platforms => :ruby_19
 end
 
 group :development, :test do

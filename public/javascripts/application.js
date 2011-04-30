@@ -52,28 +52,27 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  // Forms at the top of the Dashboard
-  // (If JavaScript is disabled, they all show by default)
+
+  // Forms on the Voting & proposals page
+  // If JavaScript is disabled, they all show by default
   $('.form-to-hide').hide();
   $('.button-form-show').show();
-  // Reset when any button is clicked
+
   $('.button-form-show').click(function() {
-    $('.button-form-show').removeClass('clicked');
-    $('.form-to-hide').hide();
+    $(this).toggleClass('clicked');
   });
-  // Each of the three buttons:
+  
   $('#button-proposal').click(function() {
-    $('#propose_freeform_form').show('medium');
-    $(this).addClass('clicked');
+    $('#propose_freeform_form').toggle('medium');
   });
   $('#button-member-invite').click(function() {
-    $('#propose_new_member_form').show('medium');
-    $(this).addClass('clicked');
+    $('#propose_new_member_form').toggle('medium');
   })
   $('#button-constitution-change').click(function() {
     $(location).attr('href','/amendments');
   });
   
+
   // Notifications
   if ($('#lightbox div.notification').length > 0) {
     OneClickOrgs.activateLightbox();

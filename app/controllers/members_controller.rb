@@ -13,7 +13,13 @@ class MembersController < ApplicationController
     @members = co.members.active
     @pending_members = co.members.pending
     @new_member = co.members.new
-    respond_with @members
+    
+    respond_to do |format|
+      format.html
+      format.pdf {
+        generate_pdf(@page_title)
+      }
+    end
   end
 
   def show
@@ -43,11 +49,11 @@ class MembersController < ApplicationController
       redirect_back_or_default
       return
     end
+    @page_title = "Edit Your Account"
     respond_with @member
   end
 
   def create
-    # TODO: validate input
     member = params[:member]
     title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
@@ -63,17 +69,25 @@ class MembersController < ApplicationController
         redirect_to members_path, :notice => "Add Member Proposal successfully created"
       end
     else
-      redirect_to root_path, :flash => {:error => "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"}      
+      @member = proposal.draft_member
+      flash[:error] = "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"
+      render :action => :new
     end
   end
   
   def create_founding_member
-    # TODO: validate input
-    member = params[:member]
-    member[:member_class_id] = co.member_classes.find_by_name('Founding Member').id.to_s
-    co.members.create_member(member, true)
-    # raise member.to_json
-    redirect_to members_path, :notice => "Added a new founding member."
+    member_attributes = params[:member]
+    member_attributes[:member_class_id] = co.member_classes.find_by_name('Founding Member').id.to_s
+    member_attributes[:send_welcome] = true
+    
+    @member = co.members.build(member_attributes)
+    
+    if @member.save
+      redirect_to members_path, :notice => "Added a new founding member."
+    else
+      flash[:error] = "There was a problem with the new member's details: #{@member.errors.full_messages.to_sentence}"
+      render :action => :new
+    end
   end
 
   def update
