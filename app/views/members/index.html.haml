@@ -39,6 +39,12 @@
 
 - else
   %h2 Members
+  
+  %p#download
+    Download:
+    %span.pdf.download
+      = link_to 'PDF', members_path(:format => 'pdf')
+  
   %table.members
     %tr
       %th Name

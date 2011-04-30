@@ -14,10 +14,15 @@
     on the amendments page. After the Association is formed any member will be able to suggest changes and hold a vote.
 
 - if current_organisation.active?
+  %p#download
+    Download:
+    %span.pdf.download
+      = link_to 'PDF', constitution_path(:format => 'pdf')
   %p
     Propose amendments to
     %span.dynamic highlighted clauses
     by making
-    = link_to 'amendments', amendments_path
+    = succeed '.' do
+      = link_to 'amendments', amendments_path
 
 =render :partial => 'shared/constitution'

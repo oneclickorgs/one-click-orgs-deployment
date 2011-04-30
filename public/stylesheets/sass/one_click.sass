@@ -17,6 +17,15 @@ $pale_blue: #E0E8EF
 
 // And let's begin
 
+// Shorthand
+
+@mixin rounded-corners($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  border-radius: $radius
+
+// And let's begin
+
 *
   :margin 0
   :padding 0
@@ -271,6 +280,24 @@ img.gravatar
   :margin-left 3px
   :margin-right 3px
   :vertical-align middle
+
+#download
+  :font-size 0.85em
+  :margin-top 6px
+  span.download a
+    @include rounded-corners(2px)
+    :padding 5px 6px
+    :text-decoration none  
+  span.pdf a
+    :background-color #c02434
+    :color #fff
+    &:hover
+      :background-color #861924
+  span.csv a
+    :background-color #036f40
+    :color #fff
+    &:hover
+      :background-color #005500
 
 #bd
   .comment
