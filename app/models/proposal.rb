@@ -45,8 +45,9 @@ class Proposal < ActiveRecord::Base
       self.enact!(self.parameters)
       true
     else
-      save
-      proposer.cast_vote(:for, self.id)
+      save_succeeded = save
+      proposer.cast_vote(:for, self.id) if save_succeeded
+      save_succeeded
     end
   end
  
