@@ -1,5 +1,5 @@
 %h2
-  Edit Your Account
+  = @page_title
 
 %p
   = form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
@@ -11,13 +11,13 @@
       = f.label(:last_name)
       = f.text_field :last_name
     %p
-      = f.label(:email, "Email Address")
+      = f.label(:email, "Email address")
       = f.text_field :email
     %p
       = f.label(:password)
       = f.password_field :password
     %p
-      = f.label(:password_confirmation, "Repeat Password")
+      = f.label(:password_confirmation, "Repeat password")
       = f.password_field :password_confirmation
     %p    
-      = submit_tag "Save Changes", :id => 'submit'
+      = submit_tag "Save changes", :id => 'submit'

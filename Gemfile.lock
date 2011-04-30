@@ -91,6 +91,7 @@ GEM
       thor (~> 0.14.4)
     rake (0.8.7)
     rcov (0.9.9)
+    rdiscount (1.6.5)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -144,6 +145,7 @@ DEPENDENCIES
   railroad
   rails (= 3.0.6)
   rcov (~> 0.9.8)
+  rdiscount
   rspec-rails (~> 2.5.0)
   ruby-debug
   ruby-debug19

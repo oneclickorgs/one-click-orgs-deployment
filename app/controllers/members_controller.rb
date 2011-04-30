@@ -43,6 +43,7 @@ class MembersController < ApplicationController
       redirect_back_or_default
       return
     end
+    @page_title = "Edit Your Account"
     respond_with @member
   end
 

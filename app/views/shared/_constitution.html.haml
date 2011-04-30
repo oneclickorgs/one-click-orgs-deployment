@@ -2,13 +2,11 @@
 %ul.constitution
   %li
     This is the constitution ("Constitution") of
-    %span{:class=>'dynamic'}
-      = @organisation_name
+    %span{:class=>'dynamic'}= @organisation_name
     ("The Organisation").  
   %li
     The Organisation has the objectives of
-    %span{:class=>'dynamic'}
-      = @objectives
+    %span{:class=>'dynamic'}= @objectives
     ("Objectives").
   %li
     - if @assets
@@ -31,26 +29,22 @@
   %li Any member may submit a proposal ("Proposal") on the Governance System. 
   %li
     A Proposal may be voted on for a period of
-    %span{:class=>'dynamic'}
-      = @voting_period
+    %span{:class=>'dynamic'}= @voting_period
     starting with its submission ("Voting Period").
   %li Members may view all current Proposals on the Governance System. 
   %li Members may vote to support ("Supporting Vote") or vote to oppose ("Opposing Vote") a Proposal on the Governance System during the Proposal's Voting Period. 
   %li Members may only vote on Proposals submitted during their membership of the Organisation.
   %li
     A Decision is made if a Proposal receives
-    %span{:class=>'dynamic'}
-      = @general_voting_system.long_description
+    %span{:class=>'dynamic'}= @general_voting_system.long_description
   %li except that:
   %li
     The Constitution may only be amended by a Decision where
-    %span{:class=>'dynamic'}       
-      = @constitution_voting_system.long_description(:include_received => true)
+    %span{:class=>'dynamic'}= @constitution_voting_system.long_description(:include_received => true)
   %li and
   %li
     New Members may be appointed (and existing Members ejected) only by a Decision
-    %span{:class=>'dynamic'}
-      = @membership_voting_system.long_description(:include_received => true)
+    %span{:class=>'dynamic'}= @membership_voting_system.long_description(:include_received => true)
   %li Members may view all Decisions on the Governance System.
 
 / %h3 Proxies
