@@ -1,3 +1,11 @@
+2011-04-30 One Click Orgs 1.1.0
+
+* FEATURE: When making a proposal, your supporting vote is automatically cast for you.
+* FEATURE: Constitution and members list can be downloaded as PDF documents.
+* FEATURE: Proposal descriptions now accept Markdown.
+* App now has a proper maintenance page.
+* Design improvements.
+
 2011-04-30 One Click Orgs 1.0.1
 
 * FIX: Ejected members are listed as 'pending'
