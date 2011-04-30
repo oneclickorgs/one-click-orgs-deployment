@@ -13,7 +13,9 @@ class AddMemberProposal < Proposal
     if @existing_member
       @existing_member.reactivate!
     else
-      organisation.members.create_member(params, true)
+      member = organisation.members.build(params)
+      member.send_welcome = true
+      member.save!
     end
   end
   
