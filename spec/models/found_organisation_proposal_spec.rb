@@ -76,4 +76,26 @@ describe FoundOrganisationProposal do
       @proposal.enact!
     end
   end
+  
+  describe "starting" do
+    before(:each) do
+      @proposer = mock_model(Member)
+      @organisation = mock_model(Organisation,
+        :pending? => true,
+        :can_hold_founding_vote? => true
+      )
+
+      @proposal = FoundOrganisationProposal.new(
+        :proposer => @proposer,
+        :organisation => @organisation,
+        :title => "Proposal to form organisation"
+      )
+      @proposal.stub!(:send_email => nil)
+    end
+    
+    it "does not create a support vote by the proposer" do
+      @proposer.should_not_receive(:cast_vote).with(:for, anything)
+      @proposal.start
+    end
+  end
 end
