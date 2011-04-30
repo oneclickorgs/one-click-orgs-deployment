@@ -35,7 +35,6 @@ describe "Proposals" do
     describe "GET" do
       before(:each) do
         @proposal = Proposal.first
-        @user.cast_vote(:for, @proposal.id)
         @member_two.cast_vote(:for, @proposal.id)
         @member_three.cast_vote(:against, @proposal.id)
 
