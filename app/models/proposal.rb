@@ -42,10 +42,11 @@ class Proposal < ActiveRecord::Base
     if organisation.pending? and allows_direct_edit? and proposer.has_permission(:direct_edit)
       self.accepted = true
       self.force_pass!
-      self.enact!(self.parameters) 
+      self.enact!(self.parameters)
       true
     else
       save
+      proposer.cast_vote(:for, self.id)
     end
   end
  
