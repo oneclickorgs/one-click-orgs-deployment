@@ -59,7 +59,12 @@ describe Member do
   describe "creation" do
     it "should send a welcome email" do
       MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
-      @organisation.members.create_member({:email=>'foo@example.com', :first_name=>'Klaus', :last_name=>'Haus'}, true)
+      @organisation.members.create({
+        :email=>'foo@example.com',
+        :first_name=>'Klaus',
+        :last_name=>'Haus',
+        :send_welcome => true
+      })
     end
   end
 
