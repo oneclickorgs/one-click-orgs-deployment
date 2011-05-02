@@ -35,3 +35,5 @@ end
 # You can generate secrets by running
 #   bundle exec rake secret
 # at the command line.
+# Specify the full path to wkhtmltopdf, if it's not in PATH
+# PDFKit.configuration.wkhtmltopdf = '/usr/local/bin/wkhtmltopdf'
