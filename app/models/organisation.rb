@@ -1,5 +1,6 @@
 class Organisation < ActiveRecord::Base
   has_many :clauses
+  
   has_many :members
   
   has_many :proposals
@@ -168,11 +169,7 @@ class Organisation < ActiveRecord::Base
     constitution.set_voting_period(259200)
   end
   
-  def build_constitution_proposal_bundle(attributes={})
-    ConstitutionProposalBundle.new({
-      :organisation => self
-    }.merge(attributes))
-  end
+  # FAKE ASSOCIATIONS
   
   def founding_members
     members.founding_members(self)
@@ -182,6 +179,12 @@ class Organisation < ActiveRecord::Base
     FoundingMember.new({
       :organisation => self,
       :member_class => member_classes.find_by_name("Founding Member")
+    }.merge(attributes))
+  end
+  
+  def build_constitution_proposal_bundle(attributes={})
+    ConstitutionProposalBundle.new({
+      :organisation => self
     }.merge(attributes))
   end
 end

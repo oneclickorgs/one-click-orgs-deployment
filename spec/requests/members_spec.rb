@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe "everything" do
+describe "members" do
+  
   before(:each) do
     default_constitution
     default_organisation
@@ -10,7 +11,6 @@ describe "everything" do
   
   describe "/members" do
     describe "GET" do
-    
       before(:each) do
         get(members_path)
       end
@@ -22,7 +22,6 @@ describe "everything" do
       it "contains a list of members" do
         @response.should have_selector("table.members")
       end
-    
     end
   
     describe "GET, given a members exists" do

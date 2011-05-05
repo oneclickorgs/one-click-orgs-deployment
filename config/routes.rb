@@ -82,7 +82,6 @@ OneClickOrgs::Application.routes.draw do
   resources :founding_members
   
   match '/one_click(/:action)' => 'one_click'
-  #match '/induction(/:action)' => 'induction'
  
   get '/login' => 'member_sessions#new', :as => 'login'
   get '/logout' => 'member_sessions#destroy', :as => 'logout'
@@ -93,7 +92,6 @@ OneClickOrgs::Application.routes.draw do
   match '/setup(/:action)' => 'setup'
 
   resources :organisations
-#  match '/organisations(/:action)' => 'organisations'
   
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations

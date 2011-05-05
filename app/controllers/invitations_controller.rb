@@ -3,6 +3,7 @@ class InvitationsController < ApplicationController
   skip_before_filter :prepare_notifications
   
   def edit
+    # TODO should be searching scoped by organisation.
     @invitation = Invitation.find_by_id(params[:id])
     
     redirect_to(root_path) unless @invitation
@@ -11,6 +12,7 @@ class InvitationsController < ApplicationController
   end
   
   def update
+    # TODO should be searching scoped by organisation
     @invitation = Invitation.find(params[:id])
     
     if @invitation.update_attributes(params[:invitation])

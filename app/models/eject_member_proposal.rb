@@ -5,7 +5,9 @@ class EjectMemberProposal < MembershipProposal
   end
 
   def enact!(params)
+    # TODO why is this check here and not in the base class? and do we need a check here at all?
     raise "Can not enact a proposal which has not passed" unless passed?
+    
     # TODO: Needs backwards compatibility; previously stored the member's ID in
     # the 'id' key, not 'member_id'
     member = organisation.members.find(params['member_id'])

@@ -10,6 +10,7 @@ class Decision < ActiveRecord::Base
   end 
   
   def send_email
+    # TODO this should be checking the class of the Proposal, not the voting system used
     if proposal.voting_system==VotingSystems.get('Founding') then
       # Decision on the Founding Proposal.
       # At this point the proposal has already been enacted.

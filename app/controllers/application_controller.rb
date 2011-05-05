@@ -1,5 +1,4 @@
 require 'lib/one_click_orgs/setup'
-
 require 'lib/unauthenticated'
 require 'lib/not_found'
 
@@ -12,6 +11,8 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_member_active
   before_filter :ensure_member_inducted
   before_filter :prepare_notifications
+  
+  # CURRENT ORGANISATION
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
@@ -30,9 +31,7 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_organisation, :co
   
-  def date_format(d)
-    d.to_s(:long)
-  end
+  # USER LOGIN
   
   helper_method :current_user
   def current_user
@@ -67,11 +66,7 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
-  def find_constitution
-    @constitution = co.constitution
-  end
-  
-  # Making PDFs
+  # MAKING PDFS
   
   def generate_pdf(filename = 'Download')
     @organisation_name = co.name
@@ -101,7 +96,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # Notifications
+  # NOTIFICATIONS
   
   def prepare_notifications
     return unless current_user
@@ -144,7 +139,9 @@ class ApplicationController < ActionController::Base
     @notification = notification
   end
   
-  protected
+protected
+
+  # BEFORE FILTER DEFINITIONS
   
   def ensure_set_up
     unless OneClickOrgs::Setup.complete?
@@ -173,16 +170,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # def ensure_organisation_active
-  #   return if co.active?
-  #   
-  #   if co.pending?
-  #     redirect_to(:controller => 'induction', :action => 'founding_meeting')
-  #   else
-  #     redirect_to(:controller => 'induction', :action => 'founder')
-  #   end
-  # end
-  
   def ensure_member_inducted
     redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
   end
@@ -191,7 +178,11 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'welcome', :action => 'index')
   end
   
-  # EXCEPTIONS
+  def find_constitution
+    @constitution = co.constitution
+  end
+  
+  # EXCEPTION HANDLING
   
   rescue_from NotFound, :with => :render_404
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404

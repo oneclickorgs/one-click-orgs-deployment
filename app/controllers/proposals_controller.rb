@@ -19,14 +19,14 @@ class ProposalsController < ApplicationController
     @page_title = "Proposal"
     respond_with @proposal
   end
-
+  
   # Freeform proposal
   def create
     authorize! :create, Proposal
     
     @proposal = co.proposals.new(params[:proposal])
     @proposal[:type] = 'Proposal' # Bug #138, cf. http://www.simple10.com/rails-3-sti/
-    @proposal.proposer_member_id = current_user.id #fixme
+    @proposal.proposer = current_user
         
     if @proposal.save
       redirect_to proposal_path(@proposal), :flash => {:notice => "Proposal was successfully created"}
@@ -36,4 +36,4 @@ class ProposalsController < ApplicationController
       redirect root_path, :flash => {:error => "Proposal not created"}
     end
   end
-end # Proposals
+end

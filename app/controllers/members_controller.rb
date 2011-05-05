@@ -1,10 +1,6 @@
 class MembersController < ApplicationController
-
-  respond_to :html
-  
   def index
     @page_title = "Members"
-    @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
     
@@ -31,7 +27,6 @@ class MembersController < ApplicationController
     @member = co.members.find(params[:id])
     authorize! :update, @member
     @page_title = "Edit your account"
-    respond_with @member
   end
   
   def update
@@ -45,4 +40,4 @@ class MembersController < ApplicationController
       render(:action => :edit)
     end
   end
-end # Members
+end
