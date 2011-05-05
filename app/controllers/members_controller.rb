@@ -1,5 +1,3 @@
-require 'lib/not_found'
-
 class MembersController < ApplicationController
 
   respond_to :html
@@ -24,17 +22,8 @@ class MembersController < ApplicationController
 
   def show
     @member = co.members.find(params[:id])
-    raise NotFound unless @member
-    
-    @timeline = [
-      @member,
-      @member.proposals.all,
-      @member.votes.all
-    ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
-    
+    @member_presenter = MemberPresenter.new(@member)
     @page_title = "Member profile"
-    
-    respond_with @member
   end
 
   def new
