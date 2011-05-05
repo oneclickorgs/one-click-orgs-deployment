@@ -1,0 +1,2 @@
+module ChangeMemberClassProposalsHelper
+end
