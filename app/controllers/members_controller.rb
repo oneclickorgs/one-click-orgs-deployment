@@ -2,7 +2,7 @@ class MembersController < ApplicationController
 
   respond_to :html
   
-  before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
+  before_filter :require_membership_proposal_permission, :only => [:update, :destroy, :change_class]
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
@@ -26,12 +26,6 @@ class MembersController < ApplicationController
     @page_title = "Member profile"
   end
 
-  def new
-    # only_provides :html
-    @member = co.members.new
-    respond_with @member
-  end
-
   def edit
     # only_provides :html
     @member = co.members.find(params[:id])
@@ -42,28 +36,6 @@ class MembersController < ApplicationController
     end
     @page_title = "Edit your account"
     respond_with @member
-  end
-
-  def create
-    member = params[:member]
-    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.name}" # TODO: should default in model
-    proposal = co.add_member_proposals.new(
-      :title => title,
-      :proposer_member_id => current_user.id,
-      :parameters => member
-    )
-    
-    if proposal.start
-      if proposal.accepted?
-        redirect_to members_path, :notice => "New member successfully created"
-      else
-        redirect_to members_path, :notice => "Add Member Proposal successfully created"
-      end
-    else
-      @member = proposal.draft_member
-      flash[:error] = "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"
-      render :action => :new
-    end
   end
   
   def create_founding_member
@@ -149,12 +121,4 @@ private
       redirect_back_or_default
     end
   end
-
-  def require_membership_proposal_permission
-    if !current_user.has_permission(:membership_proposal)
-      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
-      redirect_back_or_default
-    end
-  end
-
 end # Members

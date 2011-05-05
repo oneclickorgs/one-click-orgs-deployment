@@ -1,0 +1,17 @@
+%p
+  = form.label(:email, "Email address")
+  = form.text_field :email
+%p
+  = form.label(:first_name)
+  = form.text_field :first_name
+%p
+  = form.label(:last_name)
+  = form.text_field :last_name
+- if co.member_classes.count == 1
+  = form.hidden_field :member_class_id
+- else
+  %p
+    = form.label(:class)
+    = form.collection_select(:member_class_id, co.member_classes.all, :id, :name)
+%p
+  = submit_tag "Invite member", :id => 'submit'

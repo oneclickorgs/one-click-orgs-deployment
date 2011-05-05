@@ -202,6 +202,15 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'welcome', :action => 'index')
   end
   
+  # PERMISSIONS
+  
+  def require_membership_proposal_permission
+    if !current_user.has_permission(:membership_proposal)
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
+    end
+  end
+  
   # EXCEPTIONS
   
   rescue_from NotFound, :with => :render_404
