@@ -14,6 +14,11 @@ class AddMemberProposal < MembershipProposal
     end
   end
   
+  before_create :set_default_title
+  def set_default_title
+    self.title ||= "Add #{parameters['first_name']} #{parameters['last_name']} as a member of #{organisation.try(:name)}"
+  end
+  
   def allows_direct_edit?
     true
   end
