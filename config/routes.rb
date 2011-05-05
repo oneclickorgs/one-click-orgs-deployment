@@ -56,10 +56,10 @@ OneClickOrgs::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
-  match '/amendments' => 'one_click#amendments', :as => 'amendments'
-  match '/constitution' => 'one_click#constitution', :as => 'constitution'
+  get '/amendments' => 'one_click#amendments', :as => 'amendments'
+  get '/constitution' => 'one_click#constitution', :as => 'constitution'
   
-  match '/timeline' => 'one_click#timeline', :as => 'timeline'
+  get '/timeline' => 'one_click#timeline', :as => 'timeline'
   
   post '/votes/vote_for/:id' => 'votes#vote_for', :as => 'vote_for'
   post '/votes/vote_against/:id' => 'votes#vote_against', :as => 'vote_against'
@@ -84,7 +84,7 @@ OneClickOrgs::Application.routes.draw do
   match '/one_click(/:action)' => 'one_click'
   #match '/induction(/:action)' => 'induction'
  
-  match '/login' => 'member_sessions#new', :as => 'login'
+  get '/login' => 'member_sessions#new', :as => 'login'
   get '/logout' => 'member_sessions#destroy', :as => 'logout'
   resource :member_session, :only => [:new, :create, :destroy]
   
@@ -95,10 +95,10 @@ OneClickOrgs::Application.routes.draw do
   resources :organisations
 #  match '/organisations(/:action)' => 'organisations'
   
-  match '/i/:id' => 'invitations#edit', :as => 'short_invitation'
+  get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations
   
-  match '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
+  get '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
   resources :password_resets
 
   post '/admin/test_email' => 'admin#test_email'
