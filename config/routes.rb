@@ -61,10 +61,11 @@ OneClickOrgs::Application.routes.draw do
   
   match '/timeline' => 'one_click#timeline', :as => 'timeline'
   
-  match '/votes/vote_for/:id' => 'votes#vote_for', :conditions => {:method => :post}, :as => 'vote_for'
-  match '/votes/vote_against/:id' => 'votes#vote_against', :conditions => {:method => :post}, :as => 'vote_against'
+  post '/votes/vote_for/:id' => 'votes#vote_for', :as => 'vote_for'
+  post '/votes/vote_against/:id' => 'votes#vote_against', :as => 'vote_against'
   
   resources :decisions
+  
   resources :proposals do
     resources :comments
   end
@@ -84,7 +85,7 @@ OneClickOrgs::Application.routes.draw do
   #match '/induction(/:action)' => 'induction'
  
   match '/login' => 'member_sessions#new', :as => 'login'
-  match '/logout' => 'member_sessions#destroy', :as => 'logout', :via => "get"
+  get '/logout' => 'member_sessions#destroy', :as => 'logout'
   resource :member_session, :only => [:new, :create, :destroy]
   
   match '/welcome(/:action)' => 'welcome'
@@ -100,7 +101,7 @@ OneClickOrgs::Application.routes.draw do
   match '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
   resources :password_resets
 
-  match '/admin/test_email' => 'admin#test_email', :conditions => { :method => :post }
+  post '/admin/test_email' => 'admin#test_email'
   match '/admin/test_exception_notification' => 'admin#test_exception_notification'
   
   root :to => 'one_click#dashboard'
