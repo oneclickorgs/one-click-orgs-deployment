@@ -2,7 +2,7 @@ class MembersController < ApplicationController
 
   respond_to :html
   
-  before_filter :require_membership_proposal_permission, :only => [:update, :destroy]
+  before_filter :require_membership_proposal_permission, :only => [:update]
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
@@ -23,6 +23,7 @@ class MembersController < ApplicationController
   def show
     @member = co.members.find(params[:id])
     @member_presenter = MemberPresenter.new(@member)
+    @eject_member_proposal = co.eject_member_proposals.build(:member_id => @member.id)
     @page_title = "Member profile"
   end
 
@@ -63,30 +64,7 @@ class MembersController < ApplicationController
       render(:action => :edit)
     end
   end
-
-  def destroy
-    @member = co.members.find(params[:id])
-    
-    title = "Eject #{@member.name} from #{current_organisation.name}"
-    proposal = co.eject_member_proposals.new(
-      :title => title,
-      :description => params[:description],
-      :proposer_member_id => current_user.id,
-      :parameters => {'id' => @member.id}
-    )
-    
-    if proposal.start
-      if proposal.accepted?
-        redirect_to(members_path, :notice => "Member successfully ejected")
-      else
-        redirect_to(root_path, :notice => "Ejection proposal successfully created")
-      end
-    else
-      redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
-    end
-  end
   
-
 private
 
   def require_direct_edit_permission

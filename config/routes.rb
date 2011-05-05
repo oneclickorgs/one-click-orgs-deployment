@@ -79,6 +79,7 @@ OneClickOrgs::Application.routes.draw do
   end
   
   resources :add_member_proposals
+  resources :eject_member_proposals
   resources :change_member_class_proposals
   
   match '/one_click(/:action)' => 'one_click'

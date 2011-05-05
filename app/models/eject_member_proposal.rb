@@ -10,7 +10,9 @@ class EjectMemberProposal < MembershipProposal
 
   def enact!(params)
     raise "Can not enact a proposal which has not passed" unless passed?
-    member = organisation.members.find(params['id'])
+    # TODO: Needs backwards compatibility; previously stored the member's ID in
+    # the 'id' key, not 'member_id'
+    member = organisation.members.find(params['member_id'])
     if organisation.pending?
       # Special case: org in pending state
       member.destroy

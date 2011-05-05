@@ -1,0 +1,2 @@
+module EjectMemberProposalsHelper
+end

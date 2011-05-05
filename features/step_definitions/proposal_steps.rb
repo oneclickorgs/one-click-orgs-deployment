@@ -55,7 +55,7 @@ Given /^a proposal has been made to eject the member "([^"]*)"$/ do |email|
   member = @organisation.members.active.find_by_email(email)
   @proposal = @organisation.eject_member_proposals.make(
     :parameters => {
-      'id' => member.id
+      'member_id' => member.id
     },
     :title => "Eject #{member.first_name} #{member.last_name} from #{@organisation.name}",
     :proposer => @organisation.members.active.first
