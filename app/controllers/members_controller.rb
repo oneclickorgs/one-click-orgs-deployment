@@ -2,15 +2,13 @@ class MembersController < ApplicationController
 
   respond_to :html
   
-  before_filter :require_membership_proposal_permission, :only => [:update]
-
   def index
     @page_title = "Members"
     @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
     
-    if co.pending? && current_user.has_permission(:membership_proposal)
+    if can?(:create, FoundingMember)
       @founding_member = co.build_founding_member
     end
     
@@ -30,13 +28,8 @@ class MembersController < ApplicationController
   end
 
   def edit
-    # only_provides :html
     @member = co.members.find(params[:id])
-    unless current_user.id == params[:id].to_i
-      flash[:error] = "You are not authorized to do this."
-      redirect_back_or_default
-      return
-    end
+    authorize! :update, @member
     @page_title = "Edit your account"
     respond_with @member
   end
@@ -44,6 +37,7 @@ class MembersController < ApplicationController
   def update
     id, member = params[:id], params[:member]
     @member = co.members.find(id)
+    authorize! :update, Member
     if @member.update_attributes(member)
        redirect_to member_path(@member), :notice => "Account updated."
     else

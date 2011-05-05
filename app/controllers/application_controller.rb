@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_organisation_exists
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
-  #before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
   before_filter :prepare_notifications
   
@@ -192,29 +191,6 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'welcome', :action => 'index')
   end
   
-  # PERMISSIONS
-  
-  def require_membership_proposal_permission
-    if !current_user.has_permission(:membership_proposal)
-      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
-      redirect_back_or_default
-    end
-  end
-  
-  def require_constitutional_proposal_permission
-    if !current_user.has_permission(:constitution_proposal)
-      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
-      redirect_back_or_default
-    end
-  end
-  
-  def require_direct_edit_permission
-    if !current_user.has_permission(:direct_edit)
-      flash[:error] = "You do not have sufficient permissions to make changes!"
-      redirect_back_or_default
-    end
-  end
-  
   # EXCEPTIONS
   
   rescue_from NotFound, :with => :render_404
@@ -227,5 +203,10 @@ class ApplicationController < ActionController::Base
   def handle_unauthenticated
     store_location
     redirect_to login_path
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to root_path
   end
 end

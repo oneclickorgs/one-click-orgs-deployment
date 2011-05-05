@@ -1,7 +1,7 @@
 class ChangeMemberClassProposalsController < ApplicationController
-  before_filter :require_membership_proposal_permission
-  
   def create
+    authorize! :create, ChangeMemberClassProposal
+    
     # TODO Make this work
     @change_member_class_proposal = co.change_member_class_proposals.build(params[:change_member_class_proposal])
     @change_member_class_proposal.proposer = current_user

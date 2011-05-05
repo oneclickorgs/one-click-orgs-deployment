@@ -1,4 +1,4 @@
-- if current_user.has_permission(:freeform_proposal) and !current_organisation.proposed?
+- if can?(:create, Proposal)
   %h3 Propose a vote
   %p.helper
     You can use

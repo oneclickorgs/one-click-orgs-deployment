@@ -1,7 +1,7 @@
 class ConstitutionProposalBundlesController < ApplicationController
-  before_filter :require_constitutional_proposal_permission, :only => :create
-  
   def create
+    authorize! :create, ConstitutionProposalBundle
+    
     @constitution_proposal_bundle = co.build_constitution_proposal_bundle(
       params[:constitution_proposal_bundle]
     )

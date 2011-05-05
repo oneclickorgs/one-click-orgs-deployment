@@ -1,11 +1,13 @@
 class FoundingMembersController < ApplicationController
-  before_filter :require_direct_edit_permission, :only => [:new, :create]
-  
   def new
+    authorize! :create, FoundingMember
+    
     @founding_member = co.build_founding_member
   end
   
   def create
+    authorize! :create, FoundingMember
+    
     @founding_member = co.build_founding_member(params[:founding_member])
     @founding_member.send_welcome = true
     if @founding_member.save
@@ -28,14 +30,5 @@ class FoundingMembersController < ApplicationController
     #   flash[:error] = "There was a problem with the new member's details: #{@member.errors.full_messages.to_sentence}"
     #   render :action => :new
     # end
-  end
-  
-private
-  
-  def require_direct_edit_permission
-    if !current_user.has_permission(:direct_edit)
-      flash[:error] = "You do not have sufficient permissions to make changes!"
-      redirect_back_or_default
-    end
   end
 end

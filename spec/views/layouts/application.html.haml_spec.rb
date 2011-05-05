@@ -17,7 +17,16 @@ describe "layouts/application.html.haml" do
       view.stub!(:current_organisation).and_return(@organisation)
       view.stub!(:co).and_return(@organisation)
       
-      view.stub!(:current_user).and_return(@user = mock_model(Member, :name => "Lucy Baker"))
+      @user = mock_model(Member, :name => "Lucy Baker")
+      view.stub!(:current_user).and_return(@user)
+      controller.stub!(:current_user).and_return(@user)
+      
+      @user.stub!(:has_permission).with(:freeform_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:membership_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:constitution_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:found_organisation_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:vote).and_return(false)
+      @user.stub!(:organisation).and_return(@organisation)
     end
     
     context "when organisation is pending" do
@@ -29,6 +38,7 @@ describe "layouts/application.html.haml" do
       context "when user is the founder" do
         before(:each) do
           @members_association.stub!(:first).and_return(@user)
+          @user.stub!(:has_permission).with(:member_proposal).and_return(true)
           @user.stub!(:has_permission).with(:found_organisation_proposal).and_return(true)
         end
         
