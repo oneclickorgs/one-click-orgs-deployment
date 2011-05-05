@@ -18,4 +18,12 @@ class EjectMemberProposal < MembershipProposal
       member.eject!
     end
   end
+  
+  def member_id
+    parameters['member_id']
+  end
+  
+  def member_id=(member_id)
+    parameters['member_id'] = member_id.to_i
+  end
 end

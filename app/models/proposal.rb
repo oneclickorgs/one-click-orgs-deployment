@@ -163,9 +163,20 @@ class Proposal < ActiveRecord::Base
       reject!(self.parameters)
     end
   end
-
+  
+  # Returns the (deserialized) hash of parameters for this proposal.
+  # You can call #[]= on the returned hash and it will magically update the
+  # actual parameters attribute of the proposal. In other words, this will
+  # just work:
+  # 
+  # proposal.parameters[:first_name] = "Bob"
+  # proposal.parameters[:first_name] # => "Bob"
   def parameters
-    self[:parameters].blank? ? {} : ActiveSupport::JSON.decode(self[:parameters])
+    ParametersHash.from_hash(
+      self[:parameters].blank? ? {} : ActiveSupport::JSON.decode(self[:parameters])
+    ).tap do |hash|
+      hash.proposal = self
+    end
   end
   
   def parameters=(new_parameters)
@@ -216,5 +227,23 @@ class Proposal < ActiveRecord::Base
   
   def decision_notification_message
     nil
+  end  
+  
+  # A light wrapper around Hash that can retain a reference to a proposal.
+  # The reference is used to update the actual parameters attribute of the
+  # proposal when the parameters hash is naively updated by calling #[]= on
+  # it.
+  class ParametersHash < Hash
+    attr_accessor :proposal
+    
+    # Returns a new ParametersHash with the contents of the given hash.
+    def self.from_hash(hash)
+      hash ? new.replace(hash) : new
+    end
+    
+    def []=(key, value)
+      proposal.parameters = proposal.parameters.merge({key => value})
+      super
+    end
   end
 end

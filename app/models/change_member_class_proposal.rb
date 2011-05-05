@@ -17,4 +17,24 @@ class ChangeMemberClassProposal < MembershipProposal
     member_class = organisation.member_classes.find(parameters['member_class_id'])
     self.title ||= "Change member class of #{member.name} from #{member.member_class.name} to #{member_class.name}"
   end
+  
+  def member_id
+    parameters['member_id']
+  end
+  
+  def member_id=(member_id)
+    parameters['member_id'] = member_id.to_i
+  end
+  
+  def member_class_id
+    parameters['member_class_id']
+  end
+  
+  def member_class_id=(member_class_id)
+    parameters['member_class_id'] = member_class_id.to_i
+  end
+  
+  def member
+    organisation.members.find(member_id)
+  end
 end
