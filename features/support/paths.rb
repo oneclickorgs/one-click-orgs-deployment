@@ -12,7 +12,9 @@ module NavigationHelpers
       '/'
     when /^the setup page$/
       '/setup'
-
+    when /^the signup page$/
+      '/organisations/new'
+    
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

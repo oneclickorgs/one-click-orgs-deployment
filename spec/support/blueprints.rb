@@ -15,6 +15,10 @@ MemberClass.blueprint do
   organisation
 end
 
+MemberClass.blueprint(:founder) do
+  name "Founder"
+end
+
 Member.blueprint do
   email
   first_name
@@ -26,6 +30,10 @@ Member.blueprint do
   active true
   inducted_at {Time.now - 23.hours}
   member_class {MemberClass.make}
+end
+
+Member.blueprint(:founder) do
+  member_class {MemberClass.make(:founder)}
 end
 
 Proposal.blueprint do
