@@ -2,13 +2,14 @@ require 'machinist/active_record'
 require 'sham'
 require 'faker'
 
-Sham.name       { Faker::Name.name }
-Sham.email      { Faker::Internet.email }
-Sham.password   { Faker::Name.first_name }
-Sham.first_name { Faker::Name.first_name }
-Sham.last_name  { Faker::Name.last_name }
-Sham.subdomain  { Faker::Internet.domain_word }
-Sham.objectives       { Faker::Lorem.sentence }
+Sham.name               { Faker::Name.name }
+Sham.email              { Faker::Internet.email }
+Sham.password           { Faker::Name.first_name }
+Sham.first_name         { Faker::Name.first_name }
+Sham.last_name          { Faker::Name.last_name }
+Sham.subdomain          { Faker::Internet.domain_word }
+Sham.objectives         { Faker::Company.bs }
+Sham.organisation_name  { Faker::Company.name }
 
 MemberClass.blueprint do
   name "Director"
@@ -34,6 +35,10 @@ end
 
 Member.blueprint(:founder) do
   member_class {MemberClass.make(:founder)}
+end
+
+Member.blueprint(:pending) do
+  inducted_at nil
 end
 
 Proposal.blueprint do
@@ -76,7 +81,7 @@ Setting.blueprint do
 end
 
 Organisation.blueprint do
-  name
+  name { Sham.organisation_name }
   objectives
   subdomain
 end

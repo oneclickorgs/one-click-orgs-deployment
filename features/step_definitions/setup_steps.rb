@@ -1,7 +1,17 @@
 Given /^the application is set up$/ do
   # Using smackaho.st to give us automatic resolution to localhost
-  Setting[:base_domain] = "smackaho.st:#{Capybara.server_port}"
-  Setting[:signup_domain] = "create.smackaho.st:#{Capybara.server_port}"
+  # 
+  # Port needs to be saved for Selenium tests (because our app code considers
+  # the port as well as the hostname when figuring out how to handle a
+  # request, and the Capybara app server doesn't run on port 80).
+  # 
+  # When using the rack-test driver, don't use port numbers at all,
+  # since it makes our test-session-resetting code (see features/support/capybara_domains.rb)
+  # more complicated.
+  port_segment = Capybara.current_driver == :selenium ? ":#{Capybara.server_port}" : ''
+  
+  Setting[:base_domain] = "smackaho.st#{port_segment}"
+  Setting[:signup_domain] = "create.smackaho.st#{port_segment}"
 end
 
 When /^the domain is the signup domain$/ do
