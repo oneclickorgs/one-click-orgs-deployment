@@ -16,6 +16,9 @@ module HtmlSelectorsHelpers
     #
     #  when /the (notice|error|info) flash/
     #    ".flash.#{$1}"
+    
+    when /the list of founding members/
+      "table.pending_members"
 
     # You can also return an array to use a different selector
     # type, like:
