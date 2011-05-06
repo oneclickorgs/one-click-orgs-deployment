@@ -1,3 +1,9 @@
+When /^I choose "([^"]*)" for (.*) decisions$/ do |voting_system, decision_kind|
+  within(".#{decision_kind}_decisions") do
+    choose(voting_system)
+  end
+end
+
 Then /^I should see the draft constitution$/ do
   @organisation ||= Organisation.last
 
