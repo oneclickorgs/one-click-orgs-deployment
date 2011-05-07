@@ -23,3 +23,8 @@ end
 Then /^I should see a proposal "([^"]*)"$/ do |proposal_title|
   page.should have_css('.open-proposals h4', :text => proposal_title)
 end
+
+Then /^I should see a proposal to add "([^"]*)" as a member$/ do |new_member_name|
+  page.should have_css('.open-proposals h4', :text => "Add #{new_member_name} as a member of #{@organisation.name}")
+end
+
