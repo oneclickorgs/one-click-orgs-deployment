@@ -19,3 +19,7 @@ end
 When /^the proposal closer runs$/ do
   Proposal.close_proposals
 end
+
+Then /^I should see a proposal "([^"]*)"$/ do |proposal_title|
+  page.should have_css('.open-proposals h4', :text => proposal_title)
+end

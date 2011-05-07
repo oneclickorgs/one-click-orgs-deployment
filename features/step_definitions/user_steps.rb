@@ -20,3 +20,8 @@ Given /^I have been invited to join the organisation$/ do
   @user.send_welcome_if_requested
 end
 
+Given /^I am a member of the organisation$/ do
+  @user = @organisation.members.make(
+    :member_class => @organisation.member_classes.find_by_name('Member')
+  )
+end
