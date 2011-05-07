@@ -16,6 +16,10 @@ Given /^everyone has voted to support the founding$/ do
   end
 end
 
+Given /^a proposal has been made$/ do
+  @organisation.proposals.make(:proposer => @organisation.members.active.first)
+end
+
 When /^the proposal closer runs$/ do
   Proposal.close_proposals
 end
@@ -31,4 +35,8 @@ end
 Then /^I should see a proposal to eject "([^"]*)"$/ do |member_email|
   @member = @organisation.members.find_by_email(member_email)
   page.should have_css('.open-proposals h4', :text => "Eject #{@member.name} from #{@organisation.name}")
+end
+
+Then /^I should see a list of votes in progress$/ do
+  page.should have_css('.open-proposals h4')
 end

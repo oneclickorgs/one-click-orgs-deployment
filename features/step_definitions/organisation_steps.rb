@@ -46,3 +46,7 @@ end
 Then /^the organisation should be active$/ do
   @organisation.should be_active
 end
+
+Then /^I should see a list of recent activity$/ do
+  page.should have_css('table.timeline td.timestamp')
+end

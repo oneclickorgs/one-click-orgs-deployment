@@ -21,8 +21,11 @@ module NavigationHelpers
     when /^the proposal page$/
       @proposal ||= Proposal.last
       proposal_path(@proposal)
-    when /^the member page for "(.*)"/
+    when /^the member page for "(.*)"$/
       @member = @organisation.members.find_by_email($1)
+      member_path(@member)
+    when /^a member's page$/
+      @member = @organisation.members.active.last
       member_path(@member)
     
     # Add more mappings here.

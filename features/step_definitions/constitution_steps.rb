@@ -4,11 +4,7 @@ When /^I choose "([^"]*)" for (.*) decisions$/ do |voting_system, decision_kind|
   end
 end
 
-Then /^I should see the draft constitution$/ do
-  @organisation ||= Organisation.last
-
-  page.should have_css('h2', :text => "View the draft constitution")
-  
+Then /^I should see the dynamic constitution clauses$/ do
   page.should have_css('.dynamic', :text => @organisation.name)
   page.should have_css('.dynamic', :text => @organisation.objectives)
   
@@ -25,4 +21,16 @@ Then /^I should see the draft constitution$/ do
   page.should have_css('.dynamic', :text =>
     @organisation.constitution.voting_system(:constitution).long_description(:include_received => true)
   )
+end
+
+Then /^I should see the draft constitution$/ do
+  @organisation ||= Organisation.last
+  page.should have_css('h2', :text => "View the draft constitution")
+  Then "I should see the dynamic constitution clauses"
+end
+
+Then /^I should see the constitution$/ do
+  @organisation ||= Organisation.last
+  page.should have_css('h2', :text => "Constitution")
+  Then "I should see the dynamic constitution clauses"
 end
