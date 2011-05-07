@@ -32,6 +32,8 @@ class MembersController < ApplicationController
       @member.votes.all
     ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     
+    @page_title = "Member profile"
+    
     respond_with @member
   end
 
@@ -49,7 +51,7 @@ class MembersController < ApplicationController
       redirect_back_or_default
       return
     end
-    @page_title = "Edit Your Account"
+    @page_title = "Edit your account"
     respond_with @member
   end
 
