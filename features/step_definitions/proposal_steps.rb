@@ -20,6 +20,13 @@ Given /^a proposal has been made$/ do
   @organisation.proposals.make(:proposer => @organisation.members.active.first)
 end
 
+Given /^a proposal "([^"]*)" has been made$/ do |proposal_title|
+  @organisation.proposals.make(
+    :title => proposal_title,
+    :proposer => @organisation.members.active.first
+  )
+end
+
 When /^the proposal closer runs$/ do
   Proposal.close_proposals
 end
