@@ -21,6 +21,9 @@ module NavigationHelpers
     when /^the proposal page$/
       @proposal ||= Proposal.last
       proposal_path(@proposal)
+    when /^the member page for "(.*)"/
+      @member = @organisation.members.find_by_email($1)
+      member_path(@member)
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

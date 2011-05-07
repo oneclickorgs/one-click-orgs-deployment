@@ -28,3 +28,7 @@ Then /^I should see a proposal to add "([^"]*)" as a member$/ do |new_member_nam
   page.should have_css('.open-proposals h4', :text => "Add #{new_member_name} as a member of #{@organisation.name}")
 end
 
+Then /^I should see a proposal to eject "([^"]*)"$/ do |member_email|
+  @member = @organisation.members.find_by_email(member_email)
+  page.should have_css('.open-proposals h4', :text => "Eject #{@member.name} from #{@organisation.name}")
+end

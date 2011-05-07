@@ -1,3 +1,10 @@
+Given /^there is a member "([^"]*)"$/ do |member_email|
+  @organisation.members.make(
+    :email => member_email,
+    :member_class => @organisation.member_classes.find_by_name("Member")
+  )
+end
+
 Then /^I should see the list of founding members$/ do
   @organisation ||= Organisation.last
   
