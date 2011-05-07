@@ -2,7 +2,7 @@
   %h3 Propose a vote
   %p.helper
     You can use
-    = link_to 'Markdown', 'http://daringfireball.net/projects/markdown/syntax'
+    = link_to 'Markdown', 'http://daringfireball.net/projects/markdown/syntax', :target => '_blank'
     to format your description.
   = form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
     %p

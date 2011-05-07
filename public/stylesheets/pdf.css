@@ -1,7 +1,18 @@
 h1 {
   border-bottom: 1px solid #333333;
-  color: #333333; }
+  color: #333333;
+  font-size: 24pt; }
+
+h2 {
+  font-size: 22pt; }
+
+h3 {
+  font-size: 20pt; }
+
+p, ul, ol {
+  font-size: 12pt; }
 
 table th, table td {
+  font-size: 11pt;
   padding: 4px;
   text-align: left; }
