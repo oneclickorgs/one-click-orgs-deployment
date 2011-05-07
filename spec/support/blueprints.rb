@@ -66,6 +66,12 @@ end
 ChangeVotingPeriodProposal.blueprint do
 end
 
+ChangeTextProposal.blueprint do
+end
+
+EjectMemberProposal.blueprint do
+end
+
 Decision.blueprint do
   proposal {Proposal.make}
 end

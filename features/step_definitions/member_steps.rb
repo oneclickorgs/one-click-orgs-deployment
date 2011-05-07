@@ -21,6 +21,16 @@ Given /^there are pending members$/ do
   end
 end
 
+Given /^there is a member with name "([^"]*)" and email "([^"]*)"$/ do |name, email|
+  first_name, last_name = name.split(' ')
+  @member = @organisation.members.make(
+    :first_name => first_name,
+    :last_name => last_name,
+    :email => email,
+    :member_class => @organisation.member_classes.find_by_name("Member")
+  )
+end
+
 Then /^I should see the list of members$/ do
   page.should have_css('table.members td a')
 end

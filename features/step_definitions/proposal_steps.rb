@@ -27,8 +27,54 @@ Given /^a proposal "([^"]*)" has been made$/ do |proposal_title|
   )
 end
 
+Given /^a proposal has been made to change the organisation name to "([^"]*)"$/ do |new_organisation_name|
+  @proposal = @organisation.change_text_proposals.make(
+    :title => "Change organisation name to '#{new_organisation_name}'",
+    :parameters => {
+      'name' => 'organisation_name',
+      'value' => new_organisation_name
+    },
+    :proposer => @organisation.members.active.first
+  )
+end
+
+Given /^a proposal has been made to add a new member with name "([^"]*)" and email "([^"]*)"$/ do |name, email|
+  first_name, last_name = name.split(' ')
+  @proposal = @organisation.add_member_proposals.make(
+    :parameters => {
+      'first_name' => first_name,
+      'last_name' => last_name,
+      'email' => email
+    },
+    :title => "Add #{first_name} #{last_name} as a member of #{@organisation.name}",
+    :proposer => @organisation.members.active.first
+  )
+end
+
+Given /^a proposal has been made to eject the member "([^"]*)"$/ do |email|
+  member = @organisation.members.active.find_by_email(email)
+  @proposal = @organisation.eject_member_proposals.make(
+    :parameters => {
+      'id' => member.id
+    },
+    :title => "Eject #{member.first_name} #{member.last_name} from #{@organisation.name}",
+    :proposer => @organisation.members.active.first
+  )
+end
+
+Given /^the voting system for membership decisions is "([^"]*)"$/ do |voting_system|
+  @organisation.constitution.change_voting_system('membership', voting_system)
+end
+
 When /^the proposal closer runs$/ do
   Proposal.close_proposals
+end
+
+When /^enough people vote in support of the proposal$/ do
+  @proposal ||= Proposal.last
+  @organisation.members.active.each do |member|
+    member.cast_vote(:for, @proposal.id)
+  end
 end
 
 Then /^I should see a proposal "([^"]*)"$/ do |proposal_title|

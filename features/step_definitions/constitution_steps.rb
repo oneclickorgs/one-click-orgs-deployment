@@ -34,3 +34,7 @@ Then /^I should see the constitution$/ do
   page.should have_css('h2', :text => "Constitution")
   Then "I should see the dynamic constitution clauses"
 end
+
+Then /^I should see a clause with "([^"]*)"$/ do |clause_text|
+  page.should have_css('ul.constitution li', :text => Regexp.new(clause_text))
+end
