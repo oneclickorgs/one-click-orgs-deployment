@@ -33,6 +33,14 @@ Given /^there are enough members to start the founding vote$/ do
   end
 end
 
+Given /^an organisation is active$/ do
+  @organisation = Organisation.make
+  @organisation.active!
+  3.times do
+    @organisation.members.make
+  end
+end
+
 Then /^the organisation should be active$/ do
   @organisation.should be_active
 end

@@ -9,6 +9,11 @@ Given /^I have received an email inviting me to become a founding member$/ do
   @email = last_email
 end
 
+Given /^I have received an email inviting me to become a member$/ do
+  Given "I have been invited to join the organisation"
+  @email = last_email
+end
+
 When /^I follow the invitation link in the email$/ do
   @email ||= last_email
   uri = URI.parse(@email.body.match(/ (http:\/\/.*?) /)[1])

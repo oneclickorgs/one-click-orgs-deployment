@@ -12,3 +12,11 @@ end
 Given /^there are two other founding members$/ do
   Given "there are enough founding members to start the founding vote"
 end
+
+Given /^I have been invited to join the organisation$/ do
+  @user ||= @organisation.members.make(:inducted_at => nil)
+  @user.should_not be_inducted
+  @user.send_welcome = true
+  @user.send_welcome_if_requested
+end
+
