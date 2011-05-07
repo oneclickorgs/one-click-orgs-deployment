@@ -13,8 +13,10 @@ describe AddMemberProposal do
   
   it "should send an email to the new member if proposal passes" do
     @proposal = @organisation.add_member_proposals.new
-    Member.should_receive(:create_member).with(hash_including(:first_name=>"Paul"), true)
-    @proposal.enact!(:first_name=>"Paul")
+    
+    MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
+    
+    @proposal.enact!(:first_name=>"Paul", :last_name => "Smith", :email => "paul@example.com")
   end
   
   describe "validation" do
@@ -25,7 +27,7 @@ describe AddMemberProposal do
     
     it "should not validate when proposed new member is already active" do
       @existing_member = @organisation.members.make
-      @proposal.parameters = {'email' => @existing_member.email}
+      @proposal.parameters = {'email' => @existing_member.email, 'first_name' => @existing_member.first_name, 'last_name' => @existing_member.last_name}
       @proposal.should_not be_valid
     end
   
@@ -33,7 +35,7 @@ describe AddMemberProposal do
       @existing_member = @organisation.members.make
       @existing_member.eject!
     
-      @proposal.parameters = {'email' => @existing_member.email}
+      @proposal.parameters = {'email' => @existing_member.email, 'first_name' => @existing_member.first_name, 'last_name' => @existing_member.last_name}
       @proposal.should be_valid
     end
   end
@@ -57,7 +59,7 @@ describe AddMemberProposal do
         @ex_member = @organisation.members.make
         @ex_member.eject!
         
-        @proposal = @organisation.add_member_proposals.make(:parameters => {'email' => @ex_member.email})
+        @proposal = @organisation.add_member_proposals.make(:parameters => {'email' => @ex_member.email, 'first_name' => @ex_member.first_name, 'last_name' => @ex_member.last_name})
       end
       
       it "should reactivate the ex-member" do

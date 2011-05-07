@@ -40,6 +40,7 @@ AddMemberProposal.blueprint do
   title "a proposal title"
   self.send(:assign_attribute, :open, 1)
   proposer {Member.make}
+  parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
 end
 
 FoundOrganisationProposal.blueprint do

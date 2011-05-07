@@ -1,3 +1,14 @@
+2011-04-30 One Click Orgs 1.0.1
+
+* FIX: Ejected members are listed as 'pending'
+* FIX: Notice and error messages sometimes display for an extra request after they're needed
+* FIX: When adding a new founding member, if there are validation problems, the user gets a 500 error.
+* Member details are validated when proposing a new member.
+* Email addresses are sanity-checked for validity.
+* Footer is redesigned.
+* Foreign keys in the database have indexes.
+* Rails is upgraded to version 3.0.6.
+
 2011-03-17 One Click Orgs 1.0.0
 
 * Support for UK Unincorporated Associations.

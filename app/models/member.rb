@@ -3,6 +3,11 @@ require 'digest/md5'
 require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
+  attr_accessor :send_welcome
+  
+  before_create :new_invitation_code!
+  after_create :send_welcome_if_requested
+  
   belongs_to :organisation
   
   has_many :votes
@@ -46,6 +51,7 @@ class Member < ActiveRecord::Base
   end
 
   validates_presence_of :first_name, :last_name, :email
+  validates_format_of :email, :with => /\A.*@.*\..*\Z/
   # TODO: how can we validate :password? (not actually saved, but accepted during input)
 
   # AUTHENTICATION
@@ -109,16 +115,10 @@ class Member < ActiveRecord::Base
       Vote.create(:member => self, :proposal_id => proposal_id, :for => false)
     end
   end
-
-  def self.create_member(params, send_welcome=false)
-    member = Member.new(params)
-    member.new_invitation_code!
-    member.save!
-    member.send_welcome if send_welcome
-    member
-  end
-
-  def send_welcome
+  
+  def send_welcome_if_requested
+    return unless @send_welcome
+    
     if self.organisation.pending? then
       MembersMailer.welcome_new_founding_member(self).deliver
     else

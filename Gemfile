@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
 
-gem "rails", "3.0.4"
+gem "bundler", "~>1.0.0"
+
+gem "rails", "3.0.6"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -40,7 +42,8 @@ gem "exception_notification_rails3", :require => 'exception_notifier'
 group :development do
   gem "capistrano", "~>2.5.19"
   gem "railroad"
-  gem "ruby-debug"
+  gem "ruby-debug", :platforms => :ruby_18
+  gem "ruby-debug19", :platforms => :ruby_19
 end
 
 group :development, :test do
