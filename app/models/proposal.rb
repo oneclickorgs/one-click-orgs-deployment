@@ -212,5 +212,9 @@ class Proposal < ActiveRecord::Base
 
   def duration
     creation_date && end_date && (end_date - creation_date)
-  end  
+  end
+  
+  def decision_notification_message
+    nil
+  end
 end

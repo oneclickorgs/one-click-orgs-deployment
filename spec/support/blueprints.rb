@@ -49,6 +49,9 @@ FoundOrganisationProposal.blueprint do
   proposer {Member.make}
 end
 
+ChangeVotingPeriodProposal.blueprint do
+end
+
 Decision.blueprint do
   proposal {Proposal.make}
 end

@@ -190,4 +190,10 @@ describe Proposal do
       @proposal.start
     end
   end
+  
+  describe "decision notification message" do
+    it "returns nil" do
+      Proposal.new.decision_notification_message.should be_nil
+    end
+  end
 end
