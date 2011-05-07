@@ -37,7 +37,9 @@ Given /^an organisation is active$/ do
   @organisation = Organisation.make
   @organisation.active!
   3.times do
-    @organisation.members.make
+    @organisation.members.make(
+      :member_class => @organisation.member_classes.find_by_name("Member")
+    )
   end
 end
 

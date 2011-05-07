@@ -18,6 +18,9 @@ module NavigationHelpers
       '/welcome'
     when /^the voting and proposals page$/
       '/'
+    when /^the proposal page$/
+      @proposal ||= Proposal.last
+      proposal_path(@proposal)
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

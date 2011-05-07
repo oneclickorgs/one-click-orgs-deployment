@@ -48,3 +48,11 @@ Then /^everyone should receive an email saying the founding vote has passed$/ do
     email.body.should =~ /The Association has therefore been formed/
   end
 end
+
+Then /^everyone should receive an email notifying them of the proposal$/ do
+  @proposal ||= Proposal.last
+  @organisation.members.each do |member|
+    email = ActionMailer::Base.deliveries.reverse.select{|mail| mail.to.first == member.email}.first
+    email.body.should =~ Regexp.new(@proposal.title)
+  end
+end
