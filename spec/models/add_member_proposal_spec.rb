@@ -71,4 +71,8 @@ describe AddMemberProposal do
       end
     end
   end
+  
+  it "has a decision notification message" do
+    AddMemberProposal.new.decision_notification_message.should be_present
+  end
 end

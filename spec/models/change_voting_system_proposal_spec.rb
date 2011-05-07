@@ -13,4 +13,9 @@ describe ChangeVotingSystemProposal do
     Clause.should_receive(:set_text!).with('constitution_voting_system', 'Unanimous')
     passed_proposal(@p, 'type'=>'constitution', 'proposed_system'=>@proposed_system).call
   end
+  
+  it "has a decision notification message" do
+    ChangeVotingSystemProposal.new.decision_notification_message.should be_present
+  end
+  
 end

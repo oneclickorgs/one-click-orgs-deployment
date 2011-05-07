@@ -17,7 +17,7 @@ For more information visit our web site: [oneclickorgs.com](http://oneclickorgs.
 
 The main repository is hosted on github: [github.com/oneclickorgs/one-click-orgs](http://github.com/oneclickorgs/one-click-orgs/tree/master)
 
-For installation instructions, see HACKING.txt.
+For installation instructions, see [HACKING.md](https://github.com/oneclickorgs/one-click-orgs/blob/master/HACKING.md).
 
 ## License
 

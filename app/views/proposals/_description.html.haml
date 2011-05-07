@@ -1,7 +1,4 @@
-- if proposal.description
+- if proposal.description?
   %section.description
     :markdown
       #{proposal.description}
-- else
-  %div.description.missing
-    %p This proposal does not have a description.

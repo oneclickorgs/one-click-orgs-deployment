@@ -24,4 +24,8 @@ describe EjectMemberProposal do
     @m.reload
     @m.should_not be_active
   end  
+  
+  it "has a decision notification message" do
+    EjectMemberProposal.new.decision_notification_message.should be_present
+  end
 end

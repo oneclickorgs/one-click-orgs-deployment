@@ -13,4 +13,4 @@
       %td= member.email
       %td
         - if member.last_logged_in_at
-          = member.last_logged_in_at.to_s(:long)
+          = member.last_logged_in_at.to_s(:short)

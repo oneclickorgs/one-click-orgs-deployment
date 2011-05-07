@@ -93,8 +93,8 @@ class ApplicationController < ActionController::Base
       kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
 
       send_data(kit.to_pdf, :filename => "#{@organisation_name} #{filename}.pdf",
-        :type => 'application/pdf', :disposition => 'inline')
-        # disposition can be set to 'attachment' to force a download
+        :type => 'application/pdf', :disposition => 'attachment')
+        # disposition: choose between attachment/inline to force download
 
       return
 

@@ -25,4 +25,8 @@ describe ChangeTextProposal do
     @p = ChangeTextProposal.new(:proposer => Member.make, :title => "change objectives to eat all the cheese", :parameters => {'name' => 'objectives', 'value' => 'eat all the cheese'})
     @p.should_not be_valid
   end
+  
+  it "has a decision notification message" do
+    ChangeTextProposal.new.decision_notification_message.should be_present
+  end
 end
