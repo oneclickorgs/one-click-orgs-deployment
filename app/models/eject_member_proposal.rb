@@ -1,4 +1,4 @@
-class EjectMemberProposal < Proposal
+class EjectMemberProposal < MembershipProposal
 
   def allows_direct_edit?
     true
@@ -13,9 +13,5 @@ class EjectMemberProposal < Proposal
     else
       member.eject!
     end
-  end
-  
-  def voting_system
-    organisation.constitution.voting_system(:membership)
   end
 end

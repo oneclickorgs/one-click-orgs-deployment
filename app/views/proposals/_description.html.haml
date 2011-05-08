@@ -1,9 +1,4 @@
-- if proposal.description
-  - paras = []
-  - paras = proposal.description.split("\n")
-  %div.description
-    - for para in paras
-      %p= para
-- else
-  %div.description.missing
-    %p This proposal does not have a description.
+- if proposal.description?
+  %section.description
+    :markdown
+      #{proposal.description}

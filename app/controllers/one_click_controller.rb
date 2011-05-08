@@ -8,6 +8,13 @@ class OneClickController < ApplicationController
   def constitution
     @page_title = "Constitution"
     prepare_constitution_view
+    
+    respond_to do |format|
+      format.html
+      format.pdf {
+        generate_pdf(@page_title)
+      }
+    end  
   end
   
   def dashboard

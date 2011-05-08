@@ -17,7 +17,7 @@ describe Proposal do
     ProposalMailer.stub!(:notify_creation).and_return(@mail)
     DecisionMailer.stub!(:notify_new_decision).and_return(@mail)
   end
-
+  
   it "should close early proposals" do
     member_0, member_1, member_2 = @organisation.members.make_n(3, :member_class => @default_member_class)
     member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)
@@ -166,6 +166,34 @@ describe Proposal do
       
       proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
       proposal.member_count.should == 3
+    end
+  end
+  
+  describe "starting" do
+    before(:each) do
+      @proposer = mock_model(Member)
+      @organisation = mock_model(Organisation,
+        :pending? => false,
+        :constitution => mock("constitution", :voting_period => 3600)
+      )
+
+      @proposal = Proposal.new(
+        :proposer => @proposer,
+        :organisation => @organisation,
+        :title => "Buy more tables"
+      )
+      @proposal.stub!(:send_email => nil)
+    end
+    
+    it "creates a support vote by the proposer" do
+      @proposer.should_receive(:cast_vote).with(:for, anything)
+      @proposal.start
+    end
+  end
+  
+  describe "decision notification message" do
+    it "returns nil" do
+      Proposal.new.decision_notification_message.should be_nil
     end
   end
 end

@@ -1,6 +1,4 @@
-%h2.purple Voting and Proposals
-
-%p= "Welcome back, #{current_user.name}!" if current_user
+%h2 Voting & proposals
 
 - if current_organisation.active? || current_organisation.proposed?
   .section.open-proposals

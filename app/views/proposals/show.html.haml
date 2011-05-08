@@ -14,8 +14,9 @@
   = link_to(@proposal.proposer.name, @proposal.proposer)
   = @proposal.creation_date.to_s(:at_on)
 
-%h3 Description
-= render 'description', :proposal => @proposal
+- if @proposal.description?
+  %h3 Description
+  = render 'description', :proposal => @proposal
 
 %h3 Voting
 
