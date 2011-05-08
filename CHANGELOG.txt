@@ -4,7 +4,7 @@
 * FEATURE: Constitution and members list can be downloaded as PDF documents.
 * FEATURE: Proposal descriptions now accept Markdown.
 * App now has a proper maintenance page.
-* Design improvements.
+* Design and copy improvements.
 
 2011-04-30 One Click Orgs 1.0.1
 
