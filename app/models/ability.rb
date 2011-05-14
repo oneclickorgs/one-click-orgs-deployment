@@ -29,6 +29,11 @@ class Ability
       can :create, Proposal if !user.organisation.proposed?
     end
     
-    can :create, Vote if user.has_permission(:vote)
+    if user.has_permission(:vote)
+      can :create, Vote
+      can :vote_on, Proposal do |proposal|
+        user.eligible_to_vote?(proposal)
+      end
+    end
   end
 end

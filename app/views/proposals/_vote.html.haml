@@ -4,7 +4,7 @@
     %strong
       = proposal.vote_by(current_user).for_or_against.downcase
     this proposal
-- elsif current_user.eligible_to_vote?(proposal)
+- elsif can? :vote_on, proposal
   = form_tag(vote_for_path(:id => proposal.id, :return_to => request.url)) do
     = submit_tag "Support"
   = form_tag(vote_against_path(:id => proposal.id, :return_to => request.url)) do

@@ -91,6 +91,7 @@ describe "layouts/application.html.haml" do
         @found_organisation_proposals_association.stub!(:last).and_return(@found_organisation_proposal)
         
         @user.stub!(:eligible_to_vote?).and_return(true)
+        @user.stub!(:has_permission).with(:vote).and_return(true)
       end
       
       context "when user has not voted yet" do
