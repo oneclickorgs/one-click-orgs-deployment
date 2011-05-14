@@ -91,7 +91,7 @@ class Member < ActiveRecord::Base
 
   # END AUTHENTICATION
   
-  def can_vote?(proposal)
+  def eligible_to_vote?(proposal)
     return true if organisation.proposed?
     inducted? && proposal.creation_date >= inducted_at
   end
@@ -105,8 +105,8 @@ class Member < ActiveRecord::Base
     # FIXME why not just pass the proposal in?
     proposal = organisation.proposals.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
-    unless can_vote?(proposal)
-      raise VoteError, "Can not vote on proposals created before member is inducted and the organisation has been proposed."
+    unless eligible_to_vote?(proposal)
+      raise VoteError, "Cannot vote on proposals created before member is inducted and the organisation has been proposed."
     end
 
     case action

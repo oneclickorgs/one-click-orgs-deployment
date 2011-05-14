@@ -90,7 +90,7 @@ describe "layouts/application.html.haml" do
         @organisation.stub!(:found_organisation_proposals).and_return(@found_organisation_proposals_association)
         @found_organisation_proposals_association.stub!(:last).and_return(@found_organisation_proposal)
         
-        @user.stub!(:can_vote?).and_return(true)
+        @user.stub!(:eligible_to_vote?).and_return(true)
       end
       
       context "when user has not voted yet" do
