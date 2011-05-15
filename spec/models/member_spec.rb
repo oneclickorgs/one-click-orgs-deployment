@@ -49,8 +49,6 @@ describe Member do
   end
 
   it "should not allow additional votes" do
-    @member.cast_vote(:for, @proposal)
-
     lambda {
       @member.cast_vote(:against, @proposal)
     }.should raise_error(VoteError)

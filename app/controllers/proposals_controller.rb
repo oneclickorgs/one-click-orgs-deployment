@@ -28,8 +28,7 @@ class ProposalsController < ApplicationController
     @proposal[:type] = 'Proposal' # Bug #138, cf. http://www.simple10.com/rails-3-sti/
     @proposal.proposer_member_id = current_user.id #fixme
         
-    if @proposal.start
-      # Freeform proposal has no need for direct enactment logic during pending stage.
+    if @proposal.save
       redirect_to proposal_path(@proposal), :flash => {:notice => "Proposal was successfully created"}
     else
       redirect root_path, :flash => {:error => "Proposal not created"}

@@ -13,11 +13,11 @@ class Ability
       can :create, AddMemberProposal if user.organisation.active?
       can :create, ChangeMemberClassProposal
       can :create, EjectMemberProposal
-      can :create, FoundingMember if user.has_permission(:direct_edit) && user.organisation.pending? # FIXME having direct_edit permission is just a side-effect of being the Founder, which is the real check
+      can :create, FoundingMember if user.has_permission(:founder) && user.organisation.pending?
     end
     
     if user.has_permission(:constitution_proposal)
-      can :update, Constitution if user.organisation.pending? && user.has_permission(:direct_edit)
+      can :update, Constitution if user.organisation.pending? && user.has_permission(:founder)
       can :create, ConstitutionProposalBundle if user.organisation.active?
     end
     

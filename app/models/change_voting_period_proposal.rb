@@ -4,10 +4,6 @@ class ChangeVotingPeriodProposal < ConstitutionProposal
   def set_default_title
     self.title ||= "Change voting period to #{VotingPeriods.name_for_value(new_voting_period)}"
   end
-  
-  def allows_direct_edit?
-    true
-  end
 
   def enact!(params)
     organisation.constitution.change_voting_period(params['new_voting_period'].to_i)

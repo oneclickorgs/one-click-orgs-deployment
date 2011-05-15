@@ -26,10 +26,6 @@ class Proposal < ActiveRecord::Base
   
   validates_presence_of :proposer_member_id
 
-  def allows_direct_edit?
-    false
-  end
-
   def voting_period
     organisation.constitution.voting_period
   end
@@ -40,21 +36,9 @@ class Proposal < ActiveRecord::Base
     true
   end
   
-  # Call this to kick off a proposal.
-  # If the organisation is pending this will simply enact the proposal.
-  # If the organisation is "live" then a proposal will get created.
-  # Returns true on success, false otherwise.
-  def start
-    if organisation.pending? and allows_direct_edit? and proposer.has_permission(:direct_edit)
-      self.accepted = true
-      self.force_pass!
-      self.enact!(self.parameters)
-      true
-    else
-      save_succeeded = save
-      proposer.cast_vote(:for, self) if save_succeeded && automatic_proposer_support_vote?
-      save_succeeded
-    end
+  after_create :cast_support_vote_by_proposer
+  def cast_support_vote_by_proposer
+    proposer.cast_vote(:for, self) if automatic_proposer_support_vote?
   end
  
   def end_date
@@ -128,13 +112,6 @@ class Proposal < ActiveRecord::Base
   def voting_system
     organisation.constitution.voting_system(:general)
   end
-
-  # Override voting system in case of direct edits (subclasses may check the 'passed' flag)
-  protected
-  def force_pass!
-    @force_passed = true
-  end
-  public
 
   def passed?
     @force_passed || voting_system.passed?(self)

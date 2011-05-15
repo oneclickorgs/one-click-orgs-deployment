@@ -120,7 +120,7 @@ Currently we can manage access to several kinds of proposals:
 * :membership_proposal -- create proposals for adding or ejecting members, or changing their member class
 * :freeform_proposal -- create freeform proposals
 * :found_organisation_proposal
-* :direct_edit
+* :founder
 
 The permission to vote on proposals is not yet broken down by subtypes:
 * :vote -- voting on proposals: constitution change, membership change, freeform proposals

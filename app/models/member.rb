@@ -92,7 +92,7 @@ class Member < ActiveRecord::Base
   # END AUTHENTICATION
   
   def eligible_to_vote?(proposal)
-    return true if organisation.proposed?
+    return true if organisation.try(:proposed?)
     inducted? && proposal.creation_date >= inducted_at
   end
   

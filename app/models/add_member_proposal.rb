@@ -22,10 +22,6 @@ class AddMemberProposal < MembershipProposal
   def set_default_title
     self.title ||= "Add #{parameters['first_name']} #{parameters['last_name']} as a member of #{organisation.try(:name)}"
   end
-  
-  def allows_direct_edit?
-    true
-  end
 
   def enact!(params)
     @existing_member = organisation.members.inactive.find_by_email(params['email'])

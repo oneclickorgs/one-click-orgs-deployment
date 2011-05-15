@@ -96,7 +96,7 @@ describe FoundOrganisationProposal do
     
     it "does not create a support vote by the proposer" do
       @proposer.should_not_receive(:cast_vote).with(:for, anything)
-      @proposal.start
+      @proposal.save
     end
   end
 end

@@ -8,10 +8,6 @@ class ChangeMemberClassProposal < MembershipProposal
   def member_class_must_exist
     errors.add(:member_class, "does not exist") unless organisation.member_classes.exists?(parameters['member_class_id'])
   end
-  
-  def allows_direct_edit?
-    true
-  end
 
   def enact!(params)
     # TODO: Needs backwards compatibility; previously stored the member's ID in

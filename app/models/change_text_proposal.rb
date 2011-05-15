@@ -6,10 +6,6 @@ class ChangeTextProposal < ConstitutionProposal
   def set_default_title
     self.title ||= "Change #{name.humanize.downcase} to '#{value}'"
   end
-  
-  def allows_direct_edit?
-    true
-  end
 
   def enact!(params)
     organisation.clauses.set_text!(params['name'], params['value'])

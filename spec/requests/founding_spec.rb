@@ -22,7 +22,7 @@ describe "Founding process" do
         :title => "Proposal to found organisation",
         :proposer_member_id => @founder.id
       )
-      @found_organisation_proposal.start
+      @found_organisation_proposal.save
       
       @organisation.proposed!
       @organisation.save
