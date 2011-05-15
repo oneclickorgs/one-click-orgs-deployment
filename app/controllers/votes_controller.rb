@@ -5,9 +5,11 @@ class VotesController < ApplicationController
     
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id
-        
+    
+    proposal = co.proposals.find(params[:id])
+    
     begin
-      current_user.cast_vote(:for, id)
+      current_user.cast_vote(:for, proposal)
       redirect_to return_to, :notice => "Vote for proposal cast"
     rescue Exception => e
       redirect_to return_to, :notice => "Error casting vote: #{e}"
@@ -20,9 +22,11 @@ class VotesController < ApplicationController
     
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id    
+    
+    proposal = co.proposals.find(params[:id])
         
     begin
-      current_user.cast_vote(:against, id)
+      current_user.cast_vote(:against, proposal)
       redirect_to return_to, :notice => "Vote against proposal cast"
     rescue Exception => e
       redirect_to return_to, :notice => "Error casting vote: #{e}"

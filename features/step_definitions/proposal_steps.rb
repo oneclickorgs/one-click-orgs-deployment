@@ -12,7 +12,7 @@ end
 Given /^everyone has voted to support the founding$/ do
   fop = @organisation.found_organisation_proposals.first
   @organisation.members.each do |member|
-    member.cast_vote(:for, fop.id)
+    member.cast_vote(:for, fop)
   end
 end
 
@@ -73,7 +73,7 @@ end
 When /^enough people vote in support of the proposal$/ do
   @proposal ||= Proposal.last
   @organisation.members.active.each do |member|
-    member.cast_vote(:for, @proposal.id)
+    member.cast_vote(:for, @proposal)
   end
 end
 
