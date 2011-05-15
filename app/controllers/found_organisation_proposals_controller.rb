@@ -15,6 +15,7 @@ class FoundOrganisationProposalsController < ApplicationController
       co.proposed!
       redirect_to(root_path, :notice => "The founding vote has now begun.")
     else
+      # TODO Render instead of redirect; use error_messages_for.
       redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
   end

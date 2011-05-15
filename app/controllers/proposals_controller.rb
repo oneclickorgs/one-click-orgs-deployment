@@ -31,6 +31,8 @@ class ProposalsController < ApplicationController
     if @proposal.save
       redirect_to proposal_path(@proposal), :flash => {:notice => "Proposal was successfully created"}
     else
+      # TODO Preserve entered form values; render instead of redirect;
+      # use error_messages_for.
       redirect root_path, :flash => {:error => "Proposal not created"}
     end
   end

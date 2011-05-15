@@ -8,7 +8,7 @@ class EjectMemberProposalsController < ApplicationController
       flash[:notice] = "Ejection proposal successfully created"
       redirect_to root_path
     else
-      flash.now[:error] = "Error creating proposal: #{@eject_member_proposal.errors.inspect}"
+      flash.now[:error] = "Error creating proposal"
       render :action => :new
     end
     

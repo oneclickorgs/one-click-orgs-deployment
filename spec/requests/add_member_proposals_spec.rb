@@ -31,8 +31,12 @@ describe "add-member proposals" do
         response.should render_template('add_member_proposals/new')
       end
       
-      it "sets a helpful error flash" do
-        flash[:error].should =~ /Email/
+      it "sets an error flash" do
+        flash[:error].should be_present
+      end
+      
+      it "displays the errors" do
+        response.should have_selector('ul.errors li', :content => "Email can't be blank")
       end
       
       it "retains the contents of the new member form" do

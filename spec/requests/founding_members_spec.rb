@@ -37,8 +37,12 @@ describe "founding members" do
         post('/founding_members', :founding_member => {:first_name => "Bob", :last_name => "Smith", :email => ""})
       end
       
-      it "sets a helpful error flash" do
-        flash[:error].should =~ /Email/
+      it "sets an error flash" do
+        flash[:error].should be_present
+      end
+      
+      it "displays the errors" do
+        response.should have_selector('ul.errors li', :content => "Email can't be blank")
       end
       
       it "renders the new member page" do

@@ -9,6 +9,8 @@ class ChangeMemberClassProposalsController < ApplicationController
       flash[:notice] = "Membership class proposal successfully created"
       redirect_to(member_path(@change_member_class_proposal.member))
     else
+      # TODO Use a render instead of redirect, so we can preserve the entered
+      # form details, and use error_messages_for to present errors better.
       flash[:error] = "Error creating proposal: #{proposal.errors.inspect}"
       redirect_back_or_default(member_path(@member))
     end

@@ -29,6 +29,7 @@ class VotesController < ApplicationController
       current_user.cast_vote(:against, proposal)
       redirect_to return_to, :notice => "Vote against proposal cast"
     rescue Exception => e
+      # TODO better error message
       redirect_to return_to, :notice => "Error casting vote: #{e}"
     end
   end

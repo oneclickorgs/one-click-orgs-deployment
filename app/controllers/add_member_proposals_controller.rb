@@ -14,8 +14,7 @@ class AddMemberProposalsController < ApplicationController
       flash[:notice] = "Add Member Proposal successfully created"
       redirect_to root_path
     else
-      # TODO use error_message_for in view instead of cramming errors messages into the flash
-      flash.now[:error] = "Error creating proposal: #{@add_member_proposal.errors.full_messages.to_sentence}"
+      flash.now[:error] = "Error creating proposal"
       render :action => :new
     end
   end
