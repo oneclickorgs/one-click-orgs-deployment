@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe MembersMailer do
   before :each do
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
     
     @member = @organisation.members.make
     @new_password = "foo"
@@ -20,7 +20,7 @@ describe MembersMailer do
     end
   
     it "should include reset password link in email text" do
-      @mail.body.should =~ %r{http://test.oneclickorgs.com/r/abcdef}            
+      @mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/r/abcdef")
     end
   end
   
@@ -35,7 +35,7 @@ describe MembersMailer do
     end
   
     it "should include invitation link in email text" do
-      @mail.body.should =~ %r{http://test.oneclickorgs.com/i/abcdef}
+      @mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/i/abcdef")
     end
   end
 end

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe DecisionMailer do
   before :each do
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
     @member = @organisation.members.make
     @proposal = @organisation.proposals.make(:proposer_member_id=>@member.id)
     @decision = Decision.make(:proposal=>@proposal)
@@ -20,7 +20,7 @@ describe DecisionMailer do
 
     it "should include correct decision link in email text" do
       mail = DecisionMailer.notify_new_decision(@member, @decision)
-      mail.body.should =~ %r{http://test.oneclickorgs.com/decisions/\d+}
+      mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/decisions/\\d+")
     end
   end
   

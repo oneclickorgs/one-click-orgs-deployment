@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "change member class proposals" do
   before(:each) do
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
   end
   
   describe "POST create" do

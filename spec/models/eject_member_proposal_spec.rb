@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe EjectMemberProposal do
   before do 
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
   end
     
   it "should use the membership voting system" do

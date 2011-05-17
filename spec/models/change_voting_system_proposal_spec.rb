@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ChangeVotingSystemProposal do
   before do
-    stub_organisation!
+    default_organisation
     @constitution_voting_system = @organisation.clauses.set_text!('constitution_voting_system', 'RelativeMajority')        
     @proposed_system = 'Unanimous'
   end

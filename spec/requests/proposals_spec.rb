@@ -15,8 +15,8 @@ describe "Proposals" do
   include ProposalsSpecHelper
   
   before(:each) do 
-    stub_organisation!
-    stub_constitution!
+    default_organisation
+    default_constitution
     
     @user = login
   end

@@ -5,9 +5,9 @@ describe Proposal do
   before(:each) do
     Delayed::Job.delete_all 
         
-    stub_constitution!  
-    stub_organisation!
-    stub_voting_systems!
+    default_constitution  
+    default_organisation
+    default_voting_systems
     default_member_class
     
     @member = @organisation.members.make(:member_class => @default_member_class)

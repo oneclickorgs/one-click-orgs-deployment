@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "constitution proposal bundles" do
   
   before(:each) do 
-    stub_organisation!
+    default_organisation
     @organisation.active!
-    stub_constitution!
+    default_constitution
     
     @user = login
   end
@@ -120,7 +120,7 @@ describe "constitution proposal bundles" do
             "constitution_voting_system" => "AbsoluteTwoThirdsMajority",
             "assets" => "0",
             "voting_period" => "259200",
-            "organisation_name" => "test",
+            "organisation_name" => @organisation.name,
             "general_voting_system" => "AbsoluteMajority",
             "membership_voting_system" => "Veto"
           }

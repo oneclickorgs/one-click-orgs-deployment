@@ -1,8 +1,8 @@
 describe "found organisation proposals" do
   
   before(:each) do 
-    stub_organisation!
-    stub_constitution!
+    default_organisation
+    default_constitution
     
     @user = login
     
@@ -19,7 +19,7 @@ describe "found organisation proposals" do
       post(found_organisation_proposals_path)
       
       FoundOrganisationProposal.count.should == 1
-      FoundOrganisationProposal.first.title.should =~ /test/ # The name of the org
+      FoundOrganisationProposal.first.title.should =~ Regexp.new(@organisation.name)
       FoundOrganisationProposal.first.description.should be_present
     end
   end

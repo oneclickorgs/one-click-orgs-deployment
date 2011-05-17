@@ -24,12 +24,11 @@ Member.blueprint do
   email
   first_name
   last_name
-  created_at {Time.now - 1.day}
-  pw = Sham.password
-  password pw
-  password_confirmation pw
+  created_at {Time.now.utc - 1.day}
+  password "password"
+  password_confirmation "password"
   active true
-  inducted_at {Time.now - 23.hours}
+  inducted_at {Time.now.utc - 23.hours}
   member_class {MemberClass.make}
 end
 

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "/one_click" do
   before(:each) do
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
   end
   
   describe "dashboard" do

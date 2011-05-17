@@ -6,8 +6,8 @@ describe Member do
   before(:each) do
     Delayed::Job.delete_all 
     
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
 
     @member = @organisation.members.make
     @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)

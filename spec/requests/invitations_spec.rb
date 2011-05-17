@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "invitations" do
   before(:each) do
-    stub_organisation!(false)
+    default_organisation(:active => false)
     @member = @organisation.members.make(:active => false, :inducted_at => nil, :password => nil, :password_confirmation => nil)
   end
   

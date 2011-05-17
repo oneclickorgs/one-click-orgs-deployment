@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "constitutions" do
   
   before(:each) do
-    stub_organisation!
-    stub_constitution!
+    default_organisation
+    default_constitution
     login
     set_permission!(@user, :constitution_proposal, true)
   end
@@ -19,11 +19,11 @@ describe "constitutions" do
     end
     
     it "fills in the name field" do
-      response.should have_selector(:input, :name => "constitution_proposal_bundle[organisation_name]", :value => 'test')
+      response.should have_selector(:input, :name => "constitution_proposal_bundle[organisation_name]", :value => @organisation.name)
     end
     
     it "fills in the objectives field" do
-      response.should have_selector(:textarea, :name => "constitution_proposal_bundle[objectives]", :content => 'our objectives')
+      response.should have_selector(:textarea, :name => "constitution_proposal_bundle[objectives]", :content => @organisation.objectives)
     end
     
     it "checks the correct assets radio button" do
@@ -60,11 +60,11 @@ describe "constitutions" do
       end
       
       it "fills in the name field" do
-        response.should have_selector(:input, :name => "constitution[organisation_name]", :value => 'test')
+        response.should have_selector(:input, :name => "constitution[organisation_name]", :value => @organisation.name)
       end
 
       it "fills in the objectives field" do
-        response.should have_selector(:textarea, :name => "constitution[objectives]", :content => 'our objectives')
+        response.should have_selector(:textarea, :name => "constitution[objectives]", :content => @organisation.objectives)
       end
 
       it "checks the correct assets radio button" do

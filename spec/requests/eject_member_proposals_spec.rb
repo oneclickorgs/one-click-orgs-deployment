@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "eject-member proposals" do
   
   before(:each) do
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
     login
     set_permission!(default_user, :membership_proposal, true)
   end
@@ -22,7 +22,7 @@ describe "eject-member proposals" do
       expect{post_create}.to change{@organisation.eject_member_proposals.count}.by(1)
       proposal = @organisation.eject_member_proposals.last
       proposal.member_id.should == @member.id
-      proposal.title.should == "Eject #{@member.name} from test"
+      proposal.title.should == "Eject #{@member.name} from #{@organisation.name}"
       proposal.description.should == "Power grab!"
       proposal.proposer.should == @user
     end

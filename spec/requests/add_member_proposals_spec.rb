@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "add-member proposals" do
   before(:each) do
-    stub_constitution!
-    stub_organisation!
+    default_constitution
+    default_organisation
     login
     set_permission!(default_user, :membership_proposal, true)
   end
