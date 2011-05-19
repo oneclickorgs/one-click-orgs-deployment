@@ -40,11 +40,11 @@ class Member < ActiveRecord::Base
   end
   
   def succeeded_proposals_count
-    proposals.where(:open => false, :accepted => true).count
+    proposals.where(:state => 'accepted').count
   end
   
   def failed_proposals_count
-    proposals.where(:open => false, :accepted => false).count
+    proposals.where(:state => 'rejected').count
   end
   
   def votes_count

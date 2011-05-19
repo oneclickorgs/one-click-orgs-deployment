@@ -1,4 +1,20 @@
 class Proposal < ActiveRecord::Base
+  state_machine :initial => :open do
+    event :close do
+      transition :open => :accepted, :if => :passed?
+      transition :open => :rejected
+    end
+    
+    before_transition :on => :close, :do => :set_close_date_to_now
+    
+    after_transition any => :accepted, :do => [:enact!, :create_decision]
+    after_transition any => :rejected, :do => [:after_reject]
+  end
+  
+  def set_close_date_to_now
+    self.close_date = Time.now.utc
+  end
+  
   belongs_to :organisation
   
   after_create :send_email
@@ -94,7 +110,7 @@ class Proposal < ActiveRecord::Base
     votes_for + votes_against
   end
   
-  def reject!(params={})
+  def after_reject(params={})
     # TODO do some kind of email notification
   end
   
@@ -106,7 +122,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def closed?
-    ! self.open?
+    !self.open?
   end
   
   def voting_system
@@ -115,25 +131,6 @@ class Proposal < ActiveRecord::Base
 
   def passed?
     @force_passed || voting_system.passed?(self)
-  end
-  
-  def close!
-    raise "proposal #{self} already closed" if closed?   
-        
-    passed = passed?
-    Rails.logger.info("closing proposal #{self}")
-        
-    self.open = 0
-    self.close_date = Time.now
-    self.accepted = passed
-    save!
-    
-    if passed
-      enact!
-      decision = self.create_decision
-    else
-      reject!(self.parameters)
-    end
   end
   
   # Returns the (deserialized) hash of parameters for this proposal.
@@ -160,7 +157,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def self.close_due_proposals
-    where(["close_date < ? AND open = 1", Time.now.utc]).all.each { |p| p.close! }
+    where(["close_date < ? AND state = 'open'", Time.now.utc]).all.each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -173,9 +170,9 @@ class Proposal < ActiveRecord::Base
     close_early_proposals
   end
   
-  scope :currently_open, lambda {where(["open = 1 AND close_date > ?", Time.now.utc])}
+  scope :currently_open, lambda {where(["state = 'open' AND close_date > ?", Time.now.utc])}
   
-  scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
+  scope :failed, lambda {where(["close_date < ? AND state = 'rejected'", Time.now.utc]).order('close_date DESC')}
   
   def send_email
     self.organisation.members.active.each do |m|

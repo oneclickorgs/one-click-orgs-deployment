@@ -74,17 +74,15 @@ describe Proposal do
   
   describe "to_event" do
     it "should list open proposals as 'proposal's" do
-      @organisation.proposals.make(:open => true, :accepted => false).to_event[:kind].should == :proposal
+      @organisation.proposals.make(:state => 'open').to_event[:kind].should == :proposal
     end
     
     it "should list closed, accepted proposals as 'proposal's" do
-      @organisation.proposals.make(:open => false, :accepted => true).to_event[:kind].should == :proposal
+      @organisation.proposals.make(:state => 'accepted').to_event[:kind].should == :proposal
     end
     
     it "should list closed, rejected proposals as 'failed proposal's" do
-      proposal = @organisation.proposals.make(:accepted => false)
-      proposal.open = false
-      proposal.save
+      proposal = @organisation.proposals.make(:state => 'rejected')
       proposal.open?.should be_false
       
       proposal.to_event[:kind].should == :failed_proposal

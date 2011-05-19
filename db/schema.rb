@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402134033) do
+ActiveRecord::Schema.define(:version => 20110519150109) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -87,16 +87,15 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
   end
 
   create_table "proposals", :force => true do |t|
-    t.string   "title",                                              :null => false
+    t.string   "title",                               :null => false
     t.text     "description"
     t.datetime "creation_date"
-    t.integer  "open",               :limit => 1,     :default => 1
-    t.integer  "accepted",           :limit => 1,     :default => 0
     t.datetime "close_date"
     t.string   "parameters",         :limit => 10000
     t.string   "type",               :limit => 50
     t.integer  "proposer_member_id"
     t.integer  "organisation_id"
+    t.string   "state"
   end
 
   create_table "seen_notifications", :force => true do |t|

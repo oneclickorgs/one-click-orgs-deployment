@@ -42,15 +42,13 @@ end
 
 Proposal.blueprint do
   title "a proposal title"
-  # Every object inherits Kernel.open, so just calling 'open' doesn't work.
-  # This line hacks into Machinist to manually set the 'open' attribute.
-  self.send(:assign_attribute, :open, 1)
+  state "open"
   proposer {Member.make}
 end
 
 AddMemberProposal.blueprint do
   title "a proposal title"
-  self.send(:assign_attribute, :open, 1)
+  state 'open'
   proposer {Member.make}
   parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
 end
@@ -58,7 +56,7 @@ end
 FoundOrganisationProposal.blueprint do
   title "Proposal to Found org"
   description "Found org"
-  self.send(:assign_attribute, :open, 1)
+  state "open"
   proposer {Member.make}
 end
 
