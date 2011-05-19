@@ -54,27 +54,7 @@ describe Proposal do
 
       @p = @organisation.proposals.make(:proposer => @member)
       @p.stub!(:passed?).and_return(true)
-      @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
-    end
-    
-    it "should send out an email to each member after a Decision has been made" do
-       @decision.should_receive(:send_email)
-       @p.close!
-    end
-    
-    context "when email delivery errors" do
-      before(:each) do
-        @decision.stub!(:send_email).and_raise(StandardError)
-      end
-      
-      it "should not propagate the error" do
-        lambda {@p.close!}.should_not raise_error
-      end
-      
-      it "should ensure the proposal is enacted" do
-        @p.should_receive(:enact!)
-        @p.close!
-      end
+      # @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
     end
     
     context "when proposal is a Founding Proposal" do
@@ -85,8 +65,8 @@ describe Proposal do
         @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
       end
       
-      it "asks the decision to send notification emails" do
-        @decision.should_receive(:send_email)
+      it "creates a decision" do
+        @p.should_receive(:create_decision)
         @p.close!
       end
     end

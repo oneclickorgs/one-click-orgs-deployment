@@ -22,10 +22,14 @@ class Decision < ActiveRecord::Base
         DecisionMailer.notify_new_decision(m, self).deliver
       end
     end
+  rescue => e
+    Rails.logger.error("Error sending decision email: #{e.inspect}")
   end
   
   # only to be backwards compatible with systems running older versions of delayed job
   def self.send_email_for(decision_id)
     Decision.find(decision_id).send_email_without_send_later
   end
+  
+  after_create :send_email
 end
