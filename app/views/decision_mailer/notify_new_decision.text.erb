@@ -7,6 +7,10 @@ a new decision has been made.
 <%=raw( @proposal.description )%>
 
 <%=raw( decision_url(@proposal.decision) )%>
+<% if @proposal.decision_notification_message -%>
+
+<%=raw( @proposal.decision_notification_message )%>
+<% end -%>
 
 Thanks
 

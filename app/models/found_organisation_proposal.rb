@@ -52,4 +52,8 @@ class FoundOrganisationProposal < Proposal
   def member_count
     organisation.members.count
   end
+  
+  def automatic_proposer_support_vote?
+    false
+  end
 end

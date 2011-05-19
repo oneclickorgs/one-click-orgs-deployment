@@ -27,6 +27,7 @@ class ProposalsController < ApplicationController
     @proposal = co.proposals.find(params[:id])
     @comments = @proposal.comments
     @comment = Comment.new
+    @page_title = "Proposal"
     respond_with @proposal
   end
 

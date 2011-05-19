@@ -33,7 +33,13 @@ class Proposal < ActiveRecord::Base
   def voting_period
     organisation.constitution.voting_period
   end
- 
+  
+  # Should the proposal automatically create a support vote by the
+  # proposer when the proposal is started?
+  def automatic_proposer_support_vote?
+    true
+  end
+  
   # Call this to kick off a proposal.
   # If the organisation is pending this will simply enact the proposal.
   # If the organisation is "live" then a proposal will get created.
@@ -42,10 +48,12 @@ class Proposal < ActiveRecord::Base
     if organisation.pending? and allows_direct_edit? and proposer.has_permission(:direct_edit)
       self.accepted = true
       self.force_pass!
-      self.enact!(self.parameters) 
+      self.enact!(self.parameters)
       true
     else
-      save
+      save_succeeded = save
+      proposer.cast_vote(:for, self.id) if save_succeeded && automatic_proposer_support_vote?
+      save_succeeded
     end
   end
  
@@ -204,5 +212,9 @@ class Proposal < ActiveRecord::Base
 
   def duration
     creation_date && end_date && (end_date - creation_date)
-  end  
+  end
+  
+  def decision_notification_message
+    nil
+  end
 end

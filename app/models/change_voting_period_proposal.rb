@@ -1,5 +1,5 @@
 # Represents a proposal to change the voting period for propsosals.
-class ChangeVotingPeriodProposal < Proposal
+class ChangeVotingPeriodProposal < ConstitutionProposal
 
   def allows_direct_edit?
     true

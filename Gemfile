@@ -26,6 +26,9 @@ gem "mysql"
 # gem 'aws-s3', :require => 'aws/s3'
 
 gem "haml", "~>3.0.18"
+gem "rdiscount"
+gem "pdfkit"
+
 gem "daemons", "~>1.0.10"
 
 gem "delayed_job", "2.1.3"

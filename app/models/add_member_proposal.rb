@@ -1,4 +1,4 @@
-class AddMemberProposal < Proposal
+class AddMemberProposal < MembershipProposal
   attr_accessor :draft_member
   
   validate :member_must_not_already_be_active
@@ -27,9 +27,5 @@ class AddMemberProposal < Proposal
       member.send_welcome = true
       member.save!
     end
-  end
-  
-  def voting_system
-    organisation.constitution.voting_system(:membership)
   end
 end

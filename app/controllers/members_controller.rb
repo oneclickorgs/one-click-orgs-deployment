@@ -13,7 +13,13 @@ class MembersController < ApplicationController
     @members = co.members.active
     @pending_members = co.members.pending
     @new_member = co.members.new
-    respond_with @members
+    
+    respond_to do |format|
+      format.html
+      format.pdf {
+        generate_pdf(@page_title)
+      }
+    end
   end
 
   def show
@@ -25,6 +31,8 @@ class MembersController < ApplicationController
       @member.proposals.all,
       @member.votes.all
     ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    
+    @page_title = "Member profile"
     
     respond_with @member
   end
@@ -43,6 +51,7 @@ class MembersController < ApplicationController
       redirect_back_or_default
       return
     end
+    @page_title = "Edit your account"
     respond_with @member
   end
 

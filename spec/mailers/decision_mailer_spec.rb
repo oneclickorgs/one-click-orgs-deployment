@@ -23,4 +23,16 @@ describe DecisionMailer do
       mail.body.should =~ %r{http://test.oneclickorgs.com/decisions/\d+}
     end
   end
+  
+  context "when proposal has a decision notification message" do
+    before(:each) do
+      @proposal = @organisation.change_voting_period_proposals.make(:proposer => @member, :parameters => {'new_voting_period' => 3600})
+      @decision = Decision.make(:proposal => @proposal)
+    end
+    
+    it "is included in the email" do
+      mail = DecisionMailer.notify_new_decision(@member, @decision)
+      mail.body.should =~ %r{this prior copy is now out of date}
+    end
+  end
 end
