@@ -1,5 +1,5 @@
 module OneClickOrgs
-  VERSION = "1.1.0rc1" unless defined?(::OneClickOrgs::VERSION)
+  VERSION = "1.1.0" unless defined?(::OneClickOrgs::VERSION)
   
   def self.version
     if VERSION =~ /^0/
