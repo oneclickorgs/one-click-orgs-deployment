@@ -53,6 +53,11 @@ describe "Multi-tenancy" do
       Setting[:signup_domain] = 'signup.oneclickorgs.com'
     end
     
+    it "should redirect all setup requests to the homepage" do
+      get 'http://oneclickorgs.com/setup'
+      response.should redirect_to 'http://oneclickorgs.com/'
+    end
+    
     it "should redirect all unrecognised subdomain requests back to the new organisation page" do
       get 'http://nonexistent.oneclickorgs.com/'
       response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
