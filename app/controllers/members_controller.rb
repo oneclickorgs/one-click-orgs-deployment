@@ -109,6 +109,7 @@ class MembersController < ApplicationController
     title = "Eject #{@member.name} from #{current_organisation.name}"
     proposal = co.eject_member_proposals.new(
       :title => title,
+      :description => params[:description],
       :proposer_member_id => current_user.id,
       :parameters => {'id' => @member.id}
     )
