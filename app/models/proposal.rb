@@ -102,7 +102,7 @@ class Proposal < ActiveRecord::Base
     accepted? ? "accepted" : "rejected"
   end
   
-  def enact!(params={})
+  def enact!
   end
   
   def closed?
@@ -129,7 +129,7 @@ class Proposal < ActiveRecord::Base
     save!
     
     if passed
-      enact!(self.parameters)
+      enact!
       decision = self.create_decision
       begin
         decision.send_email

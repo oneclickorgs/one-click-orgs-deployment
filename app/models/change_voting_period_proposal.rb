@@ -5,8 +5,8 @@ class ChangeVotingPeriodProposal < ConstitutionProposal
     self.title ||= "Change voting period to #{VotingPeriods.name_for_value(new_voting_period)}"
   end
 
-  def enact!(params)
-    organisation.constitution.change_voting_period(params['new_voting_period'].to_i)
+  def enact!
+    organisation.constitution.change_voting_period(parameters['new_voting_period'].to_i)
   end
   
   def new_voting_period

@@ -7,8 +7,8 @@ class ChangeTextProposal < ConstitutionProposal
     self.title ||= "Change #{name.humanize.downcase} to '#{value}'"
   end
 
-  def enact!(params)
-    organisation.clauses.set_text!(params['name'], params['value'])
+  def enact!
+    organisation.clauses.set_text!(parameters['name'], parameters['value'])
   end
 
   validates_each :parameters do |record, attribute, value|

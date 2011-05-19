@@ -31,7 +31,7 @@ class FoundOrganisationProposal < Proposal
     # The existence of a failed 'Found Organisation' proposal is the only record we keep of this.
   end
   
-  def enact!(params={})
+  def enact!
     # initial members are all founding members that didn't vote "no" (including 
     # members who abstained.)
     confirmed_member_ids = []

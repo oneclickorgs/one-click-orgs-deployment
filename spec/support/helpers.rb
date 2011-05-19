@@ -52,7 +52,8 @@ end
 
 def passed_proposal(p, args={})
   p.stub!(:passed?).and_return(true)
-  lambda { p.enact!(args) }
+  p.parameters = args
+  lambda { p.enact! }
 end
 
 def organisation_is_pending
