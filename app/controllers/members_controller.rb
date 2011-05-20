@@ -3,14 +3,16 @@ class MembersController < ApplicationController
   respond_to :html
   
   before_filter :require_membership_proposal_permission, :only => [:update]
-  before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
     @page_title = "Members"
     @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
-    @new_member = co.members.new
+    
+    if co.pending? && current_user.has_permission(:membership_proposal)
+      @founding_member = co.build_founding_member
+    end
     
     respond_to do |format|
       format.html
@@ -39,21 +41,6 @@ class MembersController < ApplicationController
     respond_with @member
   end
   
-  def create_founding_member
-    member_attributes = params[:member]
-    member_attributes[:member_class_id] = co.member_classes.find_by_name('Founding Member').id.to_s
-    member_attributes[:send_welcome] = true
-    
-    @member = co.members.build(member_attributes)
-    
-    if @member.save
-      redirect_to members_path, :notice => "Added a new founding member."
-    else
-      flash[:error] = "There was a problem with the new member's details: #{@member.errors.full_messages.to_sentence}"
-      render :action => :new
-    end
-  end
-
   def update
     id, member = params[:id], params[:member]
     @member = co.members.find(id)

@@ -87,46 +87,5 @@ describe "everything" do
       end
     end
   end
-  
-  describe "POST /members/create_founding_member" do
-    before(:each) do
-      stub_organisation!(false)
-      set_permission!(default_user, :direct_edit, true)
-      login
-    end
-    
-    context "when valid member attributes are given" do
-      before(:each) do
-        post('/members/create_founding_member', :member => {:first_name => "Bob", :last_name => "Smith", :email => "bob@example.com"})
-      end
-      
-      it "creates a new member" do
-        @organisation.members.last.email.should == "bob@example.com"
-      end
-      
-      it "redirect to members/index" do
-        response.should redirect_to('/members')
-      end
-    end
-    
-    context "when invalid member attributes are given" do
-      before(:each) do
-        # Missing email
-        post('/members/create_founding_member', :member => {:first_name => "Bob", :last_name => "Smith", :email => ""})
-      end
-      
-      it "sets a helpful error flash" do
-        flash[:error].should =~ /Email/
-      end
-      
-      it "renders the new member page" do
-        response.should render_template('members/new')
-      end
-      
-      it "retains the contents of the new member form" do
-        response.should have_selector('input', :name => 'member[first_name]', :value => 'Bob')
-      end
-    end
-  end
 end
 

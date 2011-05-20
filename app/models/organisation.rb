@@ -173,4 +173,15 @@ class Organisation < ActiveRecord::Base
       :organisation => self
     }.merge(attributes))
   end
+  
+  def founding_members
+    members.founding_members(self)
+  end
+  
+  def build_founding_member(attributes={})
+    FoundingMember.new({
+      :organisation => self,
+      :member_class => member_classes.find_by_name("Founding Member")
+    }.merge(attributes))
+  end
 end
