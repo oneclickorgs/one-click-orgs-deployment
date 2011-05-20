@@ -57,7 +57,8 @@ AddMemberProposal.blueprint do
 end
 
 FoundOrganisationProposal.blueprint do
-  title "a proposal title"
+  title "Proposal to Found org"
+  description "Found org"
   self.send(:assign_attribute, :open, 1)
   proposer {Member.make}
 end

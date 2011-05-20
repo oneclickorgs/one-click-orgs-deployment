@@ -8,3 +8,7 @@ Given /^I have been invited to become a founding member$/ do
     :send_welcome => true
   )
 end
+
+Given /^there are two other founding members$/ do
+  Given "there are enough founding members to start the founding vote"
+end

@@ -32,3 +32,7 @@ Given /^there are enough members to start the founding vote$/ do
     end
   end
 end
+
+Then /^the organisation should be active$/ do
+  @organisation.should be_active
+end

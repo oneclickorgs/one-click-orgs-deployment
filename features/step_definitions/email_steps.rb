@@ -36,3 +36,10 @@ Then /^everyone should receive an email saying that the founding vote has starte
     email.body.should =~ /has initiated a Founding Vote/
   end
 end
+
+Then /^everyone should receive an email saying the founding vote has passed$/ do
+  @organisation.members.each do |member|
+    email = ActionMailer::Base.deliveries.reverse.select{|mail| mail.to.first == member.email}.first
+    email.body.should =~ /The Association has therefore been formed/
+  end
+end
