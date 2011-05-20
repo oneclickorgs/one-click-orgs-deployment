@@ -45,4 +45,8 @@ module ApplicationHelper
     end.join
     content_tag(:ul, messages.html_safe, :class => 'errors')
   end
+  
+  def organisation_name
+    current_organisation.try(:name)
+  end
 end

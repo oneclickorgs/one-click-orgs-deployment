@@ -1,6 +1,6 @@
 /*global $ */
 $(document).ready(function () {
-  $('form#edit_member').bind('submit', function (event) {
+  $('form.edit_invitation').bind('submit', function (event) {
     event.preventDefault();
     OneClickOrgs.activateLightbox({complete : function () {$('button#cancel_terms').focus();}});
   });
@@ -11,9 +11,9 @@ $(document).ready(function () {
     $(event.target).attr('disabled', true);
     $('button#cancel_terms').attr('disabled', true);
     
-    $('input#member_terms_and_conditions').val('1');
+    $('input#invitation_terms_and_conditions').val('1');
     
-    $('form#edit_member').unbind('submit');
-    $('form#edit_member').submit();
+    $('form.edit_invitation').unbind('submit');
+    $('form.edit_invitation').submit();
   });
 });
