@@ -8,7 +8,7 @@ describe FoundOrganisationProposal do
   describe "validation" do
     before(:each) do
       @proposal = FoundOrganisationProposal.new(:proposer => mock_model(Member), :title => "Title")
-      @proposal.organisation = @organisation = mock_model(Organisation, :members => [])
+      @proposal.organisation = @organisation = mock_model(Organisation, :members => [], :name => "Test organisation")
       @organisation.stub!(:can_hold_founding_vote?).and_return(false)
     end
     
@@ -82,7 +82,8 @@ describe FoundOrganisationProposal do
       @proposer = mock_model(Member)
       @organisation = mock_model(Organisation,
         :pending? => true,
-        :can_hold_founding_vote? => true
+        :can_hold_founding_vote? => true,
+        :name => "Test organisation"
       )
 
       @proposal = FoundOrganisationProposal.new(

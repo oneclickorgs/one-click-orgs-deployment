@@ -8,6 +8,16 @@ class FoundOrganisationProposal < Proposal
     end
   end
   
+  before_create :set_default_title
+  def set_default_title
+    self.title ||= "Proposal to found #{organisation.name}"
+  end
+  
+  before_create :set_default_description
+  def set_default_description
+    self.description ||= "Found #{organisation.name}"
+  end
+  
   def send_email
     # This one goes to all members (who are founding members)
     self.organisation.members.each do |m|
