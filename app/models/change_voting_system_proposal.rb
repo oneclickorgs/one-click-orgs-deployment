@@ -1,4 +1,9 @@
 class ChangeVotingSystemProposal < ConstitutionProposal
+  before_create :set_default_title
+  def set_default_title
+    self.title ||= "Change #{proposal_type.humanize.downcase} voting system to #{VotingSystems.get(proposed_system).description}"
+  end
+  
   def allows_direct_edit?
     true
   end

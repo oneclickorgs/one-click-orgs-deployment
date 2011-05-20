@@ -1,6 +1,10 @@
 # Represents a proposal to change the voting period for propsosals.
 class ChangeVotingPeriodProposal < ConstitutionProposal
-
+  before_create :set_default_title
+  def set_default_title
+    self.title ||= "Change voting period to #{VotingPeriods.name_for_value(new_voting_period)}"
+  end
+  
   def allows_direct_edit?
     true
   end
