@@ -201,6 +201,20 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_constitutional_proposal_permission
+    if !current_user.has_permission(:constitution_proposal)
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
+    end
+  end
+  
+  def require_direct_edit_permission
+    if !current_user.has_permission(:direct_edit)
+      flash[:error] = "You do not have sufficient permissions to make changes!"
+      redirect_back_or_default
+    end
+  end
+  
   # EXCEPTIONS
   
   rescue_from NotFound, :with => :render_404

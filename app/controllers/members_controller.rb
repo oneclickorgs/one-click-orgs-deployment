@@ -64,13 +64,4 @@ class MembersController < ApplicationController
       render(:action => :edit)
     end
   end
-  
-private
-
-  def require_direct_edit_permission
-    if !current_user.has_permission(:direct_edit)
-      flash[:error] = "You do not have sufficient permissions to make changes!"
-      redirect_back_or_default
-    end
-  end
 end # Members

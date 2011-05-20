@@ -326,11 +326,4 @@ private
       redirect_back_or_default
     end
   end
-  
-  def require_constitutional_proposal_permission
-    if !current_user.has_permission(:constitution_proposal)
-      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
-      redirect_back_or_default
-    end
-  end
 end # Proposals
