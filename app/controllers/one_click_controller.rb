@@ -25,13 +25,4 @@ class OneClickController < ApplicationController
       co.decisions.all
     ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
   end
-  
-  def amendments
-    @page_title = "Amendments"
-    find_constitution
-    
-    @allow_editing = current_user.has_permission(:constitution_proposal) &&
-      !current_organisation.proposed?
-  end
-  
 end

@@ -56,7 +56,6 @@ OneClickOrgs::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
-  get '/amendments' => 'one_click#amendments', :as => 'amendments'
   resource :constitution
   resource :constitution_proposal_bundles
   
