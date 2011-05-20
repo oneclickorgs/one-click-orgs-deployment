@@ -21,3 +21,14 @@ end
 Given /^the subdomain is the organisation's subdomain$/ do
   Given %Q{the subdomain is "#{@organisation.subdomain}"}
 end
+
+Given /^there are enough members to start the founding vote$/ do
+  extra_members_needed = 3 - @organisation.members.count
+  if extra_members_needed > 0
+    extra_members_needed.times do
+      @organisation.members.make(:pending,
+        :member_class => @organisation.member_classes.find_by_name("Founding Member")
+      )
+    end
+  end
+end

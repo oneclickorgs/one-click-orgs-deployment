@@ -29,3 +29,10 @@ Then /^a founding member invitation email should be sent to "([^"]*)"$/ do |emai
   @email.to.should == [email_address]
   @email.body.should =~ /You've been invited by .* to become a founding member/
 end
+
+Then /^everyone should receive an email saying that the founding vote has started$/ do
+  @organisation.members.each do |member|
+    email = ActionMailer::Base.deliveries.select{|mail| mail.to.first == member.email}.first
+    email.body.should =~ /has initiated a Founding Vote/
+  end
+end
