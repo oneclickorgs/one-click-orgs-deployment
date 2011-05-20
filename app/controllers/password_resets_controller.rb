@@ -31,7 +31,7 @@ class PasswordResetsController < ApplicationController
     @member.attributes = params[:member]
     if @member.save
       @member.clear_password_reset_code!
-      self.current_user = @member
+      log_in(@member)
       flash[:notice] = "Your new password has been saved."
       redirect_to(root_path)
     else

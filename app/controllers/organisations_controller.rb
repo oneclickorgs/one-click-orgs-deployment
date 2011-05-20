@@ -58,7 +58,7 @@ class OrganisationsController < ApplicationController
     end
 
     # continue
-    self.current_user = @founder
+    log_in(@founder)
 
     MembersMailer.welcome_founder(@founder).deliver # send welcome email    
     current_user.update_attribute(:last_logged_in_at, Time.now.utc) # update login datetime

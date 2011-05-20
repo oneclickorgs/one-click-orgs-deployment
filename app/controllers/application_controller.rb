@@ -40,6 +40,11 @@ class ApplicationController < ActionController::Base
     @current_user if user_logged_in?
   end
   
+  def log_in(user)
+    self.current_user = user
+    current_user.update_attribute(:last_logged_in_at, Time.now.utc)
+  end
+  
   # Returns true if a user is logged in; false otherwise.
   def user_logged_in?
     current_user = @current_user
