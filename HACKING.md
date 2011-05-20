@@ -97,6 +97,7 @@ These commands will safely no-op if no changes are necessary.
 Before you submit any patches make sure that no tests fail:
 
       $ rake spec
+      $ rake cucumber
 
 To submit a patch, you have several options:
 

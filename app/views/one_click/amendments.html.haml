@@ -29,18 +29,20 @@
       = radio_button_tag('assets', '0', !@assets, :disabled => !@allow_editing)
       = label_tag('assets_0', "Association cannot have a bank account and own assets")
     
-    %h3 Making decisions
-    %p.explanation These settings control how many votes are needed to make an official group decision. "Simple majority" is a good starting point for most groups.
-    = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general'})
+    .general_decisions
+      %h3 Making decisions
+      %p.explanation These settings control how many votes are needed to make an official group decision. "Simple majority" is a good starting point for most groups.
+      = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general'})
+    
+    .membership_decisions
+      %h3 Admitting and rejecting members
+      %p.explanation Choose the setting you want for votes to admit new members. "Nobody opposes" is a good starting point for lots of groups.
+      = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership'})
   
-    %h3 Admitting and rejecting members
-    %p.explanation Choose the setting you want for votes to admit new members. "Nobody opposes" is a good starting point for lots of groups.
-    = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership'})
-  
-
-    %h3 Changing the constitution
-    %p Once the Association is up and running you can hold votes to change any of the constitution settings. Choose how you want this to work. "Two thirds majority" is a good option for many groups.
-    = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution'})
+    .constitution_decisions
+      %h3 Changing the constitution
+      %p Once the Association is up and running you can hold votes to change any of the constitution settings. Choose how you want this to work. "Two thirds majority" is a good option for many groups.
+      = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution'})
 
     %h3 Voting period
     %p Choose how long you want each vote to run for. "3 days" is good for most groups. Select a longer period if your members have infrequent internet access. "5 minutes" should only be selected by groups intending to hold most of their votes during live face-to-face or online meetings.
