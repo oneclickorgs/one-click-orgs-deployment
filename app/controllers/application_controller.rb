@@ -68,18 +68,8 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
-  def prepare_constitution_view
-    @organisation_name = co.name
-    @objectives = co.objectives
-    @assets = co.assets
-    @website = co.domain
-
-    @period  = co.clauses.get_integer('voting_period')
-    @voting_period = VotingPeriods.name_for_value(@period)
-
-    @general_voting_system = co.constitution.voting_system(:general)
-    @membership_voting_system = co.constitution.voting_system(:membership)
-    @constitution_voting_system = co.constitution.voting_system(:constitution)
+  def find_constitution
+    @constitution = co.constitution
   end
   
   # Making PDFs

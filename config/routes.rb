@@ -57,7 +57,7 @@ OneClickOrgs::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
   
   get '/amendments' => 'one_click#amendments', :as => 'amendments'
-  get '/constitution' => 'one_click#constitution', :as => 'constitution'
+  resource :constitution
   
   get '/timeline' => 'one_click#timeline', :as => 'timeline'
   

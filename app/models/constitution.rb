@@ -15,6 +15,10 @@ class Constitution
     @organisation
   end
   
+  delegate :name, :objectives, :assets, :domain, :to => :organisation
+  
+  alias_method :organisation_name, :name
+  
   # VOTING SYSTEMS
   
   def voting_system(type = :general)     

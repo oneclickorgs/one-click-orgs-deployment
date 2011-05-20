@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
 
   def index
     @organisation_name = co.name
-    prepare_constitution_view
+    find_constitution
   end
 
   def induct_member
