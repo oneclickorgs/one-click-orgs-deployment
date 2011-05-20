@@ -81,6 +81,7 @@ OneClickOrgs::Application.routes.draw do
   resources :add_member_proposals
   resources :eject_member_proposals
   resources :change_member_class_proposals
+  resources :found_organisation_proposals
   
   match '/one_click(/:action)' => 'one_click'
   #match '/induction(/:action)' => 'induction'

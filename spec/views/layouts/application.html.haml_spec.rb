@@ -34,7 +34,7 @@ describe "layouts/application.html.haml" do
         
         it "displays a button to hold the founding vote" do
           render
-          rendered.should have_selector('form', :action => '/proposals/propose_foundation', :id => 'start_founding_vote_form') do |form|
+          rendered.should have_selector('form', :action => '/found_organisation_proposals', :id => 'start_founding_vote_form') do |form|
             form.should have_selector('input', :type => 'submit')
           end
         end
