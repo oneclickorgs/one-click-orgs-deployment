@@ -99,7 +99,7 @@ class ProposalsController < ApplicationController
       proposals.push(co.change_voting_system_proposals.new(
         :title => "Change general voting system to #{proposed_system.description}",
         :proposer_member_id => current_user.id,
-        :parameters => {'type'=>'general', 'proposed_system'=> proposed_system.simple_name}
+        :parameters => {'proposal_type'=>'general', 'proposed_system'=> proposed_system.simple_name}
       ))
     end
     
@@ -111,7 +111,7 @@ class ProposalsController < ApplicationController
       proposals.push(co.change_voting_system_proposals.new(
         :title => "Change membership voting system to #{proposed_system.description}",
         :proposer_member_id => current_user.id,
-        :parameters => {'type'=>'membership', 'proposed_system'=> proposed_system.simple_name}
+        :parameters => {'proposal_type'=>'membership', 'proposed_system'=> proposed_system.simple_name}
       ))
     end
     
@@ -123,7 +123,7 @@ class ProposalsController < ApplicationController
       proposals.push(co.change_voting_system_proposals.new(
         :title => "Change constitution voting system to #{proposed_system.description}",
         :proposer_member_id => current_user.id,
-        :parameters => {'type'=>'constitution', 'proposed_system'=> proposed_system.simple_name}
+        :parameters => {'proposal_type'=>'constitution', 'proposed_system'=> proposed_system.simple_name}
       ))
     end
     

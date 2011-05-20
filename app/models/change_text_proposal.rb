@@ -16,4 +16,20 @@ class ChangeTextProposal < ConstitutionProposal
       record.errors.add :base, "Proposal does not change the current clause"
     end
   end
+  
+  def name
+    parameters['name']
+  end
+  
+  def name=(name)
+    parameters['name'] = name
+  end
+  
+  def value
+    parameters['value']
+  end
+  
+  def value=(value)
+    parameters['value'] = value
+  end
 end

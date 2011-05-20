@@ -117,7 +117,7 @@ describe "Proposals" do
     it "should create a proposal to change the general voting system" do
       ChangeVotingSystemProposal.should_receive(:new).with(
         :parameters => {
-          'type' => 'general',
+          'proposal_type' => 'general',
           'proposed_system' => 'AbsoluteMajority'
         },
         :proposer_member_id => @user.id,
@@ -132,7 +132,7 @@ describe "Proposals" do
     it "should create a proposal to change the membership voting system" do
       ChangeVotingSystemProposal.should_receive(:new).with(
         :parameters => {
-          'type' => 'membership',
+          'proposal_type' => 'membership',
           'proposed_system' => 'AbsoluteTwoThirdsMajority'
         },
         :proposer_member_id => @user.id,
@@ -147,7 +147,7 @@ describe "Proposals" do
     it "should create a proposal to change the constitution voting system" do
       ChangeVotingSystemProposal.should_receive(:new).with(
         :parameters => {
-          'type' => 'constitution',
+          'proposal_type' => 'constitution',
           'proposed_system' => 'Unanimous'
         },
         :proposer_member_id => @user.id,

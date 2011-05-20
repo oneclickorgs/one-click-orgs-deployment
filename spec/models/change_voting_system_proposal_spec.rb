@@ -11,7 +11,7 @@ describe ChangeVotingSystemProposal do
     @p = @organisation.change_voting_system_proposals.new
 
     Clause.should_receive(:set_text!).with('constitution_voting_system', 'Unanimous')
-    passed_proposal(@p, 'type'=>'constitution', 'proposed_system'=>@proposed_system).call
+    passed_proposal(@p, 'proposal_type'=>'constitution', 'proposed_system'=>@proposed_system).call
   end
   
   it "has a decision notification message" do
