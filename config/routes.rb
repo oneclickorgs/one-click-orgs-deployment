@@ -58,6 +58,7 @@ OneClickOrgs::Application.routes.draw do
   
   get '/amendments' => 'one_click#amendments', :as => 'amendments'
   resource :constitution
+  resource :constitution_proposal_bundles
   
   get '/timeline' => 'one_click#timeline', :as => 'timeline'
   

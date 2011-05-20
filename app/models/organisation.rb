@@ -167,5 +167,10 @@ class Organisation < ActiveRecord::Base
     constitution.set_voting_system(:constitution, 'AbsoluteTwoThirdsMajority')
     constitution.set_voting_period(259200)
   end
-
+  
+  def build_constitution_proposal_bundle(attributes={})
+    ConstitutionProposalBundle.new({
+      :organisation => self
+    }.merge(attributes))
+  end
 end
