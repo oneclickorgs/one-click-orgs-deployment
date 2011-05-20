@@ -62,6 +62,10 @@ class Organisation < ActiveRecord::Base
     @assets = assets
   end
   
+  def voting_period
+    clauses.get_integer('voting_period')
+  end
+  
   # Returns the base URL for this instance of OCO.
   # Pass the :only_host => true option to just get the host name.
   def domain(options={})
