@@ -162,6 +162,18 @@ class Member < ActiveRecord::Base
     full_name = [first_name, last_name].compact.join(' ')
     full_name.blank? ? nil : full_name
   end
+  
+  # A member is a founding member if they were created before the organisation's
+  # founding proposal, or if they are in an organisation that has not had a
+  # founding proposal yet.
+  def founding_member?
+    fop = organisation.found_organisation_proposals.last
+    if fop
+      self.created_at < fop.creation_date
+    else
+      true
+    end
+  end
 
   # INVITATION CODE
   
