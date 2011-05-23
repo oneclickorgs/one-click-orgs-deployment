@@ -21,7 +21,7 @@
     Proposals voted on:
     = @member.votes_count
 
-- if current_user.has_permission(:membership_proposal)
+- if can?(:create, ChangeMemberClassProposal)
   -# Cf. issue #146: don't display member class form
   -# - if co.member_classes.count > 1
   -#   .section

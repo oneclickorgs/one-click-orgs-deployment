@@ -32,7 +32,7 @@
     = "(" + @proposal.end_date.to_s(:at_on) + ")"
 
 - if @proposal.open?
-  - if current_user.has_permission(:vote)
+  - if can?(:create, Vote)
     %p
       = render 'vote', :proposal => @proposal
   - else

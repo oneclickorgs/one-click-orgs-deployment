@@ -1,9 +1,8 @@
 class VotesController < ApplicationController
-
-  before_filter :require_vote_permission, :only => [:vote_for, :vote_against]
-
   #FIXME duplication  
   def vote_for
+    authorize! :create, Vote
+    
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id
         
@@ -17,6 +16,8 @@ class VotesController < ApplicationController
   
   #FIXME duplication
   def vote_against
+    authorize! :create, Vote
+    
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id    
         
@@ -25,15 +26,6 @@ class VotesController < ApplicationController
       redirect_to return_to, :notice => "Vote against proposal cast"
     rescue Exception => e
       redirect_to return_to, :notice => "Error casting vote: #{e}"
-    end    
-  end
-
-private
-
-  def require_vote_permission
-    if !current_user.has_permission(:vote)
-      flash[:error] = "You do not have sufficient permissions to vote!"
-      redirect_back_or_default
     end
   end
-end 
+end

@@ -4,8 +4,12 @@ describe "founding members" do
   
   before(:each) do
     stub_organisation!(false)
+    @organisation.pending!
     set_permission!(default_user, :direct_edit, true)
+    set_permission!(default_user, :membership_proposal, true)
     login
+    @user.member_class = @organisation.member_classes.find_by_name("Founder")
+    @user.save!
   end
   
   describe "POST /founding_member" do

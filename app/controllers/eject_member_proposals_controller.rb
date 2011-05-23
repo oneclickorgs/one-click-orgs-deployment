@@ -1,7 +1,7 @@
 class EjectMemberProposalsController < ApplicationController
-  before_filter :require_membership_proposal_permission, :only => :create
-  
   def create
+    authorize! :create, EjectMemberProposal
+    
     @eject_member_proposal = co.eject_member_proposals.build(params[:eject_member_proposal])
     @eject_member_proposal.proposer = current_user
     if @eject_member_proposal.save

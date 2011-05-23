@@ -11,7 +11,7 @@
     /[if lt IE 9]
       = stylesheet_link_tag 'ie'
     = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
-    - if current_user && current_organisation.pending? && current_user.has_permission(:found_organisation_proposal)
+    - if can?(:create, FoundOrganisationProposal)
       - if @current_organisation.can_hold_founding_vote?
         = javascript_include_tag 'start_founding_vote_confirmation'
       - else
@@ -33,7 +33,7 @@
                 = co.members.first.name + ' (the first founding member)'
               can amend the constitution or call a founding vote. When the Association
               is formed all members gain equal voting rights.
-            - if current_user.has_permission(:found_organisation_proposal)
+            - if can?(:create, FoundOrganisationProposal)
               = form_tag(found_organisation_proposals_path, :id => 'start_founding_vote_form') do
                 = submit_tag "Hold the Founding Vote", :id => 'submit'
               %br.clear
@@ -46,7 +46,7 @@
               %p Progress of the vote is displayed on Members page.
             - else
               %p Proposal: Form an Association according to the constitution currently stored on the One Click Orgs system. Those who vote "Support" will become its first members.
-              - if current_user.can_vote?(co.found_organisation_proposals.last)
+              - if can? :vote_on, co.found_organisation_proposals.last
                 = form_tag(vote_against_path(:id => co.found_organisation_proposals.last.id, :return_to => request.url)) do
                   = submit_tag "Oppose"
                 = form_tag(vote_for_path(:id => co.found_organisation_proposals.last.id, :return_to => request.url)) do
@@ -102,7 +102,7 @@
                   %button#close_notification{'data-notification' => @notification} Close
             - else
               = yield(:lightbox)
-          - if current_user && current_organisation.pending? && current_user.has_permission(:found_organisation_proposal)
+          - if can?(:create, FoundOrganisationProposal)
             - if @current_organisation.can_hold_founding_vote?
               #start_founding_vote_confirmation_lightbox.lightbox{:style => 'display: none;'}
                 = render(:partial => "shared/start_founding_vote_confirmation")

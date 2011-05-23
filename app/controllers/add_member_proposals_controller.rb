@@ -1,12 +1,13 @@
 class AddMemberProposalsController < ApplicationController
-  before_filter :require_membership_proposal_permission, :only => [:new, :create]
-  
   def new
+    authorize! :create, AddMemberProposal
+    
     @add_member_proposal = co.add_member_proposals.build
-    # @member = co.members.new
   end
   
   def create
+    authorize! :create, AddMemberProposal
+    
     @add_member_proposal = co.add_member_proposals.build(params[:add_member_proposal])
     @add_member_proposal.proposer = current_user
     if @add_member_proposal.save

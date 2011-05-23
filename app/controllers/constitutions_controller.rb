@@ -1,7 +1,5 @@
 class ConstitutionsController < ApplicationController
   before_filter :find_constitution
-  before_filter :require_constitutional_proposal_permission, :only => :update
-  before_filter :require_direct_edit_permission, :only => :update
   
   def show
     @page_title = "Constitution"
@@ -17,10 +15,9 @@ class ConstitutionsController < ApplicationController
   def edit
     @page_title = "Amendments"
     
-    @allow_editing = current_user.has_permission(:constitution_proposal) &&
-      !current_organisation.proposed?
+    @allow_editing = can?(:update, Constitution) || can?(:create, ConstitutionProposal)
     
-    if current_user.has_permission(:direct_edit) && current_organisation.pending?
+    if can?(:update, Constitution)
       @constitution_wrapper = ConstitutionWrapper.new(:constitution => @constitution)
     else
       @constitution_proposal_bundle = co.build_constitution_proposal_bundle
@@ -28,6 +25,8 @@ class ConstitutionsController < ApplicationController
   end
   
   def update
+    authorize! :update, Constitution
+    
     @constitution_wrapper = ConstitutionWrapper.new(:constitution => @constitution)
     if @constitution_wrapper.update_attributes(params[:constitution])
       redirect_to(constitution_path, :notice => "Constitutional changes were made")

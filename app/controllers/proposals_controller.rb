@@ -1,8 +1,6 @@
 class ProposalsController < ApplicationController
   respond_to :html
   
-  before_filter :require_freeform_proposal_permission, :only => [:create]
-  
   def index
     # Fetch open proposals
     @proposals = co.proposals.currently_open
@@ -24,6 +22,8 @@ class ProposalsController < ApplicationController
 
   # Freeform proposal
   def create
+    authorize! :create, Proposal
+    
     @proposal = co.proposals.new(params[:proposal])
     @proposal[:type] = 'Proposal' # Bug #138, cf. http://www.simple10.com/rails-3-sti/
     @proposal.proposer_member_id = current_user.id #fixme
@@ -33,15 +33,6 @@ class ProposalsController < ApplicationController
       redirect_to proposal_path(@proposal), :flash => {:notice => "Proposal was successfully created"}
     else
       redirect root_path, :flash => {:error => "Proposal not created"}
-    end
-  end
-  
-private
-
-  def require_freeform_proposal_permission
-    if !current_user.has_permission(:freeform_proposal)
-      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
-      redirect_back_or_default
     end
   end
 end # Proposals
