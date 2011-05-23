@@ -46,7 +46,6 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
   
   validates_confirmation_of :password
-  # validates_presence_of :password_confirmation, :if => :password_required?
   
   attr_accessor :terms_and_conditions
   validates_acceptance_of :terms_and_conditions
@@ -154,7 +153,7 @@ class Member < ActiveRecord::Base
   def inducted?
     !inducted_at.nil?
   end
-
+  
   def to_event
     if self.inducted?
       {:timestamp => self.inducted_at, :object => self, :kind => :new_member}

@@ -155,6 +155,7 @@ describe Member do
       @ejected_member = Member.make(:inducted_at => nil)
       @ejected_member.eject!
     end
+    
     describe "pending" do
       it "should list the pending members" do
         Member.pending.count.should == 1

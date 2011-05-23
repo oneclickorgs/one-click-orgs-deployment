@@ -100,6 +100,13 @@ class Proposal < ActiveRecord::Base
         count += 1 if m.has_permission(:vote)
       end
     else
+      # FIXME This 'if' branch is checking for the case where there is no
+      # FoundOrganisationProposal yet, so shouldn't it be including members
+      # who haven't been inducted yet (since no member gets inducted during
+      # the pending state of the organisation)?
+      # 
+      # Suspect that this is only working because FoundOrganisationProposal
+      # overrides #member_count, so this branch never really gets executed.
       organisation.members.active.where(
         "created_at < :proposal_creation_date",
         :proposal_creation_date => creation_date
