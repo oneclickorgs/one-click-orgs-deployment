@@ -23,12 +23,12 @@ class AddMemberProposal < MembershipProposal
     self.title ||= "Add #{parameters['first_name']} #{parameters['last_name']} as a member of #{organisation.try(:name)}"
   end
 
-  def enact!(params)
-    @existing_member = organisation.members.inactive.find_by_email(params['email'])
+  def enact!
+    @existing_member = organisation.members.inactive.find_by_email(parameters['email'])
     if @existing_member
       @existing_member.reactivate!
     else
-      member = organisation.members.build(params)
+      member = organisation.members.build(parameters)
       member.send_welcome = true
       member.save!
     end

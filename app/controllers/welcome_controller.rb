@@ -11,8 +11,7 @@ class WelcomeController < ApplicationController
 
   def induct_member
     member = current_user
-    member.inducted!
-    member.save
+    member.induct!
     redirect_to root_path
   end
 

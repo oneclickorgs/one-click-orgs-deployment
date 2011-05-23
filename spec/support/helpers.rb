@@ -4,14 +4,10 @@ def set_up_app
 end
 
 def default_organisation(attributes={})
-  # Organisation is active by default
-  active = attributes.include?(:active) ? attributes.delete(:active) : true
-  
   set_up_app
   
   unless @organisation
-    @organisation = Organisation.make(attributes)
-    organisation_is_active if active
+    @organisation = Organisation.make({:state => 'active'}.merge(attributes))
     Organisation.stub!(:find_by_host).and_return(@organisation)
   end
   @organisation
@@ -52,22 +48,33 @@ end
 
 def passed_proposal(p, args={})
   p.stub!(:passed?).and_return(true)
-  lambda { p.enact!(args) }
+  p.parameters = args
+  lambda { p.enact! }
 end
 
 def organisation_is_pending
-  default_organisation(:active => false) unless @organisation
-  @organisation.clauses.set_text!('organisation_state', "pending")
+  if @organisation
+    @organisation.update_attribute(:state, 'pending')
+  else
+    default_organisation(:state => 'pending')
+  end
+  @organisation
+end
+
+def organisation_is_proposed
+  if @organisation
+    @organisation.update_attribute(:state, 'proposed')
+  else
+    default_organisation(:state => 'proposed')
+  end
+  @organisation
 end
 
 def organisation_is_active
-  default_organisation(:active => false) unless @organisation
-  @organisation.clauses.set_text!('organisation_state', "active")
-  @organisation.should be_active
-end
-
-def organisation_is_under_construction
-  default_organisation(:active => false) unless @organisation
-  clause = @organisation.clauses.get_current('organisation_state')
-  clause.destroy if clause
+  if @organisation
+    @organisation.update_attribute(:state, 'active')
+  else
+    default_organisation(:state => 'active')
+  end
+  @organisation
 end

@@ -26,12 +26,12 @@ class FoundOrganisationProposal < Proposal
     end
   end  
   
-  def reject!(params)
-    organisation.pending! # Switching back to 'pending' org state.
+  def after_reject(params)
+    organisation.fail! # Switching back to 'pending' org state.
     # The existence of a failed 'Found Organisation' proposal is the only record we keep of this.
   end
   
-  def enact!(params={})
+  def enact!
     # initial members are all founding members that didn't vote "no" (including 
     # members who abstained.)
     confirmed_member_ids = []
@@ -47,7 +47,7 @@ class FoundOrganisationProposal < Proposal
       end
     end
     
-    organisation.active!
+    organisation.found!
     organisation.save
   end
   

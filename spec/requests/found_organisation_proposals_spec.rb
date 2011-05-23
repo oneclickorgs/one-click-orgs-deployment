@@ -1,7 +1,7 @@
 describe "found organisation proposals" do
   
   before(:each) do 
-    default_organisation
+    default_organisation(:state => 'pending')
     default_constitution
     
     @user = login
@@ -10,8 +10,6 @@ describe "found organisation proposals" do
     
     # Need at least three members to propose foundation
     @organisation.members.make_n(2)
-    
-    @organisation.pending!
   end
   
   describe "proposing the founding of the organisation" do

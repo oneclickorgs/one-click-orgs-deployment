@@ -34,7 +34,7 @@ describe FoundOrganisationProposal do
   describe "enactment" do
     before(:each) do
       # Set up mock organisation and member classes
-      @organisation = mock_model(Organisation, :active! => nil, :save => false)
+      @organisation = mock_model(Organisation, :found! => nil, :save => false)
       
       @founder_class = mock_model(MemberClass, :name => 'Founder', :description => nil)
       @founding_member_class = mock_model(MemberClass, :name => 'Founding Member', :description => nil)
@@ -73,6 +73,11 @@ describe FoundOrganisationProposal do
         member.should_receive(:save!).ordered
       end
       
+      @proposal.enact!
+    end
+    
+    it "founds the organisation" do
+      @organisation.should_receive(:found!)
       @proposal.enact!
     end
   end

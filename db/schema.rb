@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402134033) do
+ActiveRecord::Schema.define(:version => 20110523104155) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -62,9 +62,8 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
   add_index "member_classes", ["organisation_id"], :name => "index_member_classes_on_organisation_id"
 
   create_table "members", :force => true do |t|
-    t.string   "email",               :limit => 50,                :null => false
+    t.string   "email",               :limit => 50, :null => false
     t.datetime "created_at"
-    t.integer  "active",              :limit => 1,  :default => 1
     t.string   "crypted_password",    :limit => 50
     t.string   "salt",                :limit => 50
     t.integer  "organisation_id"
@@ -76,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
     t.string   "password_reset_code"
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
+    t.string   "state"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
@@ -84,19 +84,19 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
   end
 
   create_table "proposals", :force => true do |t|
-    t.string   "title",                                              :null => false
+    t.string   "title",                               :null => false
     t.text     "description"
     t.datetime "creation_date"
-    t.integer  "open",               :limit => 1,     :default => 1
-    t.integer  "accepted",           :limit => 1,     :default => 0
     t.datetime "close_date"
     t.string   "parameters",         :limit => 10000
     t.string   "type",               :limit => 50
     t.integer  "proposer_member_id"
     t.integer  "organisation_id"
+    t.string   "state"
   end
 
   create_table "seen_notifications", :force => true do |t|

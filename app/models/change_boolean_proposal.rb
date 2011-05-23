@@ -1,8 +1,8 @@
 # Represents a proposal to change one of the boolean fields
 # in the constitution; e.g. the assets-holding
 class ChangeBooleanProposal < ConstitutionProposal
-  def enact!(params)
-    organisation.clauses.set_boolean!(params['name'], params['value'])
+  def enact!
+    organisation.clauses.set_boolean!(parameters['name'], parameters['value'])
   end
   
   def name

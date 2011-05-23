@@ -9,12 +9,12 @@ class ChangeMemberClassProposal < MembershipProposal
     errors.add(:member_class, "does not exist") unless organisation.member_classes.exists?(parameters['member_class_id'])
   end
 
-  def enact!(params)
+  def enact!
     # TODO: Needs backwards compatibility; previously stored the member's ID in
     # the 'id' key, not 'member_id'
     
-    member = organisation.members.find(params['member_id']) # TODO verify that this member still exists
-    mc = organisation.member_classes.find(params['member_class_id']) # TODO verify that this member class still exists
+    member = organisation.members.find(parameters['member_id']) # TODO verify that this member still exists
+    mc = organisation.member_classes.find(parameters['member_class_id']) # TODO verify that this member class still exists
     member.member_class = mc
     member.save
   end

@@ -48,7 +48,7 @@ describe "constitutions" do
     
     context "when organisation is pending" do
       before(:each) do
-        @organisation.pending!
+        organisation_is_pending
         set_permission!(@user, :founder, true)
         get '/constitution/edit'
       end

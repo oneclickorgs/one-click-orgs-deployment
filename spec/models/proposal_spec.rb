@@ -50,31 +50,11 @@ describe Proposal do
   
   describe "closing" do
     before(:each) do
-      @organisation.members.count.should >0
+      @organisation.members.count.should > 0
 
       @p = @organisation.proposals.make(:proposer => @member)
       @p.stub!(:passed?).and_return(true)
-      @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
-    end
-    
-    it "should send out an email to each member after a Decision has been made" do
-       @decision.should_receive(:send_email)
-       @p.close!
-    end
-    
-    context "when email delivery errors" do
-      before(:each) do
-        @decision.stub!(:send_email).and_raise(StandardError)
-      end
-      
-      it "should not propagate the error" do
-        lambda {@p.close!}.should_not raise_error
-      end
-      
-      it "should ensure the proposal is enacted" do
-        @p.should_receive(:enact!)
-        @p.close!
-      end
+      # @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
     end
     
     context "when proposal is a Founding Proposal" do
@@ -83,10 +63,12 @@ describe Proposal do
         @p = FoundOrganisationProposal.make(:proposer => @member, :organisation => @organisation)
         @p.stub!(:passed?).and_return(true)
         @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
+        
+        organisation_is_proposed
       end
       
-      it "asks the decision to send notification emails" do
-        @decision.should_receive(:send_email)
+      it "creates a decision" do
+        @p.should_receive(:create_decision)
         @p.close!
       end
     end
@@ -94,17 +76,15 @@ describe Proposal do
   
   describe "to_event" do
     it "should list open proposals as 'proposal's" do
-      @organisation.proposals.make(:open => true, :accepted => false).to_event[:kind].should == :proposal
+      @organisation.proposals.make(:state => 'open').to_event[:kind].should == :proposal
     end
     
     it "should list closed, accepted proposals as 'proposal's" do
-      @organisation.proposals.make(:open => false, :accepted => true).to_event[:kind].should == :proposal
+      @organisation.proposals.make(:state => 'accepted').to_event[:kind].should == :proposal
     end
     
     it "should list closed, rejected proposals as 'failed proposal's" do
-      proposal = @organisation.proposals.make(:accepted => false)
-      proposal.open = false
-      proposal.save
+      proposal = @organisation.proposals.make(:state => 'rejected')
       proposal.open?.should be_false
       
       proposal.to_event[:kind].should == :failed_proposal
@@ -148,7 +128,7 @@ describe Proposal do
       @proposal.member_count.should == 4
       
       # Test that uninducted members aren't included
-      member_2.update_attribute(:inducted_at, nil)
+      member_2.update_attributes(:inducted_at => nil, :state => 'pending')
       @organisation.members.count.should == 5
       @proposal.member_count.should == 3
     end

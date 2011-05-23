@@ -15,8 +15,8 @@ describe AddMemberProposal do
     @proposal = @organisation.add_member_proposals.new
     
     MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
-    
-    @proposal.enact!(:first_name=>"Paul", :last_name => "Smith", :email => "paul@example.com")
+    @proposal.parameters = {:first_name=>"Paul", :last_name => "Smith", :email => "paul@example.com"}
+    @proposal.enact!
   end
   
   describe "validation" do
@@ -48,7 +48,7 @@ describe AddMemberProposal do
       
       it "should create a new member" do
         old_member_count = @organisation.members.count
-        @proposal.enact!(@proposal.parameters)
+        @proposal.enact!
         @organisation.members.count.should == old_member_count + 1
         @organisation.members.last.email.should == 'new@example.com'
       end
@@ -64,7 +64,7 @@ describe AddMemberProposal do
       
       it "should reactivate the ex-member" do
         old_member_count = @organisation.members.count
-        @proposal.enact!(@proposal.parameters)
+        @proposal.enact!
         @organisation.members.count.should == old_member_count
         @ex_member.reload
         @ex_member.should be_active
