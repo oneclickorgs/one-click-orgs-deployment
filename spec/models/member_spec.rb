@@ -76,7 +76,7 @@ describe Member do
   describe "finders" do
     it "should return only active members" do
       @organisation.members.active.should == @organisation.members.all
-      disabled = @organisation.members.make(:active=>false)
+      disabled = @organisation.members.make(:state => 'inactive')
       @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
@@ -150,7 +150,7 @@ describe Member do
   
   describe "when a pending member is ejected before they are inducted" do
     before(:each) do
-      @pending_member = Member.make(:inducted_at => nil)
+      @pending_member = Member.make(:state => 'pending', :inducted_at => nil)
       @inducted_member = Member.make
       @ejected_member = Member.make(:inducted_at => nil)
       @ejected_member.eject!

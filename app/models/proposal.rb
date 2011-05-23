@@ -91,11 +91,19 @@ class Proposal < ActiveRecord::Base
     
     fop = organisation.found_organisation_proposals.last
     if fop
-      organisation.members.where(["active = 1 AND ((created_at < ? AND inducted_at IS NOT NULL) OR (created_at < ?))", creation_date, fop.creation_date]).each do |m|
+      organisation.members.where(
+        "(state = 'active' AND created_at < :proposal_creation_date) " +
+        "OR (state <> 'inactive' and created_at < :founding_date)",
+        :proposal_creation_date => creation_date,
+        :founding_date => fop.creation_date
+      ).each do |m|
         count += 1 if m.has_permission(:vote)
       end
     else
-      organisation.members.where(["(created_at < ? AND active = 1 AND inducted_at IS NOT NULL)", creation_date]).each do |m|
+      organisation.members.active.where(
+        "created_at < :proposal_creation_date",
+        :proposal_creation_date => creation_date
+      ).each do |m|
         count += 1 if m.has_permission(:vote)
       end
     end

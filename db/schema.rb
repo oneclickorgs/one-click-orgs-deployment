@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110521215633) do
+ActiveRecord::Schema.define(:version => 20110523104155) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -62,9 +62,8 @@ ActiveRecord::Schema.define(:version => 20110521215633) do
   add_index "member_classes", ["organisation_id"], :name => "index_member_classes_on_organisation_id"
 
   create_table "members", :force => true do |t|
-    t.string   "email",               :limit => 50,                :null => false
+    t.string   "email",               :limit => 50, :null => false
     t.datetime "created_at"
-    t.integer  "active",              :limit => 1,  :default => 1
     t.string   "crypted_password",    :limit => 50
     t.string   "salt",                :limit => 50
     t.integer  "organisation_id"
@@ -76,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110521215633) do
     t.string   "password_reset_code"
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
+    t.string   "state"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"

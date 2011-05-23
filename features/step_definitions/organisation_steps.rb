@@ -9,7 +9,8 @@ Given /^an organisation has been created$/ do
   @organisation = Organisation.make(:state => 'pending')
   @founder = @organisation.members.make(
     :member_class => @organisation.member_classes.find_by_name("Founder"),
-    :inducted_at => nil
+    :inducted_at => nil,
+    :state => 'pending'
   )
 end
 

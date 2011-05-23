@@ -8,7 +8,7 @@ describe CommentsController do
       controller.stub(:ensure_set_up).and_return(true)
       controller.stub(:ensure_organisation_exists).and_return(true)
       controller.stub(:ensure_authenticated).and_return(true)
-      controller.stub(:ensure_member_active).and_return(true)
+      controller.stub(:ensure_member_active_or_pending).and_return(true)
       controller.stub(:ensure_organisation_active).and_return(true)
       controller.stub(:ensure_member_inducted).and_return(true)
       

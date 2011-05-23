@@ -3,9 +3,31 @@ require 'digest/md5'
 require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
+  state_machine :initial => :pending do
+    event :induct do
+      transition :pending => :active
+    end
+    
+    event :eject do
+      transition [:pending, :active] => :inactive
+    end
+    
+    event :reactivate do
+      transition :inactive => :active, :if => :inducted?
+      transition :inactive => :pending
+    end
+    
+    after_transition :on => :induct, :do => :timestamp_induction!
+    
+    after_transition :on => :reactivate, :do => [
+      :new_invitation_code!,
+      :send_welcome
+    ]
+  end
+  
   attr_accessor :send_welcome
   
-  before_create :new_invitation_code!
+  before_create :new_invitation_code
   after_create :send_welcome_if_requested
   
   belongs_to :organisation
@@ -13,10 +35,11 @@ class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
   belongs_to :member_class
-
-  scope :active, where("active = 1 AND inducted_at IS NOT NULL")
-  scope :inactive, where("active <> 1")
-  scope :pending, where("inducted_at IS NULL and active = 1")
+  
+  scope :active, with_state(:active)
+  scope :inactive, with_state(:inactive)
+  scope :pending, with_state(:pending)
+  
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   scope :founding_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founding Member').first } } }
   
@@ -33,6 +56,10 @@ class Member < ActiveRecord::Base
     if terms_and_conditions && terms_and_conditions != 0 && terms_and_conditions != '0'
       self.terms_accepted_at ||= Time.now.utc
     end
+  end
+  
+  def timestamp_induction!
+    update_attribute(:inducted_at, Time.now.utc)
   end
 
   def proposals_count
@@ -124,23 +151,6 @@ class Member < ActiveRecord::Base
     end
   end
   
-  def eject!
-    self.active = false
-    save!
-  end
-
-  def inducted!
-    self.inducted_at = Time.now.utc if !inducted?
-    save!
-  end
-  
-  def reactivate!
-    self.active = true
-    new_invitation_code!
-    save!
-    send_welcome
-  end
-
   def inducted?
     !inducted_at.nil?
   end
@@ -179,8 +189,13 @@ class Member < ActiveRecord::Base
     Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
   end
   
-  def new_invitation_code!
+  def new_invitation_code
     self.invitation_code = self.class.generate_invitation_code
+  end
+  
+  def new_invitation_code!
+    new_invitation_code
+    save!
   end
   
   def clear_invitation_code!

@@ -128,7 +128,7 @@ describe Proposal do
       @proposal.member_count.should == 4
       
       # Test that uninducted members aren't included
-      member_2.update_attribute(:inducted_at, nil)
+      member_2.update_attributes(:inducted_at => nil, :state => 'pending')
       @organisation.members.count.should == 5
       @proposal.member_count.should == 3
     end

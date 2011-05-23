@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_set_up
   before_filter :ensure_organisation_exists
   before_filter :ensure_authenticated
-  before_filter :ensure_member_active
+  before_filter :ensure_member_active_or_pending
   before_filter :ensure_member_inducted
   before_filter :prepare_notifications
   
@@ -163,8 +163,8 @@ protected
     end
   end
   
-  def ensure_member_active
-    if current_user && !current_user.active?
+  def ensure_member_active_or_pending
+    if current_user && current_user.inactive?
       session[:user] = nil
       raise Unauthenticated
     end

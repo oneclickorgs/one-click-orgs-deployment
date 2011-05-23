@@ -27,7 +27,7 @@ Member.blueprint do
   created_at {Time.now.utc - 1.day}
   password "password"
   password_confirmation "password"
-  active true
+  state 'active'
   inducted_at {Time.now.utc - 23.hours}
   member_class {MemberClass.make}
 end
@@ -38,6 +38,7 @@ end
 
 Member.blueprint(:pending) do
   inducted_at nil
+  state 'pending'
 end
 
 Proposal.blueprint do
