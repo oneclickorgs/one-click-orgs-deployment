@@ -34,7 +34,7 @@
               can amend the constitution or call a founding vote. When the Association
               is formed all members gain equal voting rights.
             - if current_user.has_permission(:found_organisation_proposal)
-              = form_tag({:controller => 'proposals', :action => 'propose_foundation'}, :id => 'start_founding_vote_form') do
+              = form_tag(found_organisation_proposals_path, :id => 'start_founding_vote_form') do
                 = submit_tag "Hold the Founding Vote", :id => 'submit'
               %br.clear
         - elsif current_organisation.proposed?
