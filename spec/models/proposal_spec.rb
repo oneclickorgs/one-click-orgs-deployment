@@ -50,7 +50,7 @@ describe Proposal do
   
   describe "closing" do
     before(:each) do
-      @organisation.members.count.should >0
+      @organisation.members.count.should > 0
 
       @p = @organisation.proposals.make(:proposer => @member)
       @p.stub!(:passed?).and_return(true)
@@ -63,6 +63,8 @@ describe Proposal do
         @p = FoundOrganisationProposal.make(:proposer => @member, :organisation => @organisation)
         @p.stub!(:passed?).and_return(true)
         @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
+        
+        organisation_is_proposed
       end
       
       it "creates a decision" do

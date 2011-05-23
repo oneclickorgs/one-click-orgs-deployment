@@ -117,20 +117,17 @@ describe "Multi-tenancy" do
       set_up_app
       
       # Make three organisations, each with one member
-      Organisation.make(:name => 'Aardvarks', :subdomain => 'aardvarks').tap do |o|
-        o.active!
+      Organisation.make(:name => 'Aardvarks', :subdomain => 'aardvarks', :state => 'active').tap do |o|
         mc = o.member_classes.make
         o.members.make(:first_name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
-      Organisation.make(:name => 'Beavers', :subdomain => 'beavers').tap do |o|
-        o.active!
+      Organisation.make(:name => 'Beavers', :subdomain => 'beavers', :state => 'active').tap do |o|
         mc = o.member_classes.make
         o.members.make(:first_name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
-      Organisation.make(:name => 'Chipmunks', :subdomain => 'chipmunks').tap do |o|
-        o.active!
+      Organisation.make(:name => 'Chipmunks', :subdomain => 'chipmunks', :state => 'active').tap do |o|
         mc = o.member_classes.make
         o.members.make(:first_name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end

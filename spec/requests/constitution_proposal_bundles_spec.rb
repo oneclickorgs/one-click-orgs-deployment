@@ -4,7 +4,6 @@ describe "constitution proposal bundles" do
   
   before(:each) do 
     default_organisation
-    @organisation.active!
     default_constitution
     
     @user = login

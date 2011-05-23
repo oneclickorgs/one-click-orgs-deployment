@@ -33,8 +33,7 @@ describe "Single-organisation mode" do
       Setting[:single_organisation_mode] = 'true'
       
       # TODO: Roll stubbing of single-organisation-mode organisations into stubs.rb
-      @organisation = Organisation.make(:subdomain => nil, :name => 'abc', :objectives => 'def')
-      @organisation.clauses.set_text!('organisation_state', "active")
+      @organisation = Organisation.make(:subdomain => nil, :name => 'abc', :objectives => 'def', :state => 'active')
       
       @member_class = @organisation.member_classes.make
       

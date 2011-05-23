@@ -1,12 +1,12 @@
 Given /^I have started the founding vote$/ do
   @organisation.found_organisation_proposals.make(:proposer => @user)
-  @organisation.proposed!
+  @organisation.propose!
 end
 
 Given /^the founding vote has been started$/ do
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
   @organisation.found_organisation_proposals.make(:proposer => founder)
-  @organisation.proposed!
+  @organisation.propose!
 end
 
 Given /^everyone has voted to support the founding$/ do

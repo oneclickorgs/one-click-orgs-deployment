@@ -12,7 +12,7 @@ class FoundOrganisationProposalsController < ApplicationController
     found_organisation_proposal = co.found_organisation_proposals.build(found_organisation_proposal_parameters)
     
     if found_organisation_proposal.save
-      co.proposed!
+      co.propose!
       redirect_to(root_path, :notice => "The founding vote has now begun.")
     else
       # TODO Render instead of redirect; use error_messages_for.

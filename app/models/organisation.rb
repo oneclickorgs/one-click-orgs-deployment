@@ -1,4 +1,20 @@
 class Organisation < ActiveRecord::Base
+  state_machine :initial => :pending do
+    event :propose do
+      transition :pending => :proposed
+    end
+    
+    event :found do
+      transition :proposed => :active
+    end
+    
+    event :fail do
+      transition :proposed => :pending
+    end
+    
+    after_transition :proposed => :active, :do => :destroy_pending_state_member_classes
+  end
+  
   has_many :clauses
   
   has_many :members
@@ -86,39 +102,8 @@ class Organisation < ActiveRecord::Base
     members.first
   end
   
-  def under_construction?
-    clauses.get_text('organisation_state').nil?
-  end
-  
-  def under_construction!
-    clause = clauses.get_current('organisation_state')
-    clause && clause.destroy    
-  end
-
-  def pending?
-    clauses.get_text('organisation_state') == 'pending'
-  end
-    
-  def pending!
-    clauses.set_text!('organisation_state', 'pending')
-  end
-    
-  def proposed?
-    clauses.get_text('organisation_state') == 'proposed'
-  end
-    
-  def proposed!
-    clauses.set_text!('organisation_state', 'proposed')
-  end
-    
-  def active?
-    clauses.get_text('organisation_state') == 'active'
-  end
-  
-  def active!
-    clauses.set_text!('organisation_state', 'active')
-
-    # Delete Founder and Founding Member member classes
+  # Delete Founder and Founding Member member classes
+  def destroy_pending_state_member_classes
     member_classes.find_by_name('Founder').destroy
     member_classes.find_by_name('Founding Member').destroy
   end

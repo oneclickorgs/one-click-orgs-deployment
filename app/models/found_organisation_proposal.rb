@@ -27,7 +27,7 @@ class FoundOrganisationProposal < Proposal
   end  
   
   def after_reject(params)
-    organisation.pending! # Switching back to 'pending' org state.
+    organisation.fail! # Switching back to 'pending' org state.
     # The existence of a failed 'Found Organisation' proposal is the only record we keep of this.
   end
   
@@ -47,7 +47,7 @@ class FoundOrganisationProposal < Proposal
       end
     end
     
-    organisation.active!
+    organisation.found!
     organisation.save
   end
   

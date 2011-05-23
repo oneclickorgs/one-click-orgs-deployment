@@ -3,8 +3,7 @@ require 'spec_helper'
 describe "founding members" do
   
   before(:each) do
-    default_organisation(:active => false)
-    @organisation.pending!
+    default_organisation(:state => 'pending')
     set_permission!(default_user, :founder, true)
     set_permission!(default_user, :membership_proposal, true)
     login

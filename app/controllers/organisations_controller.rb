@@ -47,7 +47,6 @@ class OrganisationsController < ApplicationController
       if !@founder.save
         errors << "Cannot create your account: #{@founder.errors.full_messages.to_sentence}."
       end
-      @organisation.pending!
     end
     
     # display errors
