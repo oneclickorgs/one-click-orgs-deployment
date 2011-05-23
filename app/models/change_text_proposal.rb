@@ -2,7 +2,11 @@
 # in the constitution; e.g. the organisation name, or the
 # organisation objectives.
 class ChangeTextProposal < ConstitutionProposal
-
+  before_create :set_default_title
+  def set_default_title
+    self.title ||= "Change #{name.humanize.downcase} to '#{value}'"
+  end
+  
   def allows_direct_edit?
     true
   end
@@ -15,5 +19,21 @@ class ChangeTextProposal < ConstitutionProposal
     if Clause.get_text(record.parameters['name']) == record.parameters['value']
       record.errors.add :base, "Proposal does not change the current clause"
     end
+  end
+  
+  def name
+    parameters['name']
+  end
+  
+  def name=(name)
+    parameters['name'] = name
+  end
+  
+  def value
+    parameters['value']
+  end
+  
+  def value=(value)
+    parameters['value'] = value
   end
 end

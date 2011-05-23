@@ -73,7 +73,7 @@
           - if current_organisation.pending? or current_organisation.proposed?
             %ul#nav
               %li#navitem= link_to 'Constitution', constitution_path
-              %li#navitem= link_to 'Amendments', amendments_path
+              %li#navitem= link_to 'Amendments', edit_constitution_path
               %li#navitem= link_to 'Members', members_path
           - else
             %ul#nav

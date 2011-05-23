@@ -1,3 +1,19 @@
+When /^I fill in the organisation name with "([^"]*)"$/ do |value|
+  if page.first('input#constitution_proposal_bundle_organisation_name')
+    fill_in('constitution_proposal_bundle_organisation_name', :with => value)
+  else
+    fill_in('constitution_organisation_name', :with => value)
+  end
+end
+
+When /^I fill in the objectives with "([^"]*)"$/ do |value|
+  if page.first('textarea#constitution_proposal_bundle_objectives')
+    fill_in('constitution_proposal_bundle_objectives', :with => value)
+  else
+    fill_in('constitution_objectives', :with => value)
+  end
+end
+
 When /^I choose "([^"]*)" for (.*) decisions$/ do |voting_system, decision_kind|
   within(".#{decision_kind}_decisions") do
     choose(voting_system)

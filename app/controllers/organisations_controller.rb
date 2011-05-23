@@ -64,9 +64,9 @@ class OrganisationsController < ApplicationController
     current_user.update_attribute(:last_logged_in_at, Time.now.utc) # update login datetime
 
     if Setting[:single_organisation_mode]
-      redirect_to(:controller => 'one_click', :action => 'constitution')
+      redirect_to(constitution_path)
     else
-      redirect_to(:host => @organisation.host, :controller => 'one_click', :action => 'constitution')
+      redirect_to(constitution_url(:host => @organisation.host))
     end
   end
 

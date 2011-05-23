@@ -68,18 +68,8 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
-  def prepare_constitution_view
-    @organisation_name = co.name
-    @objectives = co.objectives
-    @assets = co.assets
-    @website = co.domain
-
-    @period  = co.clauses.get_integer('voting_period')
-    @voting_period = VotingPeriods.name_for_value(@period)
-
-    @general_voting_system = co.constitution.voting_system(:general)
-    @membership_voting_system = co.constitution.voting_system(:membership)
-    @constitution_voting_system = co.constitution.voting_system(:constitution)
+  def find_constitution
+    @constitution = co.constitution
   end
   
   # Making PDFs
@@ -207,6 +197,20 @@ class ApplicationController < ActionController::Base
   def require_membership_proposal_permission
     if !current_user.has_permission(:membership_proposal)
       flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
+    end
+  end
+  
+  def require_constitutional_proposal_permission
+    if !current_user.has_permission(:constitution_proposal)
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
+    end
+  end
+  
+  def require_direct_edit_permission
+    if !current_user.has_permission(:direct_edit)
+      flash[:error] = "You do not have sufficient permissions to make changes!"
       redirect_back_or_default
     end
   end
