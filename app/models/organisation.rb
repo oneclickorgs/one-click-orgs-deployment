@@ -10,6 +10,7 @@ class Organisation < ActiveRecord::Base
   has_many :add_member_proposals
   has_many :change_boolean_proposals
   has_many :change_text_proposals
+  has_many :change_member_class_proposals
   has_many :change_voting_period_proposals
   has_many :change_voting_system_proposals
   has_many :eject_member_proposals

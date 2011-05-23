@@ -16,7 +16,7 @@ describe EjectMemberProposal do
     
     @p = @organisation.eject_member_proposals.new
     @m.should be_active
-    passed_proposal(@p, 'id' => @m.id ).call
+    passed_proposal(@p, 'member_id' => @m.id ).call
     
     #FIXME make proposals more testable by avoiding loading of models
     #@m.should_receive(:eject!)

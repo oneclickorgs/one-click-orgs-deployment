@@ -73,13 +73,14 @@ OneClickOrgs::Application.routes.draw do
   match '/proposals(/:action)' => 'proposals'
 
   resources :members do
-    member do
-      post :change_class
-    end
     collection do
       post :create_founding_member
     end
   end
+  
+  resources :add_member_proposals
+  resources :eject_member_proposals
+  resources :change_member_class_proposals
   
   match '/one_click(/:action)' => 'one_click'
   #match '/induction(/:action)' => 'induction'
