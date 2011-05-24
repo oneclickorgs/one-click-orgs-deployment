@@ -13,6 +13,26 @@ def default_organisation(attributes={})
   @organisation
 end
 
+def default_association(attributes={})
+  set_up_app
+  
+  unless @organisation
+    @organisation = Association.make({:state => 'active'}.merge(attributes))
+    Organisation.stub!(:find_by_host).and_return(@organisation)
+  end
+  @organisation
+end
+
+def default_company(attributes={})
+  set_up_app
+  
+  unless @organisation
+    @organisation = Company.make({:state => 'active'}.merge(attributes))
+    Organisation.stub!(:find_by_host).and_return(@organisation)
+  end
+  @organisation
+end
+
 def default_constitution
   default_organisation
   @organisation.clauses.set_integer!(:voting_period, 3 * 86400)

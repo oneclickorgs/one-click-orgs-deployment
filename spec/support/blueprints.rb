@@ -90,3 +90,9 @@ Organisation.blueprint do
   objectives
   subdomain
 end
+
+Association.blueprint do
+end
+
+Company.blueprint do
+end

@@ -1,6 +1,7 @@
 require 'lib/one_click_orgs/setup'
 require 'lib/unauthenticated'
 require 'lib/not_found'
+require 'lib/one_click_orgs/organisation_resolver'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -18,15 +19,18 @@ class ApplicationController < ActionController::Base
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
   # is running in single organisation mode).
-  helper_method :current_organisation
   def current_organisation
-    @current_organisation ||= (
+    unless @current_organisation
       if Setting[:single_organisation_mode]
-        Organisation.first
+        @current_organisation = Organisation.first
       else
-        Organisation.find_by_host(request.host_with_port)
+        @current_organisation = Organisation.find_by_host(
+          request.host_with_port
+        )
       end
-    )
+      install_organisation_resolver(@current_organisation)
+    end
+    @current_organisation
   end
   alias :co :current_organisation
   
@@ -224,5 +228,21 @@ protected
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_to root_path
+  end
+  
+  # ORGANISATION RESOLVER
+  
+  # Configures the controller's view context to use an
+  # OrganisationResolver based on the given organisation's class when
+  # resolving (looking up) template paths.
+  def install_organisation_resolver(organisation)
+    view_paths.dup.each do |view_path|
+      prepend_view_path(
+        OneClickOrgs::OrganisationResolver.new(
+          view_path.to_path,
+          organisation.class
+        )
+      )
+    end
   end
 end
