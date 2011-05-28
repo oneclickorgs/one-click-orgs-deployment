@@ -61,6 +61,16 @@ describe Organisation do
         @organisation.domain(:only_host => true).should == "fromage.oneclickorgs.com"
       end
     end
+    
+    context "in single-organisation mode" do
+      before(:each) do
+        Setting[:single_organisation_mode] = "true"
+      end
+      
+      it "returns the base domain" do
+        @organisation.domain.should == "http://oneclickorgs.com"
+      end
+    end
   end
   
   describe "can_hold_founding_vote?" do
