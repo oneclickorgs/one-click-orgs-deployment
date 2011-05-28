@@ -35,4 +35,51 @@ namespace :oco do
       file << `git shortlog -nse`.gsub(/^\s+\d+\s+/, '')
     end
   end
+  
+  namespace :dev do
+    desc "Create an active organisation, for development/testing purposes"
+    task :create_organisation => :environment do
+      unless OneClickOrgs::Setup.complete?
+        STDERR.puts <<-EOE
+
+You must go through the application setup process before creating an
+organisation.
+
+Start the application server (e.g. 'bundle exec rails server')
+and visit the site in your browser (usually at http://localhost:3000 ).
+        EOE
+        exit
+      end
+      
+      password = ENV['PASSWORD'] || "password"
+      
+      require 'spec/support/machinist'
+      require 'spec/support/blueprints'
+      
+      # The blueprints use Sham to generate the same set of fake values in
+      # order each time the tests are run. However, this will cause uniquness 
+      # validation errors here if this task has already been run before.
+      # So, we skip Sham for the necessary attributes.
+      organisation = Organisation.make(
+        :subdomain => Faker::Internet.domain_word
+      )
+      organisation.active!
+      
+      member_class = organisation.member_classes.find_by_name("Member")
+      members = organisation.members.make_n(3,
+        :member_class => member_class,
+        :password => password,
+        :password_confirmation => password
+      )
+      
+      # TODO Should we make a passed FoundOrganisationProposal as well,
+      # for total authenticity?
+      
+      STDOUT.puts "Organisation '#{organisation.name}' created:"
+      STDOUT.puts "  #{organisation.domain}"
+      STDOUT.puts "Log in with:"
+      STDOUT.puts "  Email: #{members.first.email}"
+      STDOUT.puts "  Password: #{password}"
+    end
+  end
 end

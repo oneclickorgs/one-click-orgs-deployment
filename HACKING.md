@@ -83,6 +83,16 @@ Now, install required gems:
 
 You can just choose 'single organisation mode', or if you want to test multi-tenancy mode, you'll need lines in your hosts file which point `yourorganisation.localhost`, etc. to `127.0.0.1`.
 
+## Quickly creating an organisation
+
+Unless you're working on the founding stage itself, it can be handy to create
+an active organisation to experiment with, without having to walk through all
+the founding steps manually.
+
+To do this, run the `oco:dev:create_organisation` rake task:
+
+  $ rake oco:dev:create_organisation
+
 ## Updating
 
 When you pull updates from the repository, you may need to update your gem bundle (if `Gemfile.lock` has changed) and/or migrate your database (if `db/migrate` has changed):
