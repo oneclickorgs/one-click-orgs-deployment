@@ -13,6 +13,11 @@ class WelcomeController < ApplicationController
     member = current_user
     member.inducted!
     member.save
+    
+    if current_user == co.members.first
+      track_analytics_event('FounderAcceptsConstitution')
+    end
+    
     redirect_to root_path
   end
 

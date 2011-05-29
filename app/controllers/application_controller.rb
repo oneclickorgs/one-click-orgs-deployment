@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   #before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
   before_filter :prepare_notifications
+  before_filter :load_analytics_events_from_session
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
@@ -148,6 +149,30 @@ class ApplicationController < ActionController::Base
   
   def show_notification(notification)
     @notification = notification
+  end
+  
+  # Analytics
+  
+  def track_analytics_event(event_name, options={})
+    return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
+    if options[:now]
+      @analytics_events ||= []
+      @analytics_events.push(event_name)
+    else
+      session[:analytics_events] ||= []
+      session[:analytics_events].push(event_name)
+    end
+  end
+  
+  def load_analytics_events_from_session
+    return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
+    unless session[:analytics_events].blank?
+      @analytics_events ||= []
+      session[:analytics_events].dup.each do |event|
+        @analytics_events.push(event)
+        session[:analytics_events].delete(event)
+      end
+    end
   end
   
   protected
