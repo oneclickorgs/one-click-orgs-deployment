@@ -19,7 +19,7 @@ describe Organisation do
   describe "text fields" do
     before(:each) do
       @organisation.name = 'The Cheese Collective' # actually stored as 'organisation_name'
-      @organisation.objectives = 'eat all the cheese' # actually stored as 'organisation_objectoves'
+      @organisation.objectives = 'eat all the cheese' # actually stored as 'organisation_objectives'
       @organisation.save!
       @organisation.reload
     end
