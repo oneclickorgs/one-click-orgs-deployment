@@ -62,6 +62,8 @@ class OrganisationsController < ApplicationController
 
     MembersMailer.welcome_founder(@founder).deliver # send welcome email    
     current_user.update_attribute(:last_logged_in_at, Time.now.utc) # update login datetime
+    
+    track_analytics_event('EntersPendingStage')
 
     if Setting[:single_organisation_mode]
       redirect_to(:controller => 'one_click', :action => 'constitution')

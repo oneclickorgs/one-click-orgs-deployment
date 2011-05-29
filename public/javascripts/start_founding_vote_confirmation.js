@@ -4,6 +4,7 @@ $(document).ready(function () {
   $('form#start_founding_vote_form').bind('submit', function (event) {
     event.preventDefault();
     OneClickOrgs.activateLightbox({id : 'start_founding_vote_confirmation_lightbox', complete : function () {$('button#cancel_start_founding_vote').focus();}});
+    OneClickOrgs.trackAnalyticsEvent('ViewsStartFoundingVoteConfirmation');
   });
   $('button#cancel_start_founding_vote').click(function () {
     OneClickOrgs.dismissLightbox({id : 'start_founding_vote_confirmation_lightbox'});

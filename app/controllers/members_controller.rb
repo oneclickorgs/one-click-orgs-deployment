@@ -85,6 +85,7 @@ class MembersController < ApplicationController
     @member = co.members.build(member_attributes)
     
     if @member.save
+      track_analytics_event('InvitesFoundingMember')
       redirect_to members_path, :notice => "Added a new founding member."
     else
       flash[:error] = "There was a problem with the new member's details: #{@member.errors.full_messages.to_sentence}"
