@@ -13,20 +13,21 @@
         = @current_organisation.name
         members.
     - @proposals.each do |proposal|
-      %h4
-        = proposal.title
-        %span.time-ends
-          (voting ends
-          = proposal.end_date.to_s(:long)
-          )
-      = render 'proposals/description', :proposal => proposal
-      %p.votes
-        = proposal.votes_for
-        votes for,
-        = proposal.votes_against
-        against
-      = render 'proposals/vote', :proposal => proposal
-      %br.clear
+      = content_tag_for(:div, proposal) do
+        %h4
+          = proposal.title
+          %span.time-ends
+            (voting ends
+            = proposal.end_date.to_s(:long)
+            )
+        = render 'proposals/description', :proposal => proposal
+        %p.votes
+          = proposal.votes_for
+          votes for,
+          = proposal.votes_against
+          against
+        = render 'proposals/vote', :proposal => proposal
+        %br.clear
 
 - if current_organisation.active?
   .section

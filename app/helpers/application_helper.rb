@@ -1,5 +1,6 @@
 module ApplicationHelper
   def get_satisfaction_widget
+    return unless Rails.env.production?
     raw <<-EOC
       <script type="text/javascript" charset="utf-8">
         var is_ssl = ("https:" == document.location.protocol);
