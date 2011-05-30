@@ -42,7 +42,7 @@ OneClickOrgs.dismissLightbox = function (options) {
 
 OneClickOrgs.trackAnalyticsEvent = function (eventName) {
   if (_gaq) {
-    _gaq.push('_trackPageView', '/analytics_events/' + eventName);
+    _gaq.push(['_trackPageView', '/analytics_events/' + eventName]);
   }
 }
 
