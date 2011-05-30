@@ -12,7 +12,7 @@ class VotesController < ApplicationController
       
       proposal = co.proposals.find_by_id(id)
       if proposal && proposal.is_a?(FoundOrganisationProposal)
-        if current_user.member_class.name == "Member"
+        if current_user.member_class.name == "Founder"
           track_analytics_event("FounderSupportsFounding")
         end
       end
