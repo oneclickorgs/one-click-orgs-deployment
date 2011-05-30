@@ -21,7 +21,7 @@
     Proposals voted on:
     = @member.votes_count
 
-- if current_user.has_permission(:membership_proposal)
+- if can?(:create, ChangeMemberClassProposal)
   -# Cf. issue #146: don't display member class form
   -# - if co.member_classes.count > 1
   -#   .section
@@ -51,7 +51,7 @@
     %tr
       %th Event
       %th Date
-    - for event in @timeline
+    - for event in @member_presenter.timeline
       %tr{:class => cycle('odd', 'even')}
         = render :partial => "one_click/#{event[:kind]}", :locals => {:event => event}
         %td.timestamp= event[:timestamp].to_s(:long)
@@ -61,10 +61,5 @@
   .section
     %h3
       Propose the ejection of this member
-
-    = form_tag(member_path(@member), :method => :delete) do
-      %p
-        = label_tag(:description)
-        = text_area_tag :description
-      %p
-        = submit_tag "Create proposal to eject this member", :id => 'submit'
+    = form_for(@eject_member_proposal) do |form|
+      = render :partial => 'eject_member_proposals/form', :locals => {:form => form}

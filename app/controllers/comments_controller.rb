@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to(proposal_path(@proposal), :notice => "Comment added.")
     else
+      # TODO Use render instead of redirect; use error_messages_for.
       redirect_to(proposal_path(@proposal), :error => "There was a problem saving your comment.")
     end
   end

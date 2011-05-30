@@ -1,5 +1,4 @@
 require 'lib/one_click_orgs/setup'
-
 require 'lib/unauthenticated'
 require 'lib/not_found'
 
@@ -9,11 +8,12 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_set_up
   before_filter :ensure_organisation_exists
   before_filter :ensure_authenticated
-  before_filter :ensure_member_active
-  #before_filter :ensure_organisation_active
+  before_filter :ensure_member_active_or_pending
   before_filter :ensure_member_inducted
   before_filter :prepare_notifications
   before_filter :load_analytics_events_from_session
+  
+  # CURRENT ORGANISATION
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
@@ -32,13 +32,16 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_organisation, :co
   
-  def date_format(d)
-    d.to_s(:long)
-  end
+  # USER LOGIN
   
   helper_method :current_user
   def current_user
     @current_user if user_logged_in?
+  end
+  
+  def log_in(user)
+    self.current_user = user
+    current_user.update_attribute(:last_logged_in_at, Time.now.utc)
   end
   
   # Returns true if a user is logged in; false otherwise.
@@ -64,21 +67,7 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
   
-  def prepare_constitution_view
-    @organisation_name = co.name
-    @objectives = co.objectives
-    @assets = co.assets
-    @website = co.domain
-
-    @period  = co.clauses.get_integer('voting_period')
-    @voting_period = VotingPeriods.name_for_value(@period)
-
-    @general_voting_system = co.constitution.voting_system(:general)
-    @membership_voting_system = co.constitution.voting_system(:membership)
-    @constitution_voting_system = co.constitution.voting_system(:constitution)
-  end
-  
-  # Making PDFs
+  # MAKING PDFS
   
   def generate_pdf(filename = 'Download')
     @organisation_name = co.name
@@ -108,7 +97,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # Notifications
+  # NOTIFICATIONS
   
   def prepare_notifications
     return unless current_user
@@ -151,7 +140,7 @@ class ApplicationController < ActionController::Base
     @notification = notification
   end
   
-  # Analytics
+  # ANALYTICS
   
   def track_analytics_event(event_name, options={})
     return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
@@ -175,7 +164,9 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  protected
+protected
+
+  # BEFORE FILTER DEFINITIONS
   
   def ensure_set_up
     unless OneClickOrgs::Setup.complete?
@@ -197,22 +188,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def ensure_member_active
-    if current_user && !current_user.active?
+  def ensure_member_active_or_pending
+    if current_user && current_user.inactive?
       session[:user] = nil
       raise Unauthenticated
     end
   end
-  
-  # def ensure_organisation_active
-  #   return if co.active?
-  #   
-  #   if co.pending?
-  #     redirect_to(:controller => 'induction', :action => 'founding_meeting')
-  #   else
-  #     redirect_to(:controller => 'induction', :action => 'founder')
-  #   end
-  # end
   
   def ensure_member_inducted
     redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
@@ -222,7 +203,11 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'welcome', :action => 'index')
   end
   
-  # EXCEPTIONS
+  def find_constitution
+    @constitution = co.constitution
+  end
+  
+  # EXCEPTION HANDLING
   
   rescue_from NotFound, :with => :render_404
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
@@ -234,5 +219,10 @@ class ApplicationController < ActionController::Base
   def handle_unauthenticated
     store_location
     redirect_to login_path
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to root_path
   end
 end

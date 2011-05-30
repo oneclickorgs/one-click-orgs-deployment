@@ -474,6 +474,9 @@ form.login {
 form.login label, form.login input {
   margin-left: 0; }
 
+ul.errors {
+  font-size: 0.8em; }
+
 /* Settings */
 #settings_fields h3 {
   margin-top: 1em; }
@@ -537,7 +540,7 @@ dl.settings dt {
   clear: right; }
 
 div.field_with_errors input {
-  border: 1px solid red; }
+  border: 1px solid #df4242; }
 
 /* Lightbox */
 #lightbox_screen {

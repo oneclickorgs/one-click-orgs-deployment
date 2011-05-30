@@ -77,12 +77,12 @@ describe Organisation do
     before(:each) do
       @organisation.members.destroy_all
       @organisation.members.make_n(3)
-      @organisation.pending!
+      organisation_is_pending
     end
     
     it "returns false unless the organisation is pending" do
       @organisation.can_hold_founding_vote?.should be_true
-      @organisation.proposed!
+      @organisation.propose!
       @organisation.can_hold_founding_vote?.should be_false
     end
     
@@ -103,13 +103,11 @@ describe Organisation do
   
   describe "state changes" do
     before(:each) do
-      @organisation = Organisation.new
-      
       @clauses_association = mock("clauses association", :set_text! => nil)
       @organisation.stub!(:clauses).and_return(@clauses_association)
     end
     
-    describe "#active!" do
+    describe "#found!" do
       before(:each) do
         @founder_class = mock_model(MemberClass, :name => 'Founder', :description => nil)
         @founding_member_class = mock_model(MemberClass, :name => 'Founding Member', :description => nil)
@@ -119,16 +117,18 @@ describe Organisation do
         @member_classes_association.stub!(:find_by_name).with('Founding Member').and_return(@founding_member_class)
         
         @organisation.stub!(:member_classes).and_return(@member_classes_association)
+        
+        organisation_is_proposed
       end
       
       it "destroys the 'Founder' member class" do
         @founder_class.should_receive(:destroy)
-        @organisation.active!
+        @organisation.found!
       end
 
       it "destroys the 'Founding Member' member class" do
         @founding_member_class.should_receive(:destroy)
-        @organisation.active!
+        @organisation.found!
       end
 
     end

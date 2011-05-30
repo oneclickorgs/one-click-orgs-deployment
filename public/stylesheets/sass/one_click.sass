@@ -7,6 +7,7 @@ $black: #000
 $dark_grey: #6C6C6C
 $blue: #627FC4
 $pale_blue: #E0E8EF
+$error_red: #DF4242
 
 // Shorthand
 
@@ -198,7 +199,7 @@ hr
   :clear both
 
 #error
-  :background-color #DF4242
+  :background-color $error_red
   :color #fff
 
 /* Body
@@ -503,6 +504,9 @@ form.login
 form.login label, form.login input
   :margin-left 0
 
+ul.errors
+  :font-size 0.8em
+
 /* Settings
 
 #settings_fields
@@ -572,7 +576,7 @@ dl.settings
     :clear right
 
 div.field_with_errors input
-  :border 1px solid red
+  :border 1px solid $error_red
 
 /* Lightbox
 

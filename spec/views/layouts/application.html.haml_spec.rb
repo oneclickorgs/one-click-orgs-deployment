@@ -17,7 +17,16 @@ describe "layouts/application.html.haml" do
       view.stub!(:current_organisation).and_return(@organisation)
       view.stub!(:co).and_return(@organisation)
       
-      view.stub!(:current_user).and_return(@user = mock_model(Member, :name => "Lucy Baker"))
+      @user = mock_model(Member, :name => "Lucy Baker")
+      view.stub!(:current_user).and_return(@user)
+      controller.stub!(:current_user).and_return(@user)
+      
+      @user.stub!(:has_permission).with(:freeform_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:membership_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:constitution_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:found_organisation_proposal).and_return(false)
+      @user.stub!(:has_permission).with(:vote).and_return(false)
+      @user.stub!(:organisation).and_return(@organisation)
     end
     
     context "when organisation is pending" do
@@ -29,12 +38,13 @@ describe "layouts/application.html.haml" do
       context "when user is the founder" do
         before(:each) do
           @members_association.stub!(:first).and_return(@user)
+          @user.stub!(:has_permission).with(:member_proposal).and_return(true)
           @user.stub!(:has_permission).with(:found_organisation_proposal).and_return(true)
         end
         
         it "displays a button to hold the founding vote" do
           render
-          rendered.should have_selector('form', :action => '/proposals/propose_foundation', :id => 'start_founding_vote_form') do |form|
+          rendered.should have_selector('form', :action => '/found_organisation_proposals', :id => 'start_founding_vote_form') do |form|
             form.should have_selector('input', :type => 'submit')
           end
         end
@@ -80,7 +90,8 @@ describe "layouts/application.html.haml" do
         @organisation.stub!(:found_organisation_proposals).and_return(@found_organisation_proposals_association)
         @found_organisation_proposals_association.stub!(:last).and_return(@found_organisation_proposal)
         
-        @user.stub!(:can_vote?).and_return(true)
+        @user.stub!(:eligible_to_vote?).and_return(true)
+        @user.stub!(:has_permission).with(:vote).and_return(true)
       end
       
       context "when user has not voted yet" do

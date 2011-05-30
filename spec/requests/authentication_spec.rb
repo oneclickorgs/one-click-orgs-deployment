@@ -14,7 +14,7 @@ describe "authentication" do
   
   describe "logging in" do
     before(:each) do
-      post member_session_path, :email => 'krusty@clown.com', :password => 'password'
+      post member_session_path, :email => @default_user.email, :password => 'password'
     end
     
     it "should log in the user" do
@@ -28,7 +28,7 @@ describe "authentication" do
   
   describe "trying to log in with bad credentials" do
     before(:each) do
-      post member_session_path, :email => 'krusty@clown.com', :password => 'wrongpassword'
+      post member_session_path, :email => @default_user.email, :password => 'wrongpassword'
     end
     
     it "should not log in the user" do
@@ -46,7 +46,7 @@ describe "authentication" do
   
   describe "logging out" do
     before(:each) do
-      post member_session_path, :email => 'krusty@clown.com', :password => 'password'
+      post member_session_path, :email => @default_user.email, :password => 'password'
       delete member_session_path
     end
     

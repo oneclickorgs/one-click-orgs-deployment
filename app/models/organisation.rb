@@ -1,5 +1,22 @@
 class Organisation < ActiveRecord::Base
+  state_machine :initial => :pending do
+    event :propose do
+      transition :pending => :proposed
+    end
+    
+    event :found do
+      transition :proposed => :active
+    end
+    
+    event :fail do
+      transition :proposed => :pending
+    end
+    
+    after_transition :proposed => :active, :do => :destroy_pending_state_member_classes
+  end
+  
   has_many :clauses
+  
   has_many :members
   
   has_many :proposals
@@ -10,6 +27,7 @@ class Organisation < ActiveRecord::Base
   has_many :add_member_proposals
   has_many :change_boolean_proposals
   has_many :change_text_proposals
+  has_many :change_member_class_proposals
   has_many :change_voting_period_proposals
   has_many :change_voting_system_proposals
   has_many :eject_member_proposals
@@ -61,6 +79,10 @@ class Organisation < ActiveRecord::Base
     @assets = assets
   end
   
+  def voting_period
+    clauses.get_integer('voting_period')
+  end
+  
   # Returns the base URL for this instance of OCO.
   # Pass the :only_host => true option to just get the host name.
   def domain(options={})
@@ -84,39 +106,8 @@ class Organisation < ActiveRecord::Base
     members.first
   end
   
-  def under_construction?
-    clauses.get_text('organisation_state').nil?
-  end
-  
-  def under_construction!
-    clause = clauses.get_current('organisation_state')
-    clause && clause.destroy    
-  end
-
-  def pending?
-    clauses.get_text('organisation_state') == 'pending'
-  end
-    
-  def pending!
-    clauses.set_text!('organisation_state', 'pending')
-  end
-    
-  def proposed?
-    clauses.get_text('organisation_state') == 'proposed'
-  end
-    
-  def proposed!
-    clauses.set_text!('organisation_state', 'proposed')
-  end
-    
-  def active?
-    clauses.get_text('organisation_state') == 'active'
-  end
-  
-  def active!
-    clauses.set_text!('organisation_state', 'active')
-
-    # Delete Founder and Founding Member member classes
+  # Delete Founder and Founding Member member classes
+  def destroy_pending_state_member_classes
     member_classes.find_by_name('Founder').destroy
     member_classes.find_by_name('Founding Member').destroy
   end
@@ -142,7 +133,7 @@ class Organisation < ActiveRecord::Base
     members.save
     
     founder = member_classes.find_or_create_by_name('Founder')
-    founder.set_permission!(:direct_edit, true)
+    founder.set_permission!(:founder, true)
     founder.set_permission!(:constitution_proposal, true)
     founder.set_permission!(:membership_proposal, true)
     founder.set_permission!(:freeform_proposal, true)
@@ -151,7 +142,7 @@ class Organisation < ActiveRecord::Base
     founder.save
 
     founding_member = member_classes.find_or_create_by_name('Founding Member')
-    founding_member.set_permission!(:direct_edit, false)
+    founding_member.set_permission!(:founder, false)
     founding_member.set_permission!(:constitution_proposal, false)
     founding_member.set_permission!(:membership_proposal, false)
     founding_member.set_permission!(:freeform_proposal, false)
@@ -166,5 +157,23 @@ class Organisation < ActiveRecord::Base
     constitution.set_voting_system(:constitution, 'AbsoluteTwoThirdsMajority')
     constitution.set_voting_period(259200)
   end
-
+  
+  # FAKE ASSOCIATIONS
+  
+  def founding_members
+    members.founding_members(self)
+  end
+  
+  def build_founding_member(attributes={})
+    FoundingMember.new({
+      :organisation => self,
+      :member_class => member_classes.find_by_name("Founding Member")
+    }.merge(attributes))
+  end
+  
+  def build_constitution_proposal_bundle(attributes={})
+    ConstitutionProposalBundle.new({
+      :organisation => self
+    }.merge(attributes))
+  end
 end

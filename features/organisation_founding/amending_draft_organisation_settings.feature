@@ -9,8 +9,8 @@ Feature: Amending draft organisation settings
   
   Scenario: Amending draft organisation settings
     When I go to the amendments page
-    And I fill in "organisation_name" with "Tea Club Mark II"
-    And I fill in "organisation_objectives" with "REALLY enjoying tea"
+    And I fill in the organisation name with "Tea Club Mark II"
+    And I fill in the objectives with "REALLY enjoying tea"
     And I choose "Absolute majority" for general decisions
     And I choose "Unanimous" for membership decisions
     And I choose "Simple majority" for constitution decisions

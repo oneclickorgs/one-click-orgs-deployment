@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ChangeVotingPeriodProposal do
 
   before do
-    stub_organisation!
+    default_organisation
     @current_voting_period = @organisation.clauses.set_integer!('voting_period', 300)
   end
   

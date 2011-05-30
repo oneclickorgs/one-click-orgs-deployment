@@ -1,8 +1,7 @@
 class OrganisationsController < ApplicationController
   skip_before_filter :ensure_organisation_exists
   skip_before_filter :ensure_authenticated
-  skip_before_filter :ensure_member_active
-  #skip_before_filter :ensure_organisation_active
+  skip_before_filter :ensure_member_active_or_pending
   skip_before_filter :ensure_member_inducted
   
   before_filter :ensure_not_single_organisation_mode
@@ -47,7 +46,6 @@ class OrganisationsController < ApplicationController
       if !@founder.save
         errors << "Cannot create your account: #{@founder.errors.full_messages.to_sentence}."
       end
-      @organisation.pending!
     end
     
     # display errors
@@ -58,7 +56,7 @@ class OrganisationsController < ApplicationController
     end
 
     # continue
-    self.current_user = @founder
+    log_in(@founder)
 
     MembersMailer.welcome_founder(@founder).deliver # send welcome email    
     current_user.update_attribute(:last_logged_in_at, Time.now.utc) # update login datetime
@@ -66,9 +64,9 @@ class OrganisationsController < ApplicationController
     track_analytics_event('EntersPendingStage')
 
     if Setting[:single_organisation_mode]
-      redirect_to(:controller => 'one_click', :action => 'constitution')
+      redirect_to(constitution_path)
     else
-      redirect_to(:host => @organisation.host, :controller => 'one_click', :action => 'constitution')
+      redirect_to(constitution_url(:host => @organisation.host))
     end
   end
 

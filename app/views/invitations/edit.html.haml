@@ -4,20 +4,20 @@
 %h2 Choose your password
 %p
   Welcome to
-  = @organisation_name + ','
-  = @member.name + '.'
+  = organisation_name + ','
+  = @invitation.name + '.'
   To begin, please choose a password:
-= form_for(@member, :url => invitation_path(@invitation_code), :html => {:id => 'edit_member'}) do |member_form|
-  = error_messages_for(@member)
+= form_for(@invitation) do |invitation_form|
+  = error_messages_for(@invitation)
   %p
-    = member_form.label :password
-    = member_form.password_field :password
+    = invitation_form.label :password
+    = invitation_form.password_field :password
   %p
-    = member_form.label :password_confirmation
-    = member_form.password_field :password_confirmation
-  = member_form.hidden_field :terms_and_conditions
+    = invitation_form.label :password_confirmation
+    = invitation_form.password_field :password_confirmation
+  = invitation_form.hidden_field :terms_and_conditions
   %p
-    = member_form.submit("Continue")
+    = invitation_form.submit("Continue")
 
 - content_for(:lightbox) do
   = render(:partial => 'shared/founding_member_disclaimer', :locals => {:show_founding_warnings => @show_founding_warnings})

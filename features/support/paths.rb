@@ -27,7 +27,8 @@ module NavigationHelpers
     when /^a member's page$/
       @member = @organisation.members.active.last
       member_path(@member)
-    
+    when /^the amendments page$/
+      edit_constitution_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

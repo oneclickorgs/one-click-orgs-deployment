@@ -3,8 +3,7 @@ require 'spec_helper'
 describe "Founding process" do
   describe "Found Organisation Proposal decision email" do
     before(:each) do
-      @organisation = stub_organisation!(false)
-      @organisation.pending!
+      @organisation = default_organisation(:state => 'pending')
       @founding_member_member_class = @organisation.member_classes.find_by_name("Founding Member")
       @founder_member_class = @organisation.member_classes.find_by_name("Founder")
       @founder = @organisation.members.make(:member_class => @founder_member_class)
@@ -22,16 +21,16 @@ describe "Founding process" do
         :title => "Proposal to found organisation",
         :proposer_member_id => @founder.id
       )
-      @found_organisation_proposal.start
+      @found_organisation_proposal.save
       
-      @organisation.proposed!
-      @organisation.save
+      @organisation.propose!
+      @found_organisation_proposal.reload
       
       @affirmative_members.each do |m|
-        m.cast_vote(:for, @found_organisation_proposal.id)
+        m.cast_vote(:for, @found_organisation_proposal)
       end
       @negative_members.each do |m|
-        m.cast_vote(:against, @found_organisation_proposal.id)
+        m.cast_vote(:against, @found_organisation_proposal)
       end
       
       ActionMailer::Base.deliveries.clear

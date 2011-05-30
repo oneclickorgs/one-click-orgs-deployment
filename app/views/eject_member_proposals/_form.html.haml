@@ -1,0 +1,7 @@
+= error_messages_for(form.object)
+= form.hidden_field(:member_id)
+%p
+  = form.label(:description)
+  = form.text_area :description
+%p
+  = form.submit "Create proposal to eject this member", :id => 'submit'

@@ -5,23 +5,11 @@ class OneClickController < ApplicationController
     redirect_to(:action => 'dashboard')
   end
   
-  def constitution
-    @page_title = "Constitution"
-    prepare_constitution_view
-    
-    respond_to do |format|
-      format.html
-      format.pdf {
-        generate_pdf(@page_title)
-      }
-    end  
-  end
-  
   def dashboard
     # only_provides :html
     
     if current_organisation.pending? || current_organisation.proposed?
-      redirect_to(:action => 'constitution')
+      redirect_to constitution_path
       return
     end
             
@@ -29,7 +17,7 @@ class OneClickController < ApplicationController
     @proposals = co.proposals.currently_open
     
     @new_proposal = co.proposals.new
-    @new_member = co.members.new(:member_class => co.default_member_class)
+    @add_member_proposal = co.add_member_proposals.build
     
     @timeline = [
       co.members.all,
@@ -37,13 +25,4 @@ class OneClickController < ApplicationController
       co.decisions.all
     ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
   end
-  
-  def amendments
-    @page_title = "Amendments"
-    prepare_constitution_view
-    
-    @allow_editing = current_user.has_permission(:constitution_proposal) &&
-      !current_organisation.proposed?
-  end
-  
 end

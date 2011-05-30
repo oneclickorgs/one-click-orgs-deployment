@@ -34,8 +34,10 @@
                 = member.founding_vote.for_or_against
               - else
                 Not yet voted
-                
-  = render :partial => 'shared/propose_new_member_form'
+  - if @founding_member
+    %h3 Invite another Founding Member
+    = form_for(@founding_member) do |form|
+      = render :partial => 'founding_members/form', :locals => {:form => form}
 
 - else
   %h2 Members

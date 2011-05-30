@@ -40,7 +40,9 @@
       = render :partial => 'shared/propose_freeform_form'
 
     %div#propose_new_member_form.form-to-hide
-      = render :partial => 'shared/propose_new_member_form'
+      %h3 Propose a new member
+      = form_for(@add_member_proposal) do |form|
+        = render :partial => 'add_member_proposals/form', :locals => {:form => form}
 
 - if current_organisation.active?
   %div.section
