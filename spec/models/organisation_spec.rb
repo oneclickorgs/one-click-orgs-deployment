@@ -19,7 +19,7 @@ describe Organisation do
   describe "text fields" do
     before(:each) do
       @organisation.name = 'The Cheese Collective' # actually stored as 'organisation_name'
-      @organisation.objectives = 'eat all the cheese' # actually stored as 'organisation_objectoves'
+      @organisation.objectives = 'eat all the cheese' # actually stored as 'organisation_objectives'
       @organisation.save!
       @organisation.reload
     end
@@ -59,6 +59,16 @@ describe Organisation do
     context "with only_host option true" do
       it "should remove the http://" do
         @organisation.domain(:only_host => true).should == "fromage.oneclickorgs.com"
+      end
+    end
+    
+    context "in single-organisation mode" do
+      before(:each) do
+        Setting[:single_organisation_mode] = "true"
+      end
+      
+      it "returns the base domain" do
+        @organisation.domain.should == "http://oneclickorgs.com"
       end
     end
   end

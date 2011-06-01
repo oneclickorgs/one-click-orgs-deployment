@@ -80,6 +80,7 @@ describe "everything" do
         EjectMemberProposal.should_receive(:new).with(
           :parameters => {'id' => @member.id},
           :title => "Eject #{@member.name} from test",
+          :description => 'Power grab!',
           :proposer_member_id => @user.id
         ).and_return(@proposal = mock('proposal'))
         @proposal.should_receive(:start).and_return(true)
@@ -94,7 +95,7 @@ describe "everything" do
       end
       
       def make_request
-        delete(member_path(@member))
+        delete(member_path(@member), {:description => 'Power grab!'})
       end
      end
   end

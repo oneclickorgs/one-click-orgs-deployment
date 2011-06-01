@@ -1,5 +1,6 @@
 class SetupController < ApplicationController
   skip_before_filter :ensure_set_up
+  before_filter :ensure_not_set_up_yet
   skip_before_filter :ensure_organisation_exists
   skip_before_filter :ensure_authenticated
   skip_before_filter :ensure_member_active
@@ -33,4 +34,13 @@ class SetupController < ApplicationController
     Setting[:base_domain] = request.host_with_port
     redirect_to(new_organisation_path)
   end
+
+  protected
+
+  def ensure_not_set_up_yet
+    if OneClickOrgs::Setup.complete?
+      redirect_to('/')
+    end
+  end
+  
 end

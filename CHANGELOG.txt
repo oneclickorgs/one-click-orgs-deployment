@@ -1,4 +1,17 @@
-2011-04-30 One Click Orgs 1.1.0
+2011-05-29 One Click Orgs 1.1.1
+
+* FIX: Eject member proposal fails to save the description entered with the
+  proposal.
+* FIX: Form buttons on Voting & Proposals page allow more than one form to
+  appear at the same time.
+* FIX: Subdomain field allows names that are too long to work as subdomains.
+* FIX: Setup screens can still be visited after the app is set up.
+* FIX: Wrong web address shown in constitution when in single-organisation
+  mode
+* Cucumber acceptance tests added.
+* Add a script for developers to create a dummy organisation for testing.
+
+2011-05-19 One Click Orgs 1.1.0
 
 * FEATURE: When making a proposal, your supporting vote is automatically cast for you.
 * FEATURE: Constitution and members list can be downloaded as PDF documents.

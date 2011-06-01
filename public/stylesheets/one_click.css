@@ -216,6 +216,10 @@ hr {
   margin: 1em 2em;
   padding: 0.5em 2em;
   font-size: 0.8em; }
+  #bd section.description.missing {
+    border-left: 0; }
+    #bd section.description.missing p {
+      color: #666666; }
   #bd section.description h1, #bd section.description h2, #bd section.description h3 {
     color: #666666;
     margin: 0.4em 0; }

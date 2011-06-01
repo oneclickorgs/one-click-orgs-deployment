@@ -44,12 +44,12 @@
           = f.label :subdomain, "Your One Click Orgs web address will be"
         %p#help_subdomain.explanation (You can change this before you go to the next stage)
         %div#subdomain_wrapper
-          = f.text_field(:subdomain, :placeholder => 'penzancesardine')
+          = f.text_field(:subdomain, :placeholder => 'penzancesardine', :maxlength => 63)
           %span#base_domain
             = '.' + Setting[:base_domain]
       %p
         = f.label :objectives, "What the Association exists for"
-        = f.text_area :objectives, :id => 'objectives', :placeholder => 'Strengthen a common enjoyment of oily fish'
+        = f.text_area :objectives, :placeholder => 'Strengthen a common enjoyment of oily fish'
   
       %p
         = submit_tag "Create draft constitution →", :id => 'submit'

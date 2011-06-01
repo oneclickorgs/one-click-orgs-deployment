@@ -73,7 +73,11 @@ class Organisation < ActiveRecord::Base
   end
   
   def host
-    subdomain ? [subdomain, Setting[:base_domain]].join('.') : Setting[:base_domain]
+    if Setting[:single_organisation_mode] == 'true'
+      Setting[:base_domain]
+    else
+      [subdomain, Setting[:base_domain]].join('.')
+    end
   end
   
   def convener
