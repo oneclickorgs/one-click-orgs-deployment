@@ -27,7 +27,7 @@ body {
   color: #333333;
   font-family: "Vegur", "Myriad Pro", "Myriad", "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Base font size */
-  font-size: 15px;
+  font-size: 100%;
   /* Prevent Get Satisfaction feedback tab overlapping the container */
   padding: 0 40px; }
 
@@ -107,7 +107,7 @@ div.clear {
 .control_bar {
   color: #666666;
   float: right;
-  font-size: 0.8em;
+  font-size: 0.75em;
   line-height: 1.2em;
   padding: 6px 0;
   text-align: right; }
@@ -115,7 +115,7 @@ div.clear {
     text-decoration: none; }
 
 h1.header {
-  font-size: 2.4em;
+  font-size: 2.25em;
   font-family: Georgia, "Times New Roman", serif;
   margin-bottom: 4px; }
   h1.header a {
@@ -145,14 +145,17 @@ br.clear {
 
 h2 {
   color: #a2005a;
-  font-size: 2em; }
+  font-size: 2.25em;
+  font-weight: 800;
+  margin-bottom: 0.4em; }
 
 h3 {
   font-size: 1.5em;
+  font-weight: 600;
   margin-bottom: 0.2em; }
 
 h4 {
-  font-size: 1.2em; }
+  font-size: 1em; }
 
 a {
   color: #627fc4; }
@@ -166,6 +169,14 @@ hr {
   color: #a2005a;
   height: 1px;
   margin: 0.8em 0; }
+
+p {
+  font-size: 1em;
+  line-height: 1.3em; }
+
+em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic; }
 
 /* Navigation */
 #nav {
@@ -481,7 +492,8 @@ div.open-proposals form {
   margin: -0.2em 0 0; }
 
 div.open-proposals form input[type="submit"] {
-  padding: 0.1em 1em 0.05em 1em; }
+  font-size: 0.8em;
+  padding: 0.3em 1em 0.1em; }
 
 input#organisation_subdomain {
   float: left;
