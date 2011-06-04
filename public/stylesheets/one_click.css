@@ -183,7 +183,7 @@ em {
   margin: 12px 0; }
   #nav li {
     display: inline;
-    padding-right: 80px; }
+    padding-right: 4em; }
   #nav a {
     text-decoration: none; }
     #nav a:hover {
@@ -280,13 +280,13 @@ img.gravatar {
   vertical-align: middle; }
 
 #download {
-  font-size: 0.85em;
+  font-size: 0.75em;
   margin-top: 6px; }
   #download span.download a {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    padding: 5px 6px;
+    padding: 5px 6px 4px 6px;
     text-decoration: none; }
   #download span.pdf a {
     background-color: #c02434;
@@ -298,6 +298,11 @@ img.gravatar {
     color: white; }
     #download span.csv a:hover {
       background-color: #005500; }
+  #download span.txt a {
+    background-color: #444444;
+    color: white; }
+    #download span.txt a:hover {
+      background-color: black; }
 
 #bd .comment {
   background: #f6f6f6;
@@ -527,7 +532,7 @@ form.login label, form.login input {
   border-top: 1px solid black;
   clear: both;
   color: #666666;
-  font-size: 0.7em;
+  font-size: 0.75em;
   margin-top: 1em;
   padding: 1em; }
   .footer span.right {

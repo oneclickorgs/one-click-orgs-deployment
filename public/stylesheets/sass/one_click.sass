@@ -218,7 +218,7 @@ em
   :margin 12px 0
   li
     :display inline
-    :padding-right 80px
+    :padding-right 4em
   a
     :text-decoration none
     &:hover
@@ -316,11 +316,11 @@ img.gravatar
   :vertical-align middle
 
 #download
-  :font-size 0.85em
+  :font-size 0.75em
   :margin-top 6px
   span.download a
     @include rounded-corners(2px)
-    :padding 5px 6px
+    :padding 5px 6px 4px 6px
     :text-decoration none  
   span.pdf a
     :background-color #c02434
@@ -332,6 +332,11 @@ img.gravatar
     :color #fff
     &:hover
       :background-color #005500
+  span.txt a
+    :background-color #444
+    :color #fff
+    &:hover
+      :background-color #000
 
 #bd
   .comment
@@ -572,7 +577,7 @@ form.login label, form.login input
   :border-top 1px solid #000
   :clear both
   :color #666
-  :font-size .7em
+  :font-size .75em
   :margin-top 1em
   :padding 1em
   span.right
