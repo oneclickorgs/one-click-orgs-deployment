@@ -8,12 +8,44 @@ $dark_grey: #6C6C6C
 $blue: #627FC4
 $pale_blue: #E0E8EF
 
+// CSS Fonts
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-r.otf') 
+  // Regular
+  :font-weight normal, 300, 400, 500
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-l.otf')
+  // Light
+  :font-weight lighter, 100, 200
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-m.otf')
+  // Medium
+  :font-weight bold, 600, 700
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-b.otf')
+  // Bold
+  :font-weight bolder, 800, 900
+
 // Shorthand
 
 @mixin rounded-corners($radius)
   -webkit-border-radius: $radius
   -moz-border-radius: $radius
   border-radius: $radius
+
+@mixin default-sans-serif
+  font-family: 'Vegur','Myriad Pro','Myriad','Helvetica Neue',Helvetica,Arial,sans-serif
+
+@mixin default-serif
+  font-family: Georgia,'Times New Roman',serif
 
 // And let's begin
 
@@ -24,7 +56,7 @@ $pale_blue: #E0E8EF
 body
   :background-color #f6f6f6
   :color #333
-  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  @include default-sans-serif
   /* Base font size
   :font-size 15px
   /* Prevent Get Satisfaction feedback tab overlapping the container
@@ -117,7 +149,7 @@ div.clear
 
 h1.header
   :font-size 2.4em
-  :font-family Georgia,'Times New Roman',serif
+  @include default-serif
   :margin-bottom 4px
   a
     :color #000
@@ -418,7 +450,7 @@ tr.vote_for, tr.vote_against, tr.vote_in_progress
 
 label, input, textarea, select
   :display block
-  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  @include default-sans-serif
   :font-size 0.9em
   :margin-bottom 10px
   :margin-left 20px

@@ -1,3 +1,23 @@
+@font-face {
+  font-family: "Vegur";
+  src: url("../fonts/vegur-r.otf");
+  font-weight: normal, 300, 400, 500; }
+
+@font-face {
+  font-family: "Vegur";
+  src: url("../fonts/vegur-l.otf");
+  font-weight: lighter, 100, 200; }
+
+@font-face {
+  font-family: "Vegur";
+  src: url("../fonts/vegur-m.otf");
+  font-weight: bold, 600, 700; }
+
+@font-face {
+  font-family: "Vegur";
+  src: url("../fonts/vegur-b.otf");
+  font-weight: bolder, 800, 900; }
+
 * {
   margin: 0;
   padding: 0; }
@@ -5,7 +25,7 @@
 body {
   background-color: #f6f6f6;
   color: #333333;
-  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Vegur", "Myriad Pro", "Myriad", "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* Base font size */
   font-size: 15px;
   /* Prevent Get Satisfaction feedback tab overlapping the container */
@@ -389,7 +409,7 @@ tr.vote_for a, tr.vote_against a, tr.vote_in_progress a {
 /* Forms */
 label, input, textarea, select {
   display: block;
-  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Vegur", "Myriad Pro", "Myriad", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.9em;
   margin-bottom: 10px;
   margin-left: 20px;
