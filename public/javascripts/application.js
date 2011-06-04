@@ -114,7 +114,7 @@ $(document).ready(function () {
   })
 
   $('#button-constitution-change').click(function() {
-    $(location).attr('href','/amendments');
+    $(location).attr('href','/constitution/edit');
   });
 
   // Notifications
