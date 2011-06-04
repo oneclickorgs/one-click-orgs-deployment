@@ -209,8 +209,8 @@ class Member < ActiveRecord::Base
   
   has_many :seen_notifications
   
-  def has_seen_notification?(notification)
-    seen_notifications.exists?(:notification => notification)
+  def has_seen_notification?(notification, created_at = '')
+    seen_notifications.exists?(:notification => notification, :created_at => created_at)
   end
   
   def has_seen_notification!(notification)

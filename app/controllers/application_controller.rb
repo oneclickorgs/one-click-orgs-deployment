@@ -144,9 +144,9 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def show_notification_once(notification)
+  def show_notification_once(notification, created_at = '')
     return unless current_user
-    return if current_user.has_seen_notification?(notification)
+    return if current_user.has_seen_notification?(notification, created_at)
     show_notification(notification)
   end
   
