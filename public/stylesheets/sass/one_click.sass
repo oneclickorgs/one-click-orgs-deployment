@@ -8,7 +8,7 @@ $dark_grey: #6C6C6C
 $blue: #627FC4
 $pale_blue: #E0E8EF
 
-// CSS Fonts
+// CSS fonts
 
 @font-face
   :font-family 'Vegur'
@@ -34,18 +34,16 @@ $pale_blue: #E0E8EF
   // Regular
   :font-weight normal
 
-// Shorthand
+// Shorthand and variables
 
 @mixin rounded-corners($radius)
   -webkit-border-radius: $radius
   -moz-border-radius: $radius
   border-radius: $radius
 
-@mixin default-sans-serif
-  font-family: 'Vegur','Myriad Pro','Myriad','Helvetica Neue',Helvetica,Arial,sans-serif
+$default-sans-serif: 'Vegur','Myriad Pro','Myriad','Helvetica Neue',Helvetica,Arial,sans-serif
 
-@mixin default-serif
-  font-family: Georgia,'Times New Roman',serif
+$default-serif: Georgia,'Times New Roman',serif
 
 // And let's begin
 
@@ -56,7 +54,7 @@ $pale_blue: #E0E8EF
 body
   :background-color #f6f6f6
   :color #333
-  @include default-sans-serif
+  :font-family $default-sans-serif
   /* Base font size
   :font-size 100%
   /* Prevent Get Satisfaction feedback tab overlapping the container
@@ -149,7 +147,7 @@ div.clear
 
 h1.header
   :font-size 2.25em
-  @include default-serif
+  :font-family $default-serif
   :margin-bottom 4px
   a
     :color #000
@@ -209,7 +207,7 @@ p
   :line-height 1.3em
 
 em
-  @include default-serif
+  :font-family $default-serif
   :font-style italic
 
 strong
@@ -469,7 +467,7 @@ tr.vote_for, tr.vote_against, tr.vote_in_progress
 
 label, input, textarea, select
   :display block
-  @include default-sans-serif
+  :font-family $default-sans-serif
   :font-size 0.9em
   :margin-bottom 10px
   :margin-left 20px
