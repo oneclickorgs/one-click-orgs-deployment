@@ -63,14 +63,15 @@ $(document).ready(function () {
   // If JavaScript is disabled, they all show by default
   $('.form-to-hide').hide();
 
-  var cancel_button = $('<span class="cancel">cancel</span>');
+  var cancel_button = $('<a href="#" class="cancel">Cancel</span>');
   $('.form-to-hide').each(function() {
     var cloned_cancel = cancel_button.clone();
     $(this).find(':submit').after(cloned_cancel);
     
     // make it slide back up on click
-    cloned_cancel.click(function() {
-    $(this).closest('.form-to-hide').slideUp();
+    cloned_cancel.click(function(e) {
+      e.preventDefault();
+      $(this).closest('.form-to-hide').slideUp();
     })
   })
 
