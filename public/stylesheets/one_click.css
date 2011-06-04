@@ -1,22 +1,22 @@
 @font-face {
   font-family: "Vegur";
-  src: url("../fonts/vegur-r.otf");
-  font-weight: normal, 300, 400, 500; }
+  src: url("../fonts/vegur-l.otf") format("opentype");
+  font-weight: lighter; }
 
 @font-face {
   font-family: "Vegur";
-  src: url("../fonts/vegur-l.otf");
-  font-weight: lighter, 100, 200; }
+  src: url("../fonts/vegur-m.otf") format("opentype");
+  font-weight: bold; }
 
 @font-face {
   font-family: "Vegur";
-  src: url("../fonts/vegur-m.otf");
-  font-weight: bold, 600, 700; }
+  src: url("../fonts/vegur-b.otf") format("opentype");
+  font-weight: bolder; }
 
 @font-face {
   font-family: "Vegur";
-  src: url("../fonts/vegur-b.otf");
-  font-weight: bolder, 800, 900; }
+  src: url("../fonts/vegur-r.otf") format("opentype");
+  font-weight: normal; }
 
 * {
   margin: 0;
@@ -146,12 +146,12 @@ br.clear {
 h2 {
   color: #a2005a;
   font-size: 2.25em;
-  font-weight: 800;
+  font-weight: bolder;
   margin-bottom: 0.4em; }
 
 h3 {
   font-size: 1.5em;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 0.2em; }
 
 h4 {
@@ -177,6 +177,9 @@ p {
 em {
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic; }
+
+strong {
+  font-weight: bold; }
 
 /* Navigation */
 #nav {

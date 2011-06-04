@@ -12,27 +12,27 @@ $pale_blue: #E0E8EF
 
 @font-face
   :font-family 'Vegur'
-  :src url('../fonts/vegur-r.otf') 
-  // Regular
-  :font-weight normal, 300, 400, 500
-
-@font-face
-  :font-family 'Vegur'
-  :src url('../fonts/vegur-l.otf')
+  :src url('../fonts/vegur-l.otf') format('opentype')
   // Light
-  :font-weight lighter, 100, 200
+  :font-weight lighter
 
 @font-face
   :font-family 'Vegur'
-  :src url('../fonts/vegur-m.otf')
+  :src url('../fonts/vegur-m.otf') format('opentype')
   // Medium
-  :font-weight bold, 600, 700
+  :font-weight bold
 
 @font-face
   :font-family 'Vegur'
-  :src url('../fonts/vegur-b.otf')
+  :src url('../fonts/vegur-b.otf') format('opentype')
   // Bold
-  :font-weight bolder, 800, 900
+  :font-weight bolder
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-r.otf') format('opentype')
+  // Regular
+  :font-weight normal
 
 // Shorthand
 
@@ -180,12 +180,12 @@ br.clear
 h2
   :color $oco_burgundy
   :font-size 2.25em
-  :font-weight 800
+  :font-weight bolder
   :margin-bottom 0.4em
   
 h3
   :font-size 1.5em
-  :font-weight 600
+  :font-weight bold
   :margin-bottom 0.2em
 
 h4
@@ -211,6 +211,9 @@ p
 em
   @include default-serif
   :font-style italic
+
+strong
+  :font-weight bold
 
 /* Navigation
 
