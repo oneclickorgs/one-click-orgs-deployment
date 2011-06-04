@@ -525,7 +525,8 @@ form.login label, form.login input {
 #member_info {
   margin: 1em 0; }
   #member_info img {
-    float: right; }
+    float: left;
+    margin: 0 1em 1em 0; }
 
 /* Footer */
 .footer {
