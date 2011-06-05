@@ -144,6 +144,16 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # Show a notification once when a user is signed in, to notify of
+  # a specific event happening
+  #
+  # @param [Symbol] notification the notification type, `:founding_proposal_passed` or `:founding_proposal_failed`
+  # @param [optional, Timestamp] created_at the timestamp for that kind of notification, i.e `2011-06-04 13:14:37`
+  # @return [String] notification the string relating to the kind of notification `founding_proposal_passed`.
+  #
+  # @example Show a notification a user once that their proposal failed, allowing us to render the partial 'founding_proposal_failed' in the view
+  #   show_notification_once(:founding_proposal_failed)
+  #
   def show_notification_once(notification, created_at = '')
     return unless current_user
     return if current_user.has_seen_notification?(notification, created_at)
