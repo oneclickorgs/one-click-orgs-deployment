@@ -8,12 +8,42 @@ $dark_grey: #6C6C6C
 $blue: #627FC4
 $pale_blue: #E0E8EF
 
-// Shorthand
+// CSS fonts
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-l.otf') format('opentype')
+  // Light
+  :font-weight lighter
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-m.otf') format('opentype')
+  // Medium
+  :font-weight bold
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-b.otf') format('opentype')
+  // Bold
+  :font-weight bolder
+
+@font-face
+  :font-family 'Vegur'
+  :src url('../fonts/vegur-r.otf') format('opentype')
+  // Regular
+  :font-weight normal
+
+// Shorthand and variables
 
 @mixin rounded-corners($radius)
   -webkit-border-radius: $radius
   -moz-border-radius: $radius
   border-radius: $radius
+
+$default-sans-serif: 'Vegur','Myriad Pro','Myriad','Helvetica Neue',Helvetica,Arial,sans-serif
+
+$default-serif: Georgia,'Times New Roman',serif
 
 // And let's begin
 
@@ -24,9 +54,9 @@ $pale_blue: #E0E8EF
 body
   :background-color #f6f6f6
   :color #333
-  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  :font-family $default-sans-serif
   /* Base font size
-  :font-size 15px
+  :font-size 100%
   /* Prevent Get Satisfaction feedback tab overlapping the container
   :padding 0 40px
 
@@ -108,7 +138,7 @@ div.clear
 .control_bar
   :color #666
   :float right
-  :font-size 0.8em
+  :font-size 0.75em
   :line-height 1.2em
   :padding 6px 0
   :text-align right
@@ -116,8 +146,8 @@ div.clear
     :text-decoration none
 
 h1.header
-  :font-size 2.4em
-  :font-family Georgia,'Times New Roman',serif
+  :font-size 2.25em
+  :font-family $default-serif
   :margin-bottom 4px
   a
     :color #000
@@ -147,14 +177,17 @@ br.clear
 
 h2
   :color $oco_burgundy
-  :font-size 2em
+  :font-size 2.25em
+  :font-weight bolder
+  :margin-bottom 0.4em
   
 h3
   :font-size 1.5em
-  :margin-bottom .2em
+  :font-weight bold
+  :margin-bottom 0.2em
 
 h4
-  :font-size 1.2em
+  :font-size 1em
 
 a
   :color $blue
@@ -169,13 +202,24 @@ hr
   :height 1px
   :margin 0.8em 0
 
+p
+  :font-size 1em
+  :line-height 1.3em
+
+em
+  :font-family $default-serif
+  :font-style italic
+
+strong
+  :font-weight bold
+
 /* Navigation
 
 #nav
   :margin 12px 0
   li
     :display inline
-    :padding-right 80px
+    :padding-right 4em
   a
     :text-decoration none
     &:hover
@@ -273,11 +317,11 @@ img.gravatar
   :vertical-align middle
 
 #download
-  :font-size 0.85em
+  :font-size 0.75em
   :margin-top 6px
   span.download a
     @include rounded-corners(2px)
-    :padding 5px 6px
+    :padding 5px 6px 4px 6px
     :text-decoration none  
   span.pdf a
     :background-color #c02434
@@ -289,6 +333,11 @@ img.gravatar
     :color #fff
     &:hover
       :background-color #005500
+  span.txt a
+    :background-color #444
+    :color #fff
+    &:hover
+      :background-color #000
 
 #bd
   .comment
@@ -418,7 +467,7 @@ tr.vote_for, tr.vote_against, tr.vote_in_progress
 
 label, input, textarea, select
   :display block
-  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  :font-family $default-sans-serif
   :font-size 0.9em
   :margin-bottom 10px
   :margin-left 20px
@@ -490,7 +539,8 @@ div.open-proposals form
   :margin -0.2em 0 0
 
 div.open-proposals form input[type="submit"]
-  :padding 0.1em 1em 0.05em 1em
+  :font-size 0.8em
+  :padding 0.3em 1em 0.1em
 
 input#organisation_subdomain
   :float left
@@ -520,7 +570,8 @@ form.login label, form.login input
 #member_info
   :margin 1em 0
   img
-    :float right
+    :float left
+    :margin 0 1em 1em 0
 
 /* Footer
 
@@ -528,7 +579,7 @@ form.login label, form.login input
   :border-top 1px solid #000
   :clear both
   :color #666
-  :font-size .7em
+  :font-size .75em
   :margin-top 1em
   :padding 1em
   span.right
