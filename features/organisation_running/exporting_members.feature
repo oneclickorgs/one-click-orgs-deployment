@@ -16,3 +16,8 @@ Feature: Exporting member data
     # tests, but really this shouldn't be hardcoded. Will need a hand on
     # how to set this with blueprint.
     Then I should get a download with the filename "Kunde-Smith Members.pdf"
+
+  Scenario: Downloading a csv member list
+    When I am on the members page
+    And I follow "CSV"
+    Then I should get a download with the filename "Kunde-Smith Members.csv"

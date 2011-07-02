@@ -19,6 +19,9 @@ class MembersController < ApplicationController
       format.pdf {
         generate_pdf(@page_title)
       }
+      format.csv {
+        generate_csv
+      }
     end
   end
 
@@ -167,6 +170,18 @@ private
       flash[:error] = "You do not have sufficient permissions to create such a proposal!"
       redirect_back_or_default
     end
+  end
+
+  def generate_csv
+    fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
+    csv = FasterCSV.generate do |csv|
+      csv << fields
+      @members.each do |member|
+        csv << fields.collect { |f| member.send(f) }
+      end
+    end
+    send_data(csv, :filename => "#{co.name} Members.csv",
+      :type => 'text/csv', :disposition => 'attachment')
   end
 
 end # Members
