@@ -171,7 +171,11 @@ private
       redirect_back_or_default
     end
   end
-
+  
+  # Create csv file of members in an org, then send data 
+  # as a file stream for downloads.
+  #
+  # @see http://api.rubyonrails.org/classes/ActionController/Streaming.html#method-i-send_data
   def generate_csv
     fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
     csv = FasterCSV.generate do |csv|

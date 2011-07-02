@@ -12,9 +12,9 @@ Feature: Exporting member data
   Scenario: Downloading a pdf member list
     When I am on the members page
     And I follow "PDF"
-    # Blueprint seems to give the same value each time here in cuke
-    # tests, but really this shouldn't be hardcoded. Will need a hand on
-    # how to set this with blueprint.
+    # Blueprint always gives the first values from Faker
+    # name calls - https://github.com/notahat/machinist/issues/22
+    # This for this reason, we can use Kunde-Smith for the Organisation Name
     Then I should get a download with the filename "Kunde-Smith Members.pdf"
 
   Scenario: Downloading a csv member list
