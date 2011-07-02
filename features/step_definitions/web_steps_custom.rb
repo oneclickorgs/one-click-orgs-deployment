@@ -18,3 +18,7 @@ Then /^the subdomain should be "([^"]*)"$/ do |subdomain|
   current_subdomain = URI.parse(current_url).host.sub(".#{Setting[:base_domain].sub(/:\d+$/, '')}", '')
   current_subdomain.should == subdomain
 end
+
+Then /^I should get a download with the filename "([^\"]*)"$/ do |filename|
+  page.response_headers['Content-Disposition'].should include("filename=\"#{filename}\"")
+end
