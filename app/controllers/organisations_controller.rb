@@ -4,11 +4,12 @@ class OrganisationsController < ApplicationController
   skip_before_filter :ensure_member_active_or_pending
   skip_before_filter :ensure_member_inducted
   
-  before_filter :ensure_not_single_organisation_mode
+  before_filter :ensure_no_overwrite_in_single_organisation_mode
   
   layout "setup"
   
   def new
+    
     @organisation = Organisation.new
     @founder = @organisation.members.first || @organisation.members.new
     
@@ -71,9 +72,11 @@ class OrganisationsController < ApplicationController
   end
 
 protected
-
-  def ensure_not_single_organisation_mode
-    if Setting[:single_organisation_mode] == "true"
+  # In single organisation mode, you need a guard to
+  # stop being able to overwrite information about an
+  # organisation once it's first been created.
+  def ensure_no_overwrite_in_single_organisation_mode
+    if Setting[:single_organisation_mode] == "true" && Organisation.count > 0
       redirect_to root_path
     end
   end

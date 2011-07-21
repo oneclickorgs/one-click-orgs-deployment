@@ -46,7 +46,8 @@
     Download:
     %span.pdf.download
       = link_to 'PDF', members_path(:format => 'pdf')
-  
+    %span.csv.download
+      = link_to 'CSV', members_path(:format => 'csv')
   %table.members
     %tr
       %th Name
