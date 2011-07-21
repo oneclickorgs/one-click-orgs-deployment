@@ -19,6 +19,7 @@ Then /^the subdomain should be "([^"]*)"$/ do |subdomain|
   current_subdomain.should == subdomain
 end
 
-Then /^I should get a download with the filename "([^\"]*)"$/ do |filename|
-  page.response_headers['Content-Disposition'].should include("filename=\"#{filename}\"")
+Then /^I should get a "([^"]*)" download with the name of the organisation$/ do |extension|
+  @organisation ||= Organisation.last
+  page.response_headers['Content-Disposition'].should =~ Regexp.new("filename=\"#{Regexp.escape(@organisation.name)}.*#{Regexp.escape(extension)}\"")
 end

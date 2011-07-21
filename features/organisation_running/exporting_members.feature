@@ -12,12 +12,9 @@ Feature: Exporting member data
   Scenario: Downloading a pdf member list
     When I am on the members page
     And I follow "PDF"
-    # Blueprint always gives the first values from Faker
-    # name calls - https://github.com/notahat/machinist/issues/22
-    # This for this reason, we can use Kunde-Smith for the Organisation Name
-    Then I should get a download with the filename "Kunde-Smith Members.pdf"
+    Then I should get a ".pdf" download with the name of the organisation
 
   Scenario: Downloading a csv member list
     When I am on the members page
     And I follow "CSV"
-    Then I should get a download with the filename "Kunde-Smith Members.csv"
+    Then I should get a ".csv" download with the name of the organisation
