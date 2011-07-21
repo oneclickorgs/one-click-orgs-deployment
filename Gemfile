@@ -35,6 +35,8 @@ gem "delayed_job", "2.1.3"
 
 gem "exception_notification_rails3", :require => 'exception_notifier'
 
+gem "fastercsv"
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
