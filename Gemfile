@@ -35,6 +35,8 @@ gem "delayed_job", "2.1.3"
 
 gem "exception_notification_rails3", :require => 'exception_notifier'
 
+gem "fastercsv"
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
@@ -45,7 +47,7 @@ gem "exception_notification_rails3", :require => 'exception_notifier'
 group :development do
   gem "capistrano", "~>2.5.19"
   gem "railroad"
-  gem "ruby-debug", :platforms => :ruby_18
+  gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
 end
 
@@ -59,4 +61,5 @@ group :development, :test do
   gem "capybara", "~>0.4.1.2"
   gem "database_cleaner", "~>0.6.7"
   gem "launchy", "~>0.4.0"
+  gem "selenium-webdriver", "~>2.0.1"
 end

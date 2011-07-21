@@ -9,6 +9,14 @@ class VotesController < ApplicationController
         
     begin
       current_user.cast_vote(:for, id)
+      
+      proposal = co.proposals.find_by_id(id)
+      if proposal && proposal.is_a?(FoundOrganisationProposal)
+        if current_user.member_class.name == "Founder"
+          track_analytics_event("FounderSupportsFounding")
+        end
+      end
+      
       redirect_to return_to, :notice => "Vote for proposal cast"
     rescue Exception => e
       redirect_to return_to, :notice => "Error casting vote: #{e}"

@@ -32,6 +32,7 @@ class SetupController < ApplicationController
   def set_single_organisation_mode
     Setting[:single_organisation_mode] = "true"
     Setting[:base_domain] = request.host_with_port
+    Setting[:signup_domain] = request.host_with_port
     redirect_to(new_organisation_path)
   end
 

@@ -40,6 +40,12 @@ OneClickOrgs.dismissLightbox = function (options) {
   );
 }
 
+OneClickOrgs.trackAnalyticsEvent = function (eventName) {
+  if (_gaq) {
+    _gaq.push(['_trackPageview', '/analytics_events/' + eventName]);
+  }
+}
+
 $(document).ready(function () {
   $('.constitution_proposal .reveal_link a').click(function (event) {
     $(event.target).parents('.constitution_proposal').children('.proposal_form').slideDown('normal');
