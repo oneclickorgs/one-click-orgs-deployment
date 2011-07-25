@@ -11,13 +11,13 @@
     /[if lt IE 9]
       = stylesheet_link_tag 'ie'
     = javascript_include_tag 'jquery', 'jquery.scrollTo', 'rails', 'application'
-    = render :partial => 'layouts/javascript_includes'
+    = render :partial => 'shared/javascript_includes'
     = yield(:head)
     = csrf_meta_tag
     = google_analytics_code
   %body
     %div#container
-      = render :partial => 'layouts/container_start'
+      = render :partial => 'shared/container_start'
       = render(:partial => 'shared/control_bar')
       %div#doc
         %div#hd
@@ -26,7 +26,7 @@
           %p
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
-        = render :partial => 'layouts/main_menu'
+        = render :partial => 'shared/main_menu'
         - if flash[:notice]
           %div#notice
             = flash[:notice]
@@ -48,7 +48,7 @@
                   %button#close_notification{'data-notification' => @notification} Close
             - else
               = yield(:lightbox)
-          = render :partial => 'layouts/lightboxes'
+          = render :partial => 'shared/lightboxes'
         %div.footer
           = render(:partial => 'shared/footer')
       = get_satisfaction_widget
