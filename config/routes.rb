@@ -92,6 +92,7 @@ OneClickOrgs::Application.routes.draw do
   match '/setup(/:action)' => 'setup'
 
   resources :associations
+  resources :companies
   
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations

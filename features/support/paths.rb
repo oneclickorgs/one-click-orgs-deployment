@@ -31,6 +31,10 @@ module NavigationHelpers
       edit_constitution_path
     when /^the members page$/
       members_path
+    when /^the new company page$/
+      new_company_path
+    when /^the Votes & Minutes page$/
+      '/'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

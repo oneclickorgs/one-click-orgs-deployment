@@ -6,8 +6,6 @@ class OneClickController < ApplicationController
   end
   
   def dashboard
-    # only_provides :html
-    
     case co
     when Association
       if current_organisation.pending? || current_organisation.proposed?
