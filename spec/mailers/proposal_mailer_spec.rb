@@ -4,7 +4,7 @@ describe ProposalMailer do
   describe "notify_creation" do
 
     before do
-      default_constitution
+      default_association_constitution
       default_organisation
       @member = @organisation.members.make
       @proposal = @organisation.proposals.make(:proposer_member_id=>@member.id)

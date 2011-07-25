@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DecisionMailer do
   before :each do
-    default_constitution
+    default_association_constitution
     default_organisation
     @member = @organisation.members.make
     @proposal = @organisation.proposals.make(:proposer_member_id=>@member.id)

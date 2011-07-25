@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe "Single-organisation mode" do
 
-  # convenience method to create a mock organisation, ready to send out invites
+  # convenience method to create a mock association, ready to send out invites
   # to other co-founders
-  def create_mock_one_click_org
+  def create_mock_association
     Setting[:single_organisation_mode] = 'true'
         
     # TODO: Roll stubbing of single-organisation-mode organisations into stubs.rb
-    @organisation = Organisation.make(:subdomain => nil, :name => 'abc', :objectives => 'def')
-    organisation_is_active
+    @organisation = Association.make(:subdomain => nil, :name => 'abc', :objectives => 'def')
+    association_is_active
     
     @member_class = @organisation.member_classes.make
     
@@ -39,28 +39,28 @@ describe "Single-organisation mode" do
       Setting[:single_organisation_mode].should == 'true'
     end
     
-    it "redirects to New Organisation form" do
+    it "redirects to New Association form" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
-      response.should redirect_to('http://oneclickorgs.com/organisations/new')
+      response.should redirect_to('http://oneclickorgs.com/associations/new')
     end
    
-    it "allows creation of a single organisation in single organisation mode" do
+    it "allows creation of a single association in single organisation mode" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
-      get 'http://oneclickorgs.com/organisations/new'
-      response.should render_template 'organisations/new'
+      get 'http://oneclickorgs.com/associations/new'
+      response.should render_template 'associations/new'
     end
 
     it "should not allow the creation of duplicate organisations in single organisation mode" do
-      create_mock_one_click_org
-      get 'http://oneclickorgs.com/organisations/new'
-      response.should_not render_template 'organisations/new'
+      create_mock_association
+      get 'http://oneclickorgs.com/associations/new'
+      response.should_not render_template 'associations/new'
     end
 
   end
   
   describe "day-to-day running of the instance" do
     before(:each) do
-      create_mock_one_click_org
+      create_mock_association
     end
     
     it "allows login" do

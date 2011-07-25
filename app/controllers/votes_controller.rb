@@ -11,7 +11,7 @@ class VotesController < ApplicationController
     begin
       current_user.cast_vote(:for, proposal)
       
-      if proposal.is_a?(FoundOrganisationProposal)
+      if proposal.is_a?(FoundAssociationProposal)
         if current_user.member_class.name == "Founder"
           track_analytics_event("FounderSupportsFounding")
         end

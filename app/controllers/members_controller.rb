@@ -1,11 +1,13 @@
 class MembersController < ApplicationController
   def index
-    @page_title = "Members"
-    @members = co.members.active
-    @pending_members = co.members.pending
-    
-    if can?(:create, FoundingMember)
-      @founding_member = co.build_founding_member
+    case co
+    when Association
+      @page_title = "Members"
+      @members = co.members.active
+      @pending_members = co.members.pending
+      if can?(:create, FoundingMember)
+        @founding_member = co.build_founding_member
+      end
     end
     
     respond_to do |format|
@@ -22,8 +24,11 @@ class MembersController < ApplicationController
   def show
     @member = co.members.find(params[:id])
     @member_presenter = MemberPresenter.new(@member)
-    @eject_member_proposal = co.eject_member_proposals.build(:member_id => @member.id)
-    @page_title = "Member profile"
+    case co
+    when Association
+      @eject_member_proposal = co.eject_member_proposals.build(:member_id => @member.id)
+      @page_title = "Member profile"
+    end
   end
 
   def edit
@@ -51,14 +56,28 @@ private
   #
   # @see http://api.rubyonrails.org/classes/ActionController/Streaming.html#method-i-send_data
   def generate_csv
-    fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
+    case co
+    when Association
+      # Only Associations use the 'inducted_at' field.
+      fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
+    end
+    
     csv = FasterCSV.generate do |csv|
       csv << fields
       @members.each do |member|
         csv << fields.collect { |f| member.send(f) }
       end
     end
-    send_data(csv, :filename => "#{co.name} Members.csv",
-      :type => 'text/csv', :disposition => 'attachment')
+    
+    filename = case co
+    when Association
+      "#{co.name} Members.csv"
+    end
+    
+    send_data(csv,
+      :filename => filename,
+      :type => 'text/csv',
+      :disposition => 'attachment'
+    )
   end
 end

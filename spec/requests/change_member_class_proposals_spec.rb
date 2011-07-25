@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe "change member class proposals" do
   before(:each) do
-    default_constitution
+    default_association_constitution
     default_organisation
   end
   
   describe "POST create" do
     before(:each) do
-      login
-      set_permission!(default_user, :membership_proposal, true)
+      association_login
+      set_permission!(default_association_user, :membership_proposal, true)
       
       @subject_member = @organisation.members.make
       @new_member_class = @organisation.member_classes.make

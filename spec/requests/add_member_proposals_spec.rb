@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "add-member proposals" do
   before(:each) do
-    default_constitution
-    default_organisation
-    login
-    set_permission!(default_user, :membership_proposal, true)
+    default_association_constitution
+    default_association
+    association_login
+    set_permission!(default_association_user, :membership_proposal, true)
   end
   
   describe "POST create" do

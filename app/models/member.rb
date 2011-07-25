@@ -174,9 +174,9 @@ class Member < ActiveRecord::Base
   # founding proposal, or if they are in an organisation that has not had a
   # founding proposal yet.
   def founding_member?
-    fop = organisation.found_organisation_proposals.last
-    if fop
-      self.created_at < fop.creation_date
+    fap = organisation.found_association_proposals.last
+    if fap
+      self.created_at < fap.creation_date
     else
       true
     end

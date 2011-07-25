@@ -87,25 +87,25 @@ class Proposal < ActiveRecord::Base
     # (This is because, by participating in the founding vote, they have
     # already agreed to the constitution.)
     # We determine who was a founding member by seeing whether they were
-    # created before the FoundOrganisationProposal for this org.
+    # created before the FoundAssociationProposal for this org.
     
-    fop = organisation.found_organisation_proposals.last
-    if fop
+    fap = organisation.found_association_proposals.last
+    if fap
       organisation.members.where(
         "(state = 'active' AND created_at < :proposal_creation_date) " +
         "OR (state <> 'inactive' and created_at < :founding_date)",
         :proposal_creation_date => creation_date,
-        :founding_date => fop.creation_date
+        :founding_date => fap.creation_date
       ).each do |m|
         count += 1 if m.has_permission(:vote)
       end
     else
       # FIXME This 'if' branch is checking for the case where there is no
-      # FoundOrganisationProposal yet, so shouldn't it be including members
+      # FoundAssociationProposal yet, so shouldn't it be including members
       # who haven't been inducted yet (since no member gets inducted during
       # the pending state of the organisation)?
       # 
-      # Suspect that this is only working because FoundOrganisationProposal
+      # Suspect that this is only working because FoundAssociationProposal
       # overrides #member_count, so this branch never really gets executed.
       organisation.members.active.where(
         "created_at < :proposal_creation_date",

@@ -5,10 +5,10 @@ describe Proposal do
   before(:each) do
     Delayed::Job.delete_all 
         
-    default_constitution  
-    default_organisation
-    default_voting_systems
-    default_member_class
+    default_association_constitution  
+    default_association
+    default_association_voting_systems
+    default_association_member_class
     
     @member = @organisation.members.make(:member_class => @default_member_class)
     
@@ -60,11 +60,11 @@ describe Proposal do
     context "when proposal is a Founding Proposal" do
       before(:each) do
         @organisation.stub!(:can_hold_founding_vote?).and_return(true)
-        @p = FoundOrganisationProposal.make(:proposer => @member, :organisation => @organisation)
+        @p = FoundAssociationProposal.make(:proposer => @member, :organisation => @organisation)
         @p.stub!(:passed?).and_return(true)
         @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
         
-        organisation_is_proposed
+        association_is_proposed
       end
       
       it "creates a decision" do
@@ -134,15 +134,15 @@ describe Proposal do
     end
     
     it "includes members who were founding members, but who haven't yet been inducted" do
-      # Don't want to deal with FoundOrganisationProposal validation errors
+      # Don't want to deal with FoundAssociationProposal validation errors
       ProposalMailer.stub!(:notify_foundation_proposal).and_return(mock('email', :deliver => nil))
       
       member_2, member_3 = @organisation.members.make_n(2, :member_class => @default_member_class, :inducted_at => nil)
       
-      fop = @organisation.found_organisation_proposals.make_unsaved(:proposer_member_id => @member.id)
+      fap = @organisation.found_association_proposals.make_unsaved(:proposer_member_id => @member.id)
       # More validation workarounds
-      fop.stub!(:organisation_must_be_ready).and_return(true)
-      fop.save!
+      fap.stub!(:association_must_be_ready).and_return(true)
+      fap.save!
       
       proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
       proposal.member_count.should == 3

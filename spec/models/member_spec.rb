@@ -6,7 +6,7 @@ describe Member do
   before(:each) do
     Delayed::Job.delete_all 
     
-    default_constitution
+    default_association_constitution
     default_organisation
 
     @member = @organisation.members.make

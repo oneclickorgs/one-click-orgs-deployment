@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "members" do
   
   before(:each) do
-    default_constitution
+    default_association_constitution
     default_organisation
-    login
-    set_permission!(default_user, :membership_proposal, true)
+    association_login
+    set_permission!(default_association_user, :membership_proposal, true)
   end
   
   describe "/members" do
@@ -42,7 +42,7 @@ describe "members" do
     end
   
     it "responds successfully if resource == current_user" do
-      get(edit_member_path(default_user))
+      get(edit_member_path(default_association_user))
       @response.should be_successful
     end
 

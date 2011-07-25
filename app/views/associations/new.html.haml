@@ -1,0 +1,58 @@
+- content_for(:head) do
+  = javascript_include_tag 'associations_new'
+
+%h2 Form a new Association
+
+%p
+  Provide details for yourself and the Association to be formed then One Click Orgs will automatically create a draft constitution. You can invite other “founding members” from your group to view the constitution and suggest changes. When everyone’s ready you can hold a vote to found the Association. Please see
+  = link_to('the FAQ', 'http://www.oneclickorgs.com/faq', :target => '_blank')
+  if you have any questions.
+
+%p
+  You can change all of these details (apart from your web address) before calling a founding vote.
+
+= form_tag({:controller => 'associations', :action => 'create'}, :method => "post", :id => 'new_association') do
+
+  %div.left
+    %h3 Your details
+    = fields_for(:founder, @founder) do |f|
+      %p
+        = f.label :first_name, "First name"
+        = f.text_field :first_name, :placeholder => 'Robert'
+      %p
+        = f.label :last_name, "Last name"
+        = f.text_field :last_name, :placeholder => 'Smith'
+      %p
+        = f.label :email, "Email address"
+        = f.text_field :email, :type => 'email', :placeholder => 'robert@example.com'
+      %p
+        = f.label :password, "Choose password"
+        = f.password_field :password
+      %p
+        = f.label :password_confirmation, "Confirm password"
+        = f.password_field :password_confirmation
+      = f.hidden_field :terms_and_conditions
+
+  %div.right
+    %h3 The Association
+    = fields_for(:association, @association) do |f|
+      %p
+        = f.label :name, "Association's official name"
+        = f.text_field(:name, :placeholder => 'Penzance Sardine Appreciation Society')
+      - if !Setting[:single_organisation_mode]
+        %p
+          = f.label :subdomain, "Your One Click Orgs web address will be"
+        %p#help_subdomain.explanation (You can change this before you go to the next stage)
+        %div#subdomain_wrapper
+          = f.text_field(:subdomain, :placeholder => 'penzancesardine', :maxlength => 63)
+          %span#base_domain
+            = '.' + Setting[:base_domain]
+      %p
+        = f.label :objectives, "What the Association exists for"
+        = f.text_area :objectives, :placeholder => 'Strengthen a common enjoyment of oily fish'
+  
+      %p
+        = submit_tag "Create draft constitution →", :id => 'submit'
+  
+- content_for(:lightbox) do
+  = render(:partial => 'shared/convener_disclaimer')

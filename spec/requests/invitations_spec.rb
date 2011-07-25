@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "invitations" do
   before(:each) do
-    default_organisation(:state => 'pending')
+    default_association(:state => 'pending')
     @member = @organisation.members.make(:inducted_at => nil, :password => nil, :password_confirmation => nil)
   end
   

@@ -8,18 +8,18 @@ describe ApplicationController do
       )
       controller.stub!(:current_user).and_return(@user)
       
-      @organisation = mock_model(Organisation,
+      @organisation = mock_model(Association,
         :pending? => false,
         :proposed? => false,
         :active? => true
       )
       controller.stub!(:co).and_return(@organisation)
       
-      @fop = mock_model(FoundOrganisationProposal,
+      @fap = mock_model(FoundAssociationProposal,
         :creation_date => 2.days.ago.utc
       )
-      @organisation.stub!(:found_organisation_proposals).and_return(
-        @found_organisation_proposals_association = mock('found organisation proposals association', :last => @fop)
+      @organisation.stub!(:found_association_proposals).and_return(
+        @found_association_proposals_association = mock('found association proposals association', :last => @fap)
       )
     end
     
@@ -43,7 +43,7 @@ describe ApplicationController do
         @organisation.stub!(:proposed?).and_return(false)
         @organisation.stub!(:active?).and_return(false)
         
-        @found_organisation_proposals_association.stub!(:last).and_return(nil)
+        @found_association_proposals_association.stub!(:last).and_return(nil)
         
         controller.should_not_receive(:show_notification_once).with(:founding_proposal_passed)
         controller.prepare_notifications

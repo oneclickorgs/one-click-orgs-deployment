@@ -12,8 +12,8 @@ module NavigationHelpers
       '/'
     when /^the setup page$/
       '/setup'
-    when /^the signup page$/
-      '/organisations/new'
+    when /^the new association page$/
+      '/associations/new'
     when /^the welcome page$/
       '/welcome'
     when /^the voting and proposals page$/

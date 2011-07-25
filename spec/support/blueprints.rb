@@ -54,7 +54,7 @@ AddMemberProposal.blueprint do
   parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
 end
 
-FoundOrganisationProposal.blueprint do
+FoundAssociationProposal.blueprint do
   title "Proposal to Found org"
   description "Found org"
   state "open"
@@ -87,11 +87,11 @@ end
 
 Organisation.blueprint do
   name { Sham.organisation_name }
-  objectives
   subdomain
 end
 
 Association.blueprint do
+  objectives
 end
 
 Company.blueprint do

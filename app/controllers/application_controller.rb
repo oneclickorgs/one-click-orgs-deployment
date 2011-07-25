@@ -117,23 +117,25 @@ class ApplicationController < ActionController::Base
     # has seen this notification before (e.g. a 'you have a new
     # message' notification).
     
-    if co.pending? && current_user.member_class.name == "Founder"
-      show_notification_once(:convener_welcome)
-    end
+    if co.is_a?(Association)
+      if co.pending? && current_user.member_class.name == "Founder"
+        show_notification_once(:convener_welcome)
+      end
 
-    fop = co.found_organisation_proposals.last
-    # if the organisation is pending
-    # and the voting is finished (fop.closed)
-    # and a founding proposal exists
-    # and is the proposal
-    if co.pending? && fop && fop.closed? && !fop.accepted?
-      show_notification_once(:founding_proposal_failed)
-    end
+      fap = co.found_association_proposals.last
+      # if the organisation is pending
+      # and the voting is finished (fap.closed)
+      # and a founding proposal exists
+      # and is the proposal
+      if co.pending? && fap && fap.closed? && !fap.accepted?
+        show_notification_once(:founding_proposal_failed)
+      end
     
-    # Only display founding_proposal_passed notification to
-    # members who were founding members
-    if co.active? && fop && current_user.created_at <= fop.creation_date
-      show_notification_once(:founding_proposal_passed)
+      # Only display founding_proposal_passed notification to
+      # members who were founding members
+      if co.active? && fap && current_user.created_at <= fap.creation_date
+        show_notification_once(:founding_proposal_passed)
+      end
     end
   end
   
@@ -193,7 +195,7 @@ protected
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
+      redirect_to(new_association_url(:host => Setting[:signup_domain]))
     end
   end
   
@@ -213,7 +215,10 @@ protected
   end
   
   def ensure_member_inducted
-    redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
+    case co
+    when Association
+      redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
+    end
   end
   
   def redirect_to_welcome_member
@@ -249,7 +254,7 @@ protected
   # OrganisationResolver based on the given organisation's class when
   # resolving (looking up) template paths.
   def install_organisation_resolver(organisation)
-    view_paths.dup.each do |view_path|
+    view_paths.dup.reverse.each do |view_path|
       prepend_view_path(
         OneClickOrgs::OrganisationResolver.new(
           view_path.to_path,

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "authentication" do
   before(:each) do
-    default_user
+    default_association_user
   end
   
   describe "getting login form" do

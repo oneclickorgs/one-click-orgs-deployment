@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe "layouts/welcome.html.haml" do
+  
   context "when user is logged in" do
     before(:each) do
       @members_association = mock('members association', :first => @founder = mock_model(Member, :name => "Bob Smith"))
       
-      @organisation = mock_model(Organisation,
+      @organisation = mock_model(Association,
         :name => "The Cheese Collective",
         :members => @members_association,
         :pending? => false,
@@ -16,6 +17,8 @@ describe "layouts/welcome.html.haml" do
       assign(:current_organisation, @organisation)
       view.stub!(:current_organisation).and_return(@organisation)
       view.stub!(:co).and_return(@organisation)
+      
+      install_organisation_resolver(@organisation)
       
       view.stub!(:current_user).and_return(@user = mock_model(Member, 
                                                               :name => "Lucy Baker",
