@@ -17,8 +17,8 @@ module OneClickOrgs
   # render the +index+ action of the +people+ controller will try the
   # follwing templates in order until it finds one that exists:
   # 
-  # * <tt>app/views/people/index</tt>
   # * <tt>app/views/people/company/index</tt>
+  # * <tt>app/views/people/index</tt>
   class OrganisationResolver < ActionView::FileSystemResolver
     # +path+ is a root template path on the file system
     # (e.g. <tt>Rails.root + '/app/views'</tt>).
@@ -33,10 +33,10 @@ module OneClickOrgs
   private
     
     def find_templates(name, prefix, partial, details)
-      name_expansions = ["#{@organisation_class_name}/#{name}", name]
+      prefix_expansions = ["#{prefix}/#{@organisation_class_name}", prefix]
       templates = []
-      name_expansions.each do |expanded_name|
-        templates += super(expanded_name, prefix, partial, details)
+      prefix_expansions.each do |expanded_prefix|
+        templates += super(name, expanded_prefix, partial, details)
       end
       templates
     end
