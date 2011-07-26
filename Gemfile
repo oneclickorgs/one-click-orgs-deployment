@@ -29,7 +29,7 @@ gem "haml", "~>3.0.18"
 gem "rdiscount"
 gem "pdfkit"
 gem "daemons", "~>1.0.10"
-gem "delayed_job", "2.1.3"
+gem "delayed_job", "2.1.4"
 gem "exception_notification_rails3", :require => 'exception_notifier'
 gem "cancan", "~>1.6.4"
 gem "state_machine", "~>1.0.0"
