@@ -24,3 +24,10 @@ Feature: Recording minutes
     Then I should see the minutes for "Preferred coffee suppliers" in the timeline
     When I follow "Preferred coffee suppliers"
     Then I should see the first two directors' names as participants
+  
+  Scenario: Director receives email notification of new minutes
+    Given another director has recorded some new minutes
+    Then I should receive an email notifying me of the new minutes
+    And I should see a link to the minutes in the email
+    When I click the link in the email
+    Then I should see the minutes

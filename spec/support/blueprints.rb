@@ -10,6 +10,7 @@ Sham.last_name          { Faker::Name.last_name }
 Sham.subdomain          { Faker::Internet.domain_word }
 Sham.objectives         { Faker::Company.bs }
 Sham.organisation_name  { Faker::Company.name }
+Sham.minutes            { Faker::Lorem.paragraph }
 
 MemberClass.blueprint do
   name "Director"
@@ -98,6 +99,9 @@ Company.blueprint do
 end
 
 Meeting.blueprint do
+  organisation { Company.make }
+  happened_on { 1.day.ago }
+  minutes { Sham.minutes }
 end
 
 MeetingParticipation.blueprint do

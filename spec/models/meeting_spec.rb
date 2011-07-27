@@ -25,6 +25,10 @@ describe Meeting do
     end
   end
   
+  describe "validations" do
+    it "requires an organisation"
+  end
+  
   describe "#to_event" do
     it "produces an event" do
       meeting = Meeting.make
@@ -46,12 +50,30 @@ describe Meeting do
         directors[1].id.to_s => '2'
       })
       
-      meeting.participants.should == directors
+      meeting.participants.length.should == 2
+      meeting.participants.should include(directors[0])
+      meeting.participants.should include(directors[1])
     end
     
     it "does not allow setting participants that are not in the same organisation as the meeting"
     
     it "ignores participant_ids with a value of '0'"
+  end
+  
+  describe "notification emails" do
+    it "sends notification emails upon creation" do
+      @company = Company.make
+      @members = @company.members.make_n(3)
+      @mail = double("mail", :deliver => nil)
+      
+      @meeting = @company.meetings.make_unsaved
+      
+      @members.each do |member|
+        MeetingMailer.should_receive(:notify_creation).with(member, @meeting).and_return(@mail)
+      end
+      
+      @meeting.save!
+    end
   end
   
 end

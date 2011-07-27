@@ -20,4 +20,11 @@ class Meeting < ActiveRecord::Base
       participants << participant
     end
   end
+  
+  after_create :send_creation_notification_emails
+  def send_creation_notification_emails
+    organisation.members.each do |member|
+      MeetingMailer.notify_creation(member, self).deliver
+    end
+  end
 end

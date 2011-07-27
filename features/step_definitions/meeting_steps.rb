@@ -1,3 +1,8 @@
+Given /^another director has recorded some new minutes$/ do
+  @company ||= Company.last
+  @meeting = @company.meetings.make
+end
+
 When /^I choose the date of discussion$/ do
   select('2011', :from => 'meeting[happened_on(1i)]')
   select('May', :from => 'meeting[happened_on(2i)]')
@@ -50,4 +55,16 @@ Then /^I should see the first two directors' names as participants$/ do
   directors.each do |director|
     page.should have_selector('ul.participants li', :text => director.name)
   end
+end
+
+Then /^I should see the minutes$/ do
+  @meeting ||= Meeting.last
+  
+  @meeting.participants.each do |participant|
+    page.should have_selector('ul.participants li', :text => participant.name)
+  end
+  
+  page.should have_content(@meeting.minutes)
+  
+  page.should have_content(@meeting.happened_on.to_s(:long_ordinal))
 end
