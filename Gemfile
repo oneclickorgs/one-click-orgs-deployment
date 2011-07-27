@@ -51,14 +51,14 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>2.5.0"
+  gem "rspec-rails", "~>2.6"
   gem "webrat", "~>0.7.1"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.3.1'
   gem "rcov", "~>0.9.8"
-  gem "cucumber-rails", "~>0.4.1"
-  gem "capybara", "~>0.4.1.2"
+  gem "cucumber-rails", "~>1.0.2"
+  gem "capybara", "~>1.0.0"
   gem "database_cleaner", "~>0.6.7"
   gem "launchy", "~>0.4.0"
-  gem "selenium-webdriver", "~>2.0.1"
+  gem "selenium-webdriver", "~>0.2.2"
 end

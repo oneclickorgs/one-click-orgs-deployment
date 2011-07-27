@@ -3,9 +3,12 @@ Given /^the subdomain is "([^"]*)"$/ do |subdomain|
 end
 
 When /^the domain is "([^"]*)"$/ do |domain|
-  Capybara.default_host = domain
   if Capybara.current_driver == :selenium
+    Capybara.default_host = "http://#{domain}:#{Capybara.server_port}"
     Capybara.app_host = "http://#{domain}:#{Capybara.server_port}"
+  else
+    Capybara.default_host = "http://#{domain}:#{Capybara.server_port}"
+    Capybara.app_host = "http://#{domain}"
   end
 end
 
