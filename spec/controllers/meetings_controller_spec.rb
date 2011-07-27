@@ -37,6 +37,8 @@ describe MeetingsController do
       get_show
       response.should render_template('meetings/show')
     end
+    
+    it "checks permissions"
   end
   
   describe "POST create" do
@@ -82,6 +84,8 @@ describe MeetingsController do
     context "when saving the meeting fails" do
       it "handles the error gracefully"
     end
+    
+    it "checks permissions"
   end
   
 end
