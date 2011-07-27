@@ -6,13 +6,12 @@ class WelcomeController < ApplicationController
 
   def index
     @organisation_name = co.name
-    prepare_constitution_view
+    find_constitution
   end
 
   def induct_member
     member = current_user
-    member.inducted!
-    member.save
+    member.induct!
     
     if current_user == co.members.first
       track_analytics_event('FounderAcceptsConstitution')

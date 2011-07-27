@@ -1,0 +1,58 @@
+%h2 Propose an amendment
+
+%div#settings_fields
+  - if current_organisation.pending?
+    %p
+      Only
+      = co.convener.name
+      can make changes on this page while the Association is in a draft state.
+    %p.explanation
+      One Click Orgs lets you tailor the constitution to suit your group. Choose the settings you want to start off with on this page. Don't worry if you're not sure which options will work best, the group can always fine-tune the choices by voting once the Association is formed.
+  - else
+    %p.explanation Changing the settings on this page will create proposals that can be voted on by members.
+  
+  = edit_form do |form|
+    %h3 Name of the Association
+    = form.text_field(:organisation_name, :disabled => !@allow_editing)
+  
+    %h3 Objectives
+    %p.explanation This should be a brief summary of your group's main objectives which everyone can sign up to.
+    = form.text_area(:objectives, :disabled => !@allow_editing)
+    
+    %h3 Property
+    %p.explanation If you want the Association to have its own bank account or own property on behalf of the group you can specify that here.
+    %p.radio
+      = form.radio_button(:assets, '1', :disabled => !@allow_editing)
+      = label_tag('assets_1', "Association can have a bank account and own assets")
+    %p.radio
+      = form.radio_button(:assets, '0', :disabled => !@allow_editing)
+      = label_tag('assets_0', "Association cannot have a bank account and own assets")
+    
+    .general_decisions
+      %h3 Making decisions
+      %p.explanation These settings control how many votes are needed to make an official group decision. "Simple majority" is a good starting point for most groups.
+      = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general', :form => form})
+    
+    .membership_decisions
+      %h3 Admitting and rejecting members
+      %p.explanation Choose the setting you want for votes to admit new members. "Nobody opposes" is a good starting point for lots of groups.
+      = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership', :form => form})
+  
+    .constitution_decisions
+      %h3 Changing the constitution
+      %p Once the Association is up and running you can hold votes to change any of the constitution settings. Choose how you want this to work. "Two thirds majority" is a good option for many groups.
+      = render(:partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution', :form => form})
+
+    %h3 Voting period
+    %p Choose how long you want each vote to run for. "3 days" is good for most groups. Select a longer period if your members have infrequent internet access. "5 minutes" should only be selected by groups intending to hold most of their votes during live face-to-face or online meetings.
+    - VotingPeriods.all do |vp|
+      %p.radio
+        = form.radio_button('voting_period', vp[:value], :disabled => !@allow_editing)
+        = form.label("voting_period_#{vp[:value]}", vp[:name])
+
+    %p
+      - if @allow_editing
+        - if current_organisation.pending?
+          = form.submit "Save changes", :id => 'submit'
+        - else
+          = form.submit "Propose changes", :id => 'submit'

@@ -83,15 +83,15 @@ Now, install required gems:
 
 You can just choose 'single organisation mode', or if you want to test multi-tenancy mode, you'll need lines in your hosts file which point `yourorganisation.localhost`, etc. to `127.0.0.1`.
 
-## Quickly creating an organisation
+## Quickly creating an association
 
 Unless you're working on the founding stage itself, it can be handy to create
-an active organisation to experiment with, without having to walk through all
+an active association to experiment with, without having to walk through all
 the founding steps manually.
 
-To do this, run the `oco:dev:create_organisation` rake task:
+To do this, run the `oco:dev:create_association` rake task:
 
-  $ rake oco:dev:create_organisation
+  $ rake oco:dev:create_association
 
 ## Updating
 

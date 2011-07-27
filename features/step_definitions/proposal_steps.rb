@@ -1,18 +1,26 @@
 Given /^I have started the founding vote$/ do
-  @organisation.found_organisation_proposals.make(:proposer => @user).start
-  @organisation.proposed!
+  @organisation.found_association_proposals.make(:proposer => @user)
+  @organisation.propose!
 end
 
 Given /^the founding vote has been started$/ do
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
-  @organisation.found_organisation_proposals.make(:proposer => founder).start
-  @organisation.proposed!
+  @organisation.found_association_proposals.make(:proposer => founder)
+  @organisation.propose!
 end
 
-Given /^everyone has voted to support the founding$/ do
-  fop = @organisation.found_organisation_proposals.first
+Given /^another founding vote has been started$/ do
+  founder = @organisation.member_classes.where(:name => "Founder").first.members.first
+  @organisation.found_association_proposals.make(:proposer => founder, :title => "A second voting proposal.")
+  @organisation.reload
+  @organisation.propose!
+end
+
+Given /^everyone has voted (to support|against) the founding$/ do |vote|
+  fap = @organisation.found_association_proposals.last
+  verdict = (vote == "against") ? "against" : "for"
   @organisation.members.each do |member|
-    member.cast_vote(:for, fop.id)
+    member.cast_vote(verdict.to_sym, fap)
   end
 end
 
@@ -55,7 +63,7 @@ Given /^a proposal has been made to eject the member "([^"]*)"$/ do |email|
   member = @organisation.members.active.find_by_email(email)
   @proposal = @organisation.eject_member_proposals.make(
     :parameters => {
-      'id' => member.id
+      'member_id' => member.id
     },
     :title => "Eject #{member.first_name} #{member.last_name} from #{@organisation.name}",
     :proposer => @organisation.members.active.first
@@ -72,8 +80,8 @@ end
 
 When /^enough people vote in support of the proposal$/ do
   @proposal ||= Proposal.last
-  @organisation.members.active.each do |member|
-    member.cast_vote(:for, @proposal.id)
+  (@organisation.members.active - [@proposal.proposer]).each do |member|
+    member.cast_vote(:for, @proposal)
   end
 end
 

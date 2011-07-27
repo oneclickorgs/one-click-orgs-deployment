@@ -1,0 +1,12 @@
+Dear <%=raw(  @member && @member.name || 'member'  )%>,
+
+Please read the newly submitted minutes below. If you don't feel they provide an accurate reflection of the discussion you can indicate this at:
+
+<%=raw( meeting_url(@meeting) )%>
+
+<%=raw(  @meeting.minutes  )%>
+
+Thanks,
+
+<%=raw @meeting.organisation.name%>
+Powered by One Click Orgs

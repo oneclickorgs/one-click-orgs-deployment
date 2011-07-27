@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402134033) do
+ActiveRecord::Schema.define(:version => 20110727154021) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -26,13 +26,14 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
 
   create_table "comments", :force => true do |t|
     t.integer  "author_id"
-    t.integer  "proposal_id"
+    t.integer  "commentable_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "commentable_type"
   end
 
-  add_index "comments", ["proposal_id", "author_id"], :name => "index_comments_on_proposal_id_and_author_id"
+  add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_commentable_id"
 
   create_table "decisions", :force => true do |t|
     t.integer "proposal_id"
@@ -53,6 +54,21 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
     t.datetime "updated_at"
   end
 
+  create_table "meeting_participations", :force => true do |t|
+    t.integer  "meeting_id"
+    t.integer  "participant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetings", :force => true do |t|
+    t.date     "happened_on"
+    t.text     "minutes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "organisation_id"
+  end
+
   create_table "member_classes", :force => true do |t|
     t.string  "name",            :null => false
     t.string  "description"
@@ -62,9 +78,8 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
   add_index "member_classes", ["organisation_id"], :name => "index_member_classes_on_organisation_id"
 
   create_table "members", :force => true do |t|
-    t.string   "email",               :limit => 50,                :null => false
+    t.string   "email",               :limit => 50, :null => false
     t.datetime "created_at"
-    t.integer  "active",              :limit => 1,  :default => 1
     t.string   "crypted_password",    :limit => 50
     t.string   "salt",                :limit => 50
     t.integer  "organisation_id"
@@ -76,6 +91,8 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
     t.string   "password_reset_code"
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
+    t.string   "state"
+    t.date     "elected_on"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
@@ -84,19 +101,20 @@ ActiveRecord::Schema.define(:version => 20110402134033) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
+    t.string   "state"
   end
 
   create_table "proposals", :force => true do |t|
-    t.string   "title",                                              :null => false
+    t.string   "title",                               :null => false
     t.text     "description"
     t.datetime "creation_date"
-    t.integer  "open",               :limit => 1,     :default => 1
-    t.integer  "accepted",           :limit => 1,     :default => 0
     t.datetime "close_date"
     t.string   "parameters",         :limit => 10000
     t.string   "type",               :limit => 50
     t.integer  "proposer_member_id"
     t.integer  "organisation_id"
+    t.string   "state"
   end
 
   create_table "seen_notifications", :force => true do |t|

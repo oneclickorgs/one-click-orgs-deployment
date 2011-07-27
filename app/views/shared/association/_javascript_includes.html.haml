@@ -1,0 +1,5 @@
+- if can?(:create, FoundAssociationProposal)
+  - if @current_organisation.can_hold_founding_vote?
+    = javascript_include_tag 'start_founding_vote_confirmation'
+  - else
+    = javascript_include_tag 'start_founding_vote_alert'

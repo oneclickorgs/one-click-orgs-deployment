@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe EjectMemberProposal do
   before do 
-    stub_constitution!
-    stub_organisation!
+    default_association_constitution
+    default_organisation
   end
     
   it "should use the membership voting system" do
@@ -16,7 +16,7 @@ describe EjectMemberProposal do
     
     @p = @organisation.eject_member_proposals.new
     @m.should be_active
-    passed_proposal(@p, 'id' => @m.id ).call
+    passed_proposal(@p, 'member_id' => @m.id ).call
     
     #FIXME make proposals more testable by avoiding loading of models
     #@m.should_receive(:eject!)

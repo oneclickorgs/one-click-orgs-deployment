@@ -10,6 +10,7 @@ Sham.last_name          { Faker::Name.last_name }
 Sham.subdomain          { Faker::Internet.domain_word }
 Sham.objectives         { Faker::Company.bs }
 Sham.organisation_name  { Faker::Company.name }
+Sham.minutes            { Faker::Lorem.paragraph }
 
 MemberClass.blueprint do
   name "Director"
@@ -24,12 +25,11 @@ Member.blueprint do
   email
   first_name
   last_name
-  created_at {Time.now - 1.day}
-  pw = Sham.password
-  password pw
-  password_confirmation pw
-  active true
-  inducted_at {Time.now - 23.hours}
+  created_at {Time.now.utc - 1.day}
+  password "password"
+  password_confirmation "password"
+  state 'active'
+  inducted_at {Time.now.utc - 23.hours}
   member_class {MemberClass.make}
 end
 
@@ -39,27 +39,26 @@ end
 
 Member.blueprint(:pending) do
   inducted_at nil
+  state 'pending'
 end
 
 Proposal.blueprint do
   title "a proposal title"
-  # Every object inherits Kernel.open, so just calling 'open' doesn't work.
-  # This line hacks into Machinist to manually set the 'open' attribute.
-  self.send(:assign_attribute, :open, 1)
+  state "open"
   proposer {Member.make}
 end
 
 AddMemberProposal.blueprint do
   title "a proposal title"
-  self.send(:assign_attribute, :open, 1)
+  state 'open'
   proposer {Member.make}
   parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
 end
 
-FoundOrganisationProposal.blueprint do
+FoundAssociationProposal.blueprint do
   title "Proposal to Found org"
   description "Found org"
-  self.send(:assign_attribute, :open, 1)
+  state "open"
   proposer {Member.make}
 end
 
@@ -89,6 +88,24 @@ end
 
 Organisation.blueprint do
   name { Sham.organisation_name }
-  objectives
   subdomain
+end
+
+Association.blueprint do
+  objectives
+end
+
+Company.blueprint do
+end
+
+Meeting.blueprint do
+  organisation { Company.make }
+  happened_on { 1.day.ago }
+  minutes { Sham.minutes }
+end
+
+MeetingParticipation.blueprint do
+end
+
+Comment.blueprint do
 end

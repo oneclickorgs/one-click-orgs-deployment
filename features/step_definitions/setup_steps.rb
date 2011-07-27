@@ -14,6 +14,10 @@ Given /^the application is set up$/ do
   Setting[:signup_domain] = "create.smackaho.st#{port_segment}"
 end
 
+Given /^the application is not set up yet$/ do
+  Given "the domain is \"www.example.com\""
+end
+
 When /^the domain is the signup domain$/ do
   When %Q{the domain is "#{Setting[:signup_domain].sub(/:\d+$/, '')}"}
 end

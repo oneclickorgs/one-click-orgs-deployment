@@ -1,9 +1,27 @@
 class ChangeVotingSystemProposal < ConstitutionProposal
-  def allows_direct_edit?
-    true
+  before_create :set_default_title
+  def set_default_title
+    self.title ||= "Change #{proposal_type.humanize.downcase} voting system to #{VotingSystems.get(proposed_system).description}"
   end
 
-  def enact!(params)
-    organisation.constitution.change_voting_system(params['type'], params['proposed_system'])
+  def enact!
+    # TODO needs backwards compatiblity; previous proposals used 'type' instead of 'proposal_type'
+    organisation.constitution.change_voting_system(parameters['proposal_type'], parameters['proposed_system'])
+  end
+  
+  def proposal_type
+    parameters['proposal_type']
+  end
+  
+  def proposal_type=(proposal_type)
+    parameters['proposal_type'] = proposal_type
+  end
+  
+  def proposed_system
+    parameters['proposed_system']
+  end
+  
+  def proposed_system=(proposed_system)
+    parameters['proposed_system'] = proposed_system
   end
 end

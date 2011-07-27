@@ -1,0 +1,28 @@
+%h2 Add a new company
+
+= form_tag(companies_path) do
+  = fields_for(@member) do |member_fields|
+    %p
+      = member_fields.label :first_name
+      = member_fields.text_field :first_name
+    %p
+      = member_fields.label :last_name
+      = member_fields.text_field :last_name
+    %p
+      = member_fields.label :email, "Email address"
+      = member_fields.text_field :email
+    %p
+      = member_fields.label :password, "Choose password"
+      = member_fields.password_field :password
+    %p
+      = member_fields.label :password_confirmation, "Confirm password"
+      = member_fields.password_field :password_confirmation
+  = fields_for(@company) do |company_fields|
+    %p
+      = company_fields.label :name, "Company's official name"
+      = company_fields.text_field :name
+    %p
+      = company_fields.label :subdomain, "One Click Orgs web address"
+      = company_fields.text_field :subdomain
+  %p
+    = submit_tag("Add company")

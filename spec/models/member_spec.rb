@@ -6,8 +6,8 @@ describe Member do
   before(:each) do
     Delayed::Job.delete_all 
     
-    stub_constitution!
-    stub_organisation!
+    default_association_constitution
+    default_organisation
 
     @member = @organisation.members.make
     @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
@@ -44,15 +44,13 @@ describe Member do
   it "should not allow votes on members inducted after proposal was made" do
     new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
     lambda {
-      new_member.cast_vote(:for, @proposal.id)
+      new_member.cast_vote(:for, @proposal)
     }.should raise_error(VoteError)
   end
 
   it "should not allow additional votes" do
-    @member.cast_vote(:for, @proposal.id)
-
     lambda {
-      @member.cast_vote(:against, @proposal.id)
+      @member.cast_vote(:against, @proposal)
     }.should raise_error(VoteError)
   end
 
@@ -78,7 +76,7 @@ describe Member do
   describe "finders" do
     it "should return only active members" do
       @organisation.members.active.should == @organisation.members.all
-      disabled = @organisation.members.make(:active=>false)
+      disabled = @organisation.members.make(:state => 'inactive')
       @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
@@ -152,11 +150,12 @@ describe Member do
   
   describe "when a pending member is ejected before they are inducted" do
     before(:each) do
-      @pending_member = Member.make(:inducted_at => nil)
+      @pending_member = Member.make(:state => 'pending', :inducted_at => nil)
       @inducted_member = Member.make
       @ejected_member = Member.make(:inducted_at => nil)
       @ejected_member.eject!
     end
+    
     describe "pending" do
       it "should list the pending members" do
         Member.pending.count.should == 1

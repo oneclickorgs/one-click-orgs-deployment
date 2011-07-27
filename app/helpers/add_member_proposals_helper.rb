@@ -1,0 +1,2 @@
+module AddMemberProposalsHelper
+end

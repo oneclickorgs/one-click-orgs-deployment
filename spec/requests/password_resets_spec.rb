@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "PasswordResets" do
   before(:each) do
-    stub_constitution!
-    stub_organisation!
+    default_association_constitution
+    default_organisation
   end
   
   describe "resetting a password" do

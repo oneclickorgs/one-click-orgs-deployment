@@ -1,0 +1,7 @@
+- if can?(:create, FoundAssociationProposal)
+  - if @current_organisation.can_hold_founding_vote?
+    #start_founding_vote_confirmation_lightbox.lightbox{:style => 'display: none;'}
+      = render(:partial => "shared/start_founding_vote_confirmation")
+  - else
+    #start_founding_vote_alert_lightbox.lightbox{:style => 'display: none;'}
+      = render(:partial => "shared/start_founding_vote_alert")

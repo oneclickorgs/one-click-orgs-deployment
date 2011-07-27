@@ -41,8 +41,8 @@ describe "Multi-tenancy" do
         Setting[:signup_domain].should == 'signup.oneclickorgs.com'
       end
       
-      it "should redirect to the organisation setup page" do
-        response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+      it "should redirect to the association setup page" do
+        response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
       end
     end
   end
@@ -58,34 +58,34 @@ describe "Multi-tenancy" do
       response.should redirect_to 'http://oneclickorgs.com/'
     end
     
-    it "should redirect all unrecognised subdomain requests back to the new organisation page" do
+    it "should redirect all unrecognised subdomain requests back to the new association page" do
       get 'http://nonexistent.oneclickorgs.com/'
-      response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+      response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
     end
     
-    it "should redirect requests to the root of the signup-domain to the new organisation page" do
+    it "should redirect requests to the root of the signup-domain to the new association page" do
       get 'http://signup.oneclickorgs.com/'
-      response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+      response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
     end
     
-    describe "visiting the new organisation page" do
-      it "should show a form to set details for the new organisation" do
-        get 'http://signup.oneclickorgs.com/organisations/new'
-        response.should have_selector("form[action='/organisations']") do |form|
+    describe "visiting the new association page" do
+      it "should show a form to set details for the new association" do
+        get 'http://signup.oneclickorgs.com/associations/new'
+        response.should have_selector("form[action='/associations']") do |form|
           form.should have_selector("input[name='founder[first_name]']")
           form.should have_selector("input[name='founder[last_name]']")
           form.should have_selector("input[name='founder[email]']")
           form.should have_selector("input[name='founder[password]']")
           form.should have_selector("input[name='founder[password_confirmation]']")
-          form.should have_selector("input[name='organisation[name]']")
-          form.should have_selector("input[name='organisation[subdomain]']")
-          form.should have_selector("textarea[name='organisation[objectives]']")
+          form.should have_selector("input[name='association[name]']")
+          form.should have_selector("input[name='association[subdomain]']")
+          form.should have_selector("textarea[name='association[objectives]']")
           form.should have_selector("input[type=submit]")
         end
       end
     end
     
-    describe "creating a new organisation" do
+    describe "creating a new association" do
       org_parameters = {
         :founder => {
           :first_name => 'Brad',
@@ -94,38 +94,40 @@ describe "Multi-tenancy" do
           :password => 'my_password',
           :password_confirmation => 'my_password'
         },
-        :organisation => {
-          :name => 'new organisation',
-          :subdomain => 'neworganisation',
-          :objectives => 'Organisation.createOrganisation.create',
+        :association => {
+          :name => 'new association',
+          :subdomain => 'newassociation',
+          :objectives => 'newobjectives',
         }
       }
-      it "should create the organisation record" do
-        post 'http://signup.oneclickorgs.com/organisations', org_parameters
-        Organisation.where(:subdomain => 'neworganisation').first.should_not be_nil
+      it "should create the association record" do
+        post 'http://signup.oneclickorgs.com/associations', org_parameters
+        Association.where(:subdomain => 'newassociation').first.should_not be_nil
       end
       
       it "should redirect to the induction process for that domain" do
-        post 'http://signup.oneclickorgs.com/organisations', org_parameters
-        response.should redirect_to 'http://neworganisation.oneclickorgs.com/constitution'
+        post 'http://signup.oneclickorgs.com/associations', org_parameters
+        response.should redirect_to 'http://newassociation.oneclickorgs.com/constitution'
       end
     end
   end
   
   describe "with multiple organisations" do
     before(:each) do
-      # Make three organisations, each with one member
-      stub_organisation!(true, 'aardvarks', false, true).tap do |o|
+      set_up_app
+      
+      # Make three associations, each with one member
+      Association.make(:name => 'Aardvarks', :subdomain => 'aardvarks', :state => 'active').tap do |o|
         mc = o.member_classes.make
         o.members.make(:first_name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
-      stub_organisation!(true, 'beavers', false, true).tap do |o|
+      Association.make(:name => 'Beavers', :subdomain => 'beavers', :state => 'active').tap do |o|
         mc = o.member_classes.make
         o.members.make(:first_name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
-      stub_organisation!(true, 'chipmunks', false, true).tap do |o|
+      Association.make(:name => 'Chipmunks', :subdomain => 'chipmunks', :state => 'active').tap do |o|
         mc = o.member_classes.make
         o.members.make(:first_name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
@@ -154,7 +156,7 @@ describe "Multi-tenancy" do
     describe "accessing a nonexistent subdomain" do
       it "should redirect to the base domain" do
         get 'http://nonexistent.oneclickorgs.com/'
-        response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+        response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
       end
     end
   end
