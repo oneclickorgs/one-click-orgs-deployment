@@ -178,7 +178,11 @@ private
   # @see http://api.rubyonrails.org/classes/ActionController/Streaming.html#method-i-send_data
   def generate_csv
     fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
-    csv = FasterCSV.generate do |csv|
+    
+    # In Ruby 1.9, FasterCSV is provided as the stdlib's CSV library.
+    csv_library = defined?(FasterCSV) ? FasterCSV : CSV
+    
+    csv = csv_library.generate do |csv|
       csv << fields
       @members.each do |member|
         csv << fields.collect { |f| member.send(f) }
