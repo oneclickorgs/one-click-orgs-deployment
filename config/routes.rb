@@ -94,7 +94,9 @@ OneClickOrgs::Application.routes.draw do
   resources :associations
   resources :companies
   
-  resources :meetings
+  resources :meetings do
+    resources :comments
+  end
   
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations

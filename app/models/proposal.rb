@@ -24,7 +24,7 @@ class Proposal < ActiveRecord::Base
   
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
   
-  has_many :comments
+  has_many :comments, :as => :commentable
   
   before_create :set_creation_date
   private

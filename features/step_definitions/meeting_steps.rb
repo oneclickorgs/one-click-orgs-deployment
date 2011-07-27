@@ -1,6 +1,10 @@
-Given /^another director has recorded some new minutes$/ do
+Given /^another director has recorded some minutes$/ do
   @company ||= Company.last
   @meeting = @company.meetings.make
+end
+
+Given /^another director has recorded some new minutes$/ do
+  Given "another director has recorded some minutes"
 end
 
 When /^I choose the date of discussion$/ do

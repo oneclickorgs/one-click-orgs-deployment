@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110726222425) do
+ActiveRecord::Schema.define(:version => 20110727133702) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -26,13 +26,14 @@ ActiveRecord::Schema.define(:version => 20110726222425) do
 
   create_table "comments", :force => true do |t|
     t.integer  "author_id"
-    t.integer  "proposal_id"
+    t.integer  "commentable_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "commentable_type"
   end
 
-  add_index "comments", ["proposal_id", "author_id"], :name => "index_comments_on_proposal_id_and_author_id"
+  add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_commentable_id"
 
   create_table "decisions", :force => true do |t|
     t.integer "proposal_id"

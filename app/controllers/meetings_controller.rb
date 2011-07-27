@@ -1,6 +1,9 @@
 class MeetingsController < ApplicationController
   def show
     @meeting = co.meetings.find(params[:id])
+    
+    @comments = @meeting.comments
+    @comment = Comment.new
   end
   
   def create

@@ -106,3 +106,6 @@ end
 
 MeetingParticipation.blueprint do
 end
+
+Comment.blueprint do
+end

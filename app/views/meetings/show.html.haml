@@ -1,6 +1,21 @@
+%h2 Minutes
 %p= @meeting.happened_on.to_s(:long_ordinal)
 %ul.participants
   - @meeting.participants.each do |participant|
     = content_tag_for(:li, participant) do
       = participant.name
 = simple_format(@meeting.minutes)
+%h3 Comments
+- @comments.each do |comment|
+  .comment
+    %p.attribution
+      = image_tag(comment.author.gravatar_url(24), :alt => comment.author.name, :class => 'gravatar', :width => '24', :height => '24')
+      = link_to(comment.author.name, member_path(comment.author))
+      = comment.created_at.to_s(:at_on) + ':'
+    = simple_format(comment.body)
+= form_for(@comment, :url => meeting_comments_path(:meeting_id => @meeting)) do |f|
+  %p
+    = f.label :body, "Add a comment:"
+    = f.text_area :body
+  %p
+    = f.submit "Save comment"

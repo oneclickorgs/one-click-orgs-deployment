@@ -23,6 +23,15 @@ describe Meeting do
       
       meeting.reload.participants.should == [member]
     end
+    
+    it "has many comments" do
+      meeting = Meeting.make
+      comment = Comment.make
+      
+      expect{meeting.comments << comment}.to_not raise_error
+      
+      meeting.reload.comments.should == [comment]
+    end
   end
   
   describe "validations" do

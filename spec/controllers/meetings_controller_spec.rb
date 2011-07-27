@@ -17,6 +17,12 @@ describe MeetingsController do
       @meetings_association.stub(:find).and_return(@meeting)
       
       @company.stub(:meetings).and_return(@meetings_association)
+      
+      @comments_association = double("comments association")
+      @meeting.stub!(:comments).and_return(@comments_association)
+      
+      @comment = mock_model(Comment).as_new_record
+      Comment.stub(:new).and_return(@comment)
     end
     
     def get_show
@@ -31,6 +37,21 @@ describe MeetingsController do
     it "assigns the meeting" do
       get_show
       assigns(:meeting).should == @meeting
+    end
+    
+    it "assigns the meeting's comments" do
+      get_show
+      assigns(:comments).should == @comments_association
+    end
+    
+    it "builds a new comment" do
+      Comment.should_receive(:new).and_return(@comment)
+      get_show
+    end
+    
+    it "assigns the new comment" do
+      get_show
+      assigns(:comment).should == @comment
     end
     
     it "renders the meetings/show template" do

@@ -35,6 +35,9 @@ module NavigationHelpers
       new_company_path
     when /^the Votes & Minutes page$/
       '/'
+    when /^the page for the minutes$/
+      @meeting ||= @organisation.meeting.last
+      meeting_path(@meeting)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

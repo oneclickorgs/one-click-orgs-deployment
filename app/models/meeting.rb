@@ -4,6 +4,8 @@ class Meeting < ActiveRecord::Base
   has_many :meeting_participations
   has_many :participants, :through => :meeting_participations
   
+  has_many :comments, :as => :commentable
+  
   def to_event
     {:timestamp => created_at, :object => self, :kind => :meeting}
   end
