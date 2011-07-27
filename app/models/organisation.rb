@@ -17,6 +17,7 @@ class Organisation < ActiveRecord::Base
   
   after_create :create_default_member_classes
   after_create :set_default_voting_systems
+  after_create :set_default_voting_period
 
   # Given a full hostname, e.g. "myorganisation.oneclickorgs.com",
   # and assuming the installation's base domain is "oneclickorgs.com",
@@ -71,5 +72,8 @@ class Organisation < ActiveRecord::Base
   end
   
   def set_default_voting_systems
+  end
+  
+  def set_default_voting_period
   end
 end

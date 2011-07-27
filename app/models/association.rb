@@ -90,6 +90,9 @@ class Association < Organisation
     constitution.set_voting_system(:general, 'RelativeMajority')
     constitution.set_voting_system(:membership, 'Veto')
     constitution.set_voting_system(:constitution, 'AbsoluteTwoThirdsMajority')
+  end
+  
+  def set_default_voting_period
     constitution.set_voting_period(259200)
   end
   
