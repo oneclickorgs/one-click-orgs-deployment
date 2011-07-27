@@ -55,7 +55,7 @@ describe CompaniesController do
       @members_association = mock("member association")
       @company.stub!(:members).and_return(@members_association)
       
-      @member = mock_model(Member, :save => true, :member_class= => nil, :update_attribute => true)
+      @member = mock_model(Member, :save => true, :member_class= => nil, :state= => nil, :update_attribute => true)
       @members_association.stub!(:build).and_return(@member)
       
       @director_member_class = mock_model(MemberClass, :description => "Director")

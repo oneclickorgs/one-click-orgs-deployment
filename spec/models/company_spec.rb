@@ -13,6 +13,17 @@ describe Company do
     end
   end
   
+  describe "fake association builders" do
+    it "can build a director" do
+      @company = Company.make
+      @director = @company.build_director(:email => "bob@example.com")
+      @director.should be_a(Director)
+      @director.email.should == "bob@example.com"
+      @director.member_class.name.should == 'Director'
+      @director.should be_active
+    end
+  end
+  
   describe "defaults" do
     describe "default member classes" do
       it "creates a 'Director' member class" do

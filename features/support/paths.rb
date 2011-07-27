@@ -38,6 +38,8 @@ module NavigationHelpers
     when /^the page for the minutes$/
       @meeting ||= @organisation.meeting.last
       meeting_path(@meeting)
+    when /^the Directors page$/
+      members_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

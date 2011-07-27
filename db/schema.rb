@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727133702) do
+ActiveRecord::Schema.define(:version => 20110727154021) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20110727133702) do
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
     t.string   "state"
+    t.date     "elected_on"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"

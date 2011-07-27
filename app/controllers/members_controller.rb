@@ -8,6 +8,11 @@ class MembersController < ApplicationController
       if can?(:create, FoundingMember)
         @founding_member = co.build_founding_member
       end
+    when Company
+      @members = co.members.active
+      
+      @page_title = "Directors"
+      @director = Director.new
     end
     
     respond_to do |format|

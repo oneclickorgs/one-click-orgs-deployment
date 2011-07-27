@@ -80,6 +80,7 @@ OneClickOrgs::Application.routes.draw do
   resources :members
   
   resources :founding_members
+  resources :directors
   
   match '/one_click(/:action)' => 'one_click'
  
