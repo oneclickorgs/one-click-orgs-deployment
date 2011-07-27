@@ -1,6 +1,4 @@
 class OneClickController < ApplicationController
-  before_filter :current_organisation
-  
   def index
     redirect_to(:action => 'dashboard')
   end
@@ -22,6 +20,13 @@ class OneClickController < ApplicationController
         co.members.all,
         co.proposals.all,
         co.decisions.all
+      ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    when Company
+      @meeting = Meeting.new
+      @directors = co.members.where(:member_class_id => co.member_classes.find_by_name('Director').id)
+      @timeline = [
+        co.proposals.all,
+        co.meetings.all
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     end
   end

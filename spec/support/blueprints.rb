@@ -96,3 +96,9 @@ end
 
 Company.blueprint do
 end
+
+Meeting.blueprint do
+end
+
+MeetingParticipation.blueprint do
+end

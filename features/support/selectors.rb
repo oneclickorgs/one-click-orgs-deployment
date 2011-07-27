@@ -24,6 +24,8 @@ module HtmlSelectorsHelpers
     when /the "(.+)" proposal/
       @proposal = @organisation.proposals.find_by_title($1)
       "#proposal_#{@proposal.id}"
+    when /^the timeline$/
+      "table.timeline"
 
     # You can also return an array to use a different selector
     # type, like:

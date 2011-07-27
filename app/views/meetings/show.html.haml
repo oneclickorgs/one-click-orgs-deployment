@@ -1,0 +1,4 @@
+%ul.participants
+  - @meeting.participants.each do |participant|
+    = content_tag_for(:li, participant) do
+      = participant.name

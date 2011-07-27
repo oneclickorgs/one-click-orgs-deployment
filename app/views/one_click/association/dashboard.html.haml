@@ -45,13 +45,4 @@
         = render :partial => 'add_member_proposals/form', :locals => {:form => form}
 
 - if current_organisation.active?
-  %div.section
-    %h3 Timeline
-    %table.timeline
-      %tr
-        %th Event
-        %th Date
-      - for event in @timeline
-        %tr{:class => cycle('odd', 'even')}
-          = render :partial => event[:kind].to_s, :locals => {:event => event}
-          %td.timestamp= event[:timestamp].to_s(:long)
+  = render :partial => 'timeline', :locals => {:timeline => @timeline}
