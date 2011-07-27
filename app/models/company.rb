@@ -4,4 +4,8 @@ class Company < Organisation
   def create_default_member_classes
     member_classes.find_or_create_by_name('Director')
   end
+  
+  def set_default_voting_systems
+    constitution.set_voting_system(:general, 'RelativeMajority')
+  end
 end

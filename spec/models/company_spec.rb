@@ -13,10 +13,17 @@ describe Company do
     end
   end
   
-  describe "default member classes" do
-    it "creates a 'Director' member class" do
+  describe "defaults" do
+    describe "default member classes" do
+      it "creates a 'Director' member class" do
+        @company = Company.make
+        @company.member_classes.find_by_name('Director').should be_present
+      end
+    end
+    
+    it "sets a default voting system of simple majority" do
       @company = Company.make
-      @company.member_classes.find_by_name('Director').should be_present
+      @company.constitution.voting_system.should == VotingSystems::RelativeMajority
     end
   end
   
