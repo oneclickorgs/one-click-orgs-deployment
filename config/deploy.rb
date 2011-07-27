@@ -5,13 +5,14 @@ set :scm, :git
 set :user, 'oneclickorgs'
 set :use_sudo, false
 set :sv, "~/local/bin/sv"
+set :rake, "/home/oneclickorgs/local/bin/rake"
 
 role :web, "us1.okfn.org"                          # Your HTTP server, Apache/etc
 role :app, "us1.okfn.org"                          # This may be the same as your `Web` server
 role :db,  "us1.okfn.org", :primary => true # This is where Rails migrations will run
 
-set :deploy_to, "/home/oneclickorgs/var/www/gov.oneclickorgs.com"
-set :branch,    "gov-oneclickorgs-com"
+set :deploy_to, "/home/oneclickorgs/var/www/lhs.oneclickorgs.com"
+set :branch,    "lhs-oneclickorgs-com"
 
 after 'deploy:update_code' do
   run <<-END
