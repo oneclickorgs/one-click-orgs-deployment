@@ -1,2 +1,2 @@
-# require 'machinist/active_record'
+require 'spec/support/machinist'
 require 'spec/support/blueprints'

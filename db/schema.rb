@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110523104155) do
+ActiveRecord::Schema.define(:version => 20110726222425) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -51,6 +51,21 @@ ActiveRecord::Schema.define(:version => 20110523104155) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "meeting_participations", :force => true do |t|
+    t.integer  "meeting_id"
+    t.integer  "participant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetings", :force => true do |t|
+    t.date     "happened_on"
+    t.text     "minutes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "organisation_id"
   end
 
   create_table "member_classes", :force => true do |t|

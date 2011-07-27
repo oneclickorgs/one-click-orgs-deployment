@@ -2,6 +2,17 @@ require 'spec_helper'
 
 describe Company do
   
+  describe "associations" do
+    it "has many meetings" do
+      @company = Company.make
+      @meeting = Meeting.make
+      
+      expect {@company.meetings << @meeting}.to_not raise_error
+      
+      @company.reload.meetings.should == [@meeting]
+    end
+  end
+  
   describe "default member classes" do
     it "creates a 'Director' member class" do
       @company = Company.make

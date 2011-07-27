@@ -54,7 +54,7 @@ group :development, :test do
   gem "rspec-rails", "~>2.6"
   gem "webrat", "~>0.7.1"
   gem "machinist", "~>1.0.6"
-  gem "faker", '~>0.3.1'
+  gem "faker", '~>0.9.0'
   gem "rcov", "~>0.9.8"
   gem "cucumber-rails", "~>1.0.2"
   gem "capybara", "~>1.0.0"

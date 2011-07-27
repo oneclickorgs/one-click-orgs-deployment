@@ -1,0 +1,5 @@
+%td
+  Minutes for a meeting on
+  = event[:object].happened_on
+  were logged:
+  = link_to(truncate(event[:object].minutes), meeting_path(event[:object]))
