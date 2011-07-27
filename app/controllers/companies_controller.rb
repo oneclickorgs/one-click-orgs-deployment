@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
     @company.save
     @member = @company.members.build(params[:member])
     @member.member_class = @company.member_classes.find_by_name('Director')
+    @member.state = 'active'
     @member.save
     log_in(@member)
     redirect_to root_url(:host => @company.host)

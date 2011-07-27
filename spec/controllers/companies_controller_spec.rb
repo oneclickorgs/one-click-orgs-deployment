@@ -100,6 +100,11 @@ describe CompaniesController do
       post_create
     end
     
+    it "makes the new member active" do
+      @member.should_receive(:state=).with('active')
+      post_create
+    end
+    
     it "saves the new member" do
       @member.should_receive(:save).and_return(true)
       post_create
