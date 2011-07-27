@@ -8,4 +8,8 @@ class Company < Organisation
   def set_default_voting_systems
     constitution.set_voting_system(:general, 'RelativeMajority')
   end
+  
+  def set_default_voting_period
+    constitution.set_voting_period(604800)
+  end
 end

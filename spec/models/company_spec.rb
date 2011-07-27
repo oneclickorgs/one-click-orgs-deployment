@@ -25,6 +25,11 @@ describe Company do
       @company = Company.make
       @company.constitution.voting_system.should == VotingSystems::RelativeMajority
     end
+    
+    it "sets a default voting period of 7 days" do
+      @company = Company.make
+      @company.constitution.voting_period.should == 7.days
+    end
   end
   
 end
