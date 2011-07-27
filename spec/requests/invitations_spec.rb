@@ -51,7 +51,7 @@ describe "invitations" do
       post_update
       @member.reload
       @member.crypted_password.should be_present
-      @member.salt should be_present
+      @member.salt.should be_present
     end
     
     it "clears the member's invitation code" do
