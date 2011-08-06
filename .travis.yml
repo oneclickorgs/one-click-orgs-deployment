@@ -1,0 +1,13 @@
+rvm:
+  - 1.9.2
+  - 1.8.7
+before_script:
+  - "mysql -e 'create database one_click_test;' > /dev/null"
+  - "bundle exec rake oco:generate_config db:migrate"
+branches:
+  only:
+    - master
+notifications:
+  recipients:
+    - alerts@oneclickorgs.com
+  irc: "irc.freenode.net#oneclickorgs"
