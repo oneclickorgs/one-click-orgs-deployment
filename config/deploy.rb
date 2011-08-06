@@ -5,7 +5,7 @@ set :scm, :git
 set :user, 'oneclickorgs'
 set :use_sudo, false
 set :sv, "~/local/bin/sv"
-set :rake, "/home/oneclickorgs/local/bin/rake"
+set :rake "bundle exec rake"
 
 role :web, "us1.okfn.org"                          # Your HTTP server, Apache/etc
 role :app, "us1.okfn.org"                          # This may be the same as your `Web` server
