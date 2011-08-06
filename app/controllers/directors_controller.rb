@@ -2,9 +2,7 @@ class DirectorsController < ApplicationController
   def create
     @director = co.build_director(params[:director])
     if @director.save
-			@director.organisation.members.each do |member|
-				MembersMailer.new_director_notification(member, @director).deliver 
-			end
+			@director.send_new_director_notifications
 		end
     redirect_to members_path
   end
