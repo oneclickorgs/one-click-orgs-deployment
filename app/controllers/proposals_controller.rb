@@ -56,7 +56,8 @@ class ProposalsController < ApplicationController
       
       co.proposed!
       
-      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "The founding vote has now begun.")
+      track_analytics_event('StartsFoundingVote')
+      redirect_to(constitution_path, :notice => "The founding vote has now begun.")
     else
       redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end

@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   #before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
   before_filter :prepare_notifications
+  before_filter :load_analytics_events_from_session
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
@@ -128,7 +129,10 @@ class ApplicationController < ActionController::Base
     end
 
     fop = co.found_organisation_proposals.last
-    
+    # if the organisation is pending
+    # and the voting is finished (fop.closed)
+    # and a founding proposal exists
+    # and is the proposal
     if co.pending? && fop && fop.closed? && !fop.accepted?
       show_notification_once(:founding_proposal_failed)
     end
@@ -140,14 +144,48 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def show_notification_once(notification)
+  # Show a notification once when a user is signed in, to notify of
+  # a specific event happening
+  #
+  # @param [Symbol] notification the notification type, `:founding_proposal_passed` or `:founding_proposal_failed`
+  # @param [optional, Timestamp] created_at the timestamp for that kind of notification, i.e `2011-06-04 13:14:37`
+  # @return [String] notification the string relating to the kind of notification `founding_proposal_passed`.
+  #
+  # @example Show a notification a user once that their proposal failed, allowing us to render the partial 'founding_proposal_failed' in the view
+  #   show_notification_once(:founding_proposal_failed)
+  #
+  def show_notification_once(notification, created_at = '')
     return unless current_user
-    return if current_user.has_seen_notification?(notification)
+    return if current_user.has_seen_notification?(notification, created_at)
     show_notification(notification)
   end
   
   def show_notification(notification)
     @notification = notification
+  end
+  
+  # Analytics
+  
+  def track_analytics_event(event_name, options={})
+    return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
+    if options[:now]
+      @analytics_events ||= []
+      @analytics_events.push(event_name)
+    else
+      session[:analytics_events] ||= []
+      session[:analytics_events].push(event_name)
+    end
+  end
+  
+  def load_analytics_events_from_session
+    return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
+    unless session[:analytics_events].blank?
+      @analytics_events ||= []
+      session[:analytics_events].dup.each do |event|
+        @analytics_events.push(event)
+        session[:analytics_events].delete(event)
+      end
+    end
   end
   
   protected

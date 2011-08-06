@@ -3,9 +3,10 @@ Jan Berkel <jan.berkel@gmail.com>
 Alex Muller <alexlmuller@gmail.com>
 Martin Dittus <martin@dekstop.de>
 Emma Persky <emma.persky@gmail.com>
+Chris Adams <wave@chrisadams.me.uk>
+Jon Gilbraith <jon@professionalnerd.com>
 Ben Summers <ben@fluffy.co.uk>
 Chris Rode <chris.rode@headshift.com>
-Muz <mustaqila@yahoo.co.uk>
-Chris Adams <wave@chrisadams.me.uk>
-Dave Menninger <dave@domU-12-31-39-03-40-86.compute-1.internal>
 James Darling <james@abscond.org>
+Dave Menninger <dave@domU-12-31-39-03-40-86.compute-1.internal>
+Muz <mustaqila@yahoo.co.uk>
