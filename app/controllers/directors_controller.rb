@@ -6,4 +6,11 @@ class DirectorsController < ApplicationController
 		end
     redirect_to members_path
   end
+  
+  def stand_down
+    @director = co.directors.find(params[:id])
+    @director.update_attributes(params[:director])
+    @director.eject!
+    redirect_to members_path
+  end
 end

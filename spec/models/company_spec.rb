@@ -11,6 +11,14 @@ describe Company do
       
       @company.reload.meetings.should == [@meeting]
     end
+    
+    it "has many directors, which are really members" do
+      @company = Company.make
+      @member = Member.make(:organisation => @company)
+      
+      @company.reload
+      @company.directors.first.should be_a(Director)
+    end
   end
   
   describe "fake association builders" do

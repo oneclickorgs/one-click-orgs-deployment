@@ -25,12 +25,25 @@
   %tr
     %th Name
     %th Last login
+    %th
   - for member in @members
-    %tr
+    = content_tag_for(:tr, member) do
       %td
         = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
         = member.name
       %td
         - if member.last_logged_in_at
           = member.last_logged_in_at.to_s(:short)
-
+      %td
+        %input{:type => 'button', :value => 'Stand down', :class => 'button-form-show'}
+    %tr
+      %td{:colspan => 3}
+        = form_for(member, :url => stand_down_director_path(:id => member.id), :html => {:method => :post}) do |f|
+          %p
+            = f.label(:stood_down_on, "Date appointment ended")
+            = f.date_select(:stood_down_on)
+          %p
+            = f.check_box :certification
+            = f.label :certification, "I certify this individual duly ceased to be a Director on this date"
+          %p
+            = f.submit "Stand this director down"
