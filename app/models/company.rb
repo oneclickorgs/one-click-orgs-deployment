@@ -3,6 +3,10 @@ class Company < Organisation
   
   has_many :directors, :foreign_key => 'organisation_id'
   
+  def member_eligible_to_vote?(member, proposal)
+    true
+  end
+  
   def create_default_member_classes
     member_classes.find_or_create_by_name('Director')
   end

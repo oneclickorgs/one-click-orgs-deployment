@@ -59,6 +59,11 @@ class Association < Organisation
     pending? && members.count >= 3
   end
   
+  def member_eligible_to_vote?(member, proposal)
+    return true if proposed?
+    member.inducted? && proposal.creation_date >= member.inducted_at
+  end
+  
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
     members.set_permission!(:constitution_proposal, true)
