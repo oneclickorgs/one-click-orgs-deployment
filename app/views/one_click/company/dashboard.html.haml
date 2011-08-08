@@ -1,5 +1,7 @@
 %h2 Voting & minutes
 
+= render :partial => 'open_proposals', :locals => {:proposals => @proposals}
+
 .section
   %input{:type => 'button', :value => 'Record minutes', :class => 'button-form-show', 'data-form-id' => 'record_minutes_form'}
   %br.clear
