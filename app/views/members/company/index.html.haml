@@ -16,10 +16,10 @@
       %p
         = director_form.label :last_name
         = director_form.text_field :last_name
-      %p
+      %p.date
         = director_form.label :elected_on, "Date of election"
         = director_form.date_select :elected_on
-      %p
+      %p.checkbox
         = director_form.check_box :certification
         = director_form.label :certification, "I certify this individual was duly elected as a Director at a General Meeting held on this date"
       %p
@@ -43,10 +43,10 @@
     %tr.form-to-hide{:id => "stand_down_director_#{member.id}_form"}
       %td{:colspan => 3}
         = form_for(member, :url => stand_down_director_path(:id => member.id), :html => {:method => :post}) do |f|
-          %p
+          %p.date
             = f.label(:stood_down_on, "Date appointment ended")
             = f.date_select(:stood_down_on)
-          %p
+          %p.checkbox
             = f.check_box :certification
             = f.label :certification, "I certify this individual duly ceased to be a Director on this date"
           %p

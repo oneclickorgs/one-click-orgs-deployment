@@ -462,7 +462,8 @@ input[type="submit"] {
   input[type="submit"]:hover {
     background-color: #5e0037; }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
   clear: both;
   float: left;
   margin-bottom: 0.3em;
@@ -470,6 +471,10 @@ input[type="radio"] {
   margin-top: 0.3em;
   width: auto;
   border: none; }
+
+.date select {
+  width: auto;
+  display: inline; }
 
 input[type="hidden"] {
   display: none; }
