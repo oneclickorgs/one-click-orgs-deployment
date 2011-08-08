@@ -77,6 +77,9 @@ GEM
     haml (3.0.25)
     highline (1.6.2)
     i18n (0.5.0)
+    jquery-rails (1.0.12)
+      railties (~> 3.0)
+      thor (~> 0.14)
     json (1.5.3)
     json_pure (1.5.3)
     launchy (0.4.0)
@@ -190,6 +193,7 @@ DEPENDENCIES
   faker (~> 0.9.0)
   fastercsv
   haml (~> 3.0.18)
+  jquery-rails (~> 1.0.12)
   launchy (~> 0.4.0)
   machinist (~> 1.0.6)
   mysql
