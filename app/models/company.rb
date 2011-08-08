@@ -7,6 +7,10 @@ class Company < Organisation
     true
   end
   
+  def member_count_for_proposal(proposal)
+    directors.active.count
+  end
+  
   def create_default_member_classes
     member_classes.find_or_create_by_name('Director')
   end

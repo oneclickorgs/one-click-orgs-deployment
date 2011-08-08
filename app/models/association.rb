@@ -64,6 +64,48 @@ class Association < Organisation
     member.inducted? && proposal.creation_date >= member.inducted_at
   end
   
+  def member_count_for_proposal(proposal)
+    # TODO: find out how to do the following in one query
+    count = 0
+    
+    # To vote, a member must be inducted, and must have been added (created)
+    # before this proposal was made.
+    
+    # Members who were founding members are an exception. They are allowed
+    # to vote in proposals before they have been inducted.
+    # (This is because, by participating in the founding vote, they have
+    # already agreed to the constitution.)
+    # We determine who was a founding member by seeing whether they were
+    # created before the FoundAssociationProposal for this org.
+    
+    fap = found_association_proposals.last
+    if fap
+      members.where(
+        "(state = 'active' AND created_at < :proposal_creation_date) " +
+        "OR (state <> 'inactive' and created_at < :founding_date)",
+        :proposal_creation_date => proposal.creation_date,
+        :founding_date => fap.creation_date
+      ).each do |m|
+        count += 1 if m.has_permission(:vote)
+      end
+    else
+      # FIXME This 'if' branch is checking for the case where there is no
+      # FoundAssociationProposal yet, so shouldn't it be including members
+      # who haven't been inducted yet (since no member gets inducted during
+      # the pending state of the organisation)?
+      # 
+      # Suspect that this is only working because FoundAssociationProposal
+      # overrides #member_count, so this branch never really gets executed.
+      members.active.where(
+        "created_at < :proposal_creation_date",
+        :proposal_creation_date => proposal.creation_date
+      ).each do |m|
+        count += 1 if m.has_permission(:vote)
+      end
+    end
+    count
+  end
+  
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
     members.set_permission!(:constitution_proposal, true)

@@ -68,6 +68,10 @@ class Organisation < ActiveRecord::Base
     raise NotImplementedError
   end
   
+  def member_count_for_proposal(proposal)
+    raise NotImplementedError
+  end
+  
   def default_member_class
     member_classes.first
   end
