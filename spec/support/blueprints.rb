@@ -108,3 +108,6 @@ end
 
 Comment.blueprint do
 end
+
+Director.blueprint do
+end
