@@ -31,8 +31,8 @@
 
 - if current_organisation.active?
   .section
-    %input{:type => 'button', :value => 'Propose a vote', :id => 'button-proposal', :class => 'button-form-show'}  
-    %input{:type => 'button', :value => 'Propose a new member', :id => 'button-member-invite', :class => 'button-form-show'}
+    %input{:type => 'button', :value => 'Propose a vote', :class => 'button-form-show', 'data-form-id' => 'propose_freeform_form'}
+    %input{:type => 'button', :value => 'Propose a new member', :class => 'button-form-show', 'data-form-id' => 'propose_new_member_form'}
     %input{:type => 'button', :value => 'Propose an amendment to the constitution', :class => 'button-form', 'data-url' => edit_constitution_path}
     %br.clear
 

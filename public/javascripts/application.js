@@ -47,9 +47,7 @@ OneClickOrgs.trackAnalyticsEvent = function (eventName) {
 }
 
 $(document).ready(function () {
-
-
-  // Forms on the Voting & proposals page
+  // Revealed forms
   // If JavaScript is disabled, they all show by default
   $('.form-to-hide').hide();
 
@@ -61,34 +59,22 @@ $(document).ready(function () {
     // make it slide back up on click
     cloned_cancel.click(function(event) {
       event.preventDefault();
-      $(this).closest('.form-to-hide').slideUp();
+      $(this).closest('.form-to-hide').removeClass('active').slideUp();
     })
   })
-
 
   $('.button-form-show').show();
 
   $('.button-form-show').click(function() {
-    $(this).toggleClass('clicked');
-  });
-  // this isn't quite behaving how it should:
-  // ideally these slideDown() animations only fire after a 
-  // slideUp, but putting them in the call back means that these
-  // end up being called twice.
-  // TODO - fix this fire only at the right time
-  //
-  $('#button-proposal').click(function() {
-      if (!$(this).hasClass('active')) {
-
-        $('.button-form-show').removeClass('active');
-
-        $(this).addClass('active');
-
-        $('.form-to-hide').not( $('.active')).slideUp( function() {
-          $('#propose_freeform_form').slideDown('medium');
-        });
-     
-      }
+    var button = $(this);
+    var form = $('#' + button.data('formId'));
+    
+    if (!form.hasClass('active')) {
+      $('.form-to-hide.active').removeClass('active').slideUp();
+      form.addClass('active').slideDown('medium');
+    } else {
+      form.removeClass('active').slideUp();
+    }
   });
   
   $('.button-form').click(function() {
