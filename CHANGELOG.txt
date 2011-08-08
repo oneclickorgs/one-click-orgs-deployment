@@ -1,3 +1,7 @@
+2011-08-08 One Click Orgs 1.2.1
+
+* FIX: Notifications that should only be shown once were showing repeatedly.
+
 2011-07-21 One Click Orgs 1.2.0
 
 * FEATURE: Members list can be downloaded in CSV format.

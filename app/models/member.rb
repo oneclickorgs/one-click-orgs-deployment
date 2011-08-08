@@ -235,17 +235,15 @@ class Member < ActiveRecord::Base
   
   # Check if this notification has been shown to user already.
   #
-  # There is an assumption that a user will never require more than one of the
-  # same kind of notification, at the same time as another
-  #
   # @param [Symbol] notification the kind of notification
-  # @param [optional, Timestamp] created_at when the notification was created
-  #
-  # @example Check that a user saw that her latest proposal in an organisation failed at a particular time in June
-  #   current_user.has_seen_notification?(:founding_proposal_failed, "2011-06-04 13:14:37")
-  #
-  def has_seen_notification?(notification, created_at = '')
-    seen_notifications.exists?(:notification => notification, :created_at => created_at)
+  # @param [optional, Timestamp] ignore_earlier_than If you pass this timestamp, we only consider the period
+  # after the timestamp when checking to see if the member has already seen this notification.
+  def has_seen_notification?(notification, ignore_earlier_than = nil)
+    if ignore_earlier_than
+      seen_notifications.exists?(["notification = ? AND created_at >= ?", notification, ignore_earlier_than])
+    else
+      seen_notifications.exists?(:notification => notification)
+    end
   end
   
   def has_seen_notification!(notification)

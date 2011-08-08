@@ -34,6 +34,10 @@ Given /^an association is active$/ do
   end
 end
 
+When /^I create an association$/ do
+  Given "I have created an association"
+end
+
 Then /^the organisation should be active$/ do
   @organisation.reload.should be_active
 end
