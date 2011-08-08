@@ -1,18 +1,21 @@
 %h2 Voting & minutes
 
-%input{:type => 'button', :value => 'Record minutes', :class => 'button-form-show'}
-= form_for(@meeting) do |meeting_form|
-  %p
-    = meeting_form.label :happened_on, "Date of discussion"
-    = meeting_form.date_select :happened_on
-  = field_set_tag "Participants" do
-    - @directors.each do |director|
+.section
+  %input{:type => 'button', :value => 'Record minutes', :class => 'button-form-show', 'data-form-id' => 'record_minutes_form'}
+  %br.clear
+  %div#record_minutes_form.form-to-hide
+    = form_for(@meeting) do |meeting_form|
       %p
-        = check_box_tag "meeting[participant_ids][#{director.id}]"
-        = label_tag "meeting_participant_ids_#{director.id}", director.name
-  %p
-    = meeting_form.label :minutes, "What was discussed"
-    = meeting_form.text_area :minutes
-  %p
-    = meeting_form.submit "Submit"
+        = meeting_form.label :happened_on, "Date of discussion"
+        = meeting_form.date_select :happened_on
+      = field_set_tag "Participants" do
+        - @directors.each do |director|
+          %p
+            = check_box_tag "meeting[participant_ids][#{director.id}]"
+            = label_tag "meeting_participant_ids_#{director.id}", director.name
+      %p
+        = meeting_form.label :minutes, "What was discussed"
+        = meeting_form.text_area :minutes
+      %p
+        = meeting_form.submit "Submit"
 = render :partial => 'timeline', :locals => {:timeline => @timeline}

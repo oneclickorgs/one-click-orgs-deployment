@@ -1,25 +1,29 @@
 %h2 Directors
 
-%input{:type => 'button', :value => 'Add a new director', :class => 'button-form-show'}
-
-= form_for(@director) do |director_form|
-  %p
-    = director_form.label :email
-    = director_form.text_field :email
-  %p
-    = director_form.label :first_name
-    = director_form.text_field :first_name
-  %p
-    = director_form.label :last_name
-    = director_form.text_field :last_name
-  %p
-    = director_form.label :elected_on, "Date of election"
-    = director_form.date_select :elected_on
-  %p
-    = director_form.check_box :certification
-    = director_form.label :certification, "I certify this individual was duly elected as a Director at a General Meeting held on this date"
-  %p
-    = director_form.submit "Add this director"
+.section
+  %input{:type => 'button', :value => 'Add a new director', :class => 'button-form-show', 'data-form-id' => 'new_director_form'}
+  
+  %br.clear
+  
+  %div#new_director_form.form-to-hide
+    = form_for(@director) do |director_form|
+      %p
+        = director_form.label :email
+        = director_form.text_field :email
+      %p
+        = director_form.label :first_name
+        = director_form.text_field :first_name
+      %p
+        = director_form.label :last_name
+        = director_form.text_field :last_name
+      %p
+        = director_form.label :elected_on, "Date of election"
+        = director_form.date_select :elected_on
+      %p
+        = director_form.check_box :certification
+        = director_form.label :certification, "I certify this individual was duly elected as a Director at a General Meeting held on this date"
+      %p
+        = director_form.submit "Add this director"
 
 %table.members
   %tr
@@ -35,8 +39,8 @@
         - if member.last_logged_in_at
           = member.last_logged_in_at.to_s(:short)
       %td
-        %input{:type => 'button', :value => 'Stand down', :class => 'button-form-show'}
-    %tr
+        %input{:type => 'button', :value => 'Stand down', :class => 'button-form-show', 'data-form-id' => "stand_down_director_#{member.id}_form"}
+    %tr.form-to-hide{:id => "stand_down_director_#{member.id}_form"}
       %td{:colspan => 3}
         = form_for(member, :url => stand_down_director_path(:id => member.id), :html => {:method => :post}) do |f|
           %p
