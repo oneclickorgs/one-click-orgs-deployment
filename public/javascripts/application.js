@@ -89,22 +89,9 @@ $(document).ready(function () {
      
       }
   });
-
-  $('#button-member-invite').click(function() {
-     if (!$(this).hasClass('active')) {
-
-      $('.button-form-show').removeClass('active');
-
-      $(this).addClass('active');
-
-      $('.form-to-hide').not( $('.active')).slideUp();
-
-      $('#propose_new_member_form').slideDown('medium');
-     }
-  })
-
-  $('#button-constitution-change').click(function() {
-    $(location).attr('href','/amendments');
+  
+  $('.button-form').click(function() {
+    window.location.href = $(this).data('url');
   });
 
   // Notifications

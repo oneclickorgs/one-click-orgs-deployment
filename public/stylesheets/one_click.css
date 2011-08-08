@@ -480,13 +480,17 @@ input.checkbox {
   width: auto;
   float: none; }
 
-input.button-form-show {
+input.button-form-show,
+input.button-form {
   cursor: pointer;
-  display: none;
   float: left;
   margin: 10px 20px 10px 0; }
-  input.button-form-show.clicked {
+  input.button-form-show.clicked,
+  input.button-form.clicked {
     background-color: #cccccc; }
+
+input.button-form-show {
+  display: none; }
 
 textarea {
   height: 10em; }

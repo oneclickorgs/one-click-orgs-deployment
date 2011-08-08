@@ -33,7 +33,7 @@
   .section
     %input{:type => 'button', :value => 'Propose a vote', :id => 'button-proposal', :class => 'button-form-show'}  
     %input{:type => 'button', :value => 'Propose a new member', :id => 'button-member-invite', :class => 'button-form-show'}
-    %input{:type => 'button', :value => 'Propose an amendment to the constitution', :id => 'button-constitution-change', :class => 'button-form-show'}
+    %input{:type => 'button', :value => 'Propose an amendment to the constitution', :class => 'button-form', 'data-url' => edit_constitution_path}
     %br.clear
 
     %div#propose_freeform_form.form-to-hide
