@@ -48,6 +48,10 @@ Given /^the organisation's name is "([^"]*)"$/ do |new_organisation_name|
   @organisation.clauses.set_text!(:organisation_name, new_organisation_name)
 end
 
+When /^I create an organisation$/ do
+  Given "I have created an organisation"
+end
+
 Then /^the organisation should be active$/ do
   @organisation.should be_active
 end
