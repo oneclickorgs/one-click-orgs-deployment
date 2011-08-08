@@ -12,7 +12,10 @@ class Company < Organisation
   end
   
   def create_default_member_classes
-    member_classes.find_or_create_by_name('Director')
+    directors = member_classes.find_or_create_by_name('Director')
+    directors.set_permission!(:freeform_proposal, true)
+    directors.set_permission!(:vote, true)
+    directors.save
   end
   
   def set_default_voting_systems
