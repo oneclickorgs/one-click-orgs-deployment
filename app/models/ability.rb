@@ -7,8 +7,21 @@ class Ability
   def initialize(user)
     return unless user
     
+    if user.has_permission(:vote)
+      can :create, Vote
+      can :vote_on, Proposal do |proposal|
+        user.eligible_to_vote?(proposal)
+      end
+    end
+    
+    can :update, Member, :id => user.id
+    
     case user.organisation
     when Association
+      if user.has_permission(:freeform_proposal)
+        can :create, Proposal if !user.organisation.proposed?
+      end
+      
       if user.has_permission(:membership_proposal)
         can :create, AddMemberProposal if user.organisation.active?
         can :create, ChangeMemberClassProposal
@@ -24,19 +37,10 @@ class Ability
       if user.has_permission(:found_association_proposal)
         can :create, FoundAssociationProposal if user.organisation.pending?
       end
-
+    when Company
       if user.has_permission(:freeform_proposal)
-        can :create, Proposal if !user.organisation.proposed?
-      end
-
-      if user.has_permission(:vote)
-        can :create, Vote
-        can :vote_on, Proposal do |proposal|
-          user.eligible_to_vote?(proposal)
-        end
+        can :create, Proposal
       end
     end
-    
-    can :update, Member, :id => user.id
   end
 end
