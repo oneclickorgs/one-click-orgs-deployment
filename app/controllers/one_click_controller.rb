@@ -7,14 +7,14 @@ class OneClickController < ApplicationController
     # Fetch open proposals
     @proposals = co.proposals.currently_open
     
+    @new_proposal = co.proposals.new
+    
     case co
     when Association
       if current_organisation.pending? || current_organisation.proposed?
         redirect_to constitution_path
         return
       end
-      
-      @new_proposal = co.proposals.new
       @add_member_proposal = co.add_member_proposals.build
       
       @timeline = [

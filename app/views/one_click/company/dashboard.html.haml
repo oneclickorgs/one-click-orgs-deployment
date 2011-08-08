@@ -3,8 +3,14 @@
 = render :partial => 'open_proposals', :locals => {:proposals => @proposals}
 
 .section
+  %input{:type => 'button', :value => 'Propose a vote', :class => 'button-form-show', 'data-form-id' => 'propose_freeform_form'}
   %input{:type => 'button', :value => 'Record minutes', :class => 'button-form-show', 'data-form-id' => 'record_minutes_form'}
+  
   %br.clear
+  
+  %div#propose_freeform_form.form-to-hide
+    = render :partial => 'shared/propose_freeform_form'
+  
   %div#record_minutes_form.form-to-hide
     = form_for(@meeting) do |meeting_form|
       %p.date

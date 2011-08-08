@@ -36,6 +36,8 @@ describe "one_click/dashboard" do
       assign(:timeline, @timeline)
       
       assign(:proposals, [])
+      
+      view.stub(:can?).with(:create, Proposal).and_return(false)
     end
 
     describe "new meeting form" do

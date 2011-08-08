@@ -51,6 +51,8 @@ describe OneClickController do
         @company.stub(:proposals).and_return(@proposals)
         @proposals.stub(:all).and_return(@proposals)
         @proposals.stub!(:currently_open).and_return(@proposals)
+        
+        @proposals.stub!(:new).and_return(mock_model(Proposal))
       end
       
       def get_dashboard
