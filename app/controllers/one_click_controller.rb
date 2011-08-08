@@ -27,6 +27,7 @@ class OneClickController < ApplicationController
       @directors = co.members.where(:member_class_id => co.member_classes.find_by_name('Director').id)
       @timeline = [
         co.proposals.all,
+        co.decisions.all,
         co.meetings.all
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     end
