@@ -11,6 +11,10 @@ class Company < Organisation
     directors.active.count
   end
   
+  def welcome_email_action
+    :welcome_new_director
+  end
+  
   def create_default_member_classes
     directors = member_classes.find_or_create_by_name('Director')
     directors.set_permission!(:freeform_proposal, true)

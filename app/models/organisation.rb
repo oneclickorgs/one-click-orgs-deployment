@@ -72,6 +72,10 @@ class Organisation < ActiveRecord::Base
     raise NotImplementedError
   end
   
+  def welcome_email_action
+    raise NotImplementedError
+  end
+  
   def default_member_class
     member_classes.first
   end
