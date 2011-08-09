@@ -106,6 +106,14 @@ class Association < Organisation
     count
   end
   
+  def welcome_email_action
+    if pending?
+      :welcome_new_founding_member
+    else
+      :welcome_new_member
+    end
+  end
+  
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
     members.set_permission!(:constitution_proposal, true)

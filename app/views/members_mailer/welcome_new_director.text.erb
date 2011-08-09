@@ -1,0 +1,10 @@
+Dear <%=raw(  @member.name || 'director'  )%>,
+
+You have been added as a director of <%=raw( @organisation_name )%>. Click the link below to confirm your directorship on the One Click Orgs website:
+
+<%=raw(  short_invitation_url(:id => @member.invitation_code)  )%>
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs

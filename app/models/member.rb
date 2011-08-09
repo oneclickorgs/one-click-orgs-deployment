@@ -142,11 +142,7 @@ class Member < ActiveRecord::Base
   def send_welcome_if_requested
     return unless @send_welcome
     
-    if self.organisation.pending? then
-      MembersMailer.welcome_new_founding_member(self).deliver
-    else
-      MembersMailer.welcome_new_member(self).deliver
-    end
+    MembersMailer.send(organisation.welcome_email_action, self).deliver
   end
   
   def inducted?

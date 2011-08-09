@@ -34,6 +34,16 @@ class MembersMailer < OcoMailer
     create_mail(@organisation_name, @member.email, "Invitation to become a member of #{@organisation_name}")
   end
   
+  def welcome_new_director(member)
+    default_url_options[:host] = member.organisation.domain(:only_host => true)
+
+    @member = member
+    raise ArgumentError, "No member provided" unless @member
+    @organisation_name = member.organisation.name
+
+    create_mail(@organisation_name, @member.email, "You have been added as a director of #{@organisation_name}")
+  end
+  
   def password_reset(member)
     default_url_options[:host] = member.organisation.domain(:only_host => true)
     

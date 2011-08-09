@@ -13,7 +13,7 @@ describe DirectorsController do
   describe "POST create" do
     before(:each) do
       @director_parameters = double("director parameters")
-      @director = mock_model(Director, :save => true).as_new_record
+      @director = mock_model(Director, :save => true, :send_welcome= => nil).as_new_record
       @director.stub(:send_new_director_notifications)
       @company.stub(:build_director).and_return(@director)
     end
