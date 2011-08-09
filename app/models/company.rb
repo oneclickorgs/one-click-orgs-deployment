@@ -3,8 +3,19 @@ class Company < Organisation
   
   has_many :directors, :foreign_key => 'organisation_id'
   
+  def member_eligible_to_vote?(member, proposal)
+    true
+  end
+  
+  def member_count_for_proposal(proposal)
+    directors.active.count
+  end
+  
   def create_default_member_classes
-    member_classes.find_or_create_by_name('Director')
+    directors = member_classes.find_or_create_by_name('Director')
+    directors.set_permission!(:freeform_proposal, true)
+    directors.set_permission!(:vote, true)
+    directors.save
   end
   
   def set_default_voting_systems

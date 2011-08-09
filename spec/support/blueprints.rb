@@ -45,13 +45,12 @@ end
 Proposal.blueprint do
   title "a proposal title"
   state "open"
-  proposer {Member.make}
+  proposer {Member.make(:organisation => organisation)}
 end
 
 AddMemberProposal.blueprint do
   title "a proposal title"
   state 'open'
-  proposer {Member.make}
   parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
 end
 
@@ -108,4 +107,7 @@ MeetingParticipation.blueprint do
 end
 
 Comment.blueprint do
+end
+
+Director.blueprint do
 end
