@@ -23,5 +23,4 @@ Feature: Adding a director
     And I press "Add this director"
     Then I should be on the Directors page
     And I should see "Bob Smith" within the list of directors
-    
-  
+    And a director invitation email should be sent to "bob@example.com"

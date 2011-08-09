@@ -33,6 +33,11 @@ Then /^I should receive a welcome email$/ do
   @email.body.should =~ /created a draft constitution/
 end
 
+Then /^a director invitation email should be sent to "([^"]*)"$/ do |email_address|
+  @emails = ActionMailer::Base.deliveries.select{|m| m.to == [email_address] && m.body =~ /You have been added as a director/}
+  @emails.should_not be_empty
+end
+
 Then /^a founding member invitation email should be sent to "([^"]*)"$/ do |email_address|
   @email = last_email
   @email.to.should == [email_address]
