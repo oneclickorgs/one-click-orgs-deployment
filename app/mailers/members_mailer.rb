@@ -63,7 +63,7 @@ class MembersMailer < OcoMailer
     @organisation = member.organisation
     @organisation_name = member.organisation.name
 
-    create_mail(@organisation_name, @member.email, "Notification from #{@organisation_name} on One Click Orgs")
+    create_mail(@organisation_name, @member.email, "A new director has been added to #{@organisation_name}")
   end
   
   # TODO Implement @ directors_controller.rb -> destroy
