@@ -165,10 +165,12 @@ class Member < ActiveRecord::Base
     full_name.blank? ? nil : full_name
   end
   
-  # A member is a founding member if they were created before the organisation's
-  # founding proposal, or if they are in an organisation that has not had a
+  # A member is a founding member if they were created before the association's
+  # founding proposal, or if they are in an association that has not had a
   # founding proposal yet.
   def founding_member?
+    return false unless organisation.is_a?(Association)
+    
     fap = organisation.found_association_proposals.last
     if fap
       self.created_at < fap.creation_date

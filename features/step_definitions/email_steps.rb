@@ -14,6 +14,11 @@ Given /^I have received an email inviting me to become a member$/ do
   @email = last_email
 end
 
+Given /^I have received an email inviting me to sign up as a director$/ do
+  Given "I have been invited to sign up as a director"
+  @email = last_email
+end
+
 When /^I click the link in the email$/ do
   @email ||= last_email
   uri = URI.parse(@email.body.match(/(http:\/\/\S*)/)[1])

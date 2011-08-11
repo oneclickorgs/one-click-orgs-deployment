@@ -25,3 +25,9 @@ Given /^I am a member of the organisation$/ do
     :member_class => @organisation.member_classes.find_by_name('Member')
   )
 end
+
+Given /^I have been invited to sign up as a director$/ do
+  @user ||= @organisation.directors.make
+  @user.send_welcome = true
+  @user.send_welcome_if_requested
+end
