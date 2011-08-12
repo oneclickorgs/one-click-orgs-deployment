@@ -14,6 +14,11 @@ Given /^I have received an email inviting me to become a member$/ do
   @email = last_email
 end
 
+Given /^I have received an email inviting me to sign up as a director$/ do
+  Given "I have been invited to sign up as a director"
+  @email = last_email
+end
+
 When /^I click the link in the email$/ do
   @email ||= last_email
   uri = URI.parse(@email.body.match(/(http:\/\/\S*)/)[1])
@@ -31,6 +36,11 @@ Then /^I should receive a welcome email$/ do
   @email = last_email
   @email.to.should == [(@user ||= Member.last).email]
   @email.body.should =~ /created a draft constitution/
+end
+
+Then /^a director invitation email should be sent to "([^"]*)"$/ do |email_address|
+  @emails = ActionMailer::Base.deliveries.select{|m| m.to == [email_address] && m.body =~ /You have been added as a director/}
+  @emails.should_not be_empty
 end
 
 Then /^a founding member invitation email should be sent to "([^"]*)"$/ do |email_address|
@@ -79,3 +89,11 @@ Then /^I should see a link to the minutes in the email$/ do
   
   @email.body.should include("#{@meeting.organisation.domain}/meetings/#{@meeting.to_param}")
 end
+
+Then /^all the directors should receive a "([^"]*)" email$/ do |subject_phrase|
+  @organisation.directors.active.each do |director|
+    mails = ActionMailer::Base.deliveries.select{|m| m.to.include?(director.email)}
+    mails.select{|m| m.subject.include?(subject_phrase)}.should_not be_empty
+  end
+end
+

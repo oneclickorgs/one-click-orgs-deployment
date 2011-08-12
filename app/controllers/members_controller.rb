@@ -9,7 +9,7 @@ class MembersController < ApplicationController
         @founding_member = co.build_founding_member
       end
     when Company
-      @members = co.members.active
+      @members = co.directors.active
       
       @page_title = "Directors"
       @director = Director.new

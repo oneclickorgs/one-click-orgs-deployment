@@ -10,6 +10,7 @@ Given /^the founding vote has been started$/ do
 end
 
 Given /^another founding vote has been started$/ do
+  sleep(1)
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
   @organisation.found_association_proposals.make(:proposer => founder, :title => "A second voting proposal.")
   @organisation.reload

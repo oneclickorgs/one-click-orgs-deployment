@@ -46,8 +46,15 @@ describe OneClickController do
           mock_model(Meeting, :to_event => mock_event),
           mock_model(Meeting, :to_event => mock_event)
         ]
-        @company.stub_chain(:proposals, :all).and_return(@proposals)
         @company.stub_chain(:meetings, :all).and_return(@meetings)
+        
+        @company.stub(:proposals).and_return(@proposals)
+        @company.stub_chain(:decisions, :all).and_return([])
+        
+        @proposals.stub(:all).and_return(@proposals)
+        @proposals.stub!(:currently_open).and_return(@proposals)
+        
+        @proposals.stub!(:new).and_return(mock_model(Proposal))
       end
       
       def get_dashboard
