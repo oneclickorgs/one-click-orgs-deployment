@@ -54,7 +54,7 @@ class MembersMailer < OcoMailer
     create_mail(@organisation_name, @member.email, "Your password for #{@organisation_name} on One Click Orgs")
   end
   
-  def new_director_notification(member, director)
+  def notify_new_director(member, director)
     default_url_options[:host] = member.organisation.domain(:only_host => true)
 
     @member = member

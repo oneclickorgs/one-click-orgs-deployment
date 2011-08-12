@@ -9,7 +9,7 @@ class Director < Member
   
   def send_new_director_notifications
     self.organisation.members.each do |member|
-      MembersMailer.new_director_notification(member, self).deliver 
+      MembersMailer.notify_new_director(member, self).deliver
     end
   end
   
