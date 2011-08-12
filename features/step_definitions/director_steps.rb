@@ -49,6 +49,11 @@ When /^I add a new director$/ do
   And 'I press "Add this director"'
 end
 
+When /^I stand down a director$/ do
+  Given 'I am on the Directors page'
+  When 'I press "Stand down" for another director'
+  When 'I submit the form to stand down the director'
+end
 
 Then /^I should not see the director$/ do
   page.should_not have_selector("tr#director_#{@director.id}")

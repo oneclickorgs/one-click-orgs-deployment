@@ -12,4 +12,10 @@ class Director < Member
       MembersMailer.new_director_notification(member, self).deliver 
     end
   end
+  
+  def send_stand_down_notification_emails
+    self.organisation.members.each do |member|
+      MembersMailer.notify_director_stand_down(member, self).deliver
+    end
+  end
 end

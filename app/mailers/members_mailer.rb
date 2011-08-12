@@ -66,15 +66,15 @@ class MembersMailer < OcoMailer
     create_mail(@organisation_name, @member.email, "A new director has been added to #{@organisation_name}")
   end
   
-  # TODO Implement @ directors_controller.rb -> destroy
-  #def director_leaves_notification(member, director)
-  #  default_url_options[:host] = member.organisation.domain(:only_host => true)
+  def notify_director_stand_down(member, director)
+   default_url_options[:host] = member.organisation.domain(:only_host => true)
 
-  #  @member = member
-  #  raise ArgumentError, "No member provided" unless @member
-  #  @organisation = member.organisation
-  #  @organisation_name = member.organisation.name
+   @member = member
+   @director = director
+   raise ArgumentError, "No member provided" unless @member
+   @organisation = member.organisation
+   @organisation_name = member.organisation.name
 
-  #  create_mail(@organisation_name, @member.email, "Notification from #{@organisation_name} on One Click Orgs")
-  #end
+   create_mail(@organisation_name, @member.email, "#{@director.name} has stood down as a director of #{@organisation.name}")
+  end
 end

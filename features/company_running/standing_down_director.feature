@@ -19,3 +19,8 @@ Feature: Standing down director
     When I submit the form to stand down the director
     Then I should be on the Directors page
     And I should not see the director
+  
+  @javascript
+  Scenario: Directors are notified of a director standing down
+    When I stand down a director
+    Then all the directors should receive a "stood down" email

@@ -12,6 +12,7 @@ class DirectorsController < ApplicationController
     @director = co.directors.find(params[:id])
     @director.update_attributes(params[:director])
     @director.eject!
+    @director.send_stand_down_notification_emails
     redirect_to members_path
   end
 end
