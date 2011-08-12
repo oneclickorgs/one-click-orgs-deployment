@@ -38,6 +38,18 @@ When /^I submit the form to stand down the director$/ do
   end
 end
 
+When /^I add a new director$/ do
+  When 'I go to the Directors page'
+  And 'I press "Add a new director"'
+  And 'I fill in "Email" with "bob@example.com"'
+  And 'I fill in "First name" with "Bob"'
+  And 'I fill in "Last name" with "Smith"'
+  And 'I choose yesterday for the date of election'
+  And 'I check the certification checkbox'
+  And 'I press "Add this director"'
+end
+
+
 Then /^I should not see the director$/ do
   page.should_not have_selector("tr#director_#{@director.id}")
 end

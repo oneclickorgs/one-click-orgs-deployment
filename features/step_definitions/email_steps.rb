@@ -89,3 +89,11 @@ Then /^I should see a link to the minutes in the email$/ do
   
   @email.body.should include("#{@meeting.organisation.domain}/meetings/#{@meeting.to_param}")
 end
+
+Then /^all the directors should receive a "([^"]*)" email$/ do |subject_phrase|
+  @organisation.directors.each do |director|
+    mails = ActionMailer::Base.deliveries.select{|m| m.to.include?(director.email)}
+    mails.select{|m| m.subject.include?(subject_phrase)}.should_not be_empty
+  end
+end
+
