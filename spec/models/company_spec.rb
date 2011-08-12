@@ -40,9 +40,9 @@ describe Company do
       end
     end
     
-    it "sets a default voting system of simple majority" do
+    it "sets a default voting system of absolute majority" do
       @company = Company.make
-      @company.constitution.voting_system.should == VotingSystems::RelativeMajority
+      @company.constitution.voting_system.should == VotingSystems::AbsoluteMajority
     end
     
     it "sets a default voting period of 7 days" do
