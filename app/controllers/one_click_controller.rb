@@ -4,16 +4,17 @@ class OneClickController < ApplicationController
   end
   
   def dashboard
+    # Fetch open proposals
+    @proposals = co.proposals.currently_open
+    
+    @new_proposal = co.proposals.new
+    
     case co
     when Association
       if current_organisation.pending? || current_organisation.proposed?
         redirect_to constitution_path
         return
       end
-      # Fetch open proposals
-      @proposals = co.proposals.currently_open
-      
-      @new_proposal = co.proposals.new
       @add_member_proposal = co.add_member_proposals.build
       
       @timeline = [
@@ -26,6 +27,7 @@ class OneClickController < ApplicationController
       @directors = co.members.where(:member_class_id => co.member_classes.find_by_name('Director').id)
       @timeline = [
         co.proposals.all,
+        co.decisions.all,
         co.meetings.all
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     end

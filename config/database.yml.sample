@@ -8,8 +8,10 @@ development: &defaults
   host:     localhost
  
 test:
-  <<:       *defaults
+  adapter: mysql
   database: one_click_test
+  encoding: utf8
+  username: 
  
 production:
   adapter:  mysql

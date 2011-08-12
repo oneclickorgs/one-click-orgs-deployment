@@ -1,39 +1,13 @@
 %h2 Voting & proposals
 
 - if current_organisation.active? || current_organisation.proposed?
-  .section.open-proposals
-    %h3 Votes in progress
-    %p.explanation
-      - if @proposals.count == 0
-        No proposals are currently undergoing voting by
-        = @current_organisation.name
-        members.
-      - else
-        These proposals are currently undergoing voting by
-        = @current_organisation.name
-        members.
-    - @proposals.each do |proposal|
-      = content_tag_for(:div, proposal) do
-        %h4
-          = proposal.title
-          %span.time-ends
-            (voting ends
-            = proposal.end_date.to_s(:long)
-            )
-        = render 'proposals/description', :proposal => proposal
-        %p.votes
-          = proposal.votes_for
-          votes for,
-          = proposal.votes_against
-          against
-        = render 'proposals/vote', :proposal => proposal
-        %br.clear
+  = render :partial => 'open_proposals', :locals => {:proposals => @proposals}
 
 - if current_organisation.active?
   .section
-    %input{:type => 'button', :value => 'Propose a vote', :id => 'button-proposal', :class => 'button-form-show'}  
-    %input{:type => 'button', :value => 'Propose a new member', :id => 'button-member-invite', :class => 'button-form-show'}
-    %input{:type => 'button', :value => 'Propose an amendment to the constitution', :id => 'button-constitution-change', :class => 'button-form-show'}
+    %input{:type => 'button', :value => 'Propose a vote', :class => 'button-form-show', 'data-form-id' => 'propose_freeform_form'}
+    %input{:type => 'button', :value => 'Propose a new member', :class => 'button-form-show', 'data-form-id' => 'propose_new_member_form'}
+    %input{:type => 'button', :value => 'Propose an amendment to the constitution', :class => 'button-form', 'data-url' => edit_constitution_path}
     %br.clear
 
     %div#propose_freeform_form.form-to-hide

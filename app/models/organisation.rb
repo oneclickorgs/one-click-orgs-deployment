@@ -64,6 +64,18 @@ class Organisation < ActiveRecord::Base
     end
   end
   
+  def member_eligible_to_vote?(member, proposal)
+    raise NotImplementedError
+  end
+  
+  def member_count_for_proposal(proposal)
+    raise NotImplementedError
+  end
+  
+  def welcome_email_action
+    raise NotImplementedError
+  end
+  
   def default_member_class
     member_classes.first
   end

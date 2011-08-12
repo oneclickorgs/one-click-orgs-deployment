@@ -4,7 +4,7 @@ describe "one_click/dashboard" do
   
   context "when current organisation is a company" do
     before(:each) do
-      @organisation = mock_model(Company)
+      @organisation = mock_model(Company, :name => "Grapes Ltd")
       assign(:current_organisation, @organisation)
       view.stub!(:current_organisation).and_return(@organisation)
       view.stub!(:co).and_return(@organisation)
@@ -34,6 +34,10 @@ describe "one_click/dashboard" do
         }
       ]
       assign(:timeline, @timeline)
+      
+      assign(:proposals, [])
+      
+      view.stub(:can?).with(:create, Proposal).and_return(false)
     end
 
     describe "new meeting form" do

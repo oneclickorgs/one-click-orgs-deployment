@@ -502,7 +502,8 @@ input[type="submit"]
 
 // This declaration is repeated in ie.sass with an IE-compatible selector
 // and some layout tweaks; make sure any important changes go there too.
-input[type="radio"]
+input[type="radio"],
+input[type="checkbox"]
   :clear both
   :float left
   :margin-bottom 0.3em
@@ -511,22 +512,23 @@ input[type="radio"]
   :width auto
   :border none
 
+.date select
+  :width auto
+  :display inline
+
 input[type="hidden"]
   :display none
 
-input.checkbox
-  :display inline
-  :margin 5px
-  :width auto
-  :float none
-
-input.button-form-show
+input.button-form-show,
+input.button-form
   :cursor pointer
-  :display none
   :float left
   :margin 10px 20px 10px 0
   &.clicked
     :background-color #ccc
+
+input.button-form-show
+  :display none
 
 textarea
   :height 10em

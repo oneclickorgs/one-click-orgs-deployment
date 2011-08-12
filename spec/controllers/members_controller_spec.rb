@@ -16,11 +16,11 @@ describe MembersController do
     
     describe "GET index" do
       before(:each) do
-        @members_association = double("members association")
-        @company.stub(:members).and_return(@members_association)
+        @directors_association = double("directors association")
+        @company.stub(:directors).and_return(@directors_association)
         
-        @members = double("members")
-        @members_association.stub(:active).and_return(@members)
+        @directors = double("directors")
+        @directors_association.stub(:active).and_return(@directors)
         
         @director = mock_model(Director)
         Director.stub(:new).and_return(@director)
@@ -30,14 +30,14 @@ describe MembersController do
         get :index
       end
       
-      it "finds the active members" do
-        @members_association.should_receive(:active).and_return(@members)
+      it "finds the active directors" do
+        @directors_association.should_receive(:active).and_return(@directors)
         get_index
       end
       
-      it "assigns the members" do
+      it "assigns the directors" do
         get_index
-        assigns(:members).should == @members
+        assigns(:members).should == @directors
       end
       
       it "builds a new director" do
