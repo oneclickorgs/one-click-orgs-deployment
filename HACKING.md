@@ -76,7 +76,7 @@ Now, install required gems:
 
         $ script/delayed_job run    # run in foreground
         $ script/delayed_job start  # start as daemon (check log/delayed_job.log)
-        $ rake jobs:work            # forground, from rake
+        $ rake jobs:work            # foreground, from rake
         $ rake jobs:clear           # clear queue
 
 3.  Visit `http://localhost:3000/`.
