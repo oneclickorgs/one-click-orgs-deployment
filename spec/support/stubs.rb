@@ -87,3 +87,7 @@ def organisation_is_under_construction
   clause = @organisation.clauses.get_current('organisation_state')
   clause.destroy if clause
 end
+
+def gravatar_url
+  'http://www.gravatar.com/avatar/a3406e66dc2a5e80bbc2fd7d5342cc22?s=24&d=mm'
+end
