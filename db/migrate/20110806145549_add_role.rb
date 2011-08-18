@@ -3,8 +3,7 @@ class AddRole < ActiveRecord::Migration
     add_column :members, :role, :string
   end
 
-
-
   def self.down
+    remove_column :members, :role
   end
 end
