@@ -19,3 +19,22 @@ Feature:
     And the proposal closer runs
     And I go to the home page
     Then I should see "Sorry, the Founding Vote has failed."
+  
+  Scenario: The notification for a given subsequent failed founding vote is only shown once
+    Given the application is set up
+    And an organisation has been created
+    And there are enough members to start the founding vote
+    And the founding vote has been started
+    And I am a founding member
+    And the subdomain is the organisation's subdomain
+    And everyone has voted against the founding
+    And the proposal closer runs
+    And I have logged in
+    Then I should see "Sorry, the Founding Vote has failed."
+    When another founding vote has been started
+    And everyone has voted against the founding
+    And the proposal closer runs
+    And I go to the home page
+    Then I should see "Sorry, the Founding Vote has failed."
+    When I go to the members page
+    Then I should not see "Sorry, the Founding Vote has failed."
