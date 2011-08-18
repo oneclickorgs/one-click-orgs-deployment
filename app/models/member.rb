@@ -52,6 +52,13 @@ class Member < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name, :email
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
+  validates_uniqueness_of :email, :scope => :organisation_id, :unless => :allow_duplicate_email?
+  
+  attr_accessor :allow_duplicate_email
+  def allow_duplicate_email?
+    !!allow_duplicate_email
+  end
+  
   # TODO: how can we validate :password? (not actually saved, but accepted during input)
 
   # AUTHENTICATION
