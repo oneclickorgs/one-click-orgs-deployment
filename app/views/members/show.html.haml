@@ -9,6 +9,9 @@
     = mail_to(@member.email)
 
   %p
+    = @member.role
+ 
+  %p
     Proposals made:
     = @member.proposals_count
     (Succeeded:
