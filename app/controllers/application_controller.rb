@@ -127,14 +127,11 @@ class ApplicationController < ActionController::Base
     if co.pending? && current_user.member_class.name == "Founder"
       show_notification_once(:convener_welcome)
     end
-
+    
     fop = co.found_organisation_proposals.last
-    # if the organisation is pending
-    # and the voting is finished (fop.closed)
-    # and a founding proposal exists
-    # and is the proposal
+    
     if co.pending? && fop && fop.closed? && !fop.accepted?
-      show_notification_once(:founding_proposal_failed)
+      show_notification_once(:founding_proposal_failed, fop.close_date)
     end
     
     # Only display founding_proposal_passed notification to
@@ -144,19 +141,26 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # Show a notification once when a user is signed in, to notify of
-  # a specific event happening
+  # Show a one-off notification to a user, to notify of
+  # a specific event happening.
+  # 
+  # With #show_notification_once, a notification of a given type (e.g. a 'convener_welcome' notification) will only be shown once
+  # to a given user. If you want to show the notification regardless of whether the user has already seen it before,
+  # use #show_notification instead.
+  # 
+  # As an exception to this, you can pass the ignore_earlier_than parameter. If this user has seen this type of notification
+  # earlier than the timestamp you pass, the notification will be shown again.
   #
   # @param [Symbol] notification the notification type, `:founding_proposal_passed` or `:founding_proposal_failed`
-  # @param [optional, Timestamp] created_at the timestamp for that kind of notification, i.e `2011-06-04 13:14:37`
+  # @param [optional, Timestamp] ignore seen-notifications earlier than this time
   # @return [String] notification the string relating to the kind of notification `founding_proposal_passed`.
   #
   # @example Show a notification a user once that their proposal failed, allowing us to render the partial 'founding_proposal_failed' in the view
   #   show_notification_once(:founding_proposal_failed)
   #
-  def show_notification_once(notification, created_at = '')
+  def show_notification_once(notification, ignore_earlier_than = nil)
     return unless current_user
-    return if current_user.has_seen_notification?(notification, created_at)
+    return if current_user.has_seen_notification?(notification, ignore_earlier_than)
     show_notification(notification)
   end
   

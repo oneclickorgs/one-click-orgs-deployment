@@ -1,3 +1,16 @@
+2011-08-19 One Click Orgs 1.2.2
+
+* SECURITY FIX: HTML in comments was not fully escaped.
+* SECURITY FIX: HTML in Markdown in proposal descriptions was not fully
+  escaped.
+* SECURITY FIX: Organisation name was not properly escaped in email headers.
+* FIX: Notification when a founding vote failed for a second or subsequent
+  time was showing repeatedly.
+
+2011-08-08 One Click Orgs 1.2.1
+
+* FIX: Notifications that should only be shown once were showing repeatedly.
+
 2011-07-21 One Click Orgs 1.2.0
 
 * FEATURE: Members list can be downloaded in CSV format.
