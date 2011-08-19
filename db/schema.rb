@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20110806164145) do
     t.string   "state"
     t.date     "elected_on"
     t.date     "stood_down_on"
+    t.string   "role"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"

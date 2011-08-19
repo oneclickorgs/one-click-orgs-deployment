@@ -79,6 +79,13 @@ class Member < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name, :email
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
+  validates_uniqueness_of :email, :scope => :organisation_id, :unless => :allow_duplicate_email?
+  
+  attr_accessor :allow_duplicate_email
+  def allow_duplicate_email?
+    !!allow_duplicate_email
+  end
+  
   # TODO: how can we validate :password? (not actually saved, but accepted during input)
 
   # AUTHENTICATION
@@ -237,14 +244,17 @@ class Member < ActiveRecord::Base
   # after the timestamp when checking to see if the member has already seen this notification.
   def has_seen_notification?(notification, ignore_earlier_than = nil)
     if ignore_earlier_than
-      seen_notifications.exists?(["notification = ? AND created_at >= ?", notification, ignore_earlier_than])
+      seen_notifications.exists?(["notification = ? AND updated_at >= ?", notification, ignore_earlier_than])
     else
       seen_notifications.exists?(:notification => notification)
     end
   end
   
   def has_seen_notification!(notification)
-    unless has_seen_notification?(notification)
+    seen_notification = seen_notifications.find_by_notification(notification)
+    if seen_notification
+      seen_notification.touch
+    else
       seen_notifications.create(:notification => notification)
     end
   end

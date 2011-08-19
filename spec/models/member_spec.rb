@@ -39,6 +39,20 @@ describe Member do
       @member.email = "bob@example.com"
       @member.should be_valid
     end
+    
+    it "requires a unique email address within the organisation" do
+      @other_organisation = Organisation.make
+      @other_member = @other_organisation.members.make(:email => "other@example.com")
+      
+      @fellow_member = @organisation.members.make(:email => "fellow@example.com")
+      
+      @member = @organisation.members.make_unsaved(:email => "other@example.com")
+      @member.should be_valid
+      
+      @member.email = "fellow@example.com"
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
+    end
   end
 
   it "should not allow votes on members inducted after proposal was made" do
