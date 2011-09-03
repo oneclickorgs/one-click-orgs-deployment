@@ -75,11 +75,16 @@ OneClickOrgs::Application.routes.draw do
   resources :add_member_proposals
   resources :eject_member_proposals
   resources :change_member_class_proposals
-  resources :found_organisation_proposals
+  resources :found_association_proposals
   
   resources :members
   
   resources :founding_members
+  resources :directors do
+    member do
+      post :stand_down
+    end
+  end
   
   match '/one_click(/:action)' => 'one_click'
  
@@ -91,7 +96,12 @@ OneClickOrgs::Application.routes.draw do
   
   match '/setup(/:action)' => 'setup'
 
-  resources :organisations
+  resources :associations
+  resources :companies
+  
+  resources :meetings do
+    resources :comments
+  end
   
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations

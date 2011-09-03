@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "invitations" do
   before(:each) do
-    default_organisation(:state => 'pending')
+    default_association(:state => 'pending')
     @member = @organisation.members.make(:inducted_at => nil, :password => nil, :password_confirmation => nil)
   end
   
@@ -51,7 +51,7 @@ describe "invitations" do
       post_update
       @member.reload
       @member.crypted_password.should be_present
-      @member.salt should be_present
+      @member.salt.should be_present
     end
     
     it "clears the member's invitation code" do

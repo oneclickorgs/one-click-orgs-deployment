@@ -3,11 +3,11 @@ require 'spec_helper'
 module ProposalsSpecHelper
   def a_proposal_exists
     Proposal.destroy_all
-    user = login
+    user = association_login
     
     set_permission!(user, :freeform_proposal, true)
     post(proposals_path, {:proposal => {:id => nil, :proposer_member_id => user.id, :title => 'proposal'}})
-    @proposal = Proposal.first or raise "can't create a proposal"
+    @proposal = Proposal.first or raise "cannot create proposal"
   end
 end
 
@@ -15,10 +15,10 @@ describe "Proposals" do
   include ProposalsSpecHelper
   
   before(:each) do 
-    default_organisation
-    default_constitution
+    default_association
+    default_association_constitution
     
-    @user = login
+    @user = association_login
   end
   
   describe "/proposals/1, given a proposal exists" do

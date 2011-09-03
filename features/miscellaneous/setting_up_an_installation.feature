@@ -3,6 +3,9 @@ Feature: Setting up an installation
   I want to set up an installation of One Click Orgs
   So that people can use One Click Orgs
   
+  Background:
+    Given the application is not set up yet
+  
   Scenario: Viewing the setup page
     When I go to the home page
     Then I should be on the setup page
@@ -14,5 +17,5 @@ Feature: Setting up an installation
     When I fill in "base domain" with "example.com"
     And I fill in "sign-up domain" with "create.example.com"
     And I press "Save domains"
-    Then I should be on the new organisation page
+    Then I should be on the new association page
     And the domain should be "create.example.com"

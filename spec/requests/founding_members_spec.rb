@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "founding members" do
   
   before(:each) do
-    default_organisation(:state => 'pending')
-    set_permission!(default_user, :founder, true)
-    set_permission!(default_user, :membership_proposal, true)
-    login
+    default_association(:state => 'pending')
+    set_permission!(default_association_user, :founder, true)
+    set_permission!(default_association_user, :membership_proposal, true)
+    association_login
     @user.member_class = @organisation.member_classes.find_by_name("Founder")
     @user.save!
   end

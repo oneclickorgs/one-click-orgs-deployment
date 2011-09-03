@@ -1,18 +1,27 @@
 Given /^I have started the founding vote$/ do
-  @organisation.found_organisation_proposals.make(:proposer => @user)
+  @organisation.found_association_proposals.make(:proposer => @user)
   @organisation.propose!
 end
 
 Given /^the founding vote has been started$/ do
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
-  @organisation.found_organisation_proposals.make(:proposer => founder)
+  @organisation.found_association_proposals.make(:proposer => founder)
   @organisation.propose!
 end
 
-Given /^everyone has voted to support the founding$/ do
-  fop = @organisation.found_organisation_proposals.first
+Given /^another founding vote has been started$/ do
+  sleep(1)
+  founder = @organisation.member_classes.where(:name => "Founder").first.members.first
+  @organisation.found_association_proposals.make(:proposer => founder, :title => "A second voting proposal.")
+  @organisation.reload
+  @organisation.propose!
+end
+
+Given /^everyone has voted (to support|against) the founding$/ do |vote|
+  fap = @organisation.found_association_proposals.last
+  verdict = (vote == "against") ? "against" : "for"
   @organisation.members.each do |member|
-    member.cast_vote(:for, fop)
+    member.cast_vote(verdict.to_sym, fap)
   end
 end
 

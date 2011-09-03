@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "constitutions" do
   
   before(:each) do
-    default_organisation
-    default_constitution
-    login
+    default_association
+    default_association_constitution
+    association_login
     set_permission!(@user, :constitution_proposal, true)
   end
   
@@ -48,7 +48,7 @@ describe "constitutions" do
     
     context "when organisation is pending" do
       before(:each) do
-        organisation_is_pending
+        association_is_pending
         set_permission!(@user, :founder, true)
         get '/constitution/edit'
       end

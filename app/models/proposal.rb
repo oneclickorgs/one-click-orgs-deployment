@@ -24,7 +24,7 @@ class Proposal < ActiveRecord::Base
   
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
   
-  has_many :comments
+  has_many :comments, :as => :commentable
   
   before_create :set_creation_date
   private
@@ -76,45 +76,7 @@ class Proposal < ActiveRecord::Base
   
   # returns the number of members who are eligible to vote on this proposal
   def member_count
-    # TODO: find out how to do the following in one query
-    count = 0
-    
-    # To vote, a member must be inducted, and must have been added (created)
-    # before this proposal was made.
-    
-    # Members who were founding members are an exception. They are allowed
-    # to vote in proposals before they have been inducted.
-    # (This is because, by participating in the founding vote, they have
-    # already agreed to the constitution.)
-    # We determine who was a founding member by seeing whether they were
-    # created before the FoundOrganisationProposal for this org.
-    
-    fop = organisation.found_organisation_proposals.last
-    if fop
-      organisation.members.where(
-        "(state = 'active' AND created_at < :proposal_creation_date) " +
-        "OR (state <> 'inactive' and created_at < :founding_date)",
-        :proposal_creation_date => creation_date,
-        :founding_date => fop.creation_date
-      ).each do |m|
-        count += 1 if m.has_permission(:vote)
-      end
-    else
-      # FIXME This 'if' branch is checking for the case where there is no
-      # FoundOrganisationProposal yet, so shouldn't it be including members
-      # who haven't been inducted yet (since no member gets inducted during
-      # the pending state of the organisation)?
-      # 
-      # Suspect that this is only working because FoundOrganisationProposal
-      # overrides #member_count, so this branch never really gets executed.
-      organisation.members.active.where(
-        "created_at < :proposal_creation_date",
-        :proposal_creation_date => creation_date
-      ).each do |m|
-        count += 1 if m.has_permission(:vote)
-      end
-    end
-    count
+    organisation.member_count_for_proposal(self)
   end
   
   def abstained

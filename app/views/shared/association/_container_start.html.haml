@@ -1,0 +1,31 @@
+- if current_user
+  - if current_organisation.pending? 
+    %div#overlay.pending
+      %p
+        To form an Association there must be a founding vote where at least
+        three founding members vote in support. For now only
+        - if current_user == co.members.first
+          = 'you'
+        - else
+          = co.members.first.name + ' (the first founding member)'
+        can amend the constitution or call a founding vote. When the Association
+        is formed all members gain equal voting rights.
+      - if can?(:create, FoundAssociationProposal)
+        = form_tag(found_association_proposals_path, :id => 'start_founding_vote_form') do
+          = submit_tag "Hold the Founding Vote", :id => 'submit'
+        %br.clear
+  - elsif current_organisation.proposed?
+    %div#overlay.proposed
+      %h3
+        Founding vote in progress. Voting ends
+        = co.found_association_proposals.last.close_date.to_s(:at_on) + '.'
+      - if co.found_association_proposals.last.vote_by(current_user)
+        %p Progress of the vote is displayed on Members page.
+      - else
+        %p Proposal: Form an Association according to the constitution currently stored on the One Click Orgs system. Those who vote "Support" will become its first members.
+        - if can? :vote_on, co.found_association_proposals.last
+          = form_tag(vote_against_path(:id => co.found_association_proposals.last.id, :return_to => request.url)) do
+            = submit_tag "Oppose"
+          = form_tag(vote_for_path(:id => co.found_association_proposals.last.id, :return_to => request.url)) do
+            = submit_tag "Support"
+          %br.clear

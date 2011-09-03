@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "miscellaneous requests" do
   describe "internally-generated 404" do
     before(:each) do
-      login
+      association_login
       get '/proposals/9999999'
     end
     

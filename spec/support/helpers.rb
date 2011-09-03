@@ -13,31 +13,67 @@ def default_organisation(attributes={})
   @organisation
 end
 
-def default_constitution
-  default_organisation
+def default_association(attributes={})
+  set_up_app
+  
+  unless @organisation
+    @organisation = Association.make({:state => 'active'}.merge(attributes))
+    Organisation.stub!(:find_by_host).and_return(@organisation)
+  end
+  @organisation
+end
+
+def default_company(attributes={})
+  set_up_app
+  
+  unless @organisation
+    @organisation = Company.make({:state => 'active'}.merge(attributes))
+    Organisation.stub!(:find_by_host).and_return(@organisation)
+  end
+  @organisation
+end
+
+def default_association_constitution
+  default_association
   @organisation.clauses.set_integer!(:voting_period, 3 * 86400)
 end
 
-def default_voting_systems
-  default_constitution
+def default_association_voting_systems
+  default_association_constitution
   @organisation.clauses.set_text!(:general_voting_system, 'RelativeMajority')
   @organisation.clauses.set_text!(:constitution_voting_system, 'RelativeMajority')
   @organisation.clauses.set_text!(:membership_voting_system, 'RelativeMajority')
 end
 
-def default_member_class
-  default_organisation
+def default_association_member_class
+  default_association
   @default_member_class ||= @organisation.member_classes.make(:name => "Clown")
 end
 
-def default_user
-  default_constitution
-  default_organisation
-  @default_user ||= @organisation.members.make(:member_class => default_member_class)
+def default_company_member_class
+  default_company
+  @default_member_class ||= @organisation.member_classes.make(:name => "Director")
 end
 
-def login
-  @user = default_user
+def default_association_user
+  default_association_constitution
+  default_association
+  @default_user ||= @organisation.members.make(:member_class => default_association_member_class)
+end
+
+def default_company_user
+  default_company
+  @default_user ||= @organisation.members.make(:member_class => default_company_member_class)
+end
+
+def association_login
+  @user = default_association_user
+  post "/member_session", {:email => @user.email, :password => "password"}
+  @user
+end
+
+def company_login
+  @user = default_company_user
   post "/member_session", {:email => @user.email, :password => "password"}
   @user
 end
@@ -52,29 +88,46 @@ def passed_proposal(p, args={})
   lambda { p.enact! }
 end
 
-def organisation_is_pending
+def association_is_pending
   if @organisation
     @organisation.update_attribute(:state, 'pending')
+  elsif @association
+    @association.update_attribute(:state, 'pending')
   else
-    default_organisation(:state => 'pending')
+    default_association(:state => 'pending')
   end
   @organisation
 end
 
-def organisation_is_proposed
+def association_is_proposed
   if @organisation
     @organisation.update_attribute(:state, 'proposed')
+  elsif @association
+    @association.update_attribute(:state, 'proposed')
   else
-    default_organisation(:state => 'proposed')
+    default_association(:state => 'proposed')
   end
   @organisation
 end
 
-def organisation_is_active
+def association_is_active
   if @organisation
     @organisation.update_attribute(:state, 'active')
+  elsif @association
+    @association.update_attribute(:state, 'active')
   else
-    default_organisation(:state => 'active')
+    default_association(:state => 'active')
   end
   @organisation
+end
+
+def install_organisation_resolver(organisation)
+  view.view_paths.dup.each do |view_path|
+    view.view_paths.unshift(
+      OneClickOrgs::OrganisationResolver.new(
+        view_path.to_path,
+        @organisation.class
+      )
+    )
+  end
 end

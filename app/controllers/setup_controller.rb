@@ -21,7 +21,7 @@ class SetupController < ApplicationController
       Setting[:base_domain] = @base_domain
       Setting[:signup_domain] = @signup_domain
       flash[:notice] = "Domains set. Now you can make an organisation."
-      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
+      redirect_to(new_association_url(:host => Setting[:signup_domain]))
     else
       flash.now[:error] = "You must choose both a base domain and a sign-up domain."
       render(:action => :index)
@@ -31,7 +31,8 @@ class SetupController < ApplicationController
   def set_single_organisation_mode
     Setting[:single_organisation_mode] = "true"
     Setting[:base_domain] = request.host_with_port
-    redirect_to(new_organisation_path)
+    Setting[:signup_domain] = request.host_with_port
+    redirect_to(new_association_path)
   end
 
   protected

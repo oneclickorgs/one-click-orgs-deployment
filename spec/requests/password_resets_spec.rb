@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "PasswordResets" do
   before(:each) do
-    default_constitution
+    default_association_constitution
     default_organisation
   end
   

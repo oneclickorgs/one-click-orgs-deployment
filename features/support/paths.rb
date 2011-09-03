@@ -12,8 +12,8 @@ module NavigationHelpers
       '/'
     when /^the setup page$/
       '/setup'
-    when /^the signup page$/
-      '/organisations/new'
+    when /^the new association page$/
+      '/associations/new'
     when /^the welcome page$/
       '/welcome'
     when /^the voting and proposals page$/
@@ -29,6 +29,18 @@ module NavigationHelpers
       member_path(@member)
     when /^the amendments page$/
       edit_constitution_path
+    when /^the members page$/
+      members_path
+    when /^the new company page$/
+      new_company_path
+    when /^the Votes & Minutes page$/
+      '/'
+    when /^the page for the minutes$/
+      @meeting ||= @organisation.meeting.last
+      meeting_path(@meeting)
+    when /^the Directors page$/
+      members_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

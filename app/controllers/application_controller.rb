@@ -1,6 +1,7 @@
 require 'lib/one_click_orgs/setup'
 require 'lib/unauthenticated'
 require 'lib/not_found'
+require 'lib/one_click_orgs/organisation_resolver'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
@@ -18,15 +19,18 @@ class ApplicationController < ActionController::Base
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
   # is running in single organisation mode).
-  helper_method :current_organisation
   def current_organisation
-    @current_organisation ||= (
+    unless @current_organisation
       if Setting[:single_organisation_mode]
-        Organisation.first
+        @current_organisation = Organisation.first
       else
-        Organisation.find_by_host(request.host_with_port)
+        @current_organisation = Organisation.find_by_host(
+          request.host_with_port
+        )
       end
-    )
+      install_organisation_resolver(@current_organisation)
+    end
+    @current_organisation
   end
   alias :co :current_organisation
   
@@ -113,26 +117,48 @@ class ApplicationController < ActionController::Base
     # has seen this notification before (e.g. a 'you have a new
     # message' notification).
     
-    if co.pending? && current_user.member_class.name == "Founder"
-      show_notification_once(:convener_welcome)
-    end
+    if co.is_a?(Association)
+      if co.pending? && current_user.member_class.name == "Founder"
+        show_notification_once(:convener_welcome)
+      end
 
-    fop = co.found_organisation_proposals.last
+      fap = co.found_association_proposals.last
+      # if the organisation is pending
+      # and the voting is finished (fap.closed)
+      # and a founding proposal exists
+      # and is the proposal
+      if co.pending? && fap && fap.closed? && !fap.accepted?
+        show_notification_once(:founding_proposal_failed, fap.close_date)
+      end
     
-    if co.pending? && fop && fop.closed? && !fop.accepted?
-      show_notification_once(:founding_proposal_failed)
-    end
-    
-    # Only display founding_proposal_passed notification to
-    # members who were founding members
-    if co.active? && fop && current_user.created_at <= fop.creation_date
-      show_notification_once(:founding_proposal_passed)
+      # Only display founding_proposal_passed notification to
+      # members who were founding members
+      if co.active? && fap && current_user.created_at <= fap.creation_date
+        show_notification_once(:founding_proposal_passed)
+      end
     end
   end
   
-  def show_notification_once(notification)
+  # Show a one-off notification to a user, to notify of
+  # a specific event happening.
+  # 
+  # With #show_notification_once, a notification of a given type (e.g. a 'convener_welcome' notification) will only be shown once
+  # to a given user. If you want to show the notification regardless of whether the user has already seen it before,
+  # use #show_notification instead.
+  # 
+  # As an exception to this, you can pass the ignore_earlier_than parameter. If this user has seen this type of notification
+  # earlier than the timestamp you pass, the notification will be shown again.
+  #
+  # @param [Symbol] notification the notification type, `:founding_proposal_passed` or `:founding_proposal_failed`
+  # @param [optional, Timestamp] ignore seen-notifications earlier than this time
+  # @return [String] notification the string relating to the kind of notification `founding_proposal_passed`.
+  #
+  # @example Show a notification a user once that their proposal failed, allowing us to render the partial 'founding_proposal_failed' in the view
+  #   show_notification_once(:founding_proposal_failed)
+  #
+  def show_notification_once(notification, ignore_earlier_than = nil)
     return unless current_user
-    return if current_user.has_seen_notification?(notification)
+    return if current_user.has_seen_notification?(notification, ignore_earlier_than)
     show_notification(notification)
   end
   
@@ -176,7 +202,7 @@ protected
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
+      redirect_to(new_association_url(:host => Setting[:signup_domain]))
     end
   end
   
@@ -196,7 +222,10 @@ protected
   end
   
   def ensure_member_inducted
-    redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
+    case co
+    when Association
+      redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
+    end
   end
   
   def redirect_to_welcome_member
@@ -224,5 +253,21 @@ protected
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_to root_path
+  end
+  
+  # ORGANISATION RESOLVER
+  
+  # Configures the controller's view context to use an
+  # OrganisationResolver based on the given organisation's class when
+  # resolving (looking up) template paths.
+  def install_organisation_resolver(organisation)
+    view_paths.dup.reverse.each do |view_path|
+      prepend_view_path(
+        OneClickOrgs::OrganisationResolver.new(
+          view_path.to_path,
+          organisation.class
+        )
+      )
+    end
   end
 end

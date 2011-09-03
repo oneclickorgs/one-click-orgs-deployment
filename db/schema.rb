@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110523104155) do
+ActiveRecord::Schema.define(:version => 20110806164145) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -26,13 +26,14 @@ ActiveRecord::Schema.define(:version => 20110523104155) do
 
   create_table "comments", :force => true do |t|
     t.integer  "author_id"
-    t.integer  "proposal_id"
+    t.integer  "commentable_id"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "commentable_type"
   end
 
-  add_index "comments", ["proposal_id", "author_id"], :name => "index_comments_on_proposal_id_and_author_id"
+  add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_commentable_id"
 
   create_table "decisions", :force => true do |t|
     t.integer "proposal_id"
@@ -51,6 +52,21 @@ ActiveRecord::Schema.define(:version => 20110523104155) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "meeting_participations", :force => true do |t|
+    t.integer  "meeting_id"
+    t.integer  "participant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetings", :force => true do |t|
+    t.date     "happened_on"
+    t.text     "minutes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "organisation_id"
   end
 
   create_table "member_classes", :force => true do |t|
@@ -76,6 +92,8 @@ ActiveRecord::Schema.define(:version => 20110523104155) do
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
     t.string   "state"
+    t.date     "elected_on"
+    t.date     "stood_down_on"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
@@ -84,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20110523104155) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
     t.string   "state"
   end
 

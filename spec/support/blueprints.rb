@@ -10,6 +10,7 @@ Sham.last_name          { Faker::Name.last_name }
 Sham.subdomain          { Faker::Internet.domain_word }
 Sham.objectives         { Faker::Company.bs }
 Sham.organisation_name  { Faker::Company.name }
+Sham.minutes            { Faker::Lorem.paragraph }
 
 MemberClass.blueprint do
   name "Director"
@@ -44,17 +45,16 @@ end
 Proposal.blueprint do
   title "a proposal title"
   state "open"
-  proposer {Member.make}
+  proposer {Member.make(:organisation => organisation)}
 end
 
 AddMemberProposal.blueprint do
   title "a proposal title"
   state 'open'
-  proposer {Member.make}
   parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
 end
 
-FoundOrganisationProposal.blueprint do
+FoundAssociationProposal.blueprint do
   title "Proposal to Found org"
   description "Found org"
   state "open"
@@ -87,6 +87,27 @@ end
 
 Organisation.blueprint do
   name { Sham.organisation_name }
-  objectives
   subdomain
+end
+
+Association.blueprint do
+  objectives
+end
+
+Company.blueprint do
+end
+
+Meeting.blueprint do
+  organisation { Company.make }
+  happened_on { 1.day.ago }
+  minutes { Sham.minutes }
+end
+
+MeetingParticipation.blueprint do
+end
+
+Comment.blueprint do
+end
+
+Director.blueprint do
 end

@@ -3,9 +3,9 @@
 
 %p
   The vote ended after 
-  = (co.found_organisation_proposals.last.duration / 60 / 60).to_i
+  = (co.found_association_proposals.last.duration / 60 / 60).to_i
   hours. 
-  = pluralize(co.found_organisation_proposals.last.votes_for, 'person')
+  = pluralize(co.found_association_proposals.last.votes_for, 'person')
   voted in favour. A minimum of three supporting votes is required to form an Association. 
   You could consider modifying the Draft Constitution or inviting additional Founding Members.
   When everyone's ready you can try another Founding Vote.

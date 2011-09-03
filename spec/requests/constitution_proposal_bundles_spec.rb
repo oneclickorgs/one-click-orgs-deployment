@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "constitution proposal bundles" do
   
   before(:each) do 
-    default_organisation
-    default_constitution
+    default_association
+    default_association_constitution
     
-    @user = login
+    @user = association_login
   end
   
   describe "POST create" do

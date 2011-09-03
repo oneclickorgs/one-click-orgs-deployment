@@ -1,3 +1,21 @@
+2011-08-08 One Click Orgs 1.2.1
+
+* FIX: Notifications that should only be shown once were showing repeatedly.
+
+2011-07-21 One Click Orgs 1.2.0
+
+* FEATURE: Members list can be downloaded in CSV format.
+* FIX: Attempting to create an organisation in single-organisation mode would
+  result in an error.
+* FIX: If an organisation failed its founding vote more than once, the
+  notification that the founding had failed would not display.
+* FIX: New members could not log out from the page where they confirm their
+  membership.
+* Use web fonts, and other typography improvements.
+* Clearer instructional copy for 'confirm membership' page.
+* Updated link to Open Software Service definition.
+* Add analytics for tracking flow through the organisation founding process.
+
 2011-05-29 One Click Orgs 1.1.1
 
 * FIX: Eject member proposal fails to save the description entered with the

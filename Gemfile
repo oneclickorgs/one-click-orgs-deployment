@@ -25,14 +25,17 @@ gem "mysql"
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
+gem "jquery-rails", "~>1.0.12"
 gem "haml", "~>3.0.18"
 gem "rdiscount"
 gem "pdfkit"
 gem "daemons", "~>1.0.10"
-gem "delayed_job", "2.1.3"
+gem "delayed_job", "2.1.4"
 gem "exception_notification_rails3", :require => 'exception_notifier'
 gem "cancan", "~>1.6.4"
-gem "state_machine", "~>1.0.0"
+gem "state_machine", "1.0.0"
+
+gem "fastercsv", :platforms => :ruby_18
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -49,13 +52,14 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>2.5.0"
+  gem "rspec-rails", "~>2.6"
   gem "webrat", "~>0.7.1"
   gem "machinist", "~>1.0.6"
-  gem "faker", '~>0.3.1'
+  gem "faker", '~>0.9.0'
   gem "rcov", "~>0.9.8"
-  gem "cucumber-rails", "~>0.4.1"
-  gem "capybara", "~>0.4.1.2"
+  gem "cucumber-rails", "~>1.0.2"
+  gem "capybara", "~>1.0.0"
   gem "database_cleaner", "~>0.6.7"
   gem "launchy", "~>0.4.0"
+  gem "selenium-webdriver", "~>2.4.0"
 end
