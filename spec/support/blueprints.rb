@@ -92,3 +92,6 @@ Organisation.blueprint do
   objectives
   subdomain
 end
+
+Comment.blueprint do
+end
