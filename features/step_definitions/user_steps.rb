@@ -31,3 +31,7 @@ Given /^I have been invited to sign up as a director$/ do
   @user.send_welcome = true
   @user.send_welcome_if_requested
 end
+
+Then /^my email should be "([^"]*)"$/ do |email|
+  @user.reload.email.should == email
+end
