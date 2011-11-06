@@ -1,8 +1,8 @@
 Given /^I have created an association$/ do
-  Given "an association has been created"
+  step "an association has been created"
   @user = @founder
-  Given "the subdomain is the organisation's subdomain"
-  Given "I have logged in"
+  step "the subdomain is the organisation's subdomain"
+  step "I have logged in"
 end
 
 Given /^an association has been created$/ do
@@ -35,7 +35,7 @@ Given /^an association is active$/ do
 end
 
 When /^I create an association$/ do
-  Given "I have created an association"
+  step "I have created an association"
 end
 
 Then /^the organisation should be active$/ do

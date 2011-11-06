@@ -70,6 +70,8 @@ describe VotingSystems do
       should_not_pass make_proposal(4, 5)
 
       should_not_close_early make_proposal(0, 0, 1)
+      should_close_early make_proposal(1, 0, 1)     
+      should_close_early make_proposal(2, 0, 2)     # everyone has voted    
       should_close_early make_proposal(5, 4)
       should_close_early make_proposal(4, 5)
       should_not_close_early make_proposal(5, 0, 9)

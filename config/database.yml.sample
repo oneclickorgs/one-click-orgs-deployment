@@ -7,8 +7,8 @@ development: &defaults
   password: 
   host:     localhost
  
-test:
-  adapter: mysql
+test: &test
+  <<:       *defaults
   database: one_click_test
   encoding: utf8
   username: 
