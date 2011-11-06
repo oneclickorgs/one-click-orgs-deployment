@@ -7,7 +7,7 @@ development: &defaults
   password: 
   host:     localhost
  
-test:
+test: &test
   <<:       *defaults
   database: one_click_test
  
