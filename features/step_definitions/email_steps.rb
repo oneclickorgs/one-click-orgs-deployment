@@ -15,7 +15,7 @@ Given /^I have received an email inviting me to become a member$/ do
 end
 
 Given /^I have received an email inviting me to sign up as a director$/ do
-  Given "I have been invited to sign up as a director"
+  step "I have been invited to sign up as a director"
   @email = last_email
 end
 
@@ -29,7 +29,7 @@ When /^I click the link in the email$/ do
 end
 
 When /^I follow the invitation link in the email$/ do
-  When "I click the link in the email"
+  step "I click the link in the email"
 end
 
 Then /^I should receive a welcome email$/ do

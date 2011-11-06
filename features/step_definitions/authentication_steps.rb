@@ -6,7 +6,7 @@ Given /^I have logged in$/ do
 end
 
 When /^I try to log in$/ do
-  Given "I have logged in"
+  step "I have logged in"
 end
 
 Then /^I should not be logged in$/ do
