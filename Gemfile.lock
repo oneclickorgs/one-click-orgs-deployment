@@ -196,6 +196,7 @@ DEPENDENCIES
   haml (~> 3.0.18)
   launchy (~> 0.4.0)
   machinist (~> 1.0.6)
+  mail (~> 2.2.19)
   mysql
   pdfkit
   railroad

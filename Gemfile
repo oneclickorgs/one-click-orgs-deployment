@@ -37,6 +37,8 @@ gem "exception_notification_rails3", :require => 'exception_notifier'
 
 gem "fastercsv", :platforms => :ruby_18
 
+gem 'mail', '~>2.2.19'
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
