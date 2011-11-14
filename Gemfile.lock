@@ -73,7 +73,7 @@ GEM
     exception_notification_rails3 (1.2.0)
     faker (0.3.1)
     fastercsv (1.5.4)
-    ffi (1.0.10)
+    ffi (1.0.11)
     gherkin (2.6.2)
       json (>= 1.4.6)
     haml (3.0.25)
@@ -161,9 +161,9 @@ GEM
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.4)
-    selenium-webdriver (2.8.0)
+    selenium-webdriver (2.12.2)
       childprocess (>= 0.2.1)
-      ffi (>= 1.0.7)
+      ffi (~> 1.0.9)
       json_pure
       rubyzip
     term-ansicolor (1.0.7)
@@ -206,5 +206,5 @@ DEPENDENCIES
   rspec-rails (~> 2.5.0)
   ruby-debug
   ruby-debug19
-  selenium-webdriver (~> 2.8.0)
+  selenium-webdriver (~> 2.12.2)
   webrat (~> 0.7.1)
