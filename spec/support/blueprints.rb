@@ -111,3 +111,6 @@ end
 
 Director.blueprint do
 end
+
+Comment.blueprint do
+end

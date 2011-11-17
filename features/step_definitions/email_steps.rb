@@ -5,17 +5,17 @@ def last_email
 end
 
 Given /^I have received an email inviting me to become a founding member$/ do
-  Given "I have been invited to become a founding member"
+  step "I have been invited to become a founding member"
   @email = last_email
 end
 
 Given /^I have received an email inviting me to become a member$/ do
-  Given "I have been invited to join the organisation"
+  step "I have been invited to join the organisation"
   @email = last_email
 end
 
 Given /^I have received an email inviting me to sign up as a director$/ do
-  Given "I have been invited to sign up as a director"
+  step "I have been invited to sign up as a director"
   @email = last_email
 end
 
@@ -24,12 +24,12 @@ When /^I click the link in the email$/ do
   uri = URI.parse(@email.body.match(/(http:\/\/\S*)/)[1])
   subdomain = uri.host.split('.')[0]
   path = uri.path
-  Given %Q{the subdomain is "#{subdomain}"}
+  step %Q{the subdomain is "#{subdomain}"}
   visit(path)
 end
 
 When /^I follow the invitation link in the email$/ do
-  When "I click the link in the email"
+  step "I click the link in the email"
 end
 
 Then /^I should receive a welcome email$/ do

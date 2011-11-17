@@ -10,7 +10,7 @@ Given /^I have been invited to become a founding member$/ do
 end
 
 Given /^there are two other founding members$/ do
-  Given "there are enough founding members to start the founding vote"
+  step "there are enough founding members to start the founding vote"
 end
 
 Given /^I have been invited to join the organisation$/ do
@@ -30,4 +30,8 @@ Given /^I have been invited to sign up as a director$/ do
   @user ||= @organisation.directors.make
   @user.send_welcome = true
   @user.send_welcome_if_requested
+end
+
+Then /^my email should be "([^"]*)"$/ do |email|
+  @user.reload.email.should == email
 end

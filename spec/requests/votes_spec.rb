@@ -6,7 +6,7 @@ describe "everything" do
     @proposal = @organisation.proposals.make
     set_permission!(@user, :vote, true)
   end
-      
+  
   describe "vote casting" do
     it "should cast a 'for' vote" do
       post(vote_for_path(:id => @proposal.id), {:return_to => '/foo'})
@@ -30,6 +30,13 @@ describe "everything" do
       post(vote_for_path(:id => @proposal.id), {:return_to => '/foo'})
       response.should redirect_to '/'
       @proposal.vote_by(@user).should be_nil
+    end
+  end
+  
+  describe "security" do
+    it "does not redirect to an external URL if one is passed in the return_to parameter" do
+      post(vote_for_path(:id => @proposal.id), {:return_to => 'http://www.evil.com/'})
+      response.should redirect_to '/'
     end
   end
 end

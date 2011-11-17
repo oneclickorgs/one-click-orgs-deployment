@@ -14,6 +14,16 @@ describe Organisation do
         @second = Organisation.make(:name => 'def', :subdomain => "apples")
       end.should raise_error(ActiveRecord::RecordInvalid)
     end
+    
+    it "does not allow subdomains with invalid characters" do
+      @organisation.subdomain = "abcdef-190"
+      @organisation.should be_valid
+      
+      # Null byte
+      @organisation.subdomain = "\0abcdef-190"
+      @organisation.should_not be_valid
+      @organisation.errors[:subdomain].should be_present
+    end
   end
   
   describe "text fields" do

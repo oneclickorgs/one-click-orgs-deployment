@@ -12,7 +12,7 @@ module ControllerSpecHelper
   end
   
   def stub_login
-    @user = mock_model(Member)
+    @user = mock_model(Member, :inactive? => false)
     controller.stub!(:current_user).and_return(@user)
     controller.stub!(:user_logged_in?).and_return(true)
   end

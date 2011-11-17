@@ -131,3 +131,7 @@ def install_organisation_resolver(organisation)
     )
   end
 end
+
+def gravatar_url
+  'http://www.gravatar.com/avatar/a3406e66dc2a5e80bbc2fd7d5342cc22?s=24&d=mm'
+end
