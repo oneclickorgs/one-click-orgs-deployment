@@ -215,12 +215,9 @@ protected
   end
   
   def ensure_member_active_or_pending
-    case co
-    when Association
-      if current_user && current_user.inactive?
-        session[:user] = nil
-        raise Unauthenticated
-      end
+    if current_user && current_user.inactive?
+      session[:user] = nil
+      raise Unauthenticated
     end
   end
   

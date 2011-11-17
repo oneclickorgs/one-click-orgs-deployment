@@ -64,7 +64,8 @@ module VotingSystems
     end
     
     def self.can_be_closed_early?(proposal)
-      proposal.votes_against > 0
+      (proposal.votes_against > 0 ) ||
+      (proposal.votes_for == proposal.member_count)
     end
     
     def self.passed?(proposal)

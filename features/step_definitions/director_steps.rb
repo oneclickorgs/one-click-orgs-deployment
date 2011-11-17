@@ -39,20 +39,20 @@ When /^I submit the form to stand down the director$/ do
 end
 
 When /^I add a new director$/ do
-  When 'I go to the Directors page'
-  And 'I press "Add a new director"'
-  And 'I fill in "Email" with "bob@example.com"'
-  And 'I fill in "First name" with "Bob"'
-  And 'I fill in "Last name" with "Smith"'
-  And 'I choose yesterday for the date of election'
-  And 'I check the certification checkbox'
-  And 'I press "Add this director"'
+  step 'I go to the Directors page'
+  step 'I press "Add a new director"'
+  step 'I fill in "Email" with "bob@example.com"'
+  step 'I fill in "First name" with "Bob"'
+  step 'I fill in "Last name" with "Smith"'
+  step 'I choose yesterday for the date of election'
+  step 'I check the certification checkbox'
+  step 'I press "Add this director"'
 end
 
 When /^I stand down a director$/ do
-  Given 'I am on the Directors page'
-  When 'I press "Stand down" for another director'
-  When 'I submit the form to stand down the director'
+  step 'I am on the Directors page'
+  step 'I press "Stand down" for another director'
+  step 'I submit the form to stand down the director'
 end
 
 Then /^I should not see the director$/ do

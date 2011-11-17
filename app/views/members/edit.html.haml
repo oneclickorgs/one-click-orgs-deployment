@@ -19,5 +19,8 @@
     %p
       = f.label(:password_confirmation, "Repeat password")
       = f.password_field :password_confirmation
+    %p
+      = f.label(:role, "Role")
+      = f.text_field :role
     %p    
       = submit_tag "Save changes", :id => 'submit'

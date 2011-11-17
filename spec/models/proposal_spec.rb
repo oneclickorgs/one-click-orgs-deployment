@@ -18,6 +18,21 @@ describe Proposal do
     DecisionMailer.stub!(:notify_new_decision).and_return(@mail)
   end
   
+  describe "model associations" do
+    describe "comments" do
+      it "orders by creation timestamp" do
+        comments = [
+          Comment.make(:created_at => 1.day.ago, :body => "C"),
+          Comment.make(:created_at => 5.days.ago, :body => "A"),
+          Comment.make(:created_at => 3.days.ago, :body => "B")
+        ]
+        proposal = @organisation.proposals.make
+        proposal.comments << comments
+        proposal.comments.map(&:body).should == ["A", "B", "C"]
+      end
+    end
+  end
+  
   it "should close early proposals" do
     member_0, member_1, member_2 = @organisation.members.make_n(3, :member_class => @default_member_class)
     member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)

@@ -4,7 +4,7 @@ Given /^another director has recorded some minutes$/ do
 end
 
 Given /^another director has recorded some new minutes$/ do
-  Given "another director has recorded some minutes"
+  step "another director has recorded some minutes"
 end
 
 When /^I choose the date of discussion$/ do

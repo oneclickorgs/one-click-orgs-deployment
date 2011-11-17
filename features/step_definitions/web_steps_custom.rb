@@ -1,5 +1,5 @@
 Given /^the subdomain is "([^"]*)"$/ do |subdomain|
-  When %Q{the domain is "#{subdomain}.#{Setting[:base_domain].sub(/:\d+$/, '')}"}
+  step %Q{the domain is "#{subdomain}.#{Setting[:base_domain].sub(/:\d+$/, '')}"}
 end
 
 When /^the domain is "([^"]*)"$/ do |domain|

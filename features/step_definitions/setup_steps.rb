@@ -15,9 +15,9 @@ Given /^the application is set up$/ do
 end
 
 Given /^the application is not set up yet$/ do
-  Given "the domain is \"www.example.com\""
+  step "the domain is \"www.example.com\""
 end
 
 When /^the domain is the signup domain$/ do
-  When %Q{the domain is "#{Setting[:signup_domain].sub(/:\d+$/, '')}"}
+  step %Q{the domain is "#{Setting[:signup_domain].sub(/:\d+$/, '')}"}
 end

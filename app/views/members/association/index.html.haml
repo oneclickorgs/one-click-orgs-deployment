@@ -54,6 +54,7 @@
       %th Proposals made (succeeded/failed)
       %th Votes cast
       %th Last login
+      %th Role
     - for member in @members
       %tr
         %td
@@ -70,6 +71,7 @@
         %td
           - if member.last_logged_in_at
             = member.last_logged_in_at.to_s(:short)
+        %td= member.role
   - unless @pending_members.empty?
     %h2
       Invitee Members

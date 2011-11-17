@@ -47,7 +47,13 @@ class MembersController < ApplicationController
     @member = co.members.find(id)
     authorize! :update, Member
     if @member.update_attributes(member)
-       redirect_to member_path(@member), :notice => "Account updated."
+      flash[:notice] = "Account updated."
+      case co
+      when Association
+        redirect_to member_path(@member)
+      when Company
+        redirect_to members_path
+      end
     else
       flash.now[:error] = "There was a problem with your new details."
       render(:action => :edit)
