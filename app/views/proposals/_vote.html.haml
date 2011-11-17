@@ -5,9 +5,9 @@
       = proposal.vote_by(current_user).for_or_against.downcase
     this proposal
 - elsif current_user.can_vote?(proposal)
-  = form_tag(vote_for_path(:id => proposal.id, :return_to => request.url)) do
+  = form_tag(vote_for_path(:id => proposal.id, :return_to => request.path)) do
     = submit_tag "Support"
-  = form_tag(vote_against_path(:id => proposal.id, :return_to => request.url)) do
+  = form_tag(vote_against_path(:id => proposal.id, :return_to => request.path)) do
     = submit_tag "Oppose"
 - else
   %p You cannot vote in this proposal, because it was created before you joined the org.

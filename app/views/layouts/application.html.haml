@@ -47,9 +47,9 @@
             - else
               %p Proposal: Form an Association according to the constitution currently stored on the One Click Orgs system. Those who vote "Support" will become its first members.
               - if current_user.can_vote?(co.found_organisation_proposals.last)
-                = form_tag(vote_against_path(:id => co.found_organisation_proposals.last.id, :return_to => request.url)) do
+                = form_tag(vote_against_path(:id => co.found_organisation_proposals.last.id, :return_to => request.path)) do
                   = submit_tag "Oppose"
-                = form_tag(vote_for_path(:id => co.found_organisation_proposals.last.id, :return_to => request.url)) do
+                = form_tag(vote_for_path(:id => co.found_organisation_proposals.last.id, :return_to => request.path)) do
                   = submit_tag "Support"
                 %br.clear
       = render(:partial => 'shared/control_bar')

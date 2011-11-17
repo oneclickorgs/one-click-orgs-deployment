@@ -1,3 +1,5 @@
+require 'uri'
+
 class VotesController < ApplicationController
 
   before_filter :require_vote_permission, :only => [:vote_for, :vote_against]
@@ -6,7 +8,9 @@ class VotesController < ApplicationController
   def vote_for
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id
-        
+    
+    return_to = sanitise_path(return_to)
+    
     begin
       current_user.cast_vote(:for, id)
       
@@ -26,8 +30,10 @@ class VotesController < ApplicationController
   #FIXME duplication
   def vote_against
     id, return_to = params[:id], params[:return_to]
-    raise ArgumentError, "need proposal id" unless id    
-        
+    raise ArgumentError, "need proposal id" unless id
+    
+    return_to = sanitise_path(return_to)
+    
     begin
       current_user.cast_vote(:against, id)
       redirect_to return_to, :notice => "Vote against proposal cast"
@@ -44,4 +50,19 @@ private
       redirect_back_or_default
     end
   end
-end 
+  
+  # If the given path is not in fact a path, but is a full URL, then
+  # replace it with a path to our site root.
+  # 
+  # This is to avoid a vulnerability where an attacker crafts a URL
+  # which causes our application to redirect to an external site
+  # chosen by the attacker.
+  def sanitise_path(path)
+    if URI.parse(path).host
+      root_path
+    else
+      path
+    end
+  end
+  
+end
