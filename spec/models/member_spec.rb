@@ -36,6 +36,11 @@ describe Member do
       @member.should_not be_valid
       @member.errors[:email].should be_present
       
+      # (Invalid) double-quote character in local part
+      @member.email = "bob\"@example.com"
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
+      
       @member.email = "bob@example.com"
       @member.should be_valid
     end

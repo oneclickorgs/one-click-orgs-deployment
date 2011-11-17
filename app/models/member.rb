@@ -1,5 +1,6 @@
 require 'digest/sha1'
 require 'digest/md5'
+require 'mail/elements/address'
 require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
@@ -78,7 +79,16 @@ class Member < ActiveRecord::Base
   end
 
   validates_presence_of :first_name, :last_name, :email
+  
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
+  validates_each :email do |record, attribute, value|
+    begin
+      address = Mail::Address.new(value)
+    rescue Mail::Field::ParseError
+      record.errors.add(attribute, 'is invalid.')
+    end
+  end
+  
   validates_uniqueness_of :email, :scope => :organisation_id, :unless => :allow_duplicate_email?
   
   attr_accessor :allow_duplicate_email

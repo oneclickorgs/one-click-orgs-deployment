@@ -14,6 +14,7 @@ class Organisation < ActiveRecord::Base
   
   validates_presence_of :name
   validates_uniqueness_of :subdomain
+  validates_format_of :subdomain, :with => /\A[a-zA-z0-9\-]*\Z/
   
   after_create :create_default_member_classes
   after_create :set_default_voting_systems

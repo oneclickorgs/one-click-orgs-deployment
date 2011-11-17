@@ -5,15 +5,13 @@ class PasswordResetsController < ApplicationController
   end
   
   def create
-    email = params[:email]
-    if @member = co.members.where(:email => email).first
+    @email = params[:email]
+    if @member = co.members.where(:email => @email).first
       @member.new_password_reset_code!
       @member.save!
       MembersMailer.password_reset(@member).deliver
-      render(:action => :show)
-    else
-      redirect_to({:action=>:new}, :flash => { :error => "No such user with email: #{email}" })
     end
+    render(:action => :show)
   end
   
   def edit

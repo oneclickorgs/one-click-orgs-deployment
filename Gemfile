@@ -36,6 +36,8 @@ gem "cancan", "~>1.6.4"
 gem "state_machine", "1.0.0"
 gem "fastercsv", :platforms => :ruby_18
 
+gem 'mail', '~>2.2.19'
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
@@ -60,5 +62,5 @@ group :development, :test do
   gem "capybara", "~>1.1.1"
   gem "database_cleaner", "~>0.6.7"
   gem "launchy", "~>0.4.0"
-  gem "selenium-webdriver", "~>2.8.0"
+  gem "selenium-webdriver", "~>2.12.2"
 end
