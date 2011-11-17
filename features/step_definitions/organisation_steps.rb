@@ -1,8 +1,8 @@
 Given /^I have created an organisation$/ do
-  Given "an organisation has been created"
+  step "an organisation has been created"
   @user = @founder
-  Given "the subdomain is the organisation's subdomain"
-  Given "I have logged in"
+  step "the subdomain is the organisation's subdomain"
+  step "I have logged in"
 end
 
 Given /^an organisation has been created$/ do
@@ -15,11 +15,11 @@ Given /^an organisation has been created$/ do
 end
 
 Given /^the domain is the organisation's domain$/ do
-  Given %Q{the domain is "#{@organisation.host}"}
+  step %Q{the domain is "#{@organisation.host}"}
 end
 
 Given /^the subdomain is the organisation's subdomain$/ do
-  Given %Q{the subdomain is "#{@organisation.subdomain}"}
+  step %Q{the subdomain is "#{@organisation.subdomain}"}
 end
 
 Given /^there are enough members to start the founding vote$/ do
@@ -49,7 +49,7 @@ Given /^the organisation's name is "([^"]*)"$/ do |new_organisation_name|
 end
 
 When /^I create an organisation$/ do
-  Given "I have created an organisation"
+  step "I have created an organisation"
 end
 
 Then /^the organisation should be active$/ do

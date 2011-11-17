@@ -26,13 +26,13 @@ end
 Then /^I should see the draft constitution$/ do
   @organisation ||= Organisation.last
   page.should have_css('h2', :text => "View the draft constitution")
-  Then "I should see the dynamic constitution clauses"
+  step "I should see the dynamic constitution clauses"
 end
 
 Then /^I should see the constitution$/ do
   @organisation ||= Organisation.last
   page.should have_css('h2', :text => "Constitution")
-  Then "I should see the dynamic constitution clauses"
+  step "I should see the dynamic constitution clauses"
 end
 
 Then /^I should see a clause with "([^"]*)"$/ do |clause_text|

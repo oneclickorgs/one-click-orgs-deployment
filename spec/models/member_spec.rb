@@ -36,8 +36,27 @@ describe Member do
       @member.should_not be_valid
       @member.errors[:email].should be_present
       
+      # (Invalid) double-quote character in local part
+      @member.email = "bob\"@example.com"
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
+      
       @member.email = "bob@example.com"
       @member.should be_valid
+    end
+    
+    it "requires a unique email address within the organisation" do
+      @other_organisation = Organisation.make
+      @other_member = @other_organisation.members.make(:email => "other@example.com")
+      
+      @fellow_member = @organisation.members.make(:email => "fellow@example.com")
+      
+      @member = @organisation.members.make_unsaved(:email => "other@example.com")
+      @member.should be_valid
+      
+      @member.email = "fellow@example.com"
+      @member.should_not be_valid
+      @member.errors[:email].should be_present
     end
   end
 
