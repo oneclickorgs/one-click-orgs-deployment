@@ -58,7 +58,7 @@ describe Meeting do
     it "handles the participant_ids attribute" do
       meeting = @organisation.meetings.make('participant_ids' => {
         @directors[0].id.to_s => '1',
-        @directors[1].id.to_s => '2'
+        @directors[1].id.to_s => '1'
       })
       
       meeting.participants.length.should == 2
