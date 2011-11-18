@@ -18,8 +18,8 @@ class Meeting < ActiveRecord::Base
       # TODO This member lookup should be scoped by organisation,
       # but at build time the Meeting object's 'organisation'
       # attribute is nil.
-      participant = Member.find(participant_id)
-      participants << participant
+      participant = Member.find_by_id(participant_id)
+      participants << participant if participant
     end
   end
   

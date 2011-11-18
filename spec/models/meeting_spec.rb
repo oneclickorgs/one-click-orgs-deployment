@@ -50,23 +50,32 @@ describe Meeting do
   end
   
   describe "handling form parameters" do
+    before(:each) do
+      @organisation = Company.make
+      @directors = @organisation.members.make_n(2)
+    end
+    
     it "handles the participant_ids attribute" do
-      organisation = Company.make
-      directors = organisation.members.make_n(2)
-      
-      meeting = organisation.meetings.make('participant_ids' => {
-        directors[0].id.to_s => '1',
-        directors[1].id.to_s => '2'
+      meeting = @organisation.meetings.make('participant_ids' => {
+        @directors[0].id.to_s => '1',
+        @directors[1].id.to_s => '2'
       })
       
       meeting.participants.length.should == 2
-      meeting.participants.should include(directors[0])
-      meeting.participants.should include(directors[1])
+      meeting.participants.should include(@directors[0])
+      meeting.participants.should include(@directors[1])
     end
     
     it "does not allow setting participants that are not in the same organisation as the meeting"
     
-    it "ignores participant_ids with a value of '0'"
+    it "ignores participant_ids with a value of '0'" do
+      meeting = @organisation.meetings.make('participant_ids' => {
+        @directors[0].id.to_s => '1',
+        0 => '1'
+      })
+      
+      meeting.participants.length.should == 1
+    end
   end
   
   describe "notification emails" do
