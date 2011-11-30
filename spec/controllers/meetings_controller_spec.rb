@@ -78,6 +78,7 @@ describe MeetingsController do
       @meeting = mock_model(Meeting).as_new_record
       @meetings_association.stub(:build).and_return(@meeting)
       
+      @meeting.stub(:attributes=)
       @meeting.stub!(:save).and_return(true)
     end
     
@@ -85,8 +86,16 @@ describe MeetingsController do
       post :create, 'meeting' => @meeting_parameters
     end
     
-    it "builds the new meeting" do
-      @meetings_association.should_receive(:build).with(@meeting_parameters).and_return(@meeting)
+    it "builds the new meeting without setting attributes" do
+      # This is to avoid trying to set the participants before
+      # setting the organisation, since Meeting has to validate
+      # the participants' membership of the organisation.
+      @meetings_association.should_receive(:build).with().and_return(@meeting)
+      post_create
+    end
+    
+    it "sets the meeting's attributes" do
+      @meeting.should_receive(:attributes=).with(@meeting_parameters)
       post_create
     end
     

@@ -66,7 +66,19 @@ describe Meeting do
       meeting.participants.should include(@directors[1])
     end
     
-    it "does not allow setting participants that are not in the same organisation as the meeting"
+    it "does not allow setting participants that are not in the same organisation as the meeting" do
+      other_organisation = Company.make
+      other_director = other_organisation.members.make
+      
+      meeting = @organisation.meetings.make('participant_ids' => {
+        @directors[0].id.to_s => '1',
+        other_director.id.to_s => '1'
+      })
+      
+      meeting.participants.length.should == 1
+      meeting.participants.should include(@directors[0])
+      meeting.participants.should_not include(other_director)
+    end
     
     it "ignores participant_ids with a value of '0'" do
       meeting = @organisation.meetings.make('participant_ids' => {

@@ -14,11 +14,12 @@ class Meeting < ActiveRecord::Base
   # where the names are the member IDs, and the values are
   # '1' when the checkbox is selected.
   def participant_ids=(participant_ids)
+    unless organisation
+      raise RuntimeError, "Organisation must be set before setting participant IDs"
+    end
+    
     participant_ids.keys.each do |participant_id|
-      # TODO This member lookup should be scoped by organisation,
-      # but at build time the Meeting object's 'organisation'
-      # attribute is nil.
-      participant = Member.find_by_id(participant_id)
+      participant = organisation.members.find_by_id(participant_id)
       participants << participant if participant
     end
   end

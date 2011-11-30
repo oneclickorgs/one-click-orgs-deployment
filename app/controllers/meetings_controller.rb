@@ -7,7 +7,10 @@ class MeetingsController < ApplicationController
   end
   
   def create
-    @meeting = co.meetings.build(params[:meeting])
+    # A Meeting must know its organisation before we
+    # try to set its participants.
+    @meeting = co.meetings.build
+    @meeting.attributes = params[:meeting]
     @meeting.save
     redirect_to root_path
   end
