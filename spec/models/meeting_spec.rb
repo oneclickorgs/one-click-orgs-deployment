@@ -35,7 +35,9 @@ describe Meeting do
   end
   
   describe "validations" do
-    it "requires an organisation"
+    it "requires an organisation" do
+      Meeting.make_unsaved(:organisation => nil).should_not be_valid
+    end
   end
   
   describe "#to_event" do

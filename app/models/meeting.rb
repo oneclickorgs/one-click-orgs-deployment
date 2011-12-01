@@ -1,6 +1,8 @@
 class Meeting < ActiveRecord::Base
   belongs_to :organisation
   
+  validates_presence_of :organisation
+  
   has_many :meeting_participations
   has_many :participants, :through => :meeting_participations
   
