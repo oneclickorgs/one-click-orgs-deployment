@@ -112,7 +112,42 @@ describe MeetingsController do
     end
     
     context "when saving the meeting fails" do
-      it "handles the error gracefully"
+      before(:each) do
+        @meeting.stub(:save).and_return(false)
+        
+        @member_classes_association = mock("member classes association")
+        @company.stub(:member_classes).and_return(@member_classes_association)
+        
+        @director_member_class = mock_model(Director)
+        @member_classes_association.stub(:find_by_name).and_return(@director_member_class)
+        
+        @members_association = mock("members association")
+        @company.stub(:members).and_return(@members_association)
+        
+        @directors = mock("directors")
+        @members_association.stub(:where).and_return(@directors)
+      end
+      
+      it "finds the directors" do
+        @member_classes_association.should_receive(:find_by_name).with('Director').and_return(@director_member_class)
+        @members_association.should_receive(:where).with(:member_class_id => @director_member_class.id).and_return(@directors)
+        post_create
+      end
+      
+      it "assigns the directors" do
+        post_create
+        assigns(:directors).should == @directors
+      end
+      
+      it "renders the 'new' template" do
+        post_create
+        response.should render_template 'meetings/new'
+      end
+      
+      it "sets an error flash" do
+        post_create
+        flash[:error].should be_present
+      end
     end
     
     it "checks permissions"

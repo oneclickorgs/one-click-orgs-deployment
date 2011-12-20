@@ -11,7 +11,14 @@ class MeetingsController < ApplicationController
     # try to set its participants.
     @meeting = co.meetings.build
     @meeting.attributes = params[:meeting]
-    @meeting.save
-    redirect_to root_path
+    if @meeting.save
+      redirect_to root_path
+    else
+      flash[:error] = "There was a problem saving the minutes."
+      
+      @directors = co.members.where(:member_class_id => co.member_classes.find_by_name('Director').id)
+      
+      render :action => 'new'
+    end
   end
 end
