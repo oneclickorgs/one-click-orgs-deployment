@@ -49,13 +49,13 @@ describe CompaniesController do
   
   describe "POST create" do
     before(:each) do
-      @company = mock_model(Company, :save => true, :host => "coffee.oneclickorgs.com")
+      @company = mock_model(Company, :save! => true, :host => "coffee.oneclickorgs.com")
       Company.stub!(:new).and_return(@company)
       
       @members_association = mock("member association")
       @company.stub!(:members).and_return(@members_association)
       
-      @member = mock_model(Member, :save => true, :member_class= => nil, :state= => nil, :update_attribute => true)
+      @member = mock_model(Member, :save! => true, :member_class= => nil, :state= => nil, :update_attribute => true)
       @members_association.stub!(:build).and_return(@member)
       
       @director_member_class = mock_model(MemberClass, :description => "Director")
@@ -86,7 +86,7 @@ describe CompaniesController do
     end
     
     it "saves the new company" do
-      @company.should_receive(:save).and_return(true)
+      @company.should_receive(:save!).and_return(true)
       post_create
     end
     
@@ -106,7 +106,7 @@ describe CompaniesController do
     end
     
     it "saves the new member" do
-      @member.should_receive(:save).and_return(true)
+      @member.should_receive(:save!).and_return(true)
       post_create
     end
     
@@ -121,11 +121,35 @@ describe CompaniesController do
     end
     
     describe "when company attributes are not valid" do
-      it "handles the error gracefully"
+      before(:each) do
+        @company.stub(:valid?).and_return(false)
+      end
+      
+      it "does not save the new member" do
+        @member.should_not_receive(:save!)
+        post_create
+      end
+      
+      it "renders the new template" do
+        post_create
+        response.should render_template 'companies/new'
+      end
     end
     
     describe "when member attributes are not valid" do
-      it "handles the error gracefully"
+      before(:each) do
+        @member.stub(:valid?).and_return(false)
+      end
+      
+      it "does not save the company" do
+        @company.should_not_receive(:save!)
+        post_create
+      end
+      
+      it "renders the new template" do
+        post_create
+        response.should render_template 'companies/new'
+      end
     end
   end
   
