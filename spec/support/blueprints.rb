@@ -28,7 +28,7 @@ Member.blueprint do
   pw = Sham.password
   password pw
   password_confirmation pw
-  active true
+
   inducted_at {Time.now - 23.hours}
   member_class {MemberClass.make}
 end

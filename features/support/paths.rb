@@ -18,6 +18,8 @@ module NavigationHelpers
       '/welcome'
     when /^the voting and proposals page$/
       '/'
+    when /^my member page$/
+      member_path(@user)
     when /^the proposal page$/
       @proposal ||= Proposal.last
       proposal_path(@proposal)

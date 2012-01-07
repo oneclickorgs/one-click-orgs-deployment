@@ -1,0 +1,7 @@
+%h2
+  = @page_title
+
+  = form_for(@member, :url => confirm_resignation_member_path(@member), :html => { :class => 'member resign confirm'}) do |f|
+    = f.hidden_field :id
+
+    = submit_tag "Confirm", :id => 'submit'

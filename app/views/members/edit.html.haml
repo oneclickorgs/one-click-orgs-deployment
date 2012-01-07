@@ -22,5 +22,11 @@
     %p
       = f.label(:role, "Role")
       = f.text_field :role
-    %p    
+    %p
       = submit_tag "Save changes", :id => 'submit'
+
+  = form_for(@member, :url => resign_member_path(@member), :html => { :class => 'member resign', :method => :put }) do |f|
+    %p
+      = f.hidden_field :id
+    %p
+    = submit_tag "Resign", :id => 'submit'

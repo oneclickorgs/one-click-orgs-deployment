@@ -107,6 +107,26 @@ class MembersController < ApplicationController
     end
   end
 
+  def resign
+    @page_title = "Are you sure you want to resign from this organisation?"
+    @member = co.members.find(params[:id])
+    respond_with @member
+  end
+
+  def confirm_resignation
+    @member = co.members.find(params[:id])
+    redirect_to(decide_what_to_do_member_path, :notice => "You've resigned successfully")
+  end
+
+  # place holder method to provide a log out screen with custom copy
+  # once a user has resigned.
+  # if we choose to log the person out, we'll make a call to #reset_session
+  # BUT doing this means we can't pass any flash notices to the page.
+  # leaving this here until we know more
+  def decide_what_to_do
+    # reset_session
+  end
+
   def destroy
     @member = co.members.find(params[:id])
     
