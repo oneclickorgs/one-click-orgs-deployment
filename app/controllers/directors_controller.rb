@@ -1,10 +1,13 @@
 class DirectorsController < ApplicationController
   def create
-    @director = co.build_director(params[:director])
-    @director.send_welcome = true
-    if @director.save
-      @director.send_new_director_notifications
+    if can?(:create, Director)
+      @director = co.build_director(params[:director])
+      @director.send_welcome = true
+      if @director.save
+        @director.send_new_director_notifications
+      end
     end
+    
     redirect_to members_path
   end
   

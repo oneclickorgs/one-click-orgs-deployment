@@ -41,6 +41,10 @@ class Ability
       if user.has_permission(:freeform_proposal)
         can :create, Proposal
       end
+      
+      if user.has_permission(:director)
+        can :create, Director
+      end
     end
   end
 end

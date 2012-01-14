@@ -100,6 +100,13 @@ describe CompaniesController do
       post_create
     end
     
+    it "finds the member class only after saving the organisation" do
+      @company.should_receive(:save!).ordered.and_return(true)
+      @company.should_receive(:member_classes).ordered.and_return(@member_classes_association)
+      
+      post_create
+    end
+    
     it "makes the new member active" do
       @member.should_receive(:state=).with('active')
       post_create

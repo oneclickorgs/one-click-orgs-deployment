@@ -12,10 +12,10 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(params[:company])
     @member = @company.members.build(params[:member])
-    @member.member_class = @company.member_classes.find_by_name('Director')
     @member.state = 'active'
     if @company.valid? && @member.valid?
       @company.save!
+      @member.member_class = @company.member_classes.find_by_name('Director')
       @member.save!
       log_in(@member)
       redirect_to root_url(:host => @company.host)
