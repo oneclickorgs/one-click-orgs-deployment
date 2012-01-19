@@ -5,6 +5,10 @@ class DirectorsController < ApplicationController
       @director.send_welcome = true
       if @director.save
         @director.send_new_director_notifications
+      else
+        flash[:error] = "There was a problem saving the new director."
+        render :action => 'new'
+        return
       end
     end
     

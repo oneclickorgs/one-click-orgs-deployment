@@ -1,0 +1,18 @@
+= error_messages_for(form.object)
+%p
+  = form.label :email
+  = form.text_field :email
+%p
+  = form.label :first_name
+  = form.text_field :first_name
+%p
+  = form.label :last_name
+  = form.text_field :last_name
+%p.date
+  = form.label :elected_on, "Date of election"
+  = form.date_select :elected_on
+%p.checkbox
+  = form.check_box :certification
+  = form.label :certification, "I certify this individual was duly elected as a Director at a General Meeting held on this date"
+%p
+  = form.submit "Add this director"

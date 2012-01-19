@@ -45,7 +45,19 @@ describe DirectorsController do
     end
     
     context "when director cannot be saved" do
-      it "handles the error gracefully"
+      before(:each) do
+        @director.stub(:save).and_return(false)
+      end
+      
+      it "sets an error flash" do
+        post_create
+        flash[:error].should be_present
+      end
+      
+      it "renders the 'new' template" do
+        post_create
+        response.should render_template 'directors/new'
+      end
     end
     
     describe "permissions checking" do

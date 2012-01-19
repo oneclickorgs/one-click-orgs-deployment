@@ -7,23 +7,7 @@
   
   %div#new_director_form.form-to-hide
     = form_for(@director) do |director_form|
-      %p
-        = director_form.label :email
-        = director_form.text_field :email
-      %p
-        = director_form.label :first_name
-        = director_form.text_field :first_name
-      %p
-        = director_form.label :last_name
-        = director_form.text_field :last_name
-      %p.date
-        = director_form.label :elected_on, "Date of election"
-        = director_form.date_select :elected_on
-      %p.checkbox
-        = director_form.check_box :certification
-        = director_form.label :certification, "I certify this individual was duly elected as a Director at a General Meeting held on this date"
-      %p
-        = director_form.submit "Add this director"
+      = render :partial => 'directors/form', :locals => {:form => director_form}
 
 %table.members
   %tr
