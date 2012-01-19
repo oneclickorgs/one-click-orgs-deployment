@@ -86,7 +86,7 @@ describe MeetingsController do
       @meetings_association = double("meetings association")
       @company.stub(:meetings).and_return(@meetings_association)
       
-      @meeting = mock_model(Meeting).as_new_record
+      @meeting = mock_model(Meeting, :creator= => nil).as_new_record
       @meetings_association.stub(:build).and_return(@meeting)
       
       @meeting.stub(:attributes=)
@@ -115,7 +115,10 @@ describe MeetingsController do
       post_create
     end
     
-    it "logs that the current user created the meeting"
+    it "logs that the current user created the meeting" do
+      @meeting.should_receive(:creator=).with(@user)
+      post_create
+    end
     
     it "redirects to the dashboard" do
       post_create

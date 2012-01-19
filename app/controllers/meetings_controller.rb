@@ -16,6 +16,9 @@ class MeetingsController < ApplicationController
     # try to set its participants.
     @meeting = co.meetings.build
     @meeting.attributes = params[:meeting]
+    
+    @meeting.creator = current_user
+    
     if @meeting.save
       redirect_to root_path
     else

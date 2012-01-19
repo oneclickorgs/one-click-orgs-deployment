@@ -32,6 +32,18 @@ describe Meeting do
       
       meeting.reload.comments.should == [comment]
     end
+    
+    it "belongs to a creator" do
+      meeting = Meeting.make
+      creator = Member.make
+      
+      expect {meeting.creator = creator}.to_not raise_error
+      
+      meeting.save!
+      meeting = Meeting.find(meeting.id)
+      
+      meeting.creator.should == creator
+    end
   end
   
   describe "validations" do

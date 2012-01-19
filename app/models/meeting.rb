@@ -6,6 +6,8 @@ class Meeting < ActiveRecord::Base
   has_many :meeting_participations
   has_many :participants, :through => :meeting_participations
   
+  belongs_to :creator, :class_name => 'Member', :foreign_key => 'creator_id'
+  
   has_many :comments, :as => :commentable
   
   def to_event
