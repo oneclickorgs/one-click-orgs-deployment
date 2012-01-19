@@ -6,7 +6,9 @@ class MembersController < ApplicationController
   
   before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
-
+  
+  skip_before_filter :ensure_authenticated, :ensure_member_active, :only => [:resigned]
+  
   def index
     @page_title = "Members"
     @current_organisation = co
