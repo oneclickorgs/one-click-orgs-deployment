@@ -23,6 +23,8 @@ describe MeetingsController do
       
       @comment = mock_model(Comment).as_new_record
       Comment.stub(:new).and_return(@comment)
+      
+      controller.stub(:can?).with(:read, @meeting).and_return(true)
     end
     
     def get_show
@@ -59,7 +61,16 @@ describe MeetingsController do
       response.should render_template('meetings/show')
     end
     
-    it "checks permissions"
+    context "when user is not permitted to view the meeting" do
+      before(:each) do
+        controller.stub(:can?).with(:read, @meeting).and_return(false)
+      end
+      
+      it "redirects to the dashboard" do
+        get_show
+        response.should redirect_to root_path
+      end
+    end
   end
   
   describe "POST create" do

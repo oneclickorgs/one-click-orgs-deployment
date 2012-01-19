@@ -2,6 +2,11 @@ class MeetingsController < ApplicationController
   def show
     @meeting = co.meetings.find(params[:id])
     
+    unless can?(:read, @meeting)
+      redirect_to root_path
+      return
+    end
+    
     @comments = @meeting.comments
     @comment = Comment.new
   end

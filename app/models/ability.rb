@@ -45,6 +45,10 @@ class Ability
       if user.has_permission(:director)
         can :create, Director
       end
+      
+      if user.has_permission(:meeting)
+        can :read, Meeting
+      end
     end
   end
 end

@@ -20,6 +20,7 @@ class Company < Organisation
     directors.set_permission!(:freeform_proposal, true)
     directors.set_permission!(:vote, true)
     directors.set_permission!(:director, true)
+    directors.set_permission!(:meeting, true)
     directors.save
   end
   
