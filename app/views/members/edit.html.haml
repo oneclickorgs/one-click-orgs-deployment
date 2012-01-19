@@ -1,30 +1,31 @@
 %h2
   = @page_title
 
-%p
-  = form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
-    = error_messages_for(@member)
-    %p
-      = f.label(:first_name)
-      = f.text_field :first_name
-    %p
-      = f.label(:last_name)
-      = f.text_field :last_name
-    %p
-      = f.label(:email, "Email address")
-      = f.text_field :email
-    %p
-      = f.label(:password)
-      = f.password_field :password
-    %p
-      = f.label(:password_confirmation, "Repeat password")
-      = f.password_field :password_confirmation
-    %p
-      = f.label(:role, "Role")
-      = f.text_field :role
-    %p
-      = submit_tag "Save changes", :id => 'submit'
+= form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
+  = error_messages_for(@member)
+  %p
+    = f.label(:first_name)
+    = f.text_field :first_name
+  %p
+    = f.label(:last_name)
+    = f.text_field :last_name
+  %p
+    = f.label(:email, "Email address")
+    = f.text_field :email
+  %p
+    = f.label(:password)
+    = f.password_field :password
+  %p
+    = f.label(:password_confirmation, "Repeat password")
+    = f.password_field :password_confirmation
+  %p
+    = f.label(:role, "Role")
+    = f.text_field :role
+  %p
+    = submit_tag "Save changes", :id => 'submit'
 
-  = form_for(@member, :url => confirm_resign_member_path(@member), :html => { :class => 'member resign', :method => :put }) do |f|
-    %p
-      = submit_tag "Resign", :id => 'submit'
+%hr
+
+= form_for(@member, :url => confirm_resign_member_path(@member), :html => { :class => 'member resign', :method => :put }) do |f|
+  %p
+    = submit_tag "Resign", :id => 'submit'
