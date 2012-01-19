@@ -10,10 +10,8 @@ Feature: Resigning from a an organisation
     And the subdomain is the organisation's subdomain
     And I have logged in
 
-  @wip
   Scenario: Resigning
-    Given there is a member "bob@example.com"
-    When I go to my member page
+    Given I am on my account page
     And I click on the resign link, and confirm my leaving
     Then I should be logged out, with a message telling me I have resigned.
   

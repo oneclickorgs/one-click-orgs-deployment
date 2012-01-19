@@ -20,6 +20,8 @@ module NavigationHelpers
       '/'
     when /^my member page$/
       member_path(@user)
+    when /^my account page$/
+      edit_member_path(@user)
     when /^the proposal page$/
       @proposal ||= Proposal.last
       proposal_path(@proposal)

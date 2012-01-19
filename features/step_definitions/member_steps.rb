@@ -68,7 +68,7 @@ end
 When /^I click on the resign link, and confirm my leaving$/ do
   click_link 'Edit your account'
   click_link_or_button "Resign"
-  click_link_or_button "Confirm"
+  click_link_or_button "Resign"
 end
 
 Then /^I should be logged out, with a message telling me I have resigned\.$/ do
