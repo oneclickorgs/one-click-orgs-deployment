@@ -27,6 +27,5 @@
 
   = form_for(@member, :url => resign_member_path(@member), :html => { :class => 'member resign', :method => :put }) do |f|
     %p
-      = f.hidden_field :id
     %p
     = submit_tag "Resign", :id => 'submit'

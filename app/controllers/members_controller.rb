@@ -109,12 +109,12 @@ class MembersController < ApplicationController
 
   def resign
     @page_title = "Are you sure you want to resign from this organisation?"
-    @member = co.members.find(params[:id])
+    @member = current_user
     respond_with @member
   end
 
   def confirm_resignation
-    @member = co.members.find(params[:id])
+    @member = current_user
     redirect_to(decide_what_to_do_member_path, :notice => "You've resigned successfully")
   end
 
