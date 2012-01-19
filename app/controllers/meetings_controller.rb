@@ -12,6 +12,11 @@ class MeetingsController < ApplicationController
   end
   
   def create
+    unless can?(:create, Meeting)
+      redirect_to root_path
+      return
+    end
+    
     # A Meeting must know its organisation before we
     # try to set its participants.
     @meeting = co.meetings.build

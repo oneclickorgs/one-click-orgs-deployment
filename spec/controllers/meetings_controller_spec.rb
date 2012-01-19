@@ -91,6 +91,8 @@ describe MeetingsController do
       
       @meeting.stub(:attributes=)
       @meeting.stub!(:save).and_return(true)
+      
+      controller.stub(:can?).with(:create, Meeting).and_return(true)
     end
     
     def post_create
@@ -164,7 +166,16 @@ describe MeetingsController do
       end
     end
     
-    it "checks permissions"
+    context "when the user is not permitted to create a meeting" do
+      before(:each) do
+        controller.stub(:can?).with(:create, Meeting).and_return(false)
+      end
+      
+      it "does not save the meeting" do
+        @meeting.should_not_receive(:save)
+        post_create
+      end
+    end
   end
   
 end

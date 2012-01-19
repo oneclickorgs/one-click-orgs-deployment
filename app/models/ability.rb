@@ -48,6 +48,7 @@ class Ability
       
       if user.has_permission(:meeting)
         can :read, Meeting
+        can :create, Meeting
       end
     end
   end
