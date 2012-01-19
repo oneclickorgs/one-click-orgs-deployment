@@ -11,10 +11,19 @@ Feature: Resigning from a an organisation
     And I have logged in
 
   @wip
-  Scenario: Proposing ejection of a member
+  Scenario: Resigning
     Given there is a member "bob@example.com"
     When I go to my member page
     And I click on the resign link, and confirm my leaving
     Then I should be logged out, with a message telling me I have resigned.
-    And a message has been sent to the members
-    And added to the timeline
+  
+  @wip
+  Scenario: Being notified of another member's resignation
+    Given another member has resigned
+    Then I should receive an email saying that member has resigned
+  
+  @wip
+  Scenario: Seeing a resignation in the timeline
+    Given another member has resigned
+    When I go to the dashboard
+    Then I should see the resignation in the timeline
