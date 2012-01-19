@@ -77,10 +77,11 @@ OneClickOrgs::Application.routes.draw do
       post :change_class
       put :confirm_resign
       put :resign
-      get :decide_what_to_do
     end
+    
     collection do
       post :create_founding_member
+      get :resigned
     end
   end
 
