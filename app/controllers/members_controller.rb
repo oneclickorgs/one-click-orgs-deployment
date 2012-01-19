@@ -116,6 +116,7 @@ class MembersController < ApplicationController
   def resign
     @member = current_user
     redirect_to(decide_what_to_do_member_path, :notice => "You've resigned successfully")
+    @member.resign!
   end
 
   # place holder method to provide a log out screen with custom copy

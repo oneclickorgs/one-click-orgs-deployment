@@ -147,6 +147,10 @@ class Member < ActiveRecord::Base
     self.active = false
     save!
   end
+  
+  def resign!
+    eject!
+  end
 
   def inducted!
     self.inducted_at = Time.now.utc if !inducted?
