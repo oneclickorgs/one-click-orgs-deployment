@@ -75,8 +75,8 @@ OneClickOrgs::Application.routes.draw do
   resources :members do
     member do
       post :change_class
+      put :confirm_resign
       put :resign
-      put :confirm_resignation
       get :decide_what_to_do
     end
     collection do

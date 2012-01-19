@@ -25,7 +25,7 @@
     %p
       = submit_tag "Save changes", :id => 'submit'
 
-  = form_for(@member, :url => resign_member_path(@member), :html => { :class => 'member resign', :method => :put }) do |f|
+  = form_for(@member, :url => confirm_resign_member_path(@member), :html => { :class => 'member resign', :method => :put }) do |f|
     %p
     %p
     = submit_tag "Resign", :id => 'submit'
