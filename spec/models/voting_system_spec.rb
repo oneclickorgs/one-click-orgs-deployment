@@ -89,6 +89,16 @@ describe VotingSystems do
 
       should_close_early make_proposal(10, 9)
       should_close_early make_proposal(9, 10)
+      
+      # Edge cases
+      
+      # Absolute majority requires more than 50% of the membership
+      # to vote in favour. It is not enough if exactly 50% of the
+      # membership votes in favour.
+      should_pass make_proposal(6, 0, 10)
+      should_not_pass make_proposal(5, 0, 10)
+      should_close_early make_proposal(6, 0, 10)
+      should_not_close_early make_proposal(5, 0, 10)
     end
   end
 

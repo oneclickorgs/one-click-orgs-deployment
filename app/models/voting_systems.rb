@@ -82,12 +82,12 @@ module VotingSystems
     end
     
     def self.can_be_closed_early?(proposal)
-      (current_fraction_for(proposal) >= @fraction_needed) || 
-      (current_fraction_against(proposal) > (1.0 - @fraction_needed)) 
+      (current_fraction_for(proposal) > @fraction_needed) || 
+      (current_fraction_against(proposal) >= (1.0 - @fraction_needed)) 
     end
     
     def self.passed?(proposal)
-      current_fraction_for(proposal) >= @fraction_needed
+      current_fraction_for(proposal) > @fraction_needed
     end
 
     private
@@ -128,7 +128,7 @@ module VotingSystems
     self.fraction_needed = 2.0/3.0
   end
   
-  class Unanimous < Majority
+  class Unanimous < VotingSystem
     def self.description(options={})
       "Unanimous: decisions need supporting votes from 100% of members"
     end
@@ -138,7 +138,14 @@ module VotingSystems
       "Supporting Votes#{are_received} from all Members during the Voting Period."
     end
     
-    self.fraction_needed = 1.0
+    def self.can_be_closed_early?(proposal)
+      (proposal.votes_against > 0 ) ||
+      (proposal.votes_for == proposal.member_count)
+    end
+    
+    def self.passed?(proposal)
+      proposal.votes_for == proposal.member_count
+    end
   end
   
   class Founding < VotingSystem

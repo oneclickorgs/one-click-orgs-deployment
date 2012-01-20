@@ -10,7 +10,17 @@ describe Director do
   end
   
   describe "validation" do
-    it "validates acceptance of certification"
+    it "validates acceptance of certification on create" do
+      director = Director.new(:certification => nil)
+      director.should_not be_valid
+      director.errors[:certification].should be_present
+    end
+    
+    it "does not validate acceptance of certification on update" do
+      director = Director.make
+      director.certification = '0'
+      director.should be_valid
+    end
   end
   
 end

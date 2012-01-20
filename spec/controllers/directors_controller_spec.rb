@@ -16,6 +16,8 @@ describe DirectorsController do
       @director = mock_model(Director, :save => true, :send_welcome= => nil).as_new_record
       @director.stub(:send_new_director_notifications)
       @company.stub(:build_director).and_return(@director)
+      
+      controller.stub(:can?).with(:create, Director).and_return(true)
     end
     
     def post_create
@@ -33,7 +35,7 @@ describe DirectorsController do
     end
     
     it "sends notification emails to all directors" do
-			@director.should_receive(:send_new_director_notifications)
+      @director.should_receive(:send_new_director_notifications)
       post_create
     end
     
@@ -43,10 +45,34 @@ describe DirectorsController do
     end
     
     context "when director cannot be saved" do
-      it "handles the error gracefully"
+      before(:each) do
+        @director.stub(:save).and_return(false)
+      end
+      
+      it "sets an error flash" do
+        post_create
+        flash[:error].should be_present
+      end
+      
+      it "renders the 'new' template" do
+        post_create
+        response.should render_template 'directors/new'
+      end
     end
     
-    it "checks permissions"
+    describe "permissions checking" do
+      context "when user is not allowed to create a director" do
+        before(:each) do
+          controller.stub(:can?).with(:create, Director).and_return false
+        end
+        
+        it "should not create the director" do
+          @company.should_not_receive(:build_director)
+          @director.should_not_receive(:save)
+          post_create
+        end
+      end
+    end
   end
   
   describe "POST stand_down" do

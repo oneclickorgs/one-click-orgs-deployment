@@ -6,7 +6,8 @@ Emma Persky <emma.persky@gmail.com>
 Chris Adams <wave@chrisadams.me.uk>
 Jon Gilbraith <jon@professionalnerd.com>
 Ben Summers <ben@fluffy.co.uk>
+Andrew Black <andrewdblack@googlemail.com>
 Chris Rode <chris.rode@headshift.com>
-James Darling <james@abscond.org>
-Dave Menninger <dave@domU-12-31-39-03-40-86.compute-1.internal>
 Muz <mustaqila@yahoo.co.uk>
+Dave Menninger <dave@domU-12-31-39-03-40-86.compute-1.internal>
+James Darling <james@abscond.org>
