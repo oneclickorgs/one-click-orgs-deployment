@@ -31,6 +31,11 @@ Given /^there is a member with name "([^"]*)" and email "([^"]*)"$/ do |name, em
   )
 end
 
+Given /^another member has resigned$/ do
+  @member = @organisation.members.make
+  @member.resign!
+end
+
 Then /^I should see the list of members$/ do
   page.should have_css('table.members td a')
 end

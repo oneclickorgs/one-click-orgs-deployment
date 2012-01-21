@@ -15,7 +15,6 @@ Feature: Resigning from a an organisation
     And I click on the resign link, and confirm my leaving
     Then I should be logged out, with a message telling me I have resigned.
   
-  @wip
   Scenario: Being notified of another member's resignation
     Given another member has resigned
     Then I should receive an email saying that member has resigned

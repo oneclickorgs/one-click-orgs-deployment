@@ -43,4 +43,15 @@ class MembersMailer < OcoMailer
 
     create_mail(@organisation_name, @member.email, "Your password for #{@organisation_name} on One Click Orgs")
   end
+  
+  def notify_resignation(recipient, resignee)
+    default_url_options[:host] = recipient.organisation.domain(:only_host => true)
+    
+    @recipient = recipient
+    @resignee = resignee
+    
+    @organisation_name = recipient.organisation.name
+    
+    create_mail(@organisation_name, @recipient.email, "#{@resignee.name} has resigned")
+  end
 end

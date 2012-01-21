@@ -183,4 +183,20 @@ describe Member do
       end
     end
   end
+  
+  describe "resigning" do
+    def mock_email
+      mock("email", :deliver => nil)
+    end
+    
+    it "sends a notification email to the other members" do
+      other_members = @organisation.members.make_n(3)
+      
+      other_members.each do |other_member|
+        MembersMailer.should_receive(:notify_resignation).with(other_member, @member).and_return(mock_email)
+      end
+      
+      @member.resign!
+    end
+  end
 end

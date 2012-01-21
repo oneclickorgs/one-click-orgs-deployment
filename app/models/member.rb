@@ -150,6 +150,9 @@ class Member < ActiveRecord::Base
   
   def resign!
     eject!
+    organisation.members.active.each do |member|
+      MembersMailer.notify_resignation(member, self).deliver
+    end
   end
 
   def inducted!
