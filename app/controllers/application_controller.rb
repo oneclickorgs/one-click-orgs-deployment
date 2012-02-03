@@ -202,7 +202,7 @@ class ApplicationController < ActionController::Base
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
+      redirect_to(new_organisation_url(host_and_port(Setting[:signup_domain])))
     end
   end
   
@@ -239,8 +239,17 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'welcome', :action => 'index')
   end
   
+  def host_and_port(domain)
+    host, port = domain.split(':')
+    if port
+      {:host => host, :port => port}
+    else
+      {:host => host}
+    end
+  end
+
   # EXCEPTIONS
-  
+
   rescue_from NotFound, :with => :render_404
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   def render_404
