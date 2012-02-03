@@ -126,7 +126,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def parameters=(new_parameters)
-    self[:parameters] = new_parameters.to_json
+    self[:parameters] = new_parameters.blank? ? {} : new_parameters.to_json
   end
   
   def self.find_closeable_early_proposals
