@@ -48,7 +48,7 @@ class Clause < ActiveRecord::Base
     "#{name}: #{text_value || integer_value || boolean_value}"
   end
   
-  def self.exists?(name)
+  def self.currently_exists?(name)
     !!get_current(name)
   end
   
