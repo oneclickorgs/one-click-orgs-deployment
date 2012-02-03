@@ -202,7 +202,7 @@ protected
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_association_url(:host => Setting[:signup_domain]))
+      redirect_to(new_association_url(host_and_port(Setting[:signup_domain])))
     end
   end
   
@@ -234,6 +234,15 @@ protected
   
   def find_constitution
     @constitution = co.constitution
+  end
+  
+  def host_and_port(domain)
+    host, port = domain.split(':')
+    if port
+      {:host => host, :port => port}
+    else
+      {:host => host}
+    end
   end
   
   # EXCEPTION HANDLING
