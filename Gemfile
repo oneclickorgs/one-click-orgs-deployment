@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.0.0"
 
-gem "rails", "3.0.10"
+gem "rails", "3.1.3"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -33,10 +33,10 @@ gem "daemons", "~>1.0.10"
 gem "delayed_job", "2.1.4"
 gem "exception_notification_rails3", :require => 'exception_notifier'
 gem "cancan", "~>1.6.4"
-gem "state_machine", "1.0.0"
+gem "state_machine", "~>1.1.2"
 gem "fastercsv", :platforms => :ruby_18
 
-gem 'mail', '~>2.2.19'
+gem 'mail', '>=2.2.19'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
