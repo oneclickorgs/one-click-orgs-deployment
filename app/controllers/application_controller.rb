@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
 
       # Add our CSS file
-      kit.stylesheets << "#{Rails.root}/public/assets/pdf.css"
+      kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.css"
 
       send_data(kit.to_pdf, :filename => "#{@organisation_name} #{filename}.pdf",
         :type => 'application/pdf', :disposition => 'attachment')
