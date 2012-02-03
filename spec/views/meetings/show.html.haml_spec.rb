@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "meetings/show.html.haml" do
+describe "meetings/show" do
   
   before(:each) do
     @meeting = mock_model(Meeting,

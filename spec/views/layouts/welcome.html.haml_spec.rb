@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "layouts/welcome.html.haml" do
+describe "layouts/welcome" do
   
   context "when user is logged in" do
     before(:each) do

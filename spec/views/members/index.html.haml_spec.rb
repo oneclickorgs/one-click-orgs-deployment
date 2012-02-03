@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "members/index.html.haml" do
+describe "members/index" do
   
   context "when current organisation is a company" do
     before(:each) do

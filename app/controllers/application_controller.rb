@@ -250,7 +250,7 @@ protected
   rescue_from NotFound, :with => :render_404
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   def render_404
-    render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+    render :file => "#{Rails.root}/public/404", :status => 404, :layout => false
   end
   
   rescue_from Unauthenticated, :with => :handle_unauthenticated

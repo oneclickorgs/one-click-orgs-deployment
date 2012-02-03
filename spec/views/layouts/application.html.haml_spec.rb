@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "layouts/application.html.haml" do
+describe "layouts/application" do
   context "when current organisation is an association" do
     context "when user is logged in" do
       before(:each) do
