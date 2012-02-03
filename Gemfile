@@ -69,7 +69,7 @@ group :development, :test do
   gem "rcov", "~>0.9.8"
   gem "cucumber-rails", "~>1.2.0"
   gem "capybara", "~>1.1.1"
-  gem "database_cleaner", "~>0.6.7"
+  gem "database_cleaner", "~>0.7.1"
   gem "launchy", "~>0.4.0"
   gem "selenium-webdriver", "~>2.12.2"
 end
