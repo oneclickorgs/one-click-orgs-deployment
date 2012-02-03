@@ -270,7 +270,7 @@ protected
   # OrganisationResolver based on the given organisation's class when
   # resolving (looking up) template paths.
   def install_organisation_resolver(organisation)
-    view_paths.dup.reverse.each do |view_path|
+    view_paths.dup.each do |view_path|
       prepend_view_path(
         OneClickOrgs::OrganisationResolver.new(
           view_path.to_path,

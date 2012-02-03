@@ -15,7 +15,7 @@ require 'action_view/path_set'
 
 class ApplicationController < ActionController::Base
   def install_organisation_resolver_with_rspec_workaround(organisation)
-    if view_paths.length == 1 && view_paths[0].respond_to?(:original_path_set)
+    if view_paths[0].respond_to?(:original_path_set)
       empty_template_path_set_decorator = view_paths[0]
       original_path_set = empty_template_path_set_decorator.original_path_set
       
