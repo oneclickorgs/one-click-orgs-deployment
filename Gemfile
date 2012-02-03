@@ -25,8 +25,16 @@ gem "mysql"
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.1.5'
+  gem 'uglifier', '>= 1.0.3'
+end
+
 gem "jquery-rails", "~>1.0.12"
-gem "haml", "~>3.0.18"
+gem "haml", "~>3.1.4"
+gem "sass", "~>3.1.12"
 gem "rdiscount"
 gem "pdfkit"
 gem "daemons", "~>1.0.10"
