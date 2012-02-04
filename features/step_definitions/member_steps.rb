@@ -82,10 +82,8 @@ Then /^I should be logged out, with a message telling me I have resigned\.$/ do
   page.should have_content 'resigned successfully'
 end
 
-Then /^a message has been sent to the members$/ do
-  # pending # express the regexp above with the code you wish you had
-end
-
-Then /^added to the timeline$/ do
-  pending # express the regexp above with the code you wish you had
+Then /^I should see the resignation in the timeline$/ do
+  within('table.timeline') do
+    page.should have_content("#{@member.name} resigned")
+  end
 end

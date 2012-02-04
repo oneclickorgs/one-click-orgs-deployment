@@ -33,6 +33,8 @@ module NavigationHelpers
       member_path(@member)
     when /^the members page$/
       members_path
+    when /^the dashboard$/
+      '/'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

@@ -19,7 +19,6 @@ Feature: Resigning from a an organisation
     Given another member has resigned
     Then I should receive an email saying that member has resigned
   
-  @wip
   Scenario: Seeing a resignation in the timeline
     Given another member has resigned
     When I go to the dashboard

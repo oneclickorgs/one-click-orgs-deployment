@@ -34,7 +34,8 @@ class OneClickController < ApplicationController
     @timeline = [
       co.members.all,
       co.proposals.all,
-      co.decisions.all
+      co.decisions.all,
+      co.resignations.all
     ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
   end
   

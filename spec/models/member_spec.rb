@@ -189,6 +189,12 @@ describe Member do
       mock("email", :deliver => nil)
     end
     
+    it "creates a resignation record" do
+      previous_resignation_count = @member.resignations.count
+      @member.resign!
+      @member.resignations.count.should == previous_resignation_count + 1
+    end
+    
     it "sends a notification email to the other members" do
       other_members = @organisation.members.make_n(3)
       
