@@ -1,0 +1,13 @@
+%h2
+  Are you sure you want to resign?
+
+%p
+  You will immediately lose access to
+  = co.name + '.'
+  To rejoin, you will have to be voted back in by members of the Association.
+
+  = form_for(@member, :url => resign_member_path(@member), :html => { :class => 'member resign confirm'}) do |f|
+    %p
+      = submit_tag "Resign", :id => 'submit'
+  %p
+    = link_to("Cancel", root_path)

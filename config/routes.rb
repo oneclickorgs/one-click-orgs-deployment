@@ -55,15 +55,15 @@ OneClickOrgs::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
-  
+
   match '/amendments' => 'one_click#amendments', :as => 'amendments'
   match '/constitution' => 'one_click#constitution', :as => 'constitution'
-  
+
   match '/timeline' => 'one_click#timeline', :as => 'timeline'
-  
+
   match '/votes/vote_for/:id' => 'votes#vote_for', :conditions => {:method => :post}, :as => 'vote_for'
   match '/votes/vote_against/:id' => 'votes#vote_against', :conditions => {:method => :post}, :as => 'vote_against'
-  
+
   resources :decisions
   resources :proposals do
     resources :comments
@@ -71,32 +71,37 @@ OneClickOrgs::Application.routes.draw do
   # TODO Don't want this global matching if possible:
   match '/proposals(/:action)' => 'proposals'
 
+
   resources :members do
     member do
       post :change_class
+      put :confirm_resign
+      put :resign
     end
+    
     collection do
       post :create_founding_member
+      get :resigned
     end
   end
-  
+
   match '/one_click(/:action)' => 'one_click'
   #match '/induction(/:action)' => 'induction'
- 
+
   match '/login' => 'member_sessions#new', :as => 'login'
   match '/logout' => 'member_sessions#destroy', :as => 'logout', :via => "get"
   resource :member_session, :only => [:new, :create, :destroy]
-  
+
   match '/welcome(/:action)' => 'welcome'
-  
+
   match '/setup(/:action)' => 'setup'
 
   resources :organisations
 #  match '/organisations(/:action)' => 'organisations'
-  
+
   match '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations
-  
+
   match '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
   resources :password_resets
 
