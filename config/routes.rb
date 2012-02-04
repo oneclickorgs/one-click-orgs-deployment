@@ -77,7 +77,16 @@ OneClickOrgs::Application.routes.draw do
   resources :change_member_class_proposals
   resources :found_association_proposals
   
-  resources :members
+  resources :members do
+    member do
+      put :confirm_resign
+      put :resign
+    end
+    
+    collection do
+      get :resigned
+    end
+  end
   
   resources :founding_members
   resources :directors do
@@ -85,15 +94,15 @@ OneClickOrgs::Application.routes.draw do
       post :stand_down
     end
   end
-  
+
   match '/one_click(/:action)' => 'one_click'
  
   get '/login' => 'member_sessions#new', :as => 'login'
   get '/logout' => 'member_sessions#destroy', :as => 'logout'
   resource :member_session, :only => [:new, :create, :destroy]
-  
+
   match '/welcome(/:action)' => 'welcome'
-  
+
   match '/setup(/:action)' => 'setup'
 
   resources :associations

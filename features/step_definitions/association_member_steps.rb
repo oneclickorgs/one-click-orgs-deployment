@@ -31,6 +31,11 @@ Given /^there is a member with name "([^"]*)" and email "([^"]*)"$/ do |name, em
   )
 end
 
+Given /^another member has resigned$/ do
+  @member = @organisation.members.make
+  @member.resign!
+end
+
 Then /^I should see the list of members$/ do
   page.should have_css('table.members td a')
 end
@@ -61,4 +66,22 @@ end
 
 Then /^I should see a list of recent activity by the member$/ do
   page.should have_css('table.timeline td')
+end
+
+When /^I click on the resign link, and confirm my leaving$/ do
+  click_link 'Edit your account'
+  click_link_or_button "Resign"
+  click_link_or_button "Resign"
+end
+
+Then /^I should be logged out, with a message telling me I have resigned\.$/ do
+  page.should have_css "h2", :text => "You've resigned successfully"
+  # page.should have_css '#notice', :text => 'resigned successfully'
+  page.should have_content 'resigned successfully'
+end
+
+Then /^I should see the resignation in the timeline$/ do
+  within('table.timeline') do
+    page.should have_content("#{@member.name} resigned")
+  end
 end
