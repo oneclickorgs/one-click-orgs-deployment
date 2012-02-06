@@ -14,10 +14,8 @@ Given /^there are two other founding members$/ do
 end
 
 Given /^I have been invited to join the organisation$/ do
-  @user ||= @organisation.members.make(:pending)
+  @user ||= @organisation.members.make(:pending, :send_welcome => true)
   @user.should_not be_inducted
-  @user.send_welcome = true
-  @user.send_welcome_if_requested
 end
 
 Given /^I am a member of the organisation$/ do
@@ -27,9 +25,7 @@ Given /^I am a member of the organisation$/ do
 end
 
 Given /^I have been invited to sign up as a director$/ do
-  @user ||= @organisation.directors.make
-  @user.send_welcome = true
-  @user.send_welcome_if_requested
+  @user ||= @organisation.directors.make(:send_welcome => true)
 end
 
 Then /^my email should be "([^"]*)"$/ do |email|

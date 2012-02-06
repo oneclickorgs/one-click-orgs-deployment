@@ -1,5 +1,5 @@
-require 'digest/sha1'
-require 'digest/md5'
+require 'one_click_orgs/user_authentication'
+require 'one_click_orgs/notification_consumer'
 require 'mail/elements/address'
 require 'lib/vote_error'
 
@@ -21,78 +21,27 @@ class Member < ActiveRecord::Base
     event :resign do
       transition [:pending, :active] => :inactive
     end
-    
-    after_transition :on => :induct, :do => :timestamp_induction!
-    
-    after_transition :on => :reactivate, :do => [
-      :new_invitation_code!,
-      :send_welcome
-    ]
-    
-    after_transition :on => :resign, :do => :after_resignation
   end
   
-  def after_resignation
-    resignations.create!
-    organisation.members.active.each do |member|
-      MembersMailer.notify_resignation(member, self).deliver
-    end
-  end
+  include OneClickOrgs::UserAuthentication
+  include OneClickOrgs::NotificationConsumer
   
   attr_accessor :send_welcome
   
-  before_create :new_invitation_code
-  after_create :send_welcome_if_requested
-  
   belongs_to :organisation
+  belongs_to :member_class
   
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
-  belongs_to :member_class
+  has_many :resignations
   
   scope :active, with_state(:active)
   scope :inactive, with_state(:inactive)
   scope :pending, with_state(:pending)
   
-  has_many :resignations
-
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   scope :founding_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founding Member').first } } }
   
-  validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
-  
-  validates_confirmation_of :password
-  
-  attr_accessor :terms_and_conditions
-  validates_acceptance_of :terms_and_conditions
-  
-  before_save :timestamp_terms_acceptance
-  def timestamp_terms_acceptance
-    if terms_and_conditions && terms_and_conditions != 0 && terms_and_conditions != '0'
-      self.terms_accepted_at ||= Time.now.utc
-    end
-  end
-  
-  def timestamp_induction!
-    update_attribute(:inducted_at, Time.now.utc)
-  end
-
-  def proposals_count
-    proposals.count
-  end
-  
-  def succeeded_proposals_count
-    proposals.where(:state => 'accepted').count
-  end
-  
-  def failed_proposals_count
-    proposals.where(:state => 'rejected').count
-  end
-  
-  def votes_count
-    votes.count
-  end
-
   validates_presence_of :first_name, :last_name, :email
   
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
@@ -111,43 +60,24 @@ class Member < ActiveRecord::Base
     !!allow_duplicate_email
   end
   
-  # TODO: how can we validate :password? (not actually saved, but accepted during input)
-
-  # AUTHENTICATION
-
-  attr_accessor :password, :password_confirmation
-
-  # Encrypts some data with the salt
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+  attr_accessor :terms_and_conditions
+  validates_acceptance_of :terms_and_conditions
+  
+  def proposals_count
+    proposals.count
   end
-
-  def self.authenticate(login, password)
-    member = where(:email => login).first
-    member && member.authenticated?(password) ? member : nil
+  
+  def succeeded_proposals_count
+    proposals.where(:state => 'accepted').count
   end
-
-  def authenticated?(password)
-    crypted_password == encrypt(password)
+  
+  def failed_proposals_count
+    proposals.where(:state => 'rejected').count
   end
-
-  def encrypt(password)
-    self.class.encrypt(password, salt)
+  
+  def votes_count
+    votes.count
   end
-
-  def password_required?
-    crypted_password.blank? || !password.blank?
-  end
-
-  def encrypt_password
-    return if password.blank?
-    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--:email--")
-    self.crypted_password = encrypt(password)
-  end
-
-  before_save :encrypt_password
-
-  # END AUTHENTICATION
   
   def eligible_to_vote?(proposal)
     organisation.member_eligible_to_vote?(self, proposal)
@@ -169,12 +99,6 @@ class Member < ActiveRecord::Base
     when :against
       Vote.create(:member => self, :proposal => proposal, :for => false)
     end
-  end
-  
-  def send_welcome_if_requested
-    return unless @send_welcome
-    
-    MembersMailer.send(organisation.welcome_email_action, self).deliver
   end
   
   def inducted?
@@ -211,39 +135,6 @@ class Member < ActiveRecord::Base
     end
   end
 
-  # INVITATION CODE
-  
-  def self.generate_invitation_code
-    Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
-  end
-  
-  def new_invitation_code
-    self.invitation_code = self.class.generate_invitation_code
-  end
-  
-  def new_invitation_code!
-    new_invitation_code
-    save!
-  end
-  
-  def clear_invitation_code!
-    self.update_attribute(:invitation_code, nil)
-  end
-  
-  # PASSWORD RESET CODE
-  
-  def self.generate_password_reset_code
-    Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
-  end
-  
-  def new_password_reset_code!
-    self.password_reset_code = self.class.generate_password_reset_code
-  end
-  
-  def clear_password_reset_code!
-    self.update_attribute(:password_reset_code, nil)
-  end
-  
   # GRAVATAR
   
   def gravatar_url(size)
@@ -256,31 +147,5 @@ class Member < ActiveRecord::Base
   def founding_vote
     # The first vote of a founder will always be the founding vote
     self.votes.first
-  end
-  
-  # NOTIFICATIONS
-  
-  has_many :seen_notifications
-  
-  # Check if this notification has been shown to user already.
-  #
-  # @param [Symbol] notification the kind of notification
-  # @param [optional, Timestamp] ignore_earlier_than If you pass this timestamp, we only consider the period
-  # after the timestamp when checking to see if the member has already seen this notification.
-  def has_seen_notification?(notification, ignore_earlier_than = nil)
-    if ignore_earlier_than
-      seen_notifications.exists?(["notification = ? AND updated_at >= ?", notification, ignore_earlier_than])
-    else
-      seen_notifications.exists?(:notification => notification)
-    end
-  end
-  
-  def has_seen_notification!(notification)
-    seen_notification = seen_notifications.find_by_notification(notification)
-    if seen_notification
-      seen_notification.touch
-    else
-      seen_notifications.create(:notification => notification)
-    end
   end
 end
