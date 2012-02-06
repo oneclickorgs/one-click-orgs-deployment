@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120204140531) do
+ActiveRecord::Schema.define(:version => 20120206101618) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20120204140531) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "queue"
   end
 
   create_table "meeting_participations", :force => true do |t|
