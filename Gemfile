@@ -41,7 +41,8 @@ gem "pdfkit", "~>0.5.2"
 
 gem "daemons", "~>1.0.10"
 
-gem "delayed_job", "2.1.4"
+gem "delayed_job", "~>3.0.1"
+gem "delayed_job_active_record"
 
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 
