@@ -110,7 +110,12 @@ Comment.blueprint do
 end
 
 Director.blueprint do
+  certification '1'
 end
 
 Comment.blueprint do
 end
+
+Resignation.blueprint do
+end
+

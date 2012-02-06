@@ -1,0 +1,14 @@
+= form_for(meeting) do |meeting_form|
+  %p.date
+    = meeting_form.label :happened_on, "Date of discussion"
+    = meeting_form.date_select :happened_on
+  = field_set_tag "Participants" do
+    - members.each do |member|
+      %p.checkbox
+        = check_box_tag "meeting[participant_ids][#{member.id}]"
+        = label_tag "meeting_participant_ids_#{member.id}", member.name
+  %p
+    = meeting_form.label :minutes, "What was discussed"
+    = meeting_form.text_area :minutes
+  %p
+    = meeting_form.submit "Submit"

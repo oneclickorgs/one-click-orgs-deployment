@@ -11,8 +11,18 @@ module ControllerSpecHelper
     Organisation.stub!(:find_by_host).and_return(@company)
   end
   
+  def stub_association
+    @association = @organisation = mock_model(Association,
+      :active? => true,
+      :pending? => false,
+      :proposed? => false,
+      :found_association_proposals => []
+    )
+    Organisation.stub!(:find_by_host).and_return(@association)
+  end
+  
   def stub_login
-    @user = mock_model(Member, :inactive? => false)
+    @user = mock_model(Member, :inactive? => false, :inducted? => true)
     controller.stub!(:current_user).and_return(@user)
     controller.stub!(:user_logged_in?).and_return(true)
   end

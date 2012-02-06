@@ -7,7 +7,7 @@ class Proposal < ActiveRecord::Base
     
     before_transition :on => :close, :do => :set_close_date_to_now
     
-    after_transition any => :accepted, :do => [:enact!, :create_decision]
+    after_transition any => :accepted, :do => [:enact!, :create_a_decision]
     after_transition any => :rejected, :do => [:after_reject]
   end
   
@@ -126,7 +126,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def parameters=(new_parameters)
-    self[:parameters] = new_parameters.to_json
+    self[:parameters] = new_parameters.blank? ? {} : new_parameters.to_json
   end
   
   def self.find_closeable_early_proposals
@@ -173,7 +173,15 @@ class Proposal < ActiveRecord::Base
   
   def decision_notification_message
     nil
-  end  
+  end
+  
+  # This works around a bug in state_machine which means we cannot specify #create_decision
+  # directly in the after_transition callback. If we do, ActiveRecord attempts to use the
+  # Transition object as attributes to the new Decision object, resulting ultimately in an
+  # "undefined method `stringify_keys'" error on the Transition object.
+  def create_a_decision
+    create_decision
+  end
   
   # A light wrapper around Hash that can retain a reference to a proposal.
   # The reference is used to update the actual parameters attribute of the

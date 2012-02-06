@@ -38,4 +38,25 @@ describe MembersMailer do
       @mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/i/abcdef")
     end
   end
+  
+  describe "notify_resignation" do
+    before(:each) do
+      @recipient = @organisation.members.make
+      @resignee = @organisation.members.make
+      
+      @mail = MembersMailer.notify_resignation(@recipient, @resignee)
+    end
+    
+    it "addresses the email to the recipient" do
+      @mail.to.should == [@recipient.email]
+    end
+    
+    it "includes the name of the resignee in the subject" do
+      @mail.subject.should =~ Regexp.new(@resignee.name)
+    end
+    
+    it "includes the name of the resignee in the body" do
+      @mail.body.should =~ Regexp.new(@resignee.name)
+    end
+  end
 end

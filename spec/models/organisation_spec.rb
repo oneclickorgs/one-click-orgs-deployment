@@ -6,6 +6,18 @@ describe Organisation do
     Setting[:base_domain] = 'oneclickorgs.com'
   end
   
+  describe "associations" do
+    it "has many resignations" do
+      @resignation = Resignation.make
+      @member = Member.make
+      
+      @organisation.members << @member
+      @member.resignations << @resignation
+      
+      @organisation.resignations.should include(@resignation)
+    end
+  end
+  
   describe "validation" do
     it "should not allow multiple organisations with the same subdomain" do
       @first = Organisation.make(:name => 'abc', :subdomain => "apples")

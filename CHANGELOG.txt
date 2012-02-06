@@ -1,3 +1,28 @@
+2011-11-17 One Click Orgs 1.2.3
+
+* FEATURE: Members can now specify what role they play in the organisation.
+* FIX: Proposal comments were not displayed in date order.
+* FIX: The notification that the founding vote failed would still display
+  repeatedly in certain situations.
+* SECURITY FIX: HTML was not properly escaped in proposal descriptions and
+  comments.
+* SECURITY FIX: Users could be redirected to an external site by abusing the
+  URL used for registering a vote.
+* SECURITY FIX: Members could set their email to that of an existing member,
+  and new members could be added with the same email as an existing member.
+* SECURITY FIX: Browsers were permitted to cache login credentials.
+* SECURITY FIX: The password reset system allowed a non-member to determine
+  whether or not an email address corresponded to a valid user or not.
+* SECURITY FIX: The organisation's name was not properly escaped for the
+  'From' field of emails.
+* SECURITY FIX: Some invalid characters were allowed in members' email
+  addresses.
+* SECURITY FIX: Users could be redirected to an external site by inserting
+  special characters into the organisation's subdomain.
+* A vote taking place under the 'veto' voting system now closes early if
+  all members vote in favour.
+* Rails is upgraded to version 3.0.10.
+
 2011-08-19 One Click Orgs 1.2.2
 
 * SECURITY FIX: HTML in comments was not fully escaped.

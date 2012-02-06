@@ -2,6 +2,8 @@ module OneClickOrgs
   class ModelWrapper
     extend ActiveModel::Naming
     include ActiveModel::Validations
+    include ActiveModel::Conversion
+    extend ActiveModel::Conversion::ClassMethods
 
     def initialize(attributes={})
       self.attributes = attributes
@@ -19,23 +21,11 @@ module OneClickOrgs
     def id
       @id
     end
-  
-    def to_param
-      id.try(:to_s)
-    end
-
-    def to_key
-      persisted? ? [id] : nil
-    end
-
+    
     def persisted?
       raise NotImplementedError, "#persisted? must be implemented by subclass"
     end
-
-    def to_model
-      self
-    end
-
+    
     def attributes=(attributes)
       attributes.each_pair do |key, value|
         send("#{key}=", value)

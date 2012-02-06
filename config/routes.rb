@@ -48,13 +48,13 @@ OneClickOrgs::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id))(.:format)'
   
   resource :constitution
   resource :constitution_proposal_bundles
@@ -77,7 +77,16 @@ OneClickOrgs::Application.routes.draw do
   resources :change_member_class_proposals
   resources :found_association_proposals
   
-  resources :members
+  resources :members do
+    member do
+      put :confirm_resign
+      put :resign
+    end
+    
+    collection do
+      get :resigned
+    end
+  end
   
   resources :founding_members
   resources :directors do
@@ -85,15 +94,15 @@ OneClickOrgs::Application.routes.draw do
       post :stand_down
     end
   end
-  
+
   match '/one_click(/:action)' => 'one_click'
  
   get '/login' => 'member_sessions#new', :as => 'login'
   get '/logout' => 'member_sessions#destroy', :as => 'logout'
   resource :member_session, :only => [:new, :create, :destroy]
-  
+
   match '/welcome(/:action)' => 'welcome'
-  
+
   match '/setup(/:action)' => 'setup'
 
   resources :associations

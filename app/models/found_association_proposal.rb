@@ -27,7 +27,7 @@ class FoundAssociationProposal < Proposal
   end  
   
   def after_reject(params)
-    organisation.fail! # Switching back to 'pending' org state.
+    organisation.reject_founding! # Switching back to 'pending' org state.
     # The existence of a failed 'Found Association' proposal is the only record we keep of this.
   end
   

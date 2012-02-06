@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
 
       # Add our CSS file
-      kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
+      kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.css"
 
       send_data(kit.to_pdf, :filename => "#{@organisation_name} #{filename}.pdf",
         :type => 'application/pdf', :disposition => 'attachment')
@@ -202,7 +202,7 @@ protected
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_association_url(:host => Setting[:signup_domain]))
+      redirect_to(new_association_url(host_and_port(Setting[:signup_domain])))
     end
   end
   
@@ -236,12 +236,21 @@ protected
     @constitution = co.constitution
   end
   
+  def host_and_port(domain)
+    host, port = domain.split(':')
+    if port
+      {:host => host, :port => port}
+    else
+      {:host => host}
+    end
+  end
+  
   # EXCEPTION HANDLING
   
   rescue_from NotFound, :with => :render_404
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   def render_404
-    render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+    render :file => "#{Rails.root}/public/404", :status => 404, :layout => false
   end
   
   rescue_from Unauthenticated, :with => :handle_unauthenticated
@@ -261,7 +270,7 @@ protected
   # OrganisationResolver based on the given organisation's class when
   # resolving (looking up) template paths.
   def install_organisation_resolver(organisation)
-    view_paths.dup.reverse.each do |view_path|
+    view_paths.dup.each do |view_path|
       prepend_view_path(
         OneClickOrgs::OrganisationResolver.new(
           view_path.to_path,

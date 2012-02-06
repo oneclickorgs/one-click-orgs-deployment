@@ -10,10 +10,8 @@ class AddMemberProposal < MembershipProposal
   def member_attributes_must_be_valid
     @draft_member = organisation.members.build(parameters.merge(:allow_duplicate_email => true))
     unless @draft_member.valid?
-      @draft_member.errors.each_pair do |attribute, messages|
-        messages.each do |message|
-          errors.add(attribute, message)
-        end
+      @draft_member.errors.each do |attribute, message|
+        errors.add(attribute, message)
       end
     end
   end

@@ -1,4 +1,10 @@
+require 'csv'
+
 class MembersController < ApplicationController
+  
+  skip_before_filter :ensure_authenticated, :ensure_member_active_or_pending, :only => [:resigned]
+  
+  
   def index
     case co
     when Association
@@ -58,6 +64,21 @@ class MembersController < ApplicationController
       flash.now[:error] = "There was a problem with your new details."
       render(:action => :edit)
     end
+  end
+
+  def confirm_resign
+    @page_title = "Are you sure you want to resign from this organisation?"
+    @member = current_user
+  end
+  
+  def resign
+    @member = current_user
+    @member.resign!
+    redirect_to(resigned_members_path)
+  end
+  
+  def resigned
+    reset_session
   end
 
 private

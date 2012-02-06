@@ -18,12 +18,25 @@ class Member < ActiveRecord::Base
       transition :inactive => :pending
     end
     
+    event :resign do
+      transition [:pending, :active] => :inactive
+    end
+    
     after_transition :on => :induct, :do => :timestamp_induction!
     
     after_transition :on => :reactivate, :do => [
       :new_invitation_code!,
       :send_welcome
     ]
+    
+    after_transition :on => :resign, :do => :after_resignation
+  end
+  
+  def after_resignation
+    resignations.create!
+    organisation.members.active.each do |member|
+      MembersMailer.notify_resignation(member, self).deliver
+    end
   end
   
   attr_accessor :send_welcome
@@ -41,6 +54,8 @@ class Member < ActiveRecord::Base
   scope :inactive, with_state(:inactive)
   scope :pending, with_state(:pending)
   
+  has_many :resignations
+
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   scope :founding_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founding Member').first } } }
   

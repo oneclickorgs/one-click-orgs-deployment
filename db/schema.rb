@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110806164145) do
+ActiveRecord::Schema.define(:version => 20120206101618) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20110806164145) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "queue"
   end
 
   create_table "meeting_participations", :force => true do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20110806164145) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organisation_id"
+    t.integer  "creator_id"
   end
 
   create_table "member_classes", :force => true do |t|
@@ -118,6 +120,12 @@ ActiveRecord::Schema.define(:version => 20110806164145) do
     t.integer  "proposer_member_id"
     t.integer  "organisation_id"
     t.string   "state"
+  end
+
+  create_table "resignations", :force => true do |t|
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "seen_notifications", :force => true do |t|
