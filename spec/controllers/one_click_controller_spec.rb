@@ -8,6 +8,10 @@ module OneClickControllerSpecHelper
       end
     end
   end
+  
+  def get_dashboard
+    get :dashboard
+  end
 end
 
 describe OneClickController do
@@ -57,10 +61,6 @@ describe OneClickController do
         @proposals.stub!(:new).and_return(mock_model(Proposal))
       end
       
-      def get_dashboard
-        get :dashboard
-      end
-      
       it "builds a new meeting" do
         Meeting.should_receive(:new).and_return(@meeting)
         get_dashboard
@@ -82,12 +82,47 @@ describe OneClickController do
         assigns(:directors).should == @directors
       end
       
-      it "assigns the timeline" do
-        get_dashboard
-        timeline = assigns(:timeline)
-        timeline.should respond_to(:each)
-        timeline.each do |event|
-          event[:timestamp].should be_present
+      describe "timeline" do
+        it "assigns the timeline" do
+          get_dashboard
+          timeline = assigns(:timeline)
+          timeline.should respond_to(:each)
+          timeline.each do |event|
+            event[:timestamp].should be_present
+          end
+        end
+      end
+    end
+  end
+  
+  context "when current organisation is an association" do
+    before(:each) do
+      stub_association
+      stub_login
+    end
+    
+    describe "GET dashboard" do
+      before(:each) do
+        @association.stub_chain(:add_member_proposals, :build).and_return(mock_model(AddMemberProposal))
+        @association.stub_chain(:proposals, :currently_open).and_return([])
+        @association.stub_chain(:proposals, :new).and_return(mock_model(Proposal))
+        @association.stub_chain(:members, :new).and_return(mock_model(Member))
+        @association.stub(:default_member_class).and_return(mock_model(MemberClass))
+        
+        @association.stub_chain(:members, :all).and_return([])
+        @association.stub_chain(:proposals, :all).and_return([])
+        @association.stub_chain(:decisions, :all).and_return([])
+      end
+      
+      describe "timeline" do
+        it "includes Resignation events" do
+          @resignation_event = mock('resignation event')
+          @association.stub_chain(:resignations, :all).and_return(mock_model(Resignation,
+            :to_event => @resignation_event
+          ))
+          
+          get_dashboard
+          assigns[:timeline].should include(@resignation_event)
         end
       end
     end

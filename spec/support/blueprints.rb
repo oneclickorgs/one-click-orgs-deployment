@@ -115,3 +115,7 @@ end
 
 Comment.blueprint do
 end
+
+Resignation.blueprint do
+end
+

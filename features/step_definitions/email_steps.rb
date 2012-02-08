@@ -97,3 +97,10 @@ Then /^all the directors should receive a "([^"]*)" email$/ do |subject_phrase|
   end
 end
 
+Then /^I should receive an email saying that member has resigned$/ do
+  @member ||= @organisation.members.last
+  @email = last_email
+  @email.to.should == [(@user ||= @organisation.members.last).email]
+  @email.body.should include(@member.name)
+  @email.body.should include("resigned")
+end

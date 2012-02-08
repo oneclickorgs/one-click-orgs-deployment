@@ -1,9 +1,9 @@
 class PasswordResetsController < ApplicationController
-  skip_before_filter :ensure_authenticated
-  
+    skip_before_filter :ensure_authenticated
+
   def new
   end
-  
+
   def create
     @email = params[:email]
     if @member = co.members.where(:email => @email).first
@@ -13,16 +13,15 @@ class PasswordResetsController < ApplicationController
     end
     render(:action => :show)
   end
-  
+
   def edit
     @password_reset_code = params[:id]
     @member = Member.find_by_password_reset_code(@password_reset_code)
-    
     unless @member
       render_404
     end
   end
-  
+
   def update
     @password_reset_code = params[:id]
     @member = Member.find_by_password_reset_code(@password_reset_code)

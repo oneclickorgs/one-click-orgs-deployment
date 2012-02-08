@@ -50,10 +50,11 @@ group :development do
   gem "railroad"
   gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
+  gem 'pry'
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>2.6"
+  gem "rspec-rails", "~>2.8.1"
   gem "webrat", "~>0.7.1"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.9.0'
