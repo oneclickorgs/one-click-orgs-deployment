@@ -13,6 +13,7 @@ script: bundle exec rake spec cucumber
 branches:
   only:
     - master
+    - v1.x
 notifications:
   recipients:
     - alerts@oneclickorgs.com
