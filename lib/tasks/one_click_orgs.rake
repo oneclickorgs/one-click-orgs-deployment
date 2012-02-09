@@ -1,16 +1,15 @@
 require 'securerandom'
+require 'fileutils'
+
+# Returns an absolute filename given path elements relative to the config directory
+def config_dir(*path_elements)
+  path_elements.unshift(File.expand_path('../../../config', __FILE__))
+  File.join(path_elements)
+end
 
 namespace :oco do
   desc "Generate installation-specific config files for One Click Orgs."
   task :generate_config do
-    require 'fileutils'
-    
-    # Returns an absolute filename given path elements relative to the config directory
-    def config_dir(*path_elements)
-      path_elements.unshift(File.expand_path('../../../config', __FILE__))
-      File.join(path_elements)
-    end
-    
     if File.exist? config_dir('database.yml')
       STDOUT.puts "config/database.yml already exists"
     else
@@ -34,6 +33,19 @@ namespace :oco do
   task :contributors do
     File.open('doc/CONTRIBUTORS.txt', 'w') do |file|
       file << `git shortlog -nse`.gsub(/^\s+\d+\s+/, '')
+    end
+  end
+  
+  desc "Install wkhtmltopdf static binary for Linux"
+  task :install_wkhtmltopdf do
+    BASE_URL = "http://wkhtmltopdf.googlecode.com/files/"
+    ARCHIVE_NAME = "wkhtmltopdf-0.11.0_rc1-static-i386.tar.bz2"
+    `wget #{BASE_URL}#{ARCHIVE_NAME}`
+    `tar -xvjf #{ARCHIVE_NAME}`
+    `mkdir -p vendor/bin`
+    `mv wkhtmltopdf-i386 vendor/bin`
+    File.open(config_dir('initializers', 'local_settings.rb'), 'a') do |file|
+      file.puts "PDFKit.configuration.wkhtmltopdf = '#{File.expand_path('../../../vendor/bin/wkhtmltopdf-i386', __FILE__)}'"
     end
   end
   
