@@ -1,3 +1,5 @@
+require 'securerandom'
+
 namespace :oco do
   desc "Generate installation-specific config files for One Click Orgs."
   task :generate_config do
@@ -22,9 +24,8 @@ namespace :oco do
       STDOUT.puts "Creating config/initializers/local_settings.rb"
       FileUtils.cp config_dir('initializers', 'local_settings.rb.sample'), config_dir('initializers', 'local_settings.rb')
       
-      require 'active_support/secure_random'
       code = File.read(config_dir('initializers', 'local_settings.rb'))
-      code.sub!('YOUR_SECRET_HERE', ActiveSupport::SecureRandom.hex(64))
+      code.sub!('YOUR_SECRET_HERE', SecureRandom.hex(64))
       File.open(config_dir('initializers', 'local_settings.rb'), 'w'){|file| file << code}
     end
   end
