@@ -1,4 +1,8 @@
+require 'one_click_orgs/parameters_serialisation'
+
 class Proposal < ActiveRecord::Base
+  include OneClickOrgs::ParametersSerialisation
+  
   state_machine :initial => :open do
     event :close do
       transition :open => :accepted, :if => :passed?
@@ -110,25 +114,6 @@ class Proposal < ActiveRecord::Base
     @force_passed || voting_system.passed?(self)
   end
   
-  # Returns the (deserialized) hash of parameters for this proposal.
-  # You can call #[]= on the returned hash and it will magically update the
-  # actual parameters attribute of the proposal. In other words, this will
-  # just work:
-  # 
-  # proposal.parameters[:first_name] = "Bob"
-  # proposal.parameters[:first_name] # => "Bob"
-  def parameters
-    ParametersHash.from_hash(
-      self[:parameters].blank? ? {} : ActiveSupport::JSON.decode(self[:parameters])
-    ).tap do |hash|
-      hash.proposal = self
-    end
-  end
-  
-  def parameters=(new_parameters)
-    self[:parameters] = new_parameters.blank? ? {} : new_parameters.to_json
-  end
-  
   def self.find_closeable_early_proposals
     currently_open.all.select { |p| p.voting_system.can_be_closed_early?(p) }
   end
@@ -181,23 +166,5 @@ class Proposal < ActiveRecord::Base
   # "undefined method `stringify_keys'" error on the Transition object.
   def create_a_decision
     create_decision
-  end
-  
-  # A light wrapper around Hash that can retain a reference to a proposal.
-  # The reference is used to update the actual parameters attribute of the
-  # proposal when the parameters hash is naively updated by calling #[]= on
-  # it.
-  class ParametersHash < Hash
-    attr_accessor :proposal
-    
-    # Returns a new ParametersHash with the contents of the given hash.
-    def self.from_hash(hash)
-      hash ? new.replace(hash) : new
-    end
-    
-    def []=(key, value)
-      proposal.parameters = proposal.parameters.merge({key => value})
-      super
-    end
   end
 end
