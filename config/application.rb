@@ -26,6 +26,7 @@ module OneClickOrgs
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
+      :decision_mailer_observer,
       :member_observer,
       :member_mailer_observer,
       :member_timestamp_observer
