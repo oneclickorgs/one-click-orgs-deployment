@@ -9,14 +9,8 @@ class Proposal < ActiveRecord::Base
       transition :open => :rejected
     end
     
-    before_transition :on => :close, :do => :set_close_date_to_now
-    
     after_transition any => :accepted, :do => [:enact!, :create_a_decision]
     after_transition any => :rejected, :do => [:after_reject]
-  end
-  
-  def set_close_date_to_now
-    self.close_date = Time.now.utc
   end
   
   belongs_to :organisation
@@ -29,20 +23,6 @@ class Proposal < ActiveRecord::Base
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
   
   has_many :comments, :as => :commentable
-  
-  before_create :set_creation_date
-  private
-  def set_creation_date
-    self.creation_date ||= Time.now.utc
-  end
-  public
-  
-  before_create :set_close_date
-  private
-  def set_close_date
-    self.close_date ||= Time.now.utc + voting_period
-  end
-  public
   
   validates_presence_of :proposer_member_id
 
