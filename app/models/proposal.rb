@@ -15,8 +15,6 @@ class Proposal < ActiveRecord::Base
   
   belongs_to :organisation
   
-  after_create :send_email
-  
   has_many :votes
   has_one :decision
   
@@ -71,8 +69,7 @@ class Proposal < ActiveRecord::Base
     votes_for + votes_against
   end
   
-  def after_reject(params={})
-    # TODO do some kind of email notification
+  def after_reject
   end
   
   def accepted_or_rejected
@@ -115,18 +112,6 @@ class Proposal < ActiveRecord::Base
   scope :currently_open, lambda {where(["state = 'open' AND close_date > ?", Time.now.utc])}
   
   scope :failed, lambda {where(["close_date < ? AND state = 'rejected'", Time.now.utc]).order('close_date DESC')}
-  
-  def send_email
-    self.organisation.members.active.each do |m|
-      # only notify members who can vote
-      ProposalMailer.notify_creation(m, self).deliver if m.has_permission(:vote)
-    end
-  end
-  
-  # only to be backwards compatible with systems running older versions of delayed job
-  def self.send_email_for(proposal_id)
-    Proposal.find(proposal_id).send_email_without_send_later
-  end
   
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => (closed? && !accepted?) ? :failed_proposal : :proposal }

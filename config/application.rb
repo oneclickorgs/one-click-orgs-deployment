@@ -30,6 +30,7 @@ module OneClickOrgs
       :member_observer,
       :member_mailer_observer,
       :member_timestamp_observer,
+      :proposal_mailer_observer,
       :proposal_timestamp_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
