@@ -7,7 +7,7 @@ describe Decision do
       @member = mock_model(Member)
       
       @decision = Decision.new
-      @decision.stub_chain(:proposal, :voting_system).and_return(mock('standard voting system'))
+      @decision.stub(:proposal).and_return(mock_model(Proposal))
       @decision.stub_chain(:organisation, :members, :active).and_return([@member])
       
       @mail = mock("mail", :deliver => nil)
@@ -31,16 +31,13 @@ describe Decision do
     
     context "when proposal is a Founding Proposal" do
       before(:each) do
-        @founding_voting_system = mock("founding voting system")
-        VotingSystems.stub!(:get).with('Founding').and_return(@founding_voting_system)
-        @decision.stub_chain(:proposal, :voting_system).and_return(@founding_voting_system)
-        
+        @decision.stub(:proposal).and_return(mock_model(FoundAssociationProposal))
         @decision.stub_chain(:organisation, :members).and_return([@member])
       end
       
       it "sends foundation decision emails" do
         DecisionMailer.should_receive(:notify_foundation_decision).with(@member, @decision).exactly(:once).and_return(@mail)
-        @decision.send_email
+        @decision.save
       end
     end
   end
