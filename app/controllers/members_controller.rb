@@ -6,7 +6,9 @@ class MembersController < ApplicationController
   
   before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
-
+  
+  skip_before_filter :ensure_authenticated, :ensure_member_active, :only => [:resigned]
+  
   def index
     @page_title = "Members"
     @current_organisation = co
@@ -105,6 +107,22 @@ class MembersController < ApplicationController
       flash.now[:error] = "There was a problem with your new details."
       render(:action => :edit)
     end
+  end
+
+  def confirm_resign
+    @page_title = "Are you sure you want to resign from this organisation?"
+    @member = current_user
+    respond_with @member
+  end
+  
+  def resign
+    @member = current_user
+    @member.resign!
+    redirect_to(resigned_members_path)
+  end
+  
+  def resigned
+    reset_session
   end
 
   def destroy

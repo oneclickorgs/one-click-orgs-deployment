@@ -16,3 +16,4 @@ vendor/gems/*
 doc/app
 tmp/restart.txt
 .sass-cache
+bin

@@ -1,6 +1,7 @@
 class Organisation < ActiveRecord::Base
   has_many :clauses
   has_many :members
+  has_many :resignations, :through => :members
   
   has_many :proposals
   

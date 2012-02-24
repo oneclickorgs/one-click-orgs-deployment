@@ -14,6 +14,8 @@ class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
   belongs_to :member_class
+  
+  has_many :resignations
 
   scope :active, where("active = 1 AND inducted_at IS NOT NULL")
   scope :inactive, where("active <> 1")
@@ -146,6 +148,14 @@ class Member < ActiveRecord::Base
   def eject!
     self.active = false
     save!
+  end
+  
+  def resign!
+    eject!
+    resignations.create!
+    organisation.members.active.each do |member|
+      MembersMailer.notify_resignation(member, self).deliver
+    end
   end
 
   def inducted!
