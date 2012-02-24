@@ -72,5 +72,5 @@ group :development, :test do
   gem "capybara", "~>1.1.1"
   gem "database_cleaner", "~>0.7.1"
   gem "launchy", "~>0.4.0"
-  gem "selenium-webdriver", "~>2.12.2"
+  gem "selenium-webdriver", "~>2.19.0"
 end

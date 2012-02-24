@@ -52,6 +52,7 @@ end
 Then /^everyone should receive an email saying that the founding vote has started$/ do
   @organisation.members.each do |member|
     email = ActionMailer::Base.deliveries.select{|mail| mail.to.first == member.email}.first
+    email.should be_present
     email.body.should =~ /has initiated a Founding Vote/
   end
 end

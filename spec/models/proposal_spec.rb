@@ -177,7 +177,9 @@ describe Proposal do
         :organisation => @organisation,
         :title => "Buy more tables"
       )
-      @proposal.stub!(:send_email => nil)
+      
+      # Stub out ProposalMailerObserver
+      @organisation.stub_chain(:members, :active).and_return([])
     end
     
     it "creates a support vote by the proposer" do

@@ -10,7 +10,6 @@ describe Member do
     default_organisation
 
     @member = @organisation.members.make
-    @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
   end
 
 
@@ -59,20 +58,26 @@ describe Member do
       @member.errors[:email].should be_present
     end
   end
+  
+  describe "voting" do
+    before(:each) do
+      @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
+    end
+    
+    it "should not allow votes on members inducted after proposal was made" do
+      new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
+      lambda {
+        new_member.cast_vote(:for, @proposal)
+      }.should raise_error(VoteError)
+    end
 
-  it "should not allow votes on members inducted after proposal was made" do
-    new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
-    lambda {
-      new_member.cast_vote(:for, @proposal)
-    }.should raise_error(VoteError)
+    it "should not allow additional votes" do
+      lambda {
+        @member.cast_vote(:against, @proposal)
+      }.should raise_error(VoteError)
+    end
   end
-
-  it "should not allow additional votes" do
-    lambda {
-      @member.cast_vote(:against, @proposal)
-    }.should raise_error(VoteError)
-  end
-
+  
   describe "creation" do
     it "should send a welcome email" do
       MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
