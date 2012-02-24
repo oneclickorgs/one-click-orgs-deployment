@@ -22,7 +22,7 @@ set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
 set :bundle_cmd, "~/local/bin/bundle"
 set :bundle_roles, [:app]
 
-after 'deploy:update_code' do
+before 'deploy:assets:precompile' do
   run <<-END
     ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml &&
     ln -sf #{shared_path}/config/initializers/local_settings.rb #{release_path}/config/initializers/local_settings.rb
