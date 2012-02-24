@@ -37,7 +37,7 @@ describe InvitationsController do
       
       it "should render a 404" do
         post :update, :id => 'invalid'
-        response.body.should =~ /The page you were looking for/
+        response.code.should == '404'
       end
     end
   end
