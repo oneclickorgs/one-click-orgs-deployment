@@ -15,18 +15,22 @@ describe CommentsController do
   
   context "when nested in proposals" do
     describe "POST create" do
+      
+      let(:proposal) { mock_model(Proposal) }
+      
       before(:each) do
+        proposal.stub(:to_param).and_return('1')
+        
         @organisation = mock_model(Organisation, :pending? => false)
         controller.stub!(:co).and_return(@organisation)
       
         @proposals_association = mock("proposals association")
         @organisation.stub!(:proposals).and_return(@proposals_association)
       
-        @proposal = mock_model(Proposal, :to_param => '1')
-        @proposals_association.stub!(:find).and_return(@proposal)
+        @proposals_association.stub!(:find).and_return(proposal)
       
         @comments_association = mock("comments association")
-        @proposal.stub!(:comments).and_return(@comments_association)
+        proposal.stub!(:comments).and_return(@comments_association)
       
         @comment = mock_model(Comment, :save => true, :author= => nil)
         @comments_association.stub!(:build).and_return(@comment)
@@ -64,6 +68,15 @@ describe CommentsController do
       it "should redirect to the proposal" do
         post_create
         response.should redirect_to('/proposals/1')
+      end
+      
+      describe "when given a sub-class of Proposal" do
+        let(:proposal) { mock_model(FoundAssociationProposal) }
+        
+        it "should redirect to the generic Proposals controller" do
+          post_create
+          response.should redirect_to('/proposals/1')
+        end
       end
     end
   end
