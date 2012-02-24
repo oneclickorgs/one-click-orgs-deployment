@@ -29,7 +29,7 @@ before 'deploy:assets:precompile' do
   END
 end
 
-after  "deploy:restart",     "worker:restart"
+after  "deploy:restart", "worker:restart"
 
 namespace :worker do
   task :restart, :roles => :app do
