@@ -55,7 +55,7 @@ gem 'mail', '>=2.2.19'
 # end
 
 group :development do
-  gem "capistrano", "~>2.5.19"
+  gem "capistrano", "~>2.11.2"
   gem "railroad"
   gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
