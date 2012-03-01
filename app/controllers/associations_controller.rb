@@ -66,7 +66,7 @@ class AssociationsController < ApplicationController
     if Setting[:single_organisation_mode]
       redirect_to(constitution_path)
     else
-      redirect_to(constitution_url(:host => @association.host))
+      redirect_to(constitution_url(host_and_port(@association.host)))
     end
   end
 

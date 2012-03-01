@@ -18,7 +18,7 @@ class CompaniesController < ApplicationController
       @member.member_class = @company.member_classes.find_by_name('Director')
       @member.save!
       log_in(@member)
-      redirect_to root_url(:host => @company.host)
+      redirect_to root_url(host_and_port(@company.host))
     else
       render :action => 'new'
     end

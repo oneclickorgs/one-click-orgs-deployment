@@ -8,7 +8,7 @@ class Association < Organisation
       transition :proposed => :active
     end
     
-    event :fail do
+    event :reject_founding do
       transition :proposed => :pending
     end
     

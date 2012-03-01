@@ -6,7 +6,10 @@ class InvitationsController < ApplicationController
     # TODO should be searching scoped by organisation.
     @invitation = Invitation.find_by_id(params[:id])
     
-    redirect_to(root_path) unless @invitation
+    unless @invitation
+      redirect_to(root_path)
+      return
+    end
     
     @show_founding_warnings = @invitation.show_founding_warnings?
   end

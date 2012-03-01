@@ -17,3 +17,4 @@ doc/app
 tmp/restart.txt
 .sass-cache
 bin
+public/assets

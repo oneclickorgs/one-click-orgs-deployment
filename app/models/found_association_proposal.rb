@@ -18,16 +18,16 @@ class FoundAssociationProposal < Proposal
     self.description ||= "Found #{organisation.name}"
   end
   
-  def send_email
-    # This one goes to all members (who are founding members)
-    self.organisation.members.each do |m|
-      # only notify members who can vote
-      ProposalMailer.notify_foundation_proposal(m, self).deliver if m.has_permission(:vote)
-    end
-  end  
+  def notification_email_action
+    :notify_foundation_proposal
+  end
+  
+  def members_to_notify
+    organisation.members
+  end
   
   def after_reject(params)
-    organisation.fail! # Switching back to 'pending' org state.
+    organisation.reject_founding! # Switching back to 'pending' org state.
     # The existence of a failed 'Found Association' proposal is the only record we keep of this.
   end
   

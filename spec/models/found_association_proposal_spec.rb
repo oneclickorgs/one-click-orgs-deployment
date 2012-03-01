@@ -8,8 +8,9 @@ describe FoundAssociationProposal do
   describe "validation" do
     before(:each) do
       @proposal = FoundAssociationProposal.new(:proposer => mock_model(Member), :title => "Title")
-      @proposal.organisation = @organisation = mock_model(Association, :members => [], :name => "Test association")
+      @proposal.organisation = @organisation = mock_model(Association, :members => (@members_association = []), :name => "Test association")
       @organisation.stub!(:can_hold_founding_vote?).and_return(false)
+      @members_association.stub(:active).and_return([])
     end
     
     it "fails on create if the association is not ready for a founding vote" do
@@ -96,7 +97,9 @@ describe FoundAssociationProposal do
         :organisation => @organisation,
         :title => "Proposal to form association"
       )
-      @proposal.stub!(:send_email => nil)
+      
+      # Stub out ProposalMailerObserver
+      @organisation.stub(:members).and_return([])
     end
     
     it "does not create a support vote by the proposer" do

@@ -1,3 +1,5 @@
+require 'csv'
+
 class MembersController < ApplicationController
   
   skip_before_filter :ensure_authenticated, :ensure_member_active_or_pending, :only => [:resigned]

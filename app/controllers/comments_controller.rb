@@ -10,11 +10,19 @@ class CommentsController < ApplicationController
     
     @comment = @commentable.comments.build(params[:comment])
     @comment.author = current_user
+    
+    commentable_path = case @commentable
+    when Proposal
+      proposal_path(@commentable)
+    else
+      url_for(@commentable)
+    end
+    
     if @comment.save
-      redirect_to(@commentable, :notice => "Comment added.")
+      redirect_to(commentable_path, :notice => "Comment added.")
     else
       # TODO Use render instead of redirect; use error_messages_for.
-      redirect_to(@commentable, :error => "There was a problem saving your comment.")
+      redirect_to(commentable_path, :error => "There was a problem saving your comment.")
     end
   end
 end

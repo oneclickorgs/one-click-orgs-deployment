@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.0.0"
 
-gem "rails", "3.0.10"
+gem "rails", "3.2.1"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -25,18 +25,28 @@ gem "mysql"
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
+end
+
 gem "jquery-rails", "~>1.0.12"
-gem "haml", "~>3.0.18"
+gem "haml", "~>3.1.4"
+gem "sass", "~>3.1.12"
 gem "rdiscount"
 gem "pdfkit"
 gem "daemons", "~>1.0.10"
-gem "delayed_job", "2.1.4"
+gem "delayed_job", "~>3.0.1"
+gem "delayed_job_active_record"
 gem "exception_notification_rails3", :require => 'exception_notifier'
 gem "cancan", "~>1.6.4"
-gem "state_machine", "1.0.0"
+gem "state_machine", "~>1.1.2"
 gem "fastercsv", :platforms => :ruby_18
 
-gem 'mail', '~>2.2.19'
+gem 'mail', '>=2.2.19'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -46,7 +56,7 @@ gem 'mail', '~>2.2.19'
 # end
 
 group :development do
-  gem "capistrano", "~>2.5.19"
+  gem "capistrano", "~>2.11.2"
   gem "railroad"
   gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
@@ -61,7 +71,7 @@ group :development, :test do
   gem "rcov", "~>0.9.8"
   gem "cucumber-rails", "~>1.2.0"
   gem "capybara", "~>1.1.1"
-  gem "database_cleaner", "~>0.6.7"
+  gem "database_cleaner", "~>0.7.1"
   gem "launchy", "~>0.4.0"
-  gem "selenium-webdriver", "~>2.12.2"
+  gem "selenium-webdriver", "~>2.19.0"
 end
