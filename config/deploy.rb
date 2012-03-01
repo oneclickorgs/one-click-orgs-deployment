@@ -2,7 +2,7 @@ require 'bundler/capistrano'
 load 'deploy/assets'
 
 set :application, "one_click_orgs"
-set :repository,  "git://github.com/oneclickorgs/one-click-orgs"
+set :repository,  "git://github.com/oneclickorgs/one-click-orgs-deployment"
 
 set :scm, :git
 set :user, 'oneclickorgs'
@@ -15,8 +15,8 @@ role :web, "us1.okfn.org"                          # Your HTTP server, Apache/et
 role :app, "us1.okfn.org"                          # This may be the same as your `Web` server
 role :db,  "us1.okfn.org", :primary => true # This is where Rails migrations will run
 
-set :deploy_to, "/home/oneclickorgs/var/www/gov.oneclickorgs.com"
-set :branch,    "gov-oneclickorgs-com"
+set :deploy_to, "/home/oneclickorgs/var/www/dev.oneclickorgs.com"
+set :branch,    "dev-oneclickorgs-com"
 
 set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
 set :bundle_cmd, "~/local/bin/bundle"
