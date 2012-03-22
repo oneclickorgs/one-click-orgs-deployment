@@ -14,9 +14,9 @@ describe "/one_click" do
       end
 
       it "should display a timeline with past events" do
-        @organisation.members.make_n(10) 
-        @organisation.proposals.make_n(10)
-        @organisation.proposals.make_n(10).each{|p| p.create_decision}
+        @organisation.members.make
+        @organisation.proposals.make
+        @organisation.proposals.make.create_decision
 
         get url_for(:controller => 'one_click', :action => 'dashboard')
         @response.should be_successful
