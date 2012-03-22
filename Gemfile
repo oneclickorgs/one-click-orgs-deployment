@@ -60,7 +60,7 @@ group :development, :test do
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.3.1'
   gem "rcov", "~>0.9.8"
-  gem "cucumber-rails", "~>0.4.1"
+  gem "cucumber-rails", "~>0.4.1", :require => nil
   gem "capybara", "~>0.4.1.2"
   gem "database_cleaner", "~>0.6.7"
   gem "launchy", "~>0.4.0"
