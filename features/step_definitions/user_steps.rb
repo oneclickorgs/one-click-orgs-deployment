@@ -25,3 +25,4 @@ Given /^I am a member of the organisation$/ do
     :member_class => @organisation.member_classes.find_by_name('Member')
   )
 end
+
