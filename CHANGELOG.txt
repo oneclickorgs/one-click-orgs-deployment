@@ -1,3 +1,9 @@
+2012-04-05 One Click Orgs 1.3.1
+
+* FIX: Following an invalid/expired invitation link would result in a hard
+  error page.
+* Autocomplete is now allowed again on the login form.
+
 2012-02-06 One Click Orgs 1.3.0
 
 * FEATURE: Members can now resign from their organisation.
