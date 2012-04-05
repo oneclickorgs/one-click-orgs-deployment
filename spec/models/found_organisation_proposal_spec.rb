@@ -45,17 +45,19 @@ describe FoundOrganisationProposal do
       @member_classes_association.stub!(:find_by_name).with('Founding Member').and_return(@founding_member_class)
       @member_classes_association.stub!(:find_by_name).with('Member').and_return(@member_class)
       
-      # Mock up a founder and three founding members
+      # Mock up a founder and four founding members
       @members = [
         mock_model(Member, :member_class => @founder_class,         :member_class= => nil, :save! => true),
         mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true),
         mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true),
+        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true, :eject! => true),
         mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true, :eject! => true)
       ]
       @organisation.stub!(:members).and_return(@members)
       
       # Mock that founder and first two founding members vote for the founding,
-      # and that the final founding member votes against
+      # the third founding member votes against, and the final founding member
+      # abstains.
       @votes = [
         mock_model(Vote, :member_id => @members[0].id, :for? => true),
         mock_model(Vote, :member_id => @members[1].id, :for? => true),
@@ -73,6 +75,11 @@ describe FoundOrganisationProposal do
         member.should_receive(:save!).ordered
       end
       
+      @proposal.enact!
+    end
+    
+    it "ejects members who abstained" do
+      @members[4].should_receive(:eject!)
       @proposal.enact!
     end
   end

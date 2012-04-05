@@ -28,6 +28,12 @@ class InvitationsController < ApplicationController
   def update
     @invitation_code = params[:id]
     @member = Member.find_by_invitation_code(@invitation_code)
+    
+    unless @member
+      redirect_to(root_path)
+      return
+    end
+    
     @member.attributes = params[:member]
     if @member.save
       @member.clear_invitation_code!
