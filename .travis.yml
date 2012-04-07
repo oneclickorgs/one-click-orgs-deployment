@@ -9,7 +9,7 @@ before_script:
   - "bundle exec rake oco:install_wkhtmltopdf"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-script: bundle exec rake spec cucumber
+script: bundle exec cucumber --require features features/association_founding/accepting_a_founding_member_invitation.feature
 branches:
   only:
     - master
