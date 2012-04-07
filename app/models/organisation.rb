@@ -1,4 +1,6 @@
 class Organisation < ActiveRecord::Base
+  attr_accessible :subdomain, :name, :objectives, :assets
+  
   has_many :clauses
   has_many :members
   has_many :resignations, :through => :members

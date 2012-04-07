@@ -1,4 +1,6 @@
 class Decision < ActiveRecord::Base
+  attr_accessible # none
+  
   belongs_to :proposal
   
   def organisation

@@ -193,10 +193,10 @@ describe Proposal do
       )
 
       @proposal = Proposal.new(
-        :proposer => @proposer,
-        :organisation => @organisation,
         :title => "Buy more tables"
       )
+      @proposal.organisation = @organisation
+      @proposal.proposer = @proposer
       @proposal.stub!(:send_email => nil)
     end
     
