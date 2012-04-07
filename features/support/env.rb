@@ -6,27 +6,6 @@
 
 require 'cucumber/rails'
 
-# Monkey-patch selenium-webdriver to make it wait longer when trying to communicate
-# with Firefox.
-# 
-# This is a workaround for timeouts when running on Travis CI. See our bug #357.
-module Selenium
-  module WebDriver
-    module Remote
-      module Http
-        class Default
-          def new_http_client_with_long_timeout
-            http = new_http_client_without_long_timeout
-            http.read_timeout = 120
-            http
-          end
-          alias_method_chain :new_http_client, :long_timeout
-        end
-      end
-    end
-  end
-end
-
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
 # prefer to use XPath just remove this line and adjust any selectors in your
