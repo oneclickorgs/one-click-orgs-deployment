@@ -59,7 +59,8 @@ group :development, :test do
   gem "webrat"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.3.1'
-  gem "rcov"
+  gem "rcov", :platforms => :ruby_18
+  gem "simplecov", :platforms => :ruby_19
   gem "cucumber-rails", "~>0.4.1", :require => nil
   gem "capybara", "~>0.4.1.2"
   gem "database_cleaner"
