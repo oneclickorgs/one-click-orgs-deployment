@@ -1,4 +1,6 @@
 class Meeting < ActiveRecord::Base
+  attr_accessible :happened_on, :participant_ids, :minutes
+  
   belongs_to :organisation
   
   validates_presence_of :organisation
