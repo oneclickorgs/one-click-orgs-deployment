@@ -71,6 +71,6 @@ group :development, :test do
   gem "cucumber-rails", "~>1.3.0", :require => nil
   gem "capybara", "~>1.1.1"
   gem "database_cleaner", "~>0.7.1"
-  gem "launchy", "~>0.4.0"
+  gem "launchy"
   gem "selenium-webdriver", "~>2.20.0"
 end
