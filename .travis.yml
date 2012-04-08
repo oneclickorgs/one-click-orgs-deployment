@@ -5,8 +5,7 @@ rvm:
 bundler_args: --without development
 before_script:
   - "mysql -e 'create database one_click_test;' > /dev/null"
-  - "SESSION_COOKIE_DOMAIN=lvh.me bundle exec rake oco:generate_config"
-  - "bundle exec rake db:migrate"
+  - "bundle exec rake oco:generate_config db:migrate"
   - "bundle exec rake oco:install_wkhtmltopdf"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
