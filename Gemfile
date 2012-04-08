@@ -38,7 +38,6 @@ gem "haml", "~>3.1.4"
 gem "sass", "~>3.1.12"
 gem "rdiscount"
 gem "pdfkit"
-gem "daemons", "~>1.0.10"
 gem "delayed_job", "~>3.0.1"
 gem "delayed_job_active_record"
 gem "exception_notification_rails3", :require => 'exception_notifier'
