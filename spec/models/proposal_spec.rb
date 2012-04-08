@@ -143,7 +143,9 @@ describe Proposal do
       @proposal.member_count.should == 4
       
       # Test that uninducted members aren't included
-      member_2.update_attributes(:inducted_at => nil, :state => 'pending')
+      member_2.inducted_at = nil
+      member_2.state = 'pending'
+      member_2.save!
       @organisation.members.count.should == 5
       @proposal.member_count.should == 3
     end
@@ -173,10 +175,10 @@ describe Proposal do
       )
 
       @proposal = Proposal.new(
-        :proposer => @proposer,
-        :organisation => @organisation,
         :title => "Buy more tables"
       )
+      @proposal.organisation = @organisation
+      @proposal.proposer = @proposer
       
       # Stub out ProposalMailerObserver
       @organisation.stub_chain(:members, :active).and_return([])

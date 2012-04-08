@@ -1,4 +1,6 @@
 class EjectMemberProposal < MembershipProposal
+  attr_accessible :member_id
+  
   before_create :set_default_title
   def set_default_title
     self.title ||= "Eject #{organisation.members.find(member_id).name} from #{organisation.name}"

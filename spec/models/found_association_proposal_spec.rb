@@ -7,7 +7,8 @@ describe FoundAssociationProposal do
   
   describe "validation" do
     before(:each) do
-      @proposal = FoundAssociationProposal.new(:proposer => mock_model(Member), :title => "Title")
+      @proposal = FoundAssociationProposal.new(:title => "Title")
+      @proposal.proposer = mock_model(Member)
       @proposal.organisation = @organisation = mock_model(Association, :members => (@members_association = []), :name => "Test association")
       @organisation.stub!(:can_hold_founding_vote?).and_return(false)
       @members_association.stub(:active).and_return([])
@@ -66,7 +67,9 @@ describe FoundAssociationProposal do
         mock_model(Vote, :member_id => @members[3].id, :for? => false)
       ]
       
-      @proposal = FoundAssociationProposal.new(:proposer => @members[0], :organisation => @organisation)
+      @proposal = FoundAssociationProposal.new
+      @proposal.organisation = @organisation
+      @proposal.proposer = @members[0]
       @proposal.stub!(:votes).and_return(@votes)
     end
     
@@ -100,10 +103,10 @@ describe FoundAssociationProposal do
       )
 
       @proposal = FoundAssociationProposal.new(
-        :proposer => @proposer,
-        :organisation => @organisation,
         :title => "Proposal to form association"
       )
+      @proposal.organisation = @organisation
+      @proposal.proposer = @proposer
       
       # Stub out ProposalMailerObserver
       @organisation.stub(:members).and_return([])

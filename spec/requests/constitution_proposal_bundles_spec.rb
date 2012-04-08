@@ -2,6 +2,14 @@ require 'spec_helper'
 
 describe "constitution proposal bundles" do
   
+  def mock_proposal
+    mock('proposal',
+      :save! => true,
+      :valid? => true,
+      :proposer= => nil
+    )
+  end
+  
   before(:each) do 
     default_association
     default_association_constitution
@@ -12,12 +20,12 @@ describe "constitution proposal bundles" do
   describe "POST create" do
     before(:each) do
       set_permission!(@user, :constitution_proposal, true)
-      @proposal = mock('proposal', :save! => true, :valid? => true)
+      @proposal = mock_proposal
       
-      ChangeTextProposal.stub(:new).and_return(mock('proposal', :save! => true, :valid? => true))
-      ChangeVotingSystemProposal.stub(:new).and_return(mock('proposal', :save! => true, :valid? => true))
-      ChangeBooleanProposal.stub(:new).and_return(mock('proposal', :save! => true, :valid? => true))
-      ChangeVotingPeriodProposal.stub(:new).and_return(mock('proposal', :save! => true, :valid? => true))
+      ChangeTextProposal.stub(:new).and_return(mock_proposal)
+      ChangeVotingSystemProposal.stub(:new).and_return(mock_proposal)
+      ChangeBooleanProposal.stub(:new).and_return(mock_proposal)
+      ChangeVotingPeriodProposal.stub(:new).and_return(mock_proposal)
     end
     
     def post_create
@@ -36,9 +44,9 @@ describe "constitution proposal bundles" do
     it "should create a proposal to change the organisation name" do
       ChangeTextProposal.should_receive(:new).with({
         :name => 'organisation_name',
-        :value => 'New name',
-        :proposer => @user
+        :value => 'New name'
       },{}).once.ordered.and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -47,9 +55,9 @@ describe "constitution proposal bundles" do
     it "should create a proposal to change the objectives" do
       ChangeTextProposal.should_receive(:new).with({
           :name => 'organisation_objectives',
-          :value => 'New objectives',
-          :proposer => @user
+          :value => 'New objectives'
       },{}).and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -58,9 +66,9 @@ describe "constitution proposal bundles" do
     it "should create a proposal to change the general voting system" do
       ChangeVotingSystemProposal.should_receive(:new).with({
         :proposal_type => 'general',
-        :proposed_system => 'AbsoluteMajority',
-        :proposer => @user
+        :proposed_system => 'AbsoluteMajority'
       },{}).and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -69,9 +77,9 @@ describe "constitution proposal bundles" do
     it "should create a proposal to change the membership voting system" do
       ChangeVotingSystemProposal.should_receive(:new).with({
         :proposal_type => 'membership',
-        :proposed_system => 'AbsoluteTwoThirdsMajority',
-        :proposer => @user
+        :proposed_system => 'AbsoluteTwoThirdsMajority'
       },{}).and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -80,9 +88,9 @@ describe "constitution proposal bundles" do
     it "should create a proposal to change the constitution voting system" do
       ChangeVotingSystemProposal.should_receive(:new).with({
         :proposal_type => 'constitution',
-        :proposed_system => 'Unanimous',
-        :proposer => @user
+        :proposed_system => 'Unanimous'
       },{}).and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -90,11 +98,11 @@ describe "constitution proposal bundles" do
     
     it "should create a proposal to allow assets" do
       ChangeBooleanProposal.should_receive(:new).with({
-        :proposer => @user,
         :name => 'assets',
         :value => true,
         :title => "Change the constitution to allow holding, transferral and disposal of material assets and intangible assets"
       },{}).and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -102,9 +110,9 @@ describe "constitution proposal bundles" do
     
     it "should create a proposal to change the voting period" do
       ChangeVotingPeriodProposal.should_receive(:new).with({
-        :new_voting_period => "1209600",
-        :proposer => @user
+        :new_voting_period => "1209600"
       },{}).and_return(@proposal)
+      @proposal.should_receive(:proposer=).with(@user)
       @proposal.should_receive(:save!).and_return(true)
       
       post_create
@@ -128,9 +136,9 @@ describe "constitution proposal bundles" do
       it "should create a proposal to change the objectives" do
         ChangeTextProposal.should_receive(:new).with({
             :name => 'organisation_objectives',
-            :value => 'New objectives',
-            :proposer => @user
+            :value => 'New objectives'
         },{}).and_return(@proposal)
+        @proposal.should_receive(:proposer=).with(@user)
         @proposal.should_receive(:save!).and_return(true)
 
         post_create
@@ -139,9 +147,9 @@ describe "constitution proposal bundles" do
       it "should create a proposal to change the general voting system" do
         ChangeVotingSystemProposal.should_receive(:new).with({
           :proposal_type => 'general',
-          :proposed_system => 'AbsoluteMajority',
-          :proposer => @user
+          :proposed_system => 'AbsoluteMajority'
         },{}).and_return(@proposal)
+        @proposal.should_receive(:proposer=).with(@user)
         @proposal.should_receive(:save!).and_return(true)
 
         post_create

@@ -158,10 +158,10 @@ class Association < Organisation
   end
   
   def build_founding_member(attributes={})
-    FoundingMember.new({
-      :organisation => self,
-      :member_class => member_classes.find_by_name("Founding Member")
-    }.merge(attributes))
+    FoundingMember.new(attributes).tap{|m|
+      m.organisation = self
+      m.member_class = member_classes.find_by_name("Founding Member")
+    }
   end
   
   def build_constitution_proposal_bundle(attributes={})

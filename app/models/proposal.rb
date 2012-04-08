@@ -3,6 +3,8 @@ require 'one_click_orgs/parameters_serialisation'
 class Proposal < ActiveRecord::Base
   include OneClickOrgs::ParametersSerialisation
   
+  attr_accessible :title, :proposer_member_id, :description, :parameters
+  
   state_machine :initial => :open do
     event :close do
       transition :open => :accepted, :if => :passed?

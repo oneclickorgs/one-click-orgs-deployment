@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+require 'active_model/mass_assignment_security/sanitizer'
+
 describe "members" do
   
   before(:each) do
@@ -83,6 +85,21 @@ describe "members" do
   
       it "redirect to the member show action" do
         @response.should redirect_to(member_path(@member))
+      end
+      
+      context "when attempting to update restricted attributes" do
+        def put_update
+          put(member_path(@user), :member => {
+            :first_name => "Bob",
+            :last_name => "Smith",
+            :email => "new@example.com",
+            :active => '0'
+          })
+        end
+
+        it "raises an ActiveModel::MassAssignmentSecurity:Error exception" do
+          expect {put_update}.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+        end
       end
     end
   end

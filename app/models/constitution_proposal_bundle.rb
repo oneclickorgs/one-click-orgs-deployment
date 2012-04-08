@@ -32,13 +32,14 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
   end
   
   def save
+    
     # Organisation name
     if organisation.name != organisation_name
       proposal = (organisation.change_text_proposals.new(
         :name => 'organisation_name',
-        :value => organisation_name,
-        :proposer => proposer
+        :value => organisation_name
       ))
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else
@@ -50,9 +51,9 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     if organisation.objectives != objectives
       proposal = (organisation.change_text_proposals.new(
         :name => 'organisation_objectives',
-        :value => objectives,
-        :proposer => proposer
+        :value => objectives
       ))
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else
@@ -72,10 +73,10 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     if (organisation.assets && !new_assets_value) || (!organisation.assets && new_assets_value) # Bit verbose, to cope with null values
       proposal = (organisation.change_boolean_proposals.new(
         :title => title,
-        :proposer => proposer,
         :name => 'assets',
         :value => new_assets_value
       ))
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else
@@ -90,9 +91,9 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     if current_system != proposed_system
       proposal = (organisation.change_voting_system_proposals.new(
         :proposal_type => 'general',
-        :proposed_system => proposed_system.simple_name,
-        :proposer => proposer
+        :proposed_system => proposed_system.simple_name
       ))
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else
@@ -107,9 +108,9 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     if current_system != proposed_system
       proposal = (organisation.change_voting_system_proposals.new(
         :proposal_type => 'membership',
-        :proposed_system => proposed_system.simple_name,
-        :proposer => proposer
+        :proposed_system => proposed_system.simple_name
       ))
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else
@@ -124,9 +125,9 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     if current_system != proposed_system
       proposal = (organisation.change_voting_system_proposals.new(
         :proposal_type => 'constitution',
-        :proposed_system => proposed_system.simple_name,
-        :proposer => proposer
+        :proposed_system => proposed_system.simple_name
       ))
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else
@@ -137,9 +138,9 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     # Voting period
     if organisation.constitution.voting_period != voting_period.to_i
       proposal = organisation.change_voting_period_proposals.new(
-        :new_voting_period => voting_period,
-        :proposer => proposer
+        :new_voting_period => voting_period
       )
+      proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
       else

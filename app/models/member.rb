@@ -4,6 +4,12 @@ require 'mail/elements/address'
 require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
+  attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
+    :password, :password_confirmation, :send_welcome
+  attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
+    :password, :password_confirmation, :send_welcome, :member_class_id, :as => :proposal
+  
+  
   state_machine :initial => :pending do
     event :induct do
       transition :pending => :active
