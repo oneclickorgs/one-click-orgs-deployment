@@ -24,7 +24,12 @@ namespace :oco do
       FileUtils.cp config_dir('initializers', 'local_settings.rb.sample'), config_dir('initializers', 'local_settings.rb')
       
       code = File.read(config_dir('initializers', 'local_settings.rb'))
+      
       code.sub!('YOUR_SECRET_HERE', ActiveSupport::SecureRandom.hex(64))
+      
+      session_cookie_domain = ENV['SESSION_COOKIE_DOMAIN'] || ':all'
+      code.sub!('SESSION_COOKIE_DOMAIN', "'#{session_cookie_domain}'")
+      
       File.open(config_dir('initializers', 'local_settings.rb'), 'w'){|file| file << code}
     end
   end
