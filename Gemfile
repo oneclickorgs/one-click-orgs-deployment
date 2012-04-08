@@ -62,7 +62,7 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>2.8.1"
+  gem "rspec-rails", "~>2.9.0"
   gem "webrat", "~>0.7.1"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>1.0.1'
