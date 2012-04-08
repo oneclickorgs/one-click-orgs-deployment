@@ -28,7 +28,7 @@ gem "mysql"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails', '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer'
 end
@@ -69,7 +69,7 @@ group :development, :test do
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.9.0'
   gem "rcov", "~>0.9.8"
-  gem "cucumber-rails", "~>1.2.0", :require => nil
+  gem "cucumber-rails", "~>1.3.0", :require => nil
   gem "capybara", "~>1.1.1"
   gem "database_cleaner", "~>0.7.1"
   gem "launchy", "~>0.4.0"
