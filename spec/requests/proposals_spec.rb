@@ -24,9 +24,9 @@ describe "Proposals" do
   describe "/proposals/1, given a proposal exists" do
     before(:each) do
       set_permission!(@user, :vote, true)
-      @member_two = @organisation.members.make(:member_class => @default_member_class)
+      @member_two = @organisation.members.make!(:member_class => @default_member_class)
       set_permission!(@member_two, :vote, true)
-      @member_three = @organisation.members.make(:member_class => @default_member_class)
+      @member_three = @organisation.members.make!(:member_class => @default_member_class)
       set_permission!(@member_two, :vote, true)
       
       a_proposal_exists

@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe Clause do
   before(:each) do
-    @organisation = Association.make(:name => 'abc', :objectives => 'To boldly go', :subdomain => 'abc')
-    @old_objectives = @organisation.clauses.make(
+    @organisation = Association.make!(:name => 'abc', :objectives => 'To boldly go', :subdomain => 'abc')
+    @old_objectives = @organisation.clauses.make!(
       :name => 'objectives', 
       :started_at => (Time.now - 3.days), 
       :ended_at => (Time.now - 1.day), 
       :text_value => "consuming ice-cream"
     )
     
-    @current_objectives = @organisation.clauses.make(
+    @current_objectives = @organisation.clauses.make!(
       :name => 'objectives',
       :started_at => (Time.now - 1.day),
       :text_value => "consuming doughnuts"
     )
     
-    @current_voting_period = @organisation.clauses.make(
+    @current_voting_period = @organisation.clauses.make!(
       :name => 'voting_period',
       :started_at => (Time.now - 1.day),
       :integer_value => 1

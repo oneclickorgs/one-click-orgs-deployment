@@ -3,8 +3,8 @@ require 'spec_helper'
 describe MemberClass do
   describe "permissions" do
     before(:each) do
-      @organisation = Organisation.make
-      @member_class = @organisation.member_classes.make(:name => 'Clown')
+      @organisation = Organisation.make!
+      @member_class = @organisation.member_classes.make!(:name => 'Clown')
     end
     
     describe "checking permissions" do

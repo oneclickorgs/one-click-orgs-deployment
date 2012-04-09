@@ -1,5 +1,5 @@
 Given /^there is a member "([^"]*)"$/ do |member_email|
-  @organisation.members.make(
+  @organisation.members.make!(
     :email => member_email,
     :member_class => @organisation.member_classes.find_by_name("Member")
   )
@@ -7,7 +7,7 @@ end
 
 Given /^there are active members$/ do
   if @organisation.members.active.count < 1
-    @organisation.members.make(
+    @organisation.members.make!(
       :member_class => @organisation.member_classes.find_by_name("Member")
     )
   end
@@ -15,7 +15,7 @@ end
 
 Given /^there are pending members$/ do
   if @organisation.members.pending.count < 1
-    @organisation.members.make(:pending,
+    @organisation.members.make!(:pending,
       :member_class => @organisation.member_classes.find_by_name("Member")
     )
   end
@@ -23,7 +23,7 @@ end
 
 Given /^there is a member with name "([^"]*)" and email "([^"]*)"$/ do |name, email|
   first_name, last_name = name.split(' ')
-  @member = @organisation.members.make(
+  @member = @organisation.members.make!(
     :first_name => first_name,
     :last_name => last_name,
     :email => email,
@@ -32,7 +32,7 @@ Given /^there is a member with name "([^"]*)" and email "([^"]*)"$/ do |name, em
 end
 
 Given /^another member has resigned$/ do
-  @member = @organisation.members.make
+  @member = @organisation.members.make!
   @member.resign!
 end
 

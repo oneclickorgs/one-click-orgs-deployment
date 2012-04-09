@@ -22,7 +22,7 @@ class Proposal < ActiveRecord::Base
   has_one :decision
   has_many :comments, :as => :commentable
   
-  validates_presence_of :proposer_member_id
+  validates_presence_of :proposer
   
   scope :currently_open, lambda {where(["state = 'open' AND close_date > ?", Time.now.utc])}
   scope :failed, lambda {where(["close_date < ? AND state = 'rejected'", Time.now.utc]).order('close_date DESC')}

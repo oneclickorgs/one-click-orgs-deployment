@@ -5,7 +5,7 @@ describe MembersMailer do
     default_association_constitution
     default_organisation
     
-    @member = @organisation.members.make
+    @member = @organisation.members.make!
     @new_password = "foo"
   end
   
@@ -41,8 +41,8 @@ describe MembersMailer do
   
   describe "notify_resignation" do
     before(:each) do
-      @recipient = @organisation.members.make
-      @resignee = @organisation.members.make
+      @recipient = @organisation.members.make!
+      @resignee = @organisation.members.make!
       
       @mail = MembersMailer.notify_resignation(@recipient, @resignee)
     end

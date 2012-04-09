@@ -4,9 +4,9 @@ describe DecisionMailer do
   before :each do
     default_association_constitution
     default_organisation
-    @member = @organisation.members.make
-    @proposal = @organisation.proposals.make(:proposer_member_id=>@member.id)
-    @decision = Decision.make(:proposal=>@proposal)
+    @member = @organisation.members.make!
+    @proposal = @organisation.proposals.make!(:proposer_member_id=>@member.id)
+    @decision = Decision.make!(:proposal=>@proposal)
   end
   
   describe "notify_new_decision" do
@@ -26,8 +26,8 @@ describe DecisionMailer do
   
   context "when proposal has a decision notification message" do
     before(:each) do
-      @proposal = @organisation.change_voting_period_proposals.make(:proposer => @member, :parameters => {'new_voting_period' => 3600})
-      @decision = Decision.make(:proposal => @proposal)
+      @proposal = @organisation.change_voting_period_proposals.make!(:proposer => @member, :parameters => {'new_voting_period' => 3600})
+      @decision = Decision.make!(:proposal => @proposal)
     end
     
     it "is included in the email" do

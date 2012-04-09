@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Association do
   
   before(:each) do
-    @association = Association.make(:name => 'abc', :objectives => 'To boldly go', :subdomain => 'fromage')
+    @association = Association.make!(:name => 'abc', :objectives => 'To boldly go', :subdomain => 'fromage')
     Setting[:base_domain] = 'oneclickorgs.com'
   end
   
@@ -31,7 +31,7 @@ describe Association do
   describe "can_hold_founding_vote?" do
     before(:each) do
       @association.members.destroy_all
-      @association.members.make_n(3)
+      @association.members.make!(3)
       association_is_pending
     end
     
@@ -43,15 +43,15 @@ describe Association do
     
     it "returns true when there are at least three members" do
       @association.members.destroy_all
-      @association.members.make_n(3)
+      @association.members.make!(3)
       @association.reload.can_hold_founding_vote?.should be_true
       
       @association.members.destroy_all
-      @association.members.make_n(2)
+      @association.members.make!(2)
       @association.reload.can_hold_founding_vote?.should be_false
       
       @association.members.destroy_all
-      @association.members.make_n(5)
+      @association.members.make!(5)
       @association.reload.can_hold_founding_vote?.should be_true
     end
   end

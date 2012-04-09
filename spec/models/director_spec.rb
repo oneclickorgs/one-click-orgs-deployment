@@ -17,7 +17,7 @@ describe Director do
     end
     
     it "does not validate acceptance of certification on update" do
-      director = Director.make
+      director = Director.make!
       director.certification = '0'
       director.should be_valid
     end

@@ -1,18 +1,18 @@
 Given /^I have started the founding vote$/ do
-  @organisation.found_association_proposals.make(:proposer => @user)
+  @organisation.found_association_proposals.make!(:proposer => @user)
   @organisation.propose!
 end
 
 Given /^the founding vote has been started$/ do
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
-  @organisation.found_association_proposals.make(:proposer => founder)
+  @organisation.found_association_proposals.make!(:proposer => founder)
   @organisation.propose!
 end
 
 Given /^another founding vote has been started$/ do
   sleep(1)
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
-  @organisation.found_association_proposals.make(:proposer => founder, :title => "A second voting proposal.")
+  @organisation.found_association_proposals.make!(:proposer => founder, :title => "A second voting proposal.")
   @organisation.reload
   @organisation.propose!
 end
@@ -26,18 +26,18 @@ Given /^everyone has voted (to support|against) the founding$/ do |vote|
 end
 
 Given /^a proposal has been made$/ do
-  @organisation.proposals.make(:proposer => @organisation.members.active.first)
+  @organisation.proposals.make!(:proposer => @organisation.members.active.first)
 end
 
 Given /^a proposal "([^"]*)" has been made$/ do |proposal_title|
-  @organisation.proposals.make(
+  @organisation.proposals.make!(
     :title => proposal_title,
     :proposer => @organisation.members.active.first
   )
 end
 
 Given /^a proposal has been made to change the organisation name to "([^"]*)"$/ do |new_organisation_name|
-  @proposal = @organisation.change_text_proposals.make(
+  @proposal = @organisation.change_text_proposals.make!(
     :title => "Change organisation name to '#{new_organisation_name}'",
     :parameters => {
       'name' => 'organisation_name',
@@ -49,7 +49,7 @@ end
 
 Given /^a proposal has been made to add a new member with name "([^"]*)" and email "([^"]*)"$/ do |name, email|
   first_name, last_name = name.split(' ')
-  @proposal = @organisation.add_member_proposals.make(
+  @proposal = @organisation.add_member_proposals.make!(
     :parameters => {
       'first_name' => first_name,
       'last_name' => last_name,
@@ -62,7 +62,7 @@ end
 
 Given /^a proposal has been made to eject the member "([^"]*)"$/ do |email|
   member = @organisation.members.active.find_by_email(email)
-  @proposal = @organisation.eject_member_proposals.make(
+  @proposal = @organisation.eject_member_proposals.make!(
     :parameters => {
       'member_id' => member.id
     },

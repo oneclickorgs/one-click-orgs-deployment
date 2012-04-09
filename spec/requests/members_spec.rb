@@ -28,7 +28,7 @@ describe "members" do
   
     describe "GET, given a members exists" do
       before(:each) do
-        @member = Member.make
+        @member = Member.make!
         get '/members'
       end
     
@@ -40,7 +40,7 @@ describe "members" do
 
   describe "/members/1/edit, given a member exists" do
     before(:each) do
-      @member = @organisation.members.make
+      @member = @organisation.members.make!
     end
   
     it "responds successfully if resource == current_user" do
@@ -58,7 +58,7 @@ describe "members" do
 
   describe "/members/1, given a member exists" do
     before(:each) do
-      @member = @organisation.members.make
+      @member = @organisation.members.make!
       set_permission!(@user, :membership_proposal, true)
     end
     

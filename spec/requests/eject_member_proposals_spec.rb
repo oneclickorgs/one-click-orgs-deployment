@@ -11,7 +11,7 @@ describe "eject-member proposals" do
   
   describe "POST create" do
     before(:each) do
-      @member = @organisation.members.make
+      @member = @organisation.members.make!
     end
     
     def post_create

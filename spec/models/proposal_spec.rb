@@ -10,7 +10,7 @@ describe Proposal do
     default_association_voting_systems
     default_association_member_class
     
-    @member = @organisation.members.make(:member_class => @default_member_class)
+    @member = @organisation.members.make!(:member_class => @default_member_class)
     
     @mail = mock('mail', :deliver => nil)
     
@@ -22,11 +22,11 @@ describe Proposal do
     describe "comments" do
       it "orders by creation timestamp" do
         comments = [
-          Comment.make(:created_at => 1.day.ago, :body => "C"),
-          Comment.make(:created_at => 5.days.ago, :body => "A"),
-          Comment.make(:created_at => 3.days.ago, :body => "B")
+          Comment.make!(:created_at => 1.day.ago, :body => "C"),
+          Comment.make!(:created_at => 5.days.ago, :body => "A"),
+          Comment.make!(:created_at => 3.days.ago, :body => "B")
         ]
-        proposal = @organisation.proposals.make
+        proposal = @organisation.proposals.make!
         proposal.comments << comments
         proposal.comments.map(&:body).should == ["A", "B", "C"]
       end
@@ -34,8 +34,8 @@ describe Proposal do
   end
   
   it "should close early proposals" do
-    member_0, member_1, member_2 = @organisation.members.make_n(3, :member_class => @default_member_class)
-    member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)
+    member_0, member_1, member_2 = @organisation.members.make!(3, :member_class => @default_member_class)
+    member_3, member_4 = @organisation.members.make!(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)
     
     proposal = @organisation.proposals.create!(:proposer_member_id => member_1.id, :title => 'test', :parameters => nil) 
     [member_0, member_2].each { |m| m.cast_vote(:for, proposal)}
@@ -48,7 +48,7 @@ describe Proposal do
   end
   
   it "should close due proposals" do    
-    proposal = @organisation.proposals.make(:proposer_member_id => @member.id, :close_date=>Time.now - 1.day, :parameters => nil)  
+    proposal = @organisation.proposals.make!(:proposer_member_id => @member.id, :close_date=>Time.now - 1.day, :parameters => nil)  
     @organisation.proposals.close_due_proposals.should include(proposal)
     
     proposal.reload
@@ -60,14 +60,14 @@ describe Proposal do
     @member.member_class.set_permission!(:vote, true)
     
     ProposalMailer.should_receive(:notify_creation).and_return(mock('email', :deliver => nil))
-    @organisation.proposals.make(:proposer => @member)
+    @organisation.proposals.make!(:proposer => @member)
   end
   
   describe "closing" do
     before(:each) do
       @organisation.members.count.should > 0
 
-      @p = @organisation.proposals.make(:proposer => @member)
+      @p = @organisation.proposals.make!(:proposer => @member)
       @p.stub!(:passed?).and_return(true)
       # @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
     end
@@ -75,7 +75,7 @@ describe Proposal do
     context "when proposal is a Founding Proposal" do
       before(:each) do
         @organisation.stub!(:can_hold_founding_vote?).and_return(true)
-        @p = FoundAssociationProposal.make(:proposer => @member, :organisation => @organisation)
+        @p = FoundAssociationProposal.make!(:proposer => @member, :organisation => @organisation)
         @p.stub!(:passed?).and_return(true)
         @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
         
@@ -91,15 +91,15 @@ describe Proposal do
   
   describe "to_event" do
     it "should list open proposals as 'proposal's" do
-      @organisation.proposals.make(:state => 'open').to_event[:kind].should == :proposal
+      @organisation.proposals.make!(:state => 'open').to_event[:kind].should == :proposal
     end
     
     it "should list closed, accepted proposals as 'proposal's" do
-      @organisation.proposals.make(:state => 'accepted').to_event[:kind].should == :proposal
+      @organisation.proposals.make!(:state => 'accepted').to_event[:kind].should == :proposal
     end
     
     it "should list closed, rejected proposals as 'failed proposal's" do
-      proposal = @organisation.proposals.make(:state => 'rejected')
+      proposal = @organisation.proposals.make!(:state => 'rejected')
       proposal.open?.should be_false
       
       proposal.to_event[:kind].should == :failed_proposal
@@ -130,15 +130,15 @@ describe Proposal do
     it "includes active, inducted members who joined before the proposal was created" do
       @organisation.members.count.should == 1
       
-      member_2, member_3, member_4 = @organisation.members.make_n(3, :member_class => @default_member_class)
+      member_2, member_3, member_4 = @organisation.members.make!(3, :member_class => @default_member_class)
       
-      @proposal = @organisation.proposals.make(:proposer_member_id => @member.id, :title => 'test', :parameters => nil)
+      @proposal = @organisation.proposals.make!(:proposer_member_id => @member.id, :title => 'test', :parameters => nil)
       
       @organisation.members.count.should == 4
       @proposal.member_count.should == 4
       
       # Test that newer members aren't included
-      member_5 = @organisation.members.make(:member_class => @default_member_class, :created_at => Time.now.utc, :inducted_at => Time.now.utc)
+      member_5 = @organisation.members.make!(:member_class => @default_member_class, :created_at => Time.now.utc, :inducted_at => Time.now.utc)
       @organisation.members.count.should == 5
       @proposal.member_count.should == 4
       
@@ -154,14 +154,14 @@ describe Proposal do
       # Don't want to deal with FoundAssociationProposal validation errors
       ProposalMailer.stub!(:notify_foundation_proposal).and_return(mock('email', :deliver => nil))
       
-      member_2, member_3 = @organisation.members.make_n(2, :member_class => @default_member_class, :inducted_at => nil)
+      member_2, member_3 = @organisation.members.make!(2, :member_class => @default_member_class, :inducted_at => nil)
       
-      fap = @organisation.found_association_proposals.make_unsaved(:proposer_member_id => @member.id)
+      fap = @organisation.found_association_proposals.make(:proposer_member_id => @member.id)
       # More validation workarounds
       fap.stub!(:association_must_be_ready).and_return(true)
       fap.save!
       
-      proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
+      proposal = @organisation.proposals.make!(:proposer_member_id => @member.id)
       proposal.member_count.should == 3
     end
   end

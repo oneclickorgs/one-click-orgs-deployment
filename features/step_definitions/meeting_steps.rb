@@ -1,6 +1,6 @@
 Given /^another director has recorded some minutes$/ do
   @company ||= Company.last
-  @meeting = @company.meetings.make
+  @meeting = @company.meetings.make!
 end
 
 Given /^another director has recorded some new minutes$/ do

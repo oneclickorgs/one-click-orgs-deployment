@@ -64,7 +64,7 @@ end
 group :development, :test do
   gem "rspec-rails", "~>2.9.0"
   gem "webrat", "~>0.7.1"
-  gem "machinist", "~>1.0.6"
+  gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
   gem "faker", '~>1.0.1'
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19

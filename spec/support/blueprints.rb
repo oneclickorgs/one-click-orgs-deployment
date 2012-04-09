@@ -1,64 +1,65 @@
 require 'machinist/active_record'
-require 'sham'
 require 'faker'
 
-Sham.name               { Faker::Name.name }
-Sham.email              { Faker::Internet.email }
-Sham.password           { Faker::Name.first_name }
-Sham.first_name         { Faker::Name.first_name }
-Sham.last_name          { Faker::Name.last_name }
-Sham.subdomain          { Faker::Internet.domain_word }
-Sham.objectives         { Faker::Company.bs }
-Sham.organisation_name  { Faker::Company.name }
-Sham.minutes            { Faker::Lorem.paragraph }
+# Add your blueprints here.
+#
+# e.g.
+#   Post.blueprint do
+#     title { "Post #{sn}" }
+#     body  { "Lorem ipsum..." }
+#   end
 
 MemberClass.blueprint do
-  name "Director"
+  name { "Director" }
   organisation
 end
 
 MemberClass.blueprint(:founder) do
-  name "Founder"
+  name { "Founder" }
 end
 
 Member.blueprint do
-  email
-  first_name
-  last_name
-  created_at {Time.now.utc - 1.day}
-  password "password"
-  password_confirmation "password"
-  state 'active'
-  inducted_at {Time.now.utc - 23.hours}
-  member_class {MemberClass.make}
+  email { Faker::Internet.email }
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
+  created_at { Time.now.utc - 1.day }
+  password { "password" }
+  password_confirmation { "password" }
+  state { 'active' }
+  inducted_at { Time.now.utc - 23.hours }
+  member_class { MemberClass.make }
 end
 
 Member.blueprint(:founder) do
-  member_class {MemberClass.make(:founder)}
+  member_class { MemberClass.make(:founder) }
 end
 
 Member.blueprint(:pending) do
-  inducted_at nil
-  state 'pending'
+  inducted_at { nil }
+  state { 'pending' }
 end
 
 Proposal.blueprint do
-  title "a proposal title"
-  state "open"
-  proposer {Member.make(:organisation => organisation)}
+  title { "a proposal title" }
+  state { "open" }
+  proposer { Member.make(:organisation => object.organisation) }
 end
 
 AddMemberProposal.blueprint do
-  title "a proposal title"
-  state 'open'
-  parameters {{:first_name => Sham.first_name, :last_name => Sham.last_name, :email => Sham.email}}
+  title { "a proposal title" }
+  state { 'open' }
+  parameters { {
+    :first_name => Faker::Name.first_name,
+    :last_name => Faker::Name.last_name,
+    :email => Faker::Internet.email
+  } }
 end
 
 FoundAssociationProposal.blueprint do
-  title "Proposal to Found org"
-  description "Found org"
-  state "open"
-  proposer {Member.make}
+  title { "Proposal to Found org" }
+  description { "Found org" }
+  state { "open" }
+  proposer { Member.make }
 end
 
 ChangeVotingPeriodProposal.blueprint do
@@ -71,27 +72,27 @@ EjectMemberProposal.blueprint do
 end
 
 Decision.blueprint do
-  proposal {Proposal.make}
+  proposal { Proposal.make }
 end
 
 Clause.blueprint do
-  name 'objectives'
-  text_value 'consuming doughnuts'
-  started_at {Time.now - 1.day}
+  name { 'objectives' }
+  text_value { 'consuming doughnuts' }
+  started_at { Time.now - 1.day }
 end
 
 Setting.blueprint do
-  key 'base_domain'
-  value 'oneclickorgs.com'
+  key { 'base_domain' }
+  value { 'oneclickorgs.com' }
 end
 
 Organisation.blueprint do
-  name { Sham.organisation_name }
-  subdomain
+  name { Faker::Company.name }
+  subdomain { Faker::Internet.domain_word }
 end
 
 Association.blueprint do
-  objectives
+  objectives { Faker::Company.bs }
 end
 
 Company.blueprint do
@@ -100,7 +101,7 @@ end
 Meeting.blueprint do
   organisation { Company.make }
   happened_on { 1.day.ago }
-  minutes { Sham.minutes }
+  minutes { Faker::Lorem.paragraph }
 end
 
 MeetingParticipation.blueprint do
@@ -110,7 +111,7 @@ Comment.blueprint do
 end
 
 Director.blueprint do
-  certification '1'
+  certification { '1' }
 end
 
 Comment.blueprint do
