@@ -10,6 +10,6 @@
   These are the Founding Members: 
 
 %ul
-  - co.members.each do |member|
+  - (co.members.active + co.members.pending).each do |member|
     %li 
       = member.name

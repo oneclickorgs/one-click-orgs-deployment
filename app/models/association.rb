@@ -56,7 +56,11 @@ class Association < Organisation
   end
   
   def can_hold_founding_vote?
-    pending? && members.count >= 3
+    pending? && members.count >= minimum_members_required_for_founding_vote
+  end
+  
+  def minimum_members_required_for_founding_vote
+    3
   end
   
   def member_eligible_to_vote?(member, proposal)

@@ -13,7 +13,7 @@ class DecisionMailer < OcoMailer
     @organisation = @proposal.organisation
     raise ArgumentError, "proposal has no attached organisation" unless @organisation
     
-    @members = @organisation.members
+    @members = (@organisation.members.active + @organisation.members.pending)
     @organisation_name = @organisation.name
     @member_vote = @member.votes.first
 
