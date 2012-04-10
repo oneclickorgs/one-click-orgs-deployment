@@ -1,5 +1,9 @@
 Given /^the application is set up$/ do
-  # Using ocolocalhost.com to give us automatic resolution to localhost
+  # *.ocolocalhost.com resolves to 127.0.0.1. This lets us test subdomain
+  # look-up using domains like 'company.ocolocalhost.com' and
+  # 'association.ocolocalhost.com', without having to set up local wildcard
+  # entries on each developer's machine and on the CI server.
+  # 
   # N.B. This means some Cucumber scenarios will fail if your machine
   # isn't connected to the internet. We shoud probably fix this.
   # 
