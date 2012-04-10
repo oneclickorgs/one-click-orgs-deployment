@@ -75,6 +75,41 @@ Given /^the voting system for membership decisions is "([^"]*)"$/ do |voting_sys
   @organisation.constitution.change_voting_system('membership', voting_system)
 end
 
+Given /^one member voted against the founding$/ do
+  @fop ||= @organisation.found_organisation_proposals.last
+  
+  # Don't make our user vote against the founding
+  @members_against = if @user
+    [(@organisation.members - [@user]).last]
+  else
+    [@organisation.members.last]
+  end
+    
+  @members_against.each do |m|
+    m.cast_vote(:against, @fop.id)
+  end
+end
+
+Given /^the founding vote still passed$/ do
+  members_in_favour = @organisation.members
+  members_in_favour -= @members_against if @members_against
+  
+  if members_in_favour.length < @organisation.minimum_members_required_for_founding_vote
+    raise RuntimeError, "not enough members left to pass founding vote"
+  end
+  
+  @fop ||= @organisation.found_organisation_proposals.last
+  
+  members_in_favour.each do |m|
+    m.cast_vote(:for, @fop.id)
+  end
+  
+  Proposal.close_proposals
+  
+  @fop.reload
+  raise RuntimeError, "expected founding vote to pass" unless @fop.passed?
+end
+
 When /^the proposal closer runs$/ do
   Proposal.close_proposals
 end

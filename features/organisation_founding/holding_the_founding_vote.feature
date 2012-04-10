@@ -27,3 +27,10 @@ Feature: Holding the founding vote
     When the proposal closer runs
     Then everyone should receive an email saying the founding vote has passed
     And the organisation should be active
+  
+  Scenario: Seeing who has joined the new org
+    Given one member voted against the founding
+    But the founding vote still passed
+    And I have received the email saying the founding vote has passed
+    Then the email should list the members who voted in favour of the founding
+    And the email should not list the member who voted against the founding

@@ -1,4 +1,6 @@
 class Proposal < ActiveRecord::Base
+  attr_accessible :title, :proposer_member_id, :description, :parameters
+  
   belongs_to :organisation
   
   after_create :send_email

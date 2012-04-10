@@ -148,6 +148,26 @@ describe "everything" do
       it "redirect to the member show action" do
         @response.should redirect_to(member_path(@member))
       end
+      
+      context "when attempting to update restricted attributes" do
+        before(:each) do
+          put(member_path(@user), :member => {
+            :first_name => "Bob",
+            :last_name => "Smith",
+            :email => "new@example.com",
+            :active => '0'
+          })
+          @user.reload
+        end
+
+        it "updates the allowed attributes" do
+          @user.email.should == 'new@example.com'
+        end
+
+        it "doesn't change the restricted attributes" do
+          @user.should be_active
+        end
+      end
     end
   end
   
