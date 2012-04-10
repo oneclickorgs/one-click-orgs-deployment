@@ -78,7 +78,13 @@ end
 Given /^one member voted against the founding$/ do
   @fop ||= @organisation.found_organisation_proposals.last
   
-  @members_against = [@organisation.members.last]
+  # Don't make our user vote against the founding
+  @members_against = if @user
+    [(@organisation.members - [@user]).last]
+  else
+    [@organisation.members.last]
+  end
+    
   @members_against.each do |m|
     m.cast_vote(:against, @fop.id)
   end
