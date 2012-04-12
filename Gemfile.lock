@@ -195,29 +195,29 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (>= 1.0.0)
+  bundler (~> 1.1.3)
   capistrano (~> 2.5.19)
   capybara (~> 0.4.1.2)
   cucumber-rails (~> 0.4.1)
   daemons (~> 1.0.10)
-  database_cleaner (~> 0.6.7)
+  database_cleaner
   delayed_job (= 2.1.4)
-  exception_notification_rails3
+  exception_notification_rails3 (~> 1.2.0)
   faker (~> 0.3.1)
-  fastercsv
+  fastercsv (~> 1.5.4)
   haml (~> 3.0.18)
-  launchy (~> 0.4.0)
+  launchy
   machinist (~> 1.0.6)
   mail (~> 2.2.19)
-  mysql
-  pdfkit
+  mysql (~> 2.8.1)
+  pdfkit (~> 0.5.2)
   pry
   railroad
   rails (= 3.0.12)
-  rcov (~> 0.9.8)
-  rdiscount
+  rcov
+  rdiscount (~> 1.6.8)
   rspec-rails (~> 2.8.1)
   ruby-debug
   ruby-debug19
   selenium-webdriver (~> 2.19.0)
-  webrat (~> 0.7.1)
+  webrat
