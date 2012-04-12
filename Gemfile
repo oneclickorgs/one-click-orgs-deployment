@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", ">=1.0.0"
+gem "bundler", "~>1.1.3"
 
 gem "rails", "3.2.3"
 
@@ -8,7 +8,7 @@ gem "rails", "3.2.3"
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql"
+gem "mysql", "~>2.8.1"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -28,23 +28,23 @@ gem "mysql"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~> 3.2.3'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails', '~>3.2.5'
+  gem 'uglifier', '~>1.2.4'
   gem 'therubyracer'
 end
 
 gem "jquery-rails", "~>2.0.2"
 gem "haml", "~>3.1.4"
-gem "rdiscount"
-gem "pdfkit"
-gem "delayed_job", "~>3.0.1"
-gem "delayed_job_active_record"
-gem "exception_notification_rails3", :require => 'exception_notifier'
-gem "cancan", "~>1.6.4"
+gem "rdiscount", "~>1.6.8"
+gem "pdfkit", "~>0.5.2"
+gem "delayed_job", "~>3.0.2"
+gem "delayed_job_active_record", "~>0.3.2"
+gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
+gem "cancan", "~>1.6.7"
 gem "state_machine", "~>1.1.2"
-gem "fastercsv", :platforms => :ruby_18
+gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
-gem 'mail', '>=2.2.19'
+gem 'mail', '~>2.4.4'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -63,14 +63,14 @@ end
 
 group :development, :test do
   gem "rspec-rails", "~>2.9.0"
-  gem "webrat", "~>0.7.1"
+  gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
   gem "faker", '~>1.0.1'
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
   gem "cucumber-rails", "~>1.3.0", :require => nil
-  gem "capybara", "~>1.1.1"
-  gem "database_cleaner", "~>0.7.1"
+  gem "capybara", "~>1.1.2"
+  gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.20.0"
+  gem "selenium-webdriver", "~>2.21.0"
 end
