@@ -5,6 +5,8 @@
 class Director < Member
   @abstract_class = true
   
+  attr_accessible :certification, :elected_on, :stood_down_on
+  
   attr_accessor :certification
   
   validates_acceptance_of :certification, :on => :create, :allow_nil => false

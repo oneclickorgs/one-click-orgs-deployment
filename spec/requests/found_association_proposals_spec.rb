@@ -9,7 +9,7 @@ describe "found association proposals" do
     set_permission!(@user, :found_association_proposal, true)
     
     # Need at least three members to propose foundation
-    @organisation.members.make_n(2)
+    @organisation.members.make!(2)
   end
   
   describe "proposing the founding of the association" do

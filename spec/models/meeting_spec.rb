@@ -4,8 +4,8 @@ describe Meeting do
   
   describe "associations" do
     it "belongs to organisation" do
-      meeting = Meeting.make
-      organisation = Organisation.make
+      meeting = Meeting.make!
+      organisation = Organisation.make!
       
       expect {meeting.organisation = organisation}.to_not raise_error
       
@@ -16,8 +16,8 @@ describe Meeting do
     end
     
     it "has many participants" do
-      meeting = Meeting.make
-      member = Member.make
+      meeting = Meeting.make!
+      member = Member.make!
       
       expect {meeting.participants << member}.to_not raise_error
       
@@ -25,8 +25,8 @@ describe Meeting do
     end
     
     it "has many comments" do
-      meeting = Meeting.make
-      comment = Comment.make
+      meeting = Meeting.make!
+      comment = Comment.make!
       
       expect{meeting.comments << comment}.to_not raise_error
       
@@ -34,8 +34,8 @@ describe Meeting do
     end
     
     it "belongs to a creator" do
-      meeting = Meeting.make
-      creator = Member.make
+      meeting = Meeting.make!
+      creator = Member.make!
       
       expect {meeting.creator = creator}.to_not raise_error
       
@@ -48,13 +48,13 @@ describe Meeting do
   
   describe "validations" do
     it "requires an organisation" do
-      Meeting.make_unsaved(:organisation => nil).should_not be_valid
+      Meeting.make(:organisation => nil).should_not be_valid
     end
   end
   
   describe "#to_event" do
     it "produces an event" do
-      meeting = Meeting.make
+      meeting = Meeting.make!
       event = meeting.to_event
       
       event[:timestamp].should == meeting.created_at
@@ -65,12 +65,12 @@ describe Meeting do
   
   describe "handling form parameters" do
     before(:each) do
-      @organisation = Company.make
-      @directors = @organisation.members.make_n(2)
+      @organisation = Company.make!
+      @directors = @organisation.members.make!(2)
     end
     
     it "handles the participant_ids attribute" do
-      meeting = @organisation.meetings.make('participant_ids' => {
+      meeting = @organisation.meetings.make!('participant_ids' => {
         @directors[0].id.to_s => '1',
         @directors[1].id.to_s => '1'
       })
@@ -81,10 +81,10 @@ describe Meeting do
     end
     
     it "does not allow setting participants that are not in the same organisation as the meeting" do
-      other_organisation = Company.make
-      other_director = other_organisation.members.make
+      other_organisation = Company.make!
+      other_director = other_organisation.members.make!
       
-      meeting = @organisation.meetings.make('participant_ids' => {
+      meeting = @organisation.meetings.make!('participant_ids' => {
         @directors[0].id.to_s => '1',
         other_director.id.to_s => '1'
       })
@@ -95,7 +95,7 @@ describe Meeting do
     end
     
     it "ignores participant_ids with a value of '0'" do
-      meeting = @organisation.meetings.make('participant_ids' => {
+      meeting = @organisation.meetings.make!('participant_ids' => {
         @directors[0].id.to_s => '1',
         0 => '1'
       })
@@ -106,11 +106,11 @@ describe Meeting do
   
   describe "notification emails" do
     it "sends notification emails upon creation" do
-      @company = Company.make
-      @members = @company.members.make_n(3)
+      @company = Company.make!
+      @members = @company.members.make!(3)
       @mail = double("mail", :deliver => nil)
       
-      @meeting = @company.meetings.make_unsaved
+      @meeting = @company.meetings.make
       
       @members.each do |member|
         MeetingMailer.should_receive(:notify_creation).with(member, @meeting).and_return(@mail)

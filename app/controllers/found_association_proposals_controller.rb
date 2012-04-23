@@ -7,9 +7,8 @@ class FoundAssociationProposalsController < ApplicationController
     authorize! :create, FoundAssociationProposal
     
     found_association_proposal_parameters = params[:found_association_proposal] || {}
-    found_association_proposal_parameters[:proposer] = current_user
-    
     found_association_proposal = co.found_association_proposals.build(found_association_proposal_parameters)
+    found_association_proposal.proposer = current_user
     
     if found_association_proposal.save
       co.propose!

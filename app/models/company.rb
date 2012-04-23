@@ -33,10 +33,10 @@ class Company < Organisation
   end
   
   def build_director(attributes={})
-    Director.new({
-      :organisation => self,
-      :member_class => member_classes.find_by_name("Director"),
-      :state => 'active'
-    }.merge(attributes))
+    Director.new(attributes).tap{|m|
+      m.organisation = self
+      m.member_class = member_classes.find_by_name("Director")
+      m.state = 'active'
+    }
   end
 end

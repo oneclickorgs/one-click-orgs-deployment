@@ -56,7 +56,11 @@ class Association < Organisation
   end
   
   def can_hold_founding_vote?
-    pending? && members.count >= 3
+    pending? && members.count >= minimum_members_required_for_founding_vote
+  end
+  
+  def minimum_members_required_for_founding_vote
+    3
   end
   
   def member_eligible_to_vote?(member, proposal)
@@ -158,10 +162,10 @@ class Association < Organisation
   end
   
   def build_founding_member(attributes={})
-    FoundingMember.new({
-      :organisation => self,
-      :member_class => member_classes.find_by_name("Founding Member")
-    }.merge(attributes))
+    FoundingMember.new(attributes).tap{|m|
+      m.organisation = self
+      m.member_class = member_classes.find_by_name("Founding Member")
+    }
   end
   
   def build_constitution_proposal_bundle(attributes={})

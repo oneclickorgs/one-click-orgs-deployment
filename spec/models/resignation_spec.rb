@@ -4,8 +4,8 @@ describe Resignation do
   
   describe "associations" do
     it "belongs to a member" do
-      @resignation = Resignation.make
-      @member = Member.make
+      @resignation = Resignation.make!
+      @member = Member.make!
       
       expect {@resignation.member = @member}.to_not raise_error
       
@@ -18,7 +18,7 @@ describe Resignation do
   
   describe '#to_event' do
     before(:each) do
-      @resignation = Resignation.make
+      @resignation = Resignation.make!
       @event = @resignation.to_event
     end
     

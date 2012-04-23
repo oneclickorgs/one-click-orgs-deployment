@@ -8,6 +8,8 @@
 # 
 #   Setting[:base_domain]
 class Setting < ActiveRecord::Base
+  attr_accessible :key
+  
   def self.[](the_key)
     setting = where(:key => the_key.to_s).first
     setting ? setting.value : nil

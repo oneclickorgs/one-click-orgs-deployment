@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Organisation do
   before(:each) do
-    @organisation = Organisation.make(:name => 'abc', :subdomain => 'fromage')
+    @organisation = Organisation.make!(:name => 'abc', :subdomain => 'fromage')
     Setting[:base_domain] = 'oneclickorgs.com'
   end
   
   describe "associations" do
     it "has many resignations" do
-      @resignation = Resignation.make
-      @member = Member.make
+      @resignation = Resignation.make!
+      @member = Member.make!
       
       @organisation.members << @member
       @member.resignations << @resignation
@@ -20,10 +20,10 @@ describe Organisation do
   
   describe "validation" do
     it "should not allow multiple organisations with the same subdomain" do
-      @first = Organisation.make(:name => 'abc', :subdomain => "apples")
+      @first = Organisation.make!(:name => 'abc', :subdomain => "apples")
 
       lambda do
-        @second = Organisation.make(:name => 'def', :subdomain => "apples")
+        @second = Organisation.make!(:name => 'def', :subdomain => "apples")
       end.should raise_error(ActiveRecord::RecordInvalid)
     end
     

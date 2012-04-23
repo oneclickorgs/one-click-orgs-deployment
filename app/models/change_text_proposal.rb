@@ -2,6 +2,8 @@
 # in the constitution; e.g. the organisation name, or the
 # organisation objectives.
 class ChangeTextProposal < ConstitutionProposal
+  attr_accessible :name, :value
+  
   before_create :set_default_title
   def set_default_title
     self.title ||= "Change #{name.humanize.downcase} to '#{value}'"

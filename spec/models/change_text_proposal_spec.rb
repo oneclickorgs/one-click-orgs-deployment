@@ -22,7 +22,9 @@ describe ChangeTextProposal do
   end
   
   it "should not validate if text has not been changed" do
-    @p = ChangeTextProposal.new(:proposer => Member.make, :title => "change objectives to eat all the cheese", :parameters => {'name' => 'objectives', 'value' => 'eat all the cheese'})
+    @p = ChangeTextProposal.new(:title => "change objectives to eat all the cheese", :parameters => {'name' => 'objectives', 'value' => 'eat all the cheese'})
+    @p.proposer = Member.make!
+    
     @p.should_not be_valid
   end
   

@@ -8,12 +8,12 @@ describe "Single-organisation mode" do
     Setting[:single_organisation_mode] = 'true'
         
     # TODO: Roll stubbing of single-organisation-mode organisations into stubs.rb
-    @organisation = Association.make(:subdomain => nil, :name => 'abc', :objectives => 'def')
+    @organisation = Association.make!(:subdomain => nil, :name => 'abc', :objectives => 'def')
     association_is_active
     
-    @member_class = @organisation.member_classes.make
+    @member_class = @organisation.member_classes.make!
     
-    @member = @organisation.members.make(:member_class => @member_class)
+    @member = @organisation.members.make!(:member_class => @member_class)
     @member.password = @member.password_confirmation = "password"
     @member.save!
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Setting do
   before(:each) do
-    Setting.make(:key => "base_domain", :value => "oneclickorgs.com")
+    Setting.make!(:key => "base_domain", :value => "oneclickorgs.com")
   end
   
   describe "when getting" do

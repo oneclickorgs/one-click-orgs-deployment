@@ -6,8 +6,8 @@ describe ProposalMailer do
     before do
       default_association_constitution
       default_organisation
-      @member = @organisation.members.make
-      @proposal = @organisation.proposals.make(:proposer_member_id=>@member.id)
+      @member = @organisation.members.make!
+      @proposal = @organisation.proposals.make!(:proposer_member_id=>@member.id)
     end
     
     it "should include welcome phrase and proposal information in email text" do

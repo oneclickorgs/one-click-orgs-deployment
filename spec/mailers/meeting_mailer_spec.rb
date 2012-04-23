@@ -6,9 +6,9 @@ describe MeetingMailer do
   
   before(:each) do
     stub_app_setup
-    @company = Company.make
-    @meeting = @company.meetings.make
-    @member = @company.members.make
+    @company = Company.make!
+    @meeting = @company.meetings.make!
+    @member = @company.members.make!
   end
   
   describe "notify_creation" do

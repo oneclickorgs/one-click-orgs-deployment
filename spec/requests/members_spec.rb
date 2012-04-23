@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+require 'active_model/mass_assignment_security/sanitizer'
+
 describe "members" do
   
   before(:each) do
@@ -26,7 +28,7 @@ describe "members" do
   
     describe "GET, given a members exists" do
       before(:each) do
-        @member = Member.make
+        @member = Member.make!
         get '/members'
       end
     
@@ -38,7 +40,7 @@ describe "members" do
 
   describe "/members/1/edit, given a member exists" do
     before(:each) do
-      @member = @organisation.members.make
+      @member = @organisation.members.make!
     end
   
     it "responds successfully if resource == current_user" do
@@ -56,7 +58,7 @@ describe "members" do
 
   describe "/members/1, given a member exists" do
     before(:each) do
-      @member = @organisation.members.make
+      @member = @organisation.members.make!
       set_permission!(@user, :membership_proposal, true)
     end
     
@@ -83,6 +85,21 @@ describe "members" do
   
       it "redirect to the member show action" do
         @response.should redirect_to(member_path(@member))
+      end
+      
+      context "when attempting to update restricted attributes" do
+        def put_update
+          put(member_path(@user), :member => {
+            :first_name => "Bob",
+            :last_name => "Smith",
+            :email => "new@example.com",
+            :active => '0'
+          })
+        end
+
+        it "raises an ActiveModel::MassAssignmentSecurity:Error exception" do
+          expect {put_update}.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+        end
       end
     end
   end

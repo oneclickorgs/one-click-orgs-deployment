@@ -11,8 +11,8 @@ describe "change member class proposals" do
       association_login
       set_permission!(default_association_user, :membership_proposal, true)
       
-      @subject_member = @organisation.members.make
-      @new_member_class = @organisation.member_classes.make
+      @subject_member = @organisation.members.make!
+      @new_member_class = @organisation.member_classes.make!
     end
     
     def post_create
