@@ -107,6 +107,12 @@ Meeting.blueprint do
   minutes { Faker::Lorem.paragraph }
 end
 
+BoardMeeting.blueprint do
+end
+
+GeneralMeeting.blueprint do
+end
+
 MeetingParticipation.blueprint do
 end
 
