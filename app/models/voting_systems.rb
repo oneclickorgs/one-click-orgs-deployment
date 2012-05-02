@@ -9,7 +9,10 @@ module VotingSystems
     end
   end
   
-
+  # TODO Not all voting systems are applicable to all organisation types. The organisation
+  # should have a way of specifying which voting systems it allows. (For example, an Association
+  # should not have the option to choose AbsoluteThreeQuartersMajority.
+  
   class VotingSystem
     
     def self.simple_name
@@ -126,6 +129,19 @@ module VotingSystems
     end
     
     self.fraction_needed = 2.0/3.0
+  end
+  
+  class AbsoluteThreeQuartersMajority < Majority
+    def self.description(options={})
+      "Three quarters majority: decisions need supporting votes from more than 75% of members"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes#{are_received} from more than three quarters of Members during the Voting Period."
+    end
+    
+    self.fraction_needed = 3.0/4.0
   end
   
   class Unanimous < VotingSystem

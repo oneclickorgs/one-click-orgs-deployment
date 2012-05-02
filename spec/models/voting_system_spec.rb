@@ -118,6 +118,24 @@ describe VotingSystems do
       should_not_close_early make_proposal(3, 4, 20)            
     end
   end
+  
+  describe VotingSystems::AbsoluteThreeQuartersMajority do
+    before(:each) do
+      @system = VotingSystems::AbsoluteThreeQuartersMajority
+    end
+    
+    it "passes when the votes in favour are greater than 3/4 of the membership" do
+      should_pass make_proposal(76, 0, 100)
+    end
+    
+    it "does not pass when the votes in favour are equal to 3/4 of the membership" do
+      should_not_pass make_proposal(75, 0, 100)
+    end
+    
+    it "does not pass when votes in favour are less than 3/4 of the membership, even though they are more than 3/4 of the total votes" do
+      should_not_pass make_proposal(7, 1, 100)
+    end
+  end
 
 
   describe VotingSystems::Unanimous do    
