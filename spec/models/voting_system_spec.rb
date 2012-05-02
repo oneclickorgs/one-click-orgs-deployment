@@ -54,6 +54,36 @@ describe VotingSystems do
       should_not_close_early make_proposal(4, 5, 11)
     end
   end
+  
+  describe VotingSystems::RelativeThreeQuartersMajority do
+    before(:each) do
+      @system = VotingSystems::RelativeThreeQuartersMajority
+    end
+    
+    it "passes when votes in favour are more than three-quarters of total votes" do
+      should_pass make_proposal(76, 24)
+    end
+    
+    it "does not pass when votes in favour are equal to three-quarters of total votes" do
+      should_not_pass make_proposal(75, 25)
+    end
+    
+    it "does not pass when votes in favour are less than three-quarters of total votes" do
+      should_not_pass make_proposal(74, 26)
+    end
+    
+    it "still passes when votes in favour are less than three-quarters of members" do
+      should_pass make_proposal(76, 24, 1000)
+    end
+    
+    it "closes early when more than three-quarters of the members have voted in favour" do
+      should_close_early make_proposal(76, 0, 100)
+    end
+    
+    it "closes early when one quarter of the members have voted against" do
+      should_close_early make_proposal(0, 25, 100)
+    end
+  end
 
   describe VotingSystems::Veto do    
     before(:each) do

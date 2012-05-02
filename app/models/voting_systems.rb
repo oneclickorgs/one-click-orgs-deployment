@@ -56,6 +56,26 @@ module VotingSystems
     end
   end
   
+  class RelativeThreeQuartersMajority < VotingSystem
+    def self.description(options={})
+      "Three-quarters majority of votes: decisions need more than three-quarters of the votes to be in support"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes from more than three-quarters of the Members#{are_received} during the Voting Period; or when more than three-quarters of the votes received for the Proposal at the end of the Voting Period are Supporting Votes."
+    end
+    
+    def self.can_be_closed_early?(proposal)
+      (proposal.votes_for > (proposal.member_count * 0.75)) ||
+      (proposal.votes_against >= (proposal.member_count * 0.25))
+    end
+    
+    def self.passed?(proposal)
+      proposal.votes_for > (3 * proposal.votes_against)
+    end
+  end
+  
   class Veto < VotingSystem
     def self.description(options={})
       "Nobody opposes: decisions blocked if there are any opposing votes"
