@@ -98,6 +98,9 @@ end
 Company.blueprint do
 end
 
+Coop.blueprint do
+end
+
 Meeting.blueprint do
   organisation { Company.make }
   happened_on { 1.day.ago }
