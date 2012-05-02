@@ -1,0 +1,2 @@
+class BoardMeeting < Meeting
+end

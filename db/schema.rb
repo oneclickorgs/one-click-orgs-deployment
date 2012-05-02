@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206101618) do
+ActiveRecord::Schema.define(:version => 20120502230348) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(:version => 20120206101618) do
     t.integer  "author_id"
     t.integer  "commentable_id"
     t.text     "body"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "commentable_type"
   end
 
@@ -51,25 +51,26 @@ ActiveRecord::Schema.define(:version => 20120206101618) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "queue"
   end
 
   create_table "meeting_participations", :force => true do |t|
     t.integer  "meeting_id"
     t.integer  "participant_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "meetings", :force => true do |t|
     t.date     "happened_on"
     t.text     "minutes"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "organisation_id"
     t.integer  "creator_id"
+    t.string   "type"
   end
 
   create_table "member_classes", :force => true do |t|
@@ -96,16 +97,16 @@ ActiveRecord::Schema.define(:version => 20120206101618) do
     t.datetime "terms_accepted_at"
     t.string   "state"
     t.date     "elected_on"
-    t.string   "role"
     t.date     "stood_down_on"
+    t.string   "role"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
 
   create_table "organisations", :force => true do |t|
     t.string   "subdomain"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "type"
     t.string   "state"
   end
@@ -124,15 +125,15 @@ ActiveRecord::Schema.define(:version => 20120206101618) do
 
   create_table "resignations", :force => true do |t|
     t.integer  "member_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "seen_notifications", :force => true do |t|
     t.integer  "member_id"
     t.string   "notification"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "seen_notifications", ["member_id", "notification"], :name => "index_seen_notifications_on_member_id_and_notification"
@@ -141,8 +142,8 @@ ActiveRecord::Schema.define(:version => 20120206101618) do
   create_table "settings", :force => true do |t|
     t.string   "key"
     t.string   "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "votes", :force => true do |t|
