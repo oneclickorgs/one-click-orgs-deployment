@@ -32,4 +32,24 @@ describe Coop do
     end
   end
   
+  describe "defaults" do
+    describe "default member classes" do
+      before(:each) do
+        @coop = Coop.make!
+      end
+      
+      it "creates a 'Director' member class" do
+        @coop.member_classes.find_by_name('Director').should be_present
+      end
+      
+      it "creates a 'Founder Member' member class" do
+        @coop.member_classes.find_by_name('Founder Member').should be_present
+      end
+      
+      it "creates a 'Member' member class" do
+        @coop.member_classes.find_by_name('Member').should be_present
+      end
+    end
+  end
+  
 end
