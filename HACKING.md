@@ -7,13 +7,6 @@
 * bundler gem ~> 1.0.0 (install with gem install bundler)
 * MySQL, including client libraries (e.g. libmysqlclient-dev on Debian)
 
-Additionally, on Debian:
-
-* ruby1.8-dev (to get mkmf.rb, which is not in the ruby1.8 package)
-* libopenssl-ruby1.8
-* libxml2
-* libxslt
- 
 ### Optional libraries
 
 * [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/)
