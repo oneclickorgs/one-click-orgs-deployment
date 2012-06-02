@@ -41,6 +41,12 @@ Now, install required gems:
         $ git clone git://github.com/oneclickorgs/one-click-orgs.git
         $ cd one-click-orgs
 
+2.  If you want to work on the version 1 branch (the associations platform),
+    check it out:
+        
+        $ git branch v1.x origin/v1.x
+        $ git checkout v1.x
+
 2.  Install the required gems using Bundler:
 
         $ bundle install  # installs gem system-wide
