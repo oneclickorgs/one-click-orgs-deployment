@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.1.3"
 
-gem "rails", "3.0.12"
+gem "rails", "3.0.13"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -59,10 +59,11 @@ group :development, :test do
   gem "webrat"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.3.1'
-  gem "rcov"
+  gem "rcov", :platforms => :ruby_18
+  gem "simplecov", :platforms => :ruby_19
   gem "cucumber-rails", "~>0.4.1", :require => nil
   gem "capybara", "~>0.4.1.2"
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.19.0"
+  gem "selenium-webdriver", "~>2.22.1"
 end
