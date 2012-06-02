@@ -114,8 +114,8 @@ To submit a patch, you have several options:
 
 *   Open or reply to an issue in the [issue tracker](http://github.com/oneclickorgs/one-click-orgs/issues), and tell us where to find your commits.
 
-*   Send a patch to the [mailing list](http://groups.google.co.uk/group/oneclickorgs-devspace).
+*   Send a patch to the [mailing list](https://groups.google.com/forum/?fromgroups#!forum/oneclickorgs-devspace).
 
 ## Contact
 
-There is a [mailing list](http://groups.google.co.uk/group/oneclickorgs-devspace) and an IRC channel, [#oneclickorgs on irc.freenode.net](irc://irc.freenode.net/oneclickorgs).
+There is a [mailing list](https://groups.google.com/forum/?fromgroups#!forum/oneclickorgs-devspace) and an IRC channel, [#oneclickorgs on irc.freenode.net](irc://irc.freenode.net/oneclickorgs).
