@@ -50,6 +50,18 @@ class Ability
         can :read, Meeting
         can :create, Meeting
       end
+    when Coop
+      if user.has_permission(:resolution)
+        can :create, Resolution
+      end
+      
+      if user.has_permission(:board_resolution)
+        can :create, BoardResolution
+      end
+      
+      if user.has_permission(:resolution_proposal)
+        can :create, ResolutionProposal
+      end
     end
   end
 end

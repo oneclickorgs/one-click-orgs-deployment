@@ -1,8 +1,14 @@
 %h2 Resolutions
 
 .section
-  TODO: Action buttons here
-  
+  - if can?(:create, Resolution)
+    = link_button("Create a new Resolution", :url => new_resolution_path)
+  -elsif can?(:create, ResolutionProposal)
+    = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
+  - if can?(:create, BoardResolution)
+    = link_button("Create a new Resolution of the Board", :url => new_board_resolution_path)
+  %br.clear
+
 %p The following resolutions are currently open:
 .section
 

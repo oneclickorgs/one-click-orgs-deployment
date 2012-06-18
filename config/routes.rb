@@ -77,6 +77,10 @@ OneClickOrgs::Application.routes.draw do
   resources :change_member_class_proposals
   resources :found_association_proposals
   
+  resources :resolutions
+  resources :board_resolutions
+  resources :resolution_proposals
+  
   resources :members do
     member do
       put :confirm_resign

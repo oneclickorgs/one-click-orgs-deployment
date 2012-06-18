@@ -3,8 +3,15 @@ class Coop < Organisation
   has_many :general_meetings, :foreign_key => 'organisation_id'
   
   def create_default_member_classes
-    member_classes.find_or_create_by_name('Member')
-    member_classes.find_or_create_by_name('Founder Member')
-    member_classes.find_or_create_by_name('Director')
+    members = member_classes.find_or_create_by_name('Member')
+    members.set_permission!(:resolution_proposal, true)
+    members.set_permission!(:vote, true)
+    
+    founder_members = member_classes.find_or_create_by_name('Founder Member')
+    
+    directors = member_classes.find_or_create_by_name('Director')
+    directors.set_permission!(:resolution, true)
+    directors.set_permission!(:board_resolution, true)
+    directors.set_permission!(:vote, true)
   end
 end
