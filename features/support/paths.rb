@@ -14,6 +14,8 @@ module NavigationHelpers
       '/setup'
     when /^the new association page$/
       '/associations/new'
+    when /^the new co-op page$/
+      '/coops/new'
     when /^the welcome page$/
       '/welcome'
     when /^the voting and proposals page$/

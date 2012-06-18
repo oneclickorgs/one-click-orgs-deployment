@@ -104,9 +104,11 @@ OneClickOrgs::Application.routes.draw do
   match '/welcome(/:action)' => 'welcome'
 
   match '/setup(/:action)' => 'setup'
-
+  
+  resources :organisations
   resources :associations
   resources :companies
+  resources :coops
   
   resources :meetings do
     resources :comments

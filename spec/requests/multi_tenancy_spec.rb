@@ -41,8 +41,8 @@ describe "Multi-tenancy" do
         Setting[:signup_domain].should == 'signup.oneclickorgs.com'
       end
       
-      it "should redirect to the association setup page" do
-        response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
+      it "should redirect to the new organisation page" do
+        response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
       end
     end
   end
@@ -58,14 +58,23 @@ describe "Multi-tenancy" do
       response.should redirect_to 'http://oneclickorgs.com/'
     end
     
-    it "should redirect all unrecognised subdomain requests back to the new association page" do
+    it "should redirect all unrecognised subdomain requests back to the new organisation page" do
       get 'http://nonexistent.oneclickorgs.com/'
-      response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
+      response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
     end
     
-    it "should redirect requests to the root of the signup-domain to the new association page" do
+    it "should redirect requests to the root of the signup-domain to the new organisation page" do
       get 'http://signup.oneclickorgs.com/'
-      response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
+      response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+    end
+    
+    describe "visiting the new organisation page" do
+      it "shows a list of links to create different organisation types" do
+        get "http://signup.oneclickorgs.com/organisations/new"
+        response.should have_selector('ul.organisations') do |ul|
+          ul.should have_selector("a[href='/associations/new']")
+        end
+      end
     end
     
     describe "visiting the new association page" do
@@ -156,7 +165,7 @@ describe "Multi-tenancy" do
     describe "accessing a nonexistent subdomain" do
       it "should redirect to the base domain" do
         get 'http://nonexistent.oneclickorgs.com/'
-        response.should redirect_to 'http://signup.oneclickorgs.com/associations/new'
+        response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
       end
     end
   end
