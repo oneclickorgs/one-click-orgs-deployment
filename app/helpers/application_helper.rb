@@ -51,4 +51,47 @@ module ApplicationHelper
   def organisation_name
     current_organisation.try(:name)
   end
+  
+  def form_reveal_button(label, options={})
+    options = options.with_indifferent_access
+    
+    form_id = options.delete(:form_id)
+    raise RuntimeError, "must specify form_id" if form_id.blank?
+    options['data-form-id'] = form_id
+    
+    css_class = if options[:class].present?
+      options[:class] + ' button-form-show'
+    else
+      'button-form-show'
+    end
+    options[:class] = css_class
+    
+    options[:value] = label
+    
+    options[:type] = 'button'
+    
+    tag(:input, options)
+  end
+  
+  def link_button(label, options={})
+    options = options.with_indifferent_access
+    
+    url = options.delete(:url)
+    raise RuntimeError, "must specify url" if url.blank?
+    options['data-url'] = url
+    
+    css_class = if options[:class].present?
+      options[:class] + ' button-form'
+    else
+      'button-form'
+    end
+    options[:class] = css_class
+    
+    options[:value] = label
+    
+    options[:type] = 'button'
+    
+    tag(:input, options)
+    
+  end
 end
