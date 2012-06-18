@@ -46,7 +46,7 @@ module NavigationHelpers
       meeting_path(@meeting)
     when /^the Directors page$/
       members_path
-    when /^the dashboard$/
+    when /^the dashboard( page)?$/
       '/'
     
     # Add more mappings here.

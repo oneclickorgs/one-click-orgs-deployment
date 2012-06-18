@@ -52,4 +52,13 @@ describe Coop do
     end
   end
   
+  describe "attributes" do
+    it "has a 'name' attribute" do
+      @coop = Coop.new
+      
+      @coop.name = "Coffee"
+      @coop.name.should == "Coffee"
+    end
+  end
+  
 end
