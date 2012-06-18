@@ -1,4 +1,7 @@
 class MeetingsController < ApplicationController
+  def index
+  end
+  
   def show
     @meeting = co.meetings.find(params[:id])
     
