@@ -71,6 +71,10 @@ end
 EjectMemberProposal.blueprint do
 end
 
+Resolution.blueprint do
+  organisation { Coop.make }
+end
+
 Decision.blueprint do
   proposal { Proposal.make }
 end

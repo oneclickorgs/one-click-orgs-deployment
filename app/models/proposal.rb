@@ -11,6 +11,10 @@ class Proposal < ActiveRecord::Base
       transition :open => :rejected
     end
     
+    event :start do
+      transition :draft => :open
+    end
+    
     after_transition any => :accepted, :do => [:enact!, :create_a_decision]
     after_transition any => :rejected, :do => [:after_reject]
   end
@@ -70,7 +74,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def closed?
-    !self.open?
+    accepted? || rejected?
   end
   
   def voting_system

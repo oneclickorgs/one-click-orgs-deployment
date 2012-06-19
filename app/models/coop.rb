@@ -14,4 +14,8 @@ class Coop < Organisation
     directors.set_permission!(:board_resolution, true)
     directors.set_permission!(:vote, true)
   end
+  
+  def set_default_voting_period
+    constitution.set_voting_period(14.days)
+  end
 end

@@ -13,7 +13,8 @@ class ProposalTimestampObserver < ActiveRecord::Observer
     :constitution_proposal,
     :eject_member_proposal,
     :found_association_proposal,
-    :membership_proposal
+    :membership_proposal,
+    :resolution
   
   def before_create(proposal)
     set_creation_date(proposal)
@@ -27,6 +28,13 @@ class ProposalTimestampObserver < ActiveRecord::Observer
     end
   end
   
+  def after_transition(proposal, transition)
+    case transition.event
+    when :start
+      set_close_date(proposal)
+    end
+  end
+  
 protected
 
   def set_creation_date(proposal)
@@ -34,7 +42,9 @@ protected
   end
   
   def set_close_date(proposal)
-    proposal.close_date ||= Time.now.utc + proposal.voting_period
+    unless proposal.state == 'draft'
+      proposal.close_date ||= Time.now.utc + proposal.voting_period
+    end
   end
   
   def set_close_date_to_now(proposal)
