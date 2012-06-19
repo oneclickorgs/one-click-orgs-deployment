@@ -1,0 +1,2 @@
+class ExtraordinaryResolution < Resolution
+end

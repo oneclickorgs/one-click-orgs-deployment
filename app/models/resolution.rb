@@ -1,4 +1,7 @@
 class Resolution < Proposal
+  
+  attr_accessor :certification
+  
   # DRAFT STATE
   
   def draft=(new_draft)
@@ -7,6 +10,14 @@ class Resolution < Proposal
   
   def draft
     !!@draft
+  end
+  
+  def extraordinary=(new_extraordinary)
+    @extraordinary = new_extraordinary
+  end
+  
+  def extraordinary
+    !!@extraordinary
   end
   
   before_create :set_draft_state

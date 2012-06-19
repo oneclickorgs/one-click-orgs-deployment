@@ -2,6 +2,8 @@ class Coop < Organisation
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
   
+  has_many :resolutions, :foreign_key => 'organisation_id'
+  
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
     members.set_permission!(:resolution_proposal, true)
