@@ -7,13 +7,6 @@
 * bundler gem ~> 1.0.0 (install with gem install bundler)
 * MySQL, including client libraries (e.g. libmysqlclient-dev on Debian)
 
-Additionally, on Debian:
-
-* ruby1.8-dev (to get mkmf.rb, which is not in the ruby1.8 package)
-* libopenssl-ruby1.8
-* libxml2
-* libxslt
- 
 ### Optional libraries
 
 * [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/)
@@ -40,6 +33,12 @@ Now, install required gems:
 
         $ git clone git://github.com/oneclickorgs/one-click-orgs.git
         $ cd one-click-orgs
+
+2.  If you want to work on the version 1 branch (the associations platform),
+    check it out:
+        
+        $ git branch v1.x origin/v1.x
+        $ git checkout v1.x
 
 2.  Install the required gems using Bundler:
 
@@ -115,8 +114,8 @@ To submit a patch, you have several options:
 
 *   Open or reply to an issue in the [issue tracker](http://github.com/oneclickorgs/one-click-orgs/issues), and tell us where to find your commits.
 
-*   Send a patch to the [mailing list](http://groups.google.co.uk/group/oneclickorgs-devspace).
+*   Send a patch to the [mailing list](https://groups.google.com/forum/?fromgroups#!forum/oneclickorgs-devspace).
 
 ## Contact
 
-There is a [mailing list](http://groups.google.co.uk/group/oneclickorgs-devspace) and an IRC channel, [#oneclickorgs on irc.freenode.net](irc://irc.freenode.net/oneclickorgs).
+There is a [mailing list](https://groups.google.com/forum/?fromgroups#!forum/oneclickorgs-devspace) and an IRC channel, [#oneclickorgs on irc.freenode.net](irc://irc.freenode.net/oneclickorgs).
