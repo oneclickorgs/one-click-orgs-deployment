@@ -1,6 +1,6 @@
-Feature: Adding a company
+Feature: Adding a co-op
   In order to start running a co-op virtually
-  As a director
+  As a founder
   I want to create a co-op in the system
   
   Background:
@@ -9,7 +9,7 @@ Feature: Adding a company
   # TODO: This is a simplified creation process, for testing
   # purposes. The final version will most likely include a
   # full 'pending' stage, as for associations.
-  Scenario: Director creates a co-op
+  Scenario: Founder creates a co-op
     Given the domain is the signup domain
     When I go to the new co-op page
     And I fill in "First name" with "Bob"
@@ -22,3 +22,12 @@ Feature: Adding a company
     And I press "Create co-op"
     Then I should be on the dashboard page
     And the subdomain should be "coffee"
+  
+  @wip
+  Scenario: Founder creates a co-op
+    Given the domain is the signup domain
+    When I go to the new co-op page
+    And I enter my details
+    And I enter the new co-op's details
+    And I press "Create draft co-op"
+    Then I should be on the dashboard page for the new co-op
