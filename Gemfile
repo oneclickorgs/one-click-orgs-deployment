@@ -74,4 +74,6 @@ group :development, :test do
   gem "database_cleaner"
   gem "launchy"
   gem "selenium-webdriver", "~>2.21.0"
+  gem "cucumber-relizy", "~>0.0.2"
+  gem "syntax", "~>1.0.0"
 end

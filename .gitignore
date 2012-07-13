@@ -18,3 +18,7 @@ tmp/restart.txt
 .sass-cache
 bin
 public/assets
+
+# Cucumber HTML output
+tmp/features.html
+tmp/features.relizy.html
