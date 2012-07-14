@@ -49,6 +49,10 @@ describe Coop do
       it "creates a 'Member' member class" do
         @coop.member_classes.find_by_name('Member').should be_present
       end
+      
+      it "creates a 'Secretary' member class" do
+        @coop.member_classes.find_by_name('Secretary').should be_present
+      end
     end
   end
   

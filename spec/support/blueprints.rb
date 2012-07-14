@@ -34,6 +34,10 @@ Member.blueprint(:founder) do
   member_class { MemberClass.make(:founder) }
 end
 
+Member.blueprint(:secretary) do
+  member_class { object.organisation.member_classes.find_by_name!('Secretary') }
+end
+
 Member.blueprint(:pending) do
   inducted_at { nil }
   state { 'pending' }

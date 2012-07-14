@@ -15,6 +15,11 @@ class Coop < Organisation
     directors.set_permission!(:resolution, true)
     directors.set_permission!(:board_resolution, true)
     directors.set_permission!(:vote, true)
+    
+    secretaries = member_classes.find_or_create_by_name('Secretary')
+    secretaries.set_permission!(:resolution, true)
+    secretaries.set_permission!(:board_resolution, true)
+    secretaries.set_permission!(:vote, true)
   end
   
   def set_default_voting_period
