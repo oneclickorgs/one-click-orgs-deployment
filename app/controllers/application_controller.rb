@@ -202,7 +202,7 @@ protected
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_association_url(host_and_port(Setting[:signup_domain])))
+      redirect_to(new_organisation_url(host_and_port(Setting[:signup_domain])))
     end
   end
   

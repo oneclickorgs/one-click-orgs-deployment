@@ -215,7 +215,7 @@ strong
     &:hover
       :text-decoration underline
 
-#navitem
+.navitem
   :display inline
   :margin 0
   :padding 0
@@ -463,10 +463,16 @@ label, input, textarea, select
   :margin-left 20px
   :padding 0.2em
   :width 30em
+  &.inline
+    :display inline
+    :margin 0
+    :width auto
 
 label
   :padding-right 1em
   :margin-bottom 2px
+  &.inline
+    :padding 0
 
 input, textarea
   :border 1px solid #000

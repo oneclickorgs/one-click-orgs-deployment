@@ -9,7 +9,10 @@ module VotingSystems
     end
   end
   
-
+  # TODO Not all voting systems are applicable to all organisation types. The organisation
+  # should have a way of specifying which voting systems it allows. (For example, an Association
+  # should not have the option to choose AbsoluteThreeQuartersMajority.
+  
   class VotingSystem
     
     def self.simple_name
@@ -50,6 +53,26 @@ module VotingSystems
     
     def self.passed?(proposal)
       proposal.votes_for > proposal.votes_against      
+    end
+  end
+  
+  class RelativeThreeQuartersMajority < VotingSystem
+    def self.description(options={})
+      "Three-quarters majority of votes: decisions need more than three-quarters of the votes to be in support"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes from more than three-quarters of the Members#{are_received} during the Voting Period; or when more than three-quarters of the votes received for the Proposal at the end of the Voting Period are Supporting Votes."
+    end
+    
+    def self.can_be_closed_early?(proposal)
+      (proposal.votes_for > (proposal.member_count * 0.75)) ||
+      (proposal.votes_against >= (proposal.member_count * 0.25))
+    end
+    
+    def self.passed?(proposal)
+      proposal.votes_for > (3 * proposal.votes_against)
     end
   end
   
@@ -126,6 +149,19 @@ module VotingSystems
     end
     
     self.fraction_needed = 2.0/3.0
+  end
+  
+  class AbsoluteThreeQuartersMajority < Majority
+    def self.description(options={})
+      "Three quarters majority: decisions need supporting votes from more than 75% of members"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes#{are_received} from more than three quarters of Members during the Voting Period."
+    end
+    
+    self.fraction_needed = 3.0/4.0
   end
   
   class Unanimous < VotingSystem

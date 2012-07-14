@@ -14,6 +14,8 @@ module NavigationHelpers
       '/setup'
     when /^the new association page$/
       '/associations/new'
+    when /^the new co-op page$/
+      '/coops/new'
     when /^the welcome page$/
       '/welcome'
     when /^the voting and proposals page$/
@@ -44,8 +46,10 @@ module NavigationHelpers
       meeting_path(@meeting)
     when /^the Directors page$/
       members_path
-    when /^the dashboard$/
+    when /^the dashboard( page)?$/
       '/'
+    when /^the Resolutions page$/
+      proposals_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

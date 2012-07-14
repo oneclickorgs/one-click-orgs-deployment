@@ -1,4 +1,7 @@
 class DirectorsController < ApplicationController
+  def index
+  end
+  
   def create
     if can?(:create, Director)
       @director = co.build_director(params[:director])

@@ -1,0 +1,28 @@
+%h2 Add a new co-op
+
+= form_tag(coops_path) do
+  = fields_for(@member) do |member_fields|
+    %p
+      = member_fields.label :first_name
+      = member_fields.text_field :first_name
+    %p
+      = member_fields.label :last_name
+      = member_fields.text_field :last_name
+    %p
+      = member_fields.label :email, "Email address"
+      = member_fields.text_field :email
+    %p
+      = member_fields.label :password, "Choose password"
+      = member_fields.password_field :password
+    %p
+      = member_fields.label :password_confirmation, "Confirm password"
+      = member_fields.password_field :password_confirmation
+  = fields_for(@coop) do |coop_fields|
+    %p
+      = coop_fields.label :name, "Co-op's official name"
+      = coop_fields.text_field :name
+    %p
+      = coop_fields.label :subdomain, "One Click Orgs web address"
+      = coop_fields.text_field :subdomain
+  %p
+    = submit_tag "Create co-op"

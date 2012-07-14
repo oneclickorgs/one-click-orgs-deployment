@@ -17,5 +17,5 @@ Feature: Setting up an installation
     When I fill in "base domain" with "example.com"
     And I fill in "sign-up domain" with "create.example.com"
     And I press "Save domains"
-    Then I should be on the new association page
+    Then I should be on the new organisation page
     And the domain should be "create.example.com"

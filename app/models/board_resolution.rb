@@ -1,0 +1,2 @@
+class BoardResolution < Proposal
+end

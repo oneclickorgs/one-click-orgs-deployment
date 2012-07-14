@@ -1,0 +1,2 @@
+class GeneralMeeting < Meeting
+end

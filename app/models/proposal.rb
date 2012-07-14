@@ -11,6 +11,10 @@ class Proposal < ActiveRecord::Base
       transition :open => :rejected
     end
     
+    event :start do
+      transition :draft => :open
+    end
+    
     after_transition any => :accepted, :do => [:enact!, :create_a_decision]
     after_transition any => :rejected, :do => [:after_reject]
   end
@@ -55,11 +59,25 @@ class Proposal < ActiveRecord::Base
     close_early_proposals
   end
   
-  # GETTERS
+  # VOTING PERIOD
+  
+  def voting_period_in_days
+    voting_period / 1.day
+  end
+  
+  def voting_period_in_days=(new_voting_period_in_days)
+    self.voting_period = new_voting_period_in_days.to_i.days
+  end
   
   def voting_period
-    organisation.constitution.voting_period
+    @voting_period || organisation.constitution.voting_period
   end
+  
+  def voting_period=(new_voting_period)
+    @voting_period = new_voting_period.to_i
+  end
+  
+  # GETTERS
   
   def end_date
     self.close_date
@@ -70,7 +88,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def closed?
-    !self.open?
+    accepted? || rejected?
   end
   
   def voting_system

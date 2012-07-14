@@ -77,6 +77,10 @@ OneClickOrgs::Application.routes.draw do
   resources :change_member_class_proposals
   resources :found_association_proposals
   
+  resources :resolutions
+  resources :board_resolutions
+  resources :resolution_proposals
+  
   resources :members do
     member do
       put :confirm_resign
@@ -104,13 +108,17 @@ OneClickOrgs::Application.routes.draw do
   match '/welcome(/:action)' => 'welcome'
 
   match '/setup(/:action)' => 'setup'
-
+  
+  resources :organisations
   resources :associations
   resources :companies
+  resources :coops
   
   resources :meetings do
     resources :comments
   end
+  
+  resources :shares
   
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations

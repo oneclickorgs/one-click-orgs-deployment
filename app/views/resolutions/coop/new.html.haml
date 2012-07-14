@@ -1,0 +1,24 @@
+%h2 Create a new resolution
+
+= form_for(@resolution) do |resolution_form|
+  %p
+    = resolution_form.label :description, "Text of the resolution"
+  %p
+    = resolution_form.text_area :description
+  %p
+    = resolution_form.radio_button :draft, false, :class => 'inline'
+    = label_tag 'resolution_draft_true', "Open this resolution for electronic voting immediately.", :class => 'inline'
+    = resolution_form.label :voting_period_in_days, "Voting period", :class => 'inline'
+    = resolution_form.text_field :voting_period_in_days, :size => 3, :class => 'inline'
+    days.
+  %p
+    = resolution_form.radio_button :draft, true
+    = label_tag 'resolution_draft_false', "Save this resolution for consideration at a future General Meeting."
+  %p
+    = resolution_form.check_box :extraordinary
+    = resolution_form.label :extraordinary, "This is an Extraordinary Resolution."
+  %p
+    = resolution_form.check_box :certification
+    = resolution_form.label :certification, "I certify that the Board of Directors decided (at a meeting or by written resolution) to open this resolution for consideration by the Members."
+  %p
+    = resolution_form.submit "Save this resolution"

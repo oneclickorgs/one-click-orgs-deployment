@@ -78,4 +78,14 @@ describe "one_click/dashboard" do
 
   end
   
+  context "when the current organisation is a co-op" do
+    before(:each) do
+      @coop = mock_model(Coop)
+      install_organisation_resolver(@coop)
+    end
+    
+    it "renders" do
+      render
+    end
+  end
 end

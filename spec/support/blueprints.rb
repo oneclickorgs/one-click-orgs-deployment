@@ -34,6 +34,10 @@ Member.blueprint(:founder) do
   member_class { MemberClass.make(:founder) }
 end
 
+Member.blueprint(:secretary) do
+  member_class { object.organisation.member_classes.find_by_name!('Secretary') }
+end
+
 Member.blueprint(:pending) do
   inducted_at { nil }
   state { 'pending' }
@@ -71,6 +75,10 @@ end
 EjectMemberProposal.blueprint do
 end
 
+Resolution.blueprint do
+  organisation { Coop.make }
+end
+
 Decision.blueprint do
   proposal { Proposal.make }
 end
@@ -98,10 +106,19 @@ end
 Company.blueprint do
 end
 
+Coop.blueprint do
+end
+
 Meeting.blueprint do
   organisation { Company.make }
   happened_on { 1.day.ago }
   minutes { Faker::Lorem.paragraph }
+end
+
+BoardMeeting.blueprint do
+end
+
+GeneralMeeting.blueprint do
 end
 
 MeetingParticipation.blueprint do

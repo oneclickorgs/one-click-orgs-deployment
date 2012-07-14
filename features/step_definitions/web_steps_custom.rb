@@ -1,8 +1,4 @@
-Given /^the subdomain is "([^"]*)"$/ do |subdomain|
-  step %Q{the domain is "#{subdomain}.#{Setting[:base_domain].sub(/:\d+$/, '')}"}
-end
-
-When /^the domain is "([^"]*)"$/ do |domain|
+def set_domain(domain)
   if Capybara.current_driver == :selenium
     Capybara.default_host = "http://#{domain}:#{Capybara.server_port}"
     Capybara.app_host = "http://#{domain}:#{Capybara.server_port}"
@@ -10,6 +6,19 @@ When /^the domain is "([^"]*)"$/ do |domain|
     Capybara.default_host = "http://#{domain}:#{Capybara.server_port}"
     Capybara.app_host = "http://#{domain}"
   end
+end
+
+def set_subdomain(subdomain)
+  domain = "#{subdomain}.#{Setting[:base_domain].sub(/:\d+$/, '')}"
+  set_domain(domain)
+end
+
+Given /^the subdomain is "([^"]*)"$/ do |subdomain|
+  set_subdomain(subdomain)
+end
+
+When /^the domain is "([^"]*)"$/ do |domain|
+  set_domain(domain)
 end
 
 Then /^the domain should be "([^"]*)"$/ do |domain|

@@ -5,9 +5,9 @@
 
 - if current_organisation.active?
   .section
-    %input{:type => 'button', :value => 'Propose a vote', :class => 'button-form-show', 'data-form-id' => 'propose_freeform_form'}
-    %input{:type => 'button', :value => 'Propose a new member', :class => 'button-form-show', 'data-form-id' => 'propose_new_member_form'}
-    %input{:type => 'button', :value => 'Propose an amendment to the constitution', :class => 'button-form', 'data-url' => edit_constitution_path}
+    = form_reveal_button("Propose a vote", :form_id => 'propose_freeform_form')
+    = form_reveal_button("Propose a new member", :form_id => 'propose_new_member_form')
+    = link_button("Propose an amendment to the constitution", :url => edit_constitution_path)
     %br.clear
 
     %div#propose_freeform_form.form-to-hide

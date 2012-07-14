@@ -6,6 +6,11 @@ module ControllerSpecHelper
     Setting.stub!(:[]).with(:signup_domain).and_return('create.oneclickorgs.com')
   end
   
+  def stub_coop
+    @coop = @organisation = mock_model(Coop)
+    Organisation.stub!(:find_by_host).and_return(@coop)
+  end
+  
   def stub_company
     @company = @organisation = mock_model(Company)
     Organisation.stub!(:find_by_host).and_return(@company)
