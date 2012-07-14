@@ -17,5 +17,7 @@ Given /^I am a (?:M|m)ember of the co\-op$/ do
 end
 
 Given /^I am a Director of the co\-op$/ do
-  pending # express the regexp above with the code you wish you had
+  @coop ||= Coop.last
+  @user = @coop.members.make!(:director)
+  user_logs_in
 end

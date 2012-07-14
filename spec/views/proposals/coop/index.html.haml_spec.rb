@@ -10,11 +10,18 @@ describe "proposals/coop/index" do
     
     @draft_proposals = [mock_model(Resolution, :description => "Draft proposal description")]
     assign(:draft_proposals, @draft_proposals)
+    
+    stub_template "proposals/_vote" => "vote partial"
   end
   
   it "renders a list of currently-open proposals" do
     render
     rendered.should have_selector('.proposals', :content => "Open proposal description")
+  end
+  
+  it "renders the voting partial for each open proposal" do
+    render
+    rendered.should contain("vote partial")
   end
   
   it "renders a list of draft resolutions" do

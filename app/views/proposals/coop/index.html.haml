@@ -14,15 +14,16 @@
   %table.proposals
     - @proposals.each do |proposal|
       %tr
-        %td
+        = content_tag_for(:td, proposal) do
           = proposal.description
+          = render 'proposals/vote', :proposal => proposal
 
 %h3 Draft resolutions:
 .section
   %table.draft_proposals
     - @draft_proposals.each do |proposal|
       %tr
-        %td
+        = content_tag_for(:td, proposal) do
           = proposal.description
 
 %h3 Suggested resolutions:

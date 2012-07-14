@@ -1,0 +1,15 @@
+%h2 Create a new resolution of the Board
+
+= form_for(@board_resolution) do |board_resolution_form|
+  %p
+    = board_resolution_form.label :description, "Text of the resolution"
+  %p
+    = board_resolution_form.text_area :description
+  %p
+    = board_resolution_form.radio_button :draft, false
+    = label_tag 'board_resolution_draft_true', "Open this resolution for electronic voting immediately."
+  %p
+    = board_resolution_form.radio_button :draft, true
+    = label_tag 'board_resolution_draft_false', "Save this resolution for consideration at a future meeting of the Board."
+  %p
+    = board_resolution_form.submit "Save this resolution"
