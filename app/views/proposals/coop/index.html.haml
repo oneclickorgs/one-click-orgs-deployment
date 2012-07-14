@@ -19,6 +19,11 @@
 
 %h3 Draft resolutions:
 .section
+  %table.draft_proposals
+    - @draft_proposals.each do |proposal|
+      %tr
+        %td
+          = proposal.description
 
 %h3 Suggested resolutions:
 .section

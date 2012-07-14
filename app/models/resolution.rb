@@ -7,7 +7,11 @@ class Resolution < Proposal
   
   def draft=(new_draft)
     # TODO There must be something built-in to Rails to handle this.
-    if new_draft.respond_to?(:to_i)
+    if new_draft == 'true'
+      new_draft = true
+    elsif new_draft == 'false'
+      new_draft = false
+    elsif new_draft.respond_to?(:to_i)
       if new_draft.to_i == 1
         new_draft = true
       elsif new_draft.to_i == 0

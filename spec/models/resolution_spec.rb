@@ -32,6 +32,23 @@ describe Resolution do
       @resolution.draft = '0'
       @resolution.draft.should == false
     end
+    
+    it "understands 'true' and 'false' as boolean values" do
+      @resolution = Resolution.make
+      
+      @resolution.draft = 'true'
+      @resolution.draft.should == true
+      
+      @resolution.draft = 'false'
+      @resolution.draft.should == false
+    end
+  end
+  
+  describe "scopes" do
+    it "has a draft scope" do
+      @draft_resolution = Resolution.make!(:draft => true)
+      Resolution.draft.should include @draft_resolution
+    end
   end
   
   describe "automatic title" do

@@ -10,6 +10,11 @@ class ProposalsController < ApplicationController
     
     # Fetch five most recent failed proposals
     @failed_proposals = co.proposals.failed.limit(5)
+    
+    case co
+    when Coop
+      @draft_proposals = co.resolutions.draft
+    end
   end
 
   def show

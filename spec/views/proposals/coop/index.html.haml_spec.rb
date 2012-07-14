@@ -7,11 +7,19 @@ describe "proposals/coop/index" do
     
     @proposals = [mock_model(Resolution, :description => "Open proposal description")]
     assign(:proposals, @proposals)
+    
+    @draft_proposals = [mock_model(Resolution, :description => "Draft proposal description")]
+    assign(:draft_proposals, @draft_proposals)
   end
   
   it "renders a list of currently-open proposals" do
     render
     rendered.should have_selector('.proposals', :content => "Open proposal description")
+  end
+  
+  it "renders a list of draft resolutions" do
+    render
+    rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
   end
   
   context "when user can create a resolution" do

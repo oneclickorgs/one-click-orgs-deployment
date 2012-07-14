@@ -31,6 +31,8 @@ class Proposal < ActiveRecord::Base
   scope :currently_open, lambda {where(["state = 'open' AND close_date > ?", Time.now.utc])}
   scope :failed, lambda {where(["close_date < ? AND state = 'rejected'", Time.now.utc]).order('close_date DESC')}
   
+  scope :draft, with_state(:draft)
+  
   attr_accessor :force_passed
   
   # FINDERS
