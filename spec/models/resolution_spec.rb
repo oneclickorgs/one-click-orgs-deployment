@@ -34,6 +34,14 @@ describe Resolution do
     end
   end
   
+  describe "automatic title" do
+    it "automatically sets the title based on the description" do
+      @resolution = Resolution.make(:title => nil, :description => "A description of the resolution")
+      @resolution.save!
+      @resolution.title.should be_present
+    end
+  end
+  
   describe "mass assignment" do
     it "is allowed for 'draft'" do
       expect {Resolution.new(:draft => true)}.to_not raise_error

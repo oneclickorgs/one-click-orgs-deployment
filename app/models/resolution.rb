@@ -37,6 +37,13 @@ class Resolution < Proposal
     end
   end
   
+  before_create :set_title
+  def set_title
+    if title.blank?
+      self.title = description.truncate(200)
+    end
+  end
+  
   # Resolutions are often created by request on behalf of the membership
   # (e.g. by the secretary), so the 'proposer' isn't necessarily in
   # favour of the proposal. So for Resolutions, we don't automatically

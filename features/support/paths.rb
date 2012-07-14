@@ -48,6 +48,8 @@ module NavigationHelpers
       members_path
     when /^the dashboard( page)?$/
       '/'
+    when /^the Resolutions page$/
+      proposals_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

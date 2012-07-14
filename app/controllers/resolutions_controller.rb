@@ -7,4 +7,11 @@ class ResolutionsController < ApplicationController
     
     @resolution = co.resolutions.build
   end
+  
+  def create
+    @resolution = current_organisation.resolutions.build(params[:resolution])
+    @resolution.proposer = current_user
+    @resolution.save!
+    redirect_to proposals_path
+  end
 end

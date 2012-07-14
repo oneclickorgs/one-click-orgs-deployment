@@ -11,6 +11,11 @@
 
 %p The following resolutions are currently open:
 .section
+  %table.proposals
+    - @proposals.each do |proposal|
+      %tr
+        %td
+          = proposal.description
 
 %h3 Draft resolutions:
 .section

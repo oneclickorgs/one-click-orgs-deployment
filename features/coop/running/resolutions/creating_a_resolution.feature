@@ -7,7 +7,7 @@ Feature: Creating a resolution
     Given there is a co-op
     And I am the Secretary of the co-op
   
-  @wip
+  @javascript
   Scenario: Secretary creates a resolution for electronic voting
     When I go to the Resolutions page
     And I press "Create a new Resolution"
