@@ -1,9 +1,9 @@
-Given /^the domain is the organisation's domain$/ do
-  step %Q{the domain is "#{@organisation.host}"}
+def set_subdomain_to_organisation
+  set_subdomain(@organisation.subdomain)
 end
 
 Given /^the subdomain is the organisation's subdomain$/ do
-  step %Q{the subdomain is "#{@organisation.subdomain}"}
+  set_subdomain_to_organisation
 end
 
 Given /^the organisation's name is "([^"]*)"$/ do |new_organisation_name|

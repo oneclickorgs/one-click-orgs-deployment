@@ -1,4 +1,4 @@
-Given /^the application is set up$/ do
+def set_up_application
   # *.ocolocalhost.com resolves to 127.0.0.1. This lets us test subdomain
   # look-up using domains like 'company.ocolocalhost.com' and
   # 'association.ocolocalhost.com', without having to set up local wildcard
@@ -18,6 +18,16 @@ Given /^the application is set up$/ do
   
   Setting[:base_domain] = "ocolocalhost.com#{port_segment}"
   Setting[:signup_domain] = "create.ocolocalhost.com#{port_segment}"
+end
+
+def set_up_application_if_necessary
+  unless Setting[:base_domain] && Setting[:signup_domain]
+    set_up_application
+  end
+end
+
+Given /^the application is set up$/ do
+  set_up_application
 end
 
 Given /^the application is not set up yet$/ do
