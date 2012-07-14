@@ -22,6 +22,17 @@ describe Resolution do
         @resolution.close_date.should be_present
       end
     end
+    
+    it "understands '1' and '0' as boolean values" do
+      @resolution = Resolution.make
+      
+      @resolution.draft = '1'
+      @resolution.draft.should == true
+      
+      @resolution.draft = '0'
+      @resolution.draft.should == false
+    end
+  end
   
   describe "mass assignment" do
     it "is allowed for 'draft'" do

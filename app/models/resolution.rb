@@ -6,6 +6,15 @@ class Resolution < Proposal
   # DRAFT STATE
   
   def draft=(new_draft)
+    # TODO There must be something built-in to Rails to handle this.
+    if new_draft.respond_to?(:to_i)
+      if new_draft.to_i == 1
+        new_draft = true
+      elsif new_draft.to_i == 0
+        new_draft = false
+      end
+    end
+    
     @draft = new_draft
   end
   
