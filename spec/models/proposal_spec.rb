@@ -195,4 +195,34 @@ describe Proposal do
       Proposal.new.decision_notification_message.should be_nil
     end
   end
+  
+  describe "amending voting period" do
+    before(:each) do
+      @proposer = mock_model(Member, :cast_vote => nil)
+      @constitution = mock("constitution")
+      @organisation = mock_model(Organisation,
+        :pending? => false,
+        :constitution => @constitution
+      )
+      @organisation.stub_chain(:members, :active).and_return([])
+      
+      @proposal = Proposal.new(:title => 'Buy more tables')
+      @proposal.organisation = @organisation
+      @proposal.proposer = @proposer
+    end
+    
+    it "adjusts the close date accordingly" do
+      @constitution.stub(:voting_period).and_return(3600)
+      @proposal.voting_period_in_days = 2
+      @proposal.save
+      @proposal.close_date.should > 1.day.from_now
+    end
+    
+    it "handles being given a string" do
+      @constitution.stub(:voting_period).and_return(3600)
+      @proposal.voting_period_in_days = "2"
+      @proposal.save
+      @proposal.close_date.should > 1.day.from_now
+    end
+  end
 end

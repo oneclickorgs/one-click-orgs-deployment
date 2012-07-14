@@ -59,21 +59,25 @@ class Proposal < ActiveRecord::Base
     close_early_proposals
   end
   
-  # ACCESSORS
+  # VOTING PERIOD
   
   def voting_period_in_days
     voting_period / 1.day
   end
   
   def voting_period_in_days=(new_voting_period_in_days)
-    raise NotImplementedError
+    self.voting_period = new_voting_period_in_days.to_i.days
+  end
+  
+  def voting_period
+    @voting_period || organisation.constitution.voting_period
+  end
+  
+  def voting_period=(new_voting_period)
+    @voting_period = new_voting_period.to_i
   end
   
   # GETTERS
-  
-  def voting_period
-    organisation.constitution.voting_period
-  end
   
   def end_date
     self.close_date
