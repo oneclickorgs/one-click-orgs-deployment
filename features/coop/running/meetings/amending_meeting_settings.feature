@@ -4,7 +4,7 @@ Feature: Amending meeting settings
   I want to adjust the way meetings are run
   
   Background:
-    Given There is a co-op
+    Given there is a co-op
     And I am the Secretary of the co-op
   
   @wip
