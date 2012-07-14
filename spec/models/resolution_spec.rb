@@ -22,6 +22,23 @@ describe Resolution do
         @resolution.close_date.should be_present
       end
     end
+  
+  describe "mass assignment" do
+    it "is allowed for 'draft'" do
+      expect {Resolution.new(:draft => true)}.to_not raise_error
+    end
+    
+    it "is allowed for 'voting_period_in_days'" do
+      expect {Resolution.new(:voting_period_in_days => 14)}.to_not raise_error
+    end
+    
+    it "is allowed for 'extraordinary'" do
+      expect {Resolution.new(:extraordinary => true)}.to_not raise_error
+    end
+    
+    it "is allowed for 'certification'" do
+      expect {Resolution.new(:certification => true)}.to_not raise_error
+    end
   end
   
 end
