@@ -20,11 +20,14 @@ describe ProposalsController do
     context "when current organisation is a co-op" do
       before(:each) do
         @organisation.stub_chain(:resolutions, :draft)
+        @organisation.stub_chain(:resolutions, :currently_open)
         @organisation.stub(:resolution_proposals)
       end
       
       it "looks up and assigns the draft proposals" do
-        @resolutions_association = mock("resolutions association")
+        @resolutions_association = mock("resolutions association",
+          :currently_open => []
+        )
         @organisation.stub(:resolutions).and_return(@resolutions_association)
         
         @draft_resolutions_association = mock("draft resolutions association")
