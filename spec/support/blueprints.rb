@@ -89,6 +89,11 @@ end
 
 Resolution.blueprint do
   organisation { Coop.make }
+  description { 'The description of the resolution.' }
+end
+
+Resolution.blueprint(:draft) do
+  state {'draft'}
 end
 
 BoardResolution.blueprint do

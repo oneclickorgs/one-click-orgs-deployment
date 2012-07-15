@@ -7,7 +7,6 @@ Feature: Managing draft and suggested resolutions
     Given there is a co-op
     And I am the Secretary of the co-op
   
-  @wip
   Scenario: Secretary opens a draft resolution for electronic voting
     Given there is a draft resolution
     When I go to the Resolutions page

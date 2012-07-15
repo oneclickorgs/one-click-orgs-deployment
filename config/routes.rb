@@ -67,6 +67,10 @@ OneClickOrgs::Application.routes.draw do
   resources :decisions
   
   resources :proposals do
+    member do
+      put :open
+    end
+    
     resources :comments
   end
   # TODO Don't want this global matching if possible:

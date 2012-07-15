@@ -4,7 +4,7 @@ class ResolutionsController < ApplicationController
       redirect_to root_path
       return
     end
-    
+        
     @resolution = co.resolutions.build
   end
   

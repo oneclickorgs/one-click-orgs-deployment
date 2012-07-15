@@ -24,7 +24,11 @@
     - @draft_proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
-          = proposal.description
+          %p
+            = proposal.description
+          - if can?(:create, Resolution)
+            %p
+              = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
 
 %h3 Suggested resolutions:
 .section

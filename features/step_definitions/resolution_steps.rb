@@ -16,6 +16,10 @@ def choose_draft
   end
 end
 
+Given /^there is a draft resolution$/ do
+  @resolution = @organisation.resolutions.make!(:draft)
+end
+
 When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
   fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
 end
@@ -40,6 +44,14 @@ When /^I certify that the Board has decided to open this resolution$/ do
   check("resolution_certification")
 end
 
+When /^I press "(.*?)" for the draft resolution$/ do |button|
+  @resolution ||= @organisation.resolutions.draft.last
+  
+  within('#' + ActionController::RecordIdentifier.dom_id(@resolution)) do
+    click_button(button)
+  end
+end
+
 Then /^I should see the new resolution in the list of draft resolutions$/ do
   @resolution ||= @organisation.resolutions.last
   within('.draft_proposals') do
@@ -47,7 +59,7 @@ Then /^I should see the new resolution in the list of draft resolutions$/ do
   end
 end
 
-Then /^I should see the new resolution in the list of currently\-open resolutions$/ do
+Then /^I should see the (?:|new )resolution in the list of currently\-open resolutions$/ do
   @resolution ||= @organisation.resolutions.last
   within('.proposals') do
     page.should have_content(@resolution.description)

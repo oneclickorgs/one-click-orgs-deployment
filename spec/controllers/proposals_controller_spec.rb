@@ -50,4 +50,35 @@ describe ProposalsController do
     end
   end
   
+  describe "PUT open" do
+    before(:each) do
+      @resolutions_association = mock("resolutions association")
+      @organisation.stub(:resolutions).and_return(@resolutions_association)
+      @resolution = mock_model(Resolution)
+      @resolutions_association.stub(:find).and_return(@resolution)
+      @resolution.stub(:start!)
+    end
+    
+    def put_open
+      put :open, :id => '1'
+    end
+    
+    it "finds the resolution" do
+      @resolutions_association.should_receive(:find).with('1').and_return(@resolution)
+      put_open
+    end
+    
+    it "opens the resolution" do
+      @resolution.should_receive(:start!)
+      put_open
+    end
+    
+    it "redirects to the proposals page" do
+      put_open
+      response.should redirect_to('/proposals')
+    end
+    
+    it "checks authorisation"
+  end
+  
 end
