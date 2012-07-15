@@ -13,7 +13,7 @@ Feature: Managing draft and suggested resolutions
     And I press "Start an electronic vote" for the draft resolution
     Then I should see the resolution in the list of currently-open resolutions
   
-  @wip
+  @javascript
   Scenario: Secretary adds a draft resolution to a meeting
     Given there is a draft resolution
     When I go to the Resolutions page

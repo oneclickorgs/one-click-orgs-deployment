@@ -29,6 +29,9 @@
           - if can?(:create, Resolution)
             %p
               = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
+          - if can?(:create, Meeting)
+            %p
+              = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
 
 %h3 Suggested resolutions:
 .section

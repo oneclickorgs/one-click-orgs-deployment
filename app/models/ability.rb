@@ -62,6 +62,10 @@ class Ability
       if user.has_permission(:resolution_proposal)
         can :create, ResolutionProposal
       end
+
+      if user.has_permission(:meeting)
+        can :create, Meeting
+      end
     end
   end
 end

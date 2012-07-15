@@ -13,7 +13,7 @@ class MeetingsController < ApplicationController
     @comments = @meeting.comments
     @comment = Comment.new
   end
-  
+
   def create
     unless can?(:create, Meeting)
       redirect_to root_path

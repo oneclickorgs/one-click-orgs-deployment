@@ -121,6 +121,7 @@ OneClickOrgs::Application.routes.draw do
   resources :meetings do
     resources :comments
   end
+  resources :general_meetings
   
   resources :shares
   
