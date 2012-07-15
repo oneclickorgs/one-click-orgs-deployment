@@ -2,19 +2,20 @@ class ProposalsController < ApplicationController
   respond_to :html
   
   def index
-    # Fetch open proposals
-    @proposals = co.proposals.currently_open
-    
-    # Fetch five most recent decisions
-    @decisions = co.decisions.order("id DESC").limit(5)
-    
-    # Fetch five most recent failed proposals
-    @failed_proposals = co.proposals.failed.limit(5)
-    
     case co
     when Coop
+      @proposals = co.resolutions.currently_open
       @draft_proposals = co.resolutions.draft
       @resolution_proposals = co.resolution_proposals
+    else
+      # Fetch open proposals
+      @proposals = co.proposals.currently_open
+
+      # Fetch five most recent decisions
+      @decisions = co.decisions.order("id DESC").limit(5)
+
+      # Fetch five most recent failed proposals
+      @failed_proposals = co.proposals.failed.limit(5)
     end
   end
 
