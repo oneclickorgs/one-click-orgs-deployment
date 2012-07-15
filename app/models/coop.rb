@@ -5,6 +5,8 @@ class Coop < Organisation
   has_many :resolutions, :foreign_key => 'organisation_id'
   has_many :board_resolutions, :foreign_key => 'organisation_id'
   
+  has_many :resolution_proposals, :foreign_key => 'organisation_id'
+  
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
     members.set_permission!(:resolution_proposal, true)
@@ -29,5 +31,9 @@ class Coop < Organisation
   
   def member_eligible_to_vote?(member, proposal)
     true
+  end
+  
+  def secretary
+    member_classes.find_by_name!('Secretary').members.last
   end
 end

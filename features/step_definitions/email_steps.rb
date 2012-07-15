@@ -136,3 +136,12 @@ Then /^I should receive an email saying that member has resigned$/ do
   @email.body.should include(@member.name)
   @email.body.should include("resigned")
 end
+
+Then /^the Secretary should receive a notification of the new suggested resolution$/ do
+  @secretary ||= @organisation.secretary
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  @email = last_email
+  
+  @email.to.should == [@secretary.email]
+  @email.body.should include(@resolution_proposal.description)
+end

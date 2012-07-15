@@ -1,0 +1,12 @@
+Dear <%=raw(  @member && @member.name || 'member'  )%>,
+
+A new resolution has been suggested by <%=raw(  @proposal.proposer.name || @proposal.proposer.email  )%>:
+
+<%=raw(  @proposal.description  )%>
+
+Please visit <%=raw(  proposal_url(@proposal)  )%> to view it.
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs

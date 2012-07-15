@@ -16,7 +16,7 @@ def choose_draft
   end
 end
 
-When /^I enter the text of the (?:|new )resolution$/ do
+When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
   fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
 end
 
@@ -51,6 +51,13 @@ Then /^I should see the new resolution in the list of currently\-open resolution
   @resolution ||= @organisation.resolutions.last
   within('.proposals') do
     page.should have_content(@resolution.description)
+  end
+end
+
+Then /^I should see the new resolution in the list of suggested resolutions$/ do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  within('.resolution_proposals') do
+    page.should have_content(@resolution_proposal.description)
   end
 end
 

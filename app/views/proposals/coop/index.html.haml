@@ -28,3 +28,8 @@
 
 %h3 Suggested resolutions:
 .section
+  %table.resolution_proposals
+    - @resolution_proposals.each do |proposal|
+      %tr
+        = content_tag_for(:td, proposal) do
+          = proposal.description

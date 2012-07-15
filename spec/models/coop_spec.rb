@@ -41,6 +41,17 @@ describe Coop do
       
       @coop.board_resolutions.should include(@board_resolution)
     end
+    
+    it "has many resolution proposals" do
+      @coop = Coop.make!
+      @resolution_proposal = ResolutionProposal.make!
+      
+      expect {@coop.resolution_proposals << @resolution_proposal}.to_not raise_error
+      
+      @coop.reload
+      
+      @coop.resolution_proposals.should include(@resolution_proposal)
+    end
   end
   
   describe "defaults" do
@@ -78,5 +89,14 @@ describe Coop do
   
   describe "#member_eligible_to_vote?" do
     it "makes the appropriate checks about voting eligibility"
+  end
+  
+  describe "#secretary" do
+    it "finds the Secretary" do
+      @coop = Coop.make!
+      @secretary = @coop.members.make!(:secretary)
+      
+      @coop.secretary.should == @secretary
+    end
   end
 end

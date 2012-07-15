@@ -17,7 +17,12 @@ describe ProposalsController do
       @organisation.stub_chain(:proposals, :failed, :limit)
     end
     
-    context "when current organisaion is a co-op" do
+    context "when current organisation is a co-op" do
+      before(:each) do
+        @organisation.stub_chain(:resolutions, :draft)
+        @organisation.stub(:resolution_proposals)
+      end
+      
       it "looks up and assigns the draft proposals" do
         @resolutions_association = mock("resolutions association")
         @organisation.stub(:resolutions).and_return(@resolutions_association)
@@ -28,6 +33,16 @@ describe ProposalsController do
         get :index
         
         assigns[:draft_proposals].should == @draft_resolutions_association
+      end
+      
+      it "looks up and assigns the resolution proposals" do
+        @resolution_proposals_association = mock("resolution proposals association")
+        
+        @organisation.should_receive(:resolution_proposals).and_return(@resolution_proposals_association)
+        
+        get :index
+        
+        assigns[:resolution_proposals].should == @resolution_proposals_association
       end
     end
   end

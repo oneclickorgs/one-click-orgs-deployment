@@ -13,7 +13,10 @@ class ProposalMailerObserver < ActiveRecord::Observer
     :constitution_proposal,
     :eject_member_proposal,
     :found_association_proposal,
-    :membership_proposal
+    :membership_proposal,
+    :resolution,
+    :board_resolution,
+    :resolution_proposal
   
   def after_create(proposal)
     send_notification_email(proposal)
@@ -35,6 +38,8 @@ class ProposalMailerObserver < ActiveRecord::Observer
     else
       proposal.organisation.members.active
     end
+    
+    members_to_notify = members_to_notify.delete_if(&:blank?)
     
     members_to_notify.each do |m|
       # only notify members who can vote

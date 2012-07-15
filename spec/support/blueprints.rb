@@ -42,6 +42,10 @@ Member.blueprint(:director) do
   member_class { object.organisation.member_classes.find_by_name!('Director') }
 end
 
+Member.blueprint(:member) do
+  member_class { object.organisation.member_classes.find_by_name!('Member') }
+end
+
 Member.blueprint(:pending) do
   inducted_at { nil }
   state { 'pending' }
@@ -84,6 +88,10 @@ Resolution.blueprint do
 end
 
 BoardResolution.blueprint do
+  organisation { Coop.make }
+end
+
+ResolutionProposal.blueprint do
   organisation { Coop.make }
 end
 

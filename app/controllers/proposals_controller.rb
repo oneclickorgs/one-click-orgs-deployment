@@ -14,6 +14,7 @@ class ProposalsController < ApplicationController
     case co
     when Coop
       @draft_proposals = co.resolutions.draft
+      @resolution_proposals = co.resolution_proposals
     end
   end
 
