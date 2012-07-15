@@ -1,2 +1,2 @@
-class BoardResolution < Proposal
+class BoardResolution < Resolution
 end

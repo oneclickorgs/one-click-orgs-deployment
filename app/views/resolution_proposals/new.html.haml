@@ -1,0 +1,13 @@
+%h2 Suggest a new resolution
+
+= form_for(@resolution_proposal) do |resolution_proposal_form|
+  %p
+    = resolution_proposal_form.label :description, "Text of the resolution:"
+  %p
+    = resolution_proposal_form.text_area :description
+  %p This resolution will be forwarded to the Secretary for consideration.
+  %p TODO: Complete the following paragraph.
+  %p Alternatively, if ?? members visit ?? and indicate their desire for this resolution to be voted on, an electronic vote will begin automatically.
+  %p
+    = resolution_proposal_form.submit "Save this resolution"
+  

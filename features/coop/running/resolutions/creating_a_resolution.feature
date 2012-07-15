@@ -18,7 +18,7 @@ Feature: Creating a resolution
     Then I should be on the Resolutions page
     And I should see the new resolution in the list of currently-open resolutions
   
-  @wip
+  @javascript
   Scenario: Secretary creates a resolution for consideration at a future meeting
     When I go to the Resolutions page
     And I press "Create a new Resolution"

@@ -3,6 +3,9 @@ class Coop < Organisation
   has_many :general_meetings, :foreign_key => 'organisation_id'
   
   has_many :resolutions, :foreign_key => 'organisation_id'
+  has_many :board_resolutions, :foreign_key => 'organisation_id'
+  
+  has_many :resolution_proposals, :foreign_key => 'organisation_id'
   
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
@@ -24,5 +27,13 @@ class Coop < Organisation
   
   def set_default_voting_period
     constitution.set_voting_period(14.days)
+  end
+  
+  def member_eligible_to_vote?(member, proposal)
+    true
+  end
+  
+  def secretary
+    member_classes.find_by_name!('Secretary').members.last
   end
 end

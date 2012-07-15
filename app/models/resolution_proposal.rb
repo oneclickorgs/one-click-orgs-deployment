@@ -5,5 +5,18 @@
 # to open the suggested resolution to a vote. At that point, the
 # 'real' Resolution is created.
 class ResolutionProposal < Proposal
+  before_create :set_title
+  def set_title
+    if title.blank?
+      self.title = description.truncate(200)
+    end
+  end
   
+  def members_to_notify
+    [organisation.secretary]
+  end
+  
+  def notification_email_action
+    :notify_resolution_proposal
+  end
 end

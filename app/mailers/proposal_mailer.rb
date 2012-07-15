@@ -25,4 +25,16 @@ class ProposalMailer < OcoMailer
 
     create_mail(@organisation_name, @member.email, "New proposal: #{@proposal.title}")
   end
+  
+  def notify_resolution_proposal(member, proposal)
+    default_url_options[:host] = member.organisation.domain(:only_host => true)
+    
+    @member = member
+    @proposal = proposal
+    raise ArgumentError, "need member and proposal" unless @member and @proposal
+    
+    @organisation_name = member.organisation.name
+    
+    create_mail(@organisation_name, @member.email, "New resolution suggestion: #{@proposal.title}")
+  end
 end
