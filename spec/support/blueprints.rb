@@ -57,6 +57,10 @@ Proposal.blueprint do
   proposer { Member.make(:organisation => object.organisation) }
 end
 
+Proposal.blueprint(:draft) do
+  state { 'draft' }
+end
+
 AddMemberProposal.blueprint do
   title { "a proposal title" }
   state { 'open' }

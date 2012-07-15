@@ -166,7 +166,7 @@ describe Proposal do
     end
   end
   
-  describe "starting" do
+  describe "creating" do
     before(:each) do
       @proposer = mock_model(Member)
       @organisation = mock_model(Organisation,
@@ -187,6 +187,18 @@ describe Proposal do
     it "creates a support vote by the proposer" do
       @proposer.should_receive(:cast_vote).with(:for, anything)
       @proposal.save
+    end
+  end
+  
+  describe "starting" do
+    it "sets the close date" do
+      @proposal = @organisation.proposals.make!(:draft)
+      @proposal.close_date.should be_blank
+
+      @proposal.start!
+      
+      @proposal.reload
+      @proposal.close_date.should be_present
     end
   end
   

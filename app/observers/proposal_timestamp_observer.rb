@@ -31,7 +31,7 @@ class ProposalTimestampObserver < ActiveRecord::Observer
   def after_transition(proposal, transition)
     case transition.event
     when :start
-      set_close_date(proposal)
+      set_close_date(proposal, true)
     end
   end
   
@@ -41,10 +41,11 @@ protected
     proposal.creation_date ||= Time.now.utc
   end
   
-  def set_close_date(proposal)
+  def set_close_date(proposal, save=false)
     unless proposal.state == 'draft'
       proposal.close_date ||= Time.now.utc + proposal.voting_period
     end
+    proposal.save if save
   end
   
   def set_close_date_to_now(proposal)
