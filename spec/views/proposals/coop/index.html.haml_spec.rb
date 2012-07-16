@@ -22,11 +22,6 @@ describe "proposals/coop/index" do
     rendered.should have_selector('.proposals', :content => "Open proposal description")
   end
   
-  it "renders the voting partial for each open proposal" do
-    render
-    rendered.should contain("vote partial")
-  end
-  
   it "renders a list of draft resolutions" do
     render
     rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
@@ -35,6 +30,18 @@ describe "proposals/coop/index" do
   it "renders a list of suggested resolutions" do
     render
     rendered.should have_selector('.resolution_proposals', :content => "Suggested resolution description")
+  end
+
+  context "when user can vote on an open proposal" do
+    before(:each) do
+      @proposal = @proposals.first
+      view.stub(:can?).with(:vote_on, @proposal).and_return(true)
+    end
+
+    it "renders the voting partial for each open proposal" do
+      render
+      rendered.should contain("vote partial")
+    end
   end
   
   context "when user can create a resolution" do

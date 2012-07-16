@@ -24,6 +24,10 @@ Given /^there is a suggested resolution$/ do
   @resolution_proposal = @organisation.resolution_proposals.make!
 end
 
+Given /^there is a resolution open for electronic voting$/ do
+  @resolution = @organisation.resolutions.make!
+end
+
 When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
   fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
 end
@@ -70,6 +74,13 @@ end
 
 When /^I save the resolution$/ do
   click_button("Save changes")
+end
+
+When /^I vote to support the resolution$/ do
+  @resolution ||= @organisation.resolutions.last
+  within('#' + ActionController::RecordIdentifier.dom_id(@resolution)) do
+    click_button('Support')
+  end
 end
 
 Then /^I should see the new resolution in the list of draft resolutions$/ do
