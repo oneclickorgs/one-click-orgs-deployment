@@ -3,7 +3,6 @@ Feature: Viewing member details
   As a Member
   I want to view the details of a particular member
   
-  @wip
   Scenario: Member views another member's details
     Given there is a co-op
     And I am a Member of the co-op
