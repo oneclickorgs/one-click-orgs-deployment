@@ -8,17 +8,57 @@ Feature: Amending meeting settings
     And I am the Secretary of the co-op
   
   @wip
-  Scenario: Secretary amends the notice period for General Meetings
+  Scenario: Secretary increases the notice period for General Meetings
     Given the notice period for General Meetings is "14" days
     When I go to the Meetings page
     And I press "Change the notice period"
-    And I check the certification
-    And I enter "7" for the new notice period
+    And I enter "21" days
+    Then I should see "Extraordinary Resolution is required"
+    When I certify that that the Board has proposed this amendment
+    And I certify that the resolution has already been passed
+    And I press "Amend the notice period"
+    Then I should be on the Meetings page
+    And I should see that the notice period is "21" days
+
+  @wip
+  Scenario: Secretary decreases the notice period for General Meetings
+    Given the notice period for General Meetings is "14" days
+    When I go to the Meetings page
+    And I press "Change the notice period"
+    And I enter "7" days
+    Then I should see "90% of Members"
+    When I certify that that the Board has proposed this amendment
+    And I certify that the resolution has already been passed
+    And I press "Amend the notice period"
+    Then I should be on the Meetings page
+    And I should see that the notice period is "7" days
+
+  @wip
+  Scenario: Secretary starts a vote to increase the notice period for General Meetings
+    Given the notice period for General Meetings is "14" days
+    When I go to the Meetings page
+    And I press "Change the notice period"
+    And I enter "21" days
+    Then I should see "Extraordinary Resolutions is required"
+    When I certify that that the Board has proposed this amendment
     And I press "Start a vote of Members"
-    Then I should see "A draft resolution to change the General Meeting notice period has been created."
+    Then I should see "A draft resolution to increase the General Meeting notice period has been created."
     When I go to the Resolutions page
-    Then I should see a draft resolution to change the General Meeting notice period to 7 days
-  
+    Then I should see a draft resolution to increase the General Meeting notice period to 21 days
+
+  @wip
+  Scenario: Secretary starts a vote to decrease the notice period for General Meetings
+    Given the notice period for General Meetings is "14" days
+    When I go to the Meetings page
+    And I press "Change the notice period"
+    And I enter  "7" days
+    Then I should see "90% of Members"
+    When I certify that that the Board has proposed this amendment
+    And I press "Start a vote of Members"
+    Then I should see "A draft resolution to decrease the General Meeting notice period has been created."
+    When I go to the Resolutions page
+    Then I should see a draft resolution to decrease the General Meeting notice period to 7 days
+
   @wip
   Scenario: Secretary amends the quorum for General Meetings
     When I go to the Meetings page
