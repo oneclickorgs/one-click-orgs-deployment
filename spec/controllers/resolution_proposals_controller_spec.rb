@@ -179,5 +179,56 @@ describe ResolutionProposalsController do
 
     it "checks authorisation"
   end
+
+  describe "PUT pass_to_meeting" do
+    before(:each) do
+      @resolution_proposals_association = mock("resolution proposals association")
+      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+
+      @resolution_proposal = mock_model(ResolutionProposal)
+      @resolution_proposals_association.stub(:find).and_return(@resolution_proposal)
+
+      @resolution = mock_model(Resolution, :to_param => '2')
+
+      @resolution_proposal.stub(:force_passed=)
+      @resolution_proposal.stub(:create_draft_resolution=)
+      @resolution_proposal.stub(:close!)
+      @resolution_proposal.stub(:new_resolution).and_return(@resolution)
+    end
+
+    def put_pass_to_meeting
+      put :pass_to_meeting, :id => '1'
+    end
+
+    it "finds the resolution proposal" do
+      @resolution_proposals_association.should_receive(:find).with('1').and_return(@resolution_proposal)
+      put_pass_to_meeting
+    end
+
+    it "forces the resolution proposal to pass" do
+      @resolution_proposal.should_receive(:force_passed=).with(true)
+      put_pass_to_meeting
+    end
+
+    it "instructs the resolution proposal to create a draft proposal" do
+      @resolution_proposal.should_receive(:create_draft_resolution=).with(true)
+      put_pass_to_meeting
+    end
+
+    it "closes the resolution proposal" do
+      @resolution_proposal.should_receive(:close!)
+      put_pass_to_meeting
+    end
+
+    it "fetches the new resolution" do
+      @resolution_proposal.should_receive(:new_resolution).and_return(@resolution)
+      put_pass_to_meeting
+    end
+
+    it "redirects to the new general meeting page with the new resolution ID" do
+      put_pass_to_meeting
+      response.should redirect_to('/general_meetings/new?resolution_id=2')
+    end
+  end
   
 end

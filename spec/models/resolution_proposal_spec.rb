@@ -60,6 +60,28 @@ describe ResolutionProposal do
       @resolution.should_receive(:save!)
       @resolution_proposal.enact!
     end
+
+    context "when asked to create a draft resolution" do
+      before(:each) do
+        @resolution_proposal.create_draft_resolution = true
+      end
+
+      it "sets the draft attribute on the new resolution" do
+        @resolution.should_receive(:draft=).with(true)
+        @resolution_proposal.enact!
+      end
+    end
+  end
+
+  describe "#new_resolution" do
+    before(:each) do
+      @resolution_proposal = ResolutionProposal.make!
+      @resolution_proposal.enact!
+    end
+
+    it "returns the new resolution" do
+      @resolution_proposal.new_resolution.should be_a(Resolution)
+    end
   end
 
 end

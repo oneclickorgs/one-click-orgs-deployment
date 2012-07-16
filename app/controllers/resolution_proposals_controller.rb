@@ -26,4 +26,13 @@ class ResolutionProposalsController < ApplicationController
     @resolution_proposal.close!
     redirect_to proposals_path
   end
+
+  def pass_to_meeting
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
+    @resolution_proposal.force_passed = true
+    @resolution_proposal.create_draft_resolution = true
+    @resolution_proposal.close!
+    resolution = @resolution_proposal.new_resolution
+    redirect_to new_general_meeting_path(:resolution_id => resolution)
+  end
 end

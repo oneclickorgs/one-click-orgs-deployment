@@ -86,6 +86,7 @@ OneClickOrgs::Application.routes.draw do
   resources :resolution_proposals do
     member do
       put :pass
+      put :pass_to_meeting
     end
   end
   

@@ -5,11 +5,20 @@
 # to open the suggested resolution to a vote. At that point, the
 # 'real' Resolution is created.
 class ResolutionProposal < Proposal
+  attr_accessor :create_draft_resolution
+
   def enact!
     @resolution = organisation.resolutions.build
     @resolution.proposer = proposer
     @resolution.description = description
+    if create_draft_resolution
+      @resolution.draft = true
+    end
     @resolution.save!
+  end
+
+  def new_resolution
+    @resolution
   end
 
   before_create :set_title

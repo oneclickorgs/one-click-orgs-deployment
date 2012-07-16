@@ -79,6 +79,18 @@ describe "proposals/coop/index" do
       rendered.should have_selector(".draft_proposals input[data-url='/general_meetings/new?resolution_id=#{@draft_proposals[0].to_param}']")
     end
   end
+
+  context "when user can create a meeting and can create a resolution" do
+    before(:each) do
+      view.stub(:can?).with(:create, Meeting).and_return(true)
+      view.stub(:can?).with(:create, Resolution).and_return(true)
+    end
+
+    it "renders an 'Add to a meeting' button for each suggested resolution" do
+      render
+      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass_to_meeting']")
+    end
+  end
   
   context "when user cannot create a resolution" do
     it "does not render a button to create a resolution"

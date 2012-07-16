@@ -46,3 +46,6 @@
           - if can?(:create, Resolution)
             %p
               = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
+            - if can?(:create, Meeting)
+              %p
+                = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
