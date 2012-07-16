@@ -54,6 +54,8 @@ module NavigationHelpers
       new_general_meeting_path
     when /^the Meetings page$/
       meetings_path
+    when /^the Members page$/
+      members_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

@@ -19,6 +19,9 @@ class MembersController < ApplicationController
       
       @page_title = "Directors"
       @director = Director.new
+    when Coop
+      @page_title = "Members"
+      @members = co.members
     end
     
     respond_to do |format|
