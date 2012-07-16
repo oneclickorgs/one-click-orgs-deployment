@@ -9,4 +9,14 @@ class ResolutionProposalsController < ApplicationController
     @resolution_proposal.save!
     redirect_to proposals_path
   end
+
+  def edit
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
+  end
+
+  def update
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
+    @resolution_proposal.update_attributes(params[:resolution_proposal])
+    redirect_to proposals_path
+  end
 end

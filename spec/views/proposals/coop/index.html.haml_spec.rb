@@ -53,6 +53,17 @@ describe "proposals/coop/index" do
     end
   end
 
+  context "when user can edit a resolution proposal" do
+    before(:each) do
+      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
+    end
+
+    it "renders an edit button for each suggested resolution" do
+      render
+      rendered.should have_selector(".resolution_proposals input[data-url='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
+    end
+  end
+
   context "when user can create a meeting" do
     before(:each) do
       view.stub(:can?).with(:create, Meeting).and_return(true)

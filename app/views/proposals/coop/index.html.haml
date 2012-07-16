@@ -39,4 +39,7 @@
     - @resolution_proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
-          = proposal.description
+          %p= proposal.description
+          - if can?(:edit, ResolutionProposal)
+            %p
+              = link_button("Edit", :url => edit_resolution_proposal_path(proposal))

@@ -21,7 +21,7 @@ Feature: Managing draft and suggested resolutions
     Then I should be on the "Convene a General Meeting" page
     And I should see the resolution in the list of resolutions to be considered at the meeting
   
-  @wip
+  @javascript
   Scenario: Secretary edits a suggested resolution
     Given there is a suggested resolution
     When I go to the Resolutions page

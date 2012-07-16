@@ -1,0 +1,6 @@
+%h2 Editing a suggested resolution
+
+= form_for(@resolution_proposal) do |resolution_proposal_form|
+  %p= resolution_proposal_form.label :description, "Text of the resolution"
+  %p= resolution_proposal_form.text_area :description
+  %p= resolution_proposal_form.submit "Save changes"
