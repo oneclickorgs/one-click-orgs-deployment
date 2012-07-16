@@ -15,9 +15,10 @@
     - @proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
-          = proposal.description
-          - if can?(:vote_on, proposal)
-            = render 'proposals/vote', :proposal => proposal
+          .proposal
+            %p= proposal.description
+            - if can?(:vote_on, proposal)
+              %p.votes= render 'proposals/vote', :proposal => proposal
 
 %h3 Draft resolutions:
 .section
