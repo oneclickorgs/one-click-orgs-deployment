@@ -30,7 +30,6 @@ Feature: Managing draft and suggested resolutions
     And I save the resolution
     Then I should see the amended resolution text in the list of suggested resolutions
   
-  @wip
   Scenario: Secretary opens a suggested resolution for electronic voting
     Given there is a suggested resolution
     When I go to the Resolutions page

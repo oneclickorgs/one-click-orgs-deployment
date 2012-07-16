@@ -83,7 +83,11 @@ OneClickOrgs::Application.routes.draw do
   
   resources :resolutions
   resources :board_resolutions
-  resources :resolution_proposals
+  resources :resolution_proposals do
+    member do
+      put :pass
+    end
+  end
   
   resources :members do
     member do

@@ -102,6 +102,7 @@ end
 
 ResolutionProposal.blueprint do
   organisation { Coop.make }
+  description { 'The description of the suggested resolution.'}
 end
 
 Decision.blueprint do

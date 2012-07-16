@@ -51,6 +51,11 @@ describe "proposals/coop/index" do
       render
       rendered.should have_selector(".draft_proposals form[action='/proposals/#{@draft_proposals[0].to_param}/open']")
     end
+
+    it "renders a 'Start an electronic vote' button for each suggested resolution" do
+      render
+      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass']")
+    end
   end
 
   context "when user can edit a resolution proposal" do

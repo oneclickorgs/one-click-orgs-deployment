@@ -5,6 +5,13 @@
 # to open the suggested resolution to a vote. At that point, the
 # 'real' Resolution is created.
 class ResolutionProposal < Proposal
+  def enact!
+    @resolution = organisation.resolutions.build
+    @resolution.proposer = proposer
+    @resolution.description = description
+    @resolution.save!
+  end
+
   before_create :set_title
   def set_title
     if title.blank?

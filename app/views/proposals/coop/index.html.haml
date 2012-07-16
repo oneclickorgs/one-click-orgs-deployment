@@ -43,3 +43,6 @@
           - if can?(:edit, ResolutionProposal)
             %p
               = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
+          - if can?(:create, Resolution)
+            %p
+              = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)

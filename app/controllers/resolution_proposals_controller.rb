@@ -19,4 +19,11 @@ class ResolutionProposalsController < ApplicationController
     @resolution_proposal.update_attributes(params[:resolution_proposal])
     redirect_to proposals_path
   end
+
+  def pass
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
+    @resolution_proposal.force_passed = true
+    @resolution_proposal.close!
+    redirect_to proposals_path
+  end
 end

@@ -140,5 +140,44 @@ describe ResolutionProposalsController do
       it "handles the error"
     end
   end
+
+  describe "PUT pass" do
+    before(:each) do
+      @resolution_proposals_association = mock("resolution proposals association")
+      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+
+      @resolution_proposal = mock_model(ResolutionProposal)
+      @resolution_proposals_association.stub(:find).and_return(@resolution_proposal)
+
+      @resolution_proposal.stub(:force_passed=)
+      @resolution_proposal.stub(:close!)
+    end
+
+    def put_pass
+      put :pass, :id => '1'
+    end
+
+    it "finds the resolution proposal" do
+      @resolution_proposals_association.should_receive(:find).with('1').and_return(@resolution_proposal)
+      put_pass
+    end
+
+    it "forces the resolution proposal to pass" do
+      @resolution_proposal.should_receive(:force_passed=).with(true)
+      put_pass
+    end
+
+    it "closes the resolution proposal" do
+      @resolution_proposal.should_receive(:close!)
+      put_pass
+    end
+
+    it "redirects to the proposals page" do
+      put_pass
+      response.should redirect_to('/proposals')
+    end
+
+    it "checks authorisation"
+  end
   
 end
