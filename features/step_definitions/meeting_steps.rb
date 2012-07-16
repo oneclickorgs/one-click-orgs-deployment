@@ -1,3 +1,5 @@
+require 'action_controller/record_identifier'
+
 Given /^another director has recorded some minutes$/ do
   @company ||= Company.last
   @meeting = @company.meetings.make!
@@ -21,6 +23,29 @@ When /^I check the first two directors' checkboxes$/ do
   directors.each do |director|
     check(director.name)
   end
+end
+
+When /^I choose a date for the meeting$/ do
+  meeting_date = 1.month.from_now
+  select(meeting_date.year.to_s, :from => 'general_meeting[happened_on(1i)]')
+  select(meeting_date.strftime('%B'), :from => 'general_meeting[happened_on(2i)]')
+  select(meeting_date.day.to_s, :from => 'general_meeting[happened_on(3i)]')
+end
+
+When /^I enter a start time for the meeting$/ do
+  fill_in('general_meeting[start_time]', :with => '4pm')
+end
+
+When /^I enter a venue for the meeting$/ do
+  fill_in('general_meeting[venue]', :with => "The Meeting Hall")
+end
+
+When /^I enter an agenda for the meeting$/ do
+  fill_in('general_meeting[agenda]', :with => "Discuss things. AOB.")
+end
+
+When /^I certify that the Board has decided to convene the meeting$/ do
+  check('general_meeting[certification]')
 end
 
 Then /^I should see a form for recording minutes$/ do
@@ -72,3 +97,16 @@ Then /^I should see the minutes$/ do
   
   page.should have_content(@meeting.happened_on.to_s(:long_ordinal))
 end
+
+Then /^I should see the new meeting in the list of Upcoming Meetings$/ do
+  @meeting ||= @organisation.meetings.last
+
+  within('.upcoming_meetings') do
+    page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
+  end
+end
+
+Then /^all the Members should receive a notification of the new meeting$/ do
+  pending # express the regexp above with the code you wish you had
+end
+

@@ -7,7 +7,7 @@ Feature: Convening a general meeting
     Given there is a co-op
     And I am the Secretary of the co-op
   
-  @wip
+  @javascript
   Scenario: Secretary convenes a General Meeting
     When I go to the Meetings page
     And I press "Convene a General Meeting"
@@ -19,7 +19,11 @@ Feature: Convening a general meeting
     And I press "Confirm and convene the meeting"
     Then I should be on the Meetings page
     And I should see the new meeting in the list of Upcoming Meetings
-    And all the Members should receive a notification of the new meeting
+
+  @wip
+  Scenario: Members are notified of a new General Meeting
+    When I convene a General Meeting
+    Then all the Members should receive a notification of the new meeting
   
   @wip
   Scenario: Secretary convenes a General Meeting with resolutions to be considered

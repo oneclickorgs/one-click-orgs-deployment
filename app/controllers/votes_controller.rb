@@ -21,7 +21,14 @@ class VotesController < ApplicationController
         end
       end
       
-      redirect_to return_to, :notice => "Vote for proposal cast"
+      notice = case co
+      when Coop
+        "You voted to support this resolution."
+      else
+        "Vote for proposal cast"
+      end
+
+      redirect_to return_to, :notice => notice
     rescue Exception => e
       redirect_to return_to, :notice => "Error casting vote: #{e}"
     end

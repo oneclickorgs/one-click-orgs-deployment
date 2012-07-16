@@ -1,6 +1,6 @@
 class ProposalsController < ApplicationController
   respond_to :html
-  
+    
   def index
     case co
     when Coop
@@ -42,5 +42,11 @@ class ProposalsController < ApplicationController
       # use error_messages_for.
       redirect root_path, :flash => {:error => "Proposal not created"}
     end
+  end
+  
+  def open
+    @proposal = co.resolutions.find(params[:id])
+    @proposal.start!
+    redirect_to proposals_path
   end
 end

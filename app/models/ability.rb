@@ -53,6 +53,7 @@ class Ability
     when Coop
       if user.has_permission(:resolution)
         can :create, Resolution
+        can :edit, ResolutionProposal
       end
       
       if user.has_permission(:board_resolution)
@@ -61,6 +62,10 @@ class Ability
       
       if user.has_permission(:resolution_proposal)
         can :create, ResolutionProposal
+      end
+
+      if user.has_permission(:meeting)
+        can :create, Meeting
       end
     end
   end

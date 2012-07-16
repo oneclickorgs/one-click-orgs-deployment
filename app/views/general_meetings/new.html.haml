@@ -1,0 +1,24 @@
+%h2 Convene a General Meeting
+
+= form_for(@general_meeting) do |general_meeting_form|
+  %p= general_meeting_form.label :happened_on, "Date of meeting"
+  %p= general_meeting_form.date_select :happened_on
+  %p= general_meeting_form.label :start_time
+  %p= general_meeting_form.text_field :start_time
+  %p= general_meeting_form.label :venue
+  %p= general_meeting_form.text_area :venue
+  %h3 Resolutions to be considered at the meeting
+  .resolutions
+    - unless @resolutions.blank?
+      - @resolutions.each do |resolution|
+        = content_tag_for(:p, resolution) do
+          = resolution.title
+  %p= general_meeting_form.label :agenda, "Other agenda items"
+  %p= general_meeting_form.text_area :agenda
+  %p TODO: AGM details
+  %p
+    = general_meeting_form.check_box :certification
+    = general_meeting_form.label :certification, "I certify that the Board has decided (by meeting or written resolution) to convene this meeting."
+  %p When you confirm these details, notice of the meeting will be sent to all Members.
+  %p
+    = general_meeting_form.submit "Confirm and convene the meeting."

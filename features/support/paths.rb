@@ -45,11 +45,22 @@ module NavigationHelpers
       @meeting ||= @organisation.meeting.last
       meeting_path(@meeting)
     when /^the Directors page$/
-      members_path
+      case @organisation
+      when Company
+        members_path
+      when Coop
+        directors_path
+      end
     when /^the dashboard( page)?$/
       '/'
     when /^the Resolutions page$/
       proposals_path
+    when /^the "Convene a General Meeting" page$/
+      new_general_meeting_path
+    when /^the Meetings page$/
+      meetings_path
+    when /^the Members page$/
+      members_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

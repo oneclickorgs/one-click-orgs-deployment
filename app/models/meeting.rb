@@ -11,6 +11,8 @@ class Meeting < ActiveRecord::Base
   belongs_to :creator, :class_name => 'Member', :foreign_key => 'creator_id'
   
   has_many :comments, :as => :commentable
+
+  scope :upcoming, lambda{where(['happened_on > ?', Time.now.utc.midnight.advance(:days => 1)])}
   
   def to_event
     {:timestamp => created_at, :object => self, :kind => :meeting}

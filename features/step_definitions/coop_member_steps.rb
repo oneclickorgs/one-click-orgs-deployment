@@ -35,3 +35,7 @@ Given /^I am a Director of the co\-op$/ do
   @user = @coop.members.make!(:director)
   user_logs_in
 end
+
+Then /^I should see a list of the members$/ do
+  page.should have_css('.members', :text => @user.name)
+end

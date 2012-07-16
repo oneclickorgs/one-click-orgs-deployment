@@ -1,4 +1,5 @@
 class Coop < Organisation
+  has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
   
@@ -22,6 +23,7 @@ class Coop < Organisation
     secretaries = member_classes.find_or_create_by_name('Secretary')
     secretaries.set_permission!(:resolution, true)
     secretaries.set_permission!(:board_resolution, true)
+    secretaries.set_permission!(:meeting, true)    
     secretaries.set_permission!(:vote, true)
   end
   
@@ -35,5 +37,9 @@ class Coop < Organisation
   
   def secretary
     member_classes.find_by_name!('Secretary').members.last
+  end
+
+  def directors
+    members.where(['member_class_id = ?', member_classes.find_by_name!('Director').id])
   end
 end

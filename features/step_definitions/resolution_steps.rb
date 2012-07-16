@@ -16,6 +16,18 @@ def choose_draft
   end
 end
 
+Given /^there is a draft resolution$/ do
+  @resolution = @organisation.resolutions.make!(:draft)
+end
+
+Given /^there is a suggested resolution$/ do
+  @resolution_proposal = @organisation.resolution_proposals.make!
+end
+
+Given /^there is a resolution open for electronic voting$/ do
+  @resolution = @organisation.resolutions.make!
+end
+
 When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
   fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
 end
@@ -40,6 +52,37 @@ When /^I certify that the Board has decided to open this resolution$/ do
   check("resolution_certification")
 end
 
+When /^I press "(.*?)" for the draft resolution$/ do |button|
+  @resolution ||= @organisation.resolutions.draft.last
+  
+  within('#' + ActionController::RecordIdentifier.dom_id(@resolution)) do
+    click_button(button)
+  end
+end
+
+When /^I press "(.*?)" for the suggested resolution$/ do |button|
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+
+  within('#' + ActionController::RecordIdentifier.dom_id(@resolution_proposal)) do
+    click_button(button)
+  end
+end
+
+When /^I amend the text of the resolution$/ do
+  fill_in("Text of the resolution", :with => "New suggested resolution description.")
+end
+
+When /^I save the resolution$/ do
+  click_button("Save changes")
+end
+
+When /^I vote to support the resolution$/ do
+  @resolution ||= @organisation.resolutions.last
+  within('#' + ActionController::RecordIdentifier.dom_id(@resolution)) do
+    click_button('Support')
+  end
+end
+
 Then /^I should see the new resolution in the list of draft resolutions$/ do
   @resolution ||= @organisation.resolutions.last
   within('.draft_proposals') do
@@ -47,7 +90,7 @@ Then /^I should see the new resolution in the list of draft resolutions$/ do
   end
 end
 
-Then /^I should see the new resolution in the list of currently\-open resolutions$/ do
+Then /^I should see the (?:|new )resolution in the list of currently\-open resolutions$/ do
   @resolution ||= @organisation.resolutions.last
   within('.proposals') do
     page.should have_content(@resolution.description)
@@ -58,6 +101,12 @@ Then /^I should see the new resolution in the list of suggested resolutions$/ do
   @resolution_proposal ||= @organisation.resolution_proposals.last
   within('.resolution_proposals') do
     page.should have_content(@resolution_proposal.description)
+  end
+end
+
+Then /^I should see the amended resolution text in the list of suggested resolutions$/ do
+  within('.resolution_proposals') do
+    page.should have_content("New suggested resolution description.")
   end
 end
 

@@ -8,6 +8,19 @@
 
 %h3 List of Members
 .section
+  %table.members
+    %tr
+      %th Name
+      %th Last login
+    - @members.each do |member|
+      %tr
+        %td
+          = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
+          = link_to "#{member.name}", member_path(member)
+        %td
+          - if member.last_logged_in_at
+            = member.last_logged_in_at.to_s(:short)
+
 
 %h3 Members settings
 .section

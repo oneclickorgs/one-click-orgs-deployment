@@ -122,6 +122,10 @@ describe DirectorsController do
     end
     
     describe "GET index" do
+      before(:each) do
+        @organisation.stub(:directors)  
+      end
+
       it "is successful" do
         get :index
         response.should be_success

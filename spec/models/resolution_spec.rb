@@ -52,11 +52,13 @@ describe Resolution do
   end
   
   describe "automatic title" do
-    it "automatically sets the title based on the description" do
+    it "automatically sets the title based on the description upon creation" do
       @resolution = Resolution.make(:title => nil, :description => "A description of the resolution")
       @resolution.save!
       @resolution.title.should be_present
     end
+
+    it "automatically updates the title based on the description upon updating"
   end
   
   describe "mass assignment" do

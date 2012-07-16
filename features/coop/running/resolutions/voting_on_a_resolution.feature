@@ -3,7 +3,6 @@ Feature: Voting on a resolution
   As a Member
   I want to vote on a resolution
   
-  @wip
   Scenario: Member votes on a resolution
     Given there is a co-op
     And I am a Member of the co-op

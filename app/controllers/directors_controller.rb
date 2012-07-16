@@ -1,5 +1,6 @@
 class DirectorsController < ApplicationController
   def index
+    @directors = co.directors
   end
   
   def create
