@@ -81,14 +81,17 @@ OneClickOrgs::Application.routes.draw do
   resources :change_member_class_proposals
   resources :found_association_proposals
   
-  resources :resolutions
-  resources :board_resolutions
   resources :resolution_proposals do
     member do
       put :pass
       put :pass_to_meeting
     end
   end
+
+  resources :resolutions
+  resources :board_resolutions
+
+  resources :change_meeting_notice_period_resolutions
   
   resources :members do
     member do

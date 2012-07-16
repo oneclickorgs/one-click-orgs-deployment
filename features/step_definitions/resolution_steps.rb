@@ -117,3 +117,7 @@ Then /^the new resolution should have voting buttons$/ do
     page.should have_css("input[type=submit][value=Oppose]")
   end
 end
+
+Then /^I should see a draft resolution to change the General Meeting notice period to (\d+) days$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end

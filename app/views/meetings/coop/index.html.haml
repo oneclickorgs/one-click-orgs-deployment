@@ -25,3 +25,10 @@
 
 %h3 Meetings settings
 .section
+  %p
+    The notice period for General Meetings is
+    = co.constitution.meeting_notice_period
+    clear days.
+  - if can?(:create, Resolution)
+    = link_button("Change the notice period", :url => new_change_meeting_notice_period_resolution_path)
+  .clear

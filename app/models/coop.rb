@@ -5,8 +5,20 @@ class Coop < Organisation
   
   has_many :resolutions, :foreign_key => 'organisation_id'
   has_many :board_resolutions, :foreign_key => 'organisation_id'
+
+  has_many :change_meeting_notice_period_resolutions, :foreign_key => 'organisation_id'
   
   has_many :resolution_proposals, :foreign_key => 'organisation_id'
+
+  # ATTRIBUTES
+
+  def meeting_notice_period=(new_meeting_notice_period)
+    clauses.set_integer!(:meeting_notice_period, new_meeting_notice_period)
+  end
+
+  def meeting_notice_period
+    clauses.get_integer(:meeting_notice_period)
+  end
   
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
@@ -24,6 +36,7 @@ class Coop < Organisation
     secretaries.set_permission!(:resolution, true)
     secretaries.set_permission!(:board_resolution, true)
     secretaries.set_permission!(:meeting, true)    
+    secretaries.set_permission!(:constitution, true)
     secretaries.set_permission!(:vote, true)
   end
   

@@ -15,7 +15,8 @@ class Constitution
     @organisation
   end
   
-  delegate :name, :objectives, :assets, :domain, :to => :organisation
+  delegate :name, :objectives, :assets, :domain,
+    :meeting_notice_period, :meeting_notice_period=, :to => :organisation
   
   alias_method :organisation_name, :name
   

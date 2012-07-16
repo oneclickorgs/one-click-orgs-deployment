@@ -78,5 +78,24 @@ describe Resolution do
       expect {Resolution.new(:certification => true)}.to_not raise_error
     end
   end
+
+
+  describe "passing immediately" do
+    before(:each) do
+      @resolution = Resolution.make
+      @resolution.pass_immediately = true
+    end
+
+    it "triggers enactment" do
+      @resolution.should_receive(:enact!)
+      @resolution.save!
+    end
+
+    it "marks the resolution as accepted" do
+      @resolution.save!
+      @resolution.should be_accepted
+    end
+  end
+
   
 end

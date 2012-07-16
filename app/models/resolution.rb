@@ -25,6 +25,27 @@ class Resolution < Proposal
   def draft
     !!@draft
   end
+
+  before_create :set_draft_state
+  def set_draft_state
+    if draft
+      self.state = 'draft'
+    end
+  end
+
+  # IMMEDIATE PASSING
+
+  attr_accessor :pass_immediately
+
+  after_create :pass_immediately_if_requested
+  def pass_immediately_if_requested
+    return unless pass_immediately
+
+    self.force_passed = true
+    close!
+  end
+
+  # ATTRIBUTES
   
   def extraordinary=(new_extraordinary)
     @extraordinary = new_extraordinary
@@ -33,16 +54,9 @@ class Resolution < Proposal
   def extraordinary
     !!@extraordinary
   end
-  
-  before_create :set_draft_state
-  def set_draft_state
-    if draft
-      self.state = 'draft'
-    end
-  end
-  
-  before_create :set_title
-  def set_title
+    
+  before_create :set_default_title
+  def set_default_title
     if title.blank?
       self.title = description.truncate(200)
     end

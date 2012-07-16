@@ -52,6 +52,17 @@ describe Coop do
       
       @coop.resolution_proposals.should include(@resolution_proposal)
     end
+
+    it "has many change-meeting-notice-period resolutions" do
+      @coop = Coop.make!
+      @change_meeting_notice_period_resolution = ChangeMeetingNoticePeriodResolution.make!
+
+      expect {@coop.change_meeting_notice_period_resolutions << @change_meeting_notice_period_resolution}.to_not raise_error
+
+      @coop.reload
+
+      @coop.change_meeting_notice_period_resolutions.should include(@change_meeting_notice_period_resolution)
+    end
   end
   
   describe "defaults" do
@@ -84,6 +95,16 @@ describe Coop do
       
       @coop.name = "Coffee"
       @coop.name.should == "Coffee"
+    end
+
+    it "has a 'meeting_notice_period' attribute" do
+      @coop = Coop.make!
+
+      @coop.meeting_notice_period = 32
+
+      @coop.reload
+
+      @coop.meeting_notice_period.should == 32
     end
   end
   

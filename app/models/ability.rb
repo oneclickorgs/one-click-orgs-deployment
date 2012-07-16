@@ -67,6 +67,10 @@ class Ability
       if user.has_permission(:meeting)
         can :create, Meeting
       end
+
+      if user.has_permission(:constitution)
+        can :update, Constitution
+      end
     end
   end
 end

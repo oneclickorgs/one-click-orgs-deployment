@@ -87,6 +87,11 @@ end
 EjectMemberProposal.blueprint do
 end
 
+ResolutionProposal.blueprint do
+  organisation { Coop.make }
+  description { 'The description of the suggested resolution.'}
+end
+
 Resolution.blueprint do
   organisation { Coop.make }
   description { 'The description of the resolution.' }
@@ -100,9 +105,7 @@ BoardResolution.blueprint do
   organisation { Coop.make }
 end
 
-ResolutionProposal.blueprint do
-  organisation { Coop.make }
-  description { 'The description of the suggested resolution.'}
+ChangeMeetingNoticePeriodResolution.blueprint do
 end
 
 Decision.blueprint do

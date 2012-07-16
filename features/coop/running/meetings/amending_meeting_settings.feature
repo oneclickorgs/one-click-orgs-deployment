@@ -7,7 +7,7 @@ Feature: Amending meeting settings
     Given there is a co-op
     And I am the Secretary of the co-op
   
-  @wip
+  @javascript
   Scenario: Secretary increases the notice period for General Meetings
     Given the notice period for General Meetings is "14" days
     When I go to the Meetings page
