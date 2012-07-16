@@ -61,6 +61,9 @@ module NavigationHelpers
       meetings_path
     when /^the Members page$/
       members_path
+    when /^another member's profile page$/
+      @member = (@organisation.members - [@user]).first
+      member_path(@member)
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
