@@ -50,6 +50,8 @@ module NavigationHelpers
       '/'
     when /^the Resolutions page$/
       proposals_path
+    when /the "Convene a General Meeting" page/
+      new_general_meeting_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

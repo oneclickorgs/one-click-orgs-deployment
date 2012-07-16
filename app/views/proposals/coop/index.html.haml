@@ -24,7 +24,14 @@
     - @draft_proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
-          = proposal.description
+          %p
+            = proposal.description
+          - if can?(:create, Resolution)
+            %p
+              = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
+          - if can?(:create, Meeting)
+            %p
+              = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
 
 %h3 Suggested resolutions:
 .section
@@ -32,4 +39,13 @@
     - @resolution_proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
-          = proposal.description
+          %p= proposal.description
+          - if can?(:edit, ResolutionProposal)
+            %p
+              = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
+          - if can?(:create, Resolution)
+            %p
+              = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
+            - if can?(:create, Meeting)
+              %p
+                = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)

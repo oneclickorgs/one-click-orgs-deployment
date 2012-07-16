@@ -22,6 +22,7 @@ class Coop < Organisation
     secretaries = member_classes.find_or_create_by_name('Secretary')
     secretaries.set_permission!(:resolution, true)
     secretaries.set_permission!(:board_resolution, true)
+    secretaries.set_permission!(:meeting, true)    
     secretaries.set_permission!(:vote, true)
   end
   

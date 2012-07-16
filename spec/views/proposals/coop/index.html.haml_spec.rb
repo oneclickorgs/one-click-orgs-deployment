@@ -46,10 +46,55 @@ describe "proposals/coop/index" do
       render
       rendered.should have_css("input[class='button-form'][data-url='/resolutions/new']")
     end
+    
+    it "renders a 'Start an electronic vote' button for each draft resolution" do
+      render
+      rendered.should have_selector(".draft_proposals form[action='/proposals/#{@draft_proposals[0].to_param}/open']")
+    end
+
+    it "renders a 'Start an electronic vote' button for each suggested resolution" do
+      render
+      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass']")
+    end
+  end
+
+  context "when user can edit a resolution proposal" do
+    before(:each) do
+      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
+    end
+
+    it "renders an edit button for each suggested resolution" do
+      render
+      rendered.should have_selector(".resolution_proposals input[data-url='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
+    end
+  end
+
+  context "when user can create a meeting" do
+    before(:each) do
+      view.stub(:can?).with(:create, Meeting).and_return(true)
+    end
+
+    it "renders an 'Add to a meeting' button for each draft resolution" do
+      render
+      rendered.should have_selector(".draft_proposals input[data-url='/general_meetings/new?resolution_id=#{@draft_proposals[0].to_param}']")
+    end
+  end
+
+  context "when user can create a meeting and can create a resolution" do
+    before(:each) do
+      view.stub(:can?).with(:create, Meeting).and_return(true)
+      view.stub(:can?).with(:create, Resolution).and_return(true)
+    end
+
+    it "renders an 'Add to a meeting' button for each suggested resolution" do
+      render
+      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass_to_meeting']")
+    end
   end
   
   context "when user cannot create a resolution" do
     it "does not render a button to create a resolution"
+    it "does not render a button to start an electronic vote for each draft resolution"
   end
   
   context "when user can suggest a resolution" do

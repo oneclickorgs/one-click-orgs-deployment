@@ -57,6 +57,10 @@ Proposal.blueprint do
   proposer { Member.make(:organisation => object.organisation) }
 end
 
+Proposal.blueprint(:draft) do
+  state { 'draft' }
+end
+
 AddMemberProposal.blueprint do
   title { "a proposal title" }
   state { 'open' }
@@ -85,6 +89,11 @@ end
 
 Resolution.blueprint do
   organisation { Coop.make }
+  description { 'The description of the resolution.' }
+end
+
+Resolution.blueprint(:draft) do
+  state {'draft'}
 end
 
 BoardResolution.blueprint do
@@ -93,6 +102,7 @@ end
 
 ResolutionProposal.blueprint do
   organisation { Coop.make }
+  description { 'The description of the suggested resolution.'}
 end
 
 Decision.blueprint do

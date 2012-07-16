@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502230348) do
+ActiveRecord::Schema.define(:version => 20120715225911) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -71,6 +71,9 @@ ActiveRecord::Schema.define(:version => 20120502230348) do
     t.integer  "organisation_id"
     t.integer  "creator_id"
     t.string   "type"
+    t.string   "start_time"
+    t.text     "venue"
+    t.text     "agenda"
   end
 
   create_table "member_classes", :force => true do |t|

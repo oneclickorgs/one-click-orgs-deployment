@@ -67,6 +67,10 @@ OneClickOrgs::Application.routes.draw do
   resources :decisions
   
   resources :proposals do
+    member do
+      put :open
+    end
+    
     resources :comments
   end
   # TODO Don't want this global matching if possible:
@@ -79,7 +83,12 @@ OneClickOrgs::Application.routes.draw do
   
   resources :resolutions
   resources :board_resolutions
-  resources :resolution_proposals
+  resources :resolution_proposals do
+    member do
+      put :pass
+      put :pass_to_meeting
+    end
+  end
   
   resources :members do
     member do
@@ -117,6 +126,7 @@ OneClickOrgs::Application.routes.draw do
   resources :meetings do
     resources :comments
   end
+  resources :general_meetings
   
   resources :shares
   
