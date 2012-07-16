@@ -58,3 +58,9 @@ end
 Then /^I should not see the director$/ do
   page.should_not have_selector("tr#director_#{@director.id}")
 end
+
+Then /^I should see a list of the directors$/ do
+  director = @organisation.directors.first
+  page.should have_css(".directors", :text => director.name)
+end
+

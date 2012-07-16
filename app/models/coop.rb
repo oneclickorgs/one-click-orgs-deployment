@@ -38,4 +38,8 @@ class Coop < Organisation
   def secretary
     member_classes.find_by_name!('Secretary').members.last
   end
+
+  def directors
+    members.where(['member_class_id = ?', member_classes.find_by_name!('Director').id])
+  end
 end

@@ -45,7 +45,12 @@ module NavigationHelpers
       @meeting ||= @organisation.meeting.last
       meeting_path(@meeting)
     when /^the Directors page$/
-      members_path
+      case @organisation
+      when Company
+        members_path
+      when Coop
+        directors_path
+      end
     when /^the dashboard( page)?$/
       '/'
     when /^the Resolutions page$/
