@@ -1,5 +1,6 @@
 class MeetingsController < ApplicationController
   def index
+    @upcoming_meetings = co.meetings.upcoming
   end
   
   def show

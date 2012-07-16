@@ -1,10 +1,24 @@
 %h2 Meetings
 
 .section
-  TODO: Action buttons here.
+  = link_button("Convene a General Meeting", :url => new_general_meeting_path)
+  .clear
+
 
 %h3 Upcoming meetings
 .section
+  %table.upcoming_meetings
+    - @upcoming_meetings.each do |meeting|
+      %tr
+        = content_tag_for(:td, meeting) do
+          A
+          = meeting.class.name.underscore.humanize.titlecase
+          on
+          = meeting.happened_on.strftime('%d %B %Y') + ','
+          starting at
+          = meeting.start_time + ','
+          at
+          = meeting.venue + '.'
 
 %h3 Past meetings
 .section

@@ -190,6 +190,20 @@ describe MeetingsController do
     end
     
     describe "GET index" do
+      before(:each) do
+        @meetings_association = mock("meetings association")  
+        @upcoming_meetings = mock("upcoming meetings association")
+
+        @organisation.stub(:meetings).and_return(@meetings_association)
+        @meetings_association.stub(:upcoming).and_return(@upcoming_meetings_association)
+      end
+
+      it "finds and assigns the upcoming meetings" do
+        @meetings_association.should_receive(:upcoming).and_return(@upcoming_meetings_association)
+        get :index
+        assigns[:upcoming_meetings].should == @upcoming_meetings_association
+      end
+
       it "is successful" do
         get :index
         response.should be_success
