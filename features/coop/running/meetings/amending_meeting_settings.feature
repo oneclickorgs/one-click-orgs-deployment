@@ -59,14 +59,27 @@ Feature: Amending meeting settings
     When I go to the Resolutions page
     Then I should see a draft resolution to decrease the General Meeting notice period to 7 days
 
-  @wip
-  Scenario: Secretary amends the quorum for General Meetings
+  @wip @javascript
+  Scenario: Secretary starts a vote to amend the quorum for General Meetings
     When I go to the Meetings page
     And I press "Change the quorum"
     And I fill in "Number of members" with "5"
     And I fill in "Percentage of membership" with "30%"
+    And I certify that the Board has proposed this amendment
     And I press "Start a vote of Members"
     Then I should see "A draft resolution to change the General Meeting quorum has been created."
     When I go to the Resolutions page
     Then I should see a draft Extraordinary Resolution to change the General Meeting quorum
     And the draft resolution should be to change the quorum to the greater of 5 members or 30% of the membership
+
+  @wip @javascript
+  Scenario: Secretary amends the quorum for General Meetings
+    When I go to the Meetings page
+    And I press "Change the quorum"
+    And I fill in "Number of members" with "5"
+    And I fill in "Percentage of membership" with "30%"
+    And I certify that the Board has proposed this amendment
+    And I certify that the resolution has already been passed
+    And I press "Amend the quorum"
+    Then I should be on the Meetings page
+    And I should see that the quorum is 5 members or 30% of the membership
