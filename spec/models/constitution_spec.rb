@@ -77,5 +77,29 @@ describe Constitution do
         @constitution.meeting_notice_period = 14
       end
     end
+
+    describe "quorum number" do
+      it "can be read" do
+        @organisation.should_receive(:quorum_number).and_return(3)
+        @constitution.quorum_number.should be_present
+      end
+
+      it "can be set" do
+        @organisation.should_receive(:quorum_number=).with(5)
+        @constitution.quorum_number = 5
+      end
+    end
+
+    describe "quorum percentage" do
+      it "can be read" do
+        @organisation.should_receive(:quorum_percentage).and_return(25)
+        @constitution.quorum_percentage.should be_present
+      end
+
+      it "can be set" do
+        @organisation.should_receive(:quorum_percentage=).with(15)
+        @constitution.quorum_percentage = 15
+      end
+    end
   end
 end

@@ -14,7 +14,7 @@ Feature: Amending meeting settings
     And I press "Change the notice period"
     And I enter "21" days
     Then I should see "Extraordinary Resolution is required"
-    When I certify that that the Board has proposed this amendment
+    When I certify that the Board has proposed this amendment
     And I certify that the resolution has already been passed
     And I press "Amend the notice period"
     Then I should be on the Meetings page
@@ -27,7 +27,7 @@ Feature: Amending meeting settings
     And I press "Change the notice period"
     And I enter "7" days
     Then I should see "90% of Members"
-    When I certify that that the Board has proposed this amendment
+    When I certify that the Board has proposed this amendment
     And I certify that the resolution has already been passed
     And I press "Amend the notice period"
     Then I should be on the Meetings page
@@ -40,7 +40,7 @@ Feature: Amending meeting settings
     And I press "Change the notice period"
     And I enter "21" days
     Then I should see "Extraordinary Resolution is required"
-    When I certify that that the Board has proposed this amendment
+    When I certify that the Board has proposed this amendment
     And I press "Start a vote of Members"
     Then I should see "A draft resolution to increase the General Meeting notice period has been created."
     When I go to the Resolutions page
@@ -53,13 +53,13 @@ Feature: Amending meeting settings
     And I press "Change the notice period"
     And I enter "7" days
     Then I should see "90% of Members"
-    When I certify that that the Board has proposed this amendment
+    When I certify that the Board has proposed this amendment
     And I press "Start a vote of Members"
     Then I should see "A draft resolution to decrease the General Meeting notice period has been created."
     When I go to the Resolutions page
     Then I should see a draft resolution to decrease the General Meeting notice period to 7 days
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary starts a vote to amend the quorum for General Meetings
     When I go to the Meetings page
     And I press "Change the quorum"

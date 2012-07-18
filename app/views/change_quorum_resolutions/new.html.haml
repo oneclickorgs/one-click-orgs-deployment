@@ -1,0 +1,23 @@
+%h2 Changing quorum for General Meetings
+%p
+  The quorum for General Meetings is currently the greater of
+  = co.constitution.quorum_number
+  and
+  = co.constitution.quorum_percentage.to_s + '%'
+  of the membership.
+= form_for(@change_quorum_resolution) do |form|
+  %p Change the quorum to:
+  %p= form.label :quorum_number, "Number of members"
+  %p= form.text_field :quorum_number
+  %p= form.label :quorum_percentage, "Percentage of membership"
+  %p= form.text_field :quorum_percentage
+  %p
+    = form.check_box :certification
+    = form.label :certification, "I certify that the Board has decided to ask the Members to accept this notice period."
+  %p
+    = form.check_box :pass_immediately
+    = form.label :pass_immediately, "I certify that this resolution has already been passed by the Membership."
+  %p.pass_immediately_true{:style => "display: none;"}
+    = form.submit "Amend the notice period"
+  %p.pass_immediately_false
+    = form.submit "Start a vote of Members"

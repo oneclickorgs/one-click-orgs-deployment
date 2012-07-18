@@ -123,3 +123,15 @@ Then /^I should see a draft resolution to (?:increase|decrease) the General Meet
     page.should have_content("Change notice period for General Meetings to #{notice_period} clear days")
   end
 end
+
+Then /^I should see a draft Extraordinary Resolution to change the General Meeting quorum$/ do
+  within('.draft_proposals') do
+    page.should have_content("quorum")
+  end
+end
+
+Then /^the draft resolution should be to change the quorum to the greater of (\d+) members or (\d+)% of the membership$/ do |number, percentage|
+  within('.draft_proposals') do
+    page.should have_content("#{number} members or #{percentage}% of the membership")
+  end
+end

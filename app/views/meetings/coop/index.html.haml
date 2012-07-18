@@ -31,4 +31,12 @@
     clear days.
   - if can?(:create, Resolution)
     = link_button("Change the notice period", :url => new_change_meeting_notice_period_resolution_path)
+  %p
+    The quorum for General Meetings is the greater of
+    = co.constitution.quorum_number
+    and
+    = co.constitution.quorum_percentage.to_s + '%'
+    of the membership.
+  - if can?(:create, Resolution)
+    = link_button("Change the quorum", :url => new_change_quorum_resolution_path)
   .clear

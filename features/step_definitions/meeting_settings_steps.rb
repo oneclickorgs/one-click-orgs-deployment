@@ -2,8 +2,12 @@ When /^I enter "(.*?)" days$/ do |notice_period|
   fill_in('change_meeting_notice_period_resolution[meeting_notice_period]', :with => notice_period)
 end
 
-When /^I certify that that the Board has proposed this amendment$/ do
-  check('change_meeting_notice_period_resolution[certification]')
+When /^I certify that the Board has proposed this amendment$/ do
+  if page.has_field?('change_meeting_notice_period_resolution[certification]')
+    check('change_meeting_notice_period_resolution[certification]')
+  else
+    check('change_quorum_resolution[certification]')
+  end
 end
 
 When /^I certify that the resolution has already been passed$/ do

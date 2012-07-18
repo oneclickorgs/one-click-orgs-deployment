@@ -63,6 +63,14 @@ describe Coop do
 
       @coop.change_meeting_notice_period_resolutions.should include(@change_meeting_notice_period_resolution)
     end
+
+    it "has many change-quorum resolutions" do
+      @coop = Coop.make!
+      @change_quorum_resolution = ChangeQuorumResolution.make!
+      expect {@coop.change_quorum_resolutions << @change_quorum_resolution}.to_not raise_error
+      @coop.reload
+      @coop.change_quorum_resolutions.should include(@change_quorum_resolution)
+    end
   end
   
   describe "defaults" do
@@ -99,12 +107,23 @@ describe Coop do
 
     it "has a 'meeting_notice_period' attribute" do
       @coop = Coop.make!
-
       @coop.meeting_notice_period = 32
-
       @coop.reload
-
       @coop.meeting_notice_period.should == 32
+    end
+
+    it "has a 'quorum_number' attribute" do
+      @coop = Coop.make!
+      @coop.quorum_number = 20
+      @coop.reload
+      @coop.quorum_number.should == 20
+    end
+
+    it "has a 'quorum_percentage' attribute" do
+      @coop = Coop.make!
+      @coop.quorum_percentage = 15
+      @coop.reload
+      @coop.quorum_percentage.should == 15
     end
   end
   

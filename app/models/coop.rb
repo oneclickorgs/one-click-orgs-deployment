@@ -7,6 +7,7 @@ class Coop < Organisation
   has_many :board_resolutions, :foreign_key => 'organisation_id'
 
   has_many :change_meeting_notice_period_resolutions, :foreign_key => 'organisation_id'
+  has_many :change_quorum_resolutions, :foreign_key => 'organisation_id'
   
   has_many :resolution_proposals, :foreign_key => 'organisation_id'
 
@@ -18,6 +19,22 @@ class Coop < Organisation
 
   def meeting_notice_period
     clauses.get_integer(:meeting_notice_period)
+  end
+
+  def quorum_number=(new_quorum_number)
+    clauses.set_integer!(:quorum_number, new_quorum_number)
+  end
+
+  def quorum_number
+    clauses.get_integer(:quorum_number)
+  end
+
+  def quorum_percentage=(new_quorum_percentage)
+    clauses.set_integer!(:quorum_percentage, new_quorum_percentage)
+  end
+
+  def quorum_percentage
+    clauses.get_integer(:quorum_percentage)
   end
   
   def create_default_member_classes

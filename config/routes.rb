@@ -92,6 +92,7 @@ OneClickOrgs::Application.routes.draw do
   resources :board_resolutions
 
   resources :change_meeting_notice_period_resolutions
+  resources :change_quorum_resolutions
   
   resources :members do
     member do

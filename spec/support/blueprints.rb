@@ -108,6 +108,9 @@ end
 ChangeMeetingNoticePeriodResolution.blueprint do
 end
 
+ChangeQuorumResolution.blueprint do
+end
+
 Decision.blueprint do
   proposal { Proposal.make }
 end

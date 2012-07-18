@@ -17,7 +17,9 @@ describe 'meetings/coop/index' do
     view.stub(:co).and_return(@organisation)
 
     @constitution = mock("constitution",
-      :meeting_notice_period => 14
+      :meeting_notice_period => 14,
+      :quorum_number => 3,
+      :quorum_percentage => 25
     )
     @organisation.stub(:constitution).and_return(@constitution)
   end
@@ -45,6 +47,11 @@ describe 'meetings/coop/index' do
     it "renders a button link to change the notice period" do
       render
       rendered.should have_selector(:input, 'data-url' => '/change_meeting_notice_period_resolutions/new')
+    end
+
+    it "renders a button link to change the quorum" do
+      render
+      rendered.should have_selector(:input, 'data-url' => '/change_quorum_resolutions/new')
     end
   end
 
