@@ -34,7 +34,7 @@
   %p
     The quorum for General Meetings is the greater of
     = co.constitution.quorum_number
-    and
+    members and
     = co.constitution.quorum_percentage.to_s + '%'
     of the membership.
   - if can?(:create, Resolution)
