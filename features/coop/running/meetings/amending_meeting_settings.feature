@@ -20,7 +20,7 @@ Feature: Amending meeting settings
     Then I should be on the Meetings page
     And I should see that the notice period is "21" days
 
-  @wip
+  @javascript
   Scenario: Secretary decreases the notice period for General Meetings
     Given the notice period for General Meetings is "14" days
     When I go to the Meetings page
