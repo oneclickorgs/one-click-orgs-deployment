@@ -43,7 +43,8 @@ describe ChangeMeetingNoticePeriodResolutionsController do
         :proposer= => nil,
         :draft= => nil,
         :accepted? => false,
-        :save! => true
+        :save! => true,
+        :notice_period_increased? => true
       )
 
       @organisation.stub(:change_meeting_notice_period_resolutions).and_return(@resolutions_association)
@@ -84,10 +85,32 @@ describe ChangeMeetingNoticePeriodResolutionsController do
         @resolution.stub(:accepted?).and_return(false)
       end
 
-      it "sets a success flash mentioning the resolution" do
+      it "sets a notice flash mentioning the resolution" do
         post_create
         flash[:notice].should be_present
         flash[:notice].should include('resolution')
+      end
+
+      context "when notice period is being increased" do
+        before(:each) do
+          @resolution.stub(:notice_period_increased?).and_return(true)
+        end
+
+        it "sets a notice flash mentioning the increase" do
+          post_create
+          flash[:notice].should include('increase')
+        end
+      end
+
+      context "when the notice period is being decreased" do
+        before(:each) do
+          @resolution.stub(:notice_period_increased?).and_return(false)
+        end
+
+        it "sets a notice flash mentioning the decrease" do
+          post_create
+          flash[:notice].should include('decrease')
+        end
       end
     end
 
@@ -96,7 +119,7 @@ describe ChangeMeetingNoticePeriodResolutionsController do
         @resolution.stub(:accepted?).and_return(true)
       end
 
-      it "sets a success flash" do
+      it "sets a notice flash" do
         post_create
         flash[:notice].should be_present
       end

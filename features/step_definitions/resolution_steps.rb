@@ -118,7 +118,7 @@ Then /^the new resolution should have voting buttons$/ do
   end
 end
 
-Then /^I should see a draft resolution to increase the General Meeting notice period to (\d+) days$/ do |notice_period|
+Then /^I should see a draft resolution to (?:increase|decrease) the General Meeting notice period to (\d+) days$/ do |notice_period|
   within('.draft_proposals') do
     page.should have_content("Change notice period for General Meetings to #{notice_period} clear days")
   end

@@ -43,6 +43,22 @@ describe ChangeMeetingNoticePeriodResolution do
     it "is set correctly depending on whether the proposal is to increase or decrease the notice period"
   end
 
+  describe "#notice_period_increased?" do
+    before(:each) do
+      @change_meeting_notice_period_resolution.stub_chain(:organisation, :constitution, :meeting_notice_period).and_return(14)
+    end
+
+    it "returns true when the notice period is being increased" do
+      @change_meeting_notice_period_resolution.meeting_notice_period = 15
+      @change_meeting_notice_period_resolution.notice_period_increased?.should be_true
+    end
+
+    it "returns false when the notice period is being decreased" do
+      @change_meeting_notice_period_resolution.meeting_notice_period = 13
+      @change_meeting_notice_period_resolution.notice_period_increased?.should be_false
+    end
+  end
+
   describe "validation" do
     it "fails when meeting notice period has not changed"
     it "fails when meeting notice period is zero"

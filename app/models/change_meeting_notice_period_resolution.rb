@@ -17,4 +17,8 @@ class ChangeMeetingNoticePeriodResolution < Resolution
     organisation.constitution.meeting_notice_period = parameters['meeting_notice_period']
   end
 
+  def notice_period_increased?
+    meeting_notice_period > organisation.constitution.meeting_notice_period
+  end
+
 end

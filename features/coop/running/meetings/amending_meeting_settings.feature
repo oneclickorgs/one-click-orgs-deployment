@@ -46,12 +46,12 @@ Feature: Amending meeting settings
     When I go to the Resolutions page
     Then I should see a draft resolution to increase the General Meeting notice period to 21 days
 
-  @wip
+  @javascript
   Scenario: Secretary starts a vote to decrease the notice period for General Meetings
     Given the notice period for General Meetings is "14" days
     When I go to the Meetings page
     And I press "Change the notice period"
-    And I enter  "7" days
+    And I enter "7" days
     Then I should see "90% of Members"
     When I certify that that the Board has proposed this amendment
     And I press "Start a vote of Members"

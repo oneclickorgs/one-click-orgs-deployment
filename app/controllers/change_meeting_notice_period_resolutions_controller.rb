@@ -14,7 +14,11 @@ class ChangeMeetingNoticePeriodResolutionsController < ApplicationController
     if @change_meeting_notice_period_resolution.accepted?
       flash[:notice] = "The notice period for General Meetings has been changed."
     else
-      flash[:notice] = "A draft resolution to increase the General Meeting notice period has been created."
+      if @change_meeting_notice_period_resolution.notice_period_increased?
+        flash[:notice] = "A draft resolution to increase the General Meeting notice period has been created."
+      else
+        flash[:notice] = "A draft resolution to decrease the General Meeting notice period has been created."
+      end
     end
 
     redirect_to meetings_path
