@@ -13,11 +13,11 @@
   %p= form.text_field :quorum_percentage
   %p
     = form.check_box :certification
-    = form.label :certification, "I certify that the Board has decided to ask the Members to accept this notice period."
+    = form.label :certification, "I certify that the Board has decided to ask the Members to accept this quorum."
   %p
     = form.check_box :pass_immediately
     = form.label :pass_immediately, "I certify that this resolution has already been passed by the Membership."
   %p.pass_immediately_true{:style => "display: none;"}
-    = form.submit "Amend the notice period"
+    = form.submit "Amend the quorum"
   %p.pass_immediately_false
     = form.submit "Start a vote of Members"
