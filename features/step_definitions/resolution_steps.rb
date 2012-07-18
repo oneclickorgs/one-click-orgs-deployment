@@ -118,6 +118,8 @@ Then /^the new resolution should have voting buttons$/ do
   end
 end
 
-Then /^I should see a draft resolution to change the General Meeting notice period to (\d+) days$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then /^I should see a draft resolution to increase the General Meeting notice period to (\d+) days$/ do |notice_period|
+  within('.draft_proposals') do
+    page.should have_content("Change notice period for General Meetings to #{notice_period} clear days")
+  end
 end

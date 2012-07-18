@@ -39,5 +39,9 @@ describe ChangeMeetingNoticePeriodResolution do
     end
   end
 
+  describe "voting system" do
+    it "is set correctly depending on whether the proposal is to increase or decrease the notice period"
+  end
+
 end
   

@@ -18,5 +18,7 @@
   %p
     = form.check_box :pass_immediately
     = form.label :pass_immediately, "I certify that this resolution has already been passed by the Membership."
-  %p
+  %p.pass_immediately_true{:style => "display: none;"}
     = form.submit "Amend the notice period"
+  %p.pass_immediately_false
+    = form.submit "Start a vote of Members"

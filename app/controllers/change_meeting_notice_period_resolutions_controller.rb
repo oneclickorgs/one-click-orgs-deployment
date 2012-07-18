@@ -5,8 +5,18 @@ class ChangeMeetingNoticePeriodResolutionsController < ApplicationController
 
   def create
     @change_meeting_notice_period_resolution = co.change_meeting_notice_period_resolutions.build(params[:change_meeting_notice_period_resolution])
+    
     @change_meeting_notice_period_resolution.proposer = current_user
+    @change_meeting_notice_period_resolution.draft = true
+
     @change_meeting_notice_period_resolution.save!
+
+    if @change_meeting_notice_period_resolution.accepted?
+      flash[:notice] = "The notice period for General Meetings has been changed."
+    else
+      flash[:notice] = "A draft resolution to increase the General Meeting notice period has been created."
+    end
+
     redirect_to meetings_path
   end
 end

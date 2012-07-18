@@ -41,6 +41,8 @@ describe ChangeMeetingNoticePeriodResolutionsController do
       @resolution_params = {'meeting_notice_period' => '28'}
       @resolution = mock_model("ChangeMeetingNoticePeriodResolution",
         :proposer= => nil,
+        :draft= => nil,
+        :accepted? => false,
         :save! => true
       )
 
@@ -62,6 +64,11 @@ describe ChangeMeetingNoticePeriodResolutionsController do
       post_create
     end
 
+    it "sets the resolution as a draft" do
+      @resolution.should_receive(:draft=).with(true)
+      post_create
+    end
+
     it "saves the resolution" do
       @resolution.should_receive(:save!)
       post_create
@@ -70,6 +77,29 @@ describe ChangeMeetingNoticePeriodResolutionsController do
     it "redirects to the meetings page" do
       post_create
       response.should redirect_to('/meetings')
+    end
+
+    context "when the resolution does not pass immediately" do
+      before(:each) do
+        @resolution.stub(:accepted?).and_return(false)
+      end
+
+      it "sets a success flash mentioning the resolution" do
+        post_create
+        flash[:notice].should be_present
+        flash[:notice].should include('resolution')
+      end
+    end
+
+    context "when the resolution does pass immediately" do
+      before(:each) do
+        @resolution.stub(:accepted?).and_return(true)
+      end
+
+      it "sets a success flash" do
+        post_create
+        flash[:notice].should be_present
+      end
     end
 
     context "when the resolution cannot be saved" do

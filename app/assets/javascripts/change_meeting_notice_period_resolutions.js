@@ -12,4 +12,13 @@ $(document).ready(function () {
       $('.decrease_meeting_notice_period').slideDown();
     }
   });
+  $('#change_meeting_notice_period_resolution_pass_immediately').change(function () {
+    if ($('#change_meeting_notice_period_resolution_pass_immediately:checked').val() == '1') {
+      $('.pass_immediately_true').show();
+      $('.pass_immediately_false').hide();
+    } else {
+      $('.pass_immediately_true').hide();
+      $('.pass_immediately_false').show();
+    }
+  });
 });

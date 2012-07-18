@@ -16,6 +16,7 @@
       %tr
         = content_tag_for(:td, proposal) do
           .proposal
+            %h4= proposal.title
             %p= proposal.description
             - if can?(:vote_on, proposal)
               %p.votes= render 'proposals/vote', :proposal => proposal
@@ -26,6 +27,7 @@
     - @draft_proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
+          %h4= proposal.title
           %p
             = proposal.description
           - if can?(:create, Resolution)
@@ -41,6 +43,7 @@
     - @resolution_proposals.each do |proposal|
       %tr
         = content_tag_for(:td, proposal) do
+          %h4= proposal.title
           %p= proposal.description
           - if can?(:edit, ResolutionProposal)
             %p
