@@ -43,5 +43,10 @@ describe ChangeMeetingNoticePeriodResolution do
     it "is set correctly depending on whether the proposal is to increase or decrease the notice period"
   end
 
+  describe "validation" do
+    it "fails when meeting notice period has not changed"
+    it "fails when meeting notice period is zero"
+  end
+
 end
   
