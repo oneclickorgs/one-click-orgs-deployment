@@ -9,6 +9,10 @@ Given /^another director has recorded some new minutes$/ do
   step "another director has recorded some minutes"
 end
 
+Given /^the notice period for General Meetings is "(.*?)" days$/ do |arg1|
+  @organisation.constitution.meeting_notice_period = 14
+end
+
 When /^I choose the date of discussion$/ do
   select('2011', :from => 'meeting[happened_on(1i)]')
   select('May', :from => 'meeting[happened_on(2i)]')
@@ -46,6 +50,14 @@ end
 
 When /^I certify that the Board has decided to convene the meeting$/ do
   check('general_meeting[certification]')
+end
+
+When /^I check the certification$/ do
+  pending # express the regexp above with the code you wish you had
+end
+
+When /^I enter "(.*?)" for the new notice period$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
 end
 
 Then /^I should see a form for recording minutes$/ do
