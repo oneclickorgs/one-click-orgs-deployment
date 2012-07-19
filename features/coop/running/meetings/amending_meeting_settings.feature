@@ -72,7 +72,7 @@ Feature: Amending meeting settings
     Then I should see a draft Extraordinary Resolution to change the General Meeting quorum
     And the draft resolution should be to change the quorum to the greater of 5 members or 30% of the membership
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary amends the quorum for General Meetings
     When I go to the Meetings page
     And I press "Change the quorum"

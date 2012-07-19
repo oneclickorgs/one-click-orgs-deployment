@@ -37,5 +37,21 @@ describe ChangeQuorumResolution do
     @resolution.title.should include('the greater of 5 members or 25% of the membership')
   end
 
+  describe "enacting" do
+    before(:each) do
+      @resolution = ChangeQuorumResolution.make!(:quorum_number => 10, :quorum_percentage => 20)
+      @resolution.force_passed = true
+    end
+
+    it "changes the quorum number" do
+      @resolution.organisation.should_receive(:quorum_number=).with(10)
+      @resolution.close!
+    end
+
+    it "changes the quorum percentage" do
+      @resolution.organisation.should_receive(:quorum_percentage=).with(20)
+      @resolution.close!
+    end
+  end
 
 end

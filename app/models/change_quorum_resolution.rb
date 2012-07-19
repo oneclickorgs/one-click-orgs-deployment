@@ -20,4 +20,9 @@ class ChangeQuorumResolution < ExtraordinaryResolution
   def set_default_title
     self.title ||= "Change quorum for General Meetings to the greater of #{quorum_number} members or #{quorum_percentage}% of the membership"
   end
+
+  def enact!
+    organisation.constitution.quorum_number = parameters['quorum_number']
+    organisation.constitution.quorum_percentage = parameters['quorum_percentage']
+  end
 end
