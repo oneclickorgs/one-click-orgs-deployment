@@ -139,4 +139,21 @@ describe Coop do
       @coop.secretary.should == @secretary
     end
   end
+
+  describe "building a directorship" do
+    before(:each) do
+      @coop = Coop.make!
+    end
+
+    it "instantiates the directorship" do
+      Directorship.should_receive(:new)
+      @coop.build_directorship
+    end
+
+    it "sets the directorship's organisation to itself" do
+      Directorship.should_receive(:new).with(hash_including(:organisation => @coop))
+      @coop.build_directorship
+    end
+  end    
+
 end

@@ -1,0 +1,12 @@
+%p
+  = form.label(:member_id, "Name")
+%p
+  = form.select(:member_id, options_from_collection_for_select(co.members, :id, :name))
+%p
+  = form.check_box(:certification)
+  = form.label(:certification, "I certify that the above named person was elected as a director")
+  at the Annual General Meeting on
+  = form.date_select(:elected_on, :class => 'inline')
+  \.
+%p
+  = form.submit("Record this appointment")

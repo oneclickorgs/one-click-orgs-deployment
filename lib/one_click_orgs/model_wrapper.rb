@@ -1,3 +1,5 @@
+require 'active_record/errors'
+
 module OneClickOrgs
   class ModelWrapper
     extend ActiveModel::Naming
@@ -41,6 +43,10 @@ module OneClickOrgs
       raise NotImplementedError, '#save must be implemented by subclass'
     end
 
+    def save!
+      save || raise(RecordNotSaved)
+    end
+
     def self.find_by_id(id)
       raise NotImplementedError, '.find_by_id must be implemented by subclass'
     end
@@ -49,6 +55,9 @@ module OneClickOrgs
       model_wrapper = find_by_id(id)
       raise ActiveRecord::RecordNotFound unless model_wrapper
       model_wrapper
+    end
+
+    class RecordNotSaved < ActiveRecord::RecordNotSaved
     end
   end
 end

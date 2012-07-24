@@ -55,6 +55,21 @@ When /^I stand down a director$/ do
   step 'I submit the form to stand down the director'
 end
 
+When /^I certify the appointment$/ do
+  check('directorship[certification]')
+
+  yesterday = 1.day.ago
+  select(yesterday.year.to_s, :from => 'directorship[elected_on(1i)]')
+  select(yesterday.strftime('%B'), :from => 'directorship[elected_on(2i)]')
+  select(yesterday.day.to_s, :from => 'directorship[elected_on(3i)]')
+end
+
+Then /^I should see "(.*?)" in the list of directors$/ do |name|
+  within('.directors') do
+    page.should have_content(name)
+  end
+end
+
 Then /^I should not see the director$/ do
   page.should_not have_selector("tr#director_#{@director.id}")
 end

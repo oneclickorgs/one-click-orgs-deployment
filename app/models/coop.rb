@@ -72,4 +72,9 @@ class Coop < Organisation
   def directors
     members.where(['member_class_id = ?', member_classes.find_by_name!('Director').id])
   end
+
+  def build_directorship(attributes={})
+    Directorship.new({:organisation => self}.merge(attributes))
+  end
+
 end
