@@ -7,8 +7,8 @@ class Proposal < ActiveRecord::Base
   
   state_machine :initial => :open do
     event :close do
-      transition :open => :accepted, :if => :passed?
-      transition :open => :rejected
+      transition any => :accepted, :if => :passed?
+      transition any => :rejected
     end
     
     event :start do

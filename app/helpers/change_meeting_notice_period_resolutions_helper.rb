@@ -1,0 +1,2 @@
+module ChangeMeetingNoticePeriodResolutionsHelper
+end

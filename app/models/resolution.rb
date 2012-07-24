@@ -6,7 +6,7 @@ class Resolution < Proposal
   # DRAFT STATE
   
   def draft=(new_draft)
-    # TODO There must be something built-in to Rails to handle this.
+    # TODO Refactor this and #draft and #draft? to use #cast_to_boolean
     if new_draft == 'true'
       new_draft = true
     elsif new_draft == 'false'
@@ -25,6 +25,31 @@ class Resolution < Proposal
   def draft
     !!@draft
   end
+
+  before_create :set_draft_state
+  def set_draft_state
+    if draft
+      self.state = 'draft'
+    end
+  end
+
+  # IMMEDIATE PASSING
+
+  attr_accessor :pass_immediately
+
+  def pass_immediately?
+    cast_to_boolean(@pass_immediately)
+  end
+
+  after_create :pass_immediately_if_requested
+  def pass_immediately_if_requested
+    return unless pass_immediately?
+
+    self.force_passed = true
+    close!
+  end
+
+  # ATTRIBUTES
   
   def extraordinary=(new_extraordinary)
     @extraordinary = new_extraordinary
@@ -33,16 +58,9 @@ class Resolution < Proposal
   def extraordinary
     !!@extraordinary
   end
-  
-  before_create :set_draft_state
-  def set_draft_state
-    if draft
-      self.state = 'draft'
-    end
-  end
-  
-  before_create :set_title
-  def set_title
+    
+  before_create :set_default_title
+  def set_default_title
     if title.blank?
       self.title = description.truncate(200)
     end
@@ -54,5 +72,25 @@ class Resolution < Proposal
   # make the proposer support the proposal.
   def automatic_proposer_support_vote?
     false
+  end
+
+protected
+  
+  # Attempts to turn strings like 'true', 'false', '1', '0' into
+  # an actual boolean value.
+  def cast_to_boolean(value)
+    if value == 'true'
+      true
+    elsif value == 'false'
+      false
+    elsif value.respond_to?(:to_i)
+      if value.to_i == 1
+        true
+      elsif value.to_i == 0
+        false
+      end
+    else
+      !!value
+    end
   end
 end

@@ -8,7 +8,10 @@ describe "proposals/coop/index" do
     @proposals = [mock_model(Resolution, :description => "Open proposal description")]
     assign(:proposals, @proposals)
     
-    @draft_proposals = [mock_model(Resolution, :description => "Draft proposal description")]
+    @draft_proposals = [mock_model(Resolution,
+      :title => "Draft proposal title",
+      :description => "Draft proposal description"
+    )]
     assign(:draft_proposals, @draft_proposals)
     
     @resolution_proposals = [mock_model(ResolutionProposal, :description => "Suggested resolution description")]
@@ -25,6 +28,11 @@ describe "proposals/coop/index" do
   it "renders a list of draft resolutions" do
     render
     rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
+  end
+
+  it "includes the title in the list of draft resolutions" do
+    render
+    rendered.should contain('Draft proposal title')
   end
   
   it "renders a list of suggested resolutions" do

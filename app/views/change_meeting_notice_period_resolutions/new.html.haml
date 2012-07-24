@@ -1,0 +1,24 @@
+%h2 Changing notice period for General Meetings
+%p
+  The notice period for General Meetings is currently
+  %span.meeting_notice_period= co.constitution.meeting_notice_period
+  days.
+= form_for(@change_meeting_notice_period_resolution) do |form|
+  %p
+    = form.label :meeting_notice_period, "Change the notice period to", :class => 'inline'
+    = form.text_field :meeting_notice_period, :class => 'inline'
+    clear days.
+  %p.increase_meeting_notice_period
+    An Extraordinary Resolution is required to increase the notice period for General Meetings.
+  %p.decrease_meeting_notice_period{:style => "display: none;"}
+    To decrease the notice period for General Meetings, at least 90% of Members must agree.
+  %p
+    = form.check_box :certification
+    = form.label :certification, "I certify that the Board has decided to ask the Members to accept this notice period."
+  %p
+    = form.check_box :pass_immediately
+    = form.label :pass_immediately, "I certify that this resolution has already been passed by the Membership."
+  %p.pass_immediately_true{:style => "display: none;"}
+    = form.submit "Amend the notice period"
+  %p.pass_immediately_false
+    = form.submit "Start a vote of Members"
