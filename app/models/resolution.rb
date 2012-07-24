@@ -1,4 +1,8 @@
+require 'one_click_orgs/cast_to_boolean'
+
 class Resolution < Proposal
+  include OneClickOrgs::CastToBoolean
+
   attr_accessible :draft, :voting_period_in_days, :extraordinary, :certification
   
   attr_accessor :certification
@@ -72,25 +76,5 @@ class Resolution < Proposal
   # make the proposer support the proposal.
   def automatic_proposer_support_vote?
     false
-  end
-
-protected
-  
-  # Attempts to turn strings like 'true', 'false', '1', '0' into
-  # an actual boolean value.
-  def cast_to_boolean(value)
-    if value == 'true'
-      true
-    elsif value == 'false'
-      false
-    elsif value.respond_to?(:to_i)
-      if value.to_i == 1
-        true
-      elsif value.to_i == 0
-        false
-      end
-    else
-      !!value
-    end
   end
 end
