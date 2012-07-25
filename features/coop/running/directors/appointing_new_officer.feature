@@ -3,7 +3,7 @@ Feature: Appointing new officer
   As the secretary
   I want to record the appointment of a new officer
   
-  @wip
+  @javascript
   Scenario: Secretary appoints new officer
     Given there is a co-op
     And I am the Secretary of the co-op
