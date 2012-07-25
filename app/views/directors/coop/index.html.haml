@@ -21,8 +21,17 @@
 
 %h3 Offices
 .section
-  TODO: List of offices/officers here.
+  %table.offices
+    - @offices.each do |office|
+      %tr{:class => office.title.parameterize.underscore}
+        %td
+          %h4= office.title
+          - if office.officer
+            %p= office.officer.name
+          -else
+            %p Office unoccupied
 
 .section
-  TODO: Action buttons here.
+  = link_button("Appoint a new Officer", :url => new_officership_path)
+  .clear
 

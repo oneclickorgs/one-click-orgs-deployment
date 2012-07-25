@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715225911) do
+ActiveRecord::Schema.define(:version => 20120725124645) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -105,6 +105,21 @@ ActiveRecord::Schema.define(:version => 20120715225911) do
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
+
+  create_table "officerships", :force => true do |t|
+    t.integer  "office_id"
+    t.integer  "officer_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.date     "elected_on"
+  end
+
+  create_table "offices", :force => true do |t|
+    t.integer  "organisation_id"
+    t.string   "title"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "organisations", :force => true do |t|
     t.string   "subdomain"

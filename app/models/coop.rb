@@ -11,6 +11,9 @@ class Coop < Organisation
   
   has_many :resolution_proposals, :foreign_key => 'organisation_id'
 
+  has_many :offices, :foreign_key => 'organisation_id'
+  has_many :officerships, :through => :offices
+
   # ATTRIBUTES
 
   def meeting_notice_period=(new_meeting_notice_period)

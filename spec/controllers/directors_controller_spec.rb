@@ -123,7 +123,13 @@ describe DirectorsController do
     
     describe "GET index" do
       before(:each) do
-        @organisation.stub(:directors)  
+        @organisation.stub(:directors)
+        @organisation.stub(:offices).and_return(@offices = mock("offices association"))
+      end
+
+      it "assigns the offices" do
+        get :index
+        assigns[:offices].should == @offices
       end
 
       it "is successful" do

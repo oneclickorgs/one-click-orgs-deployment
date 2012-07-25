@@ -1,6 +1,7 @@
 class DirectorsController < ApplicationController
   def index
     @directors = co.directors
+    @offices = co.offices
   end
   
   def create

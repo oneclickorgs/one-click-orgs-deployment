@@ -71,6 +71,46 @@ describe Coop do
       @coop.reload
       @coop.change_quorum_resolutions.should include(@change_quorum_resolution)
     end
+
+    describe "directors" do
+      before(:each) do
+        @coop = Coop.make!
+        @director = @coop.members.make!(:director)
+        @member = @coop.members.make!
+      end
+
+      it "includes members who have the member class of 'Director'" do
+        @coop.directors.should include(@director)
+      end
+
+      it "does not include ordinary members" do
+        @coop.directors.should_not include(@members)
+      end
+    end
+
+    describe "officers, officerships and offices" do
+      before(:each) do
+        @coop = Coop.make!
+        @director = @coop.members.make!(:director)
+      end
+
+      it "can add a new office" do
+        @office = Office.make!
+        expect {@coop.offices << @office}.to_not raise_error
+        @coop.reload
+        @coop.offices.should include(@office)
+      end
+
+      it "can create a new officership on an existing office" do
+        @office = @coop.offices.make!
+        @officership = Officership.make!
+
+        expect {@office.officership = @officership}.to_not raise_error
+
+        @coop.reload
+        @coop.officerships.should include(@officership)
+      end
+    end
   end
   
   describe "defaults" do

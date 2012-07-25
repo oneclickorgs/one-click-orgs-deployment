@@ -169,3 +169,9 @@ end
 Resignation.blueprint do
 end
 
+Officership.blueprint do
+end
+
+Office.blueprint do
+  title { Faker::Name.title }
+end
