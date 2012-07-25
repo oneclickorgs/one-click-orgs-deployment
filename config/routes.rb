@@ -112,6 +112,10 @@ OneClickOrgs::Application.routes.draw do
     end
   end
 
+  resources :directorships
+
+  resources :officerships
+
   match '/one_click(/:action)' => 'one_click'
  
   get '/login' => 'member_sessions#new', :as => 'login'

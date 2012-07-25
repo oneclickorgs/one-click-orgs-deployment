@@ -1,3 +1,12 @@
+Given /^there is a director named "(.*?)"$/ do |name|
+  first_name, last_name = name.split(' ')
+  @director = @organisation.members.make!(:director, :first_name => first_name, :last_name => last_name)
+end
+
+Given /^there is an office "(.*?)"$/ do |title|
+  @organisation.offices.make!(:title => title)
+end
+
 When /^I choose yesterday for the date of election$/ do
   yesterday = 1.day.ago
   select(yesterday.year.to_s, :from => 'director[elected_on(1i)]')
@@ -55,6 +64,27 @@ When /^I stand down a director$/ do
   step 'I submit the form to stand down the director'
 end
 
+When /^I certify the appointment$/ do
+  form_model = if page.has_field?('directorship[certification]')
+    'directorship'
+  else
+    'officership'
+  end
+
+  check("#{form_model}[certification]")
+
+  yesterday = 1.day.ago
+  select(yesterday.year.to_s, :from => "#{form_model}[elected_on(1i)]")
+  select(yesterday.strftime('%B'), :from => "#{form_model}[elected_on(2i)]")
+  select(yesterday.day.to_s, :from => "#{form_model}[elected_on(3i)]")
+end
+
+Then /^I should see "(.*?)" in the list of directors$/ do |name|
+  within('.directors') do
+    page.should have_content(name)
+  end
+end
+
 Then /^I should not see the director$/ do
   page.should_not have_selector("tr#director_#{@director.id}")
 end
@@ -62,5 +92,15 @@ end
 Then /^I should see a list of the directors$/ do
   director = @organisation.directors.first
   page.should have_css(".directors", :text => director.name)
+end
+
+Then /^I should see "(.*?)" listed as the "(.*?)"$/ do |name, office|
+  within('.offices') do
+    page.should have_css(".#{office.parameterize.underscore}")
+    within(".#{office.parameterize.underscore}") do
+      page.should have_content(office)
+      page.should have_content(name)
+    end
+  end
 end
 
