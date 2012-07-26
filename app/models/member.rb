@@ -39,6 +39,9 @@ class Member < ActiveRecord::Base
   
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
+
+  has_many :ballots
+
   has_many :resignations
   
   scope :active, with_state(:active)

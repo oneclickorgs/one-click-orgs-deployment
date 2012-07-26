@@ -209,4 +209,18 @@ describe Member do
       @member.resign!
     end
   end
+
+  describe "associations" do
+    it "has many ballots" do
+      @member = Member.make!
+      @ballot = Ballot.make!
+
+      expect {@member.ballots << @ballot}.to_not raise_error
+
+      @member.reload
+      @member.ballots.reload
+
+      @member.ballots.should include(@ballot)
+    end
+  end
 end

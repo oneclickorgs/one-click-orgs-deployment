@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725124645) do
+ActiveRecord::Schema.define(:version => 20120726122628) do
+
+  create_table "ballots", :force => true do |t|
+    t.integer  "election_id"
+    t.integer  "member_id"
+    t.text     "ranking"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -54,6 +62,13 @@ ActiveRecord::Schema.define(:version => 20120725124645) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "queue"
+  end
+
+  create_table "elections", :force => true do |t|
+    t.integer  "organisation_id"
+    t.string   "state"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "meeting_participations", :force => true do |t|
@@ -105,6 +120,13 @@ ActiveRecord::Schema.define(:version => 20120725124645) do
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
+
+  create_table "nominations", :force => true do |t|
+    t.integer  "election_id"
+    t.integer  "nominee_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "officerships", :force => true do |t|
     t.integer  "office_id"

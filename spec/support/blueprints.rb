@@ -175,3 +175,12 @@ end
 Office.blueprint do
   title { Faker::Name.title }
 end
+
+Election.blueprint do
+end
+
+Nomination.blueprint do
+end
+
+Ballot.blueprint do
+end
