@@ -3,8 +3,7 @@ Feature: Viewing list of officers
   As a member
   I want to view the list of officers
   
-  @wip
-  Scenario: Member view the list of officers
+  Scenario: Member views the list of officers
     Given there is a co-op
     And I am a Member of the co-op
     When I go to the Directors page

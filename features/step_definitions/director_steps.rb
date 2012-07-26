@@ -128,6 +128,11 @@ Then /^I should see a list of the directors$/ do
   page.should have_css(".directors", :text => director.name)
 end
 
+Then /^I should see a list of the officers$/ do
+  officer = @organisation.offices.select{|o| !o.officer.nil?}.last.officer
+  page.should have_css(".offices", :text => officer.name)
+end
+
 Then /^I should see "(.*?)" listed as the "(.*?)"$/ do |name, office|
   within('.offices') do
     page.should have_css(".#{office.parameterize.underscore}")
