@@ -170,6 +170,7 @@ Resignation.blueprint do
 end
 
 Officership.blueprint do
+  elected_on { 1.month.ago }
 end
 
 Office.blueprint do

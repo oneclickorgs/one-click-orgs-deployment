@@ -1,0 +1,8 @@
+= form_for(@officership) do |officership_form|
+  %p
+    = officership_form.check_box :certification
+    = officership_form.label :certification, "I certify that this officer stepped down"
+    on
+    = officership_form.date_select :ended_on
+  %p
+    = officership_form.submit "Record this stepping down"

@@ -28,6 +28,7 @@
           %h4= office.title
           - if office.officer
             %p= office.officer.name
+            = link_button("Step down", :url => edit_officership_path(office.officership))
           -else
             %p Office unoccupied
 

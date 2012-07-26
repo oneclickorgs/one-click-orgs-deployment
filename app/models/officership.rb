@@ -14,7 +14,7 @@ require 'one_click_orgs/cast_to_boolean'
 class Officership < ActiveRecord::Base
   include OneClickOrgs::CastToBoolean
 
-  attr_accessible :office_id, :office_attributes, :officer_id, :certification, :elected_on
+  attr_accessible :office_id, :office_attributes, :officer_id, :certification, :elected_on, :ended_on
 
   attr_reader :certification
 

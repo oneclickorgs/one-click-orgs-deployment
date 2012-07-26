@@ -8,7 +8,8 @@ describe 'directors/coop/index' do
 
     @offices = [
       mock_model(Office, :title => 'Treasurer',
-        :officer => mock_model(Member, :name => "John Smith")
+        :officer => mock_model(Member, :name => "John Smith"),
+        :officership => mock_model(Officership, :to_param => '3')
       )
     ]
     assign(:offices, @offices)
@@ -18,6 +19,13 @@ describe 'directors/coop/index' do
     render
     rendered.should have_selector('.offices') do |offices|
       offices.should have_selector('.treasurer', :content => 'John Smith')
+    end
+  end
+
+  it "renders a 'Step down' button for each officer" do
+    render
+    rendered.should have_selector('.treasurer') do |treasurer|
+      treasurer.should have_selector(:input, 'data-url' => '/officerships/3/edit')
     end
   end
 

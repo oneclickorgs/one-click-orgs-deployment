@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Office do
+
   it "has an 'officer' association" do
     @member = Member.make!
     @office = Office.make!
@@ -9,6 +10,20 @@ describe Office do
     @office.reload
 
     @office.officer.should == @member
+  end
+
+  describe "officership association" do
+    it "ignores officerships elected in the future" do
+      @office = Office.make!
+      @officership = Officership.make!(:office => @office, :elected_on => 1.day.from_now)
+      @office.officership.should be_nil
+    end
+
+    it "ignores officerships ended in the past" do
+      @office = Office.make!
+      @officership = Officership.make!(:office => @office, :ended_on => 1.day.ago)
+      @office.officership.should be_nil
+    end
   end
 
   it "belongs to a coop" do
