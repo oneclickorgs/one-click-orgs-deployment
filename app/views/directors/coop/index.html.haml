@@ -6,13 +6,15 @@
       %th Name
       %th Last login
     - @directors.each do |director|
-      %tr
+      = content_tag_for(:tr, director) do
         %td
           = image_tag("#{director.gravatar_url(24)}", :class => 'gravatar', :alt => "#{director.name}", :width => '24', :height => '24')
           = link_to "#{director.name}", member_path(director)
         %td
           - if director.last_logged_in_at
             = director.last_logged_in_at.to_s(:short)
+        %td
+          = link_button("Retire", :url => edit_directorship_path(director))
 
 
 .section

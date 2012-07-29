@@ -3,7 +3,12 @@ require 'spec_helper'
 describe 'directors/coop/index' do
 
   before(:each) do
-    @directors = []
+    @directors = [
+      mock_model(Member, :to_param => '4',
+        :gravatar_url => nil,
+        :name => "Lisa Baker"
+      )
+    ]
     assign(:directors, @directors)
 
     @offices = [
@@ -27,6 +32,11 @@ describe 'directors/coop/index' do
     rendered.should have_selector('.treasurer') do |treasurer|
       treasurer.should have_selector(:input, 'data-url' => '/officerships/3/edit')
     end
+  end
+
+  it "renders a 'Retire' button for each director" do
+    render
+    rendered.should have_selector(:input, 'data-url' => '/directorships/4/edit')
   end
 
   context "when user can create a Director" do

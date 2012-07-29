@@ -1,4 +1,4 @@
-Given /^there is a director named "(.*?)"$/ do |name|
+Given /^there is a director (?:named|called) "(.*?)"$/ do |name|
   first_name, last_name = name.split(' ')
   @director = @organisation.members.make!(:director, :first_name => first_name, :last_name => last_name)
 end
@@ -113,9 +113,34 @@ When /^I save the stepping down$/ do
   click_button("Record this stepping down")
 end
 
+When /^I retire "(.*?)"$/ do |name|
+  member = @organisation.directors.find_by_name(name)
+  within("#member_#{member.id}") do
+    click_button("Retire")
+  end
+end
+
+When /^I certify the retirement$/ do
+  check('directorship[certification]')
+  yesterday = 1.day.ago
+  select(yesterday.year.to_s, :from => 'directorship[ended_on(1i)]')
+  select(yesterday.strftime('%B'), :from => 'directorship[ended_on(2i)]')
+  select(yesterday.day.to_s, :from => 'directorship[ended_on(3i)]')
+end
+
+When /^I save the retirement$/ do
+  click_button("Record this retirement")
+end
+
 Then /^I should see "(.*?)" in the list of directors$/ do |name|
   within('.directors') do
     page.should have_content(name)
+  end
+end
+
+Then /^I should not see "(.*?)" in the list of Directors$/ do |name|
+  within('.directors') do
+    page.should have_no_content(name)
   end
 end
 
