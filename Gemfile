@@ -30,7 +30,8 @@ gem "mysql", "~>2.8.1"
 group :assets do
   gem 'sass-rails', '~>3.2.5'
   gem 'uglifier', '~>1.2.4'
-  gem 'therubyracer'
+  gem 'therubyracer', '0.11.0beta5'
+  gem 'libv8', '~> 3.11.8'
 end
 
 gem "jquery-rails", "~>2.0.2"
