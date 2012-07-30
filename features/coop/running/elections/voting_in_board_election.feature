@@ -1,4 +1,4 @@
-Feature: Electing new directors
+Feature: Voting in board election
   In order to have a say in who runs the co-op
   As a Member
   I want to vote for new Directors electronically
