@@ -34,8 +34,18 @@ class Meeting < ActiveRecord::Base
   
   after_create :send_creation_notification_emails
   def send_creation_notification_emails
-    organisation.members.each do |member|
-      MeetingMailer.notify_creation(member, self).deliver
+    if creation_notification_email_action && members_to_notify
+      members_to_notify.each do |member|
+        MeetingMailer.send(creation_notification_email_action, member, self).deliver
+      end
     end
+  end
+
+  def creation_notification_email_action
+    :notify_creation
+  end
+
+  def members_to_notify
+    organisation.members
   end
 end

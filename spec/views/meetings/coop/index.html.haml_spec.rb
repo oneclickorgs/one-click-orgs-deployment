@@ -39,6 +39,17 @@ describe 'meetings/coop/index' do
     rendered.should contain("The notice period for General Meetings is 14 clear days.")
   end
 
+  context "when user can create meetings" do
+    before(:each) do
+      view.stub(:can?).with(:create, Meeting).and_return(true)
+    end
+
+    it "renders a button link to create a board meeting" do
+      render
+      rendered.should have_selector(:input, 'data-url' => '/board_meetings/new')
+    end
+  end
+
   context "when user can create resolutions" do
     before(:each) do
       view.stub(:can?).with(:create, Resolution).and_return(true)
