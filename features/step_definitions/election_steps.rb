@@ -19,6 +19,24 @@ When /^I place my vote for the new directors I want$/ do
   click_button("Save my vote")
 end
 
+When /^I choose to allow electronic nominations for new Directors$/ do
+  check "general_meeting[electronic_nominations]"
+end
+
+When /^I choose a closing date for nominations$/ do
+  date = 2.weeks.from_now
+  select(date.year.to_s, :from => "general_meeting[nominations_closing_date(1i)]")
+  select(date.strftime('%B'), :from => "general_meeting[nominations_closing_date(2i)]")
+  select(date.day.to_s, :from => "general_meeting[nominations_closing_date(3i)]")
+end
+
+Then /^electronic nominations for new Directors should be opened$/ do
+  election = @organisation.meetings.last.election
+
+  election.should be_present
+  election.nominations_closing_date.should be_present
+end
+
 Then /^my vote should be counted$/ do
   @ballot = @user.ballots.last
   @ballot.should be_present

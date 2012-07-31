@@ -1,4 +1,6 @@
 class Election < ActiveRecord::Base
+  attr_accessible :organisation
+
   state_machine :initial => :draft do
     event :close do
       transition :open => :closed
@@ -9,6 +11,7 @@ class Election < ActiveRecord::Base
     end
   end
 
+  belongs_to :organisation
   has_many :nominations
   has_many :nominees, :through => :nominations
   has_many :ballots

@@ -6,7 +6,9 @@ describe "general_meetings/new" do
     @general_meeting = mock_model(GeneralMeeting,
       :certification => nil,
       :existing_resolutions_attributes= => nil,
-      :annual_general_meeting => nil
+      :annual_general_meeting => nil,
+      :electronic_nominations => nil,
+      :nominations_closing_date => nil
     ).as_new_record
     assign(:general_meeting, @general_meeting)
 
@@ -55,6 +57,18 @@ describe "general_meetings/new" do
       ul.should contain("Sally Baker")
       ul.should contain("John Smith")
     end
+  end
+
+  it "renders an 'electronic_nominations' field" do
+    render
+    rendered.should have_selector(:input, :name => 'general_meeting[electronic_nominations]')
+  end
+
+  it "renders a date select for nominations_closing_date" do
+    render
+    rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(1i)]')
+    rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(2i)]')
+    rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(3i)]')
   end
 
 end

@@ -130,6 +130,16 @@ When /^I convene the meeting$/ do
   click_button("Confirm and convene the meeting")
 end
 
+When /^I begin to convene an AGM$/ do
+  visit(new_general_meeting_path)
+  select_meeting_date
+  fill_in_start_time
+  fill_in_venue
+  fill_in_agenda
+  check_certification
+  check('general_meeting[annual_general_meeting]')
+end
+
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.draft.first

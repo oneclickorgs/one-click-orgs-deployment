@@ -97,7 +97,11 @@ class Coop < Organisation
     agm = cast_to_boolean(attributes.delete(:annual_general_meeting))
 
     if agm
-      annual_general_meetings.build(attributes)
+      begin
+        annual_general_meetings.build(attributes)
+      rescue ActiveRecord::MultiparameterAssignmentErrors => e
+        raise e.errors.map{|e| [e.exception, e.attribute]}.inspect
+      end
     else
       general_meetings.build(attributes)
     end

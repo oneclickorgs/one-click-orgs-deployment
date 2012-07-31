@@ -11,7 +11,7 @@ class GeneralMeetingsController < ApplicationController
   end
 
   def create
-    @general_meeting = co.build_general_meeting_or_annual_general_meeting(params[:general_meeting])
+    @general_meeting = co.build_general_meeting_or_annual_general_meeting (params[:general_meeting])
     @general_meeting.save!
     redirect_to meetings_path
   end

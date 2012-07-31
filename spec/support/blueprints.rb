@@ -153,6 +153,9 @@ end
 GeneralMeeting.blueprint do
 end
 
+AnnualGeneralMeeting.blueprint do
+end
+
 MeetingParticipation.blueprint do
 end
 

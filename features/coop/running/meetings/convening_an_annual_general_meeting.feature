@@ -20,9 +20,9 @@ Feature: Convening an annual general meeting
     And I press "Confirm and convene the meeting"
     Then I should see the new AGM in the list of Upcoming Meetings
   
-  @wip @javascript
+  @javascript
   Scenario: Secretary opens electronic nominations for new Directors for an AGM
-    When I go to convene an AGM
+    When I begin to convene an AGM
     And I choose to allow electronic nominations for new Directors
     And I choose a closing date for nominations
     And I convene the meeting
@@ -30,7 +30,7 @@ Feature: Convening an annual general meeting
   
   @wip @javascript
   Scenario: Secretary opens electronic voting for new Directors for an AGM
-    When I go to convene an AGM
+    When I begin to convene an AGM
     And I choose to allow electronic voting for new Directors
     And I choose a closing date for voting
     And I convene the meeting
