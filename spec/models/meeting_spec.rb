@@ -45,6 +45,25 @@ describe Meeting do
       meeting.creator.should == creator
     end
   end
+
+  describe "scopes" do
+    describe "upcoming" do
+      before(:each) do
+        @today = Time.now.utc
+        @yesterday = Time.now.utc.advance(:days => -1)
+      end
+
+      it "includes a meeting that happens today" do
+        meeting = Meeting.make!(:happened_on => @today)
+        Meeting.upcoming.should include(meeting)
+      end
+
+      it "does not include a meeting that happened yesterday" do
+        meeting = Meeting.make!(:happened_on => @yesterday)
+        Meeting.upcoming.should_not include(meeting)
+      end
+    end
+  end
   
   describe "validations" do
     it "requires an organisation" do

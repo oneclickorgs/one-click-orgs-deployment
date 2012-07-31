@@ -1,0 +1,2 @@
+module BoardMeetingsHelper
+end

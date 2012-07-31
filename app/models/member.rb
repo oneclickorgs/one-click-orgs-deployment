@@ -39,7 +39,13 @@ class Member < ActiveRecord::Base
   
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
+
+  has_many :ballots
+
   has_many :resignations
+
+  has_one :office, :through => :officership
+  has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id'
   
   scope :active, with_state(:active)
   scope :inactive, with_state(:inactive)
@@ -153,5 +159,11 @@ class Member < ActiveRecord::Base
   def founding_vote
     # The first vote of a founder will always be the founding vote
     self.votes.first
+  end
+
+  # FINDERS
+
+  def self.find_by_name(name)
+    find_by_first_name_and_last_name(*name.split(' '))
   end
 end

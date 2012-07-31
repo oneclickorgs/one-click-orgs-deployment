@@ -9,4 +9,14 @@ class OfficershipsController < ApplicationController
     @officership.save!
     redirect_to directors_path
   end
+
+  def edit
+    @officership = co.officerships.find(params[:id])
+  end
+
+  def update
+    @officership = co.officerships.find(params[:id])
+    @officership.update_attributes(params[:officership])
+    redirect_to directors_path
+  end
 end

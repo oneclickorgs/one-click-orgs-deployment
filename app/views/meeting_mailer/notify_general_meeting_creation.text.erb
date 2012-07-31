@@ -1,0 +1,23 @@
+Dear <%=raw(  @member && @member.name || 'member'  )%>,
+
+A new General Meeting has been convened.
+
+The meeting will be on <%=raw( @meeting.happened_on.strftime('%d %B %Y') )%>,
+starting at <%=raw( @meeting.start_time )%>.
+
+It will be held at this venue:
+
+<%=raw( @meeting.venue )%>
+
+The agenda is as follows:
+
+<%=raw( @meeting.agenda )%>
+
+For more details about this meeting, visit:
+
+<%=raw( meeting_url(@meeting) )%>
+
+Thanks,
+
+<%=raw @meeting.organisation.name%>
+Powered by One Click Orgs

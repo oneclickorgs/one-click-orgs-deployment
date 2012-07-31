@@ -20,12 +20,12 @@ Feature: Convening a general meeting
     Then I should be on the Meetings page
     And I should see the new meeting in the list of Upcoming Meetings
 
-  @wip
+  @javascript
   Scenario: Members are notified of a new General Meeting
     When I convene a General Meeting
     Then all the Members should receive a notification of the new meeting
   
-  @wip
+  @javascript  
   Scenario: Secretary convenes a General Meeting with resolutions to be considered
     Given there are draft resolutions
     When I go to convene a General Meeting

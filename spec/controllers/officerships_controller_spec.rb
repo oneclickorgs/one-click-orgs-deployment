@@ -76,4 +76,68 @@ describe OfficershipsController do
     end
   end
 
+  describe "GET edit" do
+    before(:each) do
+      @officership = mock_model(Officership)  
+      @officerships_association = mock("officerships association")
+
+      @organisation.stub(:officerships).and_return(@officerships_association)
+      @officerships_association.stub(:find).and_return(@officership)
+    end
+
+    def get_edit
+      get :edit, 'id' => '1'
+    end
+
+    it "finds the officership" do
+      @officerships_association.should_receive(:find).with('1').and_return(@officership)
+      get_edit
+    end
+
+    it "assigns the officership" do
+      get_edit
+      assigns[:officership].should == @officership
+    end
+
+    it "is successful" do
+      get_edit
+      response.should be_success
+    end
+  end
+
+  describe "PUT update" do
+    before(:each) do
+      @officership_params = {'certification' => '1'}
+      @officership = mock_model(Officership)
+      @officerships_association = mock("officerships association")
+
+      @organisation.stub(:officerships).and_return(@officerships_association)
+      @officerships_association.stub(:find).and_return(@officership)
+      @officership.stub(:update_attributes)
+    end
+
+    def put_update
+      put :update, 'id' => '1', 'officership' => @officership_params
+    end
+
+    it "finds the officership" do
+      @officerships_association.should_receive(:find).with('1').and_return(@officership)
+      put_update
+    end
+
+    it "updates the officership's attributes" do
+      @officership.should_receive(:update_attributes).with(@officership_params)
+      put_update
+    end
+
+    it "redirects to the directors page" do
+      put_update
+      response.should redirect_to('/directors')
+    end
+
+    context "when the officership cannot be updated" do
+      it "handles the error"
+    end
+  end
+
 end

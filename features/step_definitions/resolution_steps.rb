@@ -20,6 +20,10 @@ Given /^there is a draft resolution$/ do
   @resolution = @organisation.resolutions.make!(:draft)
 end
 
+Given /^there are draft resolutions$/ do
+  @organisation.resolutions.make!(2, :draft)
+end
+
 Given /^there is a suggested resolution$/ do
   @resolution_proposal = @organisation.resolution_proposals.make!
 end

@@ -7,18 +7,25 @@
   %p= general_meeting_form.text_field :start_time
   %p= general_meeting_form.label :venue
   %p= general_meeting_form.text_area :venue
+
   %h3 Resolutions to be considered at the meeting
+
   .resolutions
-    - unless @resolutions.blank?
-      - @resolutions.each do |resolution|
-        = content_tag_for(:p, resolution) do
-          = resolution.title
+    = general_meeting_form.fields_for :existing_resolutions, @draft_resolutions do |resolution_fields|
+      = content_tag_for(:p, resolution_fields.object) do
+        = resolution_fields.check_box :attached
+        = resolution_fields.label :attached, resolution_fields.object.title
+
   %p= general_meeting_form.label :agenda, "Other agenda items"
   %p= general_meeting_form.text_area :agenda
+
   %p TODO: AGM details
+
   %p
     = general_meeting_form.check_box :certification
     = general_meeting_form.label :certification, "I certify that the Board has decided (by meeting or written resolution) to convene this meeting."
+
   %p When you confirm these details, notice of the meeting will be sent to all Members.
+
   %p
     = general_meeting_form.submit "Confirm and convene the meeting."

@@ -2,8 +2,9 @@ class GeneralMeetingsController < ApplicationController
   def new
     @general_meeting = co.general_meetings.build
 
+    @draft_resolutions = co.resolutions.draft
     if params[:resolution_id].present?
-      @resolutions = [co.resolutions.find(params[:resolution_id])]
+      @draft_resolutions.find_by_id(params[:resolution_id]).try(:attached=, '1')
     end
   end
 

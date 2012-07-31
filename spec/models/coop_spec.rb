@@ -111,6 +111,18 @@ describe Coop do
         @coop.officerships.should include(@officership)
       end
     end
+
+    it "has many elections" do
+      @coop = Coop.make!
+      @election = Election.make!
+
+      expect {@coop.elections << @election}.to_not raise_error
+
+      @coop.reload
+      @coop.elections.reload
+
+      @coop.elections.should include(@election)
+    end
   end
   
   describe "defaults" do

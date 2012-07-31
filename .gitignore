@@ -22,3 +22,6 @@ public/assets
 # Cucumber HTML output
 tmp/features.html
 tmp/features.relizy.html
+
+# Cucumber Parallel logs
+tmp/parallel_runtime_cucumber.log

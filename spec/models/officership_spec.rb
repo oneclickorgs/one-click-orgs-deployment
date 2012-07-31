@@ -9,6 +9,12 @@ describe Officership do
     end
   end
 
+  describe "mass-assignment" do
+    it "is allowed for 'ended_on'" do
+      expect {Officership.new(:ended_on => Date.today)}.to_not raise_error
+    end
+  end
+
   it "has an 'officer' association" do
     @officership = Officership.make!
     @member = Member.make!
@@ -146,6 +152,6 @@ describe Officership do
         @office.title.should == "Treasurer"
       end
     end
-
   end
+
 end

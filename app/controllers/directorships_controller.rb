@@ -8,4 +8,15 @@ class DirectorshipsController < ApplicationController
     @directorship.save!
     redirect_to directors_path
   end
+
+  def edit
+    @directorship = Directorship.find(params[:id])
+  end
+
+  def update
+    @directorship = Directorship.find(params[:id])
+    @directorship.update_attributes(params[:directorship])
+    @directorship.save!
+    redirect_to directors_path
+  end
 end

@@ -116,6 +116,10 @@ OneClickOrgs::Application.routes.draw do
 
   resources :officerships
 
+  resources :elections do
+    resources :ballots
+  end
+
   match '/one_click(/:action)' => 'one_click'
  
   get '/login' => 'member_sessions#new', :as => 'login'
@@ -135,6 +139,7 @@ OneClickOrgs::Application.routes.draw do
     resources :comments
   end
   resources :general_meetings
+  resources :board_meetings
   
   resources :shares
   

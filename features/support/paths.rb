@@ -64,6 +64,8 @@ module NavigationHelpers
     when /^another member's profile page$/
       @member = (@organisation.members - [@user]).first
       member_path(@member)
+    when /^convene a General Meeting$/
+      new_general_meeting_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

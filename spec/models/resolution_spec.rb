@@ -79,7 +79,6 @@ describe Resolution do
     end
   end
 
-
   describe "passing immediately" do
     before(:each) do
       @resolution = Resolution.make
@@ -97,5 +96,10 @@ describe Resolution do
     end
   end
 
+  it "has an 'attached' attribute" do
+    Resolution.new.attached.should be_nil
+  end
+
+  it "stops being a draft resolution when it is attached to a meeting"
   
 end

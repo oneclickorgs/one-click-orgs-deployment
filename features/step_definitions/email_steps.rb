@@ -4,6 +4,10 @@ def last_email
   ActionMailer::Base.deliveries.last
 end
 
+def all_emails
+  ActionMailer::Base.deliveries
+end
+
 def follow_link_in_email
   @email ||= last_email
   uri = URI.parse(@email.body.match(/(http:\/\/\S*)/)[1])
@@ -144,4 +148,29 @@ Then /^the Secretary should receive a notification of the new suggested resoluti
   
   @email.to.should == [@secretary.email]
   @email.body.should include(@resolution_proposal.description)
+end
+
+Then /^all the Directors should receive a notification of the board meeting$/ do
+  @meeting ||= @organisation.meetings.last
+  @directors = @organisation.directors
+
+  @directors.each do |director|
+    email = all_emails.select{|e| e.to.include?(director.email)}.last
+    email.should be_present
+    email.subject.should include("Board Meeting")
+    email.body.should include(@meeting.start_time)
+    email.body.should include(@meeting.venue)
+  end
+end
+
+Then /^all the Members should receive a notification of the new meeting$/ do
+  @meeting ||= @organisation.meetings.last
+  members = @organisation.members
+  members.each do |member|
+    email = all_emails.select{|e| e.to.include?(member.email)}.last
+    email.should be_present
+    email.subject.should include("Meeting")
+    email.body.should include(@meeting.start_time)
+    email.body.should include(@meeting.venue)
+  end
 end

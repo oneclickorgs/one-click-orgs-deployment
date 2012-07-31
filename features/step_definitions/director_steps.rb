@@ -1,10 +1,24 @@
-Given /^there is a director named "(.*?)"$/ do |name|
+Given /^there is a director (?:named|called) "(.*?)"$/ do |name|
   first_name, last_name = name.split(' ')
   @director = @organisation.members.make!(:director, :first_name => first_name, :last_name => last_name)
 end
 
 Given /^there is an office "(.*?)"$/ do |title|
-  @organisation.offices.make!(:title => title)
+  @office = @organisation.offices.make!(:title => title)
+end
+
+Given /^the office is occupied by "(.*?)"$/ do |name|
+  @office ||= @organisation.offices.last
+  
+  first_name, last_name = name.split(' ')
+  director = @organisation.members.make!(:director,
+    :first_name => first_name,
+    :last_name => last_name
+  )
+
+  officership = Officership.make!(:office => @office, :officer => director)
+
+  @office.reload
 end
 
 When /^I choose yesterday for the date of election$/ do
@@ -79,9 +93,54 @@ When /^I certify the appointment$/ do
   select(yesterday.day.to_s, :from => "#{form_model}[elected_on(3i)]")
 end
 
+When /^I step down "(.*?)"$/ do |name|
+  member = @organisation.directors.find_by_name(name)
+  office = member.office
+  within(".#{office.title.parameterize.underscore}") do
+    click_button("Step down")
+  end
+end
+
+When /^I certify the stepping down$/ do
+  check('officership[certification]')
+  yesterday = 1.day.ago
+  select(yesterday.year.to_s, :from => 'officership[ended_on(1i)]')
+  select(yesterday.strftime('%B'), :from => 'officership[ended_on(2i)]')
+  select(yesterday.day.to_s, :from => 'officership[ended_on(3i)]')
+end
+
+When /^I save the stepping down$/ do
+  click_button("Record this stepping down")
+end
+
+When /^I retire "(.*?)"$/ do |name|
+  member = @organisation.directors.find_by_name(name)
+  within("#member_#{member.id}") do
+    click_button("Retire")
+  end
+end
+
+When /^I certify the retirement$/ do
+  check('directorship[certification]')
+  yesterday = 1.day.ago
+  select(yesterday.year.to_s, :from => 'directorship[ended_on(1i)]')
+  select(yesterday.strftime('%B'), :from => 'directorship[ended_on(2i)]')
+  select(yesterday.day.to_s, :from => 'directorship[ended_on(3i)]')
+end
+
+When /^I save the retirement$/ do
+  click_button("Record this retirement")
+end
+
 Then /^I should see "(.*?)" in the list of directors$/ do |name|
   within('.directors') do
     page.should have_content(name)
+  end
+end
+
+Then /^I should not see "(.*?)" in the list of Directors$/ do |name|
+  within('.directors') do
+    page.should have_no_content(name)
   end
 end
 
@@ -94,6 +153,11 @@ Then /^I should see a list of the directors$/ do
   page.should have_css(".directors", :text => director.name)
 end
 
+Then /^I should see a list of the officers$/ do
+  officer = @organisation.offices.select{|o| !o.officer.nil?}.last.officer
+  page.should have_css(".offices", :text => officer.name)
+end
+
 Then /^I should see "(.*?)" listed as the "(.*?)"$/ do |name, office|
   within('.offices') do
     page.should have_css(".#{office.parameterize.underscore}")
@@ -104,3 +168,12 @@ Then /^I should see "(.*?)" listed as the "(.*?)"$/ do |name, office|
   end
 end
 
+Then /^I should not see "(.*?)" listed as the "(.*?)"$/ do |name, office|
+  within('.offices') do
+    page.should have_css(".#{office.parameterize.underscore}")
+    within(".#{office.parameterize.underscore}") do
+      page.should have_no_content(name)
+      page.should have_content('unoccupied')
+    end
+  end
+end

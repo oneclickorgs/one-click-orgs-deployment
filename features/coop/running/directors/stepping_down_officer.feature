@@ -3,11 +3,12 @@ Feature: Stepping down officer
   As the secretary
   I want to record the stepping down of an officer
   
-  @wip
+  @javascript  
   Scenario: Secretary records the stepping down of an officer
     Given there is a co-op
     And I am the Secretary of the co-op
-    And there is an office "Treasurer" occupied by "Claire Simmons"
+    And there is an office "Treasurer"
+    And the office is occupied by "Claire Simmons"
     When I go to the Directors page
     And I step down "Claire Simmons"
     And I certify the stepping down
