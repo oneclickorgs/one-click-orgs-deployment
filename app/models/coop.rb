@@ -1,7 +1,12 @@
+require 'one_click_orgs/cast_to_boolean'
+
 class Coop < Organisation
+  include OneClickOrgs::CastToBoolean
+
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
+  has_many :annual_general_meetings, :foreign_key => 'organisation_id'
   
   has_many :resolutions, :foreign_key => 'organisation_id'
   has_many :board_resolutions, :foreign_key => 'organisation_id'
@@ -80,6 +85,22 @@ class Coop < Organisation
 
   def build_directorship(attributes={})
     Directorship.new({:organisation => self}.merge(attributes))
+  end
+
+  def directors_retiring
+    # TODO expand this to full rules of retirement
+    directors
+  end
+
+  def build_general_meeting_or_annual_general_meeting(attributes={})
+    attributes = attributes.dup.with_indifferent_access
+    agm = cast_to_boolean(attributes.delete(:annual_general_meeting))
+
+    if agm
+      annual_general_meetings.build(attributes)
+    else
+      general_meetings.build(attributes)
+    end
   end
 
 end

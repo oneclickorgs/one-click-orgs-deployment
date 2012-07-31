@@ -7,7 +7,7 @@ Feature: Convening an annual general meeting
     Given there is a co-op
     And I am the Secretary of the co-op
   
-  @wip @javascript
+  @javascript
   Scenario: Secretary convenes the Annual General Meeting
     When I go to the Meetings page
     And I press "Convene a General Meeting"
@@ -19,7 +19,6 @@ Feature: Convening an annual general meeting
     When I certify that the Board has decided to convene the meeting
     And I press "Confirm and convene the meeting"
     Then I should see the new AGM in the list of Upcoming Meetings
-    And I should 
   
   @wip @javascript
   Scenario: Secretary opens electronic nominations for new Directors for an AGM

@@ -1,0 +1,2 @@
+class AnnualGeneralMeeting < GeneralMeeting
+end

@@ -203,3 +203,18 @@ Then /^I should see the new meeting in the list of Upcoming Meetings$/ do
     page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
   end
 end
+
+Then /^I should see a list of the Directors who are due for retirement$/ do
+  # As this is the first AGM, all of the current Directors must stand down.
+  within('.directors') do
+    @organisation.directors.each do |director|
+      page.should have_content(director.name)
+    end
+  end
+end
+
+Then /^I should see the new AGM in the list of Upcoming Meetings$/ do
+  within('.upcoming_meetings') do
+    page.should have_content("Annual General Meeting")
+  end
+end

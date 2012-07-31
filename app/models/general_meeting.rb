@@ -1,9 +1,10 @@
 class GeneralMeeting < Meeting
-  attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes
+  attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes,
+    :annual_general_meeting
 
   has_many :resolutions, :foreign_key => 'meeting_id'
 
-  attr_accessor :certification
+  attr_accessor :certification, :annual_general_meeting
 
   def existing_resolutions_attributes=(attributes)
     # The attributes received from the form will look something like this:

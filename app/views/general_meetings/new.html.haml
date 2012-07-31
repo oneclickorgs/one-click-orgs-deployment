@@ -19,7 +19,17 @@
   %p= general_meeting_form.label :agenda, "Other agenda items"
   %p= general_meeting_form.text_area :agenda
 
-  %p TODO: AGM details
+  %p
+    = general_meeting_form.check_box :annual_general_meeting
+    = general_meeting_form.label :annual_general_meeting, "This is the Annual General Meeting"
+
+  #annual_general_meeting_fields{:style => 'display: none;'}
+    %p At this AGM, the following Directors will retire
+    %ul.directors
+      - @directors_retiring.each do |director|
+        = content_tag_for(:li, director) do
+          = director.name
+
 
   %p
     = general_meeting_form.check_box :certification
