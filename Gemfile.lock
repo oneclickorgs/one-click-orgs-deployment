@@ -125,6 +125,9 @@ GEM
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.3)
+    parallel (0.5.17)
+    parallel_tests (0.8.7)
+      parallel
     pdfkit (0.5.2)
     polyglot (0.3.3)
     pry (0.9.9.6)
@@ -253,6 +256,7 @@ DEPENDENCIES
   machinist!
   mail (~> 2.4.4)
   mysql (~> 2.8.1)
+  parallel_tests
   pdfkit (~> 0.5.2)
   pry
   railroad

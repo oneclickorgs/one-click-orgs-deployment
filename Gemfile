@@ -61,6 +61,7 @@ group :development do
   gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
   gem 'pry'
+  gem 'parallel_tests'
 end
 
 group :development, :test do

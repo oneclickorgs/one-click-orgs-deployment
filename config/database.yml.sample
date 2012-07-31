@@ -9,7 +9,7 @@ development: &defaults
  
 test: &test
   <<:       *defaults
-  database: one_click_test
+  database: one_click_test<%= ENV['TEST_ENV_NUMBER'] %>
   encoding: utf8
   username: 
  
