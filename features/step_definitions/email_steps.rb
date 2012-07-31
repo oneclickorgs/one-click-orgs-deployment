@@ -162,3 +162,15 @@ Then /^all the Directors should receive a notification of the board meeting$/ do
     email.body.should include(@meeting.venue)
   end
 end
+
+Then /^all the Members should receive a notification of the new meeting$/ do
+  @meeting ||= @organisation.meetings.last
+  members = @organisation.members
+  members.each do |member|
+    email = all_emails.select{|e| e.to.include?(member.email)}.last
+    email.should be_present
+    email.subject.should include("Meeting")
+    email.body.should include(@meeting.start_time)
+    email.body.should include(@meeting.venue)
+  end
+end

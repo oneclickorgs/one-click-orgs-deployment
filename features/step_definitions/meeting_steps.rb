@@ -1,11 +1,45 @@
 require 'action_controller/record_identifier'
 
+def select_meeting_date
+  meeting_date = 1.month.from_now
+
+  if page.has_field?('general_meeting[happened_on(1i)]')
+    select(meeting_date.year.to_s, :from => 'general_meeting[happened_on(1i)]')
+    select(meeting_date.strftime('%B'), :from => 'general_meeting[happened_on(2i)]')
+    select(meeting_date.day.to_s, :from => 'general_meeting[happened_on(3i)]')
+  else
+    select(meeting_date.year.to_s, :from => 'board_meeting[happened_on(1i)]')
+    select(meeting_date.strftime('%B'), :from => 'board_meeting[happened_on(2i)]')
+    select(meeting_date.day.to_s, :from => 'board_meeting[happened_on(3i)]')
+  end
+end
+
+def fill_in_start_time
+  if page.has_field?('general_meeting[start_time]')
+    fill_in('general_meeting[start_time]', :with => '4pm')
+  else
+    fill_in('board_meeting[start_time]', :with => '4pm')
+  end
+end
+
+def fill_in_venue
+  if page.has_field?('general_meeting[venue]')
+    fill_in('general_meeting[venue]', :with => "The Meeting Hall")
+  else
+    fill_in('board_meeting[venue]', :with => "The Meeting Hall")
+  end
+end
+
 def fill_in_agenda
   if page.has_field?('general_meeting[agenda]')
     fill_in('general_meeting[agenda]', :with => "Discuss things. AOB.")
   else
     fill_in('board_meeting[agenda]', :with => "Discuss things. AOB.")
   end
+end
+
+def check_certification
+  check('general_meeting[certification]')
 end
 
 Given /^another director has recorded some minutes$/ do
@@ -38,33 +72,15 @@ When /^I check the first two directors' checkboxes$/ do
 end
 
 When /^I choose a date for the meeting$/ do
-  meeting_date = 1.month.from_now
-
-  if page.has_field?('general_meeting[happened_on(1i)]')
-    select(meeting_date.year.to_s, :from => 'general_meeting[happened_on(1i)]')
-    select(meeting_date.strftime('%B'), :from => 'general_meeting[happened_on(2i)]')
-    select(meeting_date.day.to_s, :from => 'general_meeting[happened_on(3i)]')
-  else
-    select(meeting_date.year.to_s, :from => 'board_meeting[happened_on(1i)]')
-    select(meeting_date.strftime('%B'), :from => 'board_meeting[happened_on(2i)]')
-    select(meeting_date.day.to_s, :from => 'board_meeting[happened_on(3i)]')
-  end
+  select_meeting_date
 end
 
 When /^I enter a start time for the meeting$/ do
-  if page.has_field?('general_meeting[start_time]')
-    fill_in('general_meeting[start_time]', :with => '4pm')
-  else
-    fill_in('board_meeting[start_time]', :with => '4pm')
-  end
+  fill_in_start_time
 end
 
 When /^I enter a venue for the meeting$/ do
-  if page.has_field?('general_meeting[venue]')
-    fill_in('general_meeting[venue]', :with => "The Meeting Hall")
-  else
-    fill_in('board_meeting[venue]', :with => "The Meeting Hall")
-  end
+  fill_in_venue
 end
 
 When /^I enter an agenda for the meeting$/ do
@@ -76,7 +92,7 @@ When /^I enter the business to be transacted during the meeting$/ do
 end
 
 When /^I certify that the Board has decided to convene the meeting$/ do
-  check('general_meeting[certification]')
+  check_certification
 end
 
 When /^I check the certification$/ do
@@ -85,6 +101,16 @@ end
 
 When /^I enter "(.*?)" for the new notice period$/ do |arg1|
   pending # express the regexp above with the code you wish you had
+end
+
+When /^I convene a General Meeting$/ do
+  visit(new_general_meeting_path)
+  select_meeting_date
+  fill_in_start_time
+  fill_in_venue
+  fill_in_agenda
+  check_certification
+  click_button("Confirm and convene the meeting")
 end
 
 Then /^I should see the meeting details I chose in the list of Upcoming Meetings$/ do
