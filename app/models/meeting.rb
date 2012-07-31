@@ -12,7 +12,8 @@ class Meeting < ActiveRecord::Base
   
   has_many :comments, :as => :commentable
 
-  scope :upcoming, lambda{where(['happened_on > ?', Time.now.utc.midnight.advance(:days => 1)])}
+  # 'Upcoming' scope includes meetings happening today.
+  scope :upcoming, lambda{where(['happened_on >= ?', Time.now.utc.to_date])}
   
   def to_event
     {:timestamp => created_at, :object => self, :kind => :meeting}

@@ -113,6 +113,31 @@ When /^I convene a General Meeting$/ do
   click_button("Confirm and convene the meeting")
 end
 
+When /^I enter details for the meeting$/ do
+  select_meeting_date
+  fill_in_start_time
+  fill_in_venue
+  fill_in_agenda
+  check_certification
+end
+
+When /^I select one of the draft resolutions to be considered at the meeting$/ do
+  draft_resolutions = @organisation.resolutions.draft
+  check("general_meeting[existing_resolutions_attributes][0][attached]")
+end
+
+When /^I convene the meeting$/ do
+  click_button("Confirm and convene the meeting")
+end
+
+Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
+  # We selected the first draft resolution on the form
+  @resolution ||= @organisation.resolutions.draft.first
+  @meeting ||= @organisation.meetings.last
+
+  @meeting.resolutions.should include(@resolution)
+end
+
 Then /^I should see the meeting details I chose in the list of Upcoming Meetings$/ do
   within('.upcoming_meetings') do
     page.should have_content("Board Meeting")

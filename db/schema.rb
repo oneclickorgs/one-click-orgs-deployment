@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726205708) do
+ActiveRecord::Schema.define(:version => 20120731121541) do
 
   create_table "ballots", :force => true do |t|
     t.integer  "election_id"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20120726205708) do
     t.integer  "proposer_member_id"
     t.integer  "organisation_id"
     t.string   "state"
+    t.integer  "meeting_id"
   end
 
   create_table "resignations", :force => true do |t|

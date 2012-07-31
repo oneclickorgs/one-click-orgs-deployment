@@ -25,7 +25,7 @@ Feature: Convening a general meeting
     When I convene a General Meeting
     Then all the Members should receive a notification of the new meeting
   
-  @wip
+  @javascript  
   Scenario: Secretary convenes a General Meeting with resolutions to be considered
     Given there are draft resolutions
     When I go to convene a General Meeting

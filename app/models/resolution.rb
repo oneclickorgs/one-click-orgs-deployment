@@ -5,7 +5,7 @@ class Resolution < Proposal
 
   attr_accessible :draft, :voting_period_in_days, :extraordinary, :certification
   
-  attr_accessor :certification
+  attr_accessor :certification, :attached
   
   # DRAFT STATE
   
@@ -62,7 +62,7 @@ class Resolution < Proposal
   def extraordinary
     !!@extraordinary
   end
-    
+
   before_create :set_default_title
   def set_default_title
     if title.blank?
