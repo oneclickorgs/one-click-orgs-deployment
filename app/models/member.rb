@@ -118,8 +118,11 @@ class Member < ActiveRecord::Base
   end
   
   def to_event
-    if self.inducted?
+    # TODO Push this knowledge somewhere more appropriate
+    if inducted?
       {:timestamp => self.inducted_at, :object => self, :kind => :new_member}
+    elsif organisation.is_a?(Coop)
+      {:timestamp => self.created_at, :object => self, :kind => :new_member}
     end
   end
   
