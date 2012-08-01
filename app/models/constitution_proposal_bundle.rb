@@ -19,13 +19,16 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     # Load existing settings from organisation, if given, but don't
     # overwrite new settings that have been passed directly in as attributes.
     if organisation
-      [:organisation_name, :objectives, :voting_period].each do |clause_name|
-        send("#{clause_name}=", organisation.constitution.send(clause_name)) unless send("#{clause_name}")
+      case organisation
+      when Association
+        [:organisation_name, :objectives, :voting_period].each do |clause_name|
+          send("#{clause_name}=", organisation.constitution.send(clause_name)) unless send("#{clause_name}")
+        end
+        [:general, :membership, :constitution].each do |voting_system_type|
+          send("#{voting_system_type}_voting_system=", organisation.constitution.voting_system(voting_system_type).simple_name) unless send("#{voting_system_type}_voting_system")
+        end
+        self.assets = (!!organisation.constitution.assets ? '1' : '0') unless assets
       end
-      [:general, :membership, :constitution].each do |voting_system_type|
-        send("#{voting_system_type}_voting_system=", organisation.constitution.voting_system(voting_system_type).simple_name) unless send("#{voting_system_type}_voting_system")
-      end
-      self.assets = (!!organisation.constitution.assets ? '1' : '0') unless assets
     end
     
     self.proposals ||= []
