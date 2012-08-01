@@ -167,10 +167,4 @@ class Association < Organisation
       m.member_class = member_classes.find_by_name("Founding Member")
     }
   end
-  
-  def build_constitution_proposal_bundle(attributes={})
-    ConstitutionProposalBundle.new({
-      :organisation => self
-    }.merge(attributes))
-  end
 end

@@ -38,6 +38,18 @@ describe Election do
 
       @election.nominations.should include(@nomination)
     end
+
+    it "belongs to an organisation" do
+      @election = Election.make!
+      @organisation = Coop.make!
+
+      expect {@election.organisation = @organisation}.to_not raise_error
+
+      @election.save!
+      @election.reload
+      
+      @election.organisation(true).should == @organisation
+    end
   end
 
   describe "states" do
@@ -57,6 +69,12 @@ describe Election do
       @election.state = 'open'
       @election.close!
       @election.state.should == 'closed'
+    end
+  end
+
+  describe "mass assignment" do
+    it "allows mass-assignment of 'organisation'" do
+      expect{Election.new(:organisation => mock_model(Organisation))}.to_not raise_error
     end
   end
 

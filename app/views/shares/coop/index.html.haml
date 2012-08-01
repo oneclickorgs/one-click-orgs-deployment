@@ -6,11 +6,13 @@
 .section
   TODO: Action buttons here.
 
-%h3 Payments pending for issued shares
-.section
+- if @share_payments_pending.present?
+  .section
+    %h3 Payments pending for issued shares
 
-%h3 Outstanding share withdrawals
-.section
+- if @share_withdrawals_outstanding.present?
+  .section
+    %h3 Outstanding share withdrawals
 
-%h3 Share ownership
 .section
+  %h3 Share ownership

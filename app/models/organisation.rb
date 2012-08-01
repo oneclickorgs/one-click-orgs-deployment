@@ -92,4 +92,11 @@ class Organisation < ActiveRecord::Base
   
   def set_default_voting_period
   end
+
+  def build_constitution_proposal_bundle(attributes={})
+    ConstitutionProposalBundle.new({
+      :organisation => self
+    }.merge(attributes))
+  end
+
 end

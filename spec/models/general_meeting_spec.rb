@@ -22,6 +22,20 @@ describe GeneralMeeting do
     end
   end
 
+  describe "attributes" do
+    it "has an 'annual_general_meeting' attribute" do
+      expect{GeneralMeeting.new(:annual_general_meeting => '1')}.to_not raise_error
+    end
+
+    it "has an electronic_nominations attribute" do
+      expect{GeneralMeeting.new.electronic_nominations}.to_not raise_error
+    end
+
+    it "has a nominations_closing_date attribute" do
+      expect{GeneralMeeting.new.nominations_closing_date}.to_not raise_error
+    end
+  end
+
   describe "setting existing resolutions" do
     before(:each) do
       @existing_resolutions_attributes = {"0"=>{"attached"=>"1", "id"=>"7"}, "1"=>{"attached"=>"0", "id"=>"9"}}

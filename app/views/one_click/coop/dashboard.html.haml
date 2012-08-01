@@ -1,10 +1,18 @@
 %h2 Dashboard
 
-%h3 Notifications
-.section
+- if @tasks.present?
+  %h3 Notifications
+  .section
+    %ul.tasks
+      - @tasks.each do |task|
+        = content_tag_for(:li, task) do
+          = task.inspect
 
 .section
-  TODO: Action buttons here.
+  - if can?(:create, Resolution)
+    = link_button("Create a new Resolution", :url => new_resolution_path)
+  - if can?(:create, ResolutionProposal)
+    = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
+  %br.clear
 
-%h3 Timeline
-.section
+= render :partial => 'timeline', :locals => {:timeline => @timeline}

@@ -1,13 +1,15 @@
 %h2 Members
 
-%h3 Membership applications received
-.section
+- if @membership_applications_pending.present?
+  .section
+    %h3 Membership applications received
 
-%h3 Membership issues
-.section
+- if @membership_issues.present?
+  .section
+    %h3 Membership issues
 
-%h3 List of Members
 .section
+  %h3 List of Members
   %table.members
     %tr
       %th Name
@@ -21,6 +23,5 @@
           - if member.last_logged_in_at
             = member.last_logged_in_at.to_s(:short)
 
-
-%h3 Members settings
 .section
+  %h3 Members settings

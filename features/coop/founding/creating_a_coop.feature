@@ -23,11 +23,11 @@ Feature: Adding a co-op
     Then I should be on the dashboard page
     And the subdomain should be "coffee"
   
-  @wip
-  Scenario: Founder creates a co-op
-    Given the domain is the signup domain
-    When I go to the new co-op page
-    And I enter my details
-    And I enter the new co-op's details
-    And I press "Create draft co-op"
-    Then I should be on the dashboard page for the new co-op
+  # @wip
+  # Scenario: Founder creates a co-op
+  #   Given the domain is the signup domain
+  #   When I go to the new co-op page
+  #   And I enter my details
+  #   And I enter the new co-op's details
+  #   And I press "Create draft co-op"
+  #   Then I should be on the dashboard page for the new co-op

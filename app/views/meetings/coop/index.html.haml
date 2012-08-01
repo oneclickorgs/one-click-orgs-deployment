@@ -5,33 +5,38 @@
   = link_button("Convene a meeting of the Board", :url => new_board_meeting_path)
   .clear
 
+- if @upcoming_meetings.present?
+  .section
+    %h3 Upcoming meetings
+    %table.upcoming_meetings
+      - @upcoming_meetings.each do |meeting|
+        %tr
+          = content_tag_for(:td, meeting) do
+            %p
+              A
+              %strong= meeting.class.name.underscore.humanize.titlecase
+              on
+              = meeting.happened_on.strftime('%d %B %Y') + ','
+              starting at
+              = meeting.start_time + ','
+              at
+              = meeting.venue + '.'
+            %p
+              %a{:href => '#'} View agenda and details.
 
-%h3 Upcoming meetings
-.section
-  %table.upcoming_meetings
-    - @upcoming_meetings.each do |meeting|
-      %tr
-        = content_tag_for(:td, meeting) do
-          A
-          = meeting.class.name.underscore.humanize.titlecase
-          on
-          = meeting.happened_on.strftime('%d %B %Y') + ','
-          starting at
-          = meeting.start_time + ','
-          at
-          = meeting.venue + '.'
+- if @past_meetings.present?
+  .section
+    %h3 Past meetings
 
-%h3 Past meetings
 .section
-
-%h3 Meetings settings
-.section
+  %h3 Meetings settings
   %p
     The notice period for General Meetings is
     = co.constitution.meeting_notice_period
     clear days.
   - if can?(:create, Resolution)
     = link_button("Change the notice period", :url => new_change_meeting_notice_period_resolution_path)
+  %br.clear
   %p
     The quorum for General Meetings is the greater of
     = co.constitution.quorum_number
@@ -40,4 +45,4 @@
     of the membership.
   - if can?(:create, Resolution)
     = link_button("Change the quorum", :url => new_change_quorum_resolution_path)
-  .clear
+  %br.clear

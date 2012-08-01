@@ -5,7 +5,9 @@ describe 'officerships/edit' do
   before(:each) do
     @officership = mock_model(Officership,
       :certification => nil,
-      :ended_on => nil
+      :ended_on => nil,
+      :officer_name => "John Smith",
+      :office_title => "Treasurer"
     )
     assign(:officership, @officership)
   end

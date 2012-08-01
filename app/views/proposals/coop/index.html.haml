@@ -1,56 +1,52 @@
 %h2 Resolutions
 
-.section
-  - if can?(:create, Resolution)
-    = link_button("Create a new Resolution", :url => new_resolution_path)
-  -elsif can?(:create, ResolutionProposal)
-    = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
-  - if can?(:create, BoardResolution)
-    = link_button("Create a new Resolution of the Board", :url => new_board_resolution_path)
-  %br.clear
+- if can?(:create, Resolution) || can?(:create, ResolutionProposal) || can?(:create, BoardResolution)
+  .section
+    - if can?(:create, Resolution)
+      = link_button("Create a new Resolution", :url => new_resolution_path)
+    -elsif can?(:create, ResolutionProposal)
+      = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
+    - if can?(:create, BoardResolution)
+      = link_button("Create a new Resolution of the Board", :url => new_board_resolution_path)
+    %br.clear
 
-%p The following resolutions are currently open:
-.section
-  %table.proposals
-    - @proposals.each do |proposal|
-      %tr
-        = content_tag_for(:td, proposal) do
-          .proposal
-            %h4= proposal.title
-            %p= proposal.description
-            - if can?(:vote_on, proposal)
-              %p.votes= render 'proposals/vote', :proposal => proposal
+- if @proposals.present?
+  .section
+    %p The following resolutions are currently open:
+    %table.proposals
+      - @proposals.each do |proposal|
+        %tr
+          = content_tag_for(:td, proposal) do
+            .proposal
+              %h4= proposal.title
+              %p= proposal.description
+              - if can?(:vote_on, proposal)
+                %p.votes= render 'proposals/vote', :proposal => proposal
 
-%h3 Draft resolutions:
-.section
-  %table.draft_proposals
-    - @draft_proposals.each do |proposal|
-      %tr
-        = content_tag_for(:td, proposal) do
-          %h4= proposal.title
-          %p
-            = proposal.description
+- if @draft_proposals.present?
+  .section
+    %h3 Draft resolutions:
+    %ul.draft_proposals
+      - @draft_proposals.each do |proposal|
+        = content_tag_for(:li, proposal) do
+          %p= proposal.description.present? ? proposal.description : proposal.title
           - if can?(:create, Resolution)
-            %p
-              = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
+            = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
           - if can?(:create, Meeting)
-            %p
-              = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
+            = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
+    %br.clear
 
-%h3 Suggested resolutions:
-.section
-  %table.resolution_proposals
-    - @resolution_proposals.each do |proposal|
-      %tr
-        = content_tag_for(:td, proposal) do
-          %h4= proposal.title
-          %p= proposal.description
+- if @resolution_proposals.present?
+  .section
+    %h3 Suggested resolutions:
+    %ul.resolution_proposals
+      - @resolution_proposals.each do |proposal|
+        = content_tag_for(:li, proposal) do
+          %p= proposal.description.present? ? proposal.description : proposal.title
           - if can?(:edit, ResolutionProposal)
-            %p
-              = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
+            = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
           - if can?(:create, Resolution)
-            %p
-              = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
-            - if can?(:create, Meeting)
-              %p
-                = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
+            = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
+          - if can?(:create, Meeting)
+            = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
+    %br.clear

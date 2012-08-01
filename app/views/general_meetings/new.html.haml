@@ -1,31 +1,58 @@
+- content_for(:head) do
+  = javascript_include_tag :general_meetings
+
 %h2 Convene a General Meeting
 
-= form_for(@general_meeting) do |general_meeting_form|
-  %p= general_meeting_form.label :happened_on, "Date of meeting"
-  %p= general_meeting_form.date_select :happened_on
-  %p= general_meeting_form.label :start_time
-  %p= general_meeting_form.text_field :start_time
-  %p= general_meeting_form.label :venue
-  %p= general_meeting_form.text_area :venue
+.section
+  = form_for(@general_meeting) do |general_meeting_form|
+    %p= general_meeting_form.label :happened_on, "Date of meeting"
+    %p.date_select= general_meeting_form.date_select :happened_on, {}, :class => 'inline'
+    %p= general_meeting_form.label :start_time
+    %p= general_meeting_form.text_field :start_time
+    %p= general_meeting_form.label :venue
+    %p= general_meeting_form.text_area :venue
 
-  %h3 Resolutions to be considered at the meeting
+    %p Resolutions to be considered at the meeting:
 
-  .resolutions
-    = general_meeting_form.fields_for :existing_resolutions, @draft_resolutions do |resolution_fields|
-      = content_tag_for(:p, resolution_fields.object) do
-        = resolution_fields.check_box :attached
-        = resolution_fields.label :attached, resolution_fields.object.title
+    .resolutions
+      = general_meeting_form.fields_for :existing_resolutions, @draft_resolutions do |resolution_fields|
+        = content_tag_for(:p, resolution_fields.object) do
+          = resolution_fields.check_box :attached
+          = resolution_fields.label :attached, resolution_fields.object.title
 
-  %p= general_meeting_form.label :agenda, "Other agenda items"
-  %p= general_meeting_form.text_area :agenda
+    %p= general_meeting_form.label :agenda, "Other agenda items"
+    %p= general_meeting_form.text_area :agenda
 
-  %p TODO: AGM details
+    %p
+      = general_meeting_form.check_box :annual_general_meeting
+      = general_meeting_form.label :annual_general_meeting, "This is the Annual General Meeting"
 
-  %p
-    = general_meeting_form.check_box :certification
-    = general_meeting_form.label :certification, "I certify that the Board has decided (by meeting or written resolution) to convene this meeting."
+    #annual_general_meeting_fields{:style => 'display: none;'}
+      %p At this AGM, the following Directors will retire
+      %ul.directors
+        - @directors_retiring.each do |director|
+          = content_tag_for(:li, director) do
+            = director.name
+      %p
+        = general_meeting_form.check_box :electronic_nominations
+        = general_meeting_form.label :electronic_nominations, "Allow nominations of new Directors to be made electronically."
+      %p
+        = general_meeting_form.check_box :electronic_voting
+        = general_meeting_form.label :electronic_voting, "Allow voting on the nominees to be done electronically."
+      %p
+        = general_meeting_form.label :nominations_closing_date, "Closing date for nominations"
+      %p.date_select
+        = general_meeting_form.date_select :nominations_closing_date, {:include_blank => true}, :class => 'inline'
+      %p
+        = general_meeting_form.label :voting_closing_date, "Closing date for voting"
+      %p.date_select
+        = general_meeting_form.date_select :voting_closing_date, {:include_blank => true}, :class => 'inline'
 
-  %p When you confirm these details, notice of the meeting will be sent to all Members.
+    %p
+      = general_meeting_form.check_box :certification
+      = general_meeting_form.label :certification, "I certify that the Board has decided (by meeting or written resolution) to convene this meeting."
 
-  %p
-    = general_meeting_form.submit "Confirm and convene the meeting."
+    %p When you confirm these details, notice of the meeting will be sent to all Members.
+
+    %p
+      = general_meeting_form.submit "Confirm and convene the meeting"

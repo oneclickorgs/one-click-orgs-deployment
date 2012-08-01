@@ -1,7 +1,12 @@
+require 'one_click_orgs/cast_to_boolean'
+
 class Coop < Organisation
+  include OneClickOrgs::CastToBoolean
+
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
+  has_many :annual_general_meetings, :foreign_key => 'organisation_id'
   
   has_many :resolutions, :foreign_key => 'organisation_id'
   has_many :board_resolutions, :foreign_key => 'organisation_id'
@@ -53,6 +58,7 @@ class Coop < Organisation
     directors.set_permission!(:resolution, true)
     directors.set_permission!(:board_resolution, true)
     directors.set_permission!(:vote, true)
+    directors.set_permission!(:meeting, true)
     
     secretaries = member_classes.find_or_create_by_name('Secretary')
     secretaries.set_permission!(:resolution, true)
@@ -80,6 +86,26 @@ class Coop < Organisation
 
   def build_directorship(attributes={})
     Directorship.new({:organisation => self}.merge(attributes))
+  end
+
+  def directors_retiring
+    # TODO expand this to full rules of retirement
+    directors
+  end
+
+  def build_general_meeting_or_annual_general_meeting(attributes={})
+    attributes = attributes.dup.with_indifferent_access
+    agm = cast_to_boolean(attributes.delete(:annual_general_meeting))
+
+    if agm
+      begin
+        annual_general_meetings.build(attributes)
+      rescue ActiveRecord::MultiparameterAssignmentErrors => e
+        raise e.errors.map{|e| [e.exception, e.attribute]}.inspect
+      end
+    else
+      general_meetings.build(attributes)
+    end
   end
 
 end

@@ -20,6 +20,8 @@ describe GeneralMeetingsController do
       @general_meetings_association.stub(:build)
       @organisation.stub(:resolutions).and_return(@resolutions_association)
       @resolutions_association.stub(:draft).and_return(@draft_resolutions_association)
+
+      @organisation.stub(:directors_retiring)
     end
 
     def get_new
@@ -35,27 +37,33 @@ describe GeneralMeetingsController do
       get_new
       assigns[:draft_resolutions].should == @draft_resolutions_association
     end
+
+    it "finds the directors due to retire" do
+      @organisation.should_receive(:directors_retiring).and_return(@directors_retiring)
+      get_new
+    end
+
+    it "assigns the directors due to retire" do
+      get_new
+      assigns[:directors_retiring].should == @directors_retiring
+    end
   end
 
   describe "POST create" do
     before(:each) do
-      @general_meetings_association = mock("general meetings association")
-      @organisation.stub(:general_meetings).and_return(@general_meetings_association)
-
       @general_meeting = mock_model(GeneralMeeting)
-      @general_meetings_association.stub(:build).and_return(@general_meeting)
+      @general_meeting_params = {'venue' => 'Meeting Hall'}
 
       @general_meeting.stub(:save!)
-
-      @general_meeting_params = {'venue' => 'Meeting Hall'}
+      @organisation.stub(:build_general_meeting_or_annual_general_meeting).and_return(@general_meeting)
     end
 
     def post_create
       post :create, 'general_meeting' => @general_meeting_params
     end
 
-    it "builds the new meeting" do
-      @general_meetings_association.should_receive(:build).with(@general_meeting_params).and_return(@general_meeting)
+    it "builds a new General Meeting or Annual General Meeting" do
+      @coop.should_receive(:build_general_meeting_or_annual_general_meeting).with(@general_meeting_params).and_return(@general_meeting)
       post_create
     end
 
