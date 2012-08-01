@@ -11,7 +11,6 @@ Given /^there is a co\-op$/ do
   secretary_office = @coop.offices.make!(:title => "Secretary")
   secretary_office.officership = Officership.make!(:officer => secretary)
 
-
   @coop.members.make!(:director)
 
   set_subdomain_to_organisation

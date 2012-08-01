@@ -206,6 +206,40 @@ describe Coop do
       Directorship.should_receive(:new).with(hash_including(:organisation => @coop))
       @coop.build_directorship
     end
-  end    
+  end
+
+  describe "calculating directors due to retire" do
+    context "when no AGM has been held before" do
+      before(:each) do
+        @coop = Coop.make!
+        @coop.members.make!(3, :director)
+      end
+
+      it "retires all the directors" do
+        @coop.directors_retiring.should == @coop.directors
+      end
+    end
+
+    context "when this is not the first AGM" do
+      it "retires the one-third of the directors who have been longest in office since their last election"
+    end
+  end 
+
+  describe "GM/AGM builder" do
+    before(:each) do
+      @coop = Coop.make!
+    end
+
+    it "creates a GeneralMeeting" do
+      meeting = @coop.build_general_meeting_or_annual_general_meeting
+      meeting.should be_a(GeneralMeeting)
+      meeting.should_not be_a(AnnualGeneralMeeting)
+    end
+
+    it "creates an AnnualGeneralMeeting" do
+      meeting = @coop.build_general_meeting_or_annual_general_meeting('annual_general_meeting' => '1')
+      meeting.should be_a(AnnualGeneralMeeting)
+    end
+  end
 
 end

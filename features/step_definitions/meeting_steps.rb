@@ -130,6 +130,16 @@ When /^I convene the meeting$/ do
   click_button("Confirm and convene the meeting")
 end
 
+When /^I begin to convene an AGM$/ do
+  visit(new_general_meeting_path)
+  select_meeting_date
+  fill_in_start_time
+  fill_in_venue
+  fill_in_agenda
+  check_certification
+  check('general_meeting[annual_general_meeting]')
+end
+
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.draft.first
@@ -201,5 +211,20 @@ Then /^I should see the new meeting in the list of Upcoming Meetings$/ do
 
   within('.upcoming_meetings') do
     page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
+  end
+end
+
+Then /^I should see a list of the Directors who are due for retirement$/ do
+  # As this is the first AGM, all of the current Directors must stand down.
+  within('.directors') do
+    @organisation.directors.each do |director|
+      page.should have_content(director.name)
+    end
+  end
+end
+
+Then /^I should see the new AGM in the list of Upcoming Meetings$/ do
+  within('.upcoming_meetings') do
+    page.should have_content("Annual General Meeting")
   end
 end
