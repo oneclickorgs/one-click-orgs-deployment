@@ -3,10 +3,10 @@ Feature: Withdrawing shares
   As a Member
   I want to make an application to withdraw some shares
   
-  Background:
-    Given there is a co-op
-    And members of the co-op can hold more than one share
-    And I am a Member of the co-op
+  # Background:
+  #   Given there is a co-op
+  #   And members of the co-op can hold more than one share
+  #   And I am a Member of the co-op
   
   @wip
   Scenario: Member withdraws some of their shares

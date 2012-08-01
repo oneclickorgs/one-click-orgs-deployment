@@ -3,9 +3,9 @@ Feature: Appointing initial directors
   As the founder of a new co-op
   I want to appoint the initial directors and officers
   
-  Background:
-    Given there is a draft co-op
-    And I am the founder of the draft co-op
+  # Background:
+  #   Given there is a draft co-op
+  #   And I am the founder of the draft co-op
   
   @wip
   Scenario: Founder appoints an initial director

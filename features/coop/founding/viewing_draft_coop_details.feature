@@ -3,9 +3,9 @@ Feature: Viewing draft coop details
   As a founding member
   I want to view the details of the draft co-op
   
-  Background:
-    Given there is a draft co-op
-    And I am a founding member of the draft co-op
+  # Background:
+  #   Given there is a draft co-op
+  #   And I am a founding member of the draft co-op
   
   @wip
   Scenario: Founding member views the rules of the draft co-op
