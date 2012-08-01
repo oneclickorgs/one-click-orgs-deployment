@@ -8,4 +8,8 @@ class BoardMeeting < Meeting
   def members_to_notify
     organisation.directors
   end
+
+  def to_event
+    {:timestamp => created_at, :object => self, :kind => :board_meeting}
+  end
 end
