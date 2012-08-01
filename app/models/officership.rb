@@ -23,6 +23,14 @@ class Officership < ActiveRecord::Base
 
   accepts_nested_attributes_for :office, :reject_if => :all_blank
 
+  def officer_name
+    officer.try(:name)
+  end
+
+  def office_title
+    office.try(:title)
+  end
+
   # after_initialize :build_office_if_necessary
   # def build_office_if_necessary
   #   if new_record? && !office

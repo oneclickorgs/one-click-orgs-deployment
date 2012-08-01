@@ -1,23 +1,24 @@
 %h2 Appointment of a new officer
 
-= form_for(@officership) do |officership_form|
-  %p
-    = officership_form.label(:officer_id, "Name")
-  %p
-    = officership_form.select(:officer_id, options_from_collection_for_select(co.directors, :id, :name))
-  %p
-    = officership_form.label(:office_id, "Office")
-  %p
-    = officership_form.select(:office_id, options_from_collection_for_select(co.offices, :id, :title))
-  = officership_form.fields_for(:office) do |office_fields|
+.section
+  = form_for(@officership) do |officership_form|
     %p
-      = office_fields.label(:title, "New office")
+      = officership_form.label(:officer_id, "Name")
     %p
-      = office_fields.text_field(:title)
-  %p
-    = officership_form.check_box(:certification)
-    = officership_form.label(:certification, "I certify that the above named person was elected to this office")
-    on
-    = officership_form.date_select(:elected_on)
-  %p
-    = officership_form.submit("Record this appointment")
+      = officership_form.select(:officer_id, options_from_collection_for_select(co.directors, :id, :name))
+    %p
+      = officership_form.label(:office_id, "Existing office...")
+    %p
+      = officership_form.select(:office_id, options_from_collection_for_select(co.offices, :id, :title))
+    = officership_form.fields_for(:office) do |office_fields|
+      %p
+        = office_fields.label(:title, "...or create a new office")
+      %p
+        = office_fields.text_field(:title)
+    %p
+      = officership_form.check_box(:certification)
+      = officership_form.label(:certification, "I certify that the above named person was elected to this office", :class => 'inline')
+      on
+      = officership_form.date_select(:elected_on, {}, :class => 'inline')
+    %p
+      = officership_form.submit("Record this appointment")

@@ -1,8 +1,12 @@
-= form_for(@directorship) do |directorship_form|
-  %p
-    = directorship_form.check_box(:certification)
-    = directorship_form.label(:certification, "I certify that this director retired")
-    on
-    = directorship_form.date_select(:ended_on)
-  %p
-    = directorship_form.submit("Record this retirement")
+%h2
+  Retiring
+  = @directorship.member_name
+.section
+  = form_for(@directorship) do |directorship_form|
+    %p
+      = directorship_form.check_box(:certification)
+      = directorship_form.label(:certification, "I certify that this director retired", :class => 'inline')
+      on
+      = directorship_form.date_select(:ended_on, {}, :class => 'inline')
+    %p
+      = directorship_form.submit("Record this retirement")

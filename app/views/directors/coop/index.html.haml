@@ -16,26 +16,28 @@
             = director.last_logged_in_at.to_s(:short)
         %td
           = link_button("Retire", :url => edit_directorship_path(director))
-
-
-.section
   = link_button("Appoint new Director", :url => new_directorship_path)
-  .clear
+  %br.clear
 
 .section
   %h3 Offices
   %table.offices
+    %tr
+      %th Office
+      %th Occupied by
+      %th
     - @offices.each do |office|
       %tr{:class => office.title.parameterize.underscore}
+        %td= office.title
         %td
-          %h4= office.title
           - if office.officer
-            %p= office.officer.name
-            = link_button("Step down", :url => edit_officership_path(office.officership))
+            = office.officer.name
           -else
-            %p Office unoccupied
+            Office unoccupied
+        %td
+          - if office.officer
+            = link_button("Step down", :url => edit_officership_path(office.officership))
 
-.section
   = link_button("Appoint a new Officer", :url => new_officership_path)
-  .clear
+  %br.clear
 

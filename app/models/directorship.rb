@@ -14,6 +14,11 @@ class Directorship < OneClickOrgs::ModelWrapper
     @id = @member_id
   end
 
+  def member_name
+    member = organisation.members.find(member_id)
+    member.try(:name)
+  end
+
   def certification=(new_certification)
     @certification = cast_to_boolean(new_certification)
   end
