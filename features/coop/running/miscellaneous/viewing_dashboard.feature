@@ -16,7 +16,6 @@ Feature: Viewing dashboard
   #   When I go to the Dashboard page
   #   Then I should see notifications of issues that require my attention
 
-  # @wip
-  # Scenario: Member views action buttons for common tasks
-  #   When I go to the Dashboard page
-  #   Then I should see action buttons for things I commonly want to do
+  Scenario: Member views action buttons for common tasks
+    When I go to the Dashboard page
+    Then I should see action buttons for things I commonly want to do

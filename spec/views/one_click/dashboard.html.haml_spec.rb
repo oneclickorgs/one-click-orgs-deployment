@@ -84,6 +84,8 @@ describe "one_click/dashboard" do
       install_organisation_resolver(@coop)
 
       assign(:timeline, [])
+
+      view.stub(:can?).and_return(false)
     end
     
     it "renders" do
