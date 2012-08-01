@@ -1,5 +1,74 @@
 %h2 Propose an amendment
 
-.section
-  %div#settings_fields
-    %p TODO: Display of customisable clauses and edit form.
+%div#settings_fields
+  = edit_form do |form|
+    %h3 Name of the Co-operative
+    = form.text_field(:organisation_name, :disabled => !@allow_editing)
+
+    %h3 Registered office address
+    = form.text_area(:registered_office_address, :disabled => !@allow_editing)
+
+    %h3 Objects
+    %p.explanation "The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to...
+    = form.text_area(:objectives, :disabled => !@allow_editing)
+
+    %h3 Membership criteria
+    %p.explanation Who may be admitted into membership of the Co-operative?
+    %p
+      = form.check_box(:user_members, :disabled => !@allow_editing)
+      = form.label(:user_members, "User Members", :class => 'inline')
+      Any regular user of the services of the Co-operative.
+    %p
+      = form.check_box(:employee_members, :disabled => !@allow_editing)
+      = form.label(:employee_members, "Employee Members", :class => 'inline')
+      Any Employee upon taking up employment with the Co-operative.
+    %p
+      = form.check_box(:supporter_members, :disabled => !@allow_editing)
+      = form.label(:supporter_members, "Supporter Members", :class => 'inline')
+      Any person or nominee of an organisation that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business.
+    %p
+      = form.check_box(:producer_members, :disabled => !@allow_editing)
+      = form.label(:producer_members, "Producer Members", :class => 'inline')
+    %p
+      = form.check_box(:consumer_members, :disabled => !@allow_editing)
+      = form.label(:consumer_members, "Consumer Members", :class => 'inline')
+
+    %h3 Share Capital
+    %p.radio
+      = form.radio_button(:single_shareholding, '1', :disabled => !@allow_editing)
+      = label_tag('single_shareholding_1', "Members hold one nominal share only.")
+    %p.radio
+      = form.radio_button(:single_shareholding, '0', :disabled => !@allow_editing)
+      = label_tag('single_shareholding_0', "Members hold more than one share.")
+
+    %h3 Composition of the Board of Directors
+    %p.explanation The composition of the Board of Directors will be with no more than...
+    %p
+      = form.text_field(:max_user_directors, :disabled => !@allow_editing, :class => 'inline', :size => 5)
+      = form.label(:max_user_directors, "User Members", :class => 'inline')
+    %p
+      = form.text_field(:max_employee_directors, :disabled => !@allow_editing, :class => 'inline', :size => 5)
+      = form.label(:max_employee_directors, "Employee Members", :class => 'inline')
+    %p
+      = form.text_field(:max_supporter_directors, :disabled => !@allow_editing, :class => 'inline', :size => 5)
+      = form.label(:max_supporter_directors, "Supporter Members", :class => 'inline')
+    %p
+      = form.text_field(:max_producer_directors, :disabled => !@allow_editing, :class => 'inline', :size => 5)
+      = form.label(:max_producer_directors, "Producer Members", :class => 'inline')
+    %p
+      = form.text_field(:max_consumer_directors, :disabled => !@allow_editing, :class => 'inline', :size => 5)
+      = form.label(:max_consumer_directors, "Consumer Members", :class => 'inline')
+
+    %h3 Dissolution
+    %p.explanation In the event of winding-up or dissolution of the Co-operatives, must assets be transferred to another common-ownership co-operative, or can they be distributed amony the Members?
+    %p.radio
+      = form.radio_button(:common_ownership, '1', :disabled => !@allow_editing)
+      = label_tag('common_ownership_1', "Common Ownership", :class => 'inline')
+      Assets shall not be distributed among the Members, but shall be transferred to some other common ownership co-operative(s).
+    %p.radio
+      = form.radio_button(:common_ownership, '0', :disabled => !@allow_editing)
+      = label_tag('common_ownership_0', "Co-ownership", :class => 'inline')
+      Assets may be distributed among the Members.
+
+    - if @allow_editing
+      %p= form.submit "Save changes", :id => 'submit'

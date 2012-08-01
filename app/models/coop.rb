@@ -21,7 +21,7 @@ class Coop < Organisation
 
   has_many :elections, :foreign_key => 'organisation_id'
 
-  # ATTRIBUTES
+  # ATTRIBUTES / CLAUSES
 
   def meeting_notice_period=(new_meeting_notice_period)
     clauses.set_integer!(:meeting_notice_period, new_meeting_notice_period)
@@ -46,6 +46,66 @@ class Coop < Organisation
   def quorum_percentage
     clauses.get_integer(:quorum_percentage)
   end
+
+  def objectives
+    @objectives ||= clauses.get_text('organisation_objectives')
+  end
+
+  def registered_office_address
+    @registered_office_address ||= clauses.get_text('registered_office_address')
+  end
+
+  def max_user_directors
+    @max_user_directors ||= clauses.get_integer('max_user_directors')
+  end
+
+  def max_employee_directors
+    @max_employee_directors ||= clauses.get_integer('max_employee_directors')
+  end
+
+  def max_supporter_directors
+    @max_supporter_directors ||= clauses.get_integer('max_supporter_directors')
+  end
+
+  def max_producer_directors
+    @max_producer_directors ||= clauses.get_integer('max_producer_directors')
+  end
+
+  def max_consumer_directors
+    @max_consumer_directors ||= clauses.get_integer('max_consumer_directors')
+  end
+
+  def user_members
+    @user_members ||= clauses.get_boolean('user_members')
+  end
+
+  def employee_members
+    @employee_members ||= clauses.get_boolean('employee_members')
+  end
+
+  def supporter_members
+    @supporter_members ||= clauses.get_boolean('supporter_members')
+  end
+
+  def producer_members
+    @producer_members ||= clauses.get_boolean('producer_members')
+  end
+
+  def consumer_members
+    @consumer_members ||= clauses.get_boolean('consumer_members')
+  end
+
+  def single_shareholding
+    @single_shareholding ||= clauses.get_boolean('single_shareholding')
+  end
+
+  def common_ownership
+    @common_ownership ||= clauses.get_boolean('common_ownership')
+  end
+
+
+
+  # SETUP
   
   def create_default_member_classes
     members = member_classes.find_or_create_by_name('Member')
