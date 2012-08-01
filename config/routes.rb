@@ -88,7 +88,9 @@ OneClickOrgs::Application.routes.draw do
     end
   end
 
-  resources :resolutions
+  resources :resolutions do
+    resources :comments
+  end
   resources :board_resolutions
 
   resources :change_meeting_notice_period_resolutions
