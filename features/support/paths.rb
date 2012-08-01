@@ -51,7 +51,7 @@ module NavigationHelpers
       when Coop
         directors_path
       end
-    when /^the dashboard( page)?$/
+    when /^the (D|d)ashboard( page)?$/
       '/'
     when /^the Resolutions page$/
       proposals_path

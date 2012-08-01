@@ -82,6 +82,8 @@ describe "one_click/dashboard" do
     before(:each) do
       @coop = mock_model(Coop)
       install_organisation_resolver(@coop)
+
+      assign(:timeline, [])
     end
     
     it "renders" do

@@ -31,6 +31,12 @@ class OneClickController < ApplicationController
         co.decisions.all,
         co.meetings.all
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    when Coop
+      @timeline = [
+        co.members.all,
+        co.meetings.all,
+        co.resolutions.currently_open
+      ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     end
   end
 end
