@@ -66,6 +66,8 @@ module NavigationHelpers
       member_path(@member)
     when /^convene a General Meeting$/
       new_general_meeting_path
+    when /^the Rules page$/
+      constitution_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
