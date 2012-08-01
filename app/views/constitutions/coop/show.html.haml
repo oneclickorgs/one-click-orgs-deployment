@@ -247,14 +247,22 @@
     %li If within one month from the date of the receipt of the application the Board have not convened a general meeting to be held within six weeks of the application, any three Members of the Co-operative acting on behalf of the signatories to the application may convene a general meeting, and shall be reimbursed by the Co-operative for any costs incurred in convening such a meeting.
   %h3 Notices
   %ol{:start => 50}
-    %li The Directors shall call the annual general meeting giving 14 Clear Days' notice to all Members. All other general meetings shall be convened with at least 14 Clear Days' notice but may be held at shorter notice if so agreed in Writing by 90% of the Members.
+    %li
+      The Directors shall call the annual general meeting giving 14 Clear Days' notice to all Members. All other general meetings shall be convened with at least
+      %span.dynamic= @constitution.meeting_notice_period
+      Clear Days' notice but may be held at shorter notice if so agreed in Writing by 90% of the Members.
     %li Notices of meetings shall either be given to Members personally or sent to them at their Address or alternatively, if so agreed by the Co operative in general meeting, notices of general meetings may be displayed conspicuously at the registered office and in all other places of business of the Co operative to which Members have access.  Notices shall specify the date, time and place at which the meeting is to be held, and the business which is to be transacted at that meeting. A general meeting shall not transact any business other than that specified in the notices calling the meeting.
     %li A notice sent to a Member's Address shall be deemed to have been duly served 48 hours after its posting. The accidental omission to send any notice to or the non receipt of any notice by any Person entitled to receive notice shall not invalidate the proceedings at the meeting.
     %li All notices shall specify the date, time and place of the meeting along with the general nature of business to be conducted and any proposed resolutions.
     %li  If the Co-operative has appointed an Auditor in accordance with these Rules they shall be entitled to attend general meetings of the Co-operative and to receive all notices of and communications relating to any general meeting which any Member of the Co operative is entitled to receive. The Auditor shall be entitled to be heard at any meeting on any part of the business of the meeting which is of proper concern to an Auditor.
   %h3 Quorum
   %ol{:start => 55}
-    %li No business shall be transacted at a general meeting unless a quorum of Members is present, including those not present in Person.  Unless amended by Extraordinary Resolution, a quorum shall be 3 Members or 25% of the membership, whichever is the greater.
+    %li
+      No business shall be transacted at a general meeting unless a quorum of Members is present, including those not present in Person. Unless amended by Extraordinary Resolution, a quorum shall be
+      %span.dynamic= @constitution.quorum_number
+      Members or
+      %span.dynamic= @constitution.quorum_percentage.to_s + '%'
+      of the membership, whichever is the greater.
   %h3 Chairing General Meetings 
   %ol{:start => 56}
     %li The chairperson of the Co-operative shall facilitate general meetings. If s/he is absent or unwilling to act at the time any meeting proceeds to business then the Members present shall choose one of their number to be the chairperson for that meeting.
@@ -334,7 +342,8 @@
       %ol{:style => "list-style-type: lower-alpha;"}
         %li the Secretary;
         %li 10% of the Membership or 100 Members (whichever is the lesser) indicating, via the Digital Platform, their desire that the resolution should be put electronically.
-    %li Where an Electronic Vote on a Resolution is initiated by the Secretary, the Secretary must specify the period in which Members may vote, which period must be no less than 14 clear days. Where an Electronic Vote on a Resolution is initiated by the Membership, the vote will remain open for 14 clear days from which the Members are notified of the vote.
+    %li
+      Where an Electronic Vote on a Resolution is initiated by the Secretary, the Secretary must specify the period in which Members may vote, which period must be no less than 14 clear days. Where an Electronic Vote on a Resolution is initiated by the Membership, the vote will remain open for 14 clear days from which the Members are notified of the vote.
     %li In either case, all Members must be informed of their right to vote as soon as the vote is initiated. 
     %li
       An Extraordinary Resolution, or any other Resolution which, if passed, would require the support of 75% or more of those attending a quorate general meeting, is passed if on the closing of the vote:
