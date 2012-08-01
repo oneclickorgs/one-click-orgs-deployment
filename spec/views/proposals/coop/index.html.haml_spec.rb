@@ -30,9 +30,9 @@ describe "proposals/coop/index" do
     rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
   end
 
-  it "includes the title in the list of draft resolutions" do
+  it "includes the description in the list of draft resolutions" do
     render
-    rendered.should contain('Draft proposal title')
+    rendered.should contain('Draft proposal description')
   end
   
   it "renders a list of suggested resolutions" do

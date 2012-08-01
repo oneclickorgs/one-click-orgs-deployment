@@ -11,7 +11,7 @@ Feature: Appointing new officer
     When I go to the Directors page
     And I press "Appoint a new Officer"
     And select "Claire Simmons" from "Name"
-    And I fill in "New office" with "Treasurer"
+    And I fill in "...or create a new office" with "Treasurer"
     And I certify the appointment
     And I press "Record this appointment"
     Then I should be on the Directors page
@@ -26,7 +26,7 @@ Feature: Appointing new officer
     When I go to the Directors page
     And I press "Appoint a new Officer"
     And select "Claire Simmons" from "Name"
-    And I select "Treasurer" from "Office"
+    And I select "Treasurer" from "Existing office..."
     And I certify the appointment
     And I press "Record this appointment"
     Then I should be on the Directors page
