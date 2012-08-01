@@ -8,7 +8,9 @@ describe "general_meetings/new" do
       :existing_resolutions_attributes= => nil,
       :annual_general_meeting => nil,
       :electronic_nominations => nil,
-      :nominations_closing_date => nil
+      :nominations_closing_date => nil,
+      :electronic_voting => nil,
+      :voting_closing_date => nil
     ).as_new_record
     assign(:general_meeting, @general_meeting)
 
@@ -69,6 +71,18 @@ describe "general_meetings/new" do
     rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(1i)]')
     rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(2i)]')
     rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(3i)]')
+  end
+
+  it "renders an 'electronic_voting' field" do
+    render
+    rendered.should have_selector(:input, :name => 'general_meeting[electronic_voting]')
+  end
+
+  it "renders a date select for voting_closing_date" do
+    render
+    rendered.should have_selector(:select, :name => 'general_meeting[voting_closing_date(1i)]')
+    rendered.should have_selector(:select, :name => 'general_meeting[voting_closing_date(2i)]')
+    rendered.should have_selector(:select, :name => 'general_meeting[voting_closing_date(3i)]')
   end
 
 end

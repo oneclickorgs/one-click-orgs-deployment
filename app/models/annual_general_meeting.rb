@@ -13,6 +13,10 @@ class AnnualGeneralMeeting < GeneralMeeting
     if electronic_nominations && nominations_closing_date
       election.nominations_closing_date = nominations_closing_date
     end
+
+    if electronic_voting && voting_closing_date
+      election.voting_closing_date = voting_closing_date
+    end
     
     election.save!
   end

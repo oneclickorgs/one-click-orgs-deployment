@@ -56,6 +56,15 @@ describe AnnualGeneralMeeting do
       @agm.election.nominations_closing_date.should be_present
       @agm.election.nominations_closing_date.should == @nominations_closing_date
     end
+
+    it "sets the voting_closing_date attribute" do
+      @agm.electronic_voting = true
+      @agm.voting_closing_date = @voting_closing_date = 2.weeks.from_now.to_date
+      @agm.save!
+
+      @agm.election.voting_closing_date.should be_present
+      @agm.election.voting_closing_date.should == @voting_closing_date
+    end
   end
 
 end

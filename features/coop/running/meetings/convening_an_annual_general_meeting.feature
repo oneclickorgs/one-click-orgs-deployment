@@ -28,7 +28,7 @@ Feature: Convening an annual general meeting
     And I convene the meeting
     Then electronic nominations for new Directors should be opened
   
-  @wip @javascript
+  @javascript
   Scenario: Secretary opens electronic voting for new Directors for an AGM
     When I begin to convene an AGM
     And I choose to allow electronic voting for new Directors

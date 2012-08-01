@@ -32,11 +32,18 @@
       - @directors_retiring.each do |director|
         = content_tag_for(:li, director) do
           = director.name
-    %p= general_meeting_form.check_box :electronic_nominations
-    %p= general_meeting_form.label :electronic_nominations, "Allow nominations of new Directors to be made electronically."
+    %p
+      = general_meeting_form.check_box :electronic_nominations
+      = general_meeting_form.label :electronic_nominations, "Allow nominations of new Directors to be made electronically."
+    %p
+      = general_meeting_form.check_box :electronic_voting
+      = general_meeting_form.label :electronic_voting, "Allow voting on the nominees to be done electronically."
     %p
       = general_meeting_form.label :nominations_closing_date, "Closing date for nominations"
       = general_meeting_form.date_select :nominations_closing_date, {:include_blank => true}, :class => 'inline'
+    %p
+      = general_meeting_form.label :voting_closing_date, "Closing date for voting"
+      = general_meeting_form.date_select :voting_closing_date, {:include_blank => true}, :class => 'inline'
 
   %p
     = general_meeting_form.check_box :certification

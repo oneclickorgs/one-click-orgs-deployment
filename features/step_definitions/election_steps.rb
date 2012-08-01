@@ -30,6 +30,24 @@ When /^I choose a closing date for nominations$/ do
   select(date.day.to_s, :from => "general_meeting[nominations_closing_date(3i)]")
 end
 
+When /^I choose to allow electronic voting for new Directors$/ do
+  check "general_meeting[electronic_voting]"
+end
+
+When /^I choose a closing date for voting$/ do
+  date = 4.weeks.from_now
+  select(date.year.to_s, :from => "general_meeting[voting_closing_date(1i)]")
+  select(date.strftime('%B'), :from => "general_meeting[voting_closing_date(2i)]")
+  select(date.day.to_s, :from => "general_meeting[voting_closing_date(3i)]")
+end
+
+Then /^an electronic vote for the new Directors should be prepared$/ do
+  election = @organisation.meetings.last.election
+
+  election.should be_present
+  election.voting_closing_date.should be_present
+end
+
 Then /^electronic nominations for new Directors should be opened$/ do
   election = @organisation.meetings.last.election
 
