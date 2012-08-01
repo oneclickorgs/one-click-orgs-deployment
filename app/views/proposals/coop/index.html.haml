@@ -26,35 +26,27 @@
 - if @draft_proposals.present?
   .section
     %h3 Draft resolutions:
-    %table.draft_proposals
+    %ul.draft_proposals
       - @draft_proposals.each do |proposal|
-        %tr
-          = content_tag_for(:td, proposal) do
-            %h4= proposal.title
-            %p
-              = proposal.description
-            - if can?(:create, Resolution)
-              %p
-                = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
-            - if can?(:create, Meeting)
-              %p
-                = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
+        = content_tag_for(:li, proposal) do
+          %p= proposal.description
+          - if can?(:create, Resolution)
+            = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
+          - if can?(:create, Meeting)
+            = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
+    %br.clear
 
 - if @resolution_proposals.present?
   .section
     %h3 Suggested resolutions:
-    %table.resolution_proposals
+    %ul.resolution_proposals
       - @resolution_proposals.each do |proposal|
-        %tr
-          = content_tag_for(:td, proposal) do
-            %h4= proposal.title
-            %p= proposal.description
-            - if can?(:edit, ResolutionProposal)
-              %p
-                = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
-            - if can?(:create, Resolution)
-              %p
-                = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
-              - if can?(:create, Meeting)
-                %p
-                  = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
+        = content_tag_for(:li, proposal) do
+          %p= proposal.description
+          - if can?(:edit, ResolutionProposal)
+            = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
+          - if can?(:create, Resolution)
+            = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
+          - if can?(:create, Meeting)
+            = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
+    %br.clear

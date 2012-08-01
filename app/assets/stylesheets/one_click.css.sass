@@ -299,6 +299,13 @@ strong
       :border-left 1px solid #666
       :margin-left 2em
       :padding-left 1em
+  ul.draft_proposals li,
+  ul.resolution_proposals li
+    :clear left
+    :margin-bottom 1em
+    p
+      :margin-bottom 0
+
 
 img.gravatar
   @include rounded-corners(2px)
@@ -503,8 +510,11 @@ input[type="button"], input[type="submit"], button
   :padding 0.3em 1.2em 0.2em 1.2em
   :width auto
 
-input[type="button"], button
+input[type="button"],
+button,
+form.button_to input[type="submit"]
   :background-color #eee
+  :color #000
   &:hover
     :background-color #ccc
 
@@ -535,7 +545,8 @@ input[type="hidden"]
   :display none
 
 input.button-form-show,
-input.button-form
+input.button-form,
+form.button_to input[type="submit"]
   :cursor pointer
   :float left
   :margin 10px 20px 10px 0
@@ -645,6 +656,7 @@ dl.settings
 
 div.field_with_errors input
   :border 1px solid $error_red
+
 
 /* Lightbox
 
