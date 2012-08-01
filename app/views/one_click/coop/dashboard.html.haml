@@ -1,7 +1,12 @@
 %h2 Dashboard
 
-%h3 Notifications
-.section
+- if @tasks.present?
+  %h3 Notifications
+  .section
+    %ul.tasks
+      - @tasks.each do |task|
+        = content_tag_for(:li, task) do
+          = task.inspect
 
 .section
   - if can?(:create, Resolution)
