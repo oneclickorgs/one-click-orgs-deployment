@@ -71,6 +71,9 @@ class Ability
       if user.has_permission(:constitution)
         can :update, Constitution
       end
+
+      can :read, GeneralMeeting
+      can :read, BoardMeeting
     end
   end
 end

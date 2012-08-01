@@ -35,4 +35,8 @@ class ResolutionProposal < Proposal
   def notification_email_action
     :notify_resolution_proposal
   end
+
+  def to_event
+    {:timestamp => self.creation_date, :object => self, :kind => :resolution_proposal }
+  end
 end

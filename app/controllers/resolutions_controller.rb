@@ -14,4 +14,10 @@ class ResolutionsController < ApplicationController
     @resolution.save!
     redirect_to proposals_path
   end
+
+  def show
+    @resolution = co.resolutions.find(params[:id])
+    @comments = @resolution.comments
+    @comment = Comment.new
+  end
 end

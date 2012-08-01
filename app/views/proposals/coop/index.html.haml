@@ -29,7 +29,9 @@
     %ul.draft_proposals
       - @draft_proposals.each do |proposal|
         = content_tag_for(:li, proposal) do
-          %p= proposal.description.present? ? proposal.description : proposal.title
+          %p
+            = proposal.description.present? ? proposal.description : proposal.title
+            = link_to("View details and comment", resolution_path(proposal))
           - if can?(:create, Resolution)
             = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
           - if can?(:create, Meeting)
@@ -42,7 +44,9 @@
     %ul.resolution_proposals
       - @resolution_proposals.each do |proposal|
         = content_tag_for(:li, proposal) do
-          %p= proposal.description.present? ? proposal.description : proposal.title
+          %p
+            = proposal.description.present? ? proposal.description : proposal.title
+            = link_to("View details and comment", proposal_path(proposal))
           - if can?(:edit, ResolutionProposal)
             = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
           - if can?(:create, Resolution)

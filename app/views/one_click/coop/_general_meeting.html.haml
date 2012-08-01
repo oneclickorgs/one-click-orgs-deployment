@@ -1,0 +1,5 @@
+%td
+  A
+  = link_to("General Meeting", meeting_path(event[:object]))
+  was convened for
+  = event[:object].happened_on.to_s + "."

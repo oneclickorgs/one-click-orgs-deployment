@@ -18,7 +18,12 @@ class Constitution
   delegate :name, :objectives, :assets, :domain,
     :meeting_notice_period, :meeting_notice_period=,
     :quorum_number, :quorum_number=,
-    :quorum_percentage, :quorum_percentage=, :to => :organisation
+    :quorum_percentage, :quorum_percentage=,
+    :registered_office_address,
+    :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+    :single_shareholding,
+    :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
+    :common_ownership, :to => :organisation
   
   alias_method :organisation_name, :name
   

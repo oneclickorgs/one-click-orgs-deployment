@@ -13,7 +13,13 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     :constitution_voting_system,
     :voting_period,
     :proposer,
-    :proposals
+    :proposals,
+    :registered_office_address, # Coop clauses
+    :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+    :single_shareholding,
+    :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
+    :common_ownership
+
   
   def after_initialize
     # Load existing settings from organisation, if given, but don't
@@ -28,6 +34,20 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
           send("#{voting_system_type}_voting_system=", organisation.constitution.voting_system(voting_system_type).simple_name) unless send("#{voting_system_type}_voting_system")
         end
         self.assets = (!!organisation.constitution.assets ? '1' : '0') unless assets
+      when Coop
+        [
+          :organisation_name, :objectives, :registered_office_address,
+          :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors
+        ].each do |clause_name|
+          send("#{clause_name}=", organisation.constitution.send(clause_name)) unless send(clause_name)
+        end
+        [
+          :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+          :single_shareholding,
+          :common_ownership
+        ].each do |clause_name|
+          send("#{clause_name}=", !!organisation.constitution.send(clause_name) ? '1' : '0') unless send(clause_name)
+        end
       end
     end
     

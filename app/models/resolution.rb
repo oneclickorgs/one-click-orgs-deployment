@@ -77,4 +77,9 @@ class Resolution < Proposal
   def automatic_proposer_support_vote?
     false
   end
+
+  def to_event
+    {:timestamp => self.creation_date, :object => self, :kind => draft? ? :draft_resolution : :resolution }
+  end
+
 end

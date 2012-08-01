@@ -10,18 +10,20 @@
   %hgroup
     %h1 Industrial and Provident Societies Act 1965
     %h1 Rules of
-    %h1.dynamic ORGANISATION_NAME
+    %h1
+      %span.dynamic= @constitution.name
+      Limited
   %h2 Name
   %ol{:start => 1}
     %li
       The name of the society shall be
-      %span.dynamic ORGANISATION_NAME
+      %span.dynamic= @constitution.name
       Limited.
   %h2 Registered Office
   %ol{:start => 2}
     %li
       The registered office of the society shall be at
-      %span.dynamic REGISTERED_OFFICE_ADDRESS
+      %span.dynamic= @constitution.registered_office_address
   %h2 Interpretations
   %ol{:start => 3}
     %li
@@ -92,7 +94,7 @@
   %ol{:start => 5}
     %li
       The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to
-      %span.dynamic OBJECTIVES
+      %span.dynamic= @constitution.objectives
   %h2 Powers
   %ol{:start => 6}
     The Co-operative may do all such lawful things as may further the Co-operative's objects and, in particular, may borrow or raise funds for any purpose and on behalf of its Members.
@@ -117,31 +119,36 @@
   %h3 Membership criteria
   %ol{:start => 15}
     %li The criteria for membership that shall be applied by the Directors follows below.
-  .dynamic
-    %h3 User Members
-    %ol{:start => 16}
-      %li Any regular user of the services of the Co-operative may be admitted into membership.
-  .dynamic
-    %h3 Employee Members
-    %ol{:start => 17}
-      %li
-        All Employees on taking up employment with the Co-operative may be admitted to membership, except that the Co operative in a general meeting may by an ordinary resolution decide to exclude from membership:
-        %ol{:style => "list-style-type: lower-alpha;"}
-          %li Newly appointed Employees during such reasonable probationary period as may be specified in their terms and conditions of employment;
-          %li Employees working less than a prescribed number of hours per week (or per month);
-        provided that any such criteria for exclusion are applied equally to all Employees.
-  .dynamic
-    %h3 Supporter Members
-    %ol{:start => 18}
-      %li Any natural person, nominee of an unincorporated body, firm, partnership or corporate body that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business.
-  .dynamic
-    %h3 Producer Members
-    %ol{:start => 19}
-      %li
-  .dynamic
-    %h3 Consumer Members
-    %ol{:start => 20}
-      %li
+  - if @constitution.user_members
+    .dynamic
+      %h3 User Members
+      %ol{:start => 16}
+        %li Any regular user of the services of the Co-operative may be admitted into membership.
+  - if @constitution.employee_members
+    .dynamic
+      %h3 Employee Members
+      %ol{:start => 17}
+        %li
+          All Employees on taking up employment with the Co-operative may be admitted to membership, except that the Co operative in a general meeting may by an ordinary resolution decide to exclude from membership:
+          %ol{:style => "list-style-type: lower-alpha;"}
+            %li Newly appointed Employees during such reasonable probationary period as may be specified in their terms and conditions of employment;
+            %li Employees working less than a prescribed number of hours per week (or per month);
+          provided that any such criteria for exclusion are applied equally to all Employees.
+  - if @constitution.supporter_members
+    .dynamic
+      %h3 Supporter Members
+      %ol{:start => 18}
+        %li Any natural person, nominee of an unincorporated body, firm, partnership or corporate body that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business.
+  - if @constitution.producer_members
+    .dynamic
+      %h3 Producer Members
+      %ol{:start => 19}
+        %li
+  - if @constitution.consumer_members
+    .dynamic
+      %h3 Consumer Members
+      %ol{:start => 20}
+        %li
   %ol{:start => 21}
     %li In accordance with the Co operative Principle of voluntary and open membership, whilst the Co operative shall undertake to encourage its stakeholders to become Members, membership must be voluntary and as a result cannot be a condition of employment.
   %h3 Applications for Membership
@@ -182,43 +189,45 @@
         %li The Office Holder to any property in the Co-operative belonging to such a Member, the Co-operative shall transfer or pay property to which the Office Holder has become entitled as the Office Holder may direct them.
     %li A Member may in accordance with the Act nominate any individual or individuals to whom any of her/his property in the Co-operative at the time of her/his death shall be transferred, but such nomination shall only be valid to the extent of the amount for the time being allowed in the Act. On receiving a satisfactory proof of death of a Member who has made a nomination the Co-operative shall, in accordance with the Act, either transfer or pay the full value of the property comprised in the nomination to the individual or individuals entitled thereunder.
   %h3 Share Capital
-  .dynamic
-    %h4 Members hold one nominal share only
-    %ol{:start => 32}
-      %li The shares of the Co-operative shall be of the nominal value of lb1 issued to Persons upon admission to membership of the Co-operative. The shares shall be fully paid prior to issue, neither Transferable nor Withdrawable, shall carry no right to interest, dividend or bonus, and shall be forfeited and cancelled on cessation of membership from whatever cause, and the amount paid up on such cancelled shares shall become the property of the Co-operative.  Each Member shall hold one share only in the Co operative.
-  .dynamic{:style => "display: none;"}
-    %h4 Members hold more than one share
-    %ol{:start => 33}
-      %li The shares of the Co-operative shall be of the nominal value of lb1.  The minimum shareholding required of a Member shall be defined as such number of fully paid shares as the Board may determine subject to the Act, or as may be required by a particular offer of shares, or, failing such determination or requirement, shall be one share.
-      %li A Member may apply for shares in tranches of shares which are smaller in number than the minimum shareholding, provided that any Member who does not achieve the minimum shareholding within 12 months of their first payment may, at the discretion of the Board, cease to be a Member.  Any person ceasing to be a Member under this rule shall have the value of their shares as at the date on which they ceased to be a Member returned to them and the relevant shares shall be cancelled.
-      %li Applications for shares shall be made to the Board of the Co-operative who shall allot to Members, upon their admission, the share or shares for which they have applied provided that the total number of shares allotted to any Member shall not exceed the maximum shareholding permitted by law.  Shares shall be paid for in full on allotment.
-      %li If a Member who is required to withdraw from membership under these Rules is unable to transfer their shares and the right to withdraw shares has been suspended, then the nominal value of their share capital shall be converted into loan stock upon such terms as may be agreed between the Board and the Member, or their personal representative or trustee in bankruptcy, provided that such agreement shall require the repayment of the loan within a period not exceeding three years.
-      %li
-        Shares shall be Withdrawable only in accordance with the provisions of these Rules. Shares shall be non-Transferable except:
-        %ol{:style => "list-style-type: lower-alpha;"}
-          %li on death or bankruptcy; or
-          %li (in the case of an unincorporated organisation or partnership), on a change of nominee(s) and only to the new nominee(s).
-    %h3 Withdrawal of share capital
-    %ol{:start => 38}
-      %li
-        Shares may be withdrawn by Members upon giving three months' notice to the Co-operative (though the Board retain sole discretion to return money paid for them) provided that:
-        %ol{:style => "list-style-type: lower-alpha;"}
-          %li All withdrawals shall be paid in the order in which the notices were received by the Co operative.
-          %li A Member shall not be entitled to withdraw shares which would leave them with less than the minimum shareholding, unless they intend to terminate their membership of the Co-operative.
-          %li The Board may waive the notice required for a withdrawal and may direct payment to be made without notice or on such shorter notice as they consider fit.
-          %li The Board may, at their sole discretion, suspend the right to withdraw either wholly or partially, and either indefinitely or for a fixed period. The suspension shall extend and apply to all notices of withdrawal which have been received and remain unpaid at the time the Board suspends the right to withdraw. Where the suspension is for a fixed period, such period may be extended from time to time by the Board.
-          %li During any period when the right of withdrawal has been suspended under the provision immediately above, the shares of deceased Members may, if the Board agree, be withdrawn by their personal representatives upon giving such notice as the Board may require.
-          %li The amount to be paid to a Member on withdrawal shall be the amount paid up or credited on the shares to be withdrawn, except where the shares are subject to a reduction in their value in accordance with the provisions of these Rules.
-          %li Interest shall be payable on any share in respect of which a notice of repayment has been given until the date of repayment.
-      %li Any share withdrawn in accordance with these Rules shall be cancelled.
-      %li Members may withdraw from the Co-operative by withdrawing all their shares in the Co-operative in accordance with these Rules or, if the right to withdraw has been suspended, by surrendering all their shares to the Co operative. Upon such surrender the Board may at their discretion pay to the withdrawing Member the amount paid up or credited on the shares surrendered.
-      %li The Co-operative may deduct such reasonable sum to cover any administrative costs of withdrawal from the monies payable to a Member on the withdrawal of shares in the Co-operative.
-    %h3 Reduction in Share Values
-    %ol{:start => 42}
-      %li If the Co-operative's Auditors (or any independent qualified accountants appointed for this purpose by the Board) certify at any time that the aggregate of the Co-operative's liabilities plus the amount of its issued share capital exceeds its assets, then (unless in the meantime the excess has been removed) the Board may determine that the amount of this excess, or part of it, shall be apportioned among the Members in proportion to (but not beyond) the amount of the nominal value of the shares paid up and held by each Member. This apportionment shall be based on the value of the shares paid up and held by each Member at the close of business on the date of such determination. The value of shares held by each Member shall be reduced accordingly for the purposes of withdrawal of shares, provided that the value of shares held by any Member shall not be reduced below the minimum shareholding as specified in these Rules.
-    %h3 Lien on Shares and Right of Offset
-    %ol{:start => 43}
-      %li The Co-operative shall have a lien on the shares of a Member for any debt due to it by the Member and may offset any sum standing to the Member's credit with the Co operative in or towards payment of such debt.
+  - if @constitution.single_shareholding
+    .dynamic
+      %h4 Members hold one nominal share only
+      %ol{:start => 32}
+        %li The shares of the Co-operative shall be of the nominal value of lb1 issued to Persons upon admission to membership of the Co-operative. The shares shall be fully paid prior to issue, neither Transferable nor Withdrawable, shall carry no right to interest, dividend or bonus, and shall be forfeited and cancelled on cessation of membership from whatever cause, and the amount paid up on such cancelled shares shall become the property of the Co-operative.  Each Member shall hold one share only in the Co operative.
+  - else
+    .dynamic
+      %h4 Members hold more than one share
+      %ol{:start => 33}
+        %li The shares of the Co-operative shall be of the nominal value of lb1.  The minimum shareholding required of a Member shall be defined as such number of fully paid shares as the Board may determine subject to the Act, or as may be required by a particular offer of shares, or, failing such determination or requirement, shall be one share.
+        %li A Member may apply for shares in tranches of shares which are smaller in number than the minimum shareholding, provided that any Member who does not achieve the minimum shareholding within 12 months of their first payment may, at the discretion of the Board, cease to be a Member.  Any person ceasing to be a Member under this rule shall have the value of their shares as at the date on which they ceased to be a Member returned to them and the relevant shares shall be cancelled.
+        %li Applications for shares shall be made to the Board of the Co-operative who shall allot to Members, upon their admission, the share or shares for which they have applied provided that the total number of shares allotted to any Member shall not exceed the maximum shareholding permitted by law.  Shares shall be paid for in full on allotment.
+        %li If a Member who is required to withdraw from membership under these Rules is unable to transfer their shares and the right to withdraw shares has been suspended, then the nominal value of their share capital shall be converted into loan stock upon such terms as may be agreed between the Board and the Member, or their personal representative or trustee in bankruptcy, provided that such agreement shall require the repayment of the loan within a period not exceeding three years.
+        %li
+          Shares shall be Withdrawable only in accordance with the provisions of these Rules. Shares shall be non-Transferable except:
+          %ol{:style => "list-style-type: lower-alpha;"}
+            %li on death or bankruptcy; or
+            %li (in the case of an unincorporated organisation or partnership), on a change of nominee(s) and only to the new nominee(s).
+      %h3 Withdrawal of share capital
+      %ol{:start => 38}
+        %li
+          Shares may be withdrawn by Members upon giving three months' notice to the Co-operative (though the Board retain sole discretion to return money paid for them) provided that:
+          %ol{:style => "list-style-type: lower-alpha;"}
+            %li All withdrawals shall be paid in the order in which the notices were received by the Co operative.
+            %li A Member shall not be entitled to withdraw shares which would leave them with less than the minimum shareholding, unless they intend to terminate their membership of the Co-operative.
+            %li The Board may waive the notice required for a withdrawal and may direct payment to be made without notice or on such shorter notice as they consider fit.
+            %li The Board may, at their sole discretion, suspend the right to withdraw either wholly or partially, and either indefinitely or for a fixed period. The suspension shall extend and apply to all notices of withdrawal which have been received and remain unpaid at the time the Board suspends the right to withdraw. Where the suspension is for a fixed period, such period may be extended from time to time by the Board.
+            %li During any period when the right of withdrawal has been suspended under the provision immediately above, the shares of deceased Members may, if the Board agree, be withdrawn by their personal representatives upon giving such notice as the Board may require.
+            %li The amount to be paid to a Member on withdrawal shall be the amount paid up or credited on the shares to be withdrawn, except where the shares are subject to a reduction in their value in accordance with the provisions of these Rules.
+            %li Interest shall be payable on any share in respect of which a notice of repayment has been given until the date of repayment.
+        %li Any share withdrawn in accordance with these Rules shall be cancelled.
+        %li Members may withdraw from the Co-operative by withdrawing all their shares in the Co-operative in accordance with these Rules or, if the right to withdraw has been suspended, by surrendering all their shares to the Co operative. Upon such surrender the Board may at their discretion pay to the withdrawing Member the amount paid up or credited on the shares surrendered.
+        %li The Co-operative may deduct such reasonable sum to cover any administrative costs of withdrawal from the monies payable to a Member on the withdrawal of shares in the Co-operative.
+      %h3 Reduction in Share Values
+      %ol{:start => 42}
+        %li If the Co-operative's Auditors (or any independent qualified accountants appointed for this purpose by the Board) certify at any time that the aggregate of the Co-operative's liabilities plus the amount of its issued share capital exceeds its assets, then (unless in the meantime the excess has been removed) the Board may determine that the amount of this excess, or part of it, shall be apportioned among the Members in proportion to (but not beyond) the amount of the nominal value of the shares paid up and held by each Member. This apportionment shall be based on the value of the shares paid up and held by each Member at the close of business on the date of such determination. The value of shares held by each Member shall be reduced accordingly for the purposes of withdrawal of shares, provided that the value of shares held by any Member shall not be reduced below the minimum shareholding as specified in these Rules.
+      %h3 Lien on Shares and Right of Offset
+      %ol{:start => 43}
+        %li The Co-operative shall have a lien on the shares of a Member for any debt due to it by the Member and may offset any sum standing to the Member's credit with the Co operative in or towards payment of such debt.
   %h2 General Meetings
   %ol{:start => 44}
     %li The Co-operative shall, within six months of the end of the financial year, hold a general meeting of the Members as its annual general meeting and shall specify the meeting as such in the notice calling it.
@@ -350,23 +359,23 @@
       %ol{:style => "list-style-type: lower-alpha;"}
         %li
           Not more than
-          %span.dynamic MAX_USER_DIRECTORS
+          %span.dynamic= @constitution.max_user_directors
           User Members;
         %li
           Not more than
-          %span.dynamic MAX_EMPLOYEE_DIRECTORS
+          %span.dynamic= @constitution.max_employee_directors
           Employee Members;
         %li
           Not more than
-          %span.dynamic MAX_SUPPORTER_MEMBERS
+          %span.dynamic= @constitution.max_supporter_directors
           Supporter Members;
         %li
           Not more than
-          %span.dynamic MAX_PRODUCER_MEMBERS
+          %span.dynamic= @constitution.max_producer_directors
           Producer Members;
         %li
           Not more than
-          %span.dynamic MAX_CONSUMER_MEMBERS
+          %span.dynamic= @constitution.max_consumer_directors
           Consumer Members;
     %li The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time.
   %h3 Retirement Cycle
@@ -453,7 +462,8 @@
       Any profits of the Co-operative shall be applied as follows in such proportions and in such manner as may be decided by the Co-operative at the annual general meeting:
       %ol{:style => 'list-style-type: lower-alpha;'}
         %li To a general reserve for the continuation and development of the Co operative;
-        %li.dynamic To paying interest on issued share capital at such rate or rates as determined by the Board from time to time, but not exceeding 5% per annum or 2% above the Co-operative Bank's base rate, whichever is the greater;
+        - unless @constitution.single_shareholding
+          %li.dynamic To paying interest on issued share capital at such rate or rates as determined by the Board from time to time, but not exceeding 5% per annum or 2% above the Co-operative Bank's base rate, whichever is the greater;
         %li To paying dividends to Members, either equally or in accordance with some other equitable formula which recognises the relative contribution made by each Member to the business of the Co-operative;
         %li To making payment for social, co-operative or community purposes within the community served by the Co-operative.
   %h2 Amalgamation, Transfer of Engagements and Conversion
@@ -476,9 +486,11 @@
         %li The quorum for a meeting at which a special resolution to amalgamate with, transfer engagements to or convert into a company is to be voted upon shall be 150 Members or 50% of the Members present in Person, whichever is the greater, subject to an absolute minimum of three Members.
   %h2 Dissolution
   %ol{:start => 132}
-    %li The Co operative may be dissolved by the consent of three quarters of the Members by their signatures to an instrument of dissolution, or by winding up in a manner provided for by the Act. 
-    %li.dynamic The Co-operative is a common ownership enterprise.  If on the winding up or dissolution of the Co operative any of its assets remain to be disposed of after its liabilities are satisfied, these assets shall not be distributed among the Members, but shall be transferred to some other common ownership co-operative(s), or to Co operatives UK (or any body that succeeds to its function).  If such residual assets cannot be distributed in this manner they shall be transferred to some other organisation(s) whose purpose is to promote and support the co operative movement and common ownership enterprises.  This rule may only be amended by Extraordinary Resolution.
-    %li.dynamic{:style => 'display: none'} The Co-operative is a co-ownership enterprise. If on the winding up or dissolution of the Co operative any of its assets remain to be disposed of after its liabilities are satisfied, these assets may be distributed among the Members and those persons who were Members at any time during the six years prior to the date on which the Co operative decides to wind up.  Such assets shall be distributed either equally or in accordance with some other equitable formula which recognises the relative contribution made by each Member and past Members to the business of the Co-operative during the six years prior to the winding up or dissolution of the Co operative.  If such residual assets cannot be distributed in this manner they shall be transferred to a common ownership co operative or to Co operatives UK (or any body that succeeds to its function). This rule may only be amended by Extraordinary Resolution.
+    %li The Co operative may be dissolved by the consent of three quarters of the Members by their signatures to an instrument of dissolution, or by winding up in a manner provided for by the Act.
+    - if @constitution.common_ownership
+      %li.dynamic The Co-operative is a common ownership enterprise.  If on the winding up or dissolution of the Co operative any of its assets remain to be disposed of after its liabilities are satisfied, these assets shall not be distributed among the Members, but shall be transferred to some other common ownership co-operative(s), or to Co operatives UK (or any body that succeeds to its function).  If such residual assets cannot be distributed in this manner they shall be transferred to some other organisation(s) whose purpose is to promote and support the co operative movement and common ownership enterprises.  This rule may only be amended by Extraordinary Resolution.
+    -else 
+      %li.dynamic The Co-operative is a co-ownership enterprise. If on the winding up or dissolution of the Co operative any of its assets remain to be disposed of after its liabilities are satisfied, these assets may be distributed among the Members and those persons who were Members at any time during the six years prior to the date on which the Co operative decides to wind up.  Such assets shall be distributed either equally or in accordance with some other equitable formula which recognises the relative contribution made by each Member and past Members to the business of the Co-operative during the six years prior to the winding up or dissolution of the Co operative.  If such residual assets cannot be distributed in this manner they shall be transferred to a common ownership co operative or to Co operatives UK (or any body that succeeds to its function). This rule may only be amended by Extraordinary Resolution.
   %h2 Administrative Arrangements
   %h3 Means of Communication
   %ol{:start => 135}
