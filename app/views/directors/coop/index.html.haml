@@ -5,6 +5,7 @@
     %tr
       %th Name
       %th Last login
+      %th
     - @directors.each do |director|
       = content_tag_for(:tr, director) do
         %td
@@ -21,8 +22,8 @@
   = link_button("Appoint new Director", :url => new_directorship_path)
   .clear
 
-%h3 Offices
 .section
+  %h3 Offices
   %table.offices
     - @offices.each do |office|
       %tr{:class => office.title.parameterize.underscore}
