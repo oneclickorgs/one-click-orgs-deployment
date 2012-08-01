@@ -495,6 +495,9 @@ label, input, textarea, select
     :margin 0
     :width auto
 
+p.date_select
+  :padding-left 1.2em
+
 label
   :padding-right 1em
   :margin-bottom 2px
@@ -558,6 +561,9 @@ input.button-form-show
 
 textarea
   :height 10em
+
+textarea[id$=venue]
+  :height 5em
 
 select
   :padding 0
@@ -657,6 +663,13 @@ dl.settings
 div.field_with_errors input
   :border 1px solid $error_red
 
+table.upcoming_meetings
+  tr
+    :margin 0.5em 0
+  td
+    :min-height 3em
+    :border 1px solid black
+    :background-color white
 
 /* Lightbox
 
