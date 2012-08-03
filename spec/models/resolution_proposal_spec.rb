@@ -88,4 +88,22 @@ describe ResolutionProposal do
     ResolutionProposal.new.automatic_proposer_support_vote?.should be_false    
   end
 
+  describe "tasks" do
+    describe "upon creation" do
+      it "creates a task for the secretary" do
+        resolution_proposal = ResolutionProposal.make
+
+        secretary = mock_model(Member, :has_permission => false)
+        resolution_proposal.organisation.stub(:secretary).and_return(secretary)
+
+        tasks_association = mock("tasks association")
+        secretary.stub(:tasks).and_return(tasks_association)
+
+        tasks_association.should_receive(:create).with(hash_including(:subject => resolution_proposal))
+
+        resolution_proposal.save!
+      end
+    end
+  end
+
 end

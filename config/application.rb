@@ -31,7 +31,8 @@ module OneClickOrgs
       :member_mailer_observer,
       :member_timestamp_observer,
       :proposal_mailer_observer,
-      :proposal_timestamp_observer
+      :proposal_timestamp_observer,
+      :resolution_proposal_task_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

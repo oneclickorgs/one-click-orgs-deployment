@@ -1,0 +1,6 @@
+%p
+  = task.subject.proposer.name
+  suggested a new resolution:
+  = '"' + task.subject.title + '"'
+%p
+  = link_to("View the suggested resolution", resolution_proposal_path(task.subject))
