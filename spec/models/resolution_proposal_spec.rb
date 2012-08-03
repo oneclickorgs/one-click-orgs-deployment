@@ -84,4 +84,8 @@ describe ResolutionProposal do
     end
   end
 
+  it "does not cast an automatic support vote for the proposer" do
+    ResolutionProposal.new.automatic_proposer_support_vote?.should be_false    
+  end
+
 end

@@ -39,4 +39,8 @@ class ResolutionProposal < Proposal
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => :resolution_proposal }
   end
+
+  def automatic_proposer_support_vote?
+    false
+  end
 end

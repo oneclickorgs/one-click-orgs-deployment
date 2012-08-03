@@ -1,4 +1,11 @@
 class ResolutionProposalsController < ApplicationController
+  def show
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
+    @comments = @resolution_proposal.comments
+    @comment = Comment.new
+    @page_title = "Suggested resolution"
+  end
+
   def new
     @resolution_proposal = co.resolution_proposals.build
   end
