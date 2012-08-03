@@ -4,4 +4,8 @@ module OneClickOrgs
   def self.version
     VERSION
   end
+
+  def self.prerelease?
+    !!version.match(/alpha/) || !!version.match(/beta/)
+  end
 end

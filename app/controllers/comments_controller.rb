@@ -6,16 +6,23 @@ class CommentsController < ApplicationController
       co.meetings.find(params[:meeting_id])
     elsif params[:resolution_id]
       co.resolutions.find(params[:resolution_id])
+    elsif params[:resolution_proposal_id]
+      co.resolution_proposals.find(params[:resolution_proposal_id])
     end
     
-    redirect_to :back unless @commentable
-    
+    unless @commentable
+      redirect_to :back
+      return
+    end
+
     @comment = @commentable.comments.build(params[:comment])
     @comment.author = current_user
     
     commentable_path = case @commentable
     when Resolution
       resolution_path(@commentable)
+    when ResolutionProposal
+      resolution_proposal_path(@commentable)
     when Proposal
       proposal_path(@commentable)
     else

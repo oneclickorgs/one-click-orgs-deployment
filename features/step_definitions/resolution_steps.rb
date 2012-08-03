@@ -87,6 +87,13 @@ When /^I vote to support the resolution$/ do
   end
 end
 
+When /^I view more details of the suggested resolution$/ do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  within("#resolution_proposal_#{@resolution_proposal.id}") do
+    click_link("View details and comment")
+  end
+end
+
 Then /^I should see the new resolution in the list of draft resolutions$/ do
   @resolution ||= @organisation.resolutions.last
   within('.draft_proposals') do
@@ -138,4 +145,9 @@ Then /^the draft resolution should be to change the quorum to the greater of (\d
   within('.draft_proposals') do
     page.should have_content("#{number} members or #{percentage}% of the membership")
   end
+end
+
+Then /^I should see the suggested resolution in the list of suggested resolutons$/ do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  page.should have_css("li#resolution_proposal_#{@resolution_proposal.id}")
 end

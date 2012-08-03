@@ -16,6 +16,9 @@
     = csrf_meta_tag
     = google_analytics_code
   %body
+    - if OneClickOrgs.prerelease?
+      #prerelease_bar
+        %p Please note: this is pre-release software. It has not been fully tested yet, and the design and guidance text is not yet complete.
     %div#container
       = render :partial => 'shared/container_start'
       = render(:partial => 'shared/control_bar')

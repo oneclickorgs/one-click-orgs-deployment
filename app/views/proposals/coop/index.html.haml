@@ -46,7 +46,7 @@
         = content_tag_for(:li, proposal) do
           %p
             = proposal.description.present? ? proposal.description : proposal.title
-            = link_to("View details and comment", proposal_path(proposal))
+            = link_to("View details and comment", resolution_proposal_path(proposal))
           - if can?(:edit, ResolutionProposal)
             = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
           - if can?(:create, Resolution)

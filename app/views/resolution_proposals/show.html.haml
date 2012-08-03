@@ -1,0 +1,27 @@
+%h2
+  = @resolution_proposal.title
+
+%p
+  A suggested resolution submitted by
+  = image_tag(@resolution_proposal.proposer.gravatar_url(24), :alt => @resolution_proposal.proposer.name, :class => 'gravatar', :width => '24', :height => '24')
+  = link_to(@resolution_proposal.proposer.name, @resolution_proposal.proposer)
+  = @resolution_proposal.creation_date.to_s(:at_on)
+
+- if @resolution_proposal.description?
+  %h3 Description
+  = render :partial => 'proposals/description', :locals => {:proposal => @resolution_proposal}
+    
+%h3 Comments
+- @comments.each do |comment|
+  .comment
+    %p.attribution
+      = image_tag(comment.author.gravatar_url(24), :alt => comment.author.name, :class => 'gravatar', :width => '24', :height => '24')
+      = link_to(comment.author.name, member_path(comment.author))
+      = comment.created_at.to_s(:at_on) + ':'
+    = simple_format(html_escape(comment.body))
+= form_for(@comment, :url => resolution_proposal_comments_path(:resolution_proposal_id => @resolution_proposal)) do |f|
+  %p
+    = f.label :body, "Add a comment to this suggested resolution:"
+    = f.text_area :body
+  %p
+    = f.submit "Save comment"
