@@ -222,5 +222,17 @@ describe Member do
 
       @member.ballots.should include(@ballot)
     end
+
+    it "has many tasks" do
+      @member = Member.make!
+      @task = Task.make!
+
+      expect {@member.tasks << @task}.to_not raise_error
+
+      @member.reload
+      @member.tasks.reload
+
+      @member.tasks.should include(@task)
+    end
   end
 end

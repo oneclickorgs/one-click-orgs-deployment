@@ -188,3 +188,6 @@ end
 
 Ballot.blueprint do
 end
+
+Task.blueprint do
+end
