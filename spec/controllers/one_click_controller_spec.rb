@@ -144,18 +144,21 @@ describe OneClickController do
       @organisation.stub(:resolutions).and_return([])
       @organisation.stub(:resolution_proposals).and_return([])
 
-      @tasks = mock("tasks association")
-      @user.stub(:tasks).and_return(@tasks)
+      @tasks_association = mock("tasks association")
+      @user.stub(:tasks).and_return(@tasks_association)
+
+      @current_tasks_association = mock("current tasks association")
+      @tasks_association.stub(:current).and_return(@current_tasks_association)
     end
 
-    it "finds the current user's tasks" do
-      @user.should_receive(:tasks).and_return(@tasks)
+    it "finds the current user's current tasks" do
+      @tasks_association.should_receive(:current).and_return(@current_tasks_association)
       get_dashboard
     end
 
-    it "assigns the current user's tasks" do
+    it "assigns the current user's current tasks" do
       get_dashboard
-      assigns[:tasks].should == @tasks
+      assigns[:tasks].should == @current_tasks_association
     end
   end
   

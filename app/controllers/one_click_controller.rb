@@ -39,7 +39,7 @@ class OneClickController < ApplicationController
         co.resolution_proposals
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
 
-      @tasks = current_user.tasks
+      @tasks = current_user.tasks.current
     end
   end
 end

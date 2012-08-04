@@ -1,7 +1,11 @@
 class Task < ActiveRecord::Base
-  attr_accessible :subject
+  attr_accessible :subject, :action, :starts_on
 
   belongs_to :subject, :polymorphic => true
+
+  scope :current, lambda {
+    where(["(starts_on IS NULL OR starts_on <= :today) AND completed_at IS NULL", {:today => Date.today}])
+  }
 
   def to_partial_name
     partial_name  = "task_"

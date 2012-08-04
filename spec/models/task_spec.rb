@@ -23,4 +23,26 @@ describe Task do
     end
   end
 
+  describe "scopes" do
+    before(:each) do
+      @completed_task = Task.make!(:completed_at => 10.seconds.ago)  
+      @future_task = Task.make!(:starts_on => 1.day.from_now)
+      @task = Task.make!
+    end
+
+    describe "current" do
+      it "does not include completed tasks" do
+        Task.current.should_not include(@completed_task)
+      end
+
+      it "does not include future tasks" do
+        Task.current.should_not include(@future_task)
+      end
+
+      it "includes other tasks" do
+        Task.current.should include(@task)
+      end
+    end
+  end
+
 end
