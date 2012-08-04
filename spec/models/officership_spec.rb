@@ -154,4 +154,16 @@ describe Officership do
     end
   end
 
+  context "when appointing a new Secretary" do
+    before(:each) do
+      @organisation = Coop.make!
+      @member = @organisation.members.make!(:director)
+    end
+
+    it "sets the officer's member class to 'Secretary'" do
+      @officership = Officership.create!(:officer => @member, :office_attributes => {:title => 'Secretary'})
+      @member.member_class(true).name.should == "Secretary"
+    end
+  end
+
 end

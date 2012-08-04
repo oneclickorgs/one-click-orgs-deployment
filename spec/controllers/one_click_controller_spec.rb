@@ -127,5 +127,39 @@ describe OneClickController do
       end
     end
   end
+
+  context "when current organisation is a co-op" do
+    before(:each) do
+      stub_coop 
+      stub_login
+
+      @proposals_association = mock("proposals association")
+      @organisation.stub(:proposals).and_return(@proposals_association)
+
+      @proposals_association.stub(:currently_open)
+      @proposals_association.stub(:new)
+
+      @organisation.stub_chain(:members, :all).and_return([])
+      @organisation.stub_chain(:meetings, :all).and_return([])
+      @organisation.stub(:resolutions).and_return([])
+      @organisation.stub(:resolution_proposals).and_return([])
+
+      @tasks_association = mock("tasks association")
+      @user.stub(:tasks).and_return(@tasks_association)
+
+      @current_tasks_association = mock("current tasks association")
+      @tasks_association.stub(:current).and_return(@current_tasks_association)
+    end
+
+    it "finds the current user's current tasks" do
+      @tasks_association.should_receive(:current).and_return(@current_tasks_association)
+      get_dashboard
+    end
+
+    it "assigns the current user's current tasks" do
+      get_dashboard
+      assigns[:tasks].should == @current_tasks_association
+    end
+  end
   
 end

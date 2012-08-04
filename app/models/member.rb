@@ -42,6 +42,8 @@ class Member < ActiveRecord::Base
 
   has_many :ballots
 
+  has_many :tasks
+
   has_many :resignations
 
   has_one :office, :through => :officership

@@ -6,6 +6,11 @@ Feature: Managing draft and suggested resolutions
   Background:
     Given there is a co-op
     And I am the Secretary of the co-op
+
+  Scenario: Secretary receives a task when a resolution is suggested
+    Given there is a suggested resolution
+    When I go to the Dashboard
+    Then I should see a task telling me to deal with the suggested resolution
   
   Scenario: Secretary opens a draft resolution for electronic voting
     Given there is a draft resolution

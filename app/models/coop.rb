@@ -143,7 +143,10 @@ class Coop < Organisation
   end
 
   def directors
-    members.where(['member_class_id = ?', member_classes.find_by_name!('Director').id])
+    members.where([
+      'member_class_id = ? OR member_class_id=?',
+      member_classes.find_by_name!('Director').id, member_classes.find_by_name!('Secretary').id
+    ])
   end
 
   def build_directorship(attributes={})

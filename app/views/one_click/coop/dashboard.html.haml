@@ -6,7 +6,7 @@
     %ul.tasks
       - @tasks.each do |task|
         = content_tag_for(:li, task) do
-          = task.inspect
+          = render :partial => 'tasks/task', :locals => {:task => task}
 
 .section
   - if can?(:create, Resolution)
