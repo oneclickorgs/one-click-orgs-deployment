@@ -76,11 +76,16 @@ describe Coop do
       before(:each) do
         @coop = Coop.make!
         @director = @coop.members.make!(:director)
+        @secretary = @coop.members.make!(:secretary)
         @member = @coop.members.make!
       end
 
       it "includes members who have the member class of 'Director'" do
         @coop.directors.should include(@director)
+      end
+
+      it "includes members who have the member class of 'Secretary'" do
+        @coop.directors.should include(@secretary)
       end
 
       it "does not include ordinary members" do
