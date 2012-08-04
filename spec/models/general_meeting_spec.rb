@@ -57,4 +57,27 @@ describe GeneralMeeting do
 
   it "should not send a 'new minutes' email upon creation"
 
+  describe "tasks" do
+    describe "on creation" do
+      it "creates a future task for the Secretary to minute the meeting" do
+        meeting_date = 2.weeks.from_now
+        meeting = GeneralMeeting.make(:happened_on => meeting_date)
+
+        secretary = mock_model(Member)
+        meeting.organisation.stub(:secretary).and_return(secretary)
+
+        tasks_association = mock("tasks association")
+        secretary.stub(:tasks).and_return(tasks_association)
+
+        tasks_association.should_receive(:create).with(hash_including(
+          :subject => meeting,
+          :action => :minute,
+          :starts_on => meeting_date
+        ))
+
+        meeting.save!
+      end
+    end
+  end
+
 end

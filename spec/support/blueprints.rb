@@ -151,6 +151,7 @@ BoardMeeting.blueprint do
 end
 
 GeneralMeeting.blueprint do
+  organisation { Coop.make }
 end
 
 AnnualGeneralMeeting.blueprint do
