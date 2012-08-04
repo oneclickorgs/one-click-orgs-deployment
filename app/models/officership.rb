@@ -14,7 +14,7 @@ require 'one_click_orgs/cast_to_boolean'
 class Officership < ActiveRecord::Base
   include OneClickOrgs::CastToBoolean
 
-  attr_accessible :office_id, :office_attributes, :officer_id, :certification, :elected_on, :ended_on
+  attr_accessible :office_id, :office_attributes, :officer_id, :officer, :certification, :elected_on, :ended_on
 
   attr_reader :certification
 
@@ -49,6 +49,16 @@ class Officership < ActiveRecord::Base
   def set_organisation_of_new_office_if_necessary
     if office && office.new_record? && office.organisation.blank?
       office.organisation = officer.organisation unless officer.blank?
+    end
+  end
+
+  after_validation :set_member_class_of_officer_if_necessary
+  def set_member_class_of_officer_if_necessary
+    if office && office.title == "Secretary"
+      if officer
+        secretary_member_class = officer.organisation.member_classes.find_by_name("Secretary")
+        officer.update_attribute(:member_class, secretary_member_class) if secretary_member_class
+      end
     end
   end
 end
