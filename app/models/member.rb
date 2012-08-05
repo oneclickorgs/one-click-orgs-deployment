@@ -28,6 +28,8 @@ class Member < ActiveRecord::Base
     event :resign do
       transition [:pending, :active] => :inactive
     end
+
+    store_audit_trail
   end
   
   include OneClickOrgs::UserAuthentication

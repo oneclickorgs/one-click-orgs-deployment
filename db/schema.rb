@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805075225) do
+ActiveRecord::Schema.define(:version => 20120805182322) do
 
   create_table "ballots", :force => true do |t|
     t.integer  "election_id"
@@ -101,6 +101,16 @@ ActiveRecord::Schema.define(:version => 20120805075225) do
   end
 
   add_index "member_classes", ["organisation_id"], :name => "index_member_classes_on_organisation_id"
+
+  create_table "member_state_transitions", :force => true do |t|
+    t.integer  "member_id"
+    t.string   "event"
+    t.string   "from"
+    t.string   "to"
+    t.datetime "created_at"
+  end
+
+  add_index "member_state_transitions", ["member_id"], :name => "index_member_state_transitions_on_member_id"
 
   create_table "members", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false

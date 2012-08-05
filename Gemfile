@@ -44,8 +44,8 @@ gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 gem "cancan", "~>1.6.7"
 gem "state_machine", "~>1.1.2"
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
-
 gem 'mail', '~>2.4.4'
+gem 'state_machine-audit_trail', '~>0.1.2'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
