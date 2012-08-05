@@ -8,6 +8,13 @@
   %p
     = mail_to(@member.email)
 
+  %dl
+    - if @member.inducted_at
+      %dt Joined
+      %dd= @member.inducted_at.to_date.to_s(:long_ordinal)
+    %dt Shares
+    %dd 1
+
 - if @member.pending?
   - if can?(:edit, @member)
     = form_for(@member, :url => induct_member_path(@member), :html => {:method => :put}) do |member_form|
