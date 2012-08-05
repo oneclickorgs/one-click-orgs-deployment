@@ -15,7 +15,7 @@ describe 'directors/coop/index' do
     @offices = [
       mock_model(Office, :title => 'Treasurer',
         :officer => mock_model(Member, :name => "John Smith"),
-        :officership => mock_model(Officership, :to_param => '3')
+        :officership => mock_model(Officership, :to_param => '3', :elected_on => 1.week.ago)
       )
     ]
     assign(:offices, @offices)

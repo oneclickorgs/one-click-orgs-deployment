@@ -28,6 +28,7 @@
     %tr
       %th Office
       %th Occupied by
+      %th Appointed
       %th
     - @offices.each do |office|
       %tr{:class => office.title.parameterize.underscore}
@@ -37,6 +38,9 @@
             = office.officer.name
           -else
             Office unoccupied
+        %td
+          - if office.officership
+            = office.officership.elected_on.to_s(:long_ordinal)
         %td
           - if office.officer
             = link_button("Step down", :url => edit_officership_path(office.officership))
