@@ -23,7 +23,7 @@ class MembersController < ApplicationController
       @director = Director.new
     when Coop
       @page_title = "Members"
-      @members = co.members
+      @members = co.members.active
     end
     
     respond_to do |format|
@@ -101,6 +101,12 @@ class MembersController < ApplicationController
   
   def resigned
     reset_session
+  end
+
+  def induct
+    @member = co.members.find(params[:id])
+    @member.induct!
+    redirect_to members_path
   end
 
 private

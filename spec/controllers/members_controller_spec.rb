@@ -51,5 +51,67 @@ describe MembersController do
       end
     end
   end
-  
+
+  context "when current organisation is a co-op" do
+    before(:each) do
+      stub_coop
+      stub_login
+    end
+
+    describe "GET index" do
+      let(:members){mock("members association", :active => active_members)}
+      let(:active_members){mock("active members association")}
+
+      before(:each) do
+        @organisation.stub(:members).and_return(members)
+      end
+
+      def get_index
+        get :index
+      end
+
+      it "finds the active members" do
+        members.should_receive(:active).and_return(active_members)
+        get_index
+      end
+
+      it "assigns the active members" do
+        get_index
+        assigns[:members].should == active_members
+      end
+    end
+
+    describe "PUT induct" do
+      let(:members){mock("members association", :find => member)}
+      let(:member){mock_model(Member, :induct! => nil)}
+
+      before(:each) do
+        @organisation.stub(:members).and_return(members)
+      end
+
+      def put_induct
+        put :induct, 'id' => '1'
+      end
+
+      it "finds the member" do
+        members.should_receive(:find).with('1').and_return(member)
+        put_induct
+      end
+
+      it "inducts the member" do
+        member.should_receive(:induct!)
+        put_induct
+      end
+
+      it "redirects" do
+        put_induct
+        response.should be_redirect
+      end
+
+      describe "authorisation" do
+        it "is checked"
+      end
+    end
+  end
+
 end

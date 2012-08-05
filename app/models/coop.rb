@@ -128,6 +128,7 @@ class Coop < Organisation
     secretaries.set_permission!(:constitution, true)
     secretaries.set_permission!(:vote, true)
     secretaries.set_permission!(:board_meeting, true)
+    secretaries.set_permission!(:member, true)
   end
   
   def set_default_voting_period

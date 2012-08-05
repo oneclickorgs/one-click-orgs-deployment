@@ -102,6 +102,7 @@ OneClickOrgs::Application.routes.draw do
     member do
       put :confirm_resign
       put :resign
+      put :induct
     end
     
     collection do

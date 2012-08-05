@@ -235,4 +235,18 @@ describe Member do
       @member.tasks.should include(@task)
     end
   end
+
+  context "when organisation is a Coop" do
+    before(:each) do
+      @organisation = Coop.make!
+    end
+
+    context "on creation" do
+      it "creates a task for the secretary" do
+        @secretary = @organisation.members.make!(:secretary)
+        expect {@member = @organisation.members.make!(:pending)}.to change{@secretary.tasks.count}.by(1)
+        @secretary.tasks.last.subject.should == @member
+      end
+    end
+  end
 end
