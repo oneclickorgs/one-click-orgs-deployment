@@ -5,6 +5,7 @@
     %tr
       %th Name
       %th Last login
+      %th Appointed
       %th
     - @directors.each do |director|
       = content_tag_for(:tr, director) do
@@ -14,6 +15,8 @@
         %td
           - if director.last_logged_in_at
             = director.last_logged_in_at.to_s(:short)
+        %td
+          = director.directorship.elected_on.to_s(:long_ordinal)
         %td
           = link_button("Retire", :url => edit_directorship_path(director.directorship))
   = link_button("Appoint new Director", :url => new_directorship_path)

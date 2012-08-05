@@ -7,7 +7,7 @@ describe 'directors/coop/index' do
       mock_model(Member, :to_param => '4',
         :gravatar_url => nil,
         :name => "Lisa Baker",
-        :directorship => mock_model(Directorship, :to_param => '5')
+        :directorship => mock_model(Directorship, :to_param => '5', :elected_on => 1.week.ago)
       )
     ]
     assign(:directors, @directors)
