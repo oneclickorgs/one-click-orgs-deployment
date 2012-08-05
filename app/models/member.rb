@@ -5,7 +5,8 @@ require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
-    :password, :password_confirmation, :send_welcome
+    :password, :password_confirmation, :send_welcome,
+    :address, :certify_share_application, :certify_age
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome, :member_class_id, :as => :proposal
   
@@ -76,6 +77,9 @@ class Member < ActiveRecord::Base
   
   attr_accessor :terms_and_conditions
   validates_acceptance_of :terms_and_conditions
+
+  attr_accessor :certify_share_application
+  attr_accessor :certify_age
   
   def proposals_count
     proposals.count

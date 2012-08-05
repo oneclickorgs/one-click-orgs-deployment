@@ -88,4 +88,15 @@ class MembersMailer < OcoMailer
     
     create_mail(@organisation_name, @recipient.email, "#{@resignee.name} has resigned")
   end
+
+  def notify_new_member(recipient, new_member)
+    default_url_options[:host] = recipient.organisation.domain(:only_host => true)
+    
+    @recipient = recipient
+    @new_member = new_member
+    
+    @organisation_name = recipient.organisation.name
+    
+    create_mail(@organisation_name, @recipient.email, "A new membership application has been received: #{@new_member.name}")
+  end
 end

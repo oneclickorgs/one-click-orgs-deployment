@@ -105,6 +105,7 @@ OneClickOrgs::Application.routes.draw do
     end
     
     collection do
+      get :created
       get :resigned
     end
   end

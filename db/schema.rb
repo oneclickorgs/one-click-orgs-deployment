@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120804075952) do
+ActiveRecord::Schema.define(:version => 20120805075225) do
 
   create_table "ballots", :force => true do |t|
     t.integer  "election_id"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20120804075952) do
     t.date     "elected_on"
     t.date     "stood_down_on"
     t.string   "role"
+    t.text     "address"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"

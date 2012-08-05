@@ -2,7 +2,9 @@ require 'csv'
 
 class MembersController < ApplicationController
   
-  skip_before_filter :ensure_authenticated, :ensure_member_active_or_pending, :only => [:resigned]
+  skip_before_filter :ensure_authenticated, :ensure_member_active_or_pending, :only => [
+    :new, :create, :created, :resigned
+  ]
   
   
   def index
@@ -43,6 +45,23 @@ class MembersController < ApplicationController
       @eject_member_proposal = co.eject_member_proposals.build(:member_id => @member.id)
       @page_title = "Member profile"
     end
+  end
+
+  def new
+    @member = co.members.build
+  end
+
+  def create
+    unless co.is_a?(Coop)
+      redirect_to root_path
+      return
+    end
+
+    @member = co.members.create!(params[:member])
+    redirect_to created_members_path
+  end
+
+  def created
   end
 
   def edit

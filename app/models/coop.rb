@@ -139,7 +139,8 @@ class Coop < Organisation
   end
   
   def secretary
-    member_classes.find_by_name!('Secretary').members.last
+    secretary_member_class = member_classes.find_by_name('Secretary')
+    secretary_member_class ? secretary_member_class.members.last : nil
   end
 
   def directors

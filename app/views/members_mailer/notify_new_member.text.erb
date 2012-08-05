@@ -1,0 +1,13 @@
+Dear <%=raw(  @recipient && @recipient.name || 'Secretary'  )%>,
+
+A new membership application has been received:
+
+Name: <%=raw(  @new_member.name  )%>
+Email: <%=raw(  @new_member.email  )%>
+
+Please visit <%=raw(  member_url(@new_member)  )%> to view the details and process the application.
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs
