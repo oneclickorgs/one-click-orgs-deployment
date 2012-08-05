@@ -21,7 +21,7 @@ Feature: Managing membership issues
   #   Given context
   #   When event
   #   Then outcome
-  
+
   # @wip
   # Scenario: Secretary handles a member who wishes to resign
   #   Given context

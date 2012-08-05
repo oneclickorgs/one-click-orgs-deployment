@@ -1,12 +1,12 @@
 require 'csv'
 
 class MembersController < ApplicationController
-  
+
   skip_before_filter :ensure_authenticated, :ensure_member_active_or_pending, :only => [
     :new, :create, :created, :resigned
   ]
-  
-  
+
+
   def index
     case co
     when Association
@@ -18,14 +18,14 @@ class MembersController < ApplicationController
       end
     when Company
       @members = co.directors.active
-      
+
       @page_title = "Directors"
       @director = Director.new
     when Coop
       @page_title = "Members"
       @members = co.members.active
     end
-    
+
     respond_to do |format|
       format.html
       format.pdf {
@@ -69,7 +69,7 @@ class MembersController < ApplicationController
     authorize! :update, @member
     @page_title = "Edit your account"
   end
-  
+
   def update
     id, member = params[:id], params[:member]
     @member = co.members.find(id)
@@ -92,13 +92,13 @@ class MembersController < ApplicationController
     @page_title = "Are you sure you want to resign from this organisation?"
     @member = current_user
   end
-  
+
   def resign
     @member = current_user
     @member.resign!
     redirect_to(resigned_members_path)
   end
-  
+
   def resigned
     reset_session
   end
@@ -110,8 +110,8 @@ class MembersController < ApplicationController
   end
 
 private
-  
-  # Create csv file of members in an org, then send data 
+
+  # Create csv file of members in an org, then send data
   # as a file stream for downloads.
   #
   # @see http://api.rubyonrails.org/classes/ActionController/Streaming.html#method-i-send_data
@@ -121,22 +121,22 @@ private
       # Only Associations use the 'inducted_at' field.
       fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
     end
-    
+
     # In Ruby 1.9, FasterCSV is provided as the stdlib's CSV library.
     csv_library = defined?(FasterCSV) ? FasterCSV : CSV
-    
+
     csv = csv_library.generate do |csv|
       csv << fields
       @members.each do |member|
         csv << fields.collect { |f| member.send(f) }
       end
     end
-    
+
     filename = case co
     when Association
       "#{co.name} Members.csv"
     end
-    
+
     send_data(csv,
       :filename => filename,
       :type => 'text/csv',
