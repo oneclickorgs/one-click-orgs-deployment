@@ -9,6 +9,8 @@
     = mail_to(@member.email)
 
   %dl
+    %dt Postal address
+    %dd= simple_format(@member.address)
     - if @member.inducted_at
       %dt Joined
       %dd= @member.inducted_at.to_date.to_s(:long_ordinal)
