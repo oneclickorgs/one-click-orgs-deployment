@@ -234,6 +234,18 @@ describe Member do
 
       @member.tasks.should include(@task)
     end
+
+    it "has one directorship" do
+      @member = Member.make!
+      @directorship = Directorship.make!
+
+      expect {@member.directorship = @directorship}.to_not raise_error
+
+      @member.save!
+      @member.reload
+
+      @member.directorship(true).should == @directorship
+    end
   end
 
   context "when organisation is a Coop" do

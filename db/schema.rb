@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805182322) do
+ActiveRecord::Schema.define(:version => 20120805212826) do
 
   create_table "ballots", :force => true do |t|
     t.integer  "election_id"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(:version => 20120805182322) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "queue"
+  end
+
+  create_table "directorships", :force => true do |t|
+    t.integer  "organisation_id"
+    t.integer  "director_id"
+    t.date     "elected_on"
+    t.date     "ended_on"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "elections", :force => true do |t|

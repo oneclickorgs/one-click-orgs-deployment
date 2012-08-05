@@ -19,6 +19,8 @@ class Coop < Organisation
   has_many :offices, :foreign_key => 'organisation_id'
   has_many :officerships, :through => :offices
 
+  has_many :directorships, :foreign_key => 'organisation_id'
+
   has_many :elections, :foreign_key => 'organisation_id'
 
   # ATTRIBUTES / CLAUSES

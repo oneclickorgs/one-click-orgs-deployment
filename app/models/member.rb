@@ -9,37 +9,37 @@ class Member < ActiveRecord::Base
     :address, :certify_share_application, :certify_age
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome, :member_class_id, :as => :proposal
-  
-  
+
+
   state_machine :initial => :pending do
     event :induct do
       transition :pending => :active
     end
-    
+
     event :eject do
       transition [:pending, :active] => :inactive
     end
-    
+
     event :reactivate do
       transition :inactive => :active, :if => :inducted?
       transition :inactive => :pending
     end
-    
+
     event :resign do
       transition [:pending, :active] => :inactive
     end
 
     store_audit_trail
   end
-  
+
   include OneClickOrgs::UserAuthentication
   include OneClickOrgs::NotificationConsumer
-  
+
   attr_accessor :send_welcome
-  
+
   belongs_to :organisation
   belongs_to :member_class
-  
+
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
 
@@ -51,16 +51,18 @@ class Member < ActiveRecord::Base
 
   has_one :office, :through => :officership
   has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id'
-  
+
+  has_one :directorship, :order => 'elected_on DESC', :foreign_key => 'director_id'
+
   scope :active, with_state(:active)
   scope :inactive, with_state(:inactive)
   scope :pending, with_state(:pending)
-  
+
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   scope :founding_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founding Member').first } } }
-  
+
   validates_presence_of :first_name, :last_name, :email
-  
+
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
   validates_each :email do |record, attribute, value|
     begin
@@ -69,40 +71,40 @@ class Member < ActiveRecord::Base
       record.errors.add(attribute, 'is invalid.')
     end
   end
-  
+
   validates_uniqueness_of :email, :scope => :organisation_id, :unless => :allow_duplicate_email?
-  
+
   attr_accessor :allow_duplicate_email
   def allow_duplicate_email?
     !!allow_duplicate_email
   end
-  
+
   attr_accessor :terms_and_conditions
   validates_acceptance_of :terms_and_conditions
 
   attr_accessor :certify_share_application
   attr_accessor :certify_age
-  
+
   def proposals_count
     proposals.count
   end
-  
+
   def succeeded_proposals_count
     proposals.where(:state => 'accepted').count
   end
-  
+
   def failed_proposals_count
     proposals.where(:state => 'rejected').count
   end
-  
+
   def votes_count
     votes.count
   end
-  
+
   def eligible_to_vote?(proposal)
     organisation.member_eligible_to_vote?(self, proposal)
   end
-  
+
   def cast_vote(action, proposal)
     raise ArgumentError, "need action and proposal" unless action and proposal
 
@@ -120,11 +122,11 @@ class Member < ActiveRecord::Base
       Vote.create(:member => self, :proposal => proposal, :for => false)
     end
   end
-  
+
   def inducted?
     !inducted_at.nil?
   end
-  
+
   def to_event
     # TODO Push this knowledge somewhere more appropriate
     if inducted?
@@ -133,23 +135,23 @@ class Member < ActiveRecord::Base
       {:timestamp => self.created_at, :object => self, :kind => :new_member}
     end
   end
-  
+
   def has_permission(type)
     return false if member_class.nil? # XXX should always have a member class?
     member_class.has_permission(type)
   end
-  
+
   def name
     full_name = [first_name, last_name].compact.join(' ')
     full_name.blank? ? nil : full_name
   end
-  
+
   # A member is a founding member if they were created before the association's
   # founding proposal, or if they are in an association that has not had a
   # founding proposal yet.
   def founding_member?
     return false unless organisation.is_a?(Association)
-    
+
     fap = organisation.found_association_proposals.last
     if fap
       self.created_at < fap.creation_date
@@ -159,14 +161,14 @@ class Member < ActiveRecord::Base
   end
 
   # GRAVATAR
-  
+
   def gravatar_url(size)
     hash = Digest::MD5.hexdigest(email.downcase)
     "http://www.gravatar.com/avatar/#{hash}?s=#{size}&d=mm"
   end
-  
+
   # FOUNDING VOTE
-  
+
   def founding_vote
     # The first vote of a founder will always be the founding vote
     self.votes.first

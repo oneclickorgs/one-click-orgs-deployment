@@ -6,7 +6,8 @@ describe 'directors/coop/index' do
     @directors = [
       mock_model(Member, :to_param => '4',
         :gravatar_url => nil,
-        :name => "Lisa Baker"
+        :name => "Lisa Baker",
+        :directorship => mock_model(Directorship, :to_param => '5')
       )
     ]
     assign(:directors, @directors)
@@ -36,7 +37,7 @@ describe 'directors/coop/index' do
 
   it "renders a 'Retire' button for each director" do
     render
-    rendered.should have_selector(:input, 'data-url' => '/directorships/4/edit')
+    rendered.should have_selector(:input, 'data-url' => '/directorships/5/edit')
   end
 
   context "when user can create a Director" do

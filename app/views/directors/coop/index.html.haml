@@ -15,7 +15,7 @@
           - if director.last_logged_in_at
             = director.last_logged_in_at.to_s(:short)
         %td
-          = link_button("Retire", :url => edit_directorship_path(director))
+          = link_button("Retire", :url => edit_directorship_path(director.directorship))
   = link_button("Appoint new Director", :url => new_directorship_path)
   %br.clear
 
