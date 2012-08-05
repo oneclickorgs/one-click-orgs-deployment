@@ -81,6 +81,8 @@ class MembersController < ApplicationController
         redirect_to member_path(@member)
       when Company
         redirect_to members_path
+      when Coop
+        redirect_to member_path(@member)
       end
     else
       flash.now[:error] = "There was a problem with your new details."
