@@ -35,7 +35,7 @@
         %td= office.title
         %td
           - if office.officer
-            = office.officer.name
+            = link_to(office.officer.name, member_path(office.officer))
           -else
             Office unoccupied
         %td
