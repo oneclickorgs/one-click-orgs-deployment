@@ -249,4 +249,10 @@ describe Member do
       end
     end
   end
+
+  it "records when induction happened" do
+    member = Member.make!(:pending)
+    member.induct!
+    member.inducted_at.should be_present
+  end
 end
