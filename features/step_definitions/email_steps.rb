@@ -174,3 +174,15 @@ Then /^all the Members should receive a notification of the new meeting$/ do
     email.body.should include(@meeting.venue)
   end
 end
+
+Then /^the Secretary should receive a notification of the new membership application$/ do
+  @secretary ||= @organisation.secretary
+  @member ||= @organisation.members.last
+  @email = last_email
+  
+  @email.should be_present
+  @email.to.should == [@secretary.email]
+  @email.subject.should include('membership application')
+  @email.body.should include(@member.name)
+end
+

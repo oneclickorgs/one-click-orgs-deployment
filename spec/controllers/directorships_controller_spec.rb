@@ -13,7 +13,9 @@ describe DirectorshipsController do
   describe "GET new" do
     before(:each) do
       @directorship = mock_model(Directorship)
-      @organisation.stub(:build_directorship).and_return(@directorship)
+      @directorships = mock("directorships association")
+      @organisation.stub(:directorships).and_return(@directorships)
+      @directorships.stub(:build).and_return(@directorship)
     end
 
     def get_new
@@ -21,7 +23,7 @@ describe DirectorshipsController do
     end
 
     it "builds a new directorship" do
-      @organisation.should_receive(:build_directorship).and_return(@directorship)
+      @directorships.should_receive(:build).and_return(@directorship)
       get_new
     end
 
@@ -37,7 +39,10 @@ describe DirectorshipsController do
         :save! => true
       ).as_new_record
 
-      @organisation.stub(:build_directorship).and_return(@directorship)
+      @directorships = mock("directors association")
+      @organisation.stub(:directorships).and_return(@directorships)
+
+      @directorships.stub(:build).and_return(@directorship)
 
       @directorship_params = {'member_id' => '1'}
     end
@@ -47,7 +52,7 @@ describe DirectorshipsController do
     end
 
     it "builds the new directorship" do
-      @organisation.should_receive(:build_directorship).with(@directorship_params).and_return(@directorship)
+      @directorships.should_receive(:build).with(@directorship_params).and_return(@directorship)
       post_create
     end
 
@@ -70,7 +75,9 @@ describe DirectorshipsController do
     before(:each) do
       @directorship = mock_model(Directorship)
 
-      Directorship.stub(:find).and_return(@directorship)
+      @directorships = mock("directorships association")
+      @organisation.stub(:directorships).and_return(@directorships)
+      @directorships.stub(:find).and_return(@directorship)
     end
 
     def get_edit
@@ -78,7 +85,7 @@ describe DirectorshipsController do
     end
 
     it "finds the directorship" do
-      Directorship.should_receive(:find).with('1').and_return(@directorship)
+      @directorships.should_receive(:find).with('1').and_return(@directorship)
       get_edit
     end
 
@@ -101,7 +108,10 @@ describe DirectorshipsController do
       )
       @directorship_params = {'certification' => '1'}
 
-      Directorship.stub(:find).and_return(@directorship)
+      @directorships = mock("directorships association")
+      @directorships.stub(:find).and_return(@directorship)
+
+      @organisation.stub(:directorships).and_return(@directorships)
     end
 
     def put_update
@@ -109,7 +119,7 @@ describe DirectorshipsController do
     end
 
     it "finds the directorship" do
-      Directorship.should_receive(:find).with('1').and_return(@directorship)
+      @directorships.should_receive(:find).with('1').and_return(@directorship)
       put_update
     end
 

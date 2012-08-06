@@ -1,4 +1,4 @@
-%div#member_info
+#member_info
 
   = image_tag(@member.gravatar_url(64), :alt => @member.name, :width => '64', :height => '64')
 
@@ -7,3 +7,17 @@
 
   %p
     = mail_to(@member.email)
+
+  %dl
+    %dt Postal address
+    %dd= simple_format(@member.address)
+    - if @member.inducted_at
+      %dt Joined
+      %dd= @member.inducted_at.to_date.to_s(:long_ordinal)
+    %dt Shares
+    %dd 1
+
+- if @member.pending?
+  - if can?(:edit, @member)
+    = form_for(@member, :url => induct_member_path(@member), :html => {:method => :put}) do |member_form|
+      %p= member_form.submit "Accept application"

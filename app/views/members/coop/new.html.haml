@@ -1,0 +1,17 @@
+%h2 Apply for membership
+= form_for(@member) do |member_form|
+  %p= member_form.label :first_name
+  %p= member_form.text_field :first_name
+  %p= member_form.label :last_name
+  %p= member_form.text_field :last_name
+  %p= member_form.label :email, "Email address"
+  %p= member_form.text_field :email
+  %p= member_form.label :address, "Postal address"
+  %p= member_form.text_area :address
+  %p
+    = member_form.check_box :certify_share_application
+    = member_form.label :certify_share_application, "I apply for one share in #{co.name}."
+  %p
+    = member_form.check_box :certify_age
+    = member_form.label :certify_age, "I am aged 16 years or over."
+  %p= member_form.submit "Send membership application"

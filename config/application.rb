@@ -29,6 +29,7 @@ module OneClickOrgs
       :decision_mailer_observer,
       :member_observer,
       :member_mailer_observer,
+      :member_task_observer,
       :member_timestamp_observer,
       :proposal_mailer_observer,
       :proposal_timestamp_observer,

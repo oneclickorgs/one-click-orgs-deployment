@@ -9,19 +9,14 @@ describe Directorship do
       @organisation = mock_model(Organisation)
       @directorship.stub(:organisation).and_return(@organisation)
 
-      @members_association = mock("members association")
-      @organisation.stub(:members).and_return(@members_association)
-
-      @member = mock_model(Member)
-      @members_association.stub(:find).and_return(@member)
+      @director = mock_model(Member)
+      @directorship.stub(:director).and_return(@director)
 
       @member_classes_association = mock("member classes association")
       @organisation.stub(:member_classes).and_return(@member_classes_association)
 
-      @member.stub(:member_class=)
-      @member.stub(:save!)
-
-      @directorship.stub(:member_id).and_return(1)
+      @director.stub(:member_class=)
+      @director.stub(:save!)
 
       @director_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Director').and_return(@director_member_class)
@@ -34,23 +29,18 @@ describe Directorship do
         @directorship.elected_on = 1.day.ago
       end
 
-      it "finds the member" do
-        @members_association.should_receive(:find).with(1).and_return(@member)
-        @directorship.save!
-      end
-
       it "finds the 'Director' member class" do
         @member_classes_association.should_receive(:find_by_name).with('Director').and_return(@director_member_class)
         @directorship.save!
       end
 
       it "sets the member's member class to 'Director'" do
-        @member.should_receive(:member_class=).with(@director_member_class)
+        @director.should_receive(:member_class=).with(@director_member_class)
         @directorship.save!
       end
 
       it "saves the member" do
-        @member.should_receive(:save!)
+        @director.should_receive(:save!)
         @directorship.save!
       end
     end
@@ -61,12 +51,12 @@ describe Directorship do
       end
 
       it "sets the member's member class to 'Member'" do
-        @member.should_receive(:member_class=).with(@member_member_class)
+        @director.should_receive(:member_class=).with(@member_member_class)
         @directorship.save!
       end
 
       it "saves the member" do
-        @member.should_receive(:save!)
+        @director.should_receive(:save!)
         @directorship.save!
       end
     end
@@ -81,13 +71,13 @@ describe Directorship do
     @directorship.organisation.should == @organisation
   end
 
-  describe "member_id attribute" do
+  describe "director_id attribute" do
     it "accepts a string" do
       @directorship = Directorship.new
 
-      expect {@directorship.member_id = '1'}.to_not raise_error
+      expect {@directorship.director_id = '1'}.to_not raise_error
 
-      @directorship.member_id.should == 1
+      @directorship.director_id.should == 1
     end
   end
 
@@ -137,45 +127,4 @@ describe Directorship do
     end
   end
 
-
-  describe "#persisted?" do
-    it "returns false for a new instance" do
-      Directorship.new.persisted?.should be_false
-    end
-
-    it "returns true for a found instance" do
-      Member.stub(:find_by_id).and_return(mock_model(Member, :organisation => mock_model(Organisation)))
-      Directorship.find(1).persisted?.should be_true
-    end
-  end
-
-  describe "finding" do
-    before(:each) do
-      @member = mock_model(Member, :id => 1)
-      Member.stub(:find_by_id).and_return(@member)
-
-      @organisation = mock_model(Organisation)
-      @member.stub(:organisation).and_return(@organisation)
-    end
-
-    it "finds the member" do
-      Member.should_receive(:find_by_id).with('1').and_return(@member)
-      Directorship.find('1')
-    end
-
-    it "returns a directorship" do
-      directorship = Directorship.find('1')
-      directorship.should be_a(Directorship)
-    end
-
-    it "retains the member ID" do
-      directorship = Directorship.find('1')
-      directorship.member_id.should == 1
-    end
-
-    it "assigns itself the organisation" do
-      directorship = Directorship.find('1')
-      directorship.organisation.should == @organisation
-    end
-  end
 end

@@ -5,6 +5,7 @@
     %tr
       %th Name
       %th Last login
+      %th Appointed
       %th
     - @directors.each do |director|
       = content_tag_for(:tr, director) do
@@ -15,7 +16,9 @@
           - if director.last_logged_in_at
             = director.last_logged_in_at.to_s(:short)
         %td
-          = link_button("Retire", :url => edit_directorship_path(director))
+          = director.directorship.elected_on.to_s(:long_ordinal)
+        %td
+          = link_button("Retire", :url => edit_directorship_path(director.directorship))
   = link_button("Appoint new Director", :url => new_directorship_path)
   %br.clear
 
@@ -25,15 +28,19 @@
     %tr
       %th Office
       %th Occupied by
+      %th Appointed
       %th
     - @offices.each do |office|
       %tr{:class => office.title.parameterize.underscore}
         %td= office.title
         %td
           - if office.officer
-            = office.officer.name
+            = link_to(office.officer.name, member_path(office.officer))
           -else
             Office unoccupied
+        %td
+          - if office.officership
+            = office.officership.elected_on.to_s(:long_ordinal)
         %td
           - if office.officer
             = link_button("Step down", :url => edit_officership_path(office.officership))

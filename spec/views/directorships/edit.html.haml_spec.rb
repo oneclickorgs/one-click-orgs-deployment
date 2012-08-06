@@ -6,7 +6,7 @@ describe "directorships/edit" do
     @directorship = mock_model(Directorship,
       :certification => nil,
       :ended_on => nil,
-      :member_name => "John Smith"
+      :director_name => "John Smith"
     )
     assign(:directorship, @directorship)
   end

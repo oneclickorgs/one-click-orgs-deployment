@@ -16,7 +16,7 @@ describe 'directorships/_form' do
 
   it "renders a select field populated with the members" do
     render
-    rendered.should have_selector(:select, :name => 'directorship[member_id]') do |select|
+    rendered.should have_selector(:select, :name => 'directorship[director_id]') do |select|
       select.should have_selector(:option, :value => '1', :content => "John Smith")
     end
   end

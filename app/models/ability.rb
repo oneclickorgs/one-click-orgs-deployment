@@ -72,6 +72,10 @@ class Ability
         can :update, Constitution
       end
 
+      can :update, Member do |member|
+        user.has_permission(:member) || user == member
+      end
+
       can :read, GeneralMeeting
       can :read, BoardMeeting
     end

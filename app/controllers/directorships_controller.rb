@@ -1,20 +1,20 @@
 class DirectorshipsController < ApplicationController
   def new
-    @directorship = co.build_directorship
+    @directorship = co.directorships.build
   end
 
   def create
-    @directorship = co.build_directorship(params[:directorship])
+    @directorship = co.directorships.build(params[:directorship])
     @directorship.save!
     redirect_to directors_path
   end
 
   def edit
-    @directorship = Directorship.find(params[:id])
+    @directorship = co.directorships.find(params[:id])
   end
 
   def update
-    @directorship = Directorship.find(params[:id])
+    @directorship = co.directorships.find(params[:id])
     @directorship.update_attributes(params[:directorship])
     @directorship.save!
     redirect_to directors_path

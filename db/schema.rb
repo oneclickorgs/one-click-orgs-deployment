@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120804075952) do
+ActiveRecord::Schema.define(:version => 20120805212826) do
 
   create_table "ballots", :force => true do |t|
     t.integer  "election_id"
@@ -64,6 +64,15 @@ ActiveRecord::Schema.define(:version => 20120804075952) do
     t.string   "queue"
   end
 
+  create_table "directorships", :force => true do |t|
+    t.integer  "organisation_id"
+    t.integer  "director_id"
+    t.date     "elected_on"
+    t.date     "ended_on"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "elections", :force => true do |t|
     t.integer  "organisation_id"
     t.string   "state"
@@ -102,6 +111,16 @@ ActiveRecord::Schema.define(:version => 20120804075952) do
 
   add_index "member_classes", ["organisation_id"], :name => "index_member_classes_on_organisation_id"
 
+  create_table "member_state_transitions", :force => true do |t|
+    t.integer  "member_id"
+    t.string   "event"
+    t.string   "from"
+    t.string   "to"
+    t.datetime "created_at"
+  end
+
+  add_index "member_state_transitions", ["member_id"], :name => "index_member_state_transitions_on_member_id"
+
   create_table "members", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
     t.datetime "created_at"
@@ -120,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20120804075952) do
     t.date     "elected_on"
     t.date     "stood_down_on"
     t.string   "role"
+    t.text     "address"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"
