@@ -13,6 +13,9 @@ class Coop < Organisation
 
   has_many :change_meeting_notice_period_resolutions, :foreign_key => 'organisation_id'
   has_many :change_quorum_resolutions, :foreign_key => 'organisation_id'
+  has_many :change_text_resolutions, :foreign_key => 'organisation_id'
+  has_many :change_boolean_resolutions, :foreign_key => 'organisation_id'
+  has_many :change_integer_resolutions, :foreign_key => 'organisation_id'
 
   has_many :resolution_proposals, :foreign_key => 'organisation_id'
 
@@ -22,6 +25,8 @@ class Coop < Organisation
   has_many :directorships, :foreign_key => 'organisation_id'
 
   has_many :elections, :foreign_key => 'organisation_id'
+
+  after_create :set_default_user_and_director_clauses
 
   # ATTRIBUTES / CLAUSES
 
@@ -61,40 +66,90 @@ class Coop < Organisation
     @max_user_directors ||= clauses.get_integer('max_user_directors')
   end
 
+  def max_user_directors=(new_max_user_directors)
+    clauses.build(:name => :max_user_directors, :integer_value => new_max_user_directors)
+    @max_user_directors = new_max_user_directors
+  end
+
   def max_employee_directors
     @max_employee_directors ||= clauses.get_integer('max_employee_directors')
+  end
+
+  def max_employee_directors=(new_max_employee_directors)
+    clauses.build(:name => :max_employee_directors, :integer_value => new_max_employee_directors)
+    @max_employee_directors = new_max_employee_directors
   end
 
   def max_supporter_directors
     @max_supporter_directors ||= clauses.get_integer('max_supporter_directors')
   end
 
+  def max_supporter_directors=(new_max_supporter_directors)
+    clauses.build(:name => :max_supporter_directors, :integer_value => new_max_supporter_directors)
+    @max_supporter_directors = new_max_supporter_directors
+  end
+
   def max_producer_directors
     @max_producer_directors ||= clauses.get_integer('max_producer_directors')
+  end
+
+  def max_producer_directors=(new_max_producer_directors)
+    clauses.build(:name => :max_producer_directors, :integer_value => new_max_producer_directors)
+    @max_producer_directors = new_max_producer_directors
   end
 
   def max_consumer_directors
     @max_consumer_directors ||= clauses.get_integer('max_consumer_directors')
   end
 
+  def max_consumer_directors=(new_max_consumer_directors)
+    clauses.build(:name => :max_consumer_directors, :integer_value => new_max_consumer_directors)
+    @max_consumer_directors = new_max_consumer_directors
+  end
+
   def user_members
     @user_members ||= clauses.get_boolean('user_members')
+  end
+
+  def user_members=(new_user_members)
+    clauses.build(:name => :user_members, :boolean_value => new_user_members)
+    @user_members = new_user_members
   end
 
   def employee_members
     @employee_members ||= clauses.get_boolean('employee_members')
   end
 
+  def employee_members=(new_employee_members)
+    clauses.build(:name => :employee_members, :boolean_value => new_employee_members)
+    @employee_members = new_employee_members
+  end
+
   def supporter_members
     @supporter_members ||= clauses.get_boolean('supporter_members')
+  end
+
+  def supporter_members=(new_supporter_members)
+    clauses.build(:name => :supporter_members, :boolean_value => new_supporter_members)
+    @supporter_members = new_supporter_members
   end
 
   def producer_members
     @producer_members ||= clauses.get_boolean('producer_members')
   end
 
+  def producer_members=(new_producer_members)
+    clauses.build(:name => :producer_members, :boolean_value => new_producer_members)
+    @producer_members = new_producer_members
+  end
+
   def consumer_members
     @consumer_members ||= clauses.get_boolean('consumer_members')
+  end
+
+  def consumer_members=(new_consumer_members)
+    clauses.build(:name => :consumer_members, :boolean_value => new_consumer_members)
+    @consumer_members = new_consumer_members
   end
 
   def single_shareholding
@@ -135,6 +190,23 @@ class Coop < Organisation
 
   def set_default_voting_period
     constitution.set_voting_period(14.days)
+  end
+
+  def set_default_user_and_director_clauses
+    # TODO Verify these are sensible defaults for the Rules
+    self.user_members = true
+    self.employee_members = true
+    self.supporter_members = true
+    self.producer_members = true
+    self.consumer_members = true
+
+    self.max_user_directors = 3
+    self.max_employee_directors = 3
+    self.max_supporter_directors = 3
+    self.max_producer_directors = 3
+    self.max_consumer_directors = 3
+
+    self.save!
   end
 
   def member_eligible_to_vote?(member, proposal)

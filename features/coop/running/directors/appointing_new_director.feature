@@ -2,8 +2,8 @@ Feature: Appointing new director
   In order to keep the record of directors up-to-date
   As the secretary
   I want to record the appointment of a new director
-  
-  @javascript  
+
+  @javascript
   Scenario: Secretary appoints new director
     Given there is a co-op
     And I am the Secretary of the co-op

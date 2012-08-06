@@ -9,7 +9,7 @@ describe Directorship do
       @organisation = mock_model(Organisation)
       @directorship.stub(:organisation).and_return(@organisation)
 
-      @director = mock_model(Member)
+      @director = mock_model(Member, :member_class => nil)
       @directorship.stub(:director).and_return(@director)
 
       @member_classes_association = mock("member classes association")
@@ -20,6 +20,8 @@ describe Directorship do
 
       @director_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Director').and_return(@director_member_class)
+      @secretary_member_class = mock_model(MemberClass)
+      @member_classes_association.stub(:find_by_name).with('Secretary').and_return(@secretary_member_class)
       @member_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Member').and_return(@member_member_class)
     end

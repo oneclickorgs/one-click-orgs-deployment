@@ -58,7 +58,7 @@ end
 
 When /^I press "(.*?)" for the draft resolution$/ do |button|
   @resolution ||= @organisation.resolutions.draft.last
-  
+
   within('#' + ActionController::RecordIdentifier.dom_id(@resolution)) do
     click_button(button)
   end
@@ -150,4 +150,10 @@ end
 Then /^I should see the suggested resolution in the list of suggested resolutons$/ do
   @resolution_proposal ||= @organisation.resolution_proposals.last
   page.should have_css("li#resolution_proposal_#{@resolution_proposal.id}")
+end
+
+Then /^I should see a draft resolution "(.*?)"$/ do |title|
+  within('.draft_proposals') do
+    page.should have_content(title)
+  end
 end

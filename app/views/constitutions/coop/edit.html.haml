@@ -60,7 +60,7 @@
       = form.label(:max_consumer_directors, "Consumer Members", :class => 'inline')
 
     %h3 Dissolution
-    %p.explanation In the event of winding-up or dissolution of the Co-operatives, must assets be transferred to another common-ownership co-operative, or can they be distributed amony the Members?
+    %p.explanation In the event of winding-up or dissolution of the Co-operatives, must assets be transferred to another common-ownership co-operative, or can they be distributed among the Members?
     %p.radio
       = form.radio_button(:common_ownership, '1', :disabled => !@allow_editing)
       = label_tag('common_ownership_1', "Common Ownership", :class => 'inline')
@@ -71,4 +71,4 @@
       Assets may be distributed among the Members.
 
     - if @allow_editing
-      %p= form.submit "Save changes", :id => 'submit'
+      %p= form.submit "Create draft resolutions", :id => 'submit'
