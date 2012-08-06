@@ -53,6 +53,7 @@ class Ability
     when Coop
       if user.has_permission(:resolution)
         can :create, Resolution
+        can :create, ConstitutionProposalBundle
         can :edit, ResolutionProposal
       end
       
