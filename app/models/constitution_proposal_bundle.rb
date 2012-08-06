@@ -20,7 +20,7 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
     :common_ownership
 
-  
+
   def after_initialize
     # Load existing settings from organisation, if given, but don't
     # overwrite new settings that have been passed directly in as attributes.
@@ -50,10 +50,10 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
         end
       end
     end
-    
+
     self.proposals ||= []
   end
-  
+
   def save
     case organisation
     when Association
@@ -97,7 +97,7 @@ protected
         errors.add(:organisation_name, proposal.errors.full_messages.to_sentence)
       end
     end
-    
+
     # Objectives
     if organisation.objectives != objectives
       proposal = (organisation.change_text_proposals.new(
@@ -111,7 +111,7 @@ protected
         errors.add(:objectives, proposal.errors.full_messages.to_sentence)
       end
     end
-    
+
     # Assets
     if assets == '1'
       title = "Change the constitution to allow holding, transferral and disposal of material assets and intangible assets"
@@ -120,7 +120,7 @@ protected
       title = "Change the constitution to prohibit holding, transferral or disposal of material assets and intangible assets"
       new_assets_value = false
     end
-   
+
     if (organisation.assets && !new_assets_value) || (!organisation.assets && new_assets_value) # Bit verbose, to cope with null values
       proposal = (organisation.change_boolean_proposals.new(
         :title => title,
@@ -134,11 +134,11 @@ protected
         errors.add(:assets, proposal.errors.full_messages.to_sentence)
       end
     end
-    
+
     # General voting system
     proposed_system = VotingSystems.get(general_voting_system)
     current_system = organisation.constitution.voting_system :general
-    
+
     if current_system != proposed_system
       proposal = (organisation.change_voting_system_proposals.new(
         :proposal_type => 'general',
@@ -151,11 +151,11 @@ protected
         errors.add(:general_voting_system, proposal.errors.full_messages.to_sentence)
       end
     end
-    
+
     # Membership voting system
     proposed_system = VotingSystems.get(membership_voting_system)
     current_system = organisation.constitution.voting_system :membership
-    
+
     if current_system != proposed_system
       proposal = (organisation.change_voting_system_proposals.new(
         :proposal_type => 'membership',
@@ -168,11 +168,11 @@ protected
         errors.add(:membership_voting_system, proposal.errors.full_messages.to_sentence)
       end
     end
-    
+
     # Constitution voting system
     proposed_system = VotingSystems.get(constitution_voting_system)
     current_system = organisation.constitution.voting_system :constitution
-    
+
     if current_system != proposed_system
       proposal = (organisation.change_voting_system_proposals.new(
         :proposal_type => 'constitution',
@@ -185,7 +185,7 @@ protected
         errors.add(:constitution_voting_system, proposal.errors.full_messages.to_sentence)
       end
     end
-    
+
     # Voting period
     if organisation.constitution.voting_period != voting_period.to_i
       proposal = organisation.change_voting_period_proposals.new(

@@ -1,11 +1,12 @@
 class ConstitutionProposalBundlesController < ApplicationController
   def create
     authorize! :create, ConstitutionProposalBundle
-    
+
     @constitution_proposal_bundle = co.build_constitution_proposal_bundle(
       params[:constitution_proposal_bundle]
     )
     @constitution_proposal_bundle.proposer = current_user
+
     if @constitution_proposal_bundle.save
       case co
       when Coop

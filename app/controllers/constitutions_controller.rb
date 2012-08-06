@@ -1,9 +1,9 @@
 class ConstitutionsController < ApplicationController
   before_filter :find_constitution
-  
+
   def show
     @page_title = "Constitution"
-    
+
     respond_to do |format|
       format.html
       format.pdf {
@@ -11,7 +11,7 @@ class ConstitutionsController < ApplicationController
       }
     end
   end
-  
+
   def edit
     @page_title = "Amendments"
 
@@ -31,10 +31,10 @@ class ConstitutionsController < ApplicationController
       end
     end
   end
-  
+
   def update
     authorize! :update, Constitution
-    
+
     @constitution_wrapper = ConstitutionWrapper.new(:constitution => @constitution)
     if @constitution_wrapper.update_attributes(params[:constitution])
       redirect_to(constitution_path, :notice => "Constitutional changes were made")

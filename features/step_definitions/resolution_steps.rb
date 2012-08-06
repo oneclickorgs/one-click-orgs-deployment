@@ -58,7 +58,7 @@ end
 
 When /^I press "(.*?)" for the draft resolution$/ do |button|
   @resolution ||= @organisation.resolutions.draft.last
-  
+
   within('#' + ActionController::RecordIdentifier.dom_id(@resolution)) do
     click_button(button)
   end
