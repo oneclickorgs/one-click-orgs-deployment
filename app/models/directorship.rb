@@ -25,7 +25,13 @@ class Directorship < ActiveRecord::Base
       member_member_class = organisation.member_classes.find_by_name('Member')
       director.member_class = member_member_class if member_member_class
     elsif elected_on
+      current_member_class = director.member_class
+
       director_member_class = organisation.member_classes.find_by_name('Director')
+      secretary_member_class = organisation.member_classes.find_by_name('Secretary')
+
+      return if current_member_class == director_member_class || current_member_class == secretary_member_class
+
       director.member_class = director_member_class if director_member_class
     end
     director.save!
