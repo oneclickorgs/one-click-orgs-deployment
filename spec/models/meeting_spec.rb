@@ -47,12 +47,12 @@ describe Meeting do
   end
 
   describe "scopes" do
-    describe "upcoming" do
-      before(:each) do
-        @today = Time.now.utc
-        @yesterday = Time.now.utc.advance(:days => -1)
-      end
+    before(:each) do
+      @today = Time.now.utc
+      @yesterday = Time.now.utc.advance(:days => -1)
+    end
 
+    describe "upcoming" do
       it "includes a meeting that happens today" do
         meeting = Meeting.make!(:happened_on => @today)
         Meeting.upcoming.should include(meeting)
@@ -63,8 +63,33 @@ describe Meeting do
         Meeting.upcoming.should_not include(meeting)
       end
     end
+
+    describe "past" do
+      it "includes a meeting that happened yesterday" do
+        meeting = Meeting.make!(:happened_on => @yesterday)
+        Meeting.past.should include(meeting)
+      end
+
+      it "does not include a meeting that happens today" do
+        meeting = Meeting.make!(:happened_on => @today)
+        Meeting.past.should_not include(meeting)
+      end
+    end
   end
-  
+
+  describe "#past?" do
+    let(:today) {Time.now.utc}
+    let(:yesterday) {Time.now.utc.advance(:days => -1)}
+
+    it "is true when meeting happened yesterday" do
+      Meeting.new(:happened_on => yesterday).past?.should be_true
+    end
+
+    it "is false when the meeting is happening today" do
+      Meeting.new(:happened_on => today).past?.should be_false
+    end
+  end
+
   describe "validations" do
     it "requires an organisation" do
       Meeting.make(:organisation => nil).should_not be_valid

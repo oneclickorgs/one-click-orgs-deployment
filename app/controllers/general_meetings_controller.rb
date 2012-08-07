@@ -15,4 +15,19 @@ class GeneralMeetingsController < ApplicationController
     @general_meeting.save!
     redirect_to meetings_path
   end
+
+  def show
+    @general_meeting = co.general_meetings.find(params[:id])
+  end
+
+  def edit
+    @general_meeting = co.general_meetings.find(params[:id])
+    @members = co.members
+  end
+
+  def update
+    @general_meeting = co.general_meetings.find(params[:id])
+    @general_meeting.update_attributes(params[:general_meeting])
+    redirect_to meetings_path
+  end
 end

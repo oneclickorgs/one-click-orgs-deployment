@@ -14,7 +14,9 @@ class Meeting < ActiveRecord::Base
 
   # 'Upcoming' scope includes meetings happening today.
   scope :upcoming, lambda{where(['happened_on >= ?', Time.now.utc.to_date])}
-  
+
+  scope :past, lambda{where(['happened_on < ?', Time.now.utc.to_date])}
+
   def to_event
     {:timestamp => created_at, :object => self, :kind => :meeting}
   end
@@ -40,6 +42,10 @@ class Meeting < ActiveRecord::Base
         MeetingMailer.send(creation_notification_email_action, member, self).deliver
       end
     end
+  end
+
+  def past?
+    happened_on && happened_on < Time.now.utc.to_date
   end
 
   def creation_notification_email_action

@@ -27,6 +27,16 @@
 - if @past_meetings.present?
   .section
     %h3 Past meetings
+    %table.past_meetings
+      - @past_meetings.each do |meeting|
+        %tr
+          = content_tag_for(:td, meeting) do
+            - if meeting.minutes.blank?
+              %p Minutes have not been entered for this meeting yet.
+              %p= link_to("Enter minutes for this meeting.", edit_general_meeting_path(meeting))
+            - else
+              %p= link_to("View minutes", general_meeting_path(meeting))
+
 
 .section
   %h3 Meetings settings
