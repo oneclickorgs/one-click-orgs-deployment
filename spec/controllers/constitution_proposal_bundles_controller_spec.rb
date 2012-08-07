@@ -23,6 +23,7 @@ describe ConstitutionProposalBundlesController do
       before(:each) do
         controller.stub(:authorize!).with(:create, ConstitutionProposalBundle).and_return(true)
         @organisation.stub(:build_constitution_proposal_bundle).and_return(constitution_proposal_bundle)
+        controller.stub(:can?).with(:create, Resolution).and_return(true)
       end
 
       def post_create

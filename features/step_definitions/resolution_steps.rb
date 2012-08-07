@@ -166,3 +166,9 @@ Then /^I should see a draft resolution "(.*?)"$/ do |title|
     page.should have_content(title)
   end
 end
+
+Then /^I should see a suggested resolution "(.*?)"$/ do |title|
+  within('.resolution_proposals') do
+    page.should have_content(title)
+  end
+end
