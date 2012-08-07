@@ -113,6 +113,9 @@ end
 ChangeQuorumResolution.blueprint do
 end
 
+ChangeTextResolution.blueprint do
+end
+
 Decision.blueprint do
   proposal { Proposal.make }
 end

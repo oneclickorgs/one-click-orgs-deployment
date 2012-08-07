@@ -32,6 +32,15 @@ Given /^there is a resolution open for electronic voting$/ do
   @resolution = @organisation.resolutions.make!
 end
 
+Given /^there is a passed resolution to change the organisation name to 'The Tea IPS'$/ do
+  @resolution = @organisation.change_text_resolutions.make!(
+    :name => 'organisation_name',
+    :value => 'The Tea IPS'
+  )
+  @resolution.force_passed = true
+  @resolution.close!
+end
+
 When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
   fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
 end
