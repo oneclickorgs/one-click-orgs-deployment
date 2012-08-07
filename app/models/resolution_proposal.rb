@@ -51,11 +51,11 @@ class ResolutionProposal < Proposal
       self.title = resolution_class.constantize.new(resolution_parameters).set_default_title
     end
   end
-  
+
   def members_to_notify
     [organisation.secretary]
   end
-  
+
   def notification_email_action
     :notify_resolution_proposal
   end
