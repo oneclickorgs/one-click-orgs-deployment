@@ -25,8 +25,8 @@ describe Task do
 
   describe "scopes" do
     before(:each) do
-      @completed_task = Task.make!(:completed_at => 10.seconds.ago)  
-      @future_task = Task.make!(:starts_on => 1.day.from_now)
+      @completed_task = Task.make!(:completed_at => 10.seconds.ago)
+      @future_task = Task.make!(:starts_on => Date.today.advance(:days => 1))
       @task = Task.make!
     end
 
