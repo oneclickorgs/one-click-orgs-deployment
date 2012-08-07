@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe MeetingsController do
   include ControllerSpecHelper
-  
+
   before(:each) do
     stub_app_setup
   end
-  
+
   context "when current organisation is a company" do
     before(:each) do
       stub_company
@@ -182,16 +182,16 @@ describe MeetingsController do
       end
     end
   end
-  
+
   context "when current organisation is a co-op" do
     before(:each) do
       stub_coop
       stub_login
     end
-    
+
     describe "GET index" do
       before(:each) do
-        @meetings_association = mock("meetings association")  
+        @meetings_association = mock("meetings association")
         @upcoming_meetings = mock("upcoming meetings association")
         @past_meetings = mock("past meetings association")
 
@@ -218,5 +218,5 @@ describe MeetingsController do
       end
     end
   end
-  
+
 end

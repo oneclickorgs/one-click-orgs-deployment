@@ -34,7 +34,7 @@ Feature: Entering minutes for a meeting
   #   And I should see the meeting in the list of Past Meetings
   #   When I follow "View minutes" for the meeting
   #   Then I should see the minutes I entered
-  
+
   # @wip
   # Scenario: Secretary records results of resolutions for a meeting
   #   Given there has been a past meeting

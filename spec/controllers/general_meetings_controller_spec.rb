@@ -13,7 +13,7 @@ describe GeneralMeetingsController do
   describe "GET new" do
     before(:each) do
       @general_meetings_association = mock("general meetings association")
-      @resolutions_association = mock("resolutions association")  
+      @resolutions_association = mock("resolutions association")
       @draft_resolutions_association = mock("draft resolutions association")
 
       @organisation.stub(:general_meetings).and_return(@general_meetings_association)

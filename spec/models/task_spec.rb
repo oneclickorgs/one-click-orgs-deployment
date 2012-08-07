@@ -18,7 +18,7 @@ describe Task do
 
       task.save!
       task.reload
-      
+
       task.subject(true).should == resolution
     end
   end
