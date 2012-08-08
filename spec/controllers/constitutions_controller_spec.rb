@@ -15,18 +15,21 @@ describe ConstitutionsController do
     end
 
     describe "GET edit" do
+      let(:constitution) {mock("constitution")}
+      let(:cpb) {mock_model(ConstitutionProposalBundle)}
+
+      before(:each) do
+        controller.stub(:can?).and_return(false)
+        @organisation.stub(:build_constitution_proposal_bundle).and_return(cpb)
+      end
+
       def get_edit
         get :edit
       end
 
       context "when current user can create resolutions" do
-        let(:constitution) {mock("constitution")}
-
         before(:each) do
-          controller.stub(:can?).and_return(false)
           controller.stub(:can?).with(:create, Resolution).and_return(true)
-
-          @organisation.stub(:build_constitution_proposal_bundle)
         end
 
         it "allows editing" do
@@ -34,6 +37,29 @@ describe ConstitutionsController do
 
           get_edit
           assigns[:allow_editing].should be_true
+        end
+      end
+
+      context "when current user can create resolution proposals" do
+        before(:each) do
+          controller.stub(:can?).with(:create, ResolutionProposal).and_return(true)
+
+          @organisation.stub(:constitution).and_return(constitution)
+        end
+
+        it "allows editing" do
+          get_edit
+          assigns[:allow_editing].should be_true
+        end
+
+        it "builds a constitution_proposal_bundle" do
+          @organisation.should_receive(:build_constitution_proposal_bundle).and_return(cpb)
+          get_edit
+        end
+
+        it "assigns the constitution proposal bundle" do
+          get_edit
+          assigns[:constitution_proposal_bundle].should == cpb
         end
       end
     end

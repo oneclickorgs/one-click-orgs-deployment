@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe MeetingsController do
   include ControllerSpecHelper
-  
+
   before(:each) do
     stub_app_setup
   end
-  
+
   context "when current organisation is a company" do
     before(:each) do
       stub_company
@@ -182,26 +182,34 @@ describe MeetingsController do
       end
     end
   end
-  
+
   context "when current organisation is a co-op" do
     before(:each) do
       stub_coop
       stub_login
     end
-    
+
     describe "GET index" do
       before(:each) do
-        @meetings_association = mock("meetings association")  
+        @meetings_association = mock("meetings association")
         @upcoming_meetings = mock("upcoming meetings association")
+        @past_meetings = mock("past meetings association")
 
         @organisation.stub(:meetings).and_return(@meetings_association)
-        @meetings_association.stub(:upcoming).and_return(@upcoming_meetings_association)
+        @meetings_association.stub(:upcoming).and_return(@upcoming_meetings)
+        @meetings_association.stub(:past).and_return(@past_meetings)
       end
 
       it "finds and assigns the upcoming meetings" do
-        @meetings_association.should_receive(:upcoming).and_return(@upcoming_meetings_association)
+        @meetings_association.should_receive(:upcoming).and_return(@upcoming_meetings)
         get :index
-        assigns[:upcoming_meetings].should == @upcoming_meetings_association
+        assigns[:upcoming_meetings].should == @upcoming_meetings
+      end
+
+      it "finds and assigns the past meetings" do
+        @meetings_association.should_receive(:past).and_return(@past_meetings)
+        get :index
+        assigns[:past_meetings].should == @past_meetings
       end
 
       it "is successful" do
@@ -210,5 +218,5 @@ describe MeetingsController do
       end
     end
   end
-  
+
 end

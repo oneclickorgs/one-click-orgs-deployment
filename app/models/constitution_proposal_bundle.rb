@@ -201,13 +201,25 @@ protected
   end
 
   def build_proposals_for_coop
+    ability = Ability.new(proposer)
+
     # Organisation name
     if organisation.name != organisation_name
-      proposal = (organisation.change_text_resolutions.build(
-        :name => 'organisation_name',
-        :value => organisation_name,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_text_resolutions.build(
+          :name => 'organisation_name',
+          :value => organisation_name,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :resolution_class => 'ChangeTextResolution',
+          :resolution_parameters => {
+            :name => 'organisation_name',
+            :value => organisation_name
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -218,12 +230,23 @@ protected
 
     # Objectives
     if organisation.objectives != objectives
-      proposal = (organisation.change_text_resolutions.build(
-        :name => 'organisation_objectives',
-        :value => objectives,
-        :title => "Change objects to '#{objectives}'",
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_text_resolutions.build(
+          :name => 'organisation_objectives',
+          :value => objectives,
+          :title => "Change objects to '#{objectives}'",
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => "Change objects to '#{objectives}'",
+          :resolution_class => "ChangeTextResolution",
+          :resolution_parameters => {
+            :name => 'organisation_objectives',
+            :value => objectives,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -234,11 +257,21 @@ protected
 
     # Registered office address
     if organisation.registered_office_address != registered_office_address
-      proposal = (organisation.change_text_resolutions.build(
-        :name => 'registered_office_address',
-        :value => registered_office_address,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_text_resolutions.build(
+          :name => 'registered_office_address',
+          :value => registered_office_address,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :resolution_class => "ChangeTextResolution",
+          :resolution_parameters => {
+            :name => 'registered_office_address',
+            :value => registered_office_address
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -257,12 +290,23 @@ protected
       new_user_members_value = false
     end
     if (organisation.user_members && !new_user_members_value) || (!organisation.user_members && new_user_members_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'user_members',
-        :value => new_user_members_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'user_members',
+          :value => new_user_members_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => 'ChangeBooleanResolution',
+          :resolution_parameters => {
+            :name => 'user_members',
+            :value => new_user_members_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -279,12 +323,23 @@ protected
       new_employee_members_value = false
     end
     if (organisation.employee_members && !new_employee_members_value) || (!organisation.employee_members && new_employee_members_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'employee_members',
-        :value => new_employee_members_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'employee_members',
+          :value => new_employee_members_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => 'ChangeBooleanResolution',
+          :resolution_parameters => {
+            :name => 'employee_members',
+            :value => new_employee_members_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -301,12 +356,23 @@ protected
       new_supporter_members_value = false
     end
     if (organisation.supporter_members && !new_supporter_members_value) || (!organisation.supporter_members && new_supporter_members_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'supporter_members',
-        :value => new_supporter_members_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'supporter_members',
+          :value => new_supporter_members_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => 'ChangeBooleanResolution',
+          :resolution_parameters => {
+            :name => 'supporter_members',
+            :value => new_supporter_members_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -323,12 +389,23 @@ protected
       new_producer_members_value = false
     end
     if (organisation.producer_members && !new_producer_members_value) || (!organisation.producer_members && new_producer_members_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'producer_members',
-        :value => new_producer_members_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'producer_members',
+          :value => new_producer_members_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => 'ChangeBooleanResolution',
+          :resolution_parameters => {
+            :name => 'producer_members',
+            :value => new_producer_members_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -345,12 +422,23 @@ protected
       new_consumer_members_value = false
     end
     if (organisation.consumer_members && !new_consumer_members_value) || (!organisation.consumer_members && new_consumer_members_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'consumer_members',
-        :value => new_consumer_members_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'consumer_members',
+          :value => new_consumer_members_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => 'ChangeBooleanResolution',
+          :resolution_parameters => {
+            :name => 'consumer_members',
+            :value => new_consumer_members_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -368,12 +456,23 @@ protected
       new_single_shareholding_value = false
     end
     if (organisation.single_shareholding && !new_single_shareholding_value) || (!organisation.single_shareholding && new_single_shareholding_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'single_shareholding',
-        :value => new_single_shareholding_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'single_shareholding',
+          :value => new_single_shareholding_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => "ChangeBooleanResolution",
+          :resolution_parameters => {
+            :name => 'single_shareholding',
+            :value => new_single_shareholding_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -385,12 +484,23 @@ protected
     # Board composition
 
     if organisation.max_user_directors != max_user_directors.to_i
-      proposal = (organisation.change_integer_resolutions.build(
-        :name => 'max_user_directors',
-        :value => max_user_directors.to_i,
-        :title => "Allow a maximum of #{max_user_directors} User Members on the Board",
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_integer_resolutions.build(
+          :name => 'max_user_directors',
+          :value => max_user_directors.to_i,
+          :title => "Allow a maximum of #{max_user_directors} User Members on the Board",
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => "Allow a maximum of #{max_user_directors} User Members on the Board",
+          :resolution_class => 'ChangeIntegerResolution',
+          :resolution_parameters => {
+            :name => 'max_user_directors',
+            :value => max_user_directors.to_i
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -400,12 +510,23 @@ protected
     end
 
     if organisation.max_employee_directors != max_employee_directors.to_i
-      proposal = (organisation.change_integer_resolutions.build(
-        :name => 'max_employee_directors',
-        :value => max_employee_directors.to_i,
-        :title => "Allow a maximum of #{max_employee_directors} Employee Members on the Board",
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_integer_resolutions.build(
+          :name => 'max_employee_directors',
+          :value => max_employee_directors.to_i,
+          :title => "Allow a maximum of #{max_employee_directors} Employee Members on the Board",
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => "Allow a maximum of #{max_employee_directors} Employee Members on the Board",
+          :resolution_class => 'ChangeIntegerResolution',
+          :resolution_parameters => {
+            :name => 'max_employee_directors',
+            :value => max_employee_directors.to_i
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -415,12 +536,23 @@ protected
     end
 
     if organisation.max_supporter_directors != max_supporter_directors.to_i
-      proposal = (organisation.change_integer_resolutions.build(
-        :name => 'max_supporter_directors',
-        :value => max_supporter_directors.to_i,
-        :title => "Allow a maximum of #{max_supporter_directors} Supporter Members on the Board",
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_integer_resolutions.build(
+          :name => 'max_supporter_directors',
+          :value => max_supporter_directors.to_i,
+          :title => "Allow a maximum of #{max_supporter_directors} Supporter Members on the Board",
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => "Allow a maximum of #{max_supporter_directors} Supporter Members on the Board",
+          :resolution_class => 'ChangeIntegerResolution',
+          :resolution_parameters => {
+            :name => 'max_supporter_directors',
+            :value => max_supporter_directors.to_i
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -430,12 +562,23 @@ protected
     end
 
     if organisation.max_producer_directors != max_producer_directors.to_i
-      proposal = (organisation.change_integer_resolutions.build(
-        :name => 'max_producer_directors',
-        :value => max_producer_directors.to_i,
-        :title => "Allow a maximum of #{max_producer_directors} Producer Members on the Board",
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_integer_resolutions.build(
+          :name => 'max_producer_directors',
+          :value => max_producer_directors.to_i,
+          :title => "Allow a maximum of #{max_producer_directors} Producer Members on the Board",
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => "Allow a maximum of #{max_producer_directors} Producer Members on the Board",
+          :resolution_class => 'ChangeIntegerResolution',
+          :resolution_parameters => {
+            :name => 'max_producer_directors',
+            :value => max_producer_directors.to_i
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -445,12 +588,23 @@ protected
     end
 
     if organisation.max_consumer_directors != max_consumer_directors.to_i
-      proposal = (organisation.change_integer_resolutions.build(
-        :name => 'max_consumer_directors',
-        :value => max_consumer_directors.to_i,
-        :title => "Allow a maximum of #{max_consumer_directors} Consumer Members on the Board",
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_integer_resolutions.build(
+          :name => 'max_consumer_directors',
+          :value => max_consumer_directors.to_i,
+          :title => "Allow a maximum of #{max_consumer_directors} Consumer Members on the Board",
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => "Allow a maximum of #{max_consumer_directors} Consumer Members on the Board",
+          :resolution_class => 'ChangeIntegerResolution',
+          :resolution_parameters => {
+            :name => 'max_consumer_directors',
+            :value => max_consumer_directors.to_i
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)
@@ -468,12 +622,23 @@ protected
       new_common_ownership_value = false
     end
     if (organisation.common_ownership && !new_common_ownership_value) || (!organisation.common_ownership && new_common_ownership_value) # Bit verbose, to cope with null values
-      proposal = (organisation.change_boolean_resolutions.new(
-        :title => title,
-        :name => 'common_ownership',
-        :value => new_common_ownership_value,
-        :draft => true
-      ))
+      proposal = if ability.can?(:create, Resolution)
+        organisation.change_boolean_resolutions.build(
+          :title => title,
+          :name => 'common_ownership',
+          :value => new_common_ownership_value,
+          :draft => true
+        )
+      elsif ability.can?(:create, ResolutionProposal)
+        organisation.resolution_proposals.build(
+          :title => title,
+          :resolution_class => 'ChangeBooleanResolution',
+          :resolution_parameters => {
+            :name => 'common_ownership',
+            :value => new_common_ownership_value,
+          }
+        )
+      end
       proposal.proposer = proposer
       if proposal.valid?
         proposals.push(proposal)

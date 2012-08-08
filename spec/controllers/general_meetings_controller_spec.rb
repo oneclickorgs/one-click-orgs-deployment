@@ -13,7 +13,7 @@ describe GeneralMeetingsController do
   describe "GET new" do
     before(:each) do
       @general_meetings_association = mock("general meetings association")
-      @resolutions_association = mock("resolutions association")  
+      @resolutions_association = mock("resolutions association")
       @draft_resolutions_association = mock("draft resolutions association")
 
       @organisation.stub(:general_meetings).and_return(@general_meetings_association)
@@ -78,6 +78,102 @@ describe GeneralMeetingsController do
     end
 
     context "when the new meeting cannot be saved" do
+      it "handles the error"
+    end
+  end
+
+  describe "GET show" do
+    let(:general_meetings) {mock("general_meetings association", :find => general_meeting)}
+    let(:general_meeting) {mock_model("GeneralMeeting")}
+
+    before(:each) do
+      @organisation.stub(:general_meetings).and_return(general_meetings)
+    end
+
+    def get_show
+      get :show, 'id' => '1'
+    end
+
+    it "finds the general meeting" do
+      general_meetings.should_receive(:find).with('1').and_return(general_meeting)
+      get_show
+    end
+
+    it "assigns the general meeting" do
+      get_show
+      assigns[:general_meeting].should == general_meeting
+    end
+
+    it "is successful" do
+      get_show
+      response.should be_success
+    end
+  end
+
+  describe "GET edit" do
+    let(:general_meeting){mock_model(GeneralMeeting)}
+    let(:general_meetings){mock("general_meetings association", :find => general_meeting)}
+    let(:members){mock("members association")}
+
+    before(:each) do
+      @organisation.stub(:general_meetings).and_return(general_meetings)
+      @organisation.stub(:members).and_return(members)
+    end
+
+    def get_edit
+      get :edit, :id => '1'
+    end
+
+    it "finds the general meeting" do
+      general_meetings.should_receive(:find).with('1').and_return(general_meeting)
+      get_edit
+    end
+
+    it "assigns the general meeting" do
+      get_edit
+      assigns[:general_meeting].should == general_meeting
+    end
+
+    it "assigns the members" do
+      get_edit
+      assigns[:members].should == members
+    end
+
+    it "is successful" do
+      get_edit
+      response.should be_success
+    end
+  end
+
+  describe "PUT update" do
+    let(:general_meetings){mock("general_meetings association", :find => general_meeting)}
+    let(:general_meeting){mock_model(GeneralMeeting, :update_attributes => true)}
+    let(:general_meeting_params){{'minutes' => 'We discussed things.'}}
+
+    before(:each) do
+      @organisation.stub(:general_meetings).and_return(general_meetings)
+    end
+
+    def put_update
+      put :update, 'id' => '1', 'general_meeting' => general_meeting_params
+    end
+
+    it "finds the general meeting" do
+      general_meetings.should_receive(:find).with('1').and_return(general_meeting)
+      put_update
+    end
+
+    it "updates the general meeting's attributes" do
+      general_meeting.should_receive(:update_attributes).with(general_meeting_params).and_return(true)
+      put_update
+    end
+
+    it "redirects" do
+      put_update
+      response.should be_redirect
+    end
+
+    context "when updating the general meeting's attributes fails" do
       it "handles the error"
     end
   end

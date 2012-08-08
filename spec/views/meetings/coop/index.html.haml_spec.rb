@@ -39,6 +39,37 @@ describe 'meetings/coop/index' do
     rendered.should contain("The notice period for General Meetings is 14 clear days.")
   end
 
+  context "when a past meeting has no minutes" do
+    before(:each) do
+      @past_meeting = mock_model(GeneralMeeting, :to_param => '2')
+      assign(:past_meetings, [@past_meeting])
+    end
+
+    it "renders a message that the past meeting has no minutes" do
+      render
+      rendered.should have_selector('.past_meetings') do |past_meetings|
+        past_meetings.should have_content('Minutes have not been entered')
+      end
+    end
+
+    it "renders a link to edit the meeting" do
+      render
+      rendered.should have_selector(:a, :href => '/general_meetings/2/edit')
+    end
+  end
+
+  context "when a past meeting has minutes" do
+    before(:each) do
+      @past_meeting = mock_model(GeneralMeeting, :to_param => '2', :minutes => "Minutes")
+      assign(:past_meetings, [@past_meeting])
+    end
+
+    it "renders a link to show the meeting" do
+      render
+      rendered.should have_selector(:a, :href => '/general_meetings/2')
+    end
+  end
+
   context "when user can create meetings" do
     before(:each) do
       view.stub(:can?).with(:create, Meeting).and_return(true)

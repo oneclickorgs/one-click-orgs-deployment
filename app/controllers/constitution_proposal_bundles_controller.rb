@@ -10,7 +10,12 @@ class ConstitutionProposalBundlesController < ApplicationController
     if @constitution_proposal_bundle.save
       case co
       when Coop
-        redirect_to(proposals_path, :notice => "Draft resolutions successfully created")
+        notice = if can?(:create, Resolution)
+          "Draft resolutions successfully created"
+        elsif can?(:create, ResolutionProposal)
+          "Your suggestions have been sent"
+        end
+        redirect_to(proposals_path, :notice => notice)
       else
         redirect_to(root_path, :notice => "Constitutional amendment proposals successfully created")
       end

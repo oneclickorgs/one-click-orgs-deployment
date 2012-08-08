@@ -113,6 +113,9 @@ end
 ChangeQuorumResolution.blueprint do
 end
 
+ChangeTextResolution.blueprint do
+end
+
 Decision.blueprint do
   proposal { Proposal.make }
 end
@@ -154,6 +157,10 @@ end
 
 GeneralMeeting.blueprint do
   organisation { Coop.make }
+end
+
+GeneralMeeting.blueprint(:past) do
+  happened_on { 3.days.ago }
 end
 
 AnnualGeneralMeeting.blueprint do

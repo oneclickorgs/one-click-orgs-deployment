@@ -1,0 +1,10 @@
+%h2 General Meeting
+
+- if @general_meeting.past?
+  %h3 Minutes
+  = simple_format(html_escape(@general_meeting.minutes))
+  %h3 Attendees
+  %ul.participants
+    - @general_meeting.participants.each do |participant|
+      = content_tag_for(:li, participant) do
+        = link_to(participant.name, member_path(participant))
