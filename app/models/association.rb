@@ -167,4 +167,8 @@ class Association < Organisation
       m.member_class = member_classes.find_by_name("Founding Member")
     }
   end
+
+  def terms_and_conditions_required?
+    true
+  end
 end

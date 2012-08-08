@@ -53,6 +53,10 @@ Member.blueprint(:pending) do
   state { 'pending' }
 end
 
+Member.blueprint(:founder_member) do
+  member_class { object.organisation.member_classes.find_by_name!('Founder Member') }
+end
+
 Proposal.blueprint do
   title { "a proposal title" }
   state { "open" }
@@ -144,6 +148,11 @@ Company.blueprint do
 end
 
 Coop.blueprint do
+  state { 'active' }
+end
+
+Coop.blueprint(:pending) do
+  state { 'pending' }
 end
 
 Meeting.blueprint do

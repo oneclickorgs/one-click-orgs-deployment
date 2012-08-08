@@ -49,3 +49,14 @@ Then /^I should see the details of that member's profile$/ do
   page.should have_content(@member.name)
   page.should have_content(@member.email)
 end
+
+Then /^I should be a Founder Member of the draft co\-op$/ do
+  @organisation ||= Coop.pending.last
+
+  # Figure out the current logged-in user by looking for the 'edit your profile' link
+  # FIXME: This is disgusting.
+  id = find_link("Edit your account")[:href].match(/(\d+)/)[1].to_i
+  @user = @organisation.members.find(id)
+
+  @user.member_class.name.should == "Founder Member"
+end

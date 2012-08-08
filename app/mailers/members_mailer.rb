@@ -23,7 +23,21 @@ class MembersMailer < OcoMailer
 
     create_mail(@organisation_name, @member.email, "Become a founding member of #{@organisation_name}")
   end
-  
+
+  def welcome_coop_founding_member(member)
+    default_url_options[:host] = member.organisation.domain(:only_host => true)
+
+    @member = member
+    raise ArgumentError, "No member provided" unless @member
+    @organisation = member.organisation
+    @organisation_name = member.organisation.name
+
+    @founder = Member.founder_members(@organisation).first
+    raise ArgumentError, "Organisation has no founder" unless @founder
+
+    create_mail(@organisation_name, @member.email, "Become a founding member of #{@organisation_name}")
+  end
+
   def welcome_new_member(member)
     default_url_options[:host] = member.organisation.domain(:only_host => true)
 

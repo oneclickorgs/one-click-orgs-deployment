@@ -1,5 +1,11 @@
 Given /^there is a draft co\-op$/ do
-  pending # express the regexp above with the code you wish you had
+  set_up_application_if_necessary
+
+  @coop = @organisation = Coop.make!(:pending)
+
+  founder = @coop.members.make!(:founder_member)
+
+  set_subdomain_to_organisation
 end
 
 Given /^there is a co\-op$/ do

@@ -99,4 +99,8 @@ class Organisation < ActiveRecord::Base
     }.merge(attributes))
   end
 
+  def terms_and_conditions_required?
+    false
+  end
+
 end

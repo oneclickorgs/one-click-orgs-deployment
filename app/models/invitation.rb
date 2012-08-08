@@ -8,10 +8,10 @@ require 'one_click_orgs/model_wrapper'
 class Invitation < OneClickOrgs::ModelWrapper
   def after_initialize
     raise ArgumentError, "Member must be supplied" unless member
-    
-    # When processing an invitation, the member should be required
-    # to agree to the terms and conditions.
-    self.terms_and_conditions = '0'
+
+    if member.organisation.terms_and_conditions_required?
+      self.terms_and_conditions = '0'
+    end
   end
   
   def show_founding_warnings?
@@ -39,6 +39,9 @@ class Invitation < OneClickOrgs::ModelWrapper
   end
   
   delegate :name,
+    :first_name, :first_name=,
+    :last_name, :last_name=,
+    :email, :email=,
     :password, :password=,
     :password_confirmation, :password_confirmation=,
     :terms_and_conditions, :terms_and_conditions=,

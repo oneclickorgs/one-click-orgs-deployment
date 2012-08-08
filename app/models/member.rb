@@ -60,6 +60,7 @@ class Member < ActiveRecord::Base
 
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   scope :founding_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founding Member').first } } }
+  scope :founder_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder Member').first } } }
 
   validates_presence_of :first_name, :last_name, :email
 

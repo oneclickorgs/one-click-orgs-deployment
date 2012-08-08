@@ -37,7 +37,15 @@ Given /^I have received the email saying the founding vote has passed$/ do
   @email.subject.should include("has been formed")
 end
 
-When /^I click the link in the email$/ do
+Given /^I have received an invitation to become a Founder Member of the draft co\-op$/ do
+  @organisation.members.make!(:pending,
+    :member_class => @organisation.member_classes.find_by_name!("Founder Member"),
+    :send_welcome => true
+  )
+  @email = last_email
+end
+
+When /^I (?:follow|click) the link in the email$/ do
   follow_link_in_email
 end
 

@@ -1,0 +1,25 @@
+%h2 Choose your password
+%p
+  Welcome to
+  = organisation_name + ','
+  = @invitation.name + '.'
+  To begin, please check your details and choose a password:
+= form_for(@invitation) do |invitation_form|
+  = error_messages_for(@invitation)
+  %p
+    = invitation_form.label :first_name
+    = invitation_form.text_field :first_name
+  %p
+    = invitation_form.label :last_name
+    = invitation_form.text_field :last_name
+  %p
+    = invitation_form.label :email, "Email address"
+    = invitation_form.text_field :email
+  %p
+    = invitation_form.label :password, "Choose password"
+    = invitation_form.password_field :password
+  %p
+    = invitation_form.label :password_confirmation, "Confirm password"
+    = invitation_form.password_field :password_confirmation
+  %p
+    = invitation_form.submit("Continue")

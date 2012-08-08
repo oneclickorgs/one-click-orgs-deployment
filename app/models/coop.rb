@@ -3,6 +3,22 @@ require 'one_click_orgs/cast_to_boolean'
 class Coop < Organisation
   include OneClickOrgs::CastToBoolean
 
+  state_machine :initial => :pending do
+    event :propose do
+      transition :pending => :proposed
+    end
+
+    event :found do
+      transition :proposed => :active
+    end
+
+    event :reject_founding do
+      transition :proposed => :pending
+    end
+
+    after_transition :proposed => :active, :do => :destroy_pending_state_member_classes
+  end
+
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
@@ -252,6 +268,10 @@ class Coop < Organisation
     else
       general_meetings.build(attributes)
     end
+  end
+
+  def welcome_email_action
+    :welcome_coop_founding_member
   end
 
 end

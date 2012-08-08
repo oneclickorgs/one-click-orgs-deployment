@@ -4,8 +4,10 @@ class MemberMailerObserver < ActiveRecord::Observer
   def after_create(member)
     case member.organisation
     when Coop
-      if member.pending?
-        send_new_member_notification(member)
+      if member.organisation.active?
+        send_new_member_notification(member) if member.pending?
+      elsif member.organisation.pending?
+        send_welcome_if_requested(member)
       end
     else
       send_welcome_if_requested(member)
