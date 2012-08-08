@@ -36,12 +36,12 @@ end
 
 Member.blueprint(:secretary) do
   member_class { object.organisation.member_classes.find_by_name!('Secretary') }
-  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago) }
+  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago, :director => object) }
 end
 
 Member.blueprint(:director) do
   member_class { object.organisation.member_classes.find_by_name!('Director') }
-  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago) }
+  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago, :director => object) }
 end
 
 Member.blueprint(:member) do

@@ -1,3 +1,7 @@
+Given /^there is a Director$/ do
+  @director = @organisation.members.make!(:director)
+end
+
 Given /^there is a director (?:named|called) "(.*?)"$/ do |name|
   first_name, last_name = name.split(' ')
   @director = @organisation.members.make!(:director, :first_name => first_name, :last_name => last_name)
@@ -135,6 +139,25 @@ end
 When /^I choose a member from the list$/ do
   @member ||= @organisation.members.first
   select(@member.name, :from => 'Name')
+end
+
+When /^I choose a director from the list of directors$/ do
+  @director = @organisation.directors.first
+  select(@director.name, :from => 'Name')
+end
+
+When /^I choose 'Secretary' from the list of offices$/ do
+  select('Secretary', :from => 'Existing office...')
+end
+
+Then /^I should see that director listed as "(.*?)" in the list of Officers$/ do |office|
+  within('.offices') do
+    page.should have_css(".#{office.parameterize.underscore}")
+    within(".#{office.parameterize.underscore}") do
+      page.should have_content(office)
+      page.should have_content(@director.name)
+    end
+  end
 end
 
 Then /^I should see that member in the list of directors$/ do

@@ -42,6 +42,7 @@ class Coop < Organisation
 
   has_many :elections, :foreign_key => 'organisation_id'
 
+  after_create :create_default_offices
   after_create :set_default_user_and_director_clauses
 
   # ATTRIBUTES / CLAUSES
@@ -207,6 +208,11 @@ class Coop < Organisation
     secretaries.set_permission!(:vote, true)
     secretaries.set_permission!(:board_meeting, true)
     secretaries.set_permission!(:member, true)
+  end
+
+  def create_default_offices
+    offices.find_or_create_by_title('Secretary')
+    offices.find_or_create_by_title('Chairperson')
   end
 
   def set_default_voting_period

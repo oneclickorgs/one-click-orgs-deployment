@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Office do
 
+  before(:all) do
+    ActiveRecord::Base.observers.disable :officership_mailer_observer
+  end
+
   it "has an 'officer' association" do
     @member = Member.make!
     @office = Office.make!
@@ -34,4 +38,9 @@ describe Office do
 
     @office.organisation.should == @coop
   end
+
+  after(:all) do
+    ActiveRecord::Base.observers.enable :officership_mailer_observer
+  end
+
 end
