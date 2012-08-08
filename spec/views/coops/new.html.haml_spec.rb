@@ -7,9 +7,12 @@ describe "coops/new" do
     assign(:member, @member)
     
     @coop = mock_model(Coop,
-      :name => nil
+      :name => nil,
+      :objectives => nil
     )
     assign(:coop, @coop)
+
+    Setting.stub(:[]).with(:base_domain).and_return("oneclickorgs.com")
   end
   
   it "renders a form to create a coop" do
@@ -32,6 +35,7 @@ describe "coops/new" do
     render
     rendered.should have_selector(:input, :type => 'text', :name => 'coop[name]')
     rendered.should have_selector(:input, :type => 'text', :name => 'coop[subdomain]')
+    rendered.should have_selector(:textarea, :name => 'coop[objectives]')
   end
   
 end

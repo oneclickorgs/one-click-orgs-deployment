@@ -70,7 +70,9 @@ module NavigationHelpers
       constitution_path
     when /^convene an AGM$/
       new_general_meeting_path
-    
+    when /^the dashboard page for the new co-op$/
+      root_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

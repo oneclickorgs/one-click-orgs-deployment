@@ -58,6 +58,11 @@ class Coop < Organisation
     @objectives ||= clauses.get_text('organisation_objectives')
   end
 
+  def objectives=(objectives)
+    clauses.build(:name => 'organisation_objectives', :text_value => objectives)
+    @objectives = objectives
+  end
+
   def registered_office_address
     @registered_office_address ||= clauses.get_text('registered_office_address')
   end
