@@ -1,0 +1,11 @@
+- if current_user
+  - if current_organisation.pending?
+    %div#overlay.pending
+      %p
+        This is a draft Co-op. You can edit any of the settings, and invite
+        others to found the Co-op with you. Then you will need to submit
+        the Co-op for registration.
+  - elsif current_organisation.proposed?
+    %div#overlay.proposed
+      %h3
+        The Co-op has been submitted for registration
