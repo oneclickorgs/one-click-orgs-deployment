@@ -27,6 +27,7 @@ module OneClickOrgs
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
       :decision_mailer_observer,
+      :directorship_mailer_observer,
       :member_observer,
       :member_mailer_observer,
       :member_task_observer,

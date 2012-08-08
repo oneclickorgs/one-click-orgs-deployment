@@ -132,6 +132,17 @@ When /^I save the retirement$/ do
   click_button("Record this retirement")
 end
 
+When /^I choose a member from the list$/ do
+  @member ||= @organisation.members.first
+  select(@member.name, :from => 'Name')
+end
+
+Then /^I should see that member in the list of directors$/ do
+  within('.directors') do
+    page.should have_content(@member.name)
+  end
+end
+
 Then /^I should see "(.*?)" in the list of directors$/ do |name|
   within('.directors') do
     page.should have_content(name)

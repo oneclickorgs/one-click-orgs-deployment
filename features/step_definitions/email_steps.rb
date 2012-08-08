@@ -194,3 +194,10 @@ Then /^the Secretary should receive a notification of the new membership applica
   @email.body.should include(@member.name)
 end
 
+Then /^that member should receive a notification of their new directorship$/ do
+  @email = last_email
+
+  @email.should be_present
+  @email.to.should == [@member.email]
+  @email.subject.should include('Director')
+end

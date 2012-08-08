@@ -2,19 +2,20 @@ Feature: Appointing initial directors
   In order to make our new co-op have the necessary directors and officers
   As the founder of a new co-op
   I want to appoint the initial directors and officers
-  
-  # Background:
-  #   Given there is a draft co-op
-  #   And I am the founder of the draft co-op
-  
-  # Scenario: Founder appoints an initial director
-  #   When I go to the Directors page
-  #   And I press "Appoint a new Director"
-  #   And I choose a member from the list
-  #   And I press "Record this appointment"
-  #   Then I should see that member in the list of directors
-  #   And that member should receive a notification of their new directorship
-  
+
+  Background:
+    Given there is a draft co-op
+    And I am the founder of the draft co-op
+
+  @javascript
+  Scenario: Founder appoints an initial director
+    When I go to the Directors page
+    And I press "Appoint new Director"
+    And I choose a member from the list
+    And I press "Record this appointment"
+    Then I should see that member in the list of directors
+    And that member should receive a notification of their new directorship
+
   # Scenario: Founder appoints an initial officer
   #   When I go to the Directors page
   #   And I press "Appoint a new Officer"

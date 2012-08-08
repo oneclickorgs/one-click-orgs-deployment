@@ -6,10 +6,10 @@ describe Directorship do
     before(:each) do
       @directorship = Directorship.new
 
-      @organisation = mock_model(Organisation)
+      @organisation = mock_model(Organisation, :domain => 'tea', :name => 'Tea')
       @directorship.stub(:organisation).and_return(@organisation)
 
-      @director = mock_model(Member, :member_class => nil)
+      @director = mock_model(Member, :member_class => nil, :name => "John Smith")
       @directorship.stub(:director).and_return(@director)
 
       @member_classes_association = mock("member classes association")
