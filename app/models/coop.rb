@@ -3,6 +3,22 @@ require 'one_click_orgs/cast_to_boolean'
 class Coop < Organisation
   include OneClickOrgs::CastToBoolean
 
+  state_machine :initial => :pending do
+    event :propose do
+      transition :pending => :proposed
+    end
+
+    event :found do
+      transition :proposed => :active
+    end
+
+    event :reject_founding do
+      transition :proposed => :pending
+    end
+
+    after_transition :proposed => :active, :do => :destroy_pending_state_member_classes
+  end
+
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
@@ -26,6 +42,7 @@ class Coop < Organisation
 
   has_many :elections, :foreign_key => 'organisation_id'
 
+  after_create :create_default_offices
   after_create :set_default_user_and_director_clauses
 
   # ATTRIBUTES / CLAUSES
@@ -56,6 +73,11 @@ class Coop < Organisation
 
   def objectives
     @objectives ||= clauses.get_text('organisation_objectives')
+  end
+
+  def objectives=(objectives)
+    clauses.build(:name => 'organisation_objectives', :text_value => objectives)
+    @objectives = objectives
   end
 
   def registered_office_address
@@ -170,6 +192,7 @@ class Coop < Organisation
     members.set_permission!(:vote, true)
 
     founder_members = member_classes.find_or_create_by_name('Founder Member')
+    founder_members.set_permission!(:constitution, true)
 
     directors = member_classes.find_or_create_by_name('Director')
     directors.set_permission!(:resolution, true)
@@ -182,10 +205,14 @@ class Coop < Organisation
     secretaries.set_permission!(:resolution, true)
     secretaries.set_permission!(:board_resolution, true)
     secretaries.set_permission!(:meeting, true)
-    secretaries.set_permission!(:constitution, true)
     secretaries.set_permission!(:vote, true)
     secretaries.set_permission!(:board_meeting, true)
     secretaries.set_permission!(:member, true)
+  end
+
+  def create_default_offices
+    offices.find_or_create_by_title('Secretary')
+    offices.find_or_create_by_title('Chairperson')
   end
 
   def set_default_voting_period
@@ -247,6 +274,10 @@ class Coop < Organisation
     else
       general_meetings.build(attributes)
     end
+  end
+
+  def welcome_email_action
+    :welcome_coop_founding_member
   end
 
 end

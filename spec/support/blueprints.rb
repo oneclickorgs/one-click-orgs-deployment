@@ -36,12 +36,12 @@ end
 
 Member.blueprint(:secretary) do
   member_class { object.organisation.member_classes.find_by_name!('Secretary') }
-  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago) }
+  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago, :director => object) }
 end
 
 Member.blueprint(:director) do
   member_class { object.organisation.member_classes.find_by_name!('Director') }
-  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago) }
+  directorship { object.organisation.directorships.make!(:elected_on => 1.month.ago, :director => object) }
 end
 
 Member.blueprint(:member) do
@@ -51,6 +51,10 @@ end
 Member.blueprint(:pending) do
   inducted_at { nil }
   state { 'pending' }
+end
+
+Member.blueprint(:founder_member) do
+  member_class { object.organisation.member_classes.find_by_name!('Founder Member') }
 end
 
 Proposal.blueprint do
@@ -144,6 +148,11 @@ Company.blueprint do
 end
 
 Coop.blueprint do
+  state { 'active' }
+end
+
+Coop.blueprint(:pending) do
+  state { 'pending' }
 end
 
 Meeting.blueprint do

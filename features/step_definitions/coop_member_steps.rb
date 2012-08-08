@@ -1,5 +1,13 @@
 Given /^I am the founder of the draft co\-op$/ do
-  pending # express the regexp above with the code you wish you had
+  @organisation ||= Coop.pending.last
+  if @organisation.members.founder_members(@organisation).first
+    @user = @organisation.members.founder_members(@organisation).first
+    @user.password = @user.password_confirmation = "password"
+    @user.save!
+  else
+    @user = @organisation.members.make!(:founder_member)
+  end
+  user_logs_in
 end
 
 Given /^I am a founding member of the draft co\-op$/ do
@@ -7,11 +15,11 @@ Given /^I am a founding member of the draft co\-op$/ do
 end
 
 Given /^I am the (?:S|s)ecretary of the co\-op$/ do
-  @coop ||= Coop.last
-  
-  if @coop.secretary
-    @user = @coop.secretary
-    
+  @organisation ||= Coop.last
+
+  if @organisation.secretary
+    @user = @organisation.secretary
+
     # We need to be able to read the user's password in order
     # to log in as them. A Member record fetched from the
     # database does not have the raw password stored, so we
@@ -19,20 +27,20 @@ Given /^I am the (?:S|s)ecretary of the co\-op$/ do
     @user.password = @user.password_confirmation = "password"
     @user.save!
   else
-    @user = @coop.members.make!(:secretary)
+    @user = @organisation.members.make!(:secretary)
   end
   user_logs_in
 end
 
 Given /^I am a (?:M|m)ember of the co\-op$/ do
-  @coop ||= Coop.last
-  @user = @coop.members.make!(:member)
+  @organisation ||= Coop.last
+  @user = @organisation.members.make!(:member)
   user_logs_in
 end
 
 Given /^I am a Director of the co\-op$/ do
-  @coop ||= Coop.last
-  @user = @coop.members.make!(:director)
+  @organisation ||= Coop.last
+  @user = @organisation.members.make!(:director)
   user_logs_in
 end
 
@@ -48,4 +56,15 @@ end
 Then /^I should see the details of that member's profile$/ do
   page.should have_content(@member.name)
   page.should have_content(@member.email)
+end
+
+Then /^I should be a Founder Member of the draft co\-op$/ do
+  @organisation ||= Coop.pending.last
+
+  # Figure out the current logged-in user by looking for the 'edit your profile' link
+  # FIXME: This is disgusting.
+  id = find_link("Edit your account")[:href].match(/(\d+)/)[1].to_i
+  @user = @organisation.members.find(id)
+
+  @user.member_class.name.should == "Founder Member"
 end

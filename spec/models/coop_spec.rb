@@ -182,6 +182,14 @@ describe Coop do
       @coop.reload
       @coop.quorum_percentage.should == 15
     end
+
+    it "has an 'objectives' attribute" do
+      @coop = Coop.make!
+      @coop.objectives = "Make things"
+      @coop.save!
+      @coop.reload
+      @coop.objectives.should == "Make things"
+    end
   end
 
   describe "#member_eligible_to_vote?" do

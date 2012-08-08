@@ -123,7 +123,7 @@ describe Officership do
       before(:each) do
         @organisation = Coop.make!
         @member = @organisation.members.make!(:id => 1)
-        @office = Office.make!(:id => 2, :title => "Treasurer")
+        @office = @organisation.offices.make!(:id => 2, :title => "Treasurer")
 
         @officership_params = {
           'officer_id' => '1',

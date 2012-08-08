@@ -27,10 +27,12 @@ module OneClickOrgs
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
       :decision_mailer_observer,
+      :directorship_mailer_observer,
       :member_observer,
       :member_mailer_observer,
       :member_task_observer,
       :member_timestamp_observer,
+      :officership_mailer_observer,
       :proposal_mailer_observer,
       :proposal_timestamp_observer,
       :resolution_proposal_task_observer,
@@ -63,7 +65,7 @@ module OneClickOrgs
 
     # Enable the asset pipeline
     config.assets.enabled = true
-    
+
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
     # Version of your assets, change this if you want to expire all your assets
