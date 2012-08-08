@@ -6,17 +6,17 @@ module OneClickOrgs
   # Handles authentication for a user object, including password resets
   module UserAuthentication
     extend ActiveSupport::Concern
-    
+
     included do
       before_save :encrypt_password
 
       validates_confirmation_of :password
-      
+
       # TODO: how can we validate :password? (not actually saved, but accepted during input)
     end
-    
+
     attr_accessor :password, :password_confirmation
-    
+
     def authenticated?(password)
       crypted_password == encrypt(password)
     end
@@ -24,7 +24,7 @@ module OneClickOrgs
     def encrypt(password)
       self.class.encrypt(password, salt)
     end
-    
+
     def encrypt_password
       return if password.blank?
       self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--:email--")
@@ -57,7 +57,7 @@ module OneClickOrgs
       end
 
       # PASSWORD RESET CODE
-      
+
       def generate_password_reset_code
         Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
       end
