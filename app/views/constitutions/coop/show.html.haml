@@ -7,6 +7,8 @@
     = link_button("Amend the Rules", :url => edit_constitution_path)
   - elsif can?(:create, ResolutionProposal)
     = link_button("Suggest amendments to the Rules", :url => edit_constitution_path)
+  - elsif can?(:update, Constitution)
+    = link_button("Edit the Rules", :url => edit_constitution_path)
   %br.clear
 
 %section.section.constitution
