@@ -75,3 +75,5 @@
         %p= form.submit "Create draft resolutions", :id => 'submit'
       - elsif can?(:create, ResolutionProposal)
         %p= form.submit "Suggest these amendments", :id => 'submit'
+      - else
+        %p= form.submit "Save changes", :id => 'submit'

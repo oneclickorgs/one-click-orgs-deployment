@@ -72,6 +72,8 @@ module NavigationHelpers
       new_general_meeting_path
     when /^the (D|d)ashboard(| page) for the (new|draft) co-op$/
       root_path
+    when /^the Amendments page$/
+      edit_constitution_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

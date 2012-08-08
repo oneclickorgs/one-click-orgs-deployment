@@ -191,6 +191,7 @@ class Coop < Organisation
     members.set_permission!(:vote, true)
 
     founder_members = member_classes.find_or_create_by_name('Founder Member')
+    founder_members.set_permission!(:constitution, true)
 
     directors = member_classes.find_or_create_by_name('Director')
     directors.set_permission!(:resolution, true)
@@ -203,7 +204,6 @@ class Coop < Organisation
     secretaries.set_permission!(:resolution, true)
     secretaries.set_permission!(:board_resolution, true)
     secretaries.set_permission!(:meeting, true)
-    secretaries.set_permission!(:constitution, true)
     secretaries.set_permission!(:vote, true)
     secretaries.set_permission!(:board_meeting, true)
     secretaries.set_permission!(:member, true)

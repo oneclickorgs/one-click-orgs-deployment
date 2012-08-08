@@ -25,7 +25,10 @@ class ConstitutionsController < ApplicationController
         @constitution_proposal_bundle = co.build_constitution_proposal_bundle
       end
     when Coop
-      if can?(:create, Resolution) || can?(:create, ResolutionProposal)
+      if can?(:update, Constitution)
+        @allow_editing = true
+        @constitution_wrapper = ConstitutionWrapper.new(:constitution => @constitution)
+      elsif can?(:create, Resolution) || can?(:create, ResolutionProposal)
         @allow_editing = true
         @constitution_proposal_bundle = co.build_constitution_proposal_bundle
       end
