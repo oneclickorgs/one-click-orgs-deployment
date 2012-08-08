@@ -5,7 +5,7 @@ class ConstitutionWrapper < OneClickOrgs::ModelWrapper
   include OneClickOrgs::CastToBoolean
 
   attr_accessor :constitution
-  
+
   attr_accessor :organisation_name, :objectives, :assets,
     :general_voting_system, :membership_voting_system, :constitution_voting_system,
     :voting_period,
@@ -45,7 +45,7 @@ class ConstitutionWrapper < OneClickOrgs::ModelWrapper
       end
     end
   end
-  
+
   def update_attributes(options={})
     case organisation
     when Association
@@ -154,11 +154,11 @@ class ConstitutionWrapper < OneClickOrgs::ModelWrapper
     # TODO return false on errors
     true
   end
-  
+
   def organisation
     constitution.organisation
   end
-  
+
   def persisted?
     true
   end

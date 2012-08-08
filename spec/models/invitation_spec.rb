@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Invitation do
-  
+
   before(:each) do
     @organisation = mock_model(Organisation,
       :terms_and_conditions_required? => false
@@ -13,9 +13,9 @@ describe Invitation do
       :organisation => @organisation
     )
   end
-  
+
   subject { Invitation.new(:member => @member) }
-  
+
   it_behaves_like "an active model"
 
   context "when organisation requires terms_and_conditions" do

@@ -26,7 +26,7 @@
         - if flash[:error]
           %div#error
             = simple_format(flash[:error])
-        
+
         %div#bd
           = yield
           #lightbox_screen{:style => 'display: none;'}

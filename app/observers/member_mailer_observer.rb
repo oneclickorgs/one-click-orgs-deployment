@@ -1,6 +1,6 @@
 class MemberMailerObserver < ActiveRecord::Observer
   observe :member
-  
+
   def after_create(member)
     case member.organisation
     when Coop
@@ -13,7 +13,7 @@ class MemberMailerObserver < ActiveRecord::Observer
       send_welcome_if_requested(member)
     end
   end
-  
+
   def after_transition(member, transition)
     case transition.event
     when :reactivate
@@ -24,7 +24,7 @@ class MemberMailerObserver < ActiveRecord::Observer
       end
     end
   end
-  
+
   def send_welcome_if_requested(member)
     if member.send_welcome
       MembersMailer.send(member.organisation.welcome_email_action, member).deliver
@@ -32,9 +32,9 @@ class MemberMailerObserver < ActiveRecord::Observer
   end
 
   def send_new_member_notification(member)
-    secretary = member.organisation.try(:secretary)  
+    secretary = member.organisation.try(:secretary)
     return unless secretary
-    
+
     MembersMailer.send(:notify_new_member, secretary, member).deliver
   end
 end

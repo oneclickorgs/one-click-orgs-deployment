@@ -13,7 +13,7 @@ end
 
 Given /^the office is occupied by "(.*?)"$/ do |name|
   @office ||= @organisation.offices.last
-  
+
   first_name, last_name = name.split(' ')
   director = @organisation.members.make!(:director,
     :first_name => first_name,

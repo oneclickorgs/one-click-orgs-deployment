@@ -2,7 +2,7 @@ Feature: Adding a co-op
   In order to start running a co-op virtually
   As a founder
   I want to create a co-op in the system
-  
+
   Background:
     Given the application is set up
 

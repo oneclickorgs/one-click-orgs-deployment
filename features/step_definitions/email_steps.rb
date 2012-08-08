@@ -88,9 +88,9 @@ end
 Then /^the email should list the members who voted in favour of the founding$/ do
   @email ||= last_email
   @fap ||= @organisation.found_association_proposals.last
-  
+
   for_members = @fap.votes.where(:for => true).map{|v| v.member}
-  
+
   for_members.each do |m|
     @email.body.should include(m.name)
   end
@@ -99,9 +99,9 @@ end
 Then /^the email should not list the member who voted against the founding$/ do
   @email ||= last_email
   @fap ||= @organisation.found_association_proposals.last
-  
+
   against_members = @fap.votes.where(:for => false).map{|v| v.member}
-  
+
   against_members.each do |m|
     @email.body.should_not include(m.name)
   end
@@ -118,19 +118,19 @@ end
 Then /^I should receive an email notifying me of the new minutes$/ do
   @email = ActionMailer::Base.deliveries.reverse.select{|mail| mail.to.first == @user.email}.first
   @email.should be_present
-  
+
   @company ||= Company.last
   @meeting ||= @company.meetings.last
-  
+
   @email.subject.should include("minutes")
   @email.body.should include(@meeting.minutes)
 end
 
 Then /^I should see a link to the minutes in the email$/ do
   @email ||= last_email
-  
+
   @meeting ||= Meeting.last
-  
+
   @email.body.should include("#{@meeting.organisation.domain}/meetings/#{@meeting.to_param}")
 end
 
@@ -153,7 +153,7 @@ Then /^the Secretary should receive a notification of the new suggested resoluti
   @secretary ||= @organisation.secretary
   @resolution_proposal ||= @organisation.resolution_proposals.last
   @email = last_email
-  
+
   @email.to.should == [@secretary.email]
   @email.body.should include(@resolution_proposal.description)
 end
@@ -187,7 +187,7 @@ Then /^the Secretary should receive a notification of the new membership applica
   @secretary ||= @organisation.secretary
   @member ||= @organisation.members.last
   @email = last_email
-  
+
   @email.should be_present
   @email.to.should == [@secretary.email]
   @email.subject.should include('membership application')
