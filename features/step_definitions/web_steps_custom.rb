@@ -13,6 +13,10 @@ def set_subdomain(subdomain)
   set_domain(domain)
 end
 
+def set_subdomain_to_signup_subdomain
+  set_domain(Setting[:signup_domain])
+end
+
 Given /^the subdomain is "([^"]*)"$/ do |subdomain|
   set_subdomain(subdomain)
 end

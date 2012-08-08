@@ -61,7 +61,32 @@ class ApplicationController < ActionController::Base
     session[:user] = (user.nil? || user.is_a?(Symbol)) ? nil : user.id
     @current_user = user
   end
-  
+
+  # ADMINISTRATOR LOGIN
+
+  helper_method :current_administrator
+  def current_administrator
+    @current_administrator if administrator_logged_in?
+  end
+
+  def log_in_administrator(administrator)
+    self.current_administrator = administrator
+  end
+
+  # Returns true if an administrator is logged in; false otherwise.
+  def administrator_logged_in?
+    current_administrator = @current_administrator
+    current_administrator ||= session[:administrator] && Administrator.find_by_id(session[:administrator])
+    @current_administrator = current_administrator
+    current_administrator.is_a?(Administrator)
+  end
+
+  # Stores the given administrator as the 'current administrator', thus marking them as logged in.
+  def current_administrator=(administrator)
+    session[:administrator] = (administrator.nil? || administrator.is_a?(Symbol)) ? nil : administrator.id
+    @current_administrator = administrator
+  end
+
   def store_location
     session[:return_to] = request.fullpath
   end
@@ -227,7 +252,23 @@ protected
       redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
     end
   end
-  
+
+  def ensure_administrator_authenticated
+    if administrator_logged_in?
+      true
+    else
+      raise UnauthenticatedAdministrator
+    end
+  end
+
+  def ensure_administration_subdomain
+    if request.host_with_port == Setting[:signup_domain]
+      true
+    else
+      redirect_to(new_organisation_url(host_and_port(Setting[:signup_domain])))
+    end
+  end
+
   def redirect_to_welcome_member
     redirect_to(:controller => 'welcome', :action => 'index')
   end
@@ -258,7 +299,13 @@ protected
     store_location
     redirect_to login_path
   end
-  
+
+  rescue_from UnauthenticatedAdministrator, :with => :handle_unauthenticated_administrator
+  def handle_unauthenticated_administrator
+    store_location
+    redirect_to admin_login_path
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_to root_path

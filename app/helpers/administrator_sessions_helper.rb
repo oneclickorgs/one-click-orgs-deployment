@@ -1,0 +1,2 @@
+module AdministratorSessionsHelper
+end

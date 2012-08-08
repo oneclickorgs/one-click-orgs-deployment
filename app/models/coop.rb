@@ -19,6 +19,10 @@ class Coop < Organisation
     after_transition :proposed => :active, :do => :destroy_pending_state_member_classes
   end
 
+  scope :active, with_state(:active)
+  scope :proposed, with_state(:proposed)
+  scope :pending, with_state(:pending)
+
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
@@ -234,6 +238,9 @@ class Coop < Organisation
     self.max_consumer_directors = 3
 
     self.save!
+  end
+
+  def destroy_pending_state_member_classes
   end
 
   def member_eligible_to_vote?(member, proposal)

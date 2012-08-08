@@ -155,6 +155,10 @@ Coop.blueprint(:pending) do
   state { 'pending' }
 end
 
+Coop.blueprint(:proposed) do
+  state { 'proposed' }
+end
+
 Meeting.blueprint do
   organisation { Company.make }
   happened_on { 1.day.ago }
@@ -212,4 +216,10 @@ Task.blueprint do
 end
 
 Directorship.blueprint do
+end
+
+Administrator.blueprint do
+  email { Faker::Internet.email }
+  password { 'password' }
+  password_confirmation { 'password' }
 end

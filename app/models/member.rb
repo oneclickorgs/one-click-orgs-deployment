@@ -1,4 +1,5 @@
 require 'one_click_orgs/user_authentication'
+require 'one_click_orgs/invitation_code'
 require 'one_click_orgs/notification_consumer'
 require 'mail/elements/address'
 require 'lib/vote_error'
@@ -33,6 +34,7 @@ class Member < ActiveRecord::Base
   end
 
   include OneClickOrgs::UserAuthentication
+  include OneClickOrgs::InvitationCode
   include OneClickOrgs::NotificationConsumer
 
   attr_accessor :send_welcome
