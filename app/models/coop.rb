@@ -88,6 +88,11 @@ class Coop < Organisation
     @registered_office_address ||= clauses.get_text('registered_office_address')
   end
 
+  def registered_office_address=(registered_office_address)
+    clauses.build(:name => 'registered_office_address', :text_value => registered_office_address)
+    @registered_office_address = registered_office_address
+  end
+
   def max_user_directors
     @max_user_directors ||= clauses.get_integer('max_user_directors')
   end
