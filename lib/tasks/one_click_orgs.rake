@@ -163,6 +163,8 @@ and visit the site in your browser (usually at http://localhost:3000 ).
         coop.general_meetings.make!(
           :happened_on => 5.days.ago,
           :created_at => (5+14).days.ago,
+          :venue => "The function room at the Royal Oak",
+          :start_time => "6.30pm",
           :minutes => nil
         )
 
