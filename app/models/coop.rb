@@ -197,6 +197,7 @@ class Coop < Organisation
 
     founder_members = member_classes.find_or_create_by_name('Founder Member')
     founder_members.set_permission!(:constitution, true)
+    founder_members.set_permission!(:founder_member, true)
 
     directors = member_classes.find_or_create_by_name('Director')
     directors.set_permission!(:resolution, true)
@@ -286,5 +287,13 @@ class Coop < Organisation
   def welcome_email_action
     :welcome_coop_founding_member
   end
+
+  def build_founder_member(attributes={})
+    FounderMember.new(attributes).tap{|m|
+      m.organisation = self
+      m.member_class = member_classes.find_by_name("Founder Member")
+    }
+  end
+
 
 end

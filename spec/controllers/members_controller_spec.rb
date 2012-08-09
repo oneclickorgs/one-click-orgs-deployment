@@ -64,6 +64,7 @@ describe MembersController do
 
       before(:each) do
         @organisation.stub(:members).and_return(members)
+        controller.stub(:can?).and_return(false)
       end
 
       def get_index

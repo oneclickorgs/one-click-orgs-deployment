@@ -72,6 +72,10 @@ class Ability
         can :update, Constitution
       end
 
+      if user.has_permission(:founder_member)
+        can :create, FounderMember
+      end
+
       can :update, Member do |member|
         user.has_permission(:member) || user == member
       end

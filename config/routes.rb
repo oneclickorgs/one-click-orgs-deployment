@@ -112,6 +112,9 @@ OneClickOrgs::Application.routes.draw do
   end
 
   resources :founding_members
+
+  resources :founder_members
+
   resources :directors do
     member do
       post :stand_down

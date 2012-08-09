@@ -24,6 +24,10 @@ class MembersController < ApplicationController
     when Coop
       @page_title = "Members"
       @members = co.members.active
+      if can?(:create, FounderMember)
+        @founder_member = co.build_founder_member
+        @pending_members = co.members.pending
+      end
     end
 
     respond_to do |format|

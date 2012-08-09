@@ -35,7 +35,7 @@ class MembersMailer < OcoMailer
     @founder = Member.founder_members(@organisation).first
     raise ArgumentError, "Organisation has no founder" unless @founder
 
-    create_mail(@organisation_name, @member.email, "Become a founding member of #{@organisation_name}")
+    create_mail(@organisation_name, @member.email, "Become a Founder Member of #{@organisation_name}")
   end
 
   def welcome_new_member(member)
