@@ -35,15 +35,6 @@ class Meeting < ActiveRecord::Base
     end
   end
 
-  after_create :send_creation_notification_emails
-  def send_creation_notification_emails
-    if creation_notification_email_action && members_to_notify
-      members_to_notify.each do |member|
-        MeetingMailer.send(creation_notification_email_action, member, self).deliver
-      end
-    end
-  end
-
   def past?
     happened_on && happened_on < Time.now.utc.to_date
   end
