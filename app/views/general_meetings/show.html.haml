@@ -8,3 +8,15 @@
     - @general_meeting.participants.each do |participant|
       = content_tag_for(:li, participant) do
         = link_to(participant.name, member_path(participant))
+-else
+  %p
+    %strong Date:
+    = @general_meeting.happened_on.to_s(:long_ordinal)
+  %p
+    %strong Starting at:
+    = @general_meeting.start_time
+  %p
+    %strong Venue:
+    = @general_meeting.venue
+  %h3 Agenda
+  = simple_format(html_escape(@general_meeting.agenda))

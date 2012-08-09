@@ -22,7 +22,7 @@
               at
               = (meeting.venue || '') + '.'
             %p
-              %a{:href => '#'} View agenda and details.
+              = link_to("View agenda and details", general_meeting_path(meeting))
 
 - if @past_meetings.present?
   .section
