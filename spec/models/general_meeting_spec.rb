@@ -61,7 +61,7 @@ describe GeneralMeeting do
     describe "on creation" do
       it "creates a future task for the Secretary to minute the meeting" do
         meeting_date = 2.weeks.from_now
-        meeting = GeneralMeeting.make(:happened_on => meeting_date)
+        meeting = GeneralMeeting.make(:happened_on => meeting_date, :minutes => nil)
 
         secretary = mock_model(Member)
         meeting.organisation.stub(:secretary).and_return(secretary)

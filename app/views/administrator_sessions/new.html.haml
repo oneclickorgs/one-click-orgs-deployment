@@ -1,0 +1,12 @@
+%div
+  = form_tag(administrator_session_path, :class => 'login') do
+    %h2
+      = @page_title
+    %p
+      = label_tag(:email)
+      = text_field_tag(:email)
+    %p
+      = label_tag(:password)
+      = password_field_tag(:password)
+    %p
+      = submit_tag "Login", :id => 'submit'

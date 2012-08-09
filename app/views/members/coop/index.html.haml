@@ -8,6 +8,11 @@
   .section
     %h3 Membership issues
 
+- if @founder_member
+  %h3 Invite a new Founder Member
+  = form_for(@founder_member) do |form|
+    = render :partial => 'founder_members/form', :locals => {:form => form}
+
 .section
   %h3 List of Members
   %table.members
@@ -26,6 +31,19 @@
         %td
           - if member.inducted_at
             = member.inducted_at.to_date.to_s(:long_ordinal)
+
+- if @pending_members
+  .section
+    %h3 Invited Members
+    %table.pending_members
+      %tr
+        %th Name
+      - @pending_members.each do |member|
+        %tr
+          %td
+            = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
+            = link_to "#{member.name}", member_path(member)
+
 
 .section
   %h3 Members settings

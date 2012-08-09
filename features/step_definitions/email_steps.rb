@@ -209,3 +209,13 @@ Then /^that member should receive a notification of their new office$/ do
   @email.to.should == [@director.email]
   @email.subject.should include(@director.office.title)
 end
+
+Then /^the new founding member should receive an invitation email$/ do
+  @member ||= @organisation.members.last
+  @email = last_email
+
+  @email.should be_present
+  @email.to.should == [@member.email]
+  @email.subject.should include("Founder Member")
+  @email.body.should include(@member.name)
+end

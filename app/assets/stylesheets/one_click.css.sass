@@ -479,6 +479,9 @@ tr.vote_for, tr.vote_against, tr.vote_in_progress
 td.resolution, td.resolution_proposal
   :border 1px solid grey
   :margin 1em
+  input
+    :float left
+    :margin-right 2em
 
 /* Forms
 
@@ -670,7 +673,8 @@ dl.settings
 div.field_with_errors input
   :border 1px solid $error_red
 
-table.upcoming_meetings
+table.upcoming_meetings,
+table.past_meetings
   tr
     :margin 0.5em 0
   td

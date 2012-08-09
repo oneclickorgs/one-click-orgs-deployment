@@ -1,0 +1,21 @@
+%h2 Co-ops
+
+%h3 Co-ops awaiting registration
+%ul.proposed_coops
+  - @proposed_coops.each do |coop|
+    = content_tag_for(:li, coop) do
+      %h4= coop.name
+      = button_to("Approve registration", found_admin_coop_path(coop), :method => :put)
+      %br.clear
+
+%h3 Co-ops in the draft stage
+%ul.pending_coops
+  - @pending_coops.each do |coop|
+    = content_tag_for(:li, coop) do
+      %h4= coop.name
+
+%h3 Active co-ops
+%ul.active_coops
+  - @active_coops.each do |coop|
+    = content_tag_for(:li, coop) do
+      %h4= coop.name

@@ -1,0 +1,45 @@
+!!!
+%html
+  %head
+    %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
+    %title
+      = @page_title ? @page_title + " - " : ""
+      = "One Click Orgs"
+
+    %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}
+    = stylesheet_link_tag 'one_click'
+    /[if lt IE 9]
+      = stylesheet_link_tag 'ie'
+    = javascript_include_tag :defaults
+    = yield(:head)
+    = csrf_meta_tag
+    = google_analytics_code
+  %body.setup
+    %div#container
+      %div.control_bar
+        - if current_administrator
+          %p
+            = link_to 'Logout', admin_logout_path
+      %div#doc
+        %div#hd
+          %h1.header
+            = image_tag('oco-logo-48.png', :height => '48', :width => '48', :alt => 'One Click Orgs logo')
+            One Click Orgs
+        - if current_administrator
+          %ul#nav
+            %li.navitem= link_to 'Co-ops', admin_coops_path
+        - if flash[:notice]
+          %div#notice
+            = flash[:notice]
+        - if flash[:error]
+          %div#error
+            = simple_format(flash[:error])
+
+        %div#bd
+          = yield
+          #lightbox_screen{:style => 'display: none;'}
+          #lightbox{:style => 'display: none;'}
+            = yield(:lightbox)
+        %div.footer
+          = render(:partial => 'shared/footer')
+      = get_satisfaction_widget

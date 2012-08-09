@@ -18,11 +18,11 @@
               on
               = meeting.happened_on.strftime('%d %B %Y') + ','
               starting at
-              = meeting.start_time + ','
+              = (meeting.start_time || '') + ','
               at
-              = meeting.venue + '.'
+              = (meeting.venue || '') + '.'
             %p
-              %a{:href => '#'} View agenda and details.
+              = link_to("View agenda and details", general_meeting_path(meeting))
 
 - if @past_meetings.present?
   .section
@@ -31,6 +31,13 @@
       - @past_meetings.each do |meeting|
         %tr
           = content_tag_for(:td, meeting) do
+            %p
+              A
+              %strong= meeting.class.name.underscore.humanize.titlecase
+              on
+              = meeting.happened_on.strftime('%d %B %Y') + ','
+              at
+              = (meeting.venue || '') + '.'
             - if meeting.minutes.blank?
               %p Minutes have not been entered for this meeting yet.
               %p= link_to("Enter minutes for this meeting.", edit_general_meeting_path(meeting))

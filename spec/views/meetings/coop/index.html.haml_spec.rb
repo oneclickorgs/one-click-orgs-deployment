@@ -41,7 +41,7 @@ describe 'meetings/coop/index' do
 
   context "when a past meeting has no minutes" do
     before(:each) do
-      @past_meeting = mock_model(GeneralMeeting, :to_param => '2')
+      @past_meeting = mock_model(GeneralMeeting, :to_param => '2', :happened_on => 1.day.ago)
       assign(:past_meetings, [@past_meeting])
     end
 
@@ -60,7 +60,7 @@ describe 'meetings/coop/index' do
 
   context "when a past meeting has minutes" do
     before(:each) do
-      @past_meeting = mock_model(GeneralMeeting, :to_param => '2', :minutes => "Minutes")
+      @past_meeting = mock_model(GeneralMeeting, :to_param => '2', :minutes => "Minutes", :happened_on => 1.day.ago)
       assign(:past_meetings, [@past_meeting])
     end
 

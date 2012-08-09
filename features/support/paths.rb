@@ -74,6 +74,8 @@ module NavigationHelpers
       root_path
     when /^the Amendments page$/
       edit_constitution_path
+    when /^the co-op review page$/
+      admin_coops_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

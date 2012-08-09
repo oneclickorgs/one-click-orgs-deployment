@@ -19,6 +19,10 @@ class Coop < Organisation
     after_transition :proposed => :active, :do => :destroy_pending_state_member_classes
   end
 
+  scope :active, with_state(:active)
+  scope :proposed, with_state(:proposed)
+  scope :pending, with_state(:pending)
+
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
@@ -82,6 +86,11 @@ class Coop < Organisation
 
   def registered_office_address
     @registered_office_address ||= clauses.get_text('registered_office_address')
+  end
+
+  def registered_office_address=(registered_office_address)
+    clauses.build(:name => 'registered_office_address', :text_value => registered_office_address)
+    @registered_office_address = registered_office_address
   end
 
   def max_user_directors
@@ -193,6 +202,7 @@ class Coop < Organisation
 
     founder_members = member_classes.find_or_create_by_name('Founder Member')
     founder_members.set_permission!(:constitution, true)
+    founder_members.set_permission!(:founder_member, true)
 
     directors = member_classes.find_or_create_by_name('Director')
     directors.set_permission!(:resolution, true)
@@ -234,6 +244,9 @@ class Coop < Organisation
     self.max_consumer_directors = 3
 
     self.save!
+  end
+
+  def destroy_pending_state_member_classes
   end
 
   def member_eligible_to_vote?(member, proposal)
@@ -279,5 +292,13 @@ class Coop < Organisation
   def welcome_email_action
     :welcome_coop_founding_member
   end
+
+  def build_founder_member(attributes={})
+    FounderMember.new(attributes).tap{|m|
+      m.organisation = self
+      m.member_class = member_classes.find_by_name("Founder Member")
+    }
+  end
+
 
 end

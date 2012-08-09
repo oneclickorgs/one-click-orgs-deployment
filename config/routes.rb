@@ -112,6 +112,9 @@ OneClickOrgs::Application.routes.draw do
   end
 
   resources :founding_members
+
+  resources :founder_members
+
   resources :directors do
     member do
       post :stand_down
@@ -132,6 +135,10 @@ OneClickOrgs::Application.routes.draw do
   get '/logout' => 'member_sessions#destroy', :as => 'logout'
   resource :member_session, :only => [:new, :create, :destroy]
 
+  get '/admin/login' => 'administrator_sessions#new', :as => 'admin_login'
+  get '/admin/logout' => 'administrator_sessions#destroy', :as => 'admin_logout'
+  resource :administrator_session, :only => [:new, :create, :destroy]
+
   match '/welcome(/:action)' => 'welcome'
 
   match '/setup(/:action)' => 'setup'
@@ -149,14 +156,24 @@ OneClickOrgs::Application.routes.draw do
 
   resources :shares
 
+  get '/admin' => 'admin#index'
+
+  namespace :admin do
+    resources :coops do
+      member do
+        put :found
+      end
+    end
+  end
+
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations
 
   get '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
   resources :password_resets
 
-  post '/admin/test_email' => 'admin#test_email'
-  match '/admin/test_exception_notification' => 'admin#test_exception_notification'
+  post '/system/test_email' => 'system#test_email'
+  match '/system/test_exception_notification' => 'system#test_exception_notification'
 
   root :to => 'one_click#dashboard'
 end

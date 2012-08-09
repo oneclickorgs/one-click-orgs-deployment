@@ -44,9 +44,23 @@ Given /^I am a Director of the co\-op$/ do
   user_logs_in
 end
 
+Given /^I am the founder of a new co\-op$/ do
+  set_up_application_if_necessary
+  @coop = @organisation = Coop.make!(:pending)
+  @user = @coop.members.make!(:founder_member)
+  set_subdomain_to_organisation
+  user_logs_in
+end
+
 Given /^there is a member named "(.*?)"$/ do |name|
   first_name, last_name = name.split(' ')
   @member = @organisation.members.make!(:first_name => first_name, :last_name => last_name)
+end
+
+When /^I enter a new founding member's details$/ do
+  fill_in("Email address", :with => "bob@example.com")
+  fill_in("First name", :with => "Bob")
+  fill_in("Last name", :with => "Smith")
 end
 
 Then /^I should see a list of the members$/ do
@@ -67,4 +81,10 @@ Then /^I should be a Founder Member of the draft co\-op$/ do
   @user = @organisation.members.find(id)
 
   @user.member_class.name.should == "Founder Member"
+end
+
+Then /^I should see the new founding member in the list of invited members$/ do
+  within('.pending_members') do
+    page.should have_content("Bob Smith")
+  end
 end

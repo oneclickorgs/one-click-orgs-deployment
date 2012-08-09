@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805212826) do
+ActiveRecord::Schema.define(:version => 20120808191719) do
+
+  create_table "administrators", :force => true do |t|
+    t.string   "email",               :limit => 50, :null => false
+    t.string   "crypted_password",    :limit => 50
+    t.string   "salt",                :limit => 50
+    t.string   "password_reset_code"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
 
   create_table "ballots", :force => true do |t|
     t.integer  "election_id"
