@@ -15,4 +15,8 @@ class Task < ActiveRecord::Base
     end
     partial_name
   end
+
+  def complete!
+    update_attribute(:completed_at, Time.now.utc)
+  end
 end
