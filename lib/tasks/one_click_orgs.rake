@@ -98,86 +98,98 @@ and visit the site in your browser (usually at http://localhost:3000 ).
           exit
         end
 
+        # Don't send emails
+        ActiveRecord::Base.observers.disable :decision_mailer_observer, :directorship_mailer_observer, :meeting_mailer_observer, :member_mailer_observer, :officership_mailer_observer, :proposal_mailer_observer
+
         password = ENV['password'] || "password"
+
+        number_to_create = ENV['NUMBER'] ? ENV['NUMBER'].to_i : 1
 
         require 'spec/support/blueprints'
 
-        # Find first available test subdomain
-        subdomain_index = 1
-        while Organisation.find_by_subdomain("test#{subdomain_index}")
+        subdomain_index = 0
+
+        number_to_create.times do
+          # Find first available test subdomain
           subdomain_index += 1
+          while Organisation.find_by_subdomain("test#{subdomain_index}")
+            subdomain_index += 1
+          end
+
+          coop = Coop.make!(
+            :created_at => 12.months.ago,
+            :subdomain => "test#{subdomain_index}",
+            :name => "The Locally-Grown Co-operative",
+            :registered_office_address => "1 High Street, Broxbourne",
+            :objectives => "produce locally-grown food."
+          )
+
+          # Members for logging in
+
+          secretary = coop.members.make!(:secretary,
+            :first_name => "Sally",
+            :last_name => "Secretary",
+            :email => "secretary@example.com",
+            :password => password,
+            :password_confirmation => password,
+            :inducted_at => 12.months.ago,
+            :state => 'active'
+          )
+
+          coop.offices.find_by_title("Secretary").officership = Officership.make!(
+            :officer => secretary
+          )
+
+          member = coop.members.make!(:member,
+            :first_name => "Max",
+            :last_name => "Member",
+            :email => "member@example.com",
+            :password => password,
+            :password_confirmation => password,
+            :inducted_at => 10.months.ago
+          )
+
+          # Other members
+
+          coop.members.make!(:director,
+            :first_name => "James",
+            :last_name => "Godwin",
+            :email => "james@example.com",
+            :inducted_at => 12.months.ago,
+            :state => 'active'
+          )
+
+          coop.members.make!(:member,
+            :first_name => "Caroline",
+            :last_name => "Jones",
+            :email => "caroline@example.com",
+            :inducted_at => 6.months.ago
+          )
+
+          coop.members.make!(15, :member, :inducted_at => 7.months.ago)
+
+          coop.general_meetings.make!(
+            :happened_on => 5.days.ago,
+            :created_at => (5+14).days.ago,
+            :venue => "The function room at the Royal Oak",
+            :start_time => "6.30pm",
+            :minutes => nil
+          )
+
+          coop.general_meetings.make!(
+            :happened_on => 4.days.from_now,
+            :created_at => (4.days.from_now - 14.days),
+            :venue => "The Meeting Hall",
+            :start_time => "7pm",
+            :agenda => "Discuss the new shop premises."
+          )
+
+          STDOUT.puts "Coop '#{coop.subdomain}' created."
         end
 
-        coop = Coop.make!(
-          :created_at => 12.months.ago,
-          :subdomain => "test#{subdomain_index}",
-          :name => "The Locally-Grown Co-operative",
-          :registered_office_address => "1 High Street, Broxbourne",
-          :objectives => "produce locally-grown food."
-        )
-
-        # Members for logging in
-
-        secretary = coop.members.make!(:secretary,
-          :first_name => "Sally",
-          :last_name => "Secretary",
-          :email => "secretary@example.com",
-          :password => password,
-          :password_confirmation => password,
-          :inducted_at => 12.months.ago,
-          :state => 'active'
-        )
-
-        coop.offices.find_by_title("Secretary").officership = Officership.make!(
-          :officer => secretary
-        )
-
-        member = coop.members.make!(:member,
-          :first_name => "Max",
-          :last_name => "Member",
-          :email => "member@example.com",
-          :password => password,
-          :password_confirmation => password,
-          :inducted_at => 10.months.ago
-        )
-
-        # Other members
-
-        coop.members.make!(:director,
-          :first_name => "James",
-          :last_name => "Godwin",
-          :email => "james@example.com",
-          :inducted_at => 12.months.ago,
-          :state => 'active'
-        )
-
-        coop.members.make!(:member,
-          :first_name => "Caroline",
-          :last_name => "Jones",
-          :email => "caroline@example.com",
-          :inducted_at => 6.months.ago
-        )
-
-        coop.members.make!(15, :member, :inducted_at => 7.months.ago)
-
-        coop.general_meetings.make!(
-          :happened_on => 5.days.ago,
-          :created_at => (5+14).days.ago,
-          :venue => "The function room at the Royal Oak",
-          :start_time => "6.30pm",
-          :minutes => nil
-        )
-
-        coop.general_meetings.make!(
-          :happened_on => 4.days.from_now,
-          :created_at => (4.days.from_now - 14.days),
-          :venue => "The Meeting Hall",
-          :start_time => "7pm",
-          :agenda => "Discuss the new shop premises."
-        )
-
-      STDOUT.puts "Coop '#{coop.subdomain}' created."
+        ActiveRecord::Base.observers.enable :decision_mailer_observer, :member_mailer_observer, :officership_mailer_observer, :proposal_mailer_observer
       end
+
     end
 
     desc "Move aside any 'testx' instances."
