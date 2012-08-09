@@ -177,5 +177,28 @@ and visit the site in your browser (usually at http://localhost:3000 ).
       STDOUT.puts "Coop '#{coop.subdomain}' created."
       end
     end
+
+    desc "Move aside any 'testx' instances."
+    task :archive_test_instances => :environment do
+      archived = []
+      organisations = Organisation.where("subdomain LIKE 'test%'").all
+      organisations.each do |o|
+        original_subdomain = o.subdomain
+        o.subdomain = "archived-#{Time.now.utc.to_s(:number)}-#{original_subdomain}"
+        if o.save
+          archived << "#{original_subdomain} -> #{o.subdomain}"
+        else
+          STDERR.puts "Could not archive instance '#{original_subdomain}'."
+        end
+      end
+      if archived.empty?
+        STDOUT.puts "Did not archive any instances."
+      else
+        STDOUT.puts "Archived these instances:"
+        archived.each do |archive_line|
+          STDOUT.puts archive_line
+        end
+      end
+    end
   end
 end
