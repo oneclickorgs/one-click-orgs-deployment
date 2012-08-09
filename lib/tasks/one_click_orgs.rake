@@ -162,13 +162,13 @@ and visit the site in your browser (usually at http://localhost:3000 ).
 
         coop.general_meetings.make!(
           :happened_on => 5.days.ago,
-          :created_at => (5+14).days.ago
+          :created_at => (5+14).days.ago,
           :minutes => nil
         )
 
         coop.general_meetings.make!(
           :happened_on => 4.days.from_now,
-          :created_at => (4.days.from_now - 14.days)
+          :created_at => (4.days.from_now - 14.days),
           :venue => "The Meeting Hall",
           :start_time => "7pm",
           :agenda => "Discuss the new shop premises."
