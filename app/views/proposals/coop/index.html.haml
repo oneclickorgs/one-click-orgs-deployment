@@ -19,7 +19,11 @@
           = content_tag_for(:td, proposal) do
             .proposal
               %h4= proposal.title
-              %p= proposal.description
+              - if proposal.title != proposal.description
+                %p= proposal.description
+              %p
+                Voting ends
+                = proposal.end_date.to_s(:long)
               - if can?(:vote_on, proposal)
                 %p.votes= render 'proposals/vote', :proposal => proposal
 
