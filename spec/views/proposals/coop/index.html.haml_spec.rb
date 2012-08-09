@@ -4,8 +4,8 @@ describe "proposals/coop/index" do
   
   before(:each) do
     view.stub(:can?).and_return(false)
-    
-    @proposals = [mock_model(Resolution, :description => "Open proposal description")]
+
+    @proposals = [mock_model(Resolution, :description => "Open proposal description", :end_date => 14.days.from_now)]
     assign(:proposals, @proposals)
     
     @draft_proposals = [mock_model(Resolution,
