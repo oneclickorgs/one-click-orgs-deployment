@@ -15,6 +15,7 @@ Feature: Managing membership issues
     And I press "Accept application"
     Then I should be on the Members page
     And I should see the new member in the list of members
+    And the new member should receive an invitation email
 
   # @wip
   # Scenario: Secretary handles a member who has failed to attain the minimum shareholding

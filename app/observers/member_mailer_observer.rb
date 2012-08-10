@@ -16,6 +16,13 @@ class MemberMailerObserver < ActiveRecord::Observer
 
   def after_transition(member, transition)
     case transition.event
+    when :induct
+      case member.organisation
+      when Coop
+        if member.organisation.active?
+          send_welcome_if_requested(member)
+        end
+      end
     when :reactivate
       send_welcome_if_requested(member)
     when :resign

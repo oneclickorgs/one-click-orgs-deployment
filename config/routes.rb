@@ -146,7 +146,11 @@ OneClickOrgs::Application.routes.draw do
   resources :organisations
   resources :associations
   resources :companies
-  resources :coops
+  resources :coops do
+    member do
+      put :propose
+    end
+  end
 
   resources :meetings do
     resources :comments

@@ -290,7 +290,11 @@ class Coop < Organisation
   end
 
   def welcome_email_action
-    :welcome_coop_founding_member
+    if pending?
+      :welcome_coop_founding_member
+    elsif active?
+      :welcome_coop_new_member
+    end
   end
 
   def build_founder_member(attributes={})

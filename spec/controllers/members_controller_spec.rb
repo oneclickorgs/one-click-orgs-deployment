@@ -84,7 +84,7 @@ describe MembersController do
 
     describe "PUT induct" do
       let(:members){mock("members association", :find => member)}
-      let(:member){mock_model(Member, :induct! => nil)}
+      let(:member){mock_model(Member, :send_welcome= => true, :induct! => nil)}
 
       before(:each) do
         @organisation.stub(:members).and_return(members)

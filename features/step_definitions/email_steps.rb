@@ -219,3 +219,13 @@ Then /^the new founding member should receive an invitation email$/ do
   @email.subject.should include("Founder Member")
   @email.body.should include(@member.name)
 end
+
+Then /^the new member should receive an invitation email$/ do
+  @member ||= @organisation.members.last
+  @email = last_email
+
+  @email.should be_present
+  @email.to.should == [@member.email]
+  @email.subject.should include('application')
+  @email.body.should include('/i/') # Invitation link
+end
