@@ -61,7 +61,9 @@ class MembersController < ApplicationController
       return
     end
 
-    @member = co.members.create!(params[:member])
+    @member = co.members.build(params[:member])
+    @member.member_class = co.member_classes.find_by_name('Member')
+    @member.save!
     redirect_to created_members_path
   end
 
