@@ -23,4 +23,12 @@ class CoopsController < ApplicationController
 
     redirect_to root_url(host_and_port(@coop.host))
   end
+
+  def propose
+    @coop = Coop.find(params[:id])
+    authorize! :edit, @coop
+
+    @coop.propose!
+    redirect_to :back
+  end
 end
