@@ -111,6 +111,7 @@ class MembersController < ApplicationController
 
   def induct
     @member = co.members.find(params[:id])
+    @member.send_welcome = true
     @member.induct!
     redirect_to members_path
   end

@@ -1,0 +1,11 @@
+Dear <%=raw(  @member.name || 'member'  )%>,
+
+Congratulations! Your membership application for "<%=raw(  @organisation_name  )%>" has been approved.
+
+Click the link below to log in to the One Click Orgs website. This is where you can view the co-operative's rules, see a list of members and take part in voting.
+
+<%=raw(  short_invitation_url(:id => @member.invitation_code)  )%>
+
+If you don’t know anything about a co-operative called "<%=raw(  @organisation_name  )%>" please ignore this email.
+
+Contact the One Click Orgs team and find out more at our website http://www.oneclickorgs.com/
