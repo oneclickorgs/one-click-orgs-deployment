@@ -128,6 +128,13 @@ describe Coop do
 
       @coop.elections.should include(@election)
     end
+
+    it "has many founder members" do
+      @coop = Coop.make!
+      @founder_member = @coop.members.make!(:founder_member)
+
+      @coop.founder_members.should include(@founder_member)
+    end
   end
 
   describe "defaults" do

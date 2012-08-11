@@ -90,3 +90,10 @@ Then /^I should see the new founding member in the list of invited members$/ do
     page.should have_content("Bob Smith")
   end
 end
+
+Then /^I should see a list of founding members of the draft co\-op$/ do
+  @organisation.founder_members.should_not be_empty
+  @organisation.founder_members.each do |founder_member|
+    page.should have_content(founder_member.name)
+  end
+end

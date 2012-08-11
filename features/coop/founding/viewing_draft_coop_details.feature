@@ -12,10 +12,9 @@ Feature: Viewing draft coop details
     When I go to the Rules page
     Then I should see the customisations we have made to the rules
 
-  # @wip
-  # Scenario: Founding member views the members of the draft co-op
-  #   When I go to the Members page
-  #   Then I should see a list of founding members of the draft co-op
+  Scenario: Founding member views the members of the draft co-op
+    When I go to the Members page
+    Then I should see a list of founding members of the draft co-op
 
   # @wip
   # Scenario: Founding member views the directors and officers of the draft co-op

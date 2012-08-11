@@ -46,6 +46,10 @@ class Coop < Organisation
 
   has_many :elections, :foreign_key => 'organisation_id'
 
+  def founder_members
+    members.founder_members(self)
+  end
+
   after_create :create_default_offices
   after_create :set_default_user_and_director_clauses
 
@@ -303,6 +307,4 @@ class Coop < Organisation
       m.member_class = member_classes.find_by_name("Founder Member")
     }
   end
-
-
 end
