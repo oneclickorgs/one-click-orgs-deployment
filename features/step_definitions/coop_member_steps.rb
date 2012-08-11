@@ -11,7 +11,9 @@ Given /^I am the founder of the draft co\-op$/ do
 end
 
 Given /^I am a founding member of the draft co\-op$/ do
-  pending # express the regexp above with the code you wish you had
+  @organsation ||= Coop.pending.last
+  @user = @organisation.members.make!(:founder_member)
+  user_logs_in
 end
 
 Given /^I am the (?:S|s)ecretary of the co\-op$/ do
