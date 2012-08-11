@@ -16,8 +16,8 @@ Feature: Viewing draft coop details
     When I go to the Members page
     Then I should see a list of founding members of the draft co-op
 
-  # @wip
-  # Scenario: Founding member views the directors and officers of the draft co-op
-  #   When I go to the Directors page
-  #   Then I should see a list of the directors of the draft co-op
-  #   And I should see a list of officers of the draft co-op
+  Scenario: Founding member views the directors and officers of the draft co-op
+    Given we have appointed some initial Directors and Officers
+    When I go to the Directors page
+    Then I should see a list of the directors of the draft co-op
+    And I should see a list of officers of the draft co-op
