@@ -2,7 +2,7 @@ Feature: Managing share payments
   In order to respond to members' requests for new shares
   As the Secretary
   I want to process new share applications
-  
+
   # @wip
   # Scenario: Secretary processes a new share application
   #   Given there is a co-op

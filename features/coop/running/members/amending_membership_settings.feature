@@ -2,7 +2,7 @@ Feature: Amending membership settings
   In order to make sure the co-op is handling membership in the best way
   As the Secretary
   I want to adjust settings to do with membership
-  
+
   # @wip
   # Scenario: Secretary amends the membership application form
   #   Given there is a co-op

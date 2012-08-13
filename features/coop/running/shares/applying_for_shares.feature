@@ -2,7 +2,7 @@ Feature: Applying for shares
   In order to increase my investment in the co-op
   As a Member
   I want to apply for more shares
-  
+
   # @wip @javascript
   # Scenario: Member applies for more shares
   #   Given there is a co-op

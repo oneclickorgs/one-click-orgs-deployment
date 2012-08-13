@@ -2,7 +2,7 @@ Feature: Terminating membership
   In order to deal with a member who must cease to be a member of the co-op
   As the Secretary
   I want to terminate their membership
-  
+
   # @wip
   # Scenario: Secretary terminates a membership
   #   Given there is a co-op
