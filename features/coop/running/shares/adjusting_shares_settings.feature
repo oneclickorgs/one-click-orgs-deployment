@@ -16,14 +16,14 @@ Feature: Adjusting shares settings
     Then I should be on the Shares page
     And I should see the new share value
 
-  # @wip
-  # Scenario: Secretary adjusts the minimum shareholding
-  #   When I go to the Shares page
-  #   And I press "Adjust minimum shareholding"
-  #   And I enter a new minimum shareholding
-  #   And I press "Save"
-  #   Then I should be on the Shares page
-  #   And I should see the new minimum shareholding
+  @javascript
+  Scenario: Secretary adjusts the minimum shareholding
+    When I go to the Shares page
+    And I press "Adjust minimum shareholding"
+    And I enter a new minimum shareholding
+    And I press "Save"
+    Then I should be on the Shares page
+    And I should see the new minimum shareholding
 
   # @wip
   # Scenario: Secretary adjusts the interest rate on share capital

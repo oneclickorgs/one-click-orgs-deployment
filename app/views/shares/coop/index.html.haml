@@ -4,6 +4,9 @@
   %p
     The share value is
     = number_to_currency(co.share_value_in_pounds, :unit => "£")
+  %p
+    The minimum shareholding is
+    = pluralize(co.minimum_shareholding, "share.", "shares.")
 
 .section
   TODO: Action buttons here.
@@ -19,6 +22,7 @@
 - if can?(:update, co)
   .section
     = link_button("Adjust share value", :url => edit_share_value_shares_path)
+    = link_button("Adjust minimum shareholding", :url => edit_minimum_shareholding_shares_path)
     %br.clear
 
 .section

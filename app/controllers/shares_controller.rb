@@ -16,4 +16,19 @@ class SharesController < ApplicationController
 
     redirect_to shares_path
   end
+
+  def edit_minimum_shareholding
+    authorize! :update, co
+  end
+
+  def update_minimum_shareholding
+    authorize! :update, co
+
+    if params[:organisation][:minimum_shareholding].present?
+      co.minimum_shareholding = params[:organisation][:minimum_shareholding]
+      co.save!
+    end
+
+    redirect_to shares_path
+  end
 end

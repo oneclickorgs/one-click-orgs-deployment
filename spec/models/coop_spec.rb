@@ -227,6 +227,21 @@ describe Coop do
         @coop.share_value_in_pounds.should == 1.0
       end
     end
+
+    describe "'minimum_shareholding' attribute" do
+      before(:each) do
+        @coop = Coop.make
+      end
+
+      it "defaults to 1" do
+        @coop.minimum_shareholding.should == 1
+      end
+
+      it "accepts a string" do
+        @coop.minimum_shareholding = "3"
+        @coop.minimum_shareholding.should == 3
+      end
+    end
   end
 
   describe "#member_eligible_to_vote?" do

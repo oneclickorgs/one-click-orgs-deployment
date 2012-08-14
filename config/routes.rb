@@ -162,6 +162,9 @@ OneClickOrgs::Application.routes.draw do
     collection do
       get :edit_share_value
       put :update_share_value
+
+      get :edit_minimum_shareholding
+      put :update_minimum_shareholding
     end
   end
 

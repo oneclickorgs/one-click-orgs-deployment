@@ -1,0 +1,8 @@
+%h2 Adjust minimum shareholding
+
+= form_for(:organisation, :url => update_minimum_shareholding_shares_path, :method => :put) do |form|
+  %p
+    = form.label :minimum_shareholding, "New minimum shareholding"
+    = form.text_field :minimum_shareholding
+  %p
+    = form.submit "Save"

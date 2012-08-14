@@ -216,6 +216,16 @@ class Coop < Organisation
     share_value.to_f / 100.0
   end
 
+  def minimum_shareholding=(new_minimum_shareholding)
+    new_minimum_shareholding = new_minimum_shareholding.to_i
+    clauses.build(:name => :minimum_shareholding, :integer_value => new_minimum_shareholding)
+    @minimum_shareholding = new_minimum_shareholding
+  end
+
+  def minimum_shareholding
+    @minimum_shareholding ||= (clauses.get_integer('minimum_shareholding') || 1)
+  end
+
   # SETUP
 
   def create_default_member_classes
