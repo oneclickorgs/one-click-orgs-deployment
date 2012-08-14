@@ -1,5 +1,13 @@
 %h2 Shares
 
+- if @tasks.present?
+  %h3 Notifications
+  .section
+    %ul.tasks
+      - @tasks.each do |task|
+        = content_tag_for(:li, task) do
+          = render :partial => 'tasks/task', :locals => {:task => task}
+
 .section
   %p
     The share value is
@@ -13,7 +21,9 @@
       = "#{co.interest_rate}%."
 
 .section
-  TODO: Action buttons here.
+  - if can?(:create, ShareApplication)
+    = link_button("Apply for more shares", :url => new_share_application_path)
+  %br.clear
 
 - if @share_payments_pending.present?
   .section

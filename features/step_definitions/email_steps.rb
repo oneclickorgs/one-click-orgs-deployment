@@ -229,3 +229,17 @@ Then /^the new member should receive an invitation email$/ do
   @email.subject.should include('application')
   @email.body.should include('/i/') # Invitation link
 end
+
+Then /^the Secretary should receive a notification of the new share application$/ do
+  @secretary ||= @organisation.secretary
+
+  @share_transaction ||= @organisation.withdrawals.last
+  member = @share_transaction.to_account.owner
+
+  @email = last_email
+
+  @email.should be_present
+  @email.to.should == [@secretary.email]
+  @email.subject.should include('made a new application for shares')
+  @email.body.should include(member.name)
+end

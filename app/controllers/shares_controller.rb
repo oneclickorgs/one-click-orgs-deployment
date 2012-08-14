@@ -1,5 +1,6 @@
 class SharesController < ApplicationController
   def index
+    @tasks = current_user.tasks.current.shares_related
   end
 
   def edit_share_value

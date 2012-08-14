@@ -24,13 +24,13 @@ describe Task do
   end
 
   describe "scopes" do
-    before(:each) do
-      @completed_task = Task.make!(:completed_at => 10.seconds.ago)
-      @future_task = Task.make!(:starts_on => Date.today.advance(:days => 1))
-      @task = Task.make!
-    end
-
     describe "current" do
+      before(:each) do
+        @completed_task = Task.make!(:completed_at => 10.seconds.ago)
+        @future_task = Task.make!(:starts_on => Date.today.advance(:days => 1))
+        @task = Task.make!
+      end
+
       it "does not include completed tasks" do
         Task.current.should_not include(@completed_task)
       end
@@ -41,6 +41,21 @@ describe Task do
 
       it "includes other tasks" do
         Task.current.should include(@task)
+      end
+    end
+
+    describe "shares-related" do
+      before(:each) do
+        @share_transaction_task = Task.make!(:subject => ShareTransaction.make!)
+        @member_task = Task.make!(:subject => Member.make!)
+      end
+
+      it "includes tasks with a ShareTransaction as the subject" do
+        Task.shares_related.should include(@share_transaction_task)
+      end
+
+      it "does not include tasks with a Member as the subject" do
+        Task.shares_related.should_not include(@member_task)
       end
     end
   end

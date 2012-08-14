@@ -12,6 +12,23 @@ describe SharesController do
     controller.stub(:authorize!).and_raise(CanCan::AccessDenied)
   end
 
+  describe "GET index" do
+    let(:tasks) {mock('tasks')}
+
+    before(:each) do
+      @user.stub_chain(:tasks, :current, :shares_related).and_return(tasks)
+    end
+
+    def get_index
+      get :index
+    end
+
+    it "assigns the currently-open, shares-related tasks for the current user" do
+      get_index
+      assigns[:tasks].should == tasks
+    end
+  end
+
   describe "GET edit_share_value" do
     before(:each) do
       controller.stub(:authorize!).with(:update, @organisation)

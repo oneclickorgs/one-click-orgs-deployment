@@ -267,4 +267,9 @@ describe Member do
     member.induct!
     member.inducted_at.should be_present
   end
+
+  it "returns the count of shares owned by this member" do
+    member = Member.make!
+    member.shares_count.should == 0
+  end
 end

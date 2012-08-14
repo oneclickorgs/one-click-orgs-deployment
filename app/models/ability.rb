@@ -90,6 +90,8 @@ class Ability
       can :read, BoardMeeting
 
       can :create, ConstitutionProposalBundle
+
+      can :create, ShareApplication
     end
   end
 end

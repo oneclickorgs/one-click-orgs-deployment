@@ -1,0 +1,12 @@
+Dear <%=raw( @recipient.name || 'Secretary') %>,
+
+<%=raw( @applicant.name ) %> has made a new application for <%=raw( pluralize(@share_transaction.amount, 'share.', 'shares.') )%>
+
+Follow the link below to process the application:
+
+<%=raw( share_transaction_url(@share_transaction) )%>
+
+Thanks,
+
+<%=raw @organisation.name %>
+Powered by One Click Orgs

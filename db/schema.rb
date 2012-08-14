@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814125936) do
+ActiveRecord::Schema.define(:version => 20120814205341) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -219,6 +219,34 @@ ActiveRecord::Schema.define(:version => 20120814125936) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "share_accounts", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "balance"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "share_transaction_state_transitions", :force => true do |t|
+    t.integer  "share_transaction_id"
+    t.string   "event"
+    t.string   "from"
+    t.string   "to"
+    t.datetime "created_at"
+  end
+
+  add_index "share_transaction_state_transitions", ["share_transaction_id"], :name => "share_trans_state_trans_on_share_trans_id"
+
+  create_table "share_transactions", :force => true do |t|
+    t.string   "state"
+    t.integer  "amount"
+    t.integer  "from_account_id"
+    t.integer  "to_account_id"
+    t.integer  "share_value"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "tasks", :force => true do |t|

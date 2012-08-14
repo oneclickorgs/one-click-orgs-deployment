@@ -37,6 +37,8 @@ module OneClickOrgs
       :proposal_mailer_observer,
       :proposal_timestamp_observer,
       :resolution_proposal_task_observer,
+      :share_transaction_mailer_observer,
+      :share_transaction_task_observer,
       :general_meeting_task_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

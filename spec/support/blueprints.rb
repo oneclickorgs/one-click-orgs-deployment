@@ -223,3 +223,12 @@ Administrator.blueprint do
   password { 'password' }
   password_confirmation { 'password' }
 end
+
+ShareAccount.blueprint do
+end
+
+ShareTransaction.blueprint do
+  from_account
+  to_account
+  amount { 1 }
+end

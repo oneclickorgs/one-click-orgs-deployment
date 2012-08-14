@@ -47,12 +47,16 @@ class Coop < Organisation
 
   has_many :elections, :foreign_key => 'organisation_id'
 
+  has_one :share_account, :as => :owner
+  has_many :withdrawals, :through => :share_account
+
   def founder_members
     members.founder_members(self)
   end
 
   after_create :create_default_offices
   after_create :set_default_user_and_director_clauses
+  after_create :create_share_account_if_necessary
 
   # ATTRIBUTES / CLAUSES
 
@@ -192,6 +196,11 @@ class Coop < Organisation
     @single_shareholding ||= clauses.get_boolean('single_shareholding')
   end
 
+  def single_shareholding=(new_single_shareholding)
+    clauses.build(:name => :single_shareholding, :boolean_value => !!new_single_shareholding)
+    @single_shareholding = !!new_single_shareholding
+  end
+
   def common_ownership
     @common_ownership ||= clauses.get_boolean('common_ownership')
   end
@@ -301,6 +310,12 @@ class Coop < Organisation
   end
 
   def destroy_pending_state_member_classes
+  end
+
+  def create_share_account_if_necessary
+    unless share_account
+      create_share_account!
+    end
   end
 
   def member_eligible_to_vote?(member, proposal)
