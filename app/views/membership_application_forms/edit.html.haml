@@ -1,0 +1,11 @@
+%h2 Amending membership application form
+
+= form_for(:organisation, :url => membership_application_form_path, :method => :put) do |form|
+  %p
+    = form.label :membership_application_text, "This text will appear at the end of the membership application form:"
+    = form.text_area :membership_application_text
+  %p
+    = form.check_box :certification
+    = form.label "I certify that this change to the membership application form was agreed by the Directors."
+  %p
+    = form.submit "Save changes"

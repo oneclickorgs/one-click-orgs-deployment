@@ -65,6 +65,14 @@ When /^I enter a new founding member's details$/ do
   fill_in("Last name", :with => "Smith")
 end
 
+When /^I enter new text for the membership application form$/ do
+  fill_in("organisation[membership_application_text]", :with => "You must live locally.")
+end
+
+When /^I certify that the new text was agreed by the Directors$/ do
+  check('organisation[certification]')
+end
+
 Then /^I should see a list of the members$/ do
   page.should have_css('.members', :text => @user.name)
 end

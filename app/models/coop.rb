@@ -236,6 +236,15 @@ class Coop < Organisation
     @interest_rate = new_interest_rate
   end
 
+  def membership_application_text
+    @membership_application_text ||= clauses.get_text(:membership_application_text)
+  end
+
+  def membership_application_text=(new_membership_application_text)
+    clauses.build(:name => :membership_application_text, :text_value => new_membership_application_text)
+    @membership_application_text = new_membership_application_text
+  end
+
   # SETUP
 
   def create_default_member_classes

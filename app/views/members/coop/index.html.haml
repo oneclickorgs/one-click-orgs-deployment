@@ -45,5 +45,8 @@
             = link_to "#{member.name}", member_path(member)
 
 
-.section
-  %h3 Members settings
+- if can?(:update, co)
+  .section
+    %h3 Members settings
+    = link_button("Amend the membership application form", :url => edit_membership_application_form_path)
+    %br.clear

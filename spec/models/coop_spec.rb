@@ -257,6 +257,12 @@ describe Coop do
         @coop.interest_rate.should == 1.34
       end
     end
+
+    it "has a 'membership_application_text' attribute" do
+      @coop = Coop.make
+      expect {@coop.membership_application_text = "Custom text."}.to_not raise_error
+      @coop.membership_application_text.should == "Custom text."
+    end
   end
 
   describe "#member_eligible_to_vote?" do
