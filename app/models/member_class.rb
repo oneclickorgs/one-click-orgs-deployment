@@ -1,11 +1,11 @@
 class MemberClass < ActiveRecord::Base
   attr_accessible :name, :description
-  
+
   belongs_to :organisation
   has_many :members
 
   validates_presence_of :name
-  
+
   def has_permission(type)
     organisation.clauses.get_boolean(get_permission_name(type)) || false
   end
@@ -22,9 +22,9 @@ class MemberClass < ActiveRecord::Base
     clauses = organisation.clauses.where('name LIKE :name', { :name => get_permission_name('%') })
     clauses.each { |c| c.destroy }
   end
-  
+
 private
-  
+
   def get_permission_name(type)
     "permission_#{self.name.underscore}_#{type.to_s.underscore}"
   end
