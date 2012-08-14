@@ -7,6 +7,10 @@
   %p
     The minimum shareholding is
     = pluralize(co.minimum_shareholding, "share.", "shares.")
+  - if co.interest_rate
+    %p
+      The rate of interest on share capital is
+      = "#{co.interest_rate}%."
 
 .section
   TODO: Action buttons here.
@@ -23,6 +27,7 @@
   .section
     = link_button("Adjust share value", :url => edit_share_value_shares_path)
     = link_button("Adjust minimum shareholding", :url => edit_minimum_shareholding_shares_path)
+    = link_button("Adjust interest rate", :url => edit_interest_rate_shares_path)
     %br.clear
 
 .section

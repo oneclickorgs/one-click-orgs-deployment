@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808191719) do
+ActiveRecord::Schema.define(:version => 20120814125936) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -31,13 +31,14 @@ ActiveRecord::Schema.define(:version => 20120808191719) do
   end
 
   create_table "clauses", :force => true do |t|
-    t.string   "name",            :limit => 50, :null => false
+    t.string   "name",            :limit => 50,                                :null => false
     t.datetime "started_at"
     t.datetime "ended_at"
     t.text     "text_value"
     t.integer  "integer_value"
     t.integer  "boolean_value",   :limit => 1
     t.integer  "organisation_id"
+    t.decimal  "decimal_value",                 :precision => 10, :scale => 5
   end
 
   add_index "clauses", ["organisation_id"], :name => "index_clauses_on_organisation_id"

@@ -6,7 +6,8 @@ describe 'shares/coop/index' do
 
   let(:organisation) {mock_model(Coop,
     :share_value_in_pounds => 0.7,
-    :minimum_shareholding => 2
+    :minimum_shareholding => 2,
+    :interest_rate => 1.34
   )}
 
   before(:each) do
@@ -24,6 +25,11 @@ describe 'shares/coop/index' do
     rendered.should have_content("minimum shareholding is 2 shares.")
   end
 
+  it "displays the current interest rate" do
+    render
+    rendered.should have_content("rate of interest on share capital is 1.34%.")
+  end
+
   context "when user can update the organisation" do
     before(:each) do
       view.stub(:can?).with(:update, organisation).and_return(true)
@@ -37,6 +43,11 @@ describe 'shares/coop/index' do
     it "renders a link button to adjust the minimum shareholding" do
       render
       rendered.should have_selector(:input, 'data-url' => '/shares/edit_minimum_shareholding')
+    end
+
+    it "renders a link button to adjust the interest rate" do
+      render
+      rendered.should have_selector(:input, 'data-url' => '/shares/edit_interest_rate')
     end
   end
 

@@ -12,14 +12,16 @@
 # membership_voting_system    String -- the class name of the VotingSystem in use
 # constitution_voting_system  String -- the class name of the VotingSystem in use
 class Clause < ActiveRecord::Base
-  attr_accessible :name, :text_value, :integer_value, :boolean_value
+  attr_accessible :name, :text_value, :integer_value, :boolean_value, :decimal_value
 
   belongs_to :organisation
 
   validates_presence_of :name
   # TODO: validate presence of exactly one of the value columns
   validate(:on => :create) do |c|
-    errors.add('One of boolean_value, integer_value or text_value', 'cannot be empty') if [c.boolean_value, c.integer_value, c.text_value].all?(&:blank?)
+    if [c.boolean_value, c.integer_value, c.text_value, c.decimal_value].all?(&:blank?)
+      errors.add('One of boolean_value, integer_value or text_value', 'cannot be empty')
+    end
   end
 
   scope :current, where('ended_at IS NULL')
@@ -77,5 +79,14 @@ class Clause < ActiveRecord::Base
   def self.get_integer(name)
     v = get_current(name.to_s)
     (v ? v.integer_value : nil)
+  end
+
+  def self.set_decimal!(name, value)
+    create!(:name => name.to_s, :decimal_value => value)
+  end
+
+  def self.get_decimal(name)
+    v = get_current(name.to_s)
+    (v ? v.decimal_value : nil)
   end
 end

@@ -90,4 +90,43 @@ describe SharesController do
     end
   end
 
+  describe "GET edit_interest_rate" do
+    before(:each) do
+      controller.stub(:authorize!).with(:update, @organisation)
+    end
+
+    def get_edit_interest_rate
+      get :edit_interest_rate
+    end
+
+    it "is successful" do
+      get_edit_interest_rate
+      response.should be_successful
+    end
+  end
+
+  describe "PUT update_interest_rate" do
+    before(:each) do
+      controller.stub(:authorize!).with(:update, @organisation)
+
+      @organisation.stub(:interest_rate=)
+      @organisation.stub(:save!)
+    end
+
+    def put_update_interest_rate
+      put :update_interest_rate, 'organisation' => {'interest_rate' => '1.34'}
+    end
+
+    it "updates the interest rate" do
+      @organisation.should_receive(:interest_rate=).with('1.34')
+      @organisation.should_receive(:save!)
+      put_update_interest_rate
+    end
+
+    it "redirects to the shares page" do
+      put_update_interest_rate
+      response.should redirect_to('/shares')
+    end
+  end
+
 end

@@ -165,6 +165,9 @@ OneClickOrgs::Application.routes.draw do
 
       get :edit_minimum_shareholding
       put :update_minimum_shareholding
+
+      get :edit_interest_rate
+      put :update_interest_rate
     end
   end
 

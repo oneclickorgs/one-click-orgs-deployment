@@ -242,6 +242,21 @@ describe Coop do
         @coop.minimum_shareholding.should == 3
       end
     end
+
+    describe "'interest_rate' attribute" do
+      before(:each) do
+        @coop = Coop.make
+      end
+
+      it "defaults to nil" do
+        @coop.interest_rate.should be_nil
+      end
+
+      it "accepts a string" do
+        @coop.interest_rate = "1.34"
+        @coop.interest_rate.should == 1.34
+      end
+    end
   end
 
   describe "#member_eligible_to_vote?" do

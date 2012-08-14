@@ -31,4 +31,19 @@ class SharesController < ApplicationController
 
     redirect_to shares_path
   end
+
+  def edit_interest_rate
+    authorize! :update, co
+  end
+
+  def update_interest_rate
+    authorize! :update, co
+
+    if params[:organisation][:interest_rate].present?
+      co.interest_rate = params[:organisation][:interest_rate]
+      co.save!
+    end
+
+    redirect_to shares_path
+  end
 end

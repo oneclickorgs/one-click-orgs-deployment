@@ -226,6 +226,16 @@ class Coop < Organisation
     @minimum_shareholding ||= (clauses.get_integer('minimum_shareholding') || 1)
   end
 
+  def interest_rate
+    @interest_rate ||= clauses.get_decimal('interest_rate')
+  end
+
+  def interest_rate=(new_interest_rate)
+    new_interest_rate = new_interest_rate.to_f
+    clauses.build(:name => :interest_rate, :decimal_value => new_interest_rate)
+    @interest_rate = new_interest_rate
+  end
+
   # SETUP
 
   def create_default_member_classes
