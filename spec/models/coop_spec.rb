@@ -155,8 +155,14 @@ describe Coop do
         @coop.member_classes.find_by_name('Member').should be_present
       end
 
-      it "creates a 'Secretary' member class" do
-        @coop.member_classes.find_by_name('Secretary').should be_present
+      describe "Secretary member class" do
+        it "creates a 'Secretary' member class" do
+          @coop.member_classes.find_by_name('Secretary').should be_present
+        end
+
+        it "sets the 'organisation' permission" do
+          @coop.member_classes.find_by_name('Secretary').should have_permission(:organisation)
+        end
       end
     end
   end
@@ -196,6 +202,30 @@ describe Coop do
       @coop.save!
       @coop.reload
       @coop.objectives.should == "Make things"
+    end
+
+    describe "'share_value' attribute" do
+      before(:each) do
+        @coop = Coop.make
+      end
+
+      it "defaults to 100" do
+        @coop.share_value.should == 100
+      end
+
+      it "is an integer value of pennies" do
+        @coop.share_value = 123.45
+        @coop.share_value.should == 123
+      end
+
+      it "can handle a value given in pounds" do
+        @coop.share_value_in_pounds = "0.88"
+        @coop.share_value.should == 88
+      end
+
+      it "can return a value in pounds" do
+        @coop.share_value_in_pounds.should == 1.0
+      end
     end
   end
 

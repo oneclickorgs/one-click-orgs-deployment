@@ -9,7 +9,8 @@ class MemberClass < ActiveRecord::Base
   def has_permission(type)
     organisation.clauses.get_boolean(get_permission_name(type)) || false
   end
-  
+  alias_method :has_permission?, :has_permission
+
   def set_permission!(type, value)
     organisation.clauses.set_boolean!(get_permission_name(type), value)
   end

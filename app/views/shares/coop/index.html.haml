@@ -1,7 +1,9 @@
 %h2 Shares
 
 .section
-  TODO: Personal share status here.
+  %p
+    The share value is
+    = number_to_currency(co.share_value_in_pounds, :unit => "£")
 
 .section
   TODO: Action buttons here.
@@ -13,6 +15,11 @@
 - if @share_withdrawals_outstanding.present?
   .section
     %h3 Outstanding share withdrawals
+
+- if can?(:update, co)
+  .section
+    = link_button("Adjust share value", :url => edit_share_value_shares_path)
+    %br.clear
 
 .section
   %h3 Share ownership

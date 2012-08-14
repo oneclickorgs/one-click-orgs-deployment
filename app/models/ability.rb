@@ -70,6 +70,9 @@ class Ability
 
       if user.has_permission(:constitution)
         can :update, Constitution
+      end
+
+      if user.has_permission(:organisation)
         can :update, Coop do |coop|
           user.organisation == coop
         end

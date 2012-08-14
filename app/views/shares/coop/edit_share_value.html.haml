@@ -1,0 +1,8 @@
+%h2 Adjust share value
+
+= form_for(:organisation, :url => update_share_value_shares_path, :method => :put) do |form|
+  %p
+    = form.label :share_value_in_pounds, "New share value"
+    = form.text_field :share_value_in_pounds
+  %p
+    = form.submit "Save"

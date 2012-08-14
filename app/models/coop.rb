@@ -196,7 +196,25 @@ class Coop < Organisation
     @common_ownership ||= clauses.get_boolean('common_ownership')
   end
 
+  def share_value=(new_share_value)
+    clauses.build(:name => :share_value, :integer_value => new_share_value.to_i)
+    @share_value = new_share_value.to_i
+  end
 
+  # Share value in pennies. Defaults to 100.
+  def share_value
+    @share_value ||= (clauses.get_integer('share_value') || 100)
+  end
+
+  def share_value_in_pounds=(new_share_value_in_pounds)
+    new_share_value_in_pounds = new_share_value_in_pounds.to_f
+    new_share_value = (new_share_value_in_pounds * 100.0).to_i
+    self.share_value = new_share_value
+  end
+
+  def share_value_in_pounds
+    share_value.to_f / 100.0
+  end
 
   # SETUP
 
@@ -207,6 +225,7 @@ class Coop < Organisation
 
     founder_members = member_classes.find_or_create_by_name('Founder Member')
     founder_members.set_permission!(:constitution, true)
+    founder_members.set_permission!(:organisation, true)
     founder_members.set_permission!(:founder_member, true)
 
     directors = member_classes.find_or_create_by_name('Director')
@@ -223,6 +242,7 @@ class Coop < Organisation
     secretaries.set_permission!(:vote, true)
     secretaries.set_permission!(:board_meeting, true)
     secretaries.set_permission!(:member, true)
+    secretaries.set_permission!(:organisation, true)
   end
 
   def create_default_offices

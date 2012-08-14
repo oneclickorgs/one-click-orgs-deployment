@@ -76,6 +76,8 @@ module NavigationHelpers
       edit_constitution_path
     when /^the co-op review page$/
       admin_coops_path
+    when /^the Shares page$/
+      '/shares'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
