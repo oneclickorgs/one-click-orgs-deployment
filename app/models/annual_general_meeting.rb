@@ -7,9 +7,9 @@ class AnnualGeneralMeeting < GeneralMeeting
   def create_election_if_necessary
     return if election
     return unless electronic_nominations || electronic_voting
-    
+
     build_election(:organisation => organisation)
-    
+
     if electronic_nominations && nominations_closing_date
       election.nominations_closing_date = nominations_closing_date
     end

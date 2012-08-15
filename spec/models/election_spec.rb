@@ -133,7 +133,7 @@ describe Election do
 
       @election.save!
       @election.reload
-      
+
       @election.organisation(true).should == @organisation
     end
   end

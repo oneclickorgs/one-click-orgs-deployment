@@ -5,7 +5,7 @@ class Election < ActiveRecord::Base
     event :close do
       transition :open => :closed
     end
-    
+
     event :start do
       transition :draft => :open
     end

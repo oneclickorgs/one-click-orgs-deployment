@@ -62,7 +62,7 @@ end
 
 When /^I place my vote for the new directors I want$/ do
   visit(new_election_ballot_path(:election_id => @election))
-  
+
   # Rank first three nominations in reverse order.
   # Don't rank the remaining nominations
   nominations = @election.nominations
@@ -116,7 +116,7 @@ end
 Then /^my vote should be counted$/ do
   @ballot = @user.ballots.last
   @ballot.should be_present
-  
+
   @election ||= @organisation.elections.last
   nominations = @election.nominations
 

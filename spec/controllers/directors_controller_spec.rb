@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe DirectorsController do
   include ControllerSpecHelper
-  
+
   before(:each) do
     stub_app_setup
   end
-  
+
   context "when current organisation is a Company" do
     before(:each) do
       stub_company
@@ -114,13 +114,13 @@ describe DirectorsController do
       end
     end
   end
-  
+
   context "when current organisation is a Coop" do
     before(:each) do
       stub_coop
       stub_login
     end
-    
+
     describe "GET index" do
       let(:tasks) {mock("tasks")}
 
@@ -151,5 +151,5 @@ describe DirectorsController do
       end
     end
   end
-  
+
 end
