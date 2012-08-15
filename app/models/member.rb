@@ -56,6 +56,8 @@ class Member < ActiveRecord::Base
 
   has_one :directorship, :order => 'elected_on DESC', :foreign_key => 'director_id'
 
+  has_one :share_account, :as => :owner
+
   scope :active, with_state(:active)
   scope :inactive, with_state(:inactive)
   scope :pending, with_state(:pending)
@@ -175,6 +177,16 @@ class Member < ActiveRecord::Base
   def founding_vote
     # The first vote of a founder will always be the founding vote
     self.votes.first
+  end
+
+  # SHARES
+
+  def shares_count
+    find_or_build_share_account.balance
+  end
+
+  def find_or_build_share_account
+    share_account || build_share_account
   end
 
   # FINDERS

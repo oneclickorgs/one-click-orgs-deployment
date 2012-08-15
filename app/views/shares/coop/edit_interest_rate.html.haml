@@ -1,0 +1,9 @@
+%h2 Adjust interest rate
+
+= form_for(:organisation, :url => update_interest_rate_shares_path, :method => :put) do |form|
+  %p
+    = form.label :interest_rate, "New interest rate"
+    = form.text_field :interest_rate, :class => 'inline'
+    \%
+  %p
+    = form.submit "Save"

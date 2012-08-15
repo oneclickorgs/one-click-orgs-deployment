@@ -158,7 +158,22 @@ OneClickOrgs::Application.routes.draw do
   resources :general_meetings
   resources :board_meetings
 
-  resources :shares
+  resources :shares do
+    collection do
+      get :edit_share_value
+      put :update_share_value
+
+      get :edit_minimum_shareholding
+      put :update_minimum_shareholding
+
+      get :edit_interest_rate
+      put :update_interest_rate
+    end
+  end
+  resources :share_applications
+  resources :share_transactions
+
+  resource :membership_application_form
 
   get '/admin' => 'admin#index'
 

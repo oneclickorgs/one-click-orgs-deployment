@@ -1,0 +1,17 @@
+- content_for(:head) do
+  = javascript_include_tag 'share_applications_new'
+
+%h2 Apply for more shares
+
+%p
+  You currently have
+  = pluralize(current_user.shares_count, "share.", "shares.")
+
+= form_for(@share_application) do |form|
+  %p
+    = form.label :amount, "How many shares would you like to apply for?"
+    = form.text_field :amount
+  %p.share_payment{:style => 'display: none;'}
+    A payment of £<span>0</span> will be due.
+  %p
+    = form.submit "Apply for more shares"

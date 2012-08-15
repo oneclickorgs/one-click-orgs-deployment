@@ -128,6 +128,13 @@ describe Coop do
 
       @coop.elections.should include(@election)
     end
+
+    it "has many founder members" do
+      @coop = Coop.make!
+      @founder_member = @coop.members.make!(:founder_member)
+
+      @coop.founder_members.should include(@founder_member)
+    end
   end
 
   describe "defaults" do
@@ -148,8 +155,14 @@ describe Coop do
         @coop.member_classes.find_by_name('Member').should be_present
       end
 
-      it "creates a 'Secretary' member class" do
-        @coop.member_classes.find_by_name('Secretary').should be_present
+      describe "Secretary member class" do
+        it "creates a 'Secretary' member class" do
+          @coop.member_classes.find_by_name('Secretary').should be_present
+        end
+
+        it "sets the 'organisation' permission" do
+          @coop.member_classes.find_by_name('Secretary').should have_permission(:organisation)
+        end
       end
     end
   end
@@ -189,6 +202,66 @@ describe Coop do
       @coop.save!
       @coop.reload
       @coop.objectives.should == "Make things"
+    end
+
+    describe "'share_value' attribute" do
+      before(:each) do
+        @coop = Coop.make
+      end
+
+      it "defaults to 100" do
+        @coop.share_value.should == 100
+      end
+
+      it "is an integer value of pennies" do
+        @coop.share_value = 123.45
+        @coop.share_value.should == 123
+      end
+
+      it "can handle a value given in pounds" do
+        @coop.share_value_in_pounds = "0.88"
+        @coop.share_value.should == 88
+      end
+
+      it "can return a value in pounds" do
+        @coop.share_value_in_pounds.should == 1.0
+      end
+    end
+
+    describe "'minimum_shareholding' attribute" do
+      before(:each) do
+        @coop = Coop.make
+      end
+
+      it "defaults to 1" do
+        @coop.minimum_shareholding.should == 1
+      end
+
+      it "accepts a string" do
+        @coop.minimum_shareholding = "3"
+        @coop.minimum_shareholding.should == 3
+      end
+    end
+
+    describe "'interest_rate' attribute" do
+      before(:each) do
+        @coop = Coop.make
+      end
+
+      it "defaults to nil" do
+        @coop.interest_rate.should be_nil
+      end
+
+      it "accepts a string" do
+        @coop.interest_rate = "1.34"
+        @coop.interest_rate.should == 1.34
+      end
+    end
+
+    it "has a 'membership_application_text' attribute" do
+      @coop = Coop.make
+      expect {@coop.membership_application_text = "Custom text."}.to_not raise_error
+      @coop.membership_application_text.should == "Custom text."
     end
   end
 

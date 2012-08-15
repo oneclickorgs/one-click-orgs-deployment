@@ -25,6 +25,16 @@ Given /^the office is occupied by "(.*?)"$/ do |name|
   @office.reload
 end
 
+Given /^we have appointed some initial Directors and Officers$/ do
+  # Make a Secretary
+  secretary = @organisation.members.make!(:secretary)
+  secretary_office = @organisation.offices.find_or_create_by_title('Secretary')
+  @organisation.officerships.make!(:officer => secretary, :office => secretary_office)
+
+  # Make another Director
+  @organisation.members.make!(:director)
+end
+
 When /^I choose yesterday for the date of election$/ do
   yesterday = 1.day.ago
   select(yesterday.year.to_s, :from => 'director[elected_on(1i)]')
@@ -209,5 +219,20 @@ Then /^I should not see "(.*?)" listed as the "(.*?)"$/ do |name, office|
       page.should have_no_content(name)
       page.should have_content('unoccupied')
     end
+  end
+end
+
+Then /^I should see a list of the directors of the draft co\-op$/ do
+  @organisation.directors.should_not be_empty
+  @organisation.directors.each do |director|
+    page.should have_content(director.name)
+  end
+end
+
+Then /^I should see a list of officers of the draft co\-op$/ do
+  @organisation.officers.should_not be_empty
+  @organisation.officers.each do |officer|
+    page.should have_content(officer.name)
+    page.should have_content(officer.office.title)
   end
 end

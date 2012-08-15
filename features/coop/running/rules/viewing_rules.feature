@@ -2,7 +2,7 @@ Feature: Viewing rules
   In order to understand the way the co-op works
   As a Member
   I want to view the Rules of the co-op
-  
+
   Background:
     Given there is a co-op
     And I am a Member of the co-op

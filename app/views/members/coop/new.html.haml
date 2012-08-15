@@ -14,4 +14,7 @@
   %p
     = member_form.check_box :certify_age
     = member_form.label :certify_age, "I am aged 16 years or over."
+  - if co.membership_application_text.present?
+    %p
+      = simple_format(co.membership_application_text)
   %p= member_form.submit "Send membership application"

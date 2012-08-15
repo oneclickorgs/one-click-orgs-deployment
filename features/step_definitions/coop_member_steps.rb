@@ -11,7 +11,9 @@ Given /^I am the founder of the draft co\-op$/ do
 end
 
 Given /^I am a founding member of the draft co\-op$/ do
-  pending # express the regexp above with the code you wish you had
+  @organsation ||= Coop.pending.last
+  @user = @organisation.members.make!(:founder_member)
+  user_logs_in
 end
 
 Given /^I am the (?:S|s)ecretary of the co\-op$/ do
@@ -63,6 +65,14 @@ When /^I enter a new founding member's details$/ do
   fill_in("Last name", :with => "Smith")
 end
 
+When /^I enter new text for the membership application form$/ do
+  fill_in("organisation[membership_application_text]", :with => "You must live locally.")
+end
+
+When /^I certify that the new text was agreed by the Directors$/ do
+  check('organisation[certification]')
+end
+
 Then /^I should see a list of the members$/ do
   page.should have_css('.members', :text => @user.name)
 end
@@ -86,5 +96,12 @@ end
 Then /^I should see the new founding member in the list of invited members$/ do
   within('.pending_members') do
     page.should have_content("Bob Smith")
+  end
+end
+
+Then /^I should see a list of founding members of the draft co\-op$/ do
+  @organisation.founder_members.should_not be_empty
+  @organisation.founder_members.each do |founder_member|
+    page.should have_content(founder_member.name)
   end
 end

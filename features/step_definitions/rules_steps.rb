@@ -1,3 +1,8 @@
+Given /^we have customised the Rules$/ do
+  @organisation.objectives = "Change the world"
+  @organisation.save!
+end
+
 When /^I change the Name to "(.*?)"$/ do |name|
   fill_in('constitution_proposal_bundle[organisation_name]', :with => name)
 end
@@ -69,4 +74,8 @@ end
 
 Then /^I should see the rules of the co\-op$/ do
   page.should have_content("Industrial and Provident Societies Act 1965")
+end
+
+Then /^I should see the customisations we have made to the rules$/ do
+  page.should have_content("Change the world")
 end

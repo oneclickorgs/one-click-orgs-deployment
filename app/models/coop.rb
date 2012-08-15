@@ -41,13 +41,22 @@ class Coop < Organisation
 
   has_many :offices, :foreign_key => 'organisation_id'
   has_many :officerships, :through => :offices
+  has_many :officers, :through => :officerships
 
   has_many :directorships, :foreign_key => 'organisation_id'
 
   has_many :elections, :foreign_key => 'organisation_id'
 
+  has_one :share_account, :as => :owner
+  has_many :withdrawals, :through => :share_account
+
+  def founder_members
+    members.founder_members(self)
+  end
+
   after_create :create_default_offices
   after_create :set_default_user_and_director_clauses
+  after_create :create_share_account_if_necessary
 
   # ATTRIBUTES / CLAUSES
 
@@ -187,11 +196,63 @@ class Coop < Organisation
     @single_shareholding ||= clauses.get_boolean('single_shareholding')
   end
 
+  def single_shareholding=(new_single_shareholding)
+    clauses.build(:name => :single_shareholding, :boolean_value => !!new_single_shareholding)
+    @single_shareholding = !!new_single_shareholding
+  end
+
   def common_ownership
     @common_ownership ||= clauses.get_boolean('common_ownership')
   end
 
+  def share_value=(new_share_value)
+    clauses.build(:name => :share_value, :integer_value => new_share_value.to_i)
+    @share_value = new_share_value.to_i
+  end
 
+  # Share value in pennies. Defaults to 100.
+  def share_value
+    @share_value ||= (clauses.get_integer('share_value') || 100)
+  end
+
+  def share_value_in_pounds=(new_share_value_in_pounds)
+    new_share_value_in_pounds = new_share_value_in_pounds.to_f
+    new_share_value = (new_share_value_in_pounds * 100.0).to_i
+    self.share_value = new_share_value
+  end
+
+  def share_value_in_pounds
+    share_value.to_f / 100.0
+  end
+
+  def minimum_shareholding=(new_minimum_shareholding)
+    new_minimum_shareholding = new_minimum_shareholding.to_i
+    clauses.build(:name => :minimum_shareholding, :integer_value => new_minimum_shareholding)
+    @minimum_shareholding = new_minimum_shareholding
+  end
+
+  def minimum_shareholding
+    @minimum_shareholding ||= (clauses.get_integer('minimum_shareholding') || 1)
+  end
+
+  def interest_rate
+    @interest_rate ||= clauses.get_decimal('interest_rate')
+  end
+
+  def interest_rate=(new_interest_rate)
+    new_interest_rate = new_interest_rate.to_f
+    clauses.build(:name => :interest_rate, :decimal_value => new_interest_rate)
+    @interest_rate = new_interest_rate
+  end
+
+  def membership_application_text
+    @membership_application_text ||= clauses.get_text(:membership_application_text)
+  end
+
+  def membership_application_text=(new_membership_application_text)
+    clauses.build(:name => :membership_application_text, :text_value => new_membership_application_text)
+    @membership_application_text = new_membership_application_text
+  end
 
   # SETUP
 
@@ -202,6 +263,7 @@ class Coop < Organisation
 
     founder_members = member_classes.find_or_create_by_name('Founder Member')
     founder_members.set_permission!(:constitution, true)
+    founder_members.set_permission!(:organisation, true)
     founder_members.set_permission!(:founder_member, true)
 
     directors = member_classes.find_or_create_by_name('Director')
@@ -218,6 +280,7 @@ class Coop < Organisation
     secretaries.set_permission!(:vote, true)
     secretaries.set_permission!(:board_meeting, true)
     secretaries.set_permission!(:member, true)
+    secretaries.set_permission!(:organisation, true)
   end
 
   def create_default_offices
@@ -247,6 +310,12 @@ class Coop < Organisation
   end
 
   def destroy_pending_state_member_classes
+  end
+
+  def create_share_account_if_necessary
+    unless share_account
+      create_share_account!
+    end
   end
 
   def member_eligible_to_vote?(member, proposal)
@@ -303,6 +372,4 @@ class Coop < Organisation
       m.member_class = member_classes.find_by_name("Founder Member")
     }
   end
-
-
 end
