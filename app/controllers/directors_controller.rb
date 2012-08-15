@@ -2,6 +2,8 @@ class DirectorsController < ApplicationController
   def index
     @directors = co.directors
     @offices = co.offices
+
+    @tasks = current_user.tasks.current.directors_related
   end
   
   def create

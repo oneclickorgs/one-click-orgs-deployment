@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814205341) do
+ActiveRecord::Schema.define(:version => 20120815140455) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20120814205341) do
     t.integer  "meeting_id"
     t.date     "nominations_closing_date"
     t.date     "voting_closing_date"
+    t.integer  "seats"
   end
 
   create_table "meeting_participations", :force => true do |t|
@@ -157,8 +158,10 @@ ActiveRecord::Schema.define(:version => 20120814205341) do
   create_table "nominations", :force => true do |t|
     t.integer  "election_id"
     t.integer  "nominee_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.string   "state"
+    t.decimal  "votes",       :precision => 15, :scale => 10
   end
 
   create_table "officerships", :force => true do |t|

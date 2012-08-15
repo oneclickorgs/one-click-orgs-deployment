@@ -1,0 +1,13 @@
+%p
+  The election of
+  = task.subject.voting_closing_date.to_s(:long_ordinal)
+  has been completed.
+%ul
+  - task.subject.elected_nominees.each do |n|
+    %li
+      = n.name
+      was elected.
+  - task.subject.defeated_nominees.each do |n|
+    %li
+      = n.name
+      was not elected.

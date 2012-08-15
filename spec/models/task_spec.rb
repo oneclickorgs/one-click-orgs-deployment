@@ -58,6 +58,21 @@ describe Task do
         Task.shares_related.should_not include(@member_task)
       end
     end
+
+    describe "directors-related" do
+      before(:each) do
+        @election_task = Task.make!(:subject => Election.make!)
+        @member_task = Task.make!(:subject => Member.make!)
+      end
+
+      it "includes tasks with an Election as the subject" do
+        Task.directors_related.should include(@election_task)
+      end
+
+      it "does not include tasks with a Member as the subject" do
+        Task.directors_related.should_not include(@member_task)
+      end
+    end
   end
 
 end

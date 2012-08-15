@@ -17,7 +17,9 @@ class AnnualGeneralMeeting < GeneralMeeting
     if electronic_voting && voting_closing_date
       election.voting_closing_date = voting_closing_date
     end
-    
+
+    election.seats = organisation.directors_retiring.count
+
     election.save!
   end
 end

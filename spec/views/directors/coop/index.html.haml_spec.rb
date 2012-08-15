@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe 'directors/coop/index' do
 
+  let(:task) {mock_model(Task, :to_partial_name => 'task_election_view_result')}
+
   before(:each) do
     @directors = [
       mock_model(Member, :to_param => '4',
@@ -19,6 +21,14 @@ describe 'directors/coop/index' do
       )
     ]
     assign(:offices, @offices)
+
+    assign(:tasks, [task])
+    stub_template('tasks/_task_election_view_result' => 'task template')
+  end
+
+  it "displays a list of director-related tasks for the current user" do
+    render
+    rendered.should render_template('tasks/_task_election_view_result')
   end
 
   it "renders a list of the offices" do

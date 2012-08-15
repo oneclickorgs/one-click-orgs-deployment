@@ -122,18 +122,31 @@ describe DirectorsController do
     end
     
     describe "GET index" do
+      let(:tasks) {mock("tasks")}
+
       before(:each) do
         @organisation.stub(:directors)
         @organisation.stub(:offices).and_return(@offices = mock("offices association"))
+
+        @user.stub_chain(:tasks, :current, :directors_related).and_return(tasks)
+      end
+
+      def get_index
+        get :index
       end
 
       it "assigns the offices" do
-        get :index
+        get_index
         assigns[:offices].should == @offices
       end
 
+      it "assigns the currently-open, directors-related tasks for the current user" do
+        get_index
+        assigns[:tasks].should == tasks
+      end
+
       it "is successful" do
-        get :index
+        get_index
         response.should be_success
       end
     end
