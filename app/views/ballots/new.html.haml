@@ -1,8 +1,12 @@
+%h2 Cast your vote
+
+%p Rank as few or as many of the following candidates, in order of your preference.
+
 = form_for([@election, @ballot]) do |ballot_form|
   %ul
     - @nominations.each do |nomination|
       = content_tag_for(:li, nomination) do
         = nomination.name
-        = ballot_form.text_field("ranking_#{nomination.id}")
+        = ballot_form.text_field("ranking_#{nomination.id}", :style => "width: 3em;")
   %p
     = ballot_form.submit("Save my vote")
