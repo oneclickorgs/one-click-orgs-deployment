@@ -372,4 +372,11 @@ class Coop < Organisation
       m.member_class = member_classes.find_by_name("Founder Member")
     }
   end
+
+  # True if the minimum required fields in the Rules have been filled in.
+  def rules_filled?
+    name.present? &&
+      registered_office_address.present? &&
+      objectives.present?
+  end
 end

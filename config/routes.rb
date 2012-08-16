@@ -194,5 +194,6 @@ OneClickOrgs::Application.routes.draw do
   post '/system/test_email' => 'system#test_email'
   match '/system/test_exception_notification' => 'system#test_exception_notification'
 
+  get '/checklist' => 'one_click#checklist', :as => 'checklist'
   root :to => 'one_click#dashboard'
 end

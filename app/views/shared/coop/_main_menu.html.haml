@@ -1,7 +1,7 @@
 - if current_user
   - if co.pending? || co.proposed?
     %ul#nav
-      %li.navitem= link_to 'Checklist', root_path
+      %li.navitem= link_to 'Checklist', checklist_path
       %li.navitem= link_to 'Members', members_path
       %li.navitem= link_to 'Directors', directors_path
       %li.navitem= link_to 'Rules', constitution_path

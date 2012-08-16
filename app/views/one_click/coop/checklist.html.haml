@@ -1,0 +1,30 @@
+%h2 Checklist
+
+%p Welcome to your draft co-op. There are several things you need to do before you can submit your registration.
+
+%ul.checklist
+  %li{:class => co.members.count >= 3 ? 'done' : ''}
+    %h3 Invite at least three Founder Members.
+    %p
+      You currently have
+      = pluralize(co.members.count, "Founder Member.", "Founder Members.")
+  %li{:class => co.directors.count >= 1 ? 'done' : ''}
+    %h3 Appoint your initial Directors.
+    %p
+      You currently have
+      = pluralize(co.directors.count, "Director.", "Directors.")
+  %li{:class => co.secretary ? 'done' : ''}
+    %h3 Appoint a Secretary.
+    %p
+      - if co.secretary
+        Your secretary is
+        = co.secretary.name + '.'
+      - else
+        You have not appointed a Secretary yet.
+  %li{:class => co.rules_filled? ? 'done' : ''}
+    %h3 Fill out and choose options for your co-op's Rules.
+    %p
+      - if co.rules_filled?
+        The necessary fields in your Rules have been filled in.
+      - else
+        You still have some choices to make about your Rules.

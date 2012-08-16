@@ -744,3 +744,13 @@ table.past_meetings
 
 p.share_payment span
   :font-weight bold
+
+// Co-op checklist
+
+ul.checklist
+  li
+    :list-style-image asset-url('bullet_green.png', image)
+    &.done
+      :list-style-image asset-url('tick.png', image)
+      h3
+        :text-decoration line-through

@@ -32,6 +32,10 @@ class OneClickController < ApplicationController
         co.meetings.all
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     when Coop
+      unless co.active?
+        redirect_to checklist_path
+        return
+      end
       @timeline = [
         co.members.all,
         co.meetings.all,
@@ -41,5 +45,8 @@ class OneClickController < ApplicationController
 
       @tasks = current_user.tasks.current
     end
+  end
+
+  def checklist
   end
 end
