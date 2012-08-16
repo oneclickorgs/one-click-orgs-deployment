@@ -68,17 +68,17 @@ class Ability
         can :create, Meeting
       end
 
-      if user.has_permission(:constitution)
+      if user.has_permission(:constitution) || user.organisation.pending?
         can :update, Constitution
       end
 
-      if user.has_permission(:organisation)
+      if user.has_permission(:organisation) || user.organisation.pending?
         can :update, Coop do |coop|
           user.organisation == coop
         end
       end
 
-      if user.has_permission(:founder_member)
+      if user.has_permission(:founder_member) || user.organisation.pending?
         can :create, FounderMember
       end
 
