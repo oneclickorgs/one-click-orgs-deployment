@@ -48,5 +48,9 @@ class OneClickController < ApplicationController
   end
 
   def checklist
+    if co.active?
+      redirect_to root_path
+      return
+    end
   end
 end
