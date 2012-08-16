@@ -70,4 +70,12 @@ class Election < ActiveRecord::Base
       nominations.find(c.name).defeat!
     end
   end
+
+  # TODO Remove this; it's for testing purposes only.
+  def auto_cast_ballots
+    eligible_members = organisation.members - ballots.map(&:member)
+    eligible_members.each do |member|
+      ballots.create(:ranking => [nominations.first.id], :member => member)
+    end
+  end
 end
