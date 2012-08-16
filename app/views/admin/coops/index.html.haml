@@ -4,7 +4,24 @@
 %ul.proposed_coops
   - @proposed_coops.each do |coop|
     = content_tag_for(:li, coop) do
-      %h4= coop.name
+      %h4
+        = coop.name
+        (
+        = coop.domain(:only_host => true)
+        )
+      %p
+        %strong Founder:
+        = coop.members.first.name
+        \<
+        = link_to(coop.members.first.email, "mailto:#{coop.members.first.email}")
+        \>
+      %p
+        %strong Registered Office Address:
+        = coop.registered_office_address
+      %p
+        %strong Objects:
+        = coop.objectives
+      %p TODO: Full organisation and registration form data here.
       = button_to("Approve registration", found_admin_coop_path(coop), :method => :put)
       %br.clear
 
@@ -12,10 +29,18 @@
 %ul.pending_coops
   - @pending_coops.each do |coop|
     = content_tag_for(:li, coop) do
-      %h4= coop.name
+      %h4
+        = coop.name
+        (
+        = coop.domain(:only_host => true)
+        )
 
 %h3 Active co-ops
 %ul.active_coops
   - @active_coops.each do |coop|
     = content_tag_for(:li, coop) do
-      %h4= coop.name
+      %h4
+        = coop.name
+        (
+        = coop.domain(:only_host => true)
+        )
