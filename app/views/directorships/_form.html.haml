@@ -1,12 +1,15 @@
 %p
-  = form.label(:director_id, "Name")
+  = form.label(:director_id, "Who are you appointing as a Director?")
 %p
   = form.select(:director_id, options_from_collection_for_select(co.members, :id, :name))
-%p
-  = form.check_box(:certification)
-  = form.label(:certification, "I certify that the above named person was elected as a director", :class => 'inline')
-  at the Annual General Meeting on
-  = form.date_select(:elected_on, {}, :class => 'inline')
-  \.
+- if co.active?
+  %p
+    = form.check_box(:certification)
+    = form.label(:certification, "I certify that the above named person was elected as a director", :class => 'inline')
+    at the Annual General Meeting on
+    = form.date_select(:elected_on, {}, :class => 'inline')
+    \.
+-else
+  = form.hidden_field(:elected_on)
 %p
   = form.submit("Record this appointment")
