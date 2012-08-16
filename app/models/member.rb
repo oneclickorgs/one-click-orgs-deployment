@@ -189,6 +189,10 @@ class Member < ActiveRecord::Base
     share_account || build_share_account
   end
 
+  def find_or_create_share_account
+    share_account || create_share_account!
+  end
+
   # FINDERS
 
   def self.find_by_name(name)

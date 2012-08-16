@@ -28,6 +28,7 @@ module OneClickOrgs
     config.active_record.observers =
       :decision_mailer_observer,
       :directorship_mailer_observer,
+      :election_task_observer,
       :meeting_mailer_observer,
       :member_observer,
       :member_mailer_observer,

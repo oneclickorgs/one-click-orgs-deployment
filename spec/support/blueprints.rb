@@ -204,6 +204,7 @@ Office.blueprint do
 end
 
 Election.blueprint do
+  seats { 3 }
 end
 
 Nomination.blueprint do

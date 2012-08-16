@@ -20,8 +20,8 @@ class ConstitutionProposalBundlesController < ApplicationController
         redirect_to(root_path, :notice => "Constitutional amendment proposals successfully created")
       end
     else
-      flash.now[:error] = "There was a problem with your amendments"
-      render(:action => 'TODO What action?')
+      flash.now[:error] = "There was a problem with your amendments: #{@constitution_proposal_bundle.errors.full_messages.to_sentence}"
+      edit_constitution_path
     end
   end
 end

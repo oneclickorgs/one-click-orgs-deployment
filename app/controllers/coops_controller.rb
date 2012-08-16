@@ -13,11 +13,20 @@ class CoopsController < ApplicationController
     @coop = Coop.new(params[:coop])
     @member = @coop.members.build(params[:member])
 
-    @coop.save
-    @member.save
+    @coop.save!
+    @member.save!
 
     @member.member_class = @coop.member_classes.find_by_name("Founder Member")
-    @member.save
+    @member.save!
+
+    @member.induct!
+
+    st = ShareTransaction.create(
+      :to_account => @member.find_or_create_share_account,
+      :from_account => @coop.share_account,
+      :amount => 1
+    )
+    st.save!
 
     log_in(@member)
 

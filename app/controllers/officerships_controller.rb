@@ -1,6 +1,6 @@
 class OfficershipsController < ApplicationController
   def new
-    @officership = co.officerships.build
+    @officership = co.officerships.build(:elected_on => Date.today)
     @officership.build_office
   end
 

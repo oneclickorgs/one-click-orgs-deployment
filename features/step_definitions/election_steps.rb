@@ -6,9 +6,63 @@ Given /^there is an electronic vote for new directors in progress$/ do
   @election.start!
 end
 
+Given /^there is an election which is due to close$/ do
+  @nominees = @organisation.members.make!(3)
+
+  @election = @organisation.elections.make!
+  @election.seats = 2
+  @election.nominees = @nominees
+  @election.nominations_closing_date = 1.week.ago
+  @election.voting_closing_date = 1.day.ago
+
+  @election.save!
+
+  @election.start!
+end
+
+Given /^ballots have been cast on the election$/ do
+  @election ||= @organisation.elections.last
+  @nominees ||= @election.nominees
+
+  # Array of nominations in same order as @nominees
+  nomination_ids = @nominees.map{|nominee| @election.nominations.where(:nominee_id => nominee.id).first.id}
+
+  @balloting_members = @organisation.members.make!(6)
+
+  # A set of ballots that will result in nominees 1 and 2 being elected,
+  # and nominee 0 being defeated.
+
+  @election.ballots.make!(
+    :member => @balloting_members[0],
+    :ranking => [nomination_ids[0], nomination_ids[1]]
+  )
+  @election.ballots.make!(
+    :member => @balloting_members[1],
+    :ranking => [nomination_ids[0], nomination_ids[1]]
+  )
+  @election.ballots.make!(
+    :member => @balloting_members[2],
+    :ranking => [nomination_ids[0], nomination_ids[1]]
+  )
+  @election.ballots.make!(
+    :member => @balloting_members[3],
+    :ranking => [nomination_ids[0], nomination_ids[1]]
+  )
+  @election.ballots.make!(
+    :member => @balloting_members[4],
+    :ranking => [nomination_ids[2]]
+  )
+  @election.ballots.make!(
+    :member => @balloting_members[5],
+    :ranking => [nomination_ids[2]]
+  )
+
+  @ballots = @election.ballots(true)
+end
+
 When /^I place my vote for the new directors I want$/ do
   visit(new_election_ballot_path(:election_id => @election))
-  
+
   # Rank first three nominations in reverse order.
   # Don't rank the remaining nominations
   nominations = @election.nominations
@@ -41,6 +95,10 @@ When /^I choose a closing date for voting$/ do
   select(date.day.to_s, :from => "general_meeting[voting_closing_date(3i)]")
 end
 
+When /^the election closer runs$/ do
+  Election.close_elections
+end
+
 Then /^an electronic vote for the new Directors should be prepared$/ do
   election = @organisation.meetings.last.election
 
@@ -58,7 +116,7 @@ end
 Then /^my vote should be counted$/ do
   @ballot = @user.ballots.last
   @ballot.should be_present
-  
+
   @election ||= @organisation.elections.last
   nominations = @election.nominations
 
@@ -67,4 +125,11 @@ Then /^my vote should be counted$/ do
     nominations[1].id,
     nominations[0].id
   ]
+end
+
+Then /^I should see the results of the election$/ do
+  page.should have_content("#{@nominees[0].name} was elected.")
+  page.should have_content("#{@nominees[1].name} was not elected.")
+  page.should have_content("#{@nominees[2].name} was elected.")
+
 end

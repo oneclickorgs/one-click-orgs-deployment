@@ -17,6 +17,23 @@ describe Nomination do
     end
   end
 
+  describe "scopes" do
+    before(:each) do
+      @elected_nomination = Nomination.make!(:state => 'elected')
+      @defeated_nomination = Nomination.make!(:state => 'defeated')
+    end
+
+    it "has an elected scope" do
+      Nomination.elected.should include(@elected_nomination)
+      Nomination.elected.should_not include(@defeated_nomination)
+    end
+
+    it "has a defeated scope" do
+      Nomination.defeated.should include(@defeated_nomination)
+      Nomination.defeated.should_not include(@elected_nomination)
+    end
+  end
+
   describe "getters" do
     it "gets 'name' from the nominee" do
       @nomination = Nomination.new(:nominee => mock_model(Member, :name => "John Smith"))

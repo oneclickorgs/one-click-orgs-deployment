@@ -1,3 +1,8 @@
+# Represents a single 'ballot paper' in an election. To vote, a member
+# ranks any number of nominees in order of preference.
+#
+# This ranking is stored in the attribute 'ranking', as an array of
+# Nomination IDs.
 class Ballot < ActiveRecord::Base
   attr_protected
 

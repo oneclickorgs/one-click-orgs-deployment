@@ -10,6 +10,11 @@
 
 .section
   %p
+    You currently hold:
+    = pluralize(current_user.shares_count, "share")
+    in
+    = co.name + '.'
+  %p
     The share value is
     = number_to_currency(co.share_value_in_pounds, :unit => "£")
   %p
@@ -39,6 +44,3 @@
     = link_button("Adjust minimum shareholding", :url => edit_minimum_shareholding_shares_path)
     = link_button("Adjust interest rate", :url => edit_interest_rate_shares_path)
     %br.clear
-
-.section
-  %h3 Share ownership

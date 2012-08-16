@@ -25,6 +25,19 @@ class Invitation < OneClickOrgs::ModelWrapper
   def save
     if member.save
       clear_invitation_code!
+
+      # TODO Move this to somewhere more sensible
+      if member.organisation.is_a?(Coop)
+        member.induct!
+
+        st = ShareTransaction.create(
+          :to_account => @member.find_or_create_share_account,
+          :from_account => @member.organisation.share_account,
+          :amount => 1
+        )
+        st.save!
+      end
+
       true
     else
       false

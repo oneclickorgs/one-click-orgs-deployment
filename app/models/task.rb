@@ -7,6 +7,7 @@ class Task < ActiveRecord::Base
     where(["(starts_on IS NULL OR starts_on <= :today) AND completed_at IS NULL", {:today => Date.today}])
   }
   scope :shares_related, where(:subject_type => ['ShareTransaction'])
+  scope :directors_related, where(:subject_type => ['Election'])
 
   def to_partial_name
     partial_name  = "task_"

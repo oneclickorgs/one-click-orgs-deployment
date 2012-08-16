@@ -3,6 +3,9 @@ require 'one_click_orgs/cast_to_boolean'
 class Coop < Organisation
   include OneClickOrgs::CastToBoolean
 
+  attr_accessible :reg_form_timing_factors, :reg_form_close_links, :reg_form_membership_required,
+    :reg_form_financial_year_end
+
   state_machine :initial => :pending do
     event :propose do
       transition :pending => :proposed
@@ -371,5 +374,60 @@ class Coop < Organisation
       m.organisation = self
       m.member_class = member_classes.find_by_name("Founder Member")
     }
+  end
+
+  # True if the minimum required fields in the Rules have been filled in.
+  def rules_filled?
+    name.present? &&
+      registered_office_address.present? &&
+      objectives.present?
+  end
+
+  # Registration form
+
+  def reg_form_timing_factors
+    @reg_form_timing_factors ||= clauses.get_text('reg_form_timing_factors')
+  end
+
+  def reg_form_timing_factors=(new_reg_form_timing_factors)
+    new_reg_form_timing_factors = ' ' if new_reg_form_timing_factors.blank?
+    clauses.build(:name => 'reg_form_timing_factors', :text_value => new_reg_form_timing_factors)
+    @reg_form_timing_factors = new_reg_form_timing_factors
+  end
+
+  def reg_form_close_links
+    @reg_form_close_links ||= clauses.get_text('reg_form_close_links')
+  end
+
+  def reg_form_close_links=(new_reg_form_close_links)
+    new_reg_form_close_links = ' ' if new_reg_form_close_links.blank?
+    clauses.build(:name => 'reg_form_close_links', :text_value => new_reg_form_close_links)
+    @reg_form_close_links = new_reg_form_close_links
+  end
+
+  def reg_form_financial_year_end
+    @reg_form_financial_year_end ||= clauses.get_text('reg_form_financial_year_end')
+  end
+
+  def reg_form_financial_year_end=(new_reg_form_financial_year_end)
+    new_reg_form_financial_year_end = ' ' if new_reg_form_financial_year_end.blank?
+    clauses.build(:name => 'reg_form_financial_year_end', :text_value => new_reg_form_financial_year_end)
+    @reg_form_finacial_year_end = new_reg_form_financial_year_end
+  end
+
+  def reg_form_membership_required
+    @reg_form_membership_required ||= clauses.get_boolean('reg_form_membership_required')
+  end
+
+  def reg_form_membership_required=(new_reg_form_membership_required)
+    return if new_reg_form_membership_required.nil?
+    clauses.build(:name => 'reg_form_membership_required', :boolean_value => new_reg_form_membership_required)
+    @reg_form_membership_required = new_reg_form_membership_required
+  end
+
+  def registration_form_filled?
+    [
+      :membership_required
+    ].map{|name| "reg_form_#{name}"}.map{|name| !send(name).nil?}.inject(true){|memo, present| memo && present}
   end
 end

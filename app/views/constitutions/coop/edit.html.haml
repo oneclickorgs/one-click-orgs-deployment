@@ -71,7 +71,9 @@
       Assets may be distributed among the Members.
 
     - if @allow_editing
-      - if can?(:create, Resolution)
+      - if co.pending?
+        %p= form.submit "Save changes", :id => 'submit'
+      - elsif can?(:create, Resolution)
         %p= form.submit "Create draft resolutions", :id => 'submit'
       - elsif can?(:create, ResolutionProposal)
         %p= form.submit "Suggest these amendments", :id => 'submit'

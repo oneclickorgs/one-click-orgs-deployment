@@ -10,6 +10,7 @@ class BallotsController < ApplicationController
     @ballot = @election.ballots.build(params[:ballot])
     @ballot.member = current_user
     @ballot.save!
+    flash[:notice] = "Your vote has been cast."
     redirect_to root_path
   end
 
