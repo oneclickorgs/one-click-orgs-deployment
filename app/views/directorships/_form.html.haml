@@ -1,7 +1,7 @@
 %p
   = form.label(:director_id, "Who are you appointing as a Director?")
 %p
-  = form.select(:director_id, options_from_collection_for_select(co.members, :id, :name))
+  = form.select(:director_id, options_from_collection_for_select((co.members - co.directors), :id, :name))
 - if co.active?
   %p
     = form.check_box(:certification)
