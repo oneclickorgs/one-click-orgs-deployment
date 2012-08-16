@@ -28,3 +28,10 @@
         The necessary fields in your Rules have been filled in.
       - else
         You still have some choices to make about your Rules.
+  %li{:class => co.registration_form_filled? ? 'done' : ''}
+    %h3 Fill out the Registration Form
+    %p
+      - if co.registration_form_filled?
+        The Registration Form has been filled in.
+      - else
+        The Registration Form has not been filled in yet.
