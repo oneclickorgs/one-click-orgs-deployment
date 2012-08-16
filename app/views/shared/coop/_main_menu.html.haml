@@ -1,9 +1,16 @@
 - if current_user
-  %ul#nav
-    %li.navitem= link_to 'Dashboard', root_path
-    %li.navitem= link_to 'Resolutions', proposals_path
-    %li.navitem= link_to 'Meetings', meetings_path
-    %li.navitem= link_to 'Members', members_path
-    %li.navitem= link_to 'Directors', directors_path
-    %li.navitem= link_to 'Rules', constitution_path
-    %li.navitem= link_to 'Shares', shares_path
+  - if co.pending? || co.proposed?
+    %ul#nav
+      %li.navitem= link_to 'Checklist', root_path
+      %li.navitem= link_to 'Members', members_path
+      %li.navitem= link_to 'Directors', directors_path
+      %li.navitem= link_to 'Rules', constitution_path
+  -else
+    %ul#nav
+      %li.navitem= link_to 'Dashboard', root_path
+      %li.navitem= link_to 'Resolutions', proposals_path
+      %li.navitem= link_to 'Meetings', meetings_path
+      %li.navitem= link_to 'Members', members_path
+      %li.navitem= link_to 'Directors', directors_path
+      %li.navitem= link_to 'Rules', constitution_path
+      %li.navitem= link_to 'Shares', shares_path
