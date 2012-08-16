@@ -25,6 +25,12 @@ class Invitation < OneClickOrgs::ModelWrapper
   def save
     if member.save
       clear_invitation_code!
+
+      # TODO Move this to somewhere more sensible
+      if member.organisation.is_a?(Coop)
+        member.induct!
+      end
+
       true
     else
       false
