@@ -1,5 +1,15 @@
 %h2 Dashboard
 
+- @elections = co.elections.where(:state => :open)
+- if @elections.present?
+  .section
+    - @elections.each do |election|
+      %p An online election for new Directors is currently open.
+      - if election.ballots.where(:member_id => current_user.id).present?
+        %p You have already cast your vote in this election.
+      - else
+        %p= link_to("View the election and cast your vote.", new_election_ballot_path(:election_id => election))
+
 - if @tasks.present?
   %h3 Notifications
   .section
