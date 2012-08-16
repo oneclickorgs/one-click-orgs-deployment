@@ -21,6 +21,13 @@ class CoopsController < ApplicationController
 
     @member.induct!
 
+    st = ShareTransaction.create(
+      :to_account => @member.find_or_create_share_account,
+      :from_account => @coop.share_account,
+      :amount => 1
+    )
+    st.save!
+
     log_in(@member)
 
     redirect_to root_url(host_and_port(@coop.host))

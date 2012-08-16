@@ -115,6 +115,15 @@ class MembersController < ApplicationController
     @member = co.members.find(params[:id])
     @member.send_welcome = true
     @member.induct!
+
+    st = ShareTransaction.create(
+      :to_account => @member.find_or_create_share_account,
+      :from_account => co.share_account,
+      :amount => 1
+    )
+    st.save!
+    st.approve!
+
     redirect_to members_path
   end
 
