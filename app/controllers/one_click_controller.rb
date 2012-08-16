@@ -2,13 +2,13 @@ class OneClickController < ApplicationController
   def index
     redirect_to(:action => 'dashboard')
   end
-  
+
   def dashboard
     # Fetch open proposals
     @proposals = co.proposals.currently_open
-    
+
     @new_proposal = co.proposals.new
-    
+
     case co
     when Association
       if current_organisation.pending? || current_organisation.proposed?
@@ -16,7 +16,7 @@ class OneClickController < ApplicationController
         return
       end
       @add_member_proposal = co.add_member_proposals.build
-      
+
       @timeline = [
         co.members.all,
         co.proposals.all,
