@@ -14,7 +14,10 @@
     = render :partial => 'founder_members/form', :locals => {:form => form}
 
 .section
-  %h3 List of Founder Members
+  - if co.active?
+    %h3 List of Members
+  -else
+    %h3 List of Founder Members
   %table.members
     %tr
       %th Name
