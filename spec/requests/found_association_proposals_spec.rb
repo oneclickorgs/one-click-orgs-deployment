@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe "found association proposals" do
 
   before(:each) do
