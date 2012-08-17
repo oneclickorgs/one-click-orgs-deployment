@@ -1,5 +1,6 @@
 Given /^a co\-op has been submitted$/ do
   @coop = @organisation = Coop.make!(:proposed)
+  @coop.members.make!
 end
 
 Given /^some co\-ops have been submitted for registration$/ do

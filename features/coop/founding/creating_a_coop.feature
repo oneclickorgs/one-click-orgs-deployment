@@ -12,4 +12,4 @@ Feature: Adding a co-op
     And I enter my details
     And I enter the new co-op's details
     And I press "Create draft co-op"
-    Then I should be on the dashboard page for the new co-op
+    Then I should be on the Checklist page

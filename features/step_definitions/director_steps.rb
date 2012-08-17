@@ -148,16 +148,28 @@ end
 
 When /^I choose a member from the list$/ do
   @member ||= @organisation.members.first
-  select(@member.name, :from => 'Name')
+  select(@member.name, :from => 'directorship[director_id]')
+end
+
+When /^I choose "(.*?)" from the list of members$/ do |name|
+  select(name, :from => 'directorship[director_id]')
 end
 
 When /^I choose a director from the list of directors$/ do
   @director = @organisation.directors.first
-  select(@director.name, :from => 'Name')
+  select(@director.name, :from => 'officership[officer_id]')
+end
+
+When /^I choose "(.*?)" from the list of directors$/ do |name|
+  select(name, :from => 'officership[officer_id]')
 end
 
 When /^I choose 'Secretary' from the list of offices$/ do
-  select('Secretary', :from => 'Existing office...')
+  select('Secretary', :from => 'officership[office_id]')
+end
+
+When /^I choose "(.*?)" from the list of offices$/ do |title|
+  select(title, :from => 'officership[office_id]')
 end
 
 Then /^I should see that director listed as "(.*?)" in the list of Officers$/ do |office|
