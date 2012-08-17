@@ -149,6 +149,8 @@ describe OneClickController do
 
       @current_tasks_association = mock("current tasks association")
       @tasks_association.stub(:current).and_return(@current_tasks_association)
+
+      @organisation.stub(:active?).and_return(true)
     end
 
     it "finds the current user's current tasks" do

@@ -12,6 +12,9 @@ describe 'directorships/_form' do
       mock_model(Member, :name => "John Smith", :id => 1)
     ]
     view.stub_chain(:co, :members).and_return(@members)
+    view.stub_chain(:co, :directors).and_return([])
+
+    view.stub_chain(:co, :active?).and_return(true)
   end
 
   it "renders a select field populated with the members" do

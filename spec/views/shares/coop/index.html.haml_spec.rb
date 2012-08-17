@@ -5,15 +5,19 @@ require 'spec_helper'
 describe 'shares/coop/index' do
 
   let(:organisation) {mock_model(Coop,
+    :name => "Test",
     :share_value_in_pounds => 0.7,
     :minimum_shareholding => 2,
     :interest_rate => 1.34
   )}
 
+  let(:user) {mock_model(Member, :shares_count => nil)}
+
   let(:task) {mock_model(Task, :to_partial_name => 'task_share_transaction_make_payment')}
 
   before(:each) do
     view.stub(:co).and_return(organisation)
+    view.stub(:current_user).and_return(user)
     view.stub(:can?).and_return(false)
 
     assign(:tasks, [task])

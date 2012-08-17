@@ -84,10 +84,19 @@ describe MembersController do
 
     describe "PUT induct" do
       let(:members){mock("members association", :find => member)}
-      let(:member){mock_model(Member, :send_welcome= => true, :induct! => nil)}
+      let(:member){mock_model(Member,
+        :send_welcome= => true,
+        :induct! => nil,
+        :find_or_create_share_account => member_share_account
+      )}
+      let(:member_share_account){mock_model(ShareAccount).as_new_record}
+      let(:organisation_share_account){mock_model(ShareAccount)}
+      let(:share_transaction){mock_model(ShareTransaction, :save! => true, :approve! => nil).as_new_record}
 
       before(:each) do
         @organisation.stub(:members).and_return(members)
+        @organisation.stub(:share_account).and_return(organisation_share_account)
+        ShareTransaction.stub(:create).and_return(share_transaction)
       end
 
       def put_induct

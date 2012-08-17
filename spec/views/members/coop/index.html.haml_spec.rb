@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'members/coop/index' do
 
-  let(:organisation) {mock_model(Organisation)}
+  let(:organisation) {mock_model(Organisation, :active? => true)}
 
   before(:each) do
     assign(:members, [])
