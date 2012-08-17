@@ -2,7 +2,7 @@ Feature: Appointing new officer
   In order to keep the record of officers up-to-date
   As the secretary
   I want to record the appointment of a new officer
-  
+
   @javascript
   Scenario: Secretary appoints new officer to a new office
     Given there is a co-op
