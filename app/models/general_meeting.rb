@@ -42,6 +42,10 @@ class GeneralMeeting < Meeting
     {:timestamp => created_at, :object => self, :kind => :general_meeting}
   end
 
+  def self.description
+    "General Meeting"
+  end
+
   # To fake multi-parameter date assignment for 'nominations_closing_date' attribute
 
   def column_for_attribute(attribute)

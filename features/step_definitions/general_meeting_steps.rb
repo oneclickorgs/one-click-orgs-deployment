@@ -16,10 +16,6 @@ When /^I follow "(.*?)" for the past meeting$/ do |link|
   end
 end
 
-When /^I enter minutes for the meeting$/ do
-  fill_in('general_meeting[minutes]', :with => "We discussed things.")
-end
-
 When /^I choose the Members who were in attendance$/ do
   members = @organisation.members.limit(2)
   members.each do |member|

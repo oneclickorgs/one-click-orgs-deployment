@@ -79,6 +79,11 @@ describe 'meetings/coop/index' do
       render
       rendered.should have_selector(:input, 'data-url' => '/board_meetings/new')
     end
+
+    it "renders a link to enter minutes for a meeting not yet in the system" do
+      render
+      rendered.should have_selector(:a, :href => '/minutes/new')
+    end
   end
 
   context "when user can create resolutions" do

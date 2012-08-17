@@ -140,6 +140,26 @@ When /^I begin to convene an AGM$/ do
   check('general_meeting[annual_general_meeting]')
 end
 
+When /^I enter the date of the meeting$/ do
+  select('2011', :from => 'minute[happened_on(1i)]')
+  select('May', :from => 'minute[happened_on(2i)]')
+  select('1', :from => 'minute[happened_on(3i)]')
+end
+
+When /^I choose "(.*?)" from the list of meeting types$/ do |meeting_type|
+  select(meeting_type, :from => 'minute[meeting_class]')
+end
+
+When /^I enter minutes for the meeting$/ do
+  if page.has_field?('general_meeting[minutes]')
+    fill_in('general_meeting[minutes]', :with => "We discussed things.")
+  elsif page.has_field?('minute[minutes]')
+    fill_in('minute[minutes]', :with => "We discussed things.")
+  else
+    raise "Could not find minutes field."
+  end
+end
+
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.draft.first
@@ -226,5 +246,12 @@ end
 Then /^I should see the new AGM in the list of Upcoming Meetings$/ do
   within('.upcoming_meetings') do
     page.should have_content("Annual General Meeting")
+  end
+end
+
+Then /^I should see the meeting in the list of Past Meetings$/ do
+  @meeting ||= @organisation.meetings.last
+  within('.past_meetings') do
+    page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
   end
 end

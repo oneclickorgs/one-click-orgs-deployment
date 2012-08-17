@@ -8,11 +8,17 @@ module OneClickOrgs
     extend ActiveModel::Conversion::ClassMethods
 
     def initialize(attributes={})
+      self.before_initialize(attributes.with_indifferent_access)
       self.attributes = attributes
       @errors = ActiveModel::Errors.new(self)
       self.after_initialize
     end
   
+    # To massage the attributes before they are applied en-masse,
+    # redefine this method in your subclass.
+    def before_initialize(attributes)
+    end
+
     # To implement custom behaviour after an instance is initialized,
     # redefine this method in your subclass.
     def after_initialize

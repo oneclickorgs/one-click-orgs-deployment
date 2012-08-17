@@ -22,4 +22,8 @@ class AnnualGeneralMeeting < GeneralMeeting
 
     election.save!
   end
+
+  def self.description
+    "Annual General Meeting"
+  end
 end

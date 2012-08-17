@@ -24,9 +24,9 @@
             %p
               = link_to("View agenda and details", general_meeting_path(meeting))
 
-- if @past_meetings.present?
-  .section
-    %h3 Past meetings
+.section
+  %h3 Past meetings
+  - if @past_meetings.present?
     %table.past_meetings
       - @past_meetings.each do |meeting|
         %tr
@@ -43,6 +43,10 @@
               %p= link_to("Enter minutes for this meeting.", edit_general_meeting_path(meeting))
             - else
               %p= link_to("View minutes", general_meeting_path(meeting))
+  - else
+    %p No past meetings have been recorded yet.
+  %p
+    = link_to("Enter minutes for a meeting not shown here", new_minute_path)
 
 
 .section

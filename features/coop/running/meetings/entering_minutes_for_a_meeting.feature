@@ -21,19 +21,18 @@ Feature: Entering minutes for a meeting
     Then I should see the minutes I entered
     And I should see the participants I chose
 
-  # @wip
-  # Scenario: Secretary enters minutes for a past meeting the system doesn't know about
-  #   When I go to the Meetings page
-  #   And I follow "Enter minutes for a meeting not shown here"
-  #   And I choose "General Meeting"
-  #   And I enter the date of the meeting
-  #   And I enter minutes for the meeting
-  #   And I choose the Members who where in attendance
-  #   And I press "Save these minutes"
-  #   Then I should be on the Meetings page
-  #   And I should see the meeting in the list of Past Meetings
-  #   When I follow "View minutes" for the meeting
-  #   Then I should see the minutes I entered
+  Scenario: Secretary enters minutes for a past meeting the system doesn't know about
+    When I go to the Meetings page
+    And I follow "Enter minutes for a meeting not shown here"
+    And I choose "General Meeting" from the list of meeting types
+    And I enter the date of the meeting
+    And I enter minutes for the meeting
+    And I choose the Members who were in attendance
+    And I press "Save these minutes"
+    Then I should be on the Meetings page
+    And I should see the meeting in the list of Past Meetings
+    When I follow "View minutes" for the meeting
+    Then I should see the minutes I entered
 
   # @wip
   # Scenario: Secretary records results of resolutions for a meeting

@@ -12,4 +12,8 @@ class BoardMeeting < Meeting
   def to_event
     {:timestamp => created_at, :object => self, :kind => :board_meeting}
   end
+
+  def self.description
+    "Board Meeting"
+  end
 end

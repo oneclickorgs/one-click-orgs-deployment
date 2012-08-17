@@ -1,6 +1,8 @@
 class Meeting < ActiveRecord::Base
   attr_accessible :happened_on, :participant_ids, :minutes
 
+  attr_reader :participant_ids
+
   belongs_to :organisation
 
   validates_presence_of :organisation
@@ -25,8 +27,16 @@ class Meeting < ActiveRecord::Base
   # where the names are the member IDs, and the values are
   # '1' when the checkbox is selected.
   def participant_ids=(participant_ids)
+    @participant_ids = participant_ids
+  end
+
+  before_save :build_participants_from_participant_ids
+  def build_participants_from_participant_ids
+    return unless participant_ids
+
     unless organisation
-      raise RuntimeError, "Organisation must be set before setting participant IDs"
+      raise RuntimeError, "Tried to save participant_ids without setting organisation"
+      return
     end
 
     participant_ids.keys.each do |participant_id|

@@ -376,6 +376,16 @@ class Coop < Organisation
     }
   end
 
+  def meeting_classes
+    [GeneralMeeting, AnnualGeneralMeeting, BoardMeeting]
+  end
+
+  def build_minute(attributes={})
+    Minute.new(attributes).tap{|m|
+      m.organisation = self
+    }
+  end
+
   # True if the minimum required fields in the Rules have been filled in.
   def rules_filled?
     name.present? &&
