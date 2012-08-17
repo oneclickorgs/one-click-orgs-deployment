@@ -214,5 +214,18 @@ and visit the site in your browser (usually at http://localhost:3000 ).
         end
       end
     end
+
+    task :find_leaking_test => [:environment, 'db:test:prepare'] do
+      Dir.glob('spec/**/*_spec.rb').each do |spec_path|
+        STDOUT.puts "Running #{spec_path}"
+        system("bundle exec rspec #{spec_path}")
+        organisation_count = Organisation.count
+        if organisation_count == 0
+          STDOUT.puts "OK: left 0 organisations behind."
+        else
+          STDOUT.puts "FAIL: left #{organisation_count == 1 ? "1 organisation" : "#{organisation_count} organisations"} behind!"
+        end
+      end
+    end
   end
 end
