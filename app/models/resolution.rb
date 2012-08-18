@@ -4,11 +4,11 @@ class Resolution < Proposal
   include OneClickOrgs::CastToBoolean
 
   attr_accessible :draft, :voting_period_in_days, :extraordinary, :certification
-  
+
   attr_accessor :certification, :attached, :passed
-  
+
   # DRAFT STATE
-  
+
   def draft=(new_draft)
     # TODO Refactor this and #draft and #draft? to use #cast_to_boolean
     if new_draft == 'true'
@@ -22,10 +22,10 @@ class Resolution < Proposal
         new_draft = false
       end
     end
-    
+
     @draft = new_draft
   end
-  
+
   def draft
     !!@draft
   end
@@ -54,11 +54,11 @@ class Resolution < Proposal
   end
 
   # ATTRIBUTES
-  
+
   def extraordinary=(new_extraordinary)
     @extraordinary = new_extraordinary
   end
-  
+
   def extraordinary
     !!@extraordinary
   end
@@ -69,7 +69,7 @@ class Resolution < Proposal
       self.title = description.truncate(200)
     end
   end
-  
+
   # Resolutions are often created by request on behalf of the membership
   # (e.g. by the secretary), so the 'proposer' isn't necessarily in
   # favour of the proposal. So for Resolutions, we don't automatically

@@ -208,13 +208,13 @@ end
 
 Then /^I should see a form for recording minutes$/ do
   form_selector = "form[action='/meetings']"
-  
+
   page.should have_css(form_selector)
-  
+
   page.should have_css("#{form_selector} select[name='meeting[happened_on(1i)]']")
   page.should have_css("#{form_selector} select[name='meeting[happened_on(2i)]']")
   page.should have_css("#{form_selector} select[name='meeting[happened_on(3i)]']")
-  
+
   page.should have_css("#{form_selector} textarea[name='meeting[minutes]']")
 end
 
@@ -246,13 +246,13 @@ end
 
 Then /^I should see the minutes$/ do
   @meeting ||= Meeting.last
-  
+
   @meeting.participants.each do |participant|
     page.should have_selector('ul.participants li', :text => participant.name)
   end
-  
+
   page.should have_content(@meeting.minutes)
-  
+
   page.should have_content(@meeting.happened_on.to_s(:long_ordinal))
 end
 

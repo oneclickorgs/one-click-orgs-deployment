@@ -12,7 +12,7 @@ class GeneralMeeting < Meeting
   def existing_resolutions_attributes=(attributes)
     # The attributes received from the form will look something like this:
     # {"0"=>{"attached"=>"1", "id"=>"7"}, "1"=>{"attached"=>"0", "id"=>"9"}}
-    # 
+    #
     # We want to find only the resolutions that have been attached, and
     # grab their IDs.
 

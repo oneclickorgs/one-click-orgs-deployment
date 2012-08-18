@@ -13,7 +13,7 @@ module OneClickOrgs
       @errors = ActiveModel::Errors.new(self)
       self.after_initialize
     end
-  
+
     # To massage the attributes before they are applied en-masse,
     # redefine this method in your subclass.
     def before_initialize(attributes)
@@ -29,11 +29,11 @@ module OneClickOrgs
     def id
       @id
     end
-    
+
     def persisted?
       raise NotImplementedError, "#persisted? must be implemented by subclass"
     end
-    
+
     def attributes=(attributes)
       attributes.each_pair do |key, value|
         send("#{key}=", value)
@@ -44,7 +44,7 @@ module OneClickOrgs
       self.attributes = attributes
       save
     end
-  
+
     def save
       raise NotImplementedError, '#save must be implemented by subclass'
     end
