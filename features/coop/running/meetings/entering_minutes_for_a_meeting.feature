@@ -34,16 +34,16 @@ Feature: Entering minutes for a meeting
     When I follow "View minutes" for the meeting
     Then I should see the minutes I entered
 
-  # @wip
-  # Scenario: Secretary records results of resolutions for a meeting
-  #   Given there has been a past meeting
-  #   And there were resolutions attached to the meeting
-  #   When I go to the Meetings page
-  #   And I follow "Enter minutes for this meeting" for the past meeting
-  #   Then I should see a list of the resolutions attached to the meeting
-  #   When I enter that all the resolutions were passed
-  #   And I enter other minutes for the meeting
-  #   And I choose the Members who were in attendance
-  #   And I press "Save these minutes"
-  #   And I go to the Timeline page
-  #   Then I should see the resolutions marked as passed
+  Scenario: Secretary records results of resolutions for a meeting
+    Given there has been a past meeting
+    And the meeting has no minutes yet
+    And there were resolutions attached to the meeting
+    When I go to the Meetings page
+    And I follow "Enter minutes for this meeting" for the past meeting
+    Then I should see a list of the resolutions attached to the meeting
+    When I enter that all the resolutions were passed
+    And I enter other minutes for the meeting
+    And I choose the Members who were in attendance
+    And I press "Save these minutes"
+    And I go to the Dashboard page
+    Then I should see the resolutions marked as passed

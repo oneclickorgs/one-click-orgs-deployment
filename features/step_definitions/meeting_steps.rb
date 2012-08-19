@@ -42,6 +42,16 @@ def check_certification
   check('general_meeting[certification]')
 end
 
+def enter_minutes
+  if page.has_field?('general_meeting[minutes]')
+    fill_in('general_meeting[minutes]', :with => "We discussed things.")
+  elsif page.has_field?('minute[minutes]')
+    fill_in('minute[minutes]', :with => "We discussed things.")
+  else
+    raise "Could not find minutes field."
+  end
+end
+
 Given /^another director has recorded some minutes$/ do
   @company ||= Company.last
   @meeting = @company.meetings.make!
@@ -53,6 +63,17 @@ end
 
 Given /^the notice period for General Meetings is "(.*?)" days$/ do |arg1|
   @organisation.constitution.meeting_notice_period = 14
+end
+
+Given /^the meeting has no minutes yet$/ do
+  @meeting ||= @organisation.meetings.last
+  @meeting.update_attribute(:minutes, nil)
+end
+
+Given /^there were resolutions attached to the meeting$/ do
+  @resolutions = @organisation.resolutions.make!(2)
+  @meeting ||= @organisation.meetings.last
+  @meeting.resolutions << @resolutions
 end
 
 When /^I choose the date of discussion$/ do
@@ -151,13 +172,22 @@ When /^I choose "(.*?)" from the list of meeting types$/ do |meeting_type|
 end
 
 When /^I enter minutes for the meeting$/ do
-  if page.has_field?('general_meeting[minutes]')
-    fill_in('general_meeting[minutes]', :with => "We discussed things.")
-  elsif page.has_field?('minute[minutes]')
-    fill_in('minute[minutes]', :with => "We discussed things.")
-  else
-    raise "Could not find minutes field."
+  enter_minutes
+end
+
+When /^I enter that all the resolutions were passed$/ do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  @resolutions.each do |resolution|
+    within('#' + ActionController::RecordIdentifier.dom_id(resolution)) do
+      check("Resolution was passed")
+    end
   end
+end
+
+When /^I enter other minutes for the meeting$/ do
+  enter_minutes
 end
 
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
@@ -253,5 +283,23 @@ Then /^I should see the meeting in the list of Past Meetings$/ do
   @meeting ||= @organisation.meetings.last
   within('.past_meetings') do
     page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
+  end
+end
+
+Then /^I should see a list of the resolutions attached to the meeting$/ do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  @resolutions.each do |resolution|
+    page.should have_content(resolution.title)
+  end
+end
+
+Then /^I should see the resolutions marked as passed$/ do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  @resolutions.each do |resolution|
+    page.should have_content("A decision was made: #{resolution.title}")
   end
 end

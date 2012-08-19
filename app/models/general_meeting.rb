@@ -1,5 +1,5 @@
 class GeneralMeeting < Meeting
-  attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes,
+  attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes, :passed_resolutions_attributes,
     :annual_general_meeting, :electronic_nominations, :nominations_closing_date,
     :electronic_voting, :voting_closing_date
 
@@ -28,6 +28,23 @@ class GeneralMeeting < Meeting
     resolutions << resolutions_to_attach
 
     attributes
+  end
+
+  def passed_resolutions_attributes=(attributes)
+    ids_to_pass = attributes.values.select{|a| a['passed'] == '1'}.map{|a| a['id'].to_i}
+    @resolutions_to_pass = ids_to_pass.map{|id| resolutions.find_by_id(id)}.reject{|r| r.nil?}
+    @resolutions_to_pass.each do |resolution|
+      resolution.force_passed = true
+    end
+  end
+
+  before_save :close_resolutions_to_pass
+  def close_resolutions_to_pass
+    return if @resolutions_to_pass.blank?
+
+    @resolutions_to_pass.each do |resolution|
+      resolution.close!
+    end
   end
 
   def creation_notification_email_action

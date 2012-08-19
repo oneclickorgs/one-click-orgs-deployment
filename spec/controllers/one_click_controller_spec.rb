@@ -129,6 +129,10 @@ describe OneClickController do
   end
 
   context "when current organisation is a co-op" do
+    let(:decisions) {[decision]}
+    let(:decision) {mock_model(Decision, :to_event => decision_event)}
+    let(:decision_event) {mock("decision event")}
+
     before(:each) do
       stub_coop
       stub_login
@@ -143,6 +147,7 @@ describe OneClickController do
       @organisation.stub_chain(:meetings, :all).and_return([])
       @organisation.stub(:resolutions).and_return([])
       @organisation.stub(:resolution_proposals).and_return([])
+      @organisation.stub(:decisions).and_return([])
 
       @tasks_association = mock("tasks association")
       @user.stub(:tasks).and_return(@tasks_association)
@@ -161,6 +166,14 @@ describe OneClickController do
     it "assigns the current user's current tasks" do
       get_dashboard
       assigns[:tasks].should == @current_tasks_association
+    end
+
+    describe "timeline" do
+      it "includes decisions" do
+        @organisation.should_receive(:decisions).and_return(decisions)
+        get_dashboard
+        assigns[:timeline].should include(decision_event)
+      end
     end
   end
 

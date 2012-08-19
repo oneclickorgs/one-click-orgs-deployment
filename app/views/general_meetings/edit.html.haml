@@ -1,5 +1,14 @@
 %h2 Enter minutes
 = form_for(@general_meeting) do |general_meeting_form|
+  - unless @general_meeting.resolutions.empty?
+    %h3 Resolutions
+    %ul.resolutions
+    = general_meeting_form.fields_for :passed_resolutions, @general_meeting.resolutions do |resolution_fields|
+      = content_tag_for(:li, resolution_fields.object) do
+        %p= resolution_fields.object.title
+        %p
+          = resolution_fields.check_box :passed
+          = resolution_fields.label :passed, "Resolution was passed"
   %h3 Minutes
   %p= general_meeting_form.text_area :minutes
 

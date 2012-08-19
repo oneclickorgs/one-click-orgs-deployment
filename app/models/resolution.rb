@@ -5,7 +5,7 @@ class Resolution < Proposal
 
   attr_accessible :draft, :voting_period_in_days, :extraordinary, :certification
   
-  attr_accessor :certification, :attached
+  attr_accessor :certification, :attached, :passed
   
   # DRAFT STATE
   
