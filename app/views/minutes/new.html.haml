@@ -1,0 +1,19 @@
+%h2 Enter minutes
+
+= form_for(@minute) do |minute_form|
+  %p
+    = minute_form.label :meeting_class, "Minutes for the", :class => 'inline'
+    = minute_form.select :meeting_class, @meeting_class_options_for_select, :class => 'inline'
+  %p
+    = minute_form.label :happened_on, "held on", :class => 'inline'
+    = minute_form.date_select :happened_on, :class => 'inline'
+  %p
+    = minute_form.label :minutes
+    = minute_form.text_area :minutes
+  %h3 Members in attendance
+  - @members.each do |member|
+    %p.checkbox
+      = check_box_tag "minute[participant_ids][#{member.id}]"
+      = label_tag "minute_participant_ids_#{member.id}", member.name
+  %p
+    = minute_form.submit "Save these minutes"

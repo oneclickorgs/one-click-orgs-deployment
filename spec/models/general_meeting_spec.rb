@@ -55,6 +55,30 @@ describe GeneralMeeting do
     end
   end
 
+  describe "setting passed resolutions" do
+    let(:meeting) {GeneralMeeting.make}
+    let(:resolutions) {[
+      mock_model(Resolution),
+      mock_model(Resolution)
+    ]}
+
+    before(:each) do
+      meeting.stub(:resolutions).and_return(resolutions)
+      resolutions.stub(:find_by_id).with(7).and_return(resolutions[0])
+      resolutions.stub(:find_by_id).with(9).and_return(resolutions[1])
+    end
+
+    it "it forces the passed resolutions to pass" do
+      resolutions[0].should_receive(:force_passed=).with(true)
+
+      meeting.passed_resolutions_attributes = {"0"=>{"passed"=>"1", "id"=>"7"}, "1"=>{"passed"=>"0", "id"=>"9"}}
+
+      resolutions[0].should_receive(:close!)
+
+      meeting.save!
+    end
+  end
+
   it "should not send a 'new minutes' email upon creation"
 
   describe "tasks" do

@@ -78,6 +78,8 @@ module NavigationHelpers
       admin_coops_path
     when /^the Shares page$/
       '/shares'
+    when /^the Checklist page$/
+      '/checklist'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

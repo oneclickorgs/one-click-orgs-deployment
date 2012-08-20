@@ -157,6 +157,7 @@ OneClickOrgs::Application.routes.draw do
   end
   resources :general_meetings
   resources :board_meetings
+  resources :minutes
 
   resources :shares do
     collection do

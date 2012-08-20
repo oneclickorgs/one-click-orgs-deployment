@@ -9,12 +9,13 @@
         (
         = coop.domain(:only_host => true)
         )
-      %p
-        %strong Founder:
-        = coop.members.first.name
-        \<
-        = link_to(coop.members.first.email, "mailto:#{coop.members.first.email}")
-        \>
+      - if coop.members.first
+        %p
+          %strong Founder:
+          = coop.members.first.name
+          \<
+          = link_to(coop.members.first.email, "mailto:#{coop.members.first.email}")
+          \>
       %p
         %strong Registered Office Address:
         = coop.registered_office_address

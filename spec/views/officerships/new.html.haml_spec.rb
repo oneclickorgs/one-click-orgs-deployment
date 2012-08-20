@@ -21,6 +21,8 @@ describe 'officerships/new' do
     @organisation.stub(:offices).and_return([
       mock_model(Office, :id => 2, :title => "Treasurer")
     ])
+
+    @organisation.stub(:active?).and_return(true)
   end
 
   it "renders a select field listing the directors" do

@@ -327,4 +327,19 @@ describe Coop do
     end
   end
 
+  describe "#meeting_classes" do
+    it "returns the classes of meeting used by this type of organisation" do
+      Coop.new.meeting_classes.should == [GeneralMeeting, AnnualGeneralMeeting, BoardMeeting]
+    end
+  end
+
+  describe "#build_minute" do
+    it "builds a Minute" do
+      coop = Coop.new
+      minute = coop.build_minute
+      minute.should be_a(Minute)
+      minute.organisation.should == coop
+    end
+  end
+
 end

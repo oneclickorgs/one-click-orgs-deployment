@@ -42,6 +42,16 @@ def check_certification
   check('general_meeting[certification]')
 end
 
+def enter_minutes
+  if page.has_field?('general_meeting[minutes]')
+    fill_in('general_meeting[minutes]', :with => "We discussed things.")
+  elsif page.has_field?('minute[minutes]')
+    fill_in('minute[minutes]', :with => "We discussed things.")
+  else
+    raise "Could not find minutes field."
+  end
+end
+
 Given /^another director has recorded some minutes$/ do
   @company ||= Company.last
   @meeting = @company.meetings.make!
@@ -53,6 +63,17 @@ end
 
 Given /^the notice period for General Meetings is "(.*?)" days$/ do |arg1|
   @organisation.constitution.meeting_notice_period = 14
+end
+
+Given /^the meeting has no minutes yet$/ do
+  @meeting ||= @organisation.meetings.last
+  @meeting.update_attribute(:minutes, nil)
+end
+
+Given /^there were resolutions attached to the meeting$/ do
+  @resolutions = @organisation.resolutions.make!(2)
+  @meeting ||= @organisation.meetings.last
+  @meeting.resolutions << @resolutions
 end
 
 When /^I choose the date of discussion$/ do
@@ -140,6 +161,35 @@ When /^I begin to convene an AGM$/ do
   check('general_meeting[annual_general_meeting]')
 end
 
+When /^I enter the date of the meeting$/ do
+  select('2011', :from => 'minute[happened_on(1i)]')
+  select('May', :from => 'minute[happened_on(2i)]')
+  select('1', :from => 'minute[happened_on(3i)]')
+end
+
+When /^I choose "(.*?)" from the list of meeting types$/ do |meeting_type|
+  select(meeting_type, :from => 'minute[meeting_class]')
+end
+
+When /^I enter minutes for the meeting$/ do
+  enter_minutes
+end
+
+When /^I enter that all the resolutions were passed$/ do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  @resolutions.each do |resolution|
+    within('#' + ActionController::RecordIdentifier.dom_id(resolution)) do
+      check("Resolution was passed")
+    end
+  end
+end
+
+When /^I enter other minutes for the meeting$/ do
+  enter_minutes
+end
+
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.draft.first
@@ -158,13 +208,13 @@ end
 
 Then /^I should see a form for recording minutes$/ do
   form_selector = "form[action='/meetings']"
-  
+
   page.should have_css(form_selector)
-  
+
   page.should have_css("#{form_selector} select[name='meeting[happened_on(1i)]']")
   page.should have_css("#{form_selector} select[name='meeting[happened_on(2i)]']")
   page.should have_css("#{form_selector} select[name='meeting[happened_on(3i)]']")
-  
+
   page.should have_css("#{form_selector} textarea[name='meeting[minutes]']")
 end
 
@@ -196,13 +246,13 @@ end
 
 Then /^I should see the minutes$/ do
   @meeting ||= Meeting.last
-  
+
   @meeting.participants.each do |participant|
     page.should have_selector('ul.participants li', :text => participant.name)
   end
-  
+
   page.should have_content(@meeting.minutes)
-  
+
   page.should have_content(@meeting.happened_on.to_s(:long_ordinal))
 end
 
@@ -226,5 +276,30 @@ end
 Then /^I should see the new AGM in the list of Upcoming Meetings$/ do
   within('.upcoming_meetings') do
     page.should have_content("Annual General Meeting")
+  end
+end
+
+Then /^I should see the meeting in the list of Past Meetings$/ do
+  @meeting ||= @organisation.meetings.last
+  within('.past_meetings') do
+    page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
+  end
+end
+
+Then /^I should see a list of the resolutions attached to the meeting$/ do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  @resolutions.each do |resolution|
+    page.should have_content(resolution.title)
+  end
+end
+
+Then /^I should see the resolutions marked as passed$/ do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  @resolutions.each do |resolution|
+    page.should have_content("A decision was made: #{resolution.title}")
   end
 end

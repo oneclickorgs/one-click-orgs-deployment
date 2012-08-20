@@ -9,5 +9,5 @@ Feature: Accepting a Founder Member invitation
     When I follow the link in the email
     And I enter my details
     And I press "Continue"
-    Then I should be on the dashboard for the draft co-op
+    Then I should be on the Checklist page
     And I should be a Founder Member of the draft co-op

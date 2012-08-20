@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "one_click/dashboard" do
-  
+
   context "when current organisation is a company" do
     before(:each) do
       @organisation = mock_model(Company, :name => "Grapes Ltd")
@@ -9,20 +9,20 @@ describe "one_click/dashboard" do
       view.stub!(:current_organisation).and_return(@organisation)
       view.stub!(:co).and_return(@organisation)
       install_organisation_resolver(@organisation)
-      
+
       @meeting = mock_model(Meeting,
         :happened_on => nil,
         :minutes => nil
       ).as_new_record
       assign(:meeting, @meeting)
-      
+
       @directors = [
         mock_model(Member, :id => 1, :name => "A"),
         mock_model(Member, :id => 2, :name => "B"),
         mock_model(Member, :id => 3, :name => "C")
       ]
       assign(:directors, @directors)
-      
+
       @timeline = [
         {
           :timestamp => 3.days.ago,
@@ -34,9 +34,9 @@ describe "one_click/dashboard" do
         }
       ]
       assign(:timeline, @timeline)
-      
+
       assign(:proposals, [])
-      
+
       view.stub(:can?).with(:create, Proposal).and_return(false)
     end
 
@@ -77,7 +77,7 @@ describe "one_click/dashboard" do
     end
 
   end
-  
+
   context "when the current organisation is a co-op" do
     before(:each) do
       @coop = mock_model(Coop)
@@ -86,8 +86,10 @@ describe "one_click/dashboard" do
       assign(:timeline, [])
 
       view.stub(:can?).and_return(false)
+
+      view.stub_chain(:co, :elections, :where).and_return([])
     end
-    
+
     it "renders" do
       render
     end

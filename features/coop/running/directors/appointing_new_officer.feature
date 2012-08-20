@@ -2,7 +2,7 @@ Feature: Appointing new officer
   In order to keep the record of officers up-to-date
   As the secretary
   I want to record the appointment of a new officer
-  
+
   @javascript
   Scenario: Secretary appoints new officer to a new office
     Given there is a co-op
@@ -10,7 +10,7 @@ Feature: Appointing new officer
     And there is a director named "Claire Simmons"
     When I go to the Directors page
     And I press "Appoint a new Officer"
-    And select "Claire Simmons" from "Name"
+    And I choose "Claire Simmons" from the list of directors
     And I fill in "...or create a new office" with "Treasurer"
     And I certify the appointment
     And I press "Record this appointment"
@@ -25,8 +25,8 @@ Feature: Appointing new officer
     And there is an office "Treasurer"
     When I go to the Directors page
     And I press "Appoint a new Officer"
-    And select "Claire Simmons" from "Name"
-    And I select "Treasurer" from "Existing office..."
+    And I choose "Claire Simmons" from the list of directors
+    And I choose "Treasurer" from the list of offices
     And I certify the appointment
     And I press "Record this appointment"
     Then I should be on the Directors page

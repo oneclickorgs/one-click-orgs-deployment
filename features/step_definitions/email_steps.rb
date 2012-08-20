@@ -4,6 +4,10 @@ def last_email
   ActionMailer::Base.deliveries.last
 end
 
+def last_email_to(email_address)
+  ActionMailer::Base.deliveries.select{|e| e.to.include?(email_address)}.last
+end
+
 def all_emails
   ActionMailer::Base.deliveries
 end
@@ -222,10 +226,9 @@ end
 
 Then /^the new member should receive an invitation email$/ do
   @member ||= @organisation.members.last
-  @email = last_email
+  @email = last_email_to(@member.email)
 
   @email.should be_present
-  @email.to.should == [@member.email]
   @email.subject.should include('application')
   @email.body.should include('/i/') # Invitation link
 end

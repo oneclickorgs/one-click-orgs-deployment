@@ -1,5 +1,5 @@
 class GeneralMeeting < Meeting
-  attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes,
+  attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes, :passed_resolutions_attributes,
     :annual_general_meeting, :electronic_nominations, :nominations_closing_date,
     :electronic_voting, :voting_closing_date
 
@@ -12,7 +12,7 @@ class GeneralMeeting < Meeting
   def existing_resolutions_attributes=(attributes)
     # The attributes received from the form will look something like this:
     # {"0"=>{"attached"=>"1", "id"=>"7"}, "1"=>{"attached"=>"0", "id"=>"9"}}
-    # 
+    #
     # We want to find only the resolutions that have been attached, and
     # grab their IDs.
 
@@ -30,6 +30,23 @@ class GeneralMeeting < Meeting
     attributes
   end
 
+  def passed_resolutions_attributes=(attributes)
+    ids_to_pass = attributes.values.select{|a| a['passed'] == '1'}.map{|a| a['id'].to_i}
+    @resolutions_to_pass = ids_to_pass.map{|id| resolutions.find_by_id(id)}.reject{|r| r.nil?}
+    @resolutions_to_pass.each do |resolution|
+      resolution.force_passed = true
+    end
+  end
+
+  before_save :close_resolutions_to_pass
+  def close_resolutions_to_pass
+    return if @resolutions_to_pass.blank?
+
+    @resolutions_to_pass.each do |resolution|
+      resolution.close!
+    end
+  end
+
   def creation_notification_email_action
     :notify_general_meeting_creation
   end
@@ -40,6 +57,10 @@ class GeneralMeeting < Meeting
 
   def to_event
     {:timestamp => created_at, :object => self, :kind => :general_meeting}
+  end
+
+  def self.description
+    "General Meeting"
   end
 
   # To fake multi-parameter date assignment for 'nominations_closing_date' attribute

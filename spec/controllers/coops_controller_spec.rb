@@ -67,8 +67,10 @@ describe CoopsController do
       @member = mock_model(Member)
       @members_association.stub(:build).and_return(@member)
 
-      @coop.stub(:save).and_return(true)
-      @member.stub(:save).and_return(true)
+      @coop.stub(:save!).and_return(true)
+      @member.stub(:save!).and_return(true)
+
+      @member.stub(:induct!)
 
       controller.stub(:log_in)
 
@@ -77,6 +79,12 @@ describe CoopsController do
       @coop.stub(:member_classes).and_return(@member_classes_association)
       @member_classes_association.stub(:find_by_name).with('Founder Member').and_return(@founder_member_member_class)
       @member.stub(:member_class=)
+
+      @member.stub(:find_or_create_share_account)
+      @coop.stub(:share_account)
+
+      @share_transaction = mock_model(ShareTransaction, :save! => true)
+      ShareTransaction.stub(:create).and_return(@share_transaction)
     end
 
     def post_create
@@ -94,12 +102,12 @@ describe CoopsController do
     end
 
     it "saves the co-op" do
-      @coop.should_receive(:save).and_return(true)
+      @coop.should_receive(:save!).and_return(true)
       post_create
     end
 
     it "saves the member" do
-      @member.should_receive(:save).and_return(true)
+      @member.should_receive(:save!).and_return(true)
       post_create
     end
 

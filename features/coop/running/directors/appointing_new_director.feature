@@ -10,7 +10,7 @@ Feature: Appointing new director
     And there is a member named "Claire Simmons"
     When I go to the Directors page
     And I press "Appoint new Director"
-    And select "Claire Simmons" from "Name"
+    And I choose "Claire Simmons" from the list of members
     And I certify the appointment
     And I press "Record this appointment"
     Then I should be on the Directors page

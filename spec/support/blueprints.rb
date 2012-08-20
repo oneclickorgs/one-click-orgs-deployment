@@ -100,7 +100,8 @@ end
 
 Resolution.blueprint do
   organisation { Coop.make }
-  description { 'The description of the resolution.' }
+  title { Faker::Lorem.sentence }
+  description { Faker::Lorem.paragraph }
 end
 
 Resolution.blueprint(:draft) do

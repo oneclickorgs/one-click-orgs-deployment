@@ -1,0 +1,8 @@
+%p
+  = task.subject.to_account.owner.name
+  applied for
+  = pluralize(task.subject.amount, "share", "shares")
+  = task.subject.created_at.to_s(:at_on) + '.'
+  A payment of
+  = "£#{task.subject.amount}"
+  is due.
