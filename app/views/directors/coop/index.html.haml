@@ -26,8 +26,10 @@
         %td
           = director.directorship.elected_on.to_s(:long_ordinal)
         %td
-          = link_button("Retire", :url => edit_directorship_path(director.directorship))
-  = link_button("Appoint new Director", :url => new_directorship_path)
+          - if can?(:create, Resolution)
+            = link_button("Retire", :url => edit_directorship_path(director.directorship))
+  - if can?(:create, Resolution)
+    = link_button("Appoint new Director", :url => new_directorship_path)
   %br.clear
 
 .section
@@ -51,8 +53,9 @@
             = office.officership.elected_on.to_s(:long_ordinal)
         %td
           - if office.officer
-            = link_button("Step down", :url => edit_officership_path(office.officership))
-
-  = link_button("Appoint a new Officer", :url => new_officership_path)
+            - if can?(:create, Resolution)
+              = link_button("Step down", :url => edit_officership_path(office.officership))
+  - if can?(:create, Resolution)
+    = link_button("Appoint a new Officer", :url => new_officership_path)
   %br.clear
 
