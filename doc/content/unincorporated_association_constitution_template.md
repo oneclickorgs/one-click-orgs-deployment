@@ -1,4 +1,4 @@
-Constitution Template for UK Unincorporated Association
+One Click Orgs Constitution Template for a UK Unincorporated Association
 =======================================================
 
 Definitions & Membership
