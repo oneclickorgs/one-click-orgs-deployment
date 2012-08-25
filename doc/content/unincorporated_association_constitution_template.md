@@ -6,7 +6,7 @@ Definitions & Membership
 
 * This is the constitution ("Constitution") of [ORGANISATION NAME].
 * The Organisation has the objectives of [OBJECTIVES].
-* [The Organisation may hold, transfer and dispose of material assets and intangible assets. / The Organisation does not hold material assets or intangible assets.]
+* [ASSETS]
 * The Organisation uses an electronic system to carry out its governance ("Governance System").
 * The Organisation has one or more members ("Members") who support its Objectives.
 * Each Member nominates an email address at which they will receive important notices from the Organisation ("Nominated Email Address").
@@ -30,6 +30,76 @@ Proposals & Decisions
 * and
 * New Members may be appointed (and existing Members ejected) only by a Decision [MEMBERSHIP VOTING SYSTEM DESCRIPTION]
 * Members may view all Decisions on the Governance System.
+
+## The Options
+
+<dl>
+  <dt>ORGANISATION NAME</dt>
+  <dd>Free text.<dd>
+
+  <dt>OBJECTIVES</dt>
+  <dd>Free text.</dd>
+
+  <dt>ASSETS</dt>
+  <dd>
+    One of:
+    <ul>
+      <li>The Organisation may hold, transfer and dispose of material assets and intangible assets.</li>
+      <li>The Organisation does not hold material assets or intangible assets.</li>
+    </ul>
+  </dd>
+
+  <dt>WEBSITE</dt>
+  <dd>The URL of the Governance System being used for this organisation.</dd>
+
+  <dt>VOTING PERIOD</dt>
+  <dd>
+    One of:
+    <ul>
+      <li>5 minutes</li>
+      <li>1 day</li>
+      <li>3 days</li>
+      <li>7 days</li>
+      <li>14 days</li>
+    </ul>
+  </dd>
+
+  <dt>GENERAL VOTING SYSTEM DESCRIPTION</dt>
+  <dd>
+    One of:
+    <ul>
+      <li>Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period.</li>
+      <li>Supporting Votes from more than half of Members during the Voting Period.</li>
+      <li>Supporting Votes from more than two thirds of Members during the Voting Period.</li>
+      <li>Supporting Votes from all Members during the Voting Period.</li>
+      <li>no Opposing Votes during the Voting Period.</li>
+    </ul>
+  </dd>
+
+  <dt>CONSTITUTION VOTING SYSTEM DESCRIPTION</dt>
+  <dd>
+    One of:
+    <ul>
+      <li>Supporting Votes from more than half of the Members are received during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period.</li>
+      <li>Supporting Votes are received from more than half of Members during the Voting Period.</li>
+      <li>Supporting Votes are received from more than two thirds of Members during the Voting Period.</li>
+      <li>Supporting Votes are received from all Members during the Voting Period.</li>
+      <li>no Opposing Votes are received during the Voting Period.</li>
+    </ul>
+  </dd>
+
+  <dt>MEMBERSHIP VOTING SYSTEM DESCRIPTION</dt>
+  <dd>
+    One of:
+    <ul>
+      <li>Supporting Votes from more than half of the Members are received during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period.</li>
+      <li>Supporting Votes are received from more than half of Members during the Voting Period.</li>
+      <li>Supporting Votes are received from more than two thirds of Members during the Voting Period.</li>
+      <li>Supporting Votes are received from all Members during the Voting Period.</li>
+      <li>no Opposing Votes are received during the Voting Period.</li>
+    </ul>
+  </dd>
+</dl>
 
 Copyright 2009, 2010, 2011 Circus Foundation.
 
