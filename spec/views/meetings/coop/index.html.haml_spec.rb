@@ -24,9 +24,15 @@ describe 'meetings/coop/index' do
     @organisation.stub(:constitution).and_return(@constitution)
   end
 
-  it "renders a button link to the new general meeting page" do
-    render
-    rendered.should have_selector(:input, 'data-url' => '/general_meetings/new')
+  context "when user can create Meetings" do
+    before(:each) do
+      view.stub(:can?).with(:create, Meeting).and_return(true)
+    end
+
+    it "renders a button link to the new general meeting page" do
+      render
+      rendered.should have_selector(:input, 'data-url' => '/general_meetings/new')
+    end
   end
 
   it "renders a list of the upcoming meetings" do
@@ -52,9 +58,15 @@ describe 'meetings/coop/index' do
       end
     end
 
-    it "renders a link to edit the meeting" do
-      render
-      rendered.should have_selector(:a, :href => '/general_meetings/2/edit')
+    context "when user can create Meetings" do
+      before(:each) do
+        view.stub(:can?).with(:create, Meeting).and_return(true)
+      end
+
+      it "renders a link to edit the meeting" do
+        render
+        rendered.should have_selector(:a, :href => '/general_meetings/2/edit')
+      end
     end
   end
 

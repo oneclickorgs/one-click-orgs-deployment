@@ -82,6 +82,16 @@ class Ability
         can :create, FounderMember
       end
 
+      if user.has_permission(:directorship)
+        can :create, Directorship
+        can :edit, Directorship
+      end
+
+      if user.has_permission(:officership)
+        can :create, Officership
+        can :edit, Officership
+      end
+
       can :update, Member do |member|
         user.has_permission(:member) || user == member
       end
