@@ -2,11 +2,11 @@ Feature: Amending draft organisation settings
   In order to make sure the constitution fits our needs
   As a founder
   I want to amend the draft organisation's settings
-  
+
   Background:
     Given the application is set up
     And I have created an organisation
-  
+
   Scenario: Amending draft organisation settings
     When I go to the amendments page
     And I fill in "organisation_name" with "Tea Club Mark II"
