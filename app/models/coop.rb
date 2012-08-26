@@ -358,7 +358,7 @@ class Coop < Organisation
       begin
         annual_general_meetings.build(attributes)
       rescue ActiveRecord::MultiparameterAssignmentErrors => e
-        raise e.errors.map{|e| [e.exception, e.attribute]}.inspect
+        raise e.errors.map{|error| [error.exception, error.attribute]}.inspect
       end
     else
       general_meetings.build(attributes)
