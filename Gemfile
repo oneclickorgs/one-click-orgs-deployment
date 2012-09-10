@@ -34,6 +34,7 @@ group :assets do
 end
 
 gem "jquery-rails", "~>2.0.2"
+gem "jquery-ui-rails", "~>2.0.0"
 gem "haml", "~>3.1.4"
 gem "rdiscount", "~>1.6.8"
 gem "pdfkit", "~>0.5.2"
