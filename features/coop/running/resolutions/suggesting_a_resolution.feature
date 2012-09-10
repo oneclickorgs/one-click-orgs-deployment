@@ -2,7 +2,7 @@ Feature: Suggesting a resolution
   In order to bring an issue up with the membership
   As a member
   I want to suggest a resolution for consideration
-  
+
   @javascript
   Scenario: Member suggests a resolution
     Given there is a co-op
