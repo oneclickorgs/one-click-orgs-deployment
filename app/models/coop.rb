@@ -61,6 +61,11 @@ class Coop < Organisation
   after_create :set_default_user_and_director_clauses
   after_create :create_share_account_if_necessary
 
+  def member_count_for_proposal(proposal)
+    # TODO check that this is correct
+    members.active.count
+  end
+
   # ATTRIBUTES / CLAUSES
 
   def meeting_notice_period=(new_meeting_notice_period)

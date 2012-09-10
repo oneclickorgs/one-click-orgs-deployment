@@ -68,6 +68,10 @@ class ResolutionProposal < Proposal
     false
   end
 
+  def voting_system
+    VotingSystems.get(:TenPercentOrOneHundred)
+  end
+
   # Parameters
 
   def resolution_class

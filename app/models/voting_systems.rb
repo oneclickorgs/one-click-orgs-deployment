@@ -183,7 +183,32 @@ module VotingSystems
       proposal.votes_for == proposal.member_count
     end
   end
-  
+
+  class TenPercentOrOneHundred < VotingSystem
+    def self.description(options={})
+      "The lesser of 10% of the Membership and 100 Members vote in favour"
+    end
+
+    def self.long_description(options={})
+      "The lesser of 10% of the Membership and 100 Members vote in favour"
+    end
+
+    def self.threshold(proposal)
+      threshold_absolute = 100
+      threshold_percentage = proposal.member_count.to_f / 10.0
+
+      threshold_absolute < threshold_percentage ? threshold_absolute : threshold_percentage
+    end
+
+    def self.can_be_closed_early?(proposal)
+      (proposal.votes_for > threshold(proposal)) || (proposal.votes_against >= (proposal.member_count - threshold(proposal)))
+    end
+
+    def self.passed?(proposal)
+      proposal.votes_for > threshold(proposal)
+    end
+  end
+
   class Founding < VotingSystem
     def self.description(options={})
       "At least three supporting votes"
