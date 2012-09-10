@@ -12,5 +12,4 @@ Feature: Suggesting a resolution
     And I enter the text for the new resolution
     And I press "Save this resolution"
     Then I should be on the Resolutions page
-    And I should see the new resolution in the list of suggested resolutions
     And the Secretary should receive a notification of the new suggested resolution

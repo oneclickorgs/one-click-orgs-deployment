@@ -7,6 +7,13 @@ class ProposalsController < ApplicationController
       @proposals = co.resolutions.currently_open
       @draft_proposals = co.resolutions.draft
       @resolution_proposals = co.resolution_proposals
+
+      @closed_proposals = (co.resolutions.accepted + co.resolutions.rejected).sort{|a, b| a.close_date <=> b.close_date}
+
+      # Upcoming meetings with proposals attached
+      @meetings = co.general_meetings.upcoming.reject{|m| m.resolutions.count == 0}
+
+      @my_resolution_proposals = co.resolution_proposals.where(:proposer_member_id => current_user.id)
     else
       # Fetch open proposals
       @proposals = co.proposals.currently_open

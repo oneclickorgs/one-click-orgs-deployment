@@ -21,12 +21,22 @@ describe ProposalsController do
       before(:each) do
         @organisation.stub_chain(:resolutions, :draft)
         @organisation.stub_chain(:resolutions, :currently_open)
-        @organisation.stub(:resolution_proposals)
+        @organisation.stub_chain(:resolutions, :draft)
+        @organisation.stub_chain(:resolutions, :accepted).and_return([])
+        @organisation.stub_chain(:resolutions, :rejected).and_return([])
+
+        @organisation.stub(:resolution_proposals).and_return(mock("resolution proposals",
+          :where => []
+        ))
+
+        @organisation.stub_chain(:general_meetings, :upcoming).and_return([])
       end
       
       it "looks up and assigns the draft proposals" do
         @resolutions_association = mock("resolutions association",
-          :currently_open => []
+          :currently_open => [],
+          :accepted => [],
+          :rejected => []
         )
         @organisation.stub(:resolutions).and_return(@resolutions_association)
         

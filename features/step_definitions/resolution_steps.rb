@@ -28,6 +28,10 @@ Given /^there is a suggested resolution$/ do
   @resolution_proposal = @organisation.resolution_proposals.make!
 end
 
+Given /^I have suggested a resolution$/ do
+  @resolution_proposal = @organisation.resolution_proposals.make!(:proposer => @user)
+end
+
 Given /^there is a resolution open for electronic voting$/ do
   @resolution = @organisation.resolutions.make!
 end
@@ -99,7 +103,7 @@ end
 When /^I view more details of the suggested resolution$/ do
   @resolution_proposal ||= @organisation.resolution_proposals.last
   within("#resolution_proposal_#{@resolution_proposal.id}") do
-    click_link("View details and comment")
+    click_link("View details")
   end
 end
 
@@ -171,4 +175,15 @@ Then /^I should see a suggested resolution "(.*?)"$/ do |title|
   within('.resolution_proposals') do
     page.should have_content(title)
   end
+end
+
+Then /^I should see the suggested resolution in the list of my suggestions$/ do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  within('.my_resolution_proposals') do
+    page.should have_content(@resolution_proposal.title)
+  end
+end
+
+Then /^there should be a suggested resolution "(.*?)"$/ do |title|
+  @organisation.resolution_proposals.where(:title => title).first.should be_present
 end
