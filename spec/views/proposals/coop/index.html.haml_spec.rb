@@ -25,21 +25,6 @@ describe "proposals/coop/index" do
     rendered.should have_selector('.proposals', :content => "Open proposal description")
   end
 
-  it "renders a list of draft resolutions" do
-    render
-    rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
-  end
-
-  it "includes the description in the list of draft resolutions" do
-    render
-    rendered.should contain('Draft proposal description')
-  end
-
-  it "renders a list of suggested resolutions" do
-    render
-    rendered.should have_selector('.resolution_proposals', :content => "Suggested resolution description")
-  end
-
   context "when user can vote on an open proposal" do
     before(:each) do
       @proposal = @proposals.first
@@ -54,7 +39,18 @@ describe "proposals/coop/index" do
 
   context "when user can create a resolution" do
     before(:each) do
+      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
       view.stub(:can?).with(:create, Resolution).and_return(true)
+    end
+
+    it "renders a list of draft resolutions" do
+      render
+      rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
+    end
+
+    it "includes the description in the list of draft resolutions" do
+      render
+      rendered.should contain('Draft proposal description')
     end
 
     it "renders a button to create a resolution" do
@@ -78,6 +74,11 @@ describe "proposals/coop/index" do
       view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
     end
 
+    it "renders a list of suggested resolutions" do
+      render
+      rendered.should have_selector('.resolution_proposals', :content => "Suggested resolution description")
+    end
+
     it "renders an edit button for each suggested resolution" do
       render
       rendered.should have_selector(".resolution_proposals input[data-url='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
@@ -86,6 +87,7 @@ describe "proposals/coop/index" do
 
   context "when user can create a meeting" do
     before(:each) do
+      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
       view.stub(:can?).with(:create, Meeting).and_return(true)
     end
 
@@ -97,6 +99,7 @@ describe "proposals/coop/index" do
 
   context "when user can create a meeting and can create a resolution" do
     before(:each) do
+      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
       view.stub(:can?).with(:create, Meeting).and_return(true)
       view.stub(:can?).with(:create, Resolution).and_return(true)
     end

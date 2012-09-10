@@ -1,60 +1,119 @@
-%h2 Resolutions
+- content_for(:head) do
+  = javascript_include_tag :proposals_index
 
-- if can?(:create, Resolution) || can?(:create, ResolutionProposal) || can?(:create, BoardResolution)
+%h2 Proposals
+
+- if can?(:create, Resolution) || can?(:create, ResolutionProposal)
   .section
     - if can?(:create, Resolution)
       = link_button("Create a new Resolution", :url => new_resolution_path)
     -elsif can?(:create, ResolutionProposal)
       = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
-    - if can?(:create, BoardResolution)
-      = link_button("Create a new Resolution of the Board", :url => new_board_resolution_path)
     %br.clear
 
-- if @proposals.present?
-  .section
-    %p The following resolutions are currently open:
-    %table.proposals
-      - @proposals.each do |proposal|
-        %tr
-          = content_tag_for(:td, proposal) do
-            .proposal
-              %h4= proposal.title
-              - if proposal.title != proposal.description
-                %p= proposal.description
+#tabs
+  %ul
+    - if can?(:edit, ResolutionProposal)
+      %li= link_to("Need processing", '#tab_resolution_proposals')
+    %li= link_to("Open for voting", '#tab_proposals')
+    %li= link_to("Upcoming meetings", '#tab_attached_proposals')
+    %li= link_to("Outcomes", '#tab_closed_proposals')
+    - if can?(:create, ResolutionProposal)
+      %li= link_to("My proposals", '#tab_my_proposals')
+  - if can?(:edit, ResolutionProposal)
+    #tab_resolution_proposals
+      - if @draft_proposals.present?
+        .section
+          %h3 Your draft resolutions:
+          %ul.draft_proposals
+            - @draft_proposals.each do |proposal|
+              = content_tag_for(:li, proposal) do
+                %p
+                  = proposal.description.present? ? proposal.description : proposal.title
+                  = link_to("View details and comment", resolution_path(proposal))
+                - if can?(:create, Resolution)
+                  = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
+                - if can?(:create, Meeting)
+                  = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
+          %br.clear
+      - if @resolution_proposals.present?
+        .section
+          %h3 Proposals suggested by members:
+          %ul.resolution_proposals
+            - @resolution_proposals.each do |proposal|
+              = content_tag_for(:li, proposal) do
+                %p
+                  = proposal.description.present? ? proposal.description : proposal.title
+                  = link_to("View details and comment", resolution_proposal_path(proposal))
+                - if can?(:edit, ResolutionProposal)
+                  = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
+                - if can?(:create, Resolution)
+                  = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
+                - if can?(:create, Meeting)
+                  = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
+          %br.clear
+  #tab_proposals
+    - if @proposals.present?
+      .section
+        %p The following resolutions are currently open:
+        %table.proposals
+          - @proposals.each do |proposal|
+            %tr
+              = content_tag_for(:td, proposal) do
+                .proposal
+                  %h4= proposal.title
+                  - if proposal.title != proposal.description
+                    %p= proposal.description
+                  %p
+                    Voting ends
+                    = proposal.end_date.to_s(:long)
+                  - if can?(:vote_on, proposal)
+                    %p.votes= render 'proposals/vote', :proposal => proposal
+    - else
+      %p No proposals are currently open for voting.
+  #tab_attached_proposals
+    - if @meetings.present?
+      .section
+        %ul.meetings
+          - @meetings.each do |meeting|
+            = content_tag_for(:li, meeting) do
               %p
-                Voting ends
-                = proposal.end_date.to_s(:long)
-              - if can?(:vote_on, proposal)
-                %p.votes= render 'proposals/vote', :proposal => proposal
-
-- if @draft_proposals.present?
-  .section
-    %h3 Draft resolutions:
-    %ul.draft_proposals
-      - @draft_proposals.each do |proposal|
-        = content_tag_for(:li, proposal) do
-          %p
-            = proposal.description.present? ? proposal.description : proposal.title
-            = link_to("View details and comment", resolution_path(proposal))
-          - if can?(:create, Resolution)
-            = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
-          - if can?(:create, Meeting)
-            = link_button("Add to a meeting", :url => new_general_meeting_path(:resolution_id => proposal))
-    %br.clear
-
-- if @resolution_proposals.present?
-  .section
-    %h3 Suggested resolutions:
-    %ul.resolution_proposals
-      - @resolution_proposals.each do |proposal|
-        = content_tag_for(:li, proposal) do
-          %p
-            = proposal.description.present? ? proposal.description : proposal.title
-            = link_to("View details and comment", resolution_proposal_path(proposal))
-          - if can?(:edit, ResolutionProposal)
-            = link_button("Edit", :url => edit_resolution_proposal_path(proposal))
-          - if can?(:create, Resolution)
-            = button_to("Start an electronic vote", pass_resolution_proposal_path(proposal), :method => :put)
-          - if can?(:create, Meeting)
-            = button_to("Add to a meeting", pass_to_meeting_resolution_proposal_path(proposal), :method => :put)
-    %br.clear
+                At
+                = link_to("the meeting #{meeting.happened_on.to_s(:at_on)}", meeting_path(meeting))
+                the following
+                = pluralize(meeting.resolutions.count, "resolution")
+                will be discussed:
+              %ul
+                - meeting.resolutions.each do |resolution|
+                  = content_tag_for(:li, resolution) do
+                    %p= resolution.title
+    - else
+      %p No proposals are currently scheduled for discussion at future meetings.
+  #tab_closed_proposals
+    - if @closed_proposals.present?
+      %ul.closed_proposals
+        - @closed_proposals.each do |proposal|
+          = content_tag_for(:li, proposal) do
+            %p The proposal:
+            %p= proposal.title
+            %p
+              was
+              %strong
+                = proposal.accepted_or_rejected
+              = proposal.close_date.to_s(:at_on)
+    - else
+      %p No proposals have been voted on yet.
+  - if can?(:create, ResolutionProposal)
+    #tab_my_proposals
+      - if @my_resolution_proposals.present?
+        %ul.my_resolution_proposals
+          - @my_resolution_proposals.each do |proposal|
+            = content_tag_for(:li, proposal) do
+              %p
+                You suggested:
+                %strong
+                  = proposal.title
+                = proposal.creation_date.to_s(:at_on)
+              %p= link_to("View details", resolution_proposal_path(proposal))
+      - else
+        %p You have no suggested proposals outstanding.

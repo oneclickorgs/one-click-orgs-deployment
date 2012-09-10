@@ -61,6 +61,11 @@ class Coop < Organisation
   after_create :set_default_user_and_director_clauses
   after_create :create_share_account_if_necessary
 
+  def member_count_for_proposal(proposal)
+    # TODO check that this is correct
+    members.active.count
+  end
+
   # ATTRIBUTES / CLAUSES
 
   def meeting_notice_period=(new_meeting_notice_period)
@@ -268,6 +273,8 @@ class Coop < Organisation
     founder_members.set_permission!(:constitution, true)
     founder_members.set_permission!(:organisation, true)
     founder_members.set_permission!(:founder_member, true)
+    founder_members.set_permission!(:directorship, true)
+    founder_members.set_permission!(:officership, true)
 
     directors = member_classes.find_or_create_by_name('Director')
     directors.set_permission!(:resolution, true)
@@ -284,6 +291,8 @@ class Coop < Organisation
     secretaries.set_permission!(:board_meeting, true)
     secretaries.set_permission!(:member, true)
     secretaries.set_permission!(:organisation, true)
+    secretaries.set_permission!(:directorship, true)
+    secretaries.set_permission!(:officership, true)
   end
 
   def create_default_offices
@@ -354,7 +363,7 @@ class Coop < Organisation
       begin
         annual_general_meetings.build(attributes)
       rescue ActiveRecord::MultiparameterAssignmentErrors => e
-        raise e.errors.map{|e| [e.exception, e.attribute]}.inspect
+        raise e.errors.map{|error| [error.exception, error.attribute]}.inspect
       end
     else
       general_meetings.build(attributes)

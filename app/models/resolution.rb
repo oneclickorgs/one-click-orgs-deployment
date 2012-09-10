@@ -78,6 +78,10 @@ class Resolution < Proposal
     false
   end
 
+  def voting_system
+    VotingSystems.get(:AbsoluteMajority)
+  end
+
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => draft? ? :draft_resolution : :resolution }
   end

@@ -9,7 +9,7 @@ describe 'directors/coop/index' do
       mock_model(Member, :to_param => '4',
         :gravatar_url => nil,
         :name => "Lisa Baker",
-        :directorship => mock_model(Directorship, :to_param => '5', :elected_on => 1.week.ago)
+        :directorship => @directorship = mock_model(Directorship, :to_param => '5', :elected_on => 1.week.ago)
       )
     ]
     assign(:directors, @directors)
@@ -17,13 +17,15 @@ describe 'directors/coop/index' do
     @offices = [
       mock_model(Office, :title => 'Treasurer',
         :officer => mock_model(Member, :name => "John Smith"),
-        :officership => mock_model(Officership, :to_param => '3', :elected_on => 1.week.ago)
+        :officership => @officership = mock_model(Officership, :to_param => '3', :elected_on => 1.week.ago)
       )
     ]
     assign(:offices, @offices)
 
     assign(:tasks, [task])
     stub_template('tasks/_task_election_view_result' => 'task template')
+
+    view.stub(:can?).and_return(false)
   end
 
   it "displays a list of director-related tasks for the current user" do
@@ -38,22 +40,34 @@ describe 'directors/coop/index' do
     end
   end
 
-  it "renders a 'Step down' button for each officer" do
-    render
-    rendered.should have_selector('.treasurer') do |treasurer|
-      treasurer.should have_selector(:input, 'data-url' => '/officerships/3/edit')
+  context "when user can edit the Officerships" do
+    before(:each) do
+      view.stub(:can?).with(:edit, @officership).and_return(true)
+    end
+
+    it "renders a 'Step down' button for each officer" do
+      render
+      rendered.should have_selector('.treasurer') do |treasurer|
+        treasurer.should have_selector(:input, 'data-url' => '/officerships/3/edit')
+      end
     end
   end
 
-  it "renders a 'Retire' button for each director" do
-    render
-    rendered.should have_selector(:input, 'data-url' => '/directorships/5/edit')
+  context "when user can edit the Directorships" do
+    before(:each) do
+      view.stub(:can?).with(:edit, @directorship).and_return(true)
+    end
+
+    it "renders a 'Retire' button for each director" do
+      render
+      rendered.should have_selector(:input, 'data-url' => '/directorships/5/edit')
+    end
   end
+
 
   context "when user can create a Director" do
     before(:each) do
-      # TODO This should be checking on ability to create a Director, not a Directorship.
-      view.stub(:can?).with(:create, Director).and_return(true)
+      view.stub(:can?).with(:create, Directorship).and_return(true)
     end
 
     it "renders an 'Appoint new Director' button" do
