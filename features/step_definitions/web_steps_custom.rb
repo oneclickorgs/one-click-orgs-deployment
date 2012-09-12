@@ -25,6 +25,12 @@ When /^the domain is "([^"]*)"$/ do |domain|
   set_domain(domain)
 end
 
+When /^I open the "(.*?)" tab$/ do |tab_name|
+  within('.ui-tabs-nav') do
+    click_link(tab_name)
+  end
+end
+
 Then /^the domain should be "([^"]*)"$/ do |domain|
   current_domain = URI.parse(current_url).host
   current_domain.should == domain

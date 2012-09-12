@@ -300,6 +300,6 @@ Then /^I should see the resolutions marked as passed$/ do
   @resolutions ||= @meeting.resolutions
 
   @resolutions.each do |resolution|
-    page.should have_content("A decision was made: #{resolution.title}")
+    page.should have_content("#{resolution.title} was accepted")
   end
 end

@@ -36,14 +36,6 @@ class OneClickController < ApplicationController
         redirect_to checklist_path
         return
       end
-      @timeline = [
-        co.members.all,
-        co.meetings.all,
-        co.resolutions,
-        co.resolution_proposals,
-        co.decisions
-      ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
-
       @tasks = current_user.tasks.current
     end
   end

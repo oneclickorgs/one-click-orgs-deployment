@@ -24,5 +24,3 @@
   - if can?(:create, ResolutionProposal)
     = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
   %br.clear
-
-= render :partial => 'timeline', :locals => {:timeline => @timeline}

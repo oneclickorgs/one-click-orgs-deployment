@@ -7,10 +7,6 @@ Feature: Viewing dashboard
     Given there is a co-op
     And I am a Member of the co-op
 
-  Scenario: Member views recent timeline events
-    When I go to the Dashboard page
-    Then I should see a timeline of recent events in the co-op
-
   # @wip
   # Scenario: Member views tasks that requite their attention
   #   When I go to the Dashboard page

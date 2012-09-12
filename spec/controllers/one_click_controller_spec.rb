@@ -167,14 +167,6 @@ describe OneClickController do
       get_dashboard
       assigns[:tasks].should == @current_tasks_association
     end
-
-    describe "timeline" do
-      it "includes decisions" do
-        @organisation.should_receive(:decisions).and_return(decisions)
-        get_dashboard
-        assigns[:timeline].should include(decision_event)
-      end
-    end
   end
 
 end
