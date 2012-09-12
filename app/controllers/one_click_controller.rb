@@ -36,7 +36,15 @@ class OneClickController < ApplicationController
         redirect_to checklist_path
         return
       end
+
       @tasks = current_user.tasks.current
+
+      @upcoming_meeting = co.meetings.upcoming.order('happened_on ASC').first
+      if co.meetings.upcoming.count > 1
+        @upcoming_meetings_count = co.meetings.upcoming.count - 1
+      end
+
+      @last_meeting = co.meetings.past.order('happened_on DESC').first
     end
   end
 

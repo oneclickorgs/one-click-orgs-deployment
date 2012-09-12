@@ -197,6 +197,8 @@ hr
 p
   :font-size 1em
   :line-height 1.3em
+  &.auxiliary
+    :text-align right
 
 em
   :font-family $default-serif
@@ -775,3 +777,22 @@ ul.checklist
       :font-size 1em
       :width auto
       :padding 0
+
+// Dashboard
+#bd
+  .dashboard
+    p
+      &.left
+        :float left
+      &.right
+        :float right
+    .meetings
+      .meeting, .general_meeting
+        :border 1px solid #999
+        :padding 0.5em
+        :margin-bottom 1em
+        .datetime
+          :float left
+          :background-color #eee
+          :padding 2px
+          :margin-right 1em

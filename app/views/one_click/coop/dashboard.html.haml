@@ -19,9 +19,43 @@
           = render :partial => 'tasks/task', :locals => {:task => task}
     %br.clear
 
-.left
-  .section
+.left.dashboard
+  .section.meetings
     %h3 Meetings
+
+    - if @upcoming_meeting.present?
+      %h4 Next meeting:
+      = content_tag_for(:div, @upcoming_meeting) do
+        %p.datetime
+          = @upcoming_meeting.happened_on.to_s(:short)
+          %br
+          = @upcoming_meeting.start_time
+        %p.details
+          = @upcoming_meeting.class.name.underscore.humanize.titlecase
+          %br
+          = @upcoming_meeting.venue
+          %br
+          = link_to("See agenda & details", meeting_path(@upcoming_meeting))
+      - if @upcoming_meetings_count
+        %p.auxiliary
+          = link_to("#{@upcoming_meetings_count} more upcoming", meetings_path)
+    -else
+      %p No upcoming meetings.
+
+    - if @last_meeting.present?
+      %h4 Last meeting:
+      = content_tag_for(:div, @last_meeting) do
+        %p.datetime
+          = @last_meeting.happened_on.to_s(:short)
+          %br
+          = @last_meeting.start_time
+        %p.details
+          = @last_meeting.class.name.underscore.humanize.titlecase
+          %br
+          = link_to("See minutes", meeting_path(@last_meeting))
+    - if can?(:create, GeneralMeeting)
+      %p.left= link_to("Create new", new_general_meeting_path)
+    %p.right= link_to("See all meetings", meetings_path)
     %br.clear
 
   .section

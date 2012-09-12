@@ -144,7 +144,12 @@ describe OneClickController do
       @proposals_association.stub(:new)
 
       @organisation.stub_chain(:members, :all).and_return([])
+
       @organisation.stub_chain(:meetings, :all).and_return([])
+      @organisation.stub_chain(:meetings, :upcoming, :order, :first)
+      @organisation.stub_chain(:meetings, :upcoming, :count).and_return(0)
+      @organisation.stub_chain(:meetings, :past, :order, :first)
+
       @organisation.stub(:resolutions).and_return([])
       @organisation.stub(:resolution_proposals).and_return([])
       @organisation.stub(:decisions).and_return([])
