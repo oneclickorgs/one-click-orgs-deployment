@@ -11,7 +11,3 @@ Feature: Viewing dashboard
   # Scenario: Member views tasks that requite their attention
   #   When I go to the Dashboard page
   #   Then I should see notifications of issues that require my attention
-
-  Scenario: Member views action buttons for common tasks
-    When I go to the Dashboard page
-    Then I should see action buttons for things I commonly want to do
