@@ -1,6 +1,2 @@
 %p
-  The General Meeting that happend on
-  = task.subject.happened_on.to_s(:long_ordinal)
-  needs to have its minutes recorded.
-%p
-  = link_to("Enter minutes for this meeting", edit_general_meeting_path(task.subject))
+  = link_to("Record General Meeting minutes from #{task.subject.happened_on.to_s(:long_ordinal)}", edit_general_meeting_path(task.subject))
