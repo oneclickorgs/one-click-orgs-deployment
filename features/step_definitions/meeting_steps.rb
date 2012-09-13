@@ -3,14 +3,12 @@ require 'action_controller/record_identifier'
 def select_meeting_date
   meeting_date = 1.month.from_now
 
-  if page.has_field?('general_meeting[happened_on(1i)]')
-    select(meeting_date.year.to_s, :from => 'general_meeting[happened_on(1i)]')
-    select(meeting_date.strftime('%B'), :from => 'general_meeting[happened_on(2i)]')
-    select(meeting_date.day.to_s, :from => 'general_meeting[happened_on(3i)]')
+  if page.has_css?('#general_meeting_happened_on_datepicker')
+    page.execute_script(%Q{$('#general_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
+  elsif page.has_css?('#board_meeting_happened_on_datepicker')
+    page.execute_script(%Q{$('#board_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
   else
-    select(meeting_date.year.to_s, :from => 'board_meeting[happened_on(1i)]')
-    select(meeting_date.strftime('%B'), :from => 'board_meeting[happened_on(2i)]')
-    select(meeting_date.day.to_s, :from => 'board_meeting[happened_on(3i)]')
+    raise "Could not find meeting date field"
   end
 end
 

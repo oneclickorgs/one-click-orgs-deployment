@@ -85,9 +85,65 @@ $(document).ready(function () {
   if ($('#lightbox div.notification').length > 0) {
     OneClickOrgs.activateLightbox();
   }
-  
+
   $('#lightbox div.notification button#close_notification').click(function ()
   {
     OneClickOrgs.dismissLightbox();
+  });
+
+  // Convert Rails date selects into jQuery UI datepicker
+  $('select.datepicker[name*="(3i)"]').each(function(index, element)
+  {
+    element = $(element);
+
+    var originalSelects = [];
+
+    // Collect the three date select elements
+    originalSelects.push($(element));
+    originalSelects.push($(element).siblings('select.datepicker[name*="(2i)"]'));
+    originalSelects.push($(element).siblings('select.datepicker[name*="(1i)"]'));
+
+    originalSelects = $(originalSelects).map(function() {return this.toArray();});
+
+    if (originalSelects.length != 3) {
+      return;
+    }
+
+    var defaultYear = parseInt($(originalSelects[2]).val(), 10);
+    var defaultMonth = parseInt($(originalSelects[1]).val(), 10);
+    var defaultDay = parseInt($(originalSelects[0]).val(), 10);
+
+    var defaultDateString = [defaultYear, defaultMonth, defaultDay].join('-');
+    var defaultDate = new Date(
+      defaultYear,
+      defaultMonth - 1, // JS Date object indexes months starting at zero
+      defaultDay
+    );
+
+    var attributeName = element.attr('name').replace('(3i)', '');
+    var altFieldId = element.attr('id').replace('3i', 'altField');
+    var datepickerDivId = element.attr('id').replace('3i', 'datepicker');
+
+    var datepickerField = $('<input type="hidden"/>');
+    datepickerField.attr('name', attributeName);
+    datepickerField.attr('value', defaultDateString);
+    datepickerField.attr('id', altFieldId);
+
+    var datepickerDiv = $('<div class="datepicker"/>');
+    datepickerDiv.attr('id', datepickerDivId);
+
+    $(originalSelects[2]).after(datepickerField);
+    $(originalSelects[2]).after(datepickerDiv);
+    datepickerDiv.datepicker({
+      altFormat: "yy-mm-dd",
+      altField: '#' + altFieldId,
+      defaultDate: defaultDate
+    });
+
+    originalSelects.hide();
+    $.each(originalSelects, function(index, element)
+    {
+      $(element).attr('disabled', 'disabled');
+    });
   });
 });

@@ -513,6 +513,11 @@ label, input, textarea, select
 
 p.date_select
   :padding-left 1.2em
+  input.hasDatepicker
+    // When date selects are converted to a jQuery UI datepicker, the
+    // input element becomes a standard text field, so doesn't need
+    // this extra padding.
+    :margin-left 0
 
 label
   :padding-right 1em

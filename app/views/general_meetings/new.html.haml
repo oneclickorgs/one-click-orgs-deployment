@@ -6,7 +6,7 @@
 .section
   = form_for(@general_meeting) do |general_meeting_form|
     %p= general_meeting_form.label :happened_on, "Date of meeting"
-    %p.date_select= general_meeting_form.date_select :happened_on, {}, :class => 'inline'
+    %p.date_select= general_meeting_form.date_select :happened_on, {}, :class => 'inline datepicker'
     %p= general_meeting_form.label :start_time
     %p= general_meeting_form.text_field :start_time
     %p= general_meeting_form.label :venue

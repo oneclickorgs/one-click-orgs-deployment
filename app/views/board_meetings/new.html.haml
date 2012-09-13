@@ -3,7 +3,7 @@
 .section
   = form_for(@board_meeting) do |board_meeting_form|
     %p= board_meeting_form.label :happened_on, "Date of meeting"
-    %p.date_select= board_meeting_form.date_select :happened_on, {}, :class => 'inline'
+    %p.date_select= board_meeting_form.date_select :happened_on, {}, :class => 'inline datepicker'
     %p= board_meeting_form.label :start_time
     %p= board_meeting_form.text_field :start_time
     %p= board_meeting_form.label :venue
