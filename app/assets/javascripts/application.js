@@ -55,7 +55,7 @@ $(document).ready(function () {
   $('.form-to-hide').each(function() {
     var cloned_cancel = cancel_button.clone();
     $(this).find(':submit').after(cloned_cancel);
-    
+
     // make it slide back up on click
     cloned_cancel.click(function(event) {
       event.preventDefault();
@@ -68,7 +68,7 @@ $(document).ready(function () {
   $('.button-form-show').click(function() {
     var button = $(this);
     var form = $('#' + button.data('formId'));
-    
+
     if (!form.hasClass('active')) {
       $('.form-to-hide.active').removeClass('active').slideUp();
       form.addClass('active').slideDown('medium');
@@ -76,7 +76,7 @@ $(document).ready(function () {
       form.removeClass('active').slideUp();
     }
   });
-  
+
   $('.button-form').click(function() {
     window.location.href = $(this).data('url');
   });
