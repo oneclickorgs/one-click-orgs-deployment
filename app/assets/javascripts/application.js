@@ -4,13 +4,13 @@ var OneClickOrgs = {};
 
 OneClickOrgs.activateLightbox = function (options) {
   var completionCallback, lightboxSelector;
-  if (options && options['complete']) {
-    completionCallBack = options['complete'];
+  if (options && options.complete) {
+    completionCallBack = options.complete;
   }
-  if (options && options['id']) {
-    lightboxSelector = '#' + options['id'];
+  if (options && options.id) {
+    lightboxSelector = '#' + options.id;
   } else {
-    lightboxSelector = '#lightbox'
+    lightboxSelector = '#lightbox';
   }
   $('#lightbox_screen').fadeIn();
   $(lightboxSelector).css('top', 100).animate(
@@ -25,26 +25,26 @@ OneClickOrgs.activateLightbox = function (options) {
       }
     }
   );
-}
+};
 OneClickOrgs.dismissLightbox = function (options) {
   var lightboxSelector;
-  if (options && options['id']) {
-    lightboxSelector = '#' + options['id'];
+  if (options && options.id) {
+    lightboxSelector = '#' + options.id;
   } else {
-    lightboxSelector = '#lightbox'
+    lightboxSelector = '#lightbox';
   }
   $('#lightbox_screen').fadeOut();
   $(lightboxSelector).animate(
     {top: 100, opacity: 'hide'},
     {queue: false}
   );
-}
+};
 
 OneClickOrgs.trackAnalyticsEvent = function (eventName) {
   if (_gaq) {
     _gaq.push(['_trackPageview', '/analytics_events/' + eventName]);
   }
-}
+};
 
 $(document).ready(function () {
   // Revealed forms
@@ -60,8 +60,8 @@ $(document).ready(function () {
     cloned_cancel.click(function(event) {
       event.preventDefault();
       $(this).closest('.form-to-hide').removeClass('active').slideUp();
-    })
-  })
+    });
+  });
 
   $('.button-form-show').show();
 
