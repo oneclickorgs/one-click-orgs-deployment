@@ -1,4 +1,4 @@
-%h2 Dashboard
+%h2 Your Dashboard
 
 - @elections = co.elections.where(:state => :open)
 - if @elections.present?
@@ -12,12 +12,11 @@
 
 - if @tasks.present?
   .section.tasks
-    %h3 To do
+    %h3 Requiring your attention
     %ul.tasks
       - @tasks.each do |task|
         = content_tag_for(:li, task) do
           = render :partial => 'tasks/task', :locals => {:task => task}
-    %br.clear
 
 .left.dashboard
   .section.meetings
@@ -31,7 +30,7 @@
           %br
           = @upcoming_meeting.start_time
         %p.details
-          = @upcoming_meeting.class.name.underscore.humanize.titlecase
+          %strong= @upcoming_meeting.class.name.underscore.humanize.titlecase
           %br
           = @upcoming_meeting.venue
           %br
@@ -50,11 +49,11 @@
           %br
           = @last_meeting.start_time
         %p.details
-          = @last_meeting.class.name.underscore.humanize.titlecase
+          %strong= @last_meeting.class.name.underscore.humanize.titlecase
           %br
           = link_to("See minutes", meeting_path(@last_meeting))
     - if can?(:create, GeneralMeeting)
-      %p.left= link_to("Create new", new_general_meeting_path)
+      %p.left= link_button("Create new", :url => new_general_meeting_path)
     %p.right= link_to("See all meetings", meetings_path)
     %br.clear
 
@@ -71,13 +70,13 @@
           = content_tag_for(:li, proposal) do
             %h4 New proposal
             %p.title.left= proposal.title
-            %p.action.right= link_to("Vote", proposal_path(proposal))
+            %p.action.right= link_button("Vote", :url => proposal_path(proposal))
             %br.clear
     - else
       %p No proposals currently open for voting.
     - if can?(:create, Resolution)
-      %p.left= link_to("Create new", new_resolution_path)
+      %p.left= link_button("Create new", :url => new_resolution_path)
     - elsif can?(:create, ResolutionProposal)
-      %p.left= link_to("Suggest new", new_resolution_proposal_path)
+      %p.left= link_button("Suggest new", :url => new_resolution_proposal_path)
     %p.right= link_to("See all proposals", proposals_path)
     %br.clear

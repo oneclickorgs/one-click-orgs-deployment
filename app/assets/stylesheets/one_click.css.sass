@@ -789,16 +789,24 @@ ul.checklist
         :float left
       &.right
         :float right
+    .section
+      :padding-left 24px
+      h3
+        :margin-left -12px
+    input.button-form
+      :margin 0
     .meetings
       .meeting, .general_meeting
-        :border 1px solid #999
+        :border 1px solid #aaa
         :padding 0.5em
         :margin-bottom 1em
         .datetime
           :float left
-          :background-color #eee
-          :padding 2px
+          :background-color #ddd
+          :padding 5px
           :margin-right 1em
+          :text-align center
+          :font-size 0.8em
     .proposals
       ul.proposals
         :margin 0
@@ -806,4 +814,7 @@ ul.checklist
           :list-style-type none
           :margin 1em 0
           :padding 0.5em
-          :border 1px solid #999
+          :border 1px solid #aaa
+  .section.tasks
+    h3
+      :margin-bottom 12px
