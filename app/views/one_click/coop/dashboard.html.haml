@@ -62,7 +62,22 @@
     %h3 Members and shares
     %br.clear
 
-.right
-  .section
+.right.dashboard
+  .section.proposals
     %h3 Proposals
+    - if @open_proposals_without_vote.present?
+      %ul.proposals
+        - @open_proposals_without_vote.each do |proposal|
+          = content_tag_for(:li, proposal) do
+            %h4 New proposal
+            %p.title.left= proposal.title
+            %p.action.right= link_to("Vote", proposal_path(proposal))
+            %br.clear
+    - else
+      %p No proposals currently open for voting.
+    - if can?(:create, Resolution)
+      %p.left= link_to("Create new", new_resolution_path)
+    - elsif can?(:create, ResolutionProposal)
+      %p.left= link_to("Suggest new", new_resolution_proposal_path)
+    %p.right= link_to("See all proposals", proposals_path)
     %br.clear

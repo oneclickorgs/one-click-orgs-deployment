@@ -4,8 +4,6 @@ class OneClickController < ApplicationController
   end
 
   def dashboard
-    # Fetch open proposals
-    @proposals = co.proposals.currently_open
 
     @new_proposal = co.proposals.new
 
@@ -15,6 +13,9 @@ class OneClickController < ApplicationController
         redirect_to constitution_path
         return
       end
+
+      @proposals = co.proposals.currently_open
+
       @add_member_proposal = co.add_member_proposals.build
 
       @timeline = [
@@ -24,6 +25,7 @@ class OneClickController < ApplicationController
         co.resignations.all
       ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     when Company
+      @proposals = co.proposals.currently_open
       @meeting = Meeting.new
       @directors = co.members.where(:member_class_id => co.member_classes.find_by_name('Director').id)
       @timeline = [
@@ -45,6 +47,8 @@ class OneClickController < ApplicationController
       end
 
       @last_meeting = co.meetings.past.order('happened_on DESC').first
+
+      @open_proposals_without_vote = co.proposals.currently_open.reject{|p| p.vote_by(current_user)}
     end
   end
 

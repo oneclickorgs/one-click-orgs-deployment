@@ -140,7 +140,7 @@ describe OneClickController do
       @proposals_association = mock("proposals association")
       @organisation.stub(:proposals).and_return(@proposals_association)
 
-      @proposals_association.stub(:currently_open)
+      @proposals_association.stub_chain(:currently_open, :reject)
       @proposals_association.stub(:new)
 
       @organisation.stub_chain(:members, :all).and_return([])
