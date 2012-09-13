@@ -11,7 +11,7 @@
         %p= link_to("View the election and cast your vote.", new_election_ballot_path(:election_id => election))
 
 - if @tasks.present?
-  .section
+  .section.tasks
     %h3 To do
     %ul.tasks
       - @tasks.each do |task|
