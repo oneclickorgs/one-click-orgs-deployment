@@ -53,9 +53,11 @@ class Member < ActiveRecord::Base
 
   has_many :resignations
 
-  has_one :office, :through => :officership
+  has_many :officerships, :foreign_key => 'officer_id'
   has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id'
+  has_one :office, :through => :officership
 
+  has_many :directorships, :foreign_key => 'director_id'
   has_one :directorship, :order => 'elected_on DESC', :foreign_key => 'director_id'
 
   has_one :share_account, :as => :owner

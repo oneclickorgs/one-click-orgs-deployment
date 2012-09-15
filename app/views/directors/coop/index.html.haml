@@ -8,6 +8,11 @@
         = content_tag_for(:li, task) do
           = render :partial => 'tasks/task', :locals => {:task => task}
 
+%p#download
+  Download:
+  %span.pdf.download
+    = link_to 'PDF', directors_path(:format => 'pdf')
+
 .section
   %table.directors
     %tr

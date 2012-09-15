@@ -36,4 +36,8 @@ class Directorship < ActiveRecord::Base
     end
     director.save!
   end
+
+  def self.most_recent
+    order('elected_on DESC').first
+  end
 end

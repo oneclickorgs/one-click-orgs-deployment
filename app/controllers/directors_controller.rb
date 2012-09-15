@@ -4,6 +4,13 @@ class DirectorsController < ApplicationController
     @offices = co.offices
 
     @tasks = current_user.tasks.current.directors_related
+
+    respond_to do |format|
+      format.html
+      format.pdf {
+        generate_pdf(@page_title)
+      }
+    end
   end
 
   def create

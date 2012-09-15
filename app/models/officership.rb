@@ -61,4 +61,8 @@ class Officership < ActiveRecord::Base
       end
     end
   end
+
+  def self.most_recent
+    order('elected_on DESC').first
+  end
 end
