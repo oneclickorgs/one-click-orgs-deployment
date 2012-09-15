@@ -33,6 +33,8 @@ class Member < ActiveRecord::Base
     store_audit_trail
   end
 
+  has_many :member_state_transitions
+
   include OneClickOrgs::UserAuthentication
   include OneClickOrgs::InvitationCode
   include OneClickOrgs::NotificationConsumer
@@ -104,6 +106,15 @@ class Member < ActiveRecord::Base
 
   def votes_count
     votes.count
+  end
+
+  def ejected_or_resigned_at
+    transition = member_state_transitions.where(["event = ? OR event = ?", 'reject', 'resign']).order('created_at DESC').first
+    if transition
+      transition.created_at
+    else
+      nil
+    end
   end
 
   def eligible_to_vote?(proposal)
