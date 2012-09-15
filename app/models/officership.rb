@@ -2,11 +2,11 @@ require 'one_click_orgs/cast_to_boolean'
 
 # An Officership represents the period during which a particular
 # person occupies a particular office.
-# 
+#
 # Each Office can only have one current Officership, but will have
 # a history of many Officerships as different people occupy the
 # Office.
-# 
+#
 # Similarly, a Member can only have one current Officership (i.e.
 # they can only occupy one Office at a time). But they may build
 # up a history of many Officerships if they occupy several Offices
