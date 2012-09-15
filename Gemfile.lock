@@ -12,9 +12,17 @@ GIT
   specs:
     meekster (0.0.1)
 
+GIT
+  remote: https://github.com/oneclickorgs/pdf_form_filler.git
+  revision: 5d03f7b3d26d956414fc4f4b99fb0f8cef292292
+  specs:
+    pdf_form_filler (0.0.1)
+      prawn (~> 0.12.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
+    Ascii85 (1.0.1)
     actionmailer (3.2.8)
       actionpack (= 3.2.8)
       mail (~> 2.4.4)
@@ -99,6 +107,7 @@ GEM
     gherkin (2.11.2)
       json (>= 1.4.6)
     haml (3.1.7)
+    hashery (2.0.1)
     highline (1.6.14)
     hike (1.2.1)
     i18n (0.6.1)
@@ -138,8 +147,15 @@ GEM
     parallel (0.5.18)
     parallel_tests (0.8.12)
       parallel
+    pdf-reader (1.2.0)
+      Ascii85 (~> 1.0.0)
+      hashery (~> 2.0)
+      ruby-rc4
     pdfkit (0.5.2)
     polyglot (0.3.3)
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -199,6 +215,7 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-rc4 (0.1.5)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.9)
@@ -232,6 +249,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     tzinfo (0.3.33)
     uglifier (1.2.7)
       execjs (>= 0.3.0)
@@ -269,6 +287,7 @@ DEPENDENCIES
   meekster!
   mysql (~> 2.8.1)
   parallel_tests
+  pdf_form_filler!
   pdfkit (~> 0.5.2)
   pry
   railroad
