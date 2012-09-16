@@ -3,6 +3,9 @@
 
 %h2 Form a new Co-op
 
+= error_messages_for(@member)
+= error_messages_for(@coop)
+
 = form_tag(coops_path) do
   .left
     %h3 Your details
