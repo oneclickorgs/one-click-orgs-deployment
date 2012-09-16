@@ -53,6 +53,20 @@ class Coop < Organisation
   has_one :share_account, :as => :owner
   has_many :withdrawals, :through => :share_account
 
+  # Returns true if the requirements for moving to the 'proposed' state
+  # have been fulfilled.
+  def can_propose?
+    result = true
+
+    result &&= members.active.count >= 3
+    result &&= directors.count >= 3
+    result &&= !!secretary
+    result &&= rules_filled?
+    result &&= registration_form_filled?
+
+    result
+  end
+
   def founder_members
     members.founder_members(self)
   end
