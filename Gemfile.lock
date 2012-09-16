@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/oneclickorgs/pdf_form_filler.git
-  revision: ff1dc1760816947bda35362c9b9fd7572f6ba937
+  revision: eceb09fe3321d8f3c5c6d8646957f967bea46f42
   specs:
     pdf_form_filler (0.0.1)
       prawn (~> 0.12.0)
@@ -22,7 +22,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    Ascii85 (1.0.1)
+    Ascii85 (1.0.2)
     actionmailer (3.2.8)
       actionpack (= 3.2.8)
       mail (~> 2.4.4)
