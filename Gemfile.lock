@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/oneclickorgs/pdf_form_filler.git
-  revision: 5d03f7b3d26d956414fc4f4b99fb0f8cef292292
+  revision: ff1dc1760816947bda35362c9b9fd7572f6ba937
   specs:
     pdf_form_filler (0.0.1)
       prawn (~> 0.12.0)
