@@ -13,7 +13,7 @@ GIT
     meekster (0.0.1)
 
 GIT
-  remote: https://github.com/oneclickorgs/pdf_form_filler.git
+  remote: git://github.com/oneclickorgs/pdf_form_filler.git
   revision: eceb09fe3321d8f3c5c6d8646957f967bea46f42
   specs:
     pdf_form_filler (0.0.1)
