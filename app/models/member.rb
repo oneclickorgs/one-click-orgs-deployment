@@ -7,7 +7,8 @@ require 'lib/vote_error'
 class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome,
-    :address, :certify_share_application, :certify_age
+    :address, :certify_share_application, :certify_age,
+    :phone
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome, :member_class_id, :as => :proposal
 

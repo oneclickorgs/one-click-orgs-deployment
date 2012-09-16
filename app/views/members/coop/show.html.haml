@@ -11,6 +11,8 @@
   %dl
     %dt Postal address
     %dd= simple_format(@member.address)
+    %dt Phone
+    %dd= @member.phone
     - if @member.inducted_at
       %dt Joined
       %dd= @member.inducted_at.to_date.to_s(:long_ordinal)
