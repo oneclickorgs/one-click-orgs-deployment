@@ -136,7 +136,7 @@ GEM
       net-ssh (>= 1.99.1)
     nokogiri (1.5.5)
     parallel (0.5.18)
-    parallel_tests (0.8.9)
+    parallel_tests (0.8.12)
       parallel
     pdfkit (0.5.2)
     polyglot (0.3.3)
