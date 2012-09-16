@@ -160,6 +160,8 @@ describe OneClickController do
       @current_tasks_association = mock("current tasks association")
       @tasks_association.stub(:current).and_return(@current_tasks_association)
 
+      @current_tasks_association.stub(:members_or_shares_related)
+
       @organisation.stub(:active?).and_return(true)
     end
 
