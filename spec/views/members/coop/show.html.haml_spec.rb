@@ -5,7 +5,8 @@ describe 'members/coop/show' do
   let(:member) {mock_model(Member,
     :gravatar_url => nil,
     :name => "Bob Smith",
-    :to_param => '11'
+    :to_param => '11',
+    :shares_count => 0
   )}
 
   before(:each) do
