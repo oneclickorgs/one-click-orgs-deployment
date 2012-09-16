@@ -29,7 +29,7 @@
           - if director.last_logged_in_at
             = director.last_logged_in_at.to_s(:short)
         %td
-          = director.directorship.elected_on.to_s(:long_ordinal)
+          = director.directorship.elected_on.to_s(:long)
         %td
           - if can?(:edit, director.directorship)
             = link_button("Retire", :url => edit_directorship_path(director.directorship))
@@ -55,7 +55,7 @@
             Office unoccupied
         %td
           - if office.officership
-            = office.officership.elected_on.to_s(:long_ordinal)
+            = office.officership.elected_on.to_s(:long)
         %td
           - if office.officer
             - if can?(:edit, office.officership)
