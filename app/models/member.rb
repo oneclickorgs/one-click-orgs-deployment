@@ -75,7 +75,8 @@ class Member < ActiveRecord::Base
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
   validates_each :email do |record, attribute, value|
     begin
-      address = Mail::Address.new(value)
+      # Try to parse the email address
+      Mail::Address.new(value)
     rescue Mail::Field::ParseError
       record.errors.add(attribute, 'is invalid.')
     end
