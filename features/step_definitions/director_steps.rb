@@ -109,8 +109,7 @@ end
 
 When /^I step down "(.*?)"$/ do |name|
   member = @organisation.directors.find_by_name(name)
-  office = member.office
-  within(".#{office.title.parameterize.underscore}") do
+  within("#member_#{member.id}") do
     click_button("Step down")
   end
 end
@@ -173,12 +172,8 @@ When /^I choose "(.*?)" from the list of offices$/ do |title|
 end
 
 Then /^I should see that director listed as "(.*?)" in the list of Officers$/ do |office|
-  within('.offices') do
-    page.should have_css(".#{office.parameterize.underscore}")
-    within(".#{office.parameterize.underscore}") do
-      page.should have_content(office)
-      page.should have_content(@director.name)
-    end
+  within("#member_#{@director.id}") do
+    page.should have_content(office)
   end
 end
 
@@ -211,26 +206,22 @@ end
 
 Then /^I should see a list of the officers$/ do
   officer = @organisation.offices.select{|o| !o.officer.nil?}.last.officer
-  page.should have_css(".offices", :text => officer.name)
+  within("#member_#{officer.id}") do
+    page.should have_content(officer.officership.office_title)
+  end
 end
 
 Then /^I should see "(.*?)" listed as the "(.*?)"$/ do |name, office|
-  within('.offices') do
-    page.should have_css(".#{office.parameterize.underscore}")
-    within(".#{office.parameterize.underscore}") do
-      page.should have_content(office)
-      page.should have_content(name)
-    end
+  member = @organisation.members.find_by_name(name)
+  within("#member_#{member.id}") do
+    page.should have_content(office)
   end
 end
 
 Then /^I should not see "(.*?)" listed as the "(.*?)"$/ do |name, office|
-  within('.offices') do
-    page.should have_css(".#{office.parameterize.underscore}")
-    within(".#{office.parameterize.underscore}") do
-      page.should have_no_content(name)
-      page.should have_content('unoccupied')
-    end
+  member = @organisation.members.find_by_name(name)
+  within("#member_#{member.id}") do
+    page.should have_no_content(office)
   end
 end
 

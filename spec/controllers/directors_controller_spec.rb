@@ -127,6 +127,7 @@ describe DirectorsController do
       before(:each) do
         @organisation.stub(:directors)
         @organisation.stub(:offices).and_return(@offices = mock("offices association"))
+        @offices.stub(:unoccupied).and_return([])
 
         @user.stub_chain(:tasks, :current, :directors_related).and_return(tasks)
       end

@@ -55,7 +55,11 @@ class Member < ActiveRecord::Base
   has_many :resignations
 
   has_many :officerships, :foreign_key => 'officer_id'
-  has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id'
+  has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id',
+    :conditions => proc{[
+      "(officerships.ended_on IS NULL OR officerships.ended_on > :now) AND officerships.elected_on <= :now",
+      {:now => Time.now.utc}
+    ]}
   has_one :office, :through => :officership
 
   has_many :directorships, :foreign_key => 'director_id'

@@ -5,6 +5,8 @@ class DirectorsController < ApplicationController
 
     @tasks = current_user.tasks.current.directors_related
 
+    @unoccupied_offices = co.offices.unoccupied
+
     respond_to do |format|
       format.html
       format.pdf {

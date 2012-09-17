@@ -124,6 +124,7 @@ OneClickOrgs::Application.routes.draw do
   resources :directorships
 
   resources :officerships
+  resources :offices
 
   resources :elections do
     resources :ballots

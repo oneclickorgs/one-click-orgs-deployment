@@ -7,14 +7,9 @@
     %p
       = officership_form.select(:officer_id, options_from_collection_for_select(co.directors, :id, :name))
     %p
-      = officership_form.label(:office_id, "Choose an existing office to appoint them to...")
+      = officership_form.label(:office_id, "Choose an office to appoint them to:")
     %p
       = officership_form.select(:office_id, options_from_collection_for_select(co.offices, :id, :title))
-    = officership_form.fields_for(:office) do |office_fields|
-      %p
-        = office_fields.label(:title, "...or create a new office:")
-      %p
-        = office_fields.text_field(:title)
     - if co.active?
       %p
         = officership_form.check_box(:certification)
