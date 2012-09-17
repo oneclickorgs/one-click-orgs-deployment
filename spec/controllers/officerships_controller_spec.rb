@@ -65,7 +65,7 @@ describe OfficershipsController do
       @officerships_association.stub(:build).and_return(@officership)
       @officership.stub(:save!)
     end
-    
+
     def post_create
       post :create, 'officership' => @officership_params
     end
@@ -88,7 +88,7 @@ describe OfficershipsController do
 
   describe "GET edit" do
     before(:each) do
-      @officership = mock_model(Officership)  
+      @officership = mock_model(Officership)
       @officerships_association = mock("officerships association")
 
       @organisation.stub(:officerships).and_return(@officerships_association)
