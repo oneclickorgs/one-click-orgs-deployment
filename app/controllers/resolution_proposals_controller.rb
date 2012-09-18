@@ -14,6 +14,7 @@ class ResolutionProposalsController < ApplicationController
     @resolution_proposal = co.resolution_proposals.build(params[:resolution_proposal])
     @resolution_proposal.proposer = current_user
     @resolution_proposal.save!
+    flash[:notice] = "Your proposal has been saved and sent to the Secretary."
     redirect_to resolution_proposal_path(@resolution_proposal)
   end
 
