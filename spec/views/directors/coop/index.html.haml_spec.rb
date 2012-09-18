@@ -14,6 +14,7 @@ describe 'directors/coop/index' do
       ),
       mock_model(Member,
         :name => "John Smith",
+        :gravatar_url => nil,
         :directorship => mock_model(Directorship),
         :officership => @officership = mock_model(Officership,
           :to_param => '3',

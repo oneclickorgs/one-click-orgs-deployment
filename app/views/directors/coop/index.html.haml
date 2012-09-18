@@ -23,7 +23,9 @@
     - @directors.each do |director|
       = content_tag_for(:li, director) do
         .directorship
-          %p.name= director.name
+          %p.name
+            = image_tag("#{director.gravatar_url(24)}", :class => 'gravatar', :alt => "#{director.name}", :width => '24', :height => '24')
+            = director.name
           - if director.directorship.elected_on
             %p.elected_on
               Appointed:
