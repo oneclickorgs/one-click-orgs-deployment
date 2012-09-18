@@ -28,6 +28,10 @@ class ResolutionProposalsController < ApplicationController
     redirect_to proposals_path
   end
 
+  def support
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
+  end
+
   def pass
     @resolution_proposal = co.resolution_proposals.find(params[:id])
     @resolution_proposal.force_passed = true
