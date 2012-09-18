@@ -8,59 +8,62 @@
         = content_tag_for(:li, task) do
           = render :partial => 'tasks/task', :locals => {:task => task}
 
+.section
+  = link_button("Appoint new Director", :url => new_directorship_path)
+  = link_button("Appoint new Officer", :url => new_officership_path)
+  .clear
+
 %p#download
   Download:
   %span.pdf.download
     = link_to 'PDF', directors_path(:format => 'pdf')
 
 .section
-  %table.directors
-    %tr
-      %th Name
-      %th Last login
-      %th Appointed
-      %th
+  %ul.directors
     - @directors.each do |director|
-      = content_tag_for(:tr, director) do
-        %td
-          = image_tag("#{director.gravatar_url(24)}", :class => 'gravatar', :alt => "#{director.name}", :width => '24', :height => '24')
-          = link_to "#{director.name}", member_path(director)
-        %td
-          - if director.last_logged_in_at
-            = director.last_logged_in_at.to_s(:short)
-        %td
-          = director.directorship.elected_on.to_s(:long)
-        %td
+      = content_tag_for(:li, director) do
+        .directorship
+          %p.name
+            = image_tag("#{director.gravatar_url(24)}", :class => 'gravatar', :alt => "#{director.name}", :width => '24', :height => '24')
+            = director.name
+          - if director.directorship.elected_on
+            %p.elected_on
+              Appointed:
+              = director.directorship.elected_on.to_s(:long)
           - if can?(:edit, director.directorship)
-            = link_button("Retire", :url => edit_directorship_path(director.directorship))
-  - if can?(:create, Directorship)
-    = link_button("Appoint new Director", :url => new_directorship_path)
-  %br.clear
+            %p.action
+              = link_button("Retire", :url => edit_directorship_path(director.directorship))
+          .clear
+        .officership
+          - if director.officership
+            %p.title= director.officership.office_title
+            - if can?(:edit, director.officership)
+              %p.action
+                = link_button("Step down", :url => edit_officership_path(director.officership))
+          - else
+            %p.title No office
+            - if can?(:create, Officership)
+              %p.action
+                = link_button("Appoint", :url => new_officership_path(:officer_id => director.id))
+          .clear
+        .clear
 
-.section
-  %h3 Offices
-  %table.offices
-    %tr
-      %th Office
-      %th Occupied by
-      %th Appointed
-      %th
-    - @offices.each do |office|
-      %tr{:class => office.title.parameterize.underscore}
-        %td= office.title
-        %td
-          - if office.officer
-            = link_to(office.officer.name, member_path(office.officer))
-          -else
-            Office unoccupied
-        %td
-          - if office.officership
-            = office.officership.elected_on.to_s(:long)
-        %td
-          - if office.officer
-            - if can?(:edit, office.officership)
-              = link_button("Step down", :url => edit_officership_path(office.officership))
-  - if can?(:create, Officership)
-    = link_button("Appoint a new Officer", :url => new_officership_path)
-  %br.clear
+- if @unoccupied_offices.present?
+  .section
+    %h3 Unoccupied offices
+    %ul.offices
+      - @unoccupied_offices.each do |office|
+        = content_tag_for(:li, office) do
+          = office.title
+          - if can?(:create, Officership)
+            = link_button("Appoint", :url => new_officership_path(:office_id => office.id))
+          .clear
 
+- if can?(:create, Office)
+  .section
+    %h3 Create a new office
+    = form_for(:office, :url => offices_path) do |form|
+      %p
+        = form.text_field(:title)
+      %p
+        = form.submit("Create")

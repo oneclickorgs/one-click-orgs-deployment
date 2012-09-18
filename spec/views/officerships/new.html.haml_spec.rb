@@ -32,11 +32,6 @@ describe 'officerships/new' do
     end
   end
 
-  it "renders a text field for the office" do
-    render
-    rendered.should have_selector(:input, :name => 'officership[office_attributes][title]')
-  end
-
   it "renders a certification check box" do
     render
     rendered.should have_selector(:input, :name => 'officership[certification]')

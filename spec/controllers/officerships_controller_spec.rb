@@ -24,6 +24,16 @@ describe OfficershipsController do
       get :new
     end
 
+    it "respects the officer_id parameter" do
+      @officerships_association.should_receive(:build).with(hash_including(:officer_id => '1'))
+      get :new, :officer_id => '1'
+    end
+
+    it "handles the office_id parameter" do
+      @officerships_association.should_receive(:build).with(hash_including(:office_id => '1'))
+      get :new, :office_id => '1'
+    end
+
     it "builds a new officership" do
       @officerships_association.should_receive(:build).and_return(@officership)
       get_new
@@ -55,7 +65,7 @@ describe OfficershipsController do
       @officerships_association.stub(:build).and_return(@officership)
       @officership.stub(:save!)
     end
-    
+
     def post_create
       post :create, 'officership' => @officership_params
     end
@@ -78,7 +88,7 @@ describe OfficershipsController do
 
   describe "GET edit" do
     before(:each) do
-      @officership = mock_model(Officership)  
+      @officership = mock_model(Officership)
       @officerships_association = mock("officerships association")
 
       @organisation.stub(:officerships).and_return(@officerships_association)

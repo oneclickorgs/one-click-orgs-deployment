@@ -1,6 +1,13 @@
 class OfficershipsController < ApplicationController
   def new
-    @officership = co.officerships.build(:elected_on => Date.today)
+    officership_attributes = {:elected_on => Date.today}
+    if params[:office_id]
+      officership_attributes[:office_id] = params[:office_id]
+    end
+    if params[:officer_id]
+      officership_attributes[:officer_id] = params[:officer_id]
+    end
+    @officership = co.officerships.build(officership_attributes)
     @officership.build_office
   end
 

@@ -83,6 +83,7 @@ OneClickOrgs::Application.routes.draw do
 
   resources :resolution_proposals do
     member do
+      get :support
       put :pass
       put :pass_to_meeting
     end
@@ -124,6 +125,7 @@ OneClickOrgs::Application.routes.draw do
   resources :directorships
 
   resources :officerships
+  resources :offices
 
   resources :elections do
     resources :ballots

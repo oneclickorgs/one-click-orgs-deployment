@@ -90,6 +90,8 @@ class Ability
       if user.has_permission(:officership) || user.organisation.pending?
         can :create, Officership
         can :edit, Officership
+
+        can :create, Office
       end
 
       can :update, Member do |member|

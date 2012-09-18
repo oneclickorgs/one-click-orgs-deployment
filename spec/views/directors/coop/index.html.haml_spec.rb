@@ -6,21 +6,24 @@ describe 'directors/coop/index' do
 
   before(:each) do
     @directors = [
-      mock_model(Member, :to_param => '4',
+      mock_model(Member, :to_param => '4', :id => 4,
         :gravatar_url => nil,
         :name => "Lisa Baker",
-        :directorship => @directorship = mock_model(Directorship, :to_param => '5', :elected_on => 1.week.ago)
+        :directorship => @directorship = mock_model(Directorship, :to_param => '5', :elected_on => 1.week.ago),
+        :officership => nil
+      ),
+      mock_model(Member,
+        :name => "John Smith",
+        :gravatar_url => nil,
+        :directorship => mock_model(Directorship),
+        :officership => @officership = mock_model(Officership,
+          :to_param => '3',
+          :elected_on => 1.week.ago,
+          :office_title => "Treasurer"
+        )
       )
     ]
     assign(:directors, @directors)
-
-    @offices = [
-      mock_model(Office, :title => 'Treasurer',
-        :officer => mock_model(Member, :name => "John Smith"),
-        :officership => @officership = mock_model(Officership, :to_param => '3', :elected_on => 1.week.ago)
-      )
-    ]
-    assign(:offices, @offices)
 
     assign(:tasks, [task])
     stub_template('tasks/_task_election_view_result' => 'task template')
@@ -33,13 +36,6 @@ describe 'directors/coop/index' do
     rendered.should render_template('tasks/_task_election_view_result')
   end
 
-  it "renders a list of the offices" do
-    render
-    rendered.should have_selector('.offices') do |offices|
-      offices.should have_selector('.treasurer', :content => 'John Smith')
-    end
-  end
-
   context "when user can edit the Officerships" do
     before(:each) do
       view.stub(:can?).with(:edit, @officership).and_return(true)
@@ -47,9 +43,7 @@ describe 'directors/coop/index' do
 
     it "renders a 'Step down' button for each officer" do
       render
-      rendered.should have_selector('.treasurer') do |treasurer|
-        treasurer.should have_selector(:input, 'data-url' => '/officerships/3/edit')
-      end
+      rendered.should have_selector(:input, 'data-url' => '/officerships/3/edit')
     end
   end
 
@@ -83,7 +77,7 @@ describe 'directors/coop/index' do
 
     it "renders an 'Appoint a new Officer' button" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/officerships/new', :value => "Appoint a new Officer")
+      rendered.should have_selector(:input, 'data-url' => '/officerships/new?officer_id=4')
     end
   end
 

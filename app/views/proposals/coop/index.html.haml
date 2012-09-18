@@ -6,9 +6,9 @@
 - if can?(:create, Resolution) || can?(:create, ResolutionProposal)
   .section
     - if can?(:create, Resolution)
-      = link_button("Create a new Resolution", :url => new_resolution_path)
+      = link_button("Create a proposal", :url => new_resolution_path)
     -elsif can?(:create, ResolutionProposal)
-      = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
+      = link_button("Create a proposal", :url => new_resolution_proposal_path)
     %br.clear
 
 #tabs
