@@ -10,7 +10,7 @@ Feature: Creating a resolution
   @javascript
   Scenario: Secretary creates a resolution for electronic voting
     When I go to the Resolutions page
-    And I press "Create a new Resolution"
+    And I press "Create a proposal"
     And I enter the text of the resolution
     And I choose to allow electronic voting on the resolution
     And I certify that the Board has decided to open this resolution
@@ -21,7 +21,7 @@ Feature: Creating a resolution
   @javascript
   Scenario: Secretary creates a resolution for consideration at a future meeting
     When I go to the Resolutions page
-    And I press "Create a new Resolution"
+    And I press "Create a proposal"
     And I enter the text of the resolution
     And I choose to save the resolution for consideration at a future meeting
     And I certify that the Board has decided to open this resolution

@@ -14,7 +14,7 @@ class ResolutionProposalsController < ApplicationController
     @resolution_proposal = co.resolution_proposals.build(params[:resolution_proposal])
     @resolution_proposal.proposer = current_user
     @resolution_proposal.save!
-    redirect_to proposals_path
+    redirect_to resolution_proposal_path(@resolution_proposal)
   end
 
   def edit

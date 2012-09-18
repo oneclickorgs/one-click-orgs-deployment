@@ -463,4 +463,14 @@ class Coop < Organisation
       :membership_required
     ].map{|name| "reg_form_#{name}"}.map{|name| !send(name).nil?}.inject(true){|memo, present| memo && present}
   end
+
+  # The lesser of 10% of the membership and 100 members is required to force a resolution.
+  def members_required_to_force_resolution
+    ten_percent_of_membership = (members.active.count / 10.0).ceil
+    if ten_percent_of_membership < 100
+      ten_percent_of_membership
+    else
+      100
+    end
+  end
 end

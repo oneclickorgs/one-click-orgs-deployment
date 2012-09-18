@@ -137,3 +137,8 @@ end
 Then /^I should see a list of votes in progress$/ do
   page.should have_css('.open-proposals h4')
 end
+
+Then /^I should see the new proposal$/ do
+  @proposal ||= @organisation.proposals.last
+  page.should have_content(@proposal.title)
+end

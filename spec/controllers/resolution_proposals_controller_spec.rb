@@ -39,7 +39,7 @@ describe ResolutionProposalsController do
     before(:each) do
       @resolution_proposal_params = {'description' => 'Buy more sporks.'}
       @resolution_proposals_association = mock("resolution proposals association")
-      @resolution_proposal = mock_model(ResolutionProposal)
+      @resolution_proposal = mock_model(ResolutionProposal, :to_param => '50')
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
       @resolution_proposals_association.stub(:build).and_return(@resolution_proposal)
       @resolution_proposal.stub(:proposer=)
@@ -64,10 +64,10 @@ describe ResolutionProposalsController do
       @resolution_proposal.should_receive(:save!)
       post_create
     end
-    
-    it "redirects to the proposals page" do
+
+    it "redirects to the new proposal page" do
       post_create
-      response.should redirect_to('/proposals')
+      response.should redirect_to('/resolution_proposals/50')
     end
     
     context "when the new resolution proposal cannot be saved" do

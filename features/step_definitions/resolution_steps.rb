@@ -46,7 +46,12 @@ Given /^there is a passed resolution to change the organisation name to 'The Tea
 end
 
 When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
-  fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
+  if page.has_field?('Text of the resolution')
+    fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
+  else
+    fill_in("Title", :with => "Member introductions")
+    fill_in("Description", :with => "All new members should be required to introduce themselves at the next General Meeting.")
+  end
 end
 
 When /^I choose to allow electronic voting on the resolution$/ do
@@ -104,6 +109,13 @@ When /^I view more details of the suggested resolution$/ do
   @resolution_proposal ||= @organisation.resolution_proposals.last
   within("#resolution_proposal_#{@resolution_proposal.id}") do
     click_link("View details")
+  end
+end
+
+When /^enough of the membership supports the proposal$/ do
+  @proposal ||= @organisation.resolution_proposals.last
+  @organisation.members.active.each do |member|
+    member.cast_vote(:for, @proposal)
   end
 end
 
@@ -186,4 +198,19 @@ end
 
 Then /^there should be a suggested resolution "(.*?)"$/ do |title|
   @organisation.resolution_proposals.where(:title => title).first.should be_present
+end
+
+Then /^I should see a special link to share the proposal$/ do
+  @proposal ||= @organisation.proposals.last
+  special_link = "/resolution_proposals/#{@proposal.to_param}/support"
+  page.should have_content(special_link)
+end
+
+Then /^the proposal should be open for voting as a resolution$/ do
+  @proposal ||= @organisation.proposals.last
+  @resolution = @organisation.resolutions.last
+
+  @resolution.title.should eq @proposal.title
+  @resolution.description.should eq @proposal.description
+  @resolution.should be_open
 end
