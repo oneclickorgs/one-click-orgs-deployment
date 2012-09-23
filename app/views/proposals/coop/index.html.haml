@@ -16,7 +16,7 @@
     - if can?(:edit, ResolutionProposal)
       %li= link_to("Need processing", '#tab_resolution_proposals')
     %li= link_to("Open for voting", '#tab_proposals')
-    %li= link_to("Upcoming meetings", '#tab_attached_proposals')
+    %li= link_to("Added to meetings", '#tab_attached_proposals')
     %li= link_to("Outcomes", '#tab_closed_proposals')
     - if can?(:create, ResolutionProposal)
       %li= link_to("My proposals", '#tab_my_proposals')
