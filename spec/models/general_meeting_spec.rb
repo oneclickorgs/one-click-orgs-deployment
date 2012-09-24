@@ -49,7 +49,7 @@ describe GeneralMeeting do
     it "adds the attached resolutions to the 'resolutions' association" do
       @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
 
-      @meeting.resolutions.length.should == 1
+      @meeting.resolutions.length.should eq 1
       @meeting.resolutions.should include(@resolution_7)
       @meeting.resolutions.should_not include(@resolution_9)
     end

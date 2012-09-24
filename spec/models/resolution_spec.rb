@@ -27,8 +27,8 @@ describe Resolution do
       @resolution = Resolution.make
 
       @resolution.draft = '1'
-      @resolution.draft.should == true
-      
+      @resolution.draft.should eq true
+
       @resolution.draft = '0'
       @resolution.draft.should == false
     end
@@ -37,8 +37,8 @@ describe Resolution do
       @resolution = Resolution.make
 
       @resolution.draft = 'true'
-      @resolution.draft.should == true
-      
+      @resolution.draft.should eq true
+
       @resolution.draft = 'false'
       @resolution.draft.should == false
     end
