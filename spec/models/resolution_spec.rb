@@ -43,7 +43,15 @@ describe Resolution do
       @resolution.draft.should == false
     end
   end
-  
+
+  describe "'attached' state" do
+    it "can be reached from 'draft' state" do
+      @resolution = Resolution.make!(:draft)
+      @resolution.attach!
+      @resolution.should be_attached
+    end
+  end
+
   describe "scopes" do
     it "has a draft scope" do
       @draft_resolution = Resolution.make!(:draft => true)
@@ -100,6 +108,4 @@ describe Resolution do
     Resolution.new.attached.should be_nil
   end
 
-  it "stops being a draft resolution when it is attached to a meeting"
-  
 end

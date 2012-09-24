@@ -34,7 +34,11 @@ class GeneralMeeting < Meeting
     # in the form @organisation.general_meetings.build(attributes)
     resolutions_to_attach = ids_to_attach.map{|id| Resolution.find_by_id(id)}
     resolutions_to_attach.delete_if(&:nil?)
+
     resolutions << resolutions_to_attach
+    resolutions.each do |resolution|
+      resolution.attach! if resolution.draft?
+    end
 
     attributes
   end

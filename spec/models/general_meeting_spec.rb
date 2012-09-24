@@ -42,8 +42,8 @@ describe GeneralMeeting do
 
       @meeting = GeneralMeeting.new
 
-      Resolution.stub(:find_by_id).with(7).and_return(@resolution_7 = mock_model(Resolution))
-      Resolution.stub(:find_by_id).with(9).and_return(@resolution_9 = mock_model(Resolution))
+      Resolution.stub(:find_by_id).with(7).and_return(@resolution_7 = mock_model(Resolution, :draft? => true, :attach! => nil))
+      Resolution.stub(:find_by_id).with(9).and_return(@resolution_9 = mock_model(Resolution, :draft? => true, :attach! => nil))
     end
 
     it "adds the attached resolutions to the 'resolutions' association" do
@@ -52,6 +52,13 @@ describe GeneralMeeting do
       @meeting.resolutions.length.should == 1
       @meeting.resolutions.should include(@resolution_7)
       @meeting.resolutions.should_not include(@resolution_9)
+    end
+
+    it "moves the resolutions to the 'attached' state" do
+      @resolution_7.should_receive(:attach!)
+      @resolution_9.should_not_receive(:attach!)
+
+      @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
     end
   end
 

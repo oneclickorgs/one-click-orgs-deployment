@@ -5,6 +5,14 @@ class Resolution < Proposal
 
   attr_accessible :draft, :voting_period_in_days, :extraordinary, :certification
 
+  state_machine do
+    event :attach do
+      transition :draft => :attached
+    end
+  end
+
+  scope :attached, with_state(:attached)
+
   attr_accessor :certification, :attached, :passed
 
   # DRAFT STATE

@@ -190,7 +190,7 @@ end
 
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
   # We selected the first draft resolution on the form
-  @resolution ||= @organisation.resolutions.draft.first
+  @resolution ||= @organisation.resolutions.attached.last
   @meeting ||= @organisation.meetings.last
 
   @meeting.resolutions.should include(@resolution)
