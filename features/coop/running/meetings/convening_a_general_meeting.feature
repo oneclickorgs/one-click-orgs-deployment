@@ -2,11 +2,11 @@ Feature: Convening a general meeting
   In order to give the Members of the Co-op a change to discuss things
   As the Secretary
   I want to convene a General Meeting
-  
+
   Background:
     Given there is a co-op
     And I am the Secretary of the co-op
-  
+
   @javascript
   Scenario: Secretary convenes a General Meeting
     When I go to the Meetings page
@@ -24,8 +24,8 @@ Feature: Convening a general meeting
   Scenario: Members are notified of a new General Meeting
     When I convene a General Meeting
     Then all the Members should receive a notification of the new meeting
-  
-  @javascript  
+
+  @javascript
   Scenario: Secretary convenes a General Meeting with resolutions to be considered
     Given there are draft resolutions
     When I go to convene a General Meeting
