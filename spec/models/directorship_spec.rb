@@ -20,6 +20,8 @@ describe Directorship do
 
       @director_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Director').and_return(@director_member_class)
+      @external_director_member_class = mock_model(MemberClass)
+      @member_classes_association.stub(:find_by_name).with('External Director').and_return(@external_director_member_class)
       @secretary_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Secretary').and_return(@secretary_member_class)
       @member_member_class = mock_model(MemberClass)
@@ -80,6 +82,41 @@ describe Directorship do
       expect {@directorship.director_id = '1'}.to_not raise_error
 
       @directorship.director_id.should == 1
+    end
+  end
+
+  it "accepts nested attributes for director" do
+    directorship = Directorship.new
+    expect { directorship.director_attributes = {} }.to_not raise_error
+  end
+
+  describe "appointing an external director using nested attributes for director" do
+    let(:organisation) {mock_model(Coop, :domain => 'example.oneclickorgs.com', :name => 'Example', :active? => true, :secretary => nil)}
+    let(:directorship) {
+      Directorship.new(
+        :director_attributes => {
+          :member_class_id => 999,
+          :first_name => "Bob",
+          :last_name => "Smith",
+          :email => "bob@example.com"
+        }
+      ).tap{|d| d.organisation = organisation}
+    }
+
+    it "creates a new Member" do
+      expect {
+        directorship.save!
+      }.to change{Member.count}
+    end
+
+    it "retains the member class ID that was passed" do
+      directorship.save!
+      directorship.director(true).member_class_id.should == 999
+    end
+
+    it "sets the director's organisation" do
+      directorship.save!
+      directorship.director.organisation.should == organisation
     end
   end
 

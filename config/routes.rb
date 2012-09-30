@@ -122,7 +122,11 @@ OneClickOrgs::Application.routes.draw do
     end
   end
 
-  resources :directorships
+  resources :directorships do
+    new do
+      get :external
+    end
+  end
 
   resources :officerships
   resources :offices

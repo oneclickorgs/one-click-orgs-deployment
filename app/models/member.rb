@@ -8,7 +8,7 @@ class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome,
     :address, :certify_share_application, :certify_age,
-    :phone
+    :phone, :member_class_id
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome, :member_class_id, :as => :proposal
 
@@ -62,7 +62,7 @@ class Member < ActiveRecord::Base
     ]}
   has_one :office, :through => :officership
 
-  has_many :directorships, :foreign_key => 'director_id'
+  has_many :directorships, :foreign_key => 'director_id', :inverse_of => :director
   has_one :directorship, :order => 'elected_on DESC', :foreign_key => 'director_id'
 
   has_one :share_account, :as => :owner

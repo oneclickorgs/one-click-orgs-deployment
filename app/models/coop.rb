@@ -307,6 +307,8 @@ class Coop < Organisation
     secretaries.set_permission!(:organisation, true)
     secretaries.set_permission!(:directorship, true)
     secretaries.set_permission!(:officership, true)
+
+    external_directors = member_classes.find_or_create_by_name('External Director')
   end
 
   def create_default_offices
@@ -355,8 +357,12 @@ class Coop < Organisation
 
   def directors
     members.where([
-      'member_class_id = ? OR member_class_id=?',
-      member_classes.find_by_name!('Director').id, member_classes.find_by_name!('Secretary').id
+      'member_class_id IN (?)',
+      [
+        member_classes.find_by_name!('Director').id,
+        member_classes.find_by_name!('Secretary').id,
+        member_classes.find_by_name!('External Director').id
+      ]
     ])
   end
 

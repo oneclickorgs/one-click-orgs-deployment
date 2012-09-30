@@ -1,0 +1,15 @@
+%h2 Appoint a non-member director
+
+= form_for(@directorship) do |directorship_form|
+  = directorship_form.fields_for(:director) do |director_fields|
+    = director_fields.hidden_field :member_class_id
+    %p
+      = director_fields.label :first_name
+      = director_fields.text_field :first_name
+    %p
+      = director_fields.label :last_name
+      = director_fields.text_field :last_name
+    %p
+      = director_fields.label :email, "Email address"
+      = director_fields.text_field :email
+  = directorship_form.submit "Record this appointment"

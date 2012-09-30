@@ -183,13 +183,13 @@ Then /^I should see that member in the list of directors$/ do
   end
 end
 
-Then /^I should see "(.*?)" in the list of directors$/ do |name|
+Then /^I should see "(.*?)" in the list of (?:D|d)irectors$/ do |name|
   within('.directors') do
     page.should have_content(name)
   end
 end
 
-Then /^I should not see "(.*?)" in the list of Directors$/ do |name|
+Then /^I should not see "(.*?)" in the list of (?:D|d)irectors$/ do |name|
   within('.directors') do
     page.should have_no_content(name)
   end

@@ -4,6 +4,9 @@
   = form.select(:director_id, options_from_collection_for_select((co.members - co.directors), :id, :name))
 - if co.active?
   %p
+    = link_to("Appoint a non-member Director", external_new_directorship_path)
+- if co.active?
+  %p
     = form.check_box(:certification)
     = form.label(:certification, "I certify that the above named person was elected as a director", :class => 'inline')
     at the Annual General Meeting on
