@@ -140,9 +140,9 @@ describe Directorship do
         @directorship.attributes = {'elected_on(1i)' => '2012', 'elected_on(2i)' => '7', 'elected_on(3i)' => '23'}
       }.to_not raise_error
 
-      @directorship.elected_on.year.should == 2012
-      @directorship.elected_on.month.should == 7
-      @directorship.elected_on.day.should == 23
+      @directorship.elected_on.year.should eq 2012
+      @directorship.elected_on.month.should eq 7
+      @directorship.elected_on.day.should eq 23
     end
   end
 
@@ -160,9 +160,9 @@ describe Directorship do
         @directorship.attributes = {'ended_on(1i)' => '2012', 'ended_on(2i)' => '7', 'ended_on(3i)' => '23'}
       }.to_not raise_error
 
-      @directorship.ended_on.year.should == 2012
-      @directorship.ended_on.month.should == 7
-      @directorship.ended_on.day.should == 23
+      @directorship.ended_on.year.should eq 2012
+      @directorship.ended_on.month.should eq 7
+      @directorship.ended_on.day.should eq 23
     end
   end
 
