@@ -94,4 +94,12 @@ class Resolution < Proposal
     {:timestamp => self.creation_date, :object => self, :kind => draft? ? :draft_resolution : :resolution }
   end
 
+  def creation_success_message
+    if draft?
+      "The draft proposal has been saved."
+    elsif open?
+      "The proposal has been opened for electronic voting."
+    end
+  end
+
 end

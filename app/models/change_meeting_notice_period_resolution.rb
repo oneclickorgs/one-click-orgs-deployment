@@ -18,7 +18,15 @@ class ChangeMeetingNoticePeriodResolution < Resolution
   end
 
   def notice_period_increased?
-    meeting_notice_period > organisation.constitution.meeting_notice_period
+    meeting_notice_period.to_i > organisation.constitution.meeting_notice_period
+  end
+
+  def creation_success_message
+    if open?
+      "A proposal to #{notice_period_increased? ? 'increase' : 'decrease'} the General Meeting notice period has been opened for electronic voting."
+    elsif draft?
+      "A draft proposal to #{notice_period_increased? ? 'increase' : 'decrease'} the General Meeting notice period has been saved."
+    end
   end
 
 end

@@ -17,8 +17,7 @@ describe ResolutionsController do
       @resolutions_association = mock("resolutions association")
       @organisation.stub(:resolutions).and_return(@resolutions_association)
 
-      @resolution = mock_model(Resolution, :save! => true, :proposer= => nil)
-
+      @resolution = mock_model(Resolution, :proposer= => nil, :save => true, :creation_success_message => nil)
       @resolutions_association.stub(:build).and_return(@resolution)
     end
 
@@ -37,7 +36,7 @@ describe ResolutionsController do
     end
 
     it "saves the new resolution" do
-      @resolution.should_receive(:save!)
+      @resolution.should_receive(:save).and_return(true)
       post_create
     end
 

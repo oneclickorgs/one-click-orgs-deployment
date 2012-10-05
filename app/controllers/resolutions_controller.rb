@@ -11,8 +11,13 @@ class ResolutionsController < ApplicationController
   def create
     @resolution = current_organisation.resolutions.build(params[:resolution])
     @resolution.proposer = current_user
-    @resolution.save!
-    redirect_to proposals_path
+
+    if @resolution.save
+      flash[:notice] = @resolution.creation_success_message
+      redirect_to proposals_path
+    else
+      raise @resolution.errors.full_messages.inspect
+    end
   end
 
   def show
