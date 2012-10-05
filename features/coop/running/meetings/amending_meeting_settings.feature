@@ -2,7 +2,7 @@ Feature: Amending meeting settings
   In order to make our co-op run the way we want it to
   As the secretary
   I want to adjust the way meetings are run
-  
+
   Background:
     Given there is a co-op
     And I am the Secretary of the co-op

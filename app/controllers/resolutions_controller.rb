@@ -4,10 +4,10 @@ class ResolutionsController < ApplicationController
       redirect_to root_path
       return
     end
-        
+
     @resolution = co.resolutions.build
   end
-  
+
   def create
     @resolution = current_organisation.resolutions.build(params[:resolution])
     @resolution.proposer = current_user

@@ -4,7 +4,7 @@ class ChangeMeetingNoticePeriodResolution < Resolution
   def meeting_notice_period
     parameters['meeting_notice_period']
   end
-  
+
   def meeting_notice_period=(meeting_notice_period)
     self.parameters['meeting_notice_period'] = meeting_notice_period.to_i
   end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "resolutions/coop/new" do
-  
+
   before(:each) do
     @resolution = mock_model(Resolution,
       :draft => nil,
@@ -11,10 +11,10 @@ describe "resolutions/coop/new" do
     )
     assign(:resolution, @resolution)
   end
-  
+
   it "renders a description text area for the resolution" do
     render
     rendered.should have_css("textarea[name='resolution[description]']")
   end
-  
+
 end
