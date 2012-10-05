@@ -1,24 +1,17 @@
 %h2 Create a new resolution
 
-= form_for(@resolution) do |resolution_form|
+= form_for(@resolution) do |form|
+  = label_tag('resolution_type', "Type of proposal")
+  %ul.resolution_types
+    %li= link_to("Change the notice period for General Meetings", new_change_meeting_notice_period_resolution_path)
+    %li= link_to("Change the quorum for General Meetings", new_change_quorum_resolution_path)
+    %li= link_to("Change the Name of the organisation", new_change_name_resolution_path)
+    %li= link_to("Change the Registered Office of the organisation", new_change_registered_office_address_resolution_path)
+    %li= link_to("Change the Objects of the organisation", new_change_objectives_resolution_path)
+    %li= link_to("Change the Rules about membership criteria", new_change_membership_criteria_resolution_path)
+    %li= link_to("Change the Rules about the composition of the Board", new_change_board_composition_resolution_path)
+    %li= link_to("Change the Rules about share capital", new_change_single_shareholding_resolution_path)
+    %li= link_to("Change the Rules about dissolution", new_change_common_ownership_resolution_path)
+    %li= link_to("Other proposal", new_generic_resolution_path)
   %p
-    = resolution_form.label :description, "Text of the resolution"
-  %p
-    = resolution_form.text_area :description
-  %p
-    = resolution_form.radio_button :draft, false, :class => 'inline'
-    = label_tag 'resolution_draft_true', "Open this resolution for electronic voting immediately.", :class => 'inline'
-    = resolution_form.label :voting_period_in_days, "Voting period", :class => 'inline'
-    = resolution_form.text_field :voting_period_in_days, :size => 3, :class => 'inline'
-    days.
-  %p
-    = resolution_form.radio_button :draft, true
-    = label_tag 'resolution_draft_false', "Save this resolution for consideration at a future General Meeting."
-  %p
-    = resolution_form.check_box :extraordinary
-    = resolution_form.label :extraordinary, "This is an Extraordinary Resolution."
-  %p
-    = resolution_form.check_box :certification
-    = resolution_form.label :certification, "I certify that the Board of Directors decided (at a meeting or by written resolution) to open this resolution for consideration by the Members."
-  %p
-    = resolution_form.submit "Save this resolution"
+    = form.submit "Save this resolution"
