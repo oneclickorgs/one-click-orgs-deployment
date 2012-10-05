@@ -1,0 +1,7 @@
+= fields_for(:change_single_shareholding_resolution) do |change_single_shareholding_resolution_fields|
+  %p.radio
+    = change_single_shareholding_resolution_fields.radio_button(:single_shareholding, '1')
+    = label_tag('single_shareholding_1', "Members hold one nominal share only.")
+  %p.radio
+    = change_single_shareholding_resolution_fields.radio_button(:single_shareholding, '0')
+    = label_tag('single_shareholding_0', "Members hold more than one share.")

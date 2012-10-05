@@ -1,6 +1,11 @@
 class ChangeMeetingNoticePeriodResolutionsController < ApplicationController
   def new
     @change_meeting_notice_period_resolution = co.change_meeting_notice_period_resolutions.build
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create

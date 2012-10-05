@@ -1,0 +1,2 @@
+module ChangeMembershipCriteriaResolutionsHelper
+end
