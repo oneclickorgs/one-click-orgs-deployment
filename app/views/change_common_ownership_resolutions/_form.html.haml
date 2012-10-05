@@ -1,0 +1,10 @@
+= fields_for(:change_common_ownership_resolution) do |change_common_ownership_resolution_fields|
+  %p.explanation In the event of winding-up or dissolution of the Co-operatives, must assets be transferred to another common-ownership co-operative, or can they be distributed among the Members?
+  %p.radio
+    = change_common_ownership_resolution_fields.radio_button(:common_ownership, '1')
+    = label_tag('common_ownership_1', "Common Ownership", :class => 'inline')
+    Assets shall not be distributed among the Members, but shall be transferred to some other common ownership co-operative(s).
+  %p.radio
+    = change_common_ownership_resolution_fields.radio_button(:common_ownership, '0')
+    = label_tag('common_ownership_0', "Co-ownership", :class => 'inline')
+    Assets may be distributed among the Members.
