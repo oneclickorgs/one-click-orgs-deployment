@@ -46,8 +46,13 @@ Given /^there is a passed resolution to change the organisation name to 'The Tea
 end
 
 When /^I enter the text (?:for|of) the (?:|new )resolution$/ do
-  if page.has_field?('Text of the resolution')
-    fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
+  if page.has_field?('Title of the resolution') || page.has_field?('Text of the resolution')
+    if page.has_field?('Title of the resolution')
+      fill_in("Title of the resolution", :with => "Member introductions")
+    end
+    if page.has_field?('Text of the resolution')
+      fill_in("Text of the resolution", :with => "All new members should be required to introduce themselves at the next General Meeting.")
+    end
   else
     fill_in("Title", :with => "Member introductions")
     fill_in("Description", :with => "All new members should be required to introduce themselves at the next General Meeting.")
@@ -154,20 +159,20 @@ Then /^the new resolution should have voting buttons$/ do
   end
 end
 
-Then /^I should see a draft resolution to (?:increase|decrease) the General Meeting notice period to (\d+) days$/ do |notice_period|
-  within('.draft_proposals') do
+Then /^I should see an open resolution to (?:increase|decrease) the General Meeting notice period to (\d+) days$/ do |notice_period|
+  within('.proposals') do
     page.should have_content("Change notice period for General Meetings to #{notice_period} clear days")
   end
 end
 
-Then /^I should see a draft Extraordinary Resolution to change the General Meeting quorum$/ do
-  within('.draft_proposals') do
+Then /^I should see an open Extraordinary Resolution to change the General Meeting quorum$/ do
+  within('.proposals') do
     page.should have_content("quorum")
   end
 end
 
-Then /^the draft resolution should be to change the quorum to the greater of (\d+) members or (\d+)% of the membership$/ do |number, percentage|
-  within('.draft_proposals') do
+Then /^the open resolution should be to change the quorum to the greater of (\d+) members or (\d+)% of the membership$/ do |number, percentage|
+  within('.proposals') do
     page.should have_content("#{number} members or #{percentage}% of the membership")
   end
 end

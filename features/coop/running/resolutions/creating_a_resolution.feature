@@ -7,24 +7,22 @@ Feature: Creating a resolution
     Given there is a co-op
     And I am the Secretary of the co-op
 
-  @javascript
+  @wip @javascript
   Scenario: Secretary creates a resolution for electronic voting
     When I go to the Resolutions page
     And I press "Create a proposal"
+    And I select "Other proposal" from "Type of proposal"
     And I enter the text of the resolution
-    And I choose to allow electronic voting on the resolution
-    And I certify that the Board has decided to open this resolution
-    And I press "Save this resolution"
+    And I press "Open this proposal for electronic voting"
     Then I should be on the Resolutions page
     And I should see the new resolution in the list of currently-open resolutions
 
-  @javascript
+  @wip @javascript
   Scenario: Secretary creates a resolution for consideration at a future meeting
     When I go to the Resolutions page
     And I press "Create a proposal"
+    And I select "Other proposal" from "Type of proposal"
     And I enter the text of the resolution
-    And I choose to save the resolution for consideration at a future meeting
-    And I certify that the Board has decided to open this resolution
-    And I press "Save this resolution"
+    And I press "Save this proposal as a draft"
     Then I should be on the Resolutions page
     And I should see the new resolution in the list of draft resolutions
