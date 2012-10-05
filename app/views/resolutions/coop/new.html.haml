@@ -1,3 +1,6 @@
+- content_for(:head) do
+  = javascript_include_tag :resolutions, :change_quorum_resolutions, :change_meeting_notice_period_resolutions
+
 %h2 Create a new resolution
 
 = form_for(@resolution) do |form|
@@ -14,4 +17,5 @@
     %li= link_to("Change the Rules about dissolution", new_change_common_ownership_resolution_path)
     %li= link_to("Other proposal", new_generic_resolution_path)
   %p
-    = form.submit "Save this resolution"
+    = form.submit("Save this proposal as a draft", :name => 'submit_draft')
+    = form.submit("Open this proposal for electronic voting", :name => 'submit_open')

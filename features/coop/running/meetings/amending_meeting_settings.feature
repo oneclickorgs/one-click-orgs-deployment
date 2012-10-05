@@ -7,7 +7,7 @@ Feature: Amending meeting settings
     Given there is a co-op
     And I am the Secretary of the co-op
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary starts a vote to increase the notice period for General Meetings
     Given the notice period for General Meetings is "14" days
     When I go to the Resolutions page
@@ -20,7 +20,7 @@ Feature: Amending meeting settings
     When I go to the Resolutions page
     Then I should see the resolution in the list of currently-open resolutions
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary starts a vote to decrease the notice period for General Meetings
     Given the notice period for General Meetings is "14" days
     When I go to the Resolutions page
@@ -33,7 +33,7 @@ Feature: Amending meeting settings
     When I go to the Resolutions page
     Then I should see an open resolution to decrease the General Meeting notice period to 7 days
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary starts a vote to amend the quorum for General Meetings
     When I go to the Resolutions page
     And I press "Create a proposal"

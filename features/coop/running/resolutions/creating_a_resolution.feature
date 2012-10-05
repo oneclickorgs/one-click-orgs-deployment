@@ -7,7 +7,7 @@ Feature: Creating a resolution
     Given there is a co-op
     And I am the Secretary of the co-op
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a resolution for electronic voting
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -17,7 +17,7 @@ Feature: Creating a resolution
     Then I should be on the Resolutions page
     And I should see the new resolution in the list of currently-open resolutions
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a resolution for consideration at a future meeting
     When I go to the Resolutions page
     And I press "Create a proposal"

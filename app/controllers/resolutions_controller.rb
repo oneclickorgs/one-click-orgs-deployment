@@ -48,6 +48,8 @@ class ResolutionsController < ApplicationController
     if !@resolution
       @resolution = current_organisation.resolutions.build(params[:resolution])
     end
+
+    @resolution.draft = true if params[:submit_draft]
     @resolution.proposer = current_user
 
     if @resolution.save

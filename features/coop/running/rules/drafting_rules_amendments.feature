@@ -7,7 +7,7 @@ Feature: Drafting rules amendments
     Given there is a co-op
     And I am the Secretary of the co-op
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend the Name
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -17,7 +17,7 @@ Feature: Drafting rules amendments
     Then I should be on the Resolutions page
     And I should see a draft resolution "Change organisation name to 'The Tea Co-op'"
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend the Registered Office address
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -27,7 +27,7 @@ Feature: Drafting rules amendments
     Then I should be on the Resolutions page
     And I should see a draft resolution "Change registered office address to '1 Main Street'"
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend the Objects
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -37,7 +37,7 @@ Feature: Drafting rules amendments
     Then I should be on the Resolutions page
     And I should see a draft resolution "Change objects to 'buy all the tea.'"
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend the membership criteria
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -53,7 +53,7 @@ Feature: Drafting rules amendments
     And I should see a draft resolution "Change the Rules to disallow Producer Members"
     And I should see a draft resolution "Change the Rules to disallow Consumer Members"
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend shareholding
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -63,7 +63,7 @@ Feature: Drafting rules amendments
     Then I should be on the Resolutions page
     And I should see a draft resolution "Change the Rules to permit each Member to hold only one share"
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend the composition of the Board
     When I go to the Resolutions page
     And I press "Create a proposal"
@@ -74,7 +74,7 @@ Feature: Drafting rules amendments
     And I should see a draft resolution "Allow a maximum of 2 User Members on the Board"
     And I should see a draft resolution "Allow a maximum of 2 Employee Members on the Board"
 
-  @wip @javascript
+  @javascript
   Scenario: Secretary creates a draft resolution to amend dissolution Rules
     When I go to the Resolutions page
     And I press "Create a proposal"
