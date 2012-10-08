@@ -196,7 +196,7 @@ Then /^the meeting should have the draft resolution I selected attached to its a
   @meeting.resolutions.should include(@resolution)
 end
 
-Then /^I should see the meeting details I chose in the list of Upcoming Meetings$/ do
+Then /^I should see the meeting details I chose in the list of Upcoming (?:Board )Meetings$/ do
   within('.upcoming_meetings') do
     page.should have_content("Board Meeting")
     page.should have_content("4pm")

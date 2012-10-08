@@ -71,9 +71,9 @@ describe BoardMeetingsController do
       post_create
     end
 
-    it "redirects to the meetings page" do
+    it "redirects to the Board page" do
       post_create
-      response.should redirect_to('/meetings')
+      response.should redirect_to('/board')
     end
   end
 

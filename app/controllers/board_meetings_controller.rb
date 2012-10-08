@@ -7,6 +7,6 @@ class BoardMeetingsController < ApplicationController
     @board_meeting = co.board_meetings.build(params[:board_meeting])
     @board_meeting.creator = current_user
     @board_meeting.save!
-    redirect_to meetings_path
+    redirect_to board_path
   end
 end

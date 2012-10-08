@@ -192,6 +192,8 @@ OneClickOrgs::Application.routes.draw do
 
   resource :registration_form
 
+  resource :board
+
   get '/admin' => 'admin#index'
 
   namespace :admin do

@@ -82,6 +82,8 @@ module NavigationHelpers
       '/checklist'
     when /^the Proposals page$/
       '/proposals'
+    when /^the Board page$/
+      '/board'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
