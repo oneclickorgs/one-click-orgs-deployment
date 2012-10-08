@@ -2,8 +2,8 @@ Feature: Convening a board meeting
   In order to discuss matters with the rest of the board of directors
   As a director
   I want to convene a meeting of the board of directors
-  
-  @javascript  
+
+  @javascript
   Scenario: Director convenes a meeting of the board of directors
     Given there is a co-op
     And I am a Director of the co-op
