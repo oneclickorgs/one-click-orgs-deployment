@@ -309,6 +309,8 @@ class Coop < Organisation
     secretaries.set_permission!(:officership, true)
 
     external_directors = member_classes.find_or_create_by_name('External Director')
+    external_directors.set_permission!(:board_resolution, true)
+    external_directors.set_permission!(:board_meeting, true)
   end
 
   def create_default_offices
