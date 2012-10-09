@@ -7,7 +7,8 @@
       = "One Click Orgs"
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}
-    = stylesheet_link_tag 'one_click'
+    = stylesheet_link_tag "application"
+    = stylesheet_link_tag "themes/#{Setting[:theme] ? Setting[:theme] : 'one_click_orgs'}"
     /[if lt IE 9]
       = stylesheet_link_tag 'ie'
     = javascript_include_tag :defaults
