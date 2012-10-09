@@ -1,6 +1,7 @@
 %h2 Proceedings of the Board
 .section
   = link_button("Convene a meeting of the Board", :url => new_board_meeting_path)
+  = link_button("Create a new Resolution of the Board", :url => new_board_resolution_path)
   .clear
 
 - if @upcoming_meetings.present?
@@ -21,3 +22,31 @@
               = (meeting.venue || '') + '.'
             %p
               = link_to("View agenda and details", board_meeting_path(meeting))
+
+- if @proposals.present?
+  .section
+    %p The following Board Resolutions are currently open for online voting:
+    %table.proposals
+      - @proposals.each do |proposal|
+        %tr
+          = content_tag_for(:td, proposal) do
+            .proposal
+              %h4= proposal.title
+              - if proposal.title != proposal.description
+                %p= proposal.description
+              %p
+                Voting ends
+                = proposal.end_date.to_s(:long)
+              %p.votes= render 'proposals/vote', :proposal => proposal
+
+- if @draft_proposals.present?
+  .section
+    %h3 Your draft Board Resolutions:
+    %ul.draft_proposals
+      - @draft_proposals.each do |proposal|
+        = content_tag_for(:li, proposal) do
+          %p
+            = proposal.description.present? ? proposal.description : proposal.title
+            = link_to("View details and comment", resolution_path(proposal))
+          = button_to("Start an electronic vote", open_proposal_path(proposal), :method => :put)
+          = link_button("Add to a Board meeting", :url => new_board_meeting_path(:resolution_id => proposal))

@@ -62,9 +62,9 @@ describe BoardResolutionsController do
       post_create
     end
 
-    it "redirects to the resolutions page" do
+    it "redirects to the Board page" do
       post_create
-      response.should redirect_to('/proposals')
+      response.should redirect_to('/board')
     end
 
     context "when the board resolution fails to be saved" do
