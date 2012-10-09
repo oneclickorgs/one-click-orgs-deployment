@@ -11,11 +11,13 @@
   %dl
     %dt Postal address
     %dd= simple_format(@member.address)
+    %dt Phone
+    %dd= @member.phone
     - if @member.inducted_at
       %dt Joined
       %dd= @member.inducted_at.to_date.to_s(:long_ordinal)
     %dt Shares
-    %dd 1
+    %dd= @member.shares_count
 
 - if @member.pending?
   - if can?(:edit, @member)

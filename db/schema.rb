@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815140455) do
+ActiveRecord::Schema.define(:version => 20120916081259) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20120815140455) do
     t.date     "stood_down_on"
     t.string   "role"
     t.text     "address"
+    t.string   "phone"
   end
 
   add_index "members", ["organisation_id"], :name => "index_members_on_organisation_id"

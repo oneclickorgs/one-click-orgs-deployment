@@ -1,0 +1,20 @@
+= fields_for(:change_membership_criteria_resolution) do |change_membership_criteria_resolution_fields|
+  %p.explanation Who may be admitted into membership of the Co-operative?
+  %p
+    = change_membership_criteria_resolution_fields.check_box(:user_members)
+    = change_membership_criteria_resolution_fields.label(:user_members, "User Members", :class => 'inline')
+    Any regular user of the services of the Co-operative.
+  %p
+    = change_membership_criteria_resolution_fields.check_box(:employee_members)
+    = change_membership_criteria_resolution_fields.label(:employee_members, "Employee Members", :class => 'inline')
+    Any Employee upon taking up employment with the Co-operative.
+  %p
+    = change_membership_criteria_resolution_fields.check_box(:supporter_members)
+    = change_membership_criteria_resolution_fields.label(:supporter_members, "Supporter Members", :class => 'inline')
+    Any person or nominee of an organisation that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business.
+  %p
+    = change_membership_criteria_resolution_fields.check_box(:producer_members)
+    = change_membership_criteria_resolution_fields.label(:producer_members, "Producer Members", :class => 'inline')
+  %p
+    = change_membership_criteria_resolution_fields.check_box(:consumer_members)
+    = change_membership_criteria_resolution_fields.label(:consumer_members, "Consumer Members", :class => 'inline')

@@ -1,0 +1,13 @@
+= fields_for(:change_meeting_notice_period_resolution) do |change_meeting_notice_period_resolution_fields|
+  %p
+    The notice period for General Meetings is currently
+    %span.meeting_notice_period= co.constitution.meeting_notice_period
+    days.
+  %p
+    = change_meeting_notice_period_resolution_fields.label :meeting_notice_period, "Change the notice period to", :class => 'inline'
+    = change_meeting_notice_period_resolution_fields.text_field :meeting_notice_period, :class => 'inline'
+    clear days.
+  %p.increase_meeting_notice_period
+    An Extraordinary Resolution is required to increase the notice period for General Meetings.
+  %p.decrease_meeting_notice_period{:style => "display: none;"}
+    To decrease the notice period for General Meetings, at least 90% of Members must agree.

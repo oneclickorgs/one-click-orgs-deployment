@@ -1,4 +1,8 @@
 class Task < ActiveRecord::Base
+  SHARES_RELATED = ['ShareTransaction']
+  DIRECTORS_RELATED = ['Election']
+  MEMBERS_RELATED = ['Member']
+
   attr_accessible :subject, :action, :starts_on
 
   belongs_to :subject, :polymorphic => true
@@ -6,8 +10,12 @@ class Task < ActiveRecord::Base
   scope :current, lambda {
     where(["(starts_on IS NULL OR starts_on <= :today) AND completed_at IS NULL", {:today => Date.today}])
   }
-  scope :shares_related, where(:subject_type => ['ShareTransaction'])
-  scope :directors_related, where(:subject_type => ['Election'])
+
+  scope :shares_related, where(:subject_type => SHARES_RELATED)
+  scope :directors_related, where(:subject_type => DIRECTORS_RELATED)
+  scope :members_related, where(:subject_type => MEMBERS_RELATED)
+
+  scope :members_or_shares_related, where(:subject_type => (SHARES_RELATED + MEMBERS_RELATED))
 
   def to_partial_name
     partial_name  = "task_"

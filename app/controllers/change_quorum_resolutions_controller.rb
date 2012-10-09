@@ -1,6 +1,12 @@
 class ChangeQuorumResolutionsController < ApplicationController
   def new
     @change_quorum_resolution = co.change_quorum_resolutions.build
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 
   def create

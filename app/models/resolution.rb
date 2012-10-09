@@ -5,6 +5,14 @@ class Resolution < Proposal
 
   attr_accessible :draft, :voting_period_in_days, :extraordinary, :certification
 
+  state_machine do
+    event :attach do
+      transition :draft => :attached
+    end
+  end
+
+  scope :attached, with_state(:attached)
+
   attr_accessor :certification, :attached, :passed
 
   # DRAFT STATE
@@ -84,6 +92,14 @@ class Resolution < Proposal
 
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => draft? ? :draft_resolution : :resolution }
+  end
+
+  def creation_success_message
+    if draft?
+      "The draft proposal has been saved."
+    elsif open?
+      "The proposal has been opened for electronic voting."
+    end
   end
 
 end

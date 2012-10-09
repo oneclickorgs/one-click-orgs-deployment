@@ -83,6 +83,7 @@ OneClickOrgs::Application.routes.draw do
 
   resources :resolution_proposals do
     member do
+      get :support
       put :pass
       put :pass_to_meeting
     end
@@ -93,10 +94,18 @@ OneClickOrgs::Application.routes.draw do
   resources :resolutions do
     resources :comments
   end
-  resources :board_resolutions
-
+  resources :generic_resolutions
   resources :change_meeting_notice_period_resolutions
   resources :change_quorum_resolutions
+  resources :change_name_resolutions
+  resources :change_registered_office_address_resolutions
+  resources :change_objectives_resolutions
+  resources :change_membership_criteria_resolutions
+  resources :change_board_composition_resolutions
+  resources :change_single_shareholding_resolutions
+  resources :change_common_ownership_resolutions
+
+  resources :board_resolutions
 
   resources :members do
     member do
@@ -121,9 +130,14 @@ OneClickOrgs::Application.routes.draw do
     end
   end
 
-  resources :directorships
+  resources :directorships do
+    new do
+      get :external
+    end
+  end
 
   resources :officerships
+  resources :offices
 
   resources :elections do
     resources :ballots
@@ -177,6 +191,8 @@ OneClickOrgs::Application.routes.draw do
   resource :membership_application_form
 
   resource :registration_form
+
+  resource :board
 
   get '/admin' => 'admin#index'
 

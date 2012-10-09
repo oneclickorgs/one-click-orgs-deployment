@@ -77,6 +77,7 @@ describe Coop do
         @coop = Coop.make!
         @director = @coop.members.make!(:director)
         @secretary = @coop.members.make!(:secretary)
+        @external_director = @coop.members.make!(:external_director)
         @member = @coop.members.make!
       end
 
@@ -86,6 +87,10 @@ describe Coop do
 
       it "includes members who have the member class of 'Secretary'" do
         @coop.directors.should include(@secretary)
+      end
+
+      it "includes members who have the member class of 'External Director'" do
+        @coop.directors.should include(@external_director)
       end
 
       it "does not include ordinary members" do
@@ -163,6 +168,10 @@ describe Coop do
         it "sets the 'organisation' permission" do
           @coop.member_classes.find_by_name('Secretary').should have_permission(:organisation)
         end
+      end
+
+      it "creates an 'External Director' member class" do
+        @coop.member_classes.find_by_name("External Director").should be_present
       end
     end
   end

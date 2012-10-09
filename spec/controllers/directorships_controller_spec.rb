@@ -33,6 +33,48 @@ describe DirectorshipsController do
     end
   end
 
+  describe "GET external" do
+    let(:directorships) {mock("directorships", :build => directorship)}
+    let(:directorship) {mock_model(Directorship, :build_director => nil).as_new_record}
+    let(:member_classes) {mock("member classes", :find_by_name => member_class)}
+    let(:member_class) {mock_model(MemberClass, :id => 999)}
+
+    before(:each) do
+      @organisation.stub(:directorships).and_return(directorships)
+      @organisation.stub(:member_classes).and_return(member_classes)
+    end
+
+    def get_external
+      get :external
+    end
+
+    it "builds a new directorship" do
+      directorships.should_receive(:build).and_return(directorship)
+      get_external
+    end
+
+    it "builds a new director on the directorship" do
+      directorship.should_receive(:build_director)
+      get_external
+    end
+
+    it "sets the member_class_id of the director to 'External Director'" do
+      member_classes.should_receive(:find_by_name).with("External Director").and_return(member_class)
+      directorship.should_receive(:build_director).with(hash_including(:member_class_id => 999))
+      get_external
+    end
+
+    it "assigns the new directorship" do
+      get_external
+      assigns[:directorship].should == directorship
+    end
+
+    it "is successful" do
+      get_external
+      response.should be_success
+    end
+  end
+
   describe "POST create" do
     before(:each) do
       @directorship = mock_model(Directorship,

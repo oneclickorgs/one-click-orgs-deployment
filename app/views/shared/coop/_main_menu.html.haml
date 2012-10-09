@@ -15,3 +15,5 @@
       %li.navitem= link_to 'Directors', directors_path
       %li.navitem= link_to 'Rules', constitution_path
       %li.navitem= link_to 'Shares', shares_path
+      - if can?(:create, BoardResolution)
+        %li.navitem= link_to 'Board', board_path

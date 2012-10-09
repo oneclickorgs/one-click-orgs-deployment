@@ -20,6 +20,8 @@ describe Directorship do
 
       @director_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Director').and_return(@director_member_class)
+      @external_director_member_class = mock_model(MemberClass)
+      @member_classes_association.stub(:find_by_name).with('External Director').and_return(@external_director_member_class)
       @secretary_member_class = mock_model(MemberClass)
       @member_classes_association.stub(:find_by_name).with('Secretary').and_return(@secretary_member_class)
       @member_member_class = mock_model(MemberClass)
@@ -83,6 +85,41 @@ describe Directorship do
     end
   end
 
+  it "accepts nested attributes for director" do
+    directorship = Directorship.new
+    expect { directorship.director_attributes = {} }.to_not raise_error
+  end
+
+  describe "appointing an external director using nested attributes for director" do
+    let(:organisation) {mock_model(Coop, :domain => 'example.oneclickorgs.com', :name => 'Example', :active? => true, :secretary => nil)}
+    let(:directorship) {
+      Directorship.new(
+        :director_attributes => {
+          :member_class_id => 999,
+          :first_name => "Bob",
+          :last_name => "Smith",
+          :email => "bob@example.com"
+        }
+      ).tap{|d| d.organisation = organisation}
+    }
+
+    it "creates a new Member" do
+      expect {
+        directorship.save!
+      }.to change{Member.count}
+    end
+
+    it "retains the member class ID that was passed" do
+      directorship.save!
+      directorship.director(true).member_class_id.should == 999
+    end
+
+    it "sets the director's organisation" do
+      directorship.save!
+      directorship.director.organisation.should == organisation
+    end
+  end
+
   it "has a 'certification' attribute" do
     @directorship = Directorship.new
     expect {@directorship.certification = '1'}.to_not raise_error
@@ -103,9 +140,9 @@ describe Directorship do
         @directorship.attributes = {'elected_on(1i)' => '2012', 'elected_on(2i)' => '7', 'elected_on(3i)' => '23'}
       }.to_not raise_error
 
-      @directorship.elected_on.year.should == 2012
-      @directorship.elected_on.month.should == 7
-      @directorship.elected_on.day.should == 23
+      @directorship.elected_on.year.should eq 2012
+      @directorship.elected_on.month.should eq 7
+      @directorship.elected_on.day.should eq 23
     end
   end
 
@@ -123,9 +160,9 @@ describe Directorship do
         @directorship.attributes = {'ended_on(1i)' => '2012', 'ended_on(2i)' => '7', 'ended_on(3i)' => '23'}
       }.to_not raise_error
 
-      @directorship.ended_on.year.should == 2012
-      @directorship.ended_on.month.should == 7
-      @directorship.ended_on.day.should == 23
+      @directorship.ended_on.year.should eq 2012
+      @directorship.ended_on.month.should eq 7
+      @directorship.ended_on.day.should eq 23
     end
   end
 

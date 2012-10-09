@@ -13,5 +13,9 @@ class Office < ActiveRecord::Base
 
   has_one :officer, :through => :officership
 
+  def self.unoccupied
+    includes(:officership).where('officerships.id is null')
+  end
+
   validates_presence_of :title
 end

@@ -9,6 +9,15 @@ class GeneralMeeting < Meeting
   attr_accessor :electronic_nominations, :nominations_closing_date,
     :electronic_voting, :voting_closing_date
 
+  after_initialize :after_initialize
+  def after_initialize
+    if new_record?
+      if organisation && organisation.respond_to?(:meeting_notice_period)
+        self.happened_on ||= Date.today.advance(:days => organisation.meeting_notice_period)
+      end
+    end
+  end
+
   def existing_resolutions_attributes=(attributes)
     # The attributes received from the form will look something like this:
     # {"0"=>{"attached"=>"1", "id"=>"7"}, "1"=>{"attached"=>"0", "id"=>"9"}}
@@ -25,7 +34,11 @@ class GeneralMeeting < Meeting
     # in the form @organisation.general_meetings.build(attributes)
     resolutions_to_attach = ids_to_attach.map{|id| Resolution.find_by_id(id)}
     resolutions_to_attach.delete_if(&:nil?)
+
     resolutions << resolutions_to_attach
+    resolutions.each do |resolution|
+      resolution.attach! if resolution.draft?
+    end
 
     attributes
   end

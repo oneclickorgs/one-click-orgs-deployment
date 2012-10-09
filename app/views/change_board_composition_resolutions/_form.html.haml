@@ -1,0 +1,17 @@
+= fields_for(:change_board_composition_resolution) do |change_board_composition_resolution_fields|
+  %p.explanation The composition of the Board of Directors will be with no more than...
+  %p
+    = change_board_composition_resolution_fields.text_field(:max_user_directors, :class => 'inline', :size => 5)
+    = change_board_composition_resolution_fields.label(:max_user_directors, "User Members", :class => 'inline')
+  %p
+    = change_board_composition_resolution_fields.text_field(:max_employee_directors, :class => 'inline', :size => 5)
+    = change_board_composition_resolution_fields.label(:max_employee_directors, "Employee Members", :class => 'inline')
+  %p
+    = change_board_composition_resolution_fields.text_field(:max_supporter_directors, :class => 'inline', :size => 5)
+    = change_board_composition_resolution_fields.label(:max_supporter_directors, "Supporter Members", :class => 'inline')
+  %p
+    = change_board_composition_resolution_fields.text_field(:max_producer_directors, :class => 'inline', :size => 5)
+    = change_board_composition_resolution_fields.label(:max_producer_directors, "Producer Members", :class => 'inline')
+  %p
+    = change_board_composition_resolution_fields.text_field(:max_consumer_directors, :class => 'inline', :size => 5)
+    = change_board_composition_resolution_fields.label(:max_consumer_directors, "Consumer Members", :class => 'inline')

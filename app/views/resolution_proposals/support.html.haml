@@ -1,0 +1,22 @@
+%h2 Support a proposal
+
+%p
+  A proposal has been made by
+  = image_tag(@resolution_proposal.proposer.gravatar_url(24), :alt => @resolution_proposal.proposer.name, :class => 'gravatar', :width => '24', :height => '24')
+  = link_to(@resolution_proposal.proposer.name, @resolution_proposal.proposer)
+  and they want your support to turn it into a resolution, to be voted on by the entire membership.
+
+%p The proposal is:
+
+.section
+  %h3= @resolution_proposal.title
+  = simple_format(@resolution_proposal.description)
+
+- if can?(:vote_on, @resolution_proposal)
+  - if @resolution_proposal.vote_by(current_user)
+    %p You have supported this proposal.
+  - else
+    %p If you agree that the entire membership should be sent this proposal, to be voted on as a resolution, indicate your support below:
+    = form_tag(vote_for_path(:id => @resolution_proposal.id, :return_to => request.path)) do
+      = submit_tag "I support this proposal"
+    %p If you do not agree, simply close this page.

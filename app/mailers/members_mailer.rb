@@ -32,7 +32,7 @@ class MembersMailer < OcoMailer
     @organisation = member.organisation
     @organisation_name = member.organisation.name
 
-    @founder = Member.founder_members(@organisation).first
+    @founder = @organisation.members.first
     raise ArgumentError, "Organisation has no founder" unless @founder
 
     create_mail(@organisation_name, @member.email, "Become a Founder Member of #{@organisation_name}")

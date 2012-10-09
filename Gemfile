@@ -48,6 +48,7 @@ gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 gem 'mail', '~>2.4.4'
 gem 'state_machine-audit_trail', '~>0.1.2'
 gem 'meekster', :git => "git://github.com/chrismear/meekster.git", :tag => 'v0.0.1'
+gem 'pdf_form_filler', '~>0.0.2'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

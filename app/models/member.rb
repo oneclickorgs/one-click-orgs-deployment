@@ -7,7 +7,8 @@ require 'lib/vote_error'
 class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome,
-    :address, :certify_share_application, :certify_age
+    :address, :certify_share_application, :certify_age,
+    :phone, :member_class_id
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome, :member_class_id, :as => :proposal
 
@@ -33,6 +34,8 @@ class Member < ActiveRecord::Base
     store_audit_trail
   end
 
+  has_many :member_state_transitions
+
   include OneClickOrgs::UserAuthentication
   include OneClickOrgs::InvitationCode
   include OneClickOrgs::NotificationConsumer
@@ -44,6 +47,7 @@ class Member < ActiveRecord::Base
 
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
+  has_many :board_resolutions, :foreign_key => 'proposer_member_id'
 
   has_many :ballots
 
@@ -51,9 +55,15 @@ class Member < ActiveRecord::Base
 
   has_many :resignations
 
+  has_many :officerships, :foreign_key => 'officer_id'
+  has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id',
+    :conditions => proc{[
+      "(officerships.ended_on IS NULL OR officerships.ended_on > :now) AND officerships.elected_on <= :now",
+      {:now => Time.now.utc}
+    ]}
   has_one :office, :through => :officership
-  has_one :officership, :order => 'created_at DESC', :foreign_key => 'officer_id'
 
+  has_many :directorships, :foreign_key => 'director_id', :inverse_of => :director
   has_one :directorship, :order => 'elected_on DESC', :foreign_key => 'director_id'
 
   has_one :share_account, :as => :owner
@@ -71,7 +81,8 @@ class Member < ActiveRecord::Base
   validates_format_of :email, :with => /\A.*@.*\..*\Z/
   validates_each :email do |record, attribute, value|
     begin
-      address = Mail::Address.new(value)
+      # Try to parse the email address
+      Mail::Address.new(value)
     rescue Mail::Field::ParseError
       record.errors.add(attribute, 'is invalid.')
     end
@@ -104,6 +115,15 @@ class Member < ActiveRecord::Base
 
   def votes_count
     votes.count
+  end
+
+  def ejected_or_resigned_at
+    transition = member_state_transitions.where(["event = ? OR event = ?", 'reject', 'resign']).order('created_at DESC').first
+    if transition
+      transition.created_at
+    else
+      nil
+    end
   end
 
   def eligible_to_vote?(proposal)

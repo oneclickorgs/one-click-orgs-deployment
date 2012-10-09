@@ -13,6 +13,11 @@
   = form_for(@founder_member) do |form|
     = render :partial => 'founder_members/form', :locals => {:form => form}
 
+%p#download
+  Download:
+  %span.pdf.download
+    = link_to 'PDF', members_path(:format => 'pdf')
+
 .section
   - if co.active?
     %h3 List of Members

@@ -53,6 +53,20 @@ class Coop < Organisation
   has_one :share_account, :as => :owner
   has_many :withdrawals, :through => :share_account
 
+  # Returns true if the requirements for moving to the 'proposed' state
+  # have been fulfilled.
+  def can_propose?
+    result = true
+
+    result &&= members.active.count >= 3
+    result &&= directors.count >= 3
+    result &&= !!secretary
+    result &&= rules_filled?
+    result &&= registration_form_filled?
+
+    result
+  end
+
   def founder_members
     members.founder_members(self)
   end
@@ -293,6 +307,10 @@ class Coop < Organisation
     secretaries.set_permission!(:organisation, true)
     secretaries.set_permission!(:directorship, true)
     secretaries.set_permission!(:officership, true)
+
+    external_directors = member_classes.find_or_create_by_name('External Director')
+    external_directors.set_permission!(:board_resolution, true)
+    external_directors.set_permission!(:board_meeting, true)
   end
 
   def create_default_offices
@@ -341,8 +359,12 @@ class Coop < Organisation
 
   def directors
     members.where([
-      'member_class_id = ? OR member_class_id=?',
-      member_classes.find_by_name!('Director').id, member_classes.find_by_name!('Secretary').id
+      'member_class_id IN (?)',
+      [
+        member_classes.find_by_name!('Director').id,
+        member_classes.find_by_name!('Secretary').id,
+        member_classes.find_by_name!('External Director').id
+      ]
     ])
   end
 
@@ -448,5 +470,15 @@ class Coop < Organisation
     [
       :membership_required
     ].map{|name| "reg_form_#{name}"}.map{|name| !send(name).nil?}.inject(true){|memo, present| memo && present}
+  end
+
+  # The lesser of 10% of the membership and 100 members is required to force a resolution.
+  def members_required_to_force_resolution
+    ten_percent_of_membership = (members.active.count / 10.0).ceil
+    if ten_percent_of_membership < 100
+      ten_percent_of_membership
+    else
+      100
+    end
   end
 end

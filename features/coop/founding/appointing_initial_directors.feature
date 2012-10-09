@@ -20,7 +20,7 @@ Feature: Appointing initial directors
   Scenario: Founder appoints an initial officer
     Given there is a Director
     When I go to the Directors page
-    And I press "Appoint a new Officer"
+    And I press "Appoint new Officer"
     And I choose a director from the list of directors
     And I choose 'Secretary' from the list of offices
     And I press "Record this appointment"

@@ -140,11 +140,16 @@ describe OneClickController do
       @proposals_association = mock("proposals association")
       @organisation.stub(:proposals).and_return(@proposals_association)
 
-      @proposals_association.stub(:currently_open)
+      @proposals_association.stub_chain(:currently_open, :reject)
       @proposals_association.stub(:new)
 
       @organisation.stub_chain(:members, :all).and_return([])
+
       @organisation.stub_chain(:meetings, :all).and_return([])
+      @organisation.stub_chain(:meetings, :upcoming, :order, :first)
+      @organisation.stub_chain(:meetings, :upcoming, :count).and_return(0)
+      @organisation.stub_chain(:meetings, :past, :order, :first)
+
       @organisation.stub(:resolutions).and_return([])
       @organisation.stub(:resolution_proposals).and_return([])
       @organisation.stub(:decisions).and_return([])
@@ -154,6 +159,8 @@ describe OneClickController do
 
       @current_tasks_association = mock("current tasks association")
       @tasks_association.stub(:current).and_return(@current_tasks_association)
+
+      @current_tasks_association.stub(:members_or_shares_related)
 
       @organisation.stub(:active?).and_return(true)
     end
@@ -166,14 +173,6 @@ describe OneClickController do
     it "assigns the current user's current tasks" do
       get_dashboard
       assigns[:tasks].should == @current_tasks_association
-    end
-
-    describe "timeline" do
-      it "includes decisions" do
-        @organisation.should_receive(:decisions).and_return(decisions)
-        get_dashboard
-        assigns[:timeline].should include(decision_event)
-      end
     end
   end
 

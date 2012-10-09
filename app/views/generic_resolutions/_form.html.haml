@@ -1,0 +1,7 @@
+= fields_for(:resolution) do |resolution_fields|
+  %p
+    = resolution_fields.label :title, "Title of the resolution"
+    = resolution_fields.text_field :title
+  %p
+    = resolution_fields.label :description, "Text of the resolution"
+    = resolution_fields.text_area :description

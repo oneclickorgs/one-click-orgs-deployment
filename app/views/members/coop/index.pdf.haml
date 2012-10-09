@@ -1,0 +1,18 @@
+%h1
+  = @current_organisation.name
+  Members
+
+%table.members
+  %tr
+    %th Name
+    %th Email address
+    %th Shares held
+    %th Date membership began
+    %th Date membership ended
+  - for member in @members
+    %tr
+      %td= member.name
+      %td= member.email
+      %td= member.shares_count
+      %td= member.inducted_at.to_date.to_s(:long)
+      %td= member.ejected_or_resigned_at ? member.ejected_or_resigned_at.to_date.to_s(:long) : ""

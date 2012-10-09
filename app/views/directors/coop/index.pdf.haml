@@ -1,0 +1,31 @@
+%h1
+  = @current_organisation.name
+  Directors
+
+%table.members
+  %tr
+    %th Name
+    %th Address
+    %th Date directorship assumed
+    %th Date directorship vacated
+    %th Office held
+    %th Date office assumed
+    %th Date office vacated
+  - for director in @directors
+    %tr
+      %td= director.name
+      %td= simple_format(director.address)
+      - if directorship = director.directorships.most_recent
+        %td= directorship.elected_on.to_s(:long)
+        %td= directorship.ended_on ? directorship.ended_on.to_s(:long) : ""
+      - else
+        %td
+        %td
+      - if officership = director.officerships.most_recent
+        %td= officership.office.title
+        %td= officership.elected_on.to_s(:long)
+        %td= officership.ended_on ? officership.ended_on.to_s(:long) : ""
+      - else
+        %td
+        %td
+        %td

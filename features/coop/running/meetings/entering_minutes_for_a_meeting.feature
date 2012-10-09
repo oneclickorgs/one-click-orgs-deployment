@@ -34,6 +34,7 @@ Feature: Entering minutes for a meeting
     When I follow "View minutes" for the meeting
     Then I should see the minutes I entered
 
+  @javascript
   Scenario: Secretary records results of resolutions for a meeting
     Given there has been a past meeting
     And the meeting has no minutes yet
@@ -45,5 +46,6 @@ Feature: Entering minutes for a meeting
     And I enter other minutes for the meeting
     And I choose the Members who were in attendance
     And I press "Save these minutes"
-    And I go to the Dashboard page
+    And I go to the Proposals page
+    And I open the "Outcomes" tab
     Then I should see the resolutions marked as passed

@@ -1,9 +1,9 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 $(document).ready(function () {
-  var currentMeetingNoticePeriod = parseInt($('span.meeting_notice_period').first().text());
-  $('#change_meeting_notice_period_resolution_meeting_notice_period').observe_field(1, function () {
-    var newMeetingNoticePeriod = parseInt(this.value);
+  $(document).on('change', '#change_meeting_notice_period_resolution_meeting_notice_period', function() {
+    var currentMeetingNoticePeriod = parseInt($('span.meeting_notice_period').first().text(), 10);
+    var newMeetingNoticePeriod = parseInt(this.value, 10);
     if (newMeetingNoticePeriod >= currentMeetingNoticePeriod) {
       $('.increase_meeting_notice_period').slideDown();
       $('.decrease_meeting_notice_period').slideUp();

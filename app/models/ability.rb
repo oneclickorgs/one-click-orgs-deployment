@@ -82,14 +82,16 @@ class Ability
         can :create, FounderMember
       end
 
-      if user.has_permission(:directorship)
+      if user.has_permission(:directorship) || user.organisation.pending?
         can :create, Directorship
         can :edit, Directorship
       end
 
-      if user.has_permission(:officership)
+      if user.has_permission(:officership) || user.organisation.pending?
         can :create, Officership
         can :edit, Officership
+
+        can :create, Office
       end
 
       can :update, Member do |member|

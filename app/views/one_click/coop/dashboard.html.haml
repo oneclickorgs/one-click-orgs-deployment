@@ -1,4 +1,4 @@
-%h2 Dashboard
+%h2 Your Dashboard
 
 - @elections = co.elections.where(:state => :open)
 - if @elections.present?
@@ -11,18 +11,79 @@
         %p= link_to("View the election and cast your vote.", new_election_ballot_path(:election_id => election))
 
 - if @tasks.present?
-  %h3 Notifications
-  .section
+  .section.tasks
+    %h3 Requiring your attention
     %ul.tasks
       - @tasks.each do |task|
         = content_tag_for(:li, task) do
           = render :partial => 'tasks/task', :locals => {:task => task}
 
-.section
-  - if can?(:create, Resolution)
-    = link_button("Create a new Resolution", :url => new_resolution_path)
-  - if can?(:create, ResolutionProposal)
-    = link_button("Suggest a new Resolution", :url => new_resolution_proposal_path)
-  %br.clear
+.left.dashboard
+  .section.meetings
+    %h3 Meetings
 
-= render :partial => 'timeline', :locals => {:timeline => @timeline}
+    - if @upcoming_meeting.present?
+      %h4 Next meeting:
+      = content_tag_for(:div, @upcoming_meeting) do
+        %p.datetime
+          = @upcoming_meeting.happened_on.to_s(:short)
+          %br
+          = @upcoming_meeting.start_time
+        %p.details
+          %strong= @upcoming_meeting.class.name.underscore.humanize.titlecase
+          %br
+          = @upcoming_meeting.venue
+          %br
+          = link_to("See agenda & details", meeting_path(@upcoming_meeting))
+      - if @upcoming_meetings_count
+        %p.auxiliary
+          = link_to("#{@upcoming_meetings_count} more upcoming", meetings_path)
+    -else
+      %p No upcoming meetings.
+
+    - if @last_meeting.present?
+      %h4 Last meeting:
+      = content_tag_for(:div, @last_meeting) do
+        %p.datetime
+          = @last_meeting.happened_on.to_s(:short)
+          %br
+          = @last_meeting.start_time
+        %p.details
+          %strong= @last_meeting.class.name.underscore.humanize.titlecase
+          %br
+          = link_to("See minutes", meeting_path(@last_meeting))
+    - if can?(:create, GeneralMeeting)
+      %p.left= link_button("Create new", :url => new_general_meeting_path)
+    %p.right= link_to("See all meetings", meetings_path)
+    %br.clear
+
+  .section
+    %h3 Members and shares
+    - if @members_and_shares_tasks.present?
+      %ul.tasks
+        - @members_and_shares_tasks.each do |task|
+          = content_tag_for(:li, task) do
+            = render :partial => 'tasks/task', :locals => {:task => task}
+    - else
+      %p No outstanding issues.
+    %br.clear
+
+.right.dashboard
+  .section.proposals
+    %h3 Proposals
+    - if @open_proposals_without_vote.present?
+      %ul.proposals
+        - @open_proposals_without_vote.each do |proposal|
+          = content_tag_for(:li, proposal) do
+            %h4 New proposal
+            %p.title.left= proposal.title
+            %p.action.right= link_button("Vote", :url => proposal_path(proposal))
+            %br.clear
+    - else
+      %p No proposals currently open for voting.
+    - if can?(:create, Resolution)
+      %p.left= link_button("Create new", :url => new_resolution_path)
+    - elsif can?(:create, ResolutionProposal)
+      %p.left= link_button("Suggest new", :url => new_resolution_proposal_path)
+    %p.right= link_to("See all proposals", proposals_path)
+    %br.clear

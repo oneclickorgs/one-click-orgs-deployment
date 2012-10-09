@@ -1,0 +1,2 @@
+module ChangeBoardCompositionResolutionsHelper
+end

@@ -3,12 +3,15 @@ require 'one_click_orgs/cast_to_boolean'
 class Directorship < ActiveRecord::Base
   include OneClickOrgs::CastToBoolean
 
-  attr_accessible :director, :director_id, :ended_on, :elected_on, :certification
+  attr_accessible :director, :director_id, :director_attributes,
+    :ended_on, :elected_on, :certification
 
   attr_reader :certification
 
   belongs_to :organisation
-  belongs_to :director, :class_name => 'Member'
+  belongs_to :director, :class_name => 'Member', :inverse_of => :directorships
+
+  accepts_nested_attributes_for :director
 
   def director_name
     director.try(:name)
@@ -16,6 +19,13 @@ class Directorship < ActiveRecord::Base
 
   def certification=(new_certification)
     @certification = cast_to_boolean(new_certification)
+  end
+
+  before_validation :set_director_organisation
+  def set_director_organisation
+    if director && director.new_record? && !director.organisation
+      director.organisation = organisation
+    end
   end
 
   after_save :set_member_class
@@ -29,11 +39,16 @@ class Directorship < ActiveRecord::Base
 
       director_member_class = organisation.member_classes.find_by_name('Director')
       secretary_member_class = organisation.member_classes.find_by_name('Secretary')
+      external_director_member_class = organisation.member_classes.find_by_name('External Director')
 
-      return if current_member_class == director_member_class || current_member_class == secretary_member_class
+      return if current_member_class == director_member_class || current_member_class == secretary_member_class || current_member_class == external_director_member_class
 
       director.member_class = director_member_class if director_member_class
     end
     director.save!
+  end
+
+  def self.most_recent
+    order('elected_on DESC').first
   end
 end

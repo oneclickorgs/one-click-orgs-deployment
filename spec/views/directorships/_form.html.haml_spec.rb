@@ -41,4 +41,9 @@ describe 'directorships/_form' do
     rendered.should have_selector(:input, :type => 'submit')
   end
 
+  it "renders a link to appoint a external director" do
+    render
+    rendered.should have_selector(:a, :href => '/directorships/new/external')
+  end
+
 end

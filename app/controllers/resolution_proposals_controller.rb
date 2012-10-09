@@ -9,12 +9,13 @@ class ResolutionProposalsController < ApplicationController
   def new
     @resolution_proposal = co.resolution_proposals.build
   end
-  
+
   def create
     @resolution_proposal = co.resolution_proposals.build(params[:resolution_proposal])
     @resolution_proposal.proposer = current_user
     @resolution_proposal.save!
-    redirect_to proposals_path
+    flash[:notice] = "Your proposal has been saved and sent to the Secretary."
+    redirect_to resolution_proposal_path(@resolution_proposal)
   end
 
   def edit
@@ -25,6 +26,10 @@ class ResolutionProposalsController < ApplicationController
     @resolution_proposal = co.resolution_proposals.find(params[:id])
     @resolution_proposal.update_attributes(params[:resolution_proposal])
     redirect_to proposals_path
+  end
+
+  def support
+    @resolution_proposal = co.resolution_proposals.find(params[:id])
   end
 
   def pass

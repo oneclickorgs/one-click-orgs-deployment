@@ -1,0 +1,4 @@
+= fields_for(:change_name_resolution) do |change_name_resolution_fields|
+  %p
+    = change_name_resolution_fields.label(:organisation_name, "Name of the Co-operative")
+    = change_name_resolution_fields.text_field(:organisation_name)

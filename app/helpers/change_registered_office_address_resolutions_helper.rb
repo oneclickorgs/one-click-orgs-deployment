@@ -1,0 +1,2 @@
+module ChangeRegisteredOfficeAddressResolutionsHelper
+end

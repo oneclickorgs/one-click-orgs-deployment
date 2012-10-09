@@ -2,10 +2,10 @@ Feature: Creating an association
   In order to get my group up and running quickly
   As a member of a group
   I want to create a One Click Orgs association
-  
+
   Background:
     Given the application is set up
-  
+
   @javascript
   Scenario: Creating an association
     When the domain is the signup domain

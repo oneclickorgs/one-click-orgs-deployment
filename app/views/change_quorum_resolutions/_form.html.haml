@@ -1,0 +1,12 @@
+= fields_for(:change_quorum_resolution) do |change_quorum_resolution_fields|
+  %p
+    The quorum for General Meetings is currently the greater of
+    = co.constitution.quorum_number
+    and
+    = co.constitution.quorum_percentage.to_s + '%'
+    of the membership.
+  %p Change the quorum to:
+  %p= change_quorum_resolution_fields.label :quorum_number, "Number of members"
+  %p= change_quorum_resolution_fields.text_field :quorum_number
+  %p= change_quorum_resolution_fields.label :quorum_percentage, "Percentage of membership"
+  %p= change_quorum_resolution_fields.text_field :quorum_percentage
