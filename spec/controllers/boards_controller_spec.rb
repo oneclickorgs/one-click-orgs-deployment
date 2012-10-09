@@ -34,4 +34,8 @@ describe BoardsController do
     end
   end
 
+  describe "access control" do
+    it "exists"
+  end
+
 end
