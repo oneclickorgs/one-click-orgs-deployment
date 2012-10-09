@@ -1,42 +1,7 @@
 //= require jquery.ui.base
 //= require jquery-ui/oco-theme/jquery-ui-1.8.23.custom
 
-// Colours
-// See also: https://github.com/oneclickorgs/one-click-orgs/wiki/Design-guide
-
-$oco_burgundy: #A2005A
-$oco_burgundy_hover: #5E0037
-$black: #000
-$dark_grey: #6C6C6C
-$blue: #627FC4
-$pale_blue: #E0E8EF
-$error_red: #DF4242
-
-// CSS fonts
-
-@font-face
-  :font-family 'Vegur'
-  :src asset-url('vegur-l.otf', font) format('opentype')
-  // Light
-  :font-weight lighter
-
-@font-face
-  :font-family 'Vegur'
-  :src asset-url('vegur-m.otf', font) format('opentype')
-  // Medium
-  :font-weight bold
-
-@font-face
-  :font-family 'Vegur'
-  :src asset-url('vegur-b.otf', font) format('opentype')
-  // Bold
-  :font-weight bolder
-
-@font-face
-  :font-family 'Vegur'
-  :src asset-url('vegur-r.otf', font) format('opentype')
-  // Regular
-  :font-weight normal
+@import "themes/default_theme"
 
 // Shorthand and variables
 
@@ -45,10 +10,6 @@ $error_red: #DF4242
   -moz-border-radius: $radius
   border-radius: $radius
 
-$default-sans-serif: 'Vegur','Myriad Pro','Myriad','Helvetica Neue',Helvetica,Arial,sans-serif
-
-$default-serif: Georgia,'Times New Roman',serif
-
 // And let's begin
 
 *
@@ -56,8 +17,8 @@ $default-serif: Georgia,'Times New Roman',serif
   :padding 0
 
 body
-  :background-color #f6f6f6
-  :color #333
+  :background-color $body-background
+  :color $text
   :font-family $default-sans-serif
   /* Base font size
   :font-size 100%
@@ -65,7 +26,7 @@ body
   :padding 0 40px
 
 #container
-  :background-color #fff
+  :background-color $container-background
   :margin 0 auto
   :max-width 1200px
   :min-width 800px
@@ -83,18 +44,18 @@ div.clear
   :-moz-border-radius-bottomleft 8px
   :border-bottom-right-radius 8px
   :border-bottom-left-radius 8px
-  :background #E0E0AF
-  :background -moz-linear-gradient(100% 100% 90deg, #9D9D75, #E0E0AF)
-  :background -webkit-gradient(linear, left bottom, left top, from(#9D9D75), to(#E0E0AF))
-  :border-bottom 1px solid #111
-  :border-left 1px solid #111
-  :border-right 1px solid #111
+  :background $overlay-background
+  :background -moz-linear-gradient(100% 100% 90deg, $overlay-background-highlight, $overlay-background)
+  :background -webkit-gradient(linear, left bottom, left top, from($overlay-background-highlight), to($overlay-background))
+  :border-bottom 1px solid $border
+  :border-left 1px solid $border
+  :border-right 1px solid $border
   :margin -12px 0 12px
   a
     @include rounded-corners(2px)
-    :background #333
+    :background #000
     :background rgba(0, 0, 0, 0.4)
-    :border 1px solid #333
+    :border 1px solid $text
     :color #fff
     :margin 0 2px
     :padding 2px 6px
@@ -113,7 +74,7 @@ div.clear
     :padding 12px 12px 6px
     :text-shadow #fff -1px -1px 2px
   p
-    :color #000
+    :color $overlay-text
     :font-size 1em
     :line-height 1.6em
     :margin 0
@@ -121,14 +82,14 @@ div.clear
     :text-shadow #fff -1px -1px 2px
 
 #overlay.proposed
-  :background #AFE0BC
-  :background -moz-linear-gradient(100% 100% 90deg, #779D75, #AFE0BC)
-  :background -webkit-gradient(linear, left bottom, left top, from(#779D75), to(#AFE0BC))
+  :background $overlay-alternate-background
+  :background -moz-linear-gradient(100% 100% 90deg, $overlay-alternate-background-highlight, $overlay-alternate-background)
+  :background -webkit-gradient(linear, left bottom, left top, from($overlay-alternate-background-highlight), to($overlay-alternate-background))
 
 /* Header
 
 .control_bar
-  :color #666
+  :color $secondary-text
   :float right
   :font-size 0.75em
   :line-height 1.2em
@@ -142,7 +103,7 @@ h1.header
   :font-family $default-serif
   :margin-bottom 4px
   a
-    :color #000
+    :color $header-text
     :text-decoration none
     &:hover
       :text-decoration underline
@@ -153,13 +114,13 @@ h1.header
   :padding 6px 0
 
 #hd p
-  :color #666
+  :color $secondary-text
   :font-size 0.7em
   a
-    :color #666
+    :color $secondary-text
     :text-decoration none
     &:hover
-      :color $oco_burgundy
+      :color $header-highlight
       :text-decoration underline
 
 /* Basic styles
@@ -168,7 +129,7 @@ br.clear
   :clear both
 
 h2
-  :color $oco_burgundy
+  :color $page-title
   :font-size 2.25em
   :font-weight bolder
   :margin-bottom 0.4em
@@ -182,15 +143,15 @@ h4
   :font-size 1em
 
 a
-  :color $blue
+  :color $link
   &:hover
-    :color #333
+    :color $text
     :text-decoration underline
 
 hr
-  :background-color $oco_burgundy
+  :background-color $hr
   :border none
-  :color $oco_burgundy
+  :color $hr
   :height 1px
   :margin 0.8em 0
 
@@ -232,11 +193,11 @@ strong
   :padding 12px
 
 #notice
-  :background-color #C9DCC0
+  :background-color $notice-background
   :clear both
 
 #error
-  :background-color $error_red
+  :background-color $error-background
   :color #fff
 
 /* Body
@@ -244,10 +205,10 @@ strong
 #bd
   a
     &.cancel
-      :color #f00
+      :color $cancel-link
       :font-size 0.9em
   p
-    :color #333
+    :color $text
     :margin-bottom 12px
     &.helper
       :font-size 0.9em
@@ -256,12 +217,12 @@ strong
     li
       :line-height 1.6em
   .section
-    :background #f5f5fe
-    :border 1px solid #999
+    :background $section-background
+    :border 1px solid $section-border
     :margin-bottom 18px
     :padding 12px
     p.explanation
-      :color #666
+      :color $secondary-text
       :font-size 0.8em
   div.left
     :float left
@@ -273,7 +234,7 @@ strong
     h4
       :margin 0.8em 0 0.4em
     span.time-ends
-      :color #666
+      :color $secondary-text
       :font-size 0.8em
       :font-weight normal
     p.votes
@@ -289,15 +250,15 @@ strong
     &.missing
       :border-left 0
       p
-        :color #666
+        :color $secondary-text
     h1, h2, h3
-      :color #666
+      :color $secondary-text
       :margin 0.4em 0
     h1
-      :color #333
+      :color $text
       :font-size 1.4em
     h2
-      :color #333
+      :color $text
       :font-size 1.2em
     h3
       :font-size 1.1em
@@ -306,7 +267,7 @@ strong
     ul, ol
       :margin 0.4em 2em
     blockquote
-      :border-left 1px solid #666
+      :border-left 1px solid $blockquote-sideline
       :margin-left 2em
       :padding-left 1em
   ul.draft_proposals li,
@@ -331,25 +292,25 @@ img.gravatar
     :padding 5px 6px 4px 6px
     :text-decoration none
   span.pdf a
-    :background-color #c02434
-    :color #fff
+    :background-color $pdf-background
+    :color $download-button-text
     &:hover
-      :background-color #861924
+      :background-color $pdf-background-highlight
   span.csv a
-    :background-color #036f40
-    :color #fff
+    :background-color $csv-background
+    :color $download-button-text
     &:hover
-      :background-color #005500
+      :background-color $csv-background-highlight
   span.txt a
-    :background-color #444
-    :color #fff
+    :background-color $txt-background
+    :color $download-button-text
     &:hover
-      :background-color #000
+      :background-color $txt-background-highlight
 
 #bd
   .comment
-    :background #f6f6f6
-    :border 1px solid #666
+    :background $body-background
+    :border 1px solid $secondary-text
     :margin 0.8em 0
     :padding 0.4em
     :width 60%
@@ -363,9 +324,9 @@ ul.tasks li
 
 .guidance
   :float right
-  :border 1px solid $dark_grey
+  :border 1px solid $section-border
   @include rounded-corners(2px)
-  :background-color #eee
+  :background-color $section-background
   :margin-left 1em
   :padding 1em
 
@@ -378,9 +339,9 @@ body.setup
       :vertical-align middle
   #bd
     h2
-      :color $oco_burgundy
+      :color $page-title
     p.explanation
-      :color #666
+      :color $secondary-text
       :font-size 0.8em
       :margin -12px 0 4px 20px
       :padding 0.2em
@@ -402,7 +363,7 @@ body.setup
         :padding 0.8em 0
         :width 16em
     #subdomain_wrapper
-      :border 1px solid #000
+      :border 1px solid $input-border
       :margin 0 4px 10px 20px
       :padding .4em
       :width 90%
@@ -421,9 +382,9 @@ body.setup
 
 .dynamic
   @include rounded-corners(2px)
-  :background-color #f3f3f3
-  :border 1px solid #ccc
-  :color #9d8942
+  :background-color $dynamic-background
+  :border 1px solid $dynamic-border
+  :color $dynamic-text
   :padding 2px
 
 section.constitution
@@ -449,7 +410,7 @@ table
   :margin 1em 0 2em 0
   :text-align left
   th
-    :border-bottom 1px dashed #ccc
+    :border-bottom 1px dashed $table-header-border
     :font-weight bold
     :white-space nowrap
   th, td
@@ -457,10 +418,10 @@ table
   td.timestamp
     :white-space nowrap
   tr.even td
-    :background #e9e9f4
+    :background $table-alternate-background
 
 table.proposals, table.decisions, table.failed_proposals
-  :border 1px #042 solid
+  :border 1px $table-border solid
   :margin auto
   :width 900px
   td.vote
@@ -476,29 +437,29 @@ table.proposals, table.decisions, table.failed_proposals
     :width 14em
 
 tr.vote_for
-  :background-color #6bba70
+  :background-color $vote-for-background
   :color #fff
   &:hover
-    :background-color #499850
+    :background-color $vote-for-background-highlight
 
 tr.vote_against
-  :background-color #b02b2c
+  :background-color $vote-against-background
   :color #fff
   &:hover
-    :background-color #a0090a
+    :background-color $vote-against-background-highlight
 
 tr.vote_in_progress
-  :background-color #c79810
+  :background-color $vote-in-progress-background
   :color #fff
   &:hover
-    :background-color #a57600
+    :background-color $vote-in-progress-background-highlight
 
 tr.vote_for, tr.vote_against, tr.vote_in_progress
   a
     :color #fff
 
 td.resolution, td.resolution_proposal
-  :border 1px solid grey
+  :border 1px solid $border
   :margin 1em
   input
     :float left
@@ -545,17 +506,17 @@ input[type="button"], input[type="submit"], button
 input[type="button"],
 button,
 form.button_to input[type="submit"]
-  :background-color #eee
-  :color #000
+  :background-color $button-background
+  :color $button-text
   &:hover
-    :background-color #ccc
+    :background-color $button-background-highlight
 
 input[type="submit"]
-  :background-color $oco_burgundy
-  :color #fff
+  :background-color $submit-button-background
+  :color $submit-button-text
   :cursor pointer
   &:hover
-    :background-color $oco_burgundy_hover
+    :background-color $submit-button-background-highlight
 
 // This declaration is repeated in ie.sass with an IE-compatible selector
 // and some layout tweaks; make sure any important changes go there too.
@@ -583,7 +544,7 @@ form.button_to input[type="submit"]
   :float left
   :margin 10px 20px 10px 0
   &.clicked
-    :background-color #ccc
+    :background-color $button-background-highlight
 
 input.button-form-show
   :display none
@@ -650,9 +611,9 @@ dd
 /* Footer
 
 .footer
-  :border-top 1px solid #000
+  :border-top 1px solid $footer-line
   :clear both
-  :color #666
+  :color $secondary-text
   :font-size .75em
   :margin-top 1em
   :padding 1em
@@ -673,7 +634,7 @@ ul.constitution li
 
 div.constitution_proposal
   :float right
-  :border 1px solid #042
+  :border 1px solid $table-border
   :padding 0.5em 0.5em 0
   :background-color #ddd
   :margin 0 0 0.5em 0.5em
@@ -692,12 +653,12 @@ ul.founding_members li
 dl.settings
   dt
     :font-weight bold
-    :border-top 1px solid #042
+    :border-top 1px solid $table-border
     :margin-top 1em
     :clear right
 
 div.field_with_errors input
-  :border 1px solid $error_red
+  :border 1px solid $error-background
 
 table.upcoming_meetings,
 table.past_meetings
@@ -705,8 +666,8 @@ table.past_meetings
     :margin 0.5em 0
   td
     :min-height 3em
-    :border 1px solid black
-    :background-color white
+    :border 1px solid $table-border
+    :background-color $container-background
 
 /* Lightbox
 
@@ -722,7 +683,7 @@ table.past_meetings
 
 #lightbox, .lightbox
   :background #fff
-  :border 2px solid $oco_burgundy
+  :border 2px solid $lightbox-border
   :font-size 0.9em
   :left 16%
   :padding 1%
@@ -745,7 +706,7 @@ table.past_meetings
 
 #prerelease_bar
   :padding 1em
-  :background-color $oco_burgundy
+  :background-color #A2005A
   :color white
   @include rounded-corners(4px)
   :text-align center
@@ -758,7 +719,7 @@ table.past_meetings
 .login_pane
   :width 48%
   :float left
-  :border-right 1px solid #111
+  :border-right 1px solid $border
   :padding-right 1em
   :margin-bottom 1em
 .new_member_pane
@@ -771,13 +732,13 @@ table.past_meetings
 ul.directors
   :list-style-type none
   li
-    :border 1px solid black
+    :border 1px solid $border
     @include rounded-corners(2px)
     :margin 1em 0
     .directorship, .officership
       :padding 0 10px
     .directorship
-      :border-bottom 1px solid black
+      :border-bottom 1px solid $border
     p
       :min-height 3em
       :line-height 3em
@@ -838,12 +799,12 @@ ul.checklist
       :margin 0
     .meetings
       .meeting, .general_meeting
-        :border 1px solid #aaa
+        :border 1px solid $pull-border
         :padding 0.5em
         :margin-bottom 1em
         .datetime
           :float left
-          :background-color #ddd
+          :background-color $pull-background
           :padding 5px
           :margin-right 1em
           :text-align center
@@ -855,7 +816,7 @@ ul.checklist
           :list-style-type none
           :margin 1em 0
           :padding 0.5em
-          :border 1px solid #aaa
+          :border 1px solid $pull-border
   .section.tasks
     h3
       :margin-bottom 12px
