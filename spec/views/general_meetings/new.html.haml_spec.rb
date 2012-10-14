@@ -10,7 +10,8 @@ describe "general_meetings/new" do
       :electronic_nominations => nil,
       :nominations_closing_date => nil,
       :electronic_voting => nil,
-      :voting_closing_date => nil
+      :voting_closing_date => nil,
+      :start_time_proxy => nil
     ).as_new_record
     assign(:general_meeting, @general_meeting)
 
@@ -24,6 +25,12 @@ describe "general_meetings/new" do
       mock_model(Director, :name => "Sally Baker"),
       mock_model(Director, :name => "John Smith")
     ]
+  end
+
+  it "renders time select fields for the start_time attribute" do
+    render
+    rendered.should have_selector(:select, :name => 'general_meeting[start_time_proxy(4i)]')
+    rendered.should have_selector(:select, :name => 'general_meeting[start_time_proxy(5i)]')
   end
 
   it "renders check boxes to attach draft resolutions to the new meeting" do

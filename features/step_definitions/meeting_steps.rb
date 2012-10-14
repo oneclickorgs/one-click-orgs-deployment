@@ -20,6 +20,11 @@ def fill_in_start_time
   end
 end
 
+def select_start_time
+  select("16", :from => 'general_meeting[start_time_proxy(4i)]')
+  select("00", :from => 'general_meeting[start_time_proxy(5i)]')
+end
+
 def fill_in_venue
   if page.has_field?('general_meeting[venue]')
     fill_in('general_meeting[venue]', :with => "The Meeting Hall")
@@ -98,6 +103,10 @@ When /^I enter a start time for the meeting$/ do
   fill_in_start_time
 end
 
+When /^I choose a start time for the meeting$/ do
+  select_start_time
+end
+
 When /^I enter a venue for the meeting$/ do
   fill_in_venue
 end
@@ -125,7 +134,7 @@ end
 When /^I convene a General Meeting$/ do
   visit(new_general_meeting_path)
   select_meeting_date
-  fill_in_start_time
+  select_start_time
   fill_in_venue
   fill_in_agenda
   check_certification
@@ -134,7 +143,7 @@ end
 
 When /^I enter details for the meeting$/ do
   select_meeting_date
-  fill_in_start_time
+  select_start_time
   fill_in_venue
   fill_in_agenda
   check_certification
@@ -152,7 +161,7 @@ end
 When /^I begin to convene an AGM$/ do
   visit(new_general_meeting_path)
   select_meeting_date
-  fill_in_start_time
+  select_start_time
   fill_in_venue
   fill_in_agenda
   check_certification

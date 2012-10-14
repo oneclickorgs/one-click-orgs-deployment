@@ -1,13 +1,14 @@
 class GeneralMeeting < Meeting
   attr_accessible :start_time, :venue, :agenda, :certification, :existing_resolutions_attributes, :passed_resolutions_attributes,
     :annual_general_meeting, :electronic_nominations, :nominations_closing_date,
-    :electronic_voting, :voting_closing_date
+    :electronic_voting, :voting_closing_date, :start_time_proxy
 
   has_many :resolutions, :foreign_key => 'meeting_id'
 
   attr_accessor :certification, :annual_general_meeting
   attr_accessor :electronic_nominations, :nominations_closing_date,
     :electronic_voting, :voting_closing_date
+  attr_reader :start_time_proxy
 
   after_initialize :after_initialize
   def after_initialize
@@ -76,19 +77,28 @@ class GeneralMeeting < Meeting
     "General Meeting"
   end
 
-  # To fake multi-parameter date assignment for 'nominations_closing_date' attribute
+  # To fake multi-parameter date/time assignment for 'nominations_closing_date',
+  # 'voting_closing_date' and 'start_time_proxy' attributes
 
   def column_for_attribute(attribute)
     case attribute.to_sym
     when :nominations_closing_date, :voting_closing_date
       Column.new.tap{|c| c.klass = Date}
+    when :start_time_proxy
+      Column.new.tap{|c| c.klass = Time}
     else
       super
     end
   end
 
   class Column
-    attr_accessor :klass
+    attr_accessor :klass, :type
+  end
+
+  # Pass values set via start_time_proxy into the real start_time attribute
+
+  def start_time_proxy=(time)
+    self.start_time = time.strftime("%k:%M")
   end
 
 end

@@ -12,7 +12,7 @@ Feature: Convening an annual general meeting
     When I go to the Meetings page
     And I press "Convene a General Meeting"
     And I choose a date for the meeting
-    And I enter a start time for the meeting
+    And I choose a start time for the meeting
     And I enter a venue for the meeting
     And I check "This is the Annual General Meeting"
     Then I should see a list of the Directors who are due for retirement
