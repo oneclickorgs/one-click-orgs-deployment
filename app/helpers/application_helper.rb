@@ -9,7 +9,7 @@ module ApplicationHelper
       </script>
       <script type="text/javascript" charset="utf-8">
         var feedback_widget_options = {};
-        feedback_widget_options.display = "overlay";  
+        feedback_widget_options.display = "overlay";
         feedback_widget_options.company = "oneclickorgs";
         feedback_widget_options.placement = "left";
         feedback_widget_options.color = "#222";
@@ -18,7 +18,7 @@ module ApplicationHelper
       </script>
     EOC
   end
-  
+
   def google_analytics_code
     return unless Rails.env.production? && OneClickOrgs::GoogleAnalytics.active?
     analytics_js = <<-EOC
@@ -40,57 +40,57 @@ module ApplicationHelper
     end
     ['<script type="text/javascript">', analytics_js, '</script>'].join("\n").html_safe
   end
-  
+
   def error_messages_for(object)
     messages = object.errors.full_messages.map do |message|
       content_tag(:li, message)
     end.join
     content_tag(:ul, messages.html_safe, :class => 'errors')
   end
-  
+
   def organisation_name
     current_organisation.try(:name)
   end
-  
+
   def form_reveal_button(label, options={})
     options = options.with_indifferent_access
-    
+
     form_id = options.delete(:form_id)
     raise RuntimeError, "must specify form_id" if form_id.blank?
     options['data-form-id'] = form_id
-    
+
     css_class = if options[:class].present?
       options[:class] + ' button-form-show'
     else
       'button-form-show'
     end
     options[:class] = css_class
-    
+
     options[:value] = label
-    
+
     options[:type] = 'button'
-    
+
     tag(:input, options)
   end
-  
+
   def link_button(label, options={})
     options = options.with_indifferent_access
-    
+
     url = options.delete(:url)
     raise RuntimeError, "must specify url" if url.blank?
     options['data-url'] = url
-    
+
     css_class = if options[:class].present?
       options[:class] + ' button-form'
     else
       'button-form'
     end
     options[:class] = css_class
-    
+
     options[:value] = label
-    
+
     options[:type] = 'button'
-    
+
     tag(:input, options)
   end
 
