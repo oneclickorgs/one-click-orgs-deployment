@@ -5,15 +5,25 @@
 
 .section
   = form_for(@general_meeting) do |general_meeting_form|
+
+    %h3 Date & Time of Meeting
+
     %p= general_meeting_form.label :happened_on, "Date of meeting"
     %p.date_select= general_meeting_form.date_select :happened_on, {}, :class => 'inline datepicker'
-    %p= general_meeting_form.label :venue
     %p= general_meeting_form.label :start_time_proxy, "Start time"
     %p= general_meeting_form.time_select(:start_time_proxy, {:minute_step => 15}, {:class => 'inline'})
 
     %h3 Venue
 
     %p= general_meeting_form.text_area :venue
+
+    %h3 Agenda
+
+    %ol.agenda_items
+      = general_meeting_form.fields_for(:agenda_items) do |agenda_item_fields|
+        %li
+          = agenda_item_fields.text_field(:title)
+
 
     %p Resolutions to be considered at the meeting:
 
@@ -22,9 +32,6 @@
         = content_tag_for(:p, resolution_fields.object) do
           = resolution_fields.check_box :attached
           = resolution_fields.label :attached, resolution_fields.object.title
-
-    %p= general_meeting_form.label :agenda, "Other agenda items"
-    %p= general_meeting_form.text_area :agenda
 
     %p
       = general_meeting_form.check_box :annual_general_meeting

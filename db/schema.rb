@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120916081259) do
+ActiveRecord::Schema.define(:version => 20121014191808) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(:version => 20120916081259) do
     t.string   "password_reset_code"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "agenda_items", :force => true do |t|
+    t.integer  "meeting_id"
+    t.integer  "position"
+    t.string   "title"
+    t.text     "minutes"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "ballots", :force => true do |t|

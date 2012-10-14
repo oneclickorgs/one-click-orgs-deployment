@@ -16,6 +16,17 @@ class GeneralMeeting < Meeting
       if organisation && organisation.respond_to?(:meeting_notice_period)
         self.happened_on ||= Date.today.advance(:days => organisation.meeting_notice_period)
       end
+
+      if agenda_items.empty?
+        [
+          "Apologies for Absence",
+          "Minutes of Previous Meeting",
+          "Any Other Business",
+          "Time and date of next meeting"
+        ].each do |title|
+          agenda_items.build(:title => title)
+        end
+      end
     end
   end
 

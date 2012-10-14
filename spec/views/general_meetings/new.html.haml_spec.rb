@@ -11,7 +11,12 @@ describe "general_meetings/new" do
       :nominations_closing_date => nil,
       :electronic_voting => nil,
       :voting_closing_date => nil,
-      :start_time_proxy => nil
+      :start_time_proxy => nil,
+      :agenda_items => [
+        mock_model(AgendaItem, :title => "Apologies for Absence"),
+        mock_model(AgendaItem, :title => "Minutes of Previous Meeting")
+      ],
+      :agenda_items_attributes= => nil
     ).as_new_record
     assign(:general_meeting, @general_meeting)
 
@@ -31,6 +36,12 @@ describe "general_meetings/new" do
     render
     rendered.should have_selector(:select, :name => 'general_meeting[start_time_proxy(4i)]')
     rendered.should have_selector(:select, :name => 'general_meeting[start_time_proxy(5i)]')
+  end
+
+  it "renders the agenda items as text fields" do
+    render
+    rendered.should have_selector(:input, :value => "Apologies for Absence")
+    rendered.should have_selector(:input, :value => "Minutes of Previous Meeting")
   end
 
   it "renders check boxes to attach draft resolutions to the new meeting" do

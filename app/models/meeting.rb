@@ -1,5 +1,5 @@
 class Meeting < ActiveRecord::Base
-  attr_accessible :happened_on, :participant_ids, :minutes
+  attr_accessible :happened_on, :participant_ids, :minutes, :agenda_items_attributes
 
   attr_reader :participant_ids
 
@@ -13,6 +13,10 @@ class Meeting < ActiveRecord::Base
   belongs_to :creator, :class_name => 'Member', :foreign_key => 'creator_id'
 
   has_many :comments, :as => :commentable
+
+  has_many :agenda_items
+
+  accepts_nested_attributes_for :agenda_items
 
   # 'Upcoming' scope includes meetings happening today.
   scope :upcoming, lambda{where(['happened_on >= ?', Time.now.utc.to_date])}

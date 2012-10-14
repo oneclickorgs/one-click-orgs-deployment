@@ -111,6 +111,20 @@ describe GeneralMeeting do
     end
   end
 
+  describe "agenda items" do
+    context "when building a new GeneralMeeting" do
+      it "builds defaults" do
+        meeting = GeneralMeeting.new
+        meeting.agenda_items.map(&:title).should eq [
+          "Apologies for Absence",
+          "Minutes of Previous Meeting",
+          "Any Other Business",
+          "Time and date of next meeting"
+        ]
+      end
+    end
+  end
+
   it "accepts multi-parameter attributes for start_time via start_time_proxy" do
     begin
       meeting = GeneralMeeting.new

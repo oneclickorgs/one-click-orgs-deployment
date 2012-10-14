@@ -136,7 +136,6 @@ When /^I convene a General Meeting$/ do
   select_meeting_date
   select_start_time
   fill_in_venue
-  fill_in_agenda
   check_certification
   click_button("Confirm and convene the meeting")
 end
@@ -145,7 +144,6 @@ When /^I enter details for the meeting$/ do
   select_meeting_date
   select_start_time
   fill_in_venue
-  fill_in_agenda
   check_certification
 end
 
@@ -163,7 +161,6 @@ When /^I begin to convene an AGM$/ do
   select_meeting_date
   select_start_time
   fill_in_venue
-  fill_in_agenda
   check_certification
   check('general_meeting[annual_general_meeting]')
 end
@@ -309,4 +306,8 @@ Then /^I should see the resolutions marked as passed$/ do
   @resolutions.each do |resolution|
     page.should have_content("#{resolution.title} was accepted")
   end
+end
+
+Then /^I should see an agenda item "(.*?)"$/ do |agenda_item|
+  page.should have_css("input[value='#{agenda_item}']")
 end
