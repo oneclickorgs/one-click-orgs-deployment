@@ -10,7 +10,7 @@ Feature: Creating a board resolution
   @javascript
   Scenario: Director creates a board resolution to be voted on electronically
     When I go to the Board page
-    And I press "Create a new Resolution of the Board"
+    And I press "Create a new Board Resolution"
     And I enter the text of the new resolution
     And I choose to open the resolution for electronic voting
     And I press "Save this resolution"
@@ -21,7 +21,7 @@ Feature: Creating a board resolution
   @javascript
   Scenario: Director creates a board resolution to be be considered at a future meeting
     When I go to the Board page
-    And I press "Create a new Resolution of the Board"
+    And I press "Create a new Board Resolution"
     And I enter the text of the new resolution
     And I choose to save the resolution for consideration at a future meeting of the board
     And I press "Save this resolution"
