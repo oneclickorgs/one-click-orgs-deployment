@@ -69,24 +69,3 @@ $(document).ready(function () {
     event.preventDefault();
   });
 });
-
-
-  // $('.new_survey #new_question_button').click(function (event)
-  // {
-  //   var association, content, regexp, newId;
-
-  //   association = $(this).attr('data-association');
-  //   content = $(this).closest('.fields').find('.' + association + '_fields_template').html();
-  //   regexp = new RegExp('new_' + association, 'g');
-  //   newId = new Date().getTime();
-
-  //   $(this).parent().before(content.replace(regexp, newId));
-
-  //   $('div.' + association + '_fields').each(function (index)
-  //   {
-  //     $(this).attr('id', association + '_fields_' + (index + 1));
-  //     $(this).find('span.index').text(index + 1);
-  //   });
-
-  //   event.preventDefault();
-  // });
