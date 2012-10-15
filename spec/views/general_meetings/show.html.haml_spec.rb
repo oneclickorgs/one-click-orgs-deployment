@@ -30,4 +30,29 @@ describe 'general_meetings/show' do
     end
   end
 
+  context "when general meeting is upcoming" do
+    let(:general_meeting) {
+      mock_model(GeneralMeeting,
+        :past? => false,
+        :agenda_items => [
+          mock_model(AgendaItem, :title => "Apologies for Absence"),
+          mock_model(AgendaItem, :title => "Any Other Business")
+        ],
+        :happened_on => 2.days.from_now
+      )
+    }
+
+    before(:each) do
+      assign(:general_meeting, general_meeting)
+    end
+
+    it "renders the agenda items" do
+      render
+      rendered.should have_selector("ol.agenda_items") do |ol|
+        ol.should have_selector(:li, :content => "Apologies for Absence")
+        ol.should have_selector(:li, :content => "Any Other Business")
+      end
+    end
+  end
+
 end

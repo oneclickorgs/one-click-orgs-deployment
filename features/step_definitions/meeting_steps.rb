@@ -194,6 +194,26 @@ When /^I enter other minutes for the meeting$/ do
   enter_minutes
 end
 
+When /^I delete the agenda item "(.*?)"$/ do |title|
+  page.first("input[value='#{title}'] ~ a.delete").click
+end
+
+When /^I add a new agenda item "(.*?)"$/ do |title|
+  click_link('Add')
+  page.first("ol.agenda_items li:last-child input[name*='title']").set(title)
+end
+
+When /^I move the last agenda item up one position$/ do
+  page.first("ol.agenda_items li:last-child a.up").click
+end
+
+When /^I view the details for the new meeting$/ do
+  @meeting ||= GeneralMeeting.last
+  within("#general_meeting_#{@meeting.id}") do
+    click_link("View agenda and details")
+  end
+end
+
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.attached.last
@@ -310,4 +330,12 @@ end
 
 Then /^I should see an agenda item "(.*?)"$/ do |agenda_item|
   page.should have_css("input[value='#{agenda_item}']")
+end
+
+Then /^I should see the agenda item "(.*?)" in position (\d+)$/ do |title, position|
+  if page.has_css?("#general_meeting_agenda_items_attributes_#{position.to_i - 1}_title")
+    page.should have_field("general_meeting_agenda_items_attributes_#{position.to_i - 1}_title", :with => title)
+  else
+    page.should have_css("ol.agenda_items li:nth-child(#{position})", :text => title)
+  end
 end

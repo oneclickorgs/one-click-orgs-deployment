@@ -19,4 +19,8 @@
     %strong Venue:
     = @general_meeting.venue
   %h3 Agenda
+  %ol.agenda_items
+    - @general_meeting.agenda_items.each do |agenda_item|
+      = content_tag_for(:li, agenda_item) do
+        = agenda_item.title
   = simple_format(html_escape(@general_meeting.agenda))

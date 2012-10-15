@@ -19,13 +19,14 @@
 
     %h3 Agenda
 
-    %ol.agenda_items
+    %ol#agenda_items.agenda_items
       = general_meeting_form.fields_for(:agenda_items) do |agenda_item_fields|
-        %li
-          = agenda_item_fields.text_field(:title)
+        = render(:partial => 'agenda_item', :locals => {:agenda_item_fields => agenda_item_fields})
+    %p
+      %a{:id => 'add_agenda_item', 'data-association' => 'agenda_items', 'data-container' => 'agenda_items', :href => '#'} Add
+    = new_child_fields_template(general_meeting_form, :agenda_items)
 
-
-    %p Resolutions to be considered at the meeting:
+    %h3 Resolutions to be considered at the meeting:
 
     .resolutions
       = general_meeting_form.fields_for :existing_resolutions, @draft_resolutions do |resolution_fields|
