@@ -74,25 +74,25 @@ When /^I place my vote for the new directors I want$/ do
 end
 
 When /^I choose to allow electronic nominations for new Directors$/ do
-  check "general_meeting[electronic_nominations]"
+  check "annual_general_meeting[electronic_nominations]"
 end
 
 When /^I choose a closing date for nominations$/ do
   date = 2.weeks.from_now
-  select(date.year.to_s, :from => "general_meeting[nominations_closing_date(1i)]")
-  select(date.strftime('%B'), :from => "general_meeting[nominations_closing_date(2i)]")
-  select(date.day.to_s, :from => "general_meeting[nominations_closing_date(3i)]")
+  select(date.year.to_s, :from => "annual_general_meeting[nominations_closing_date(1i)]")
+  select(date.strftime('%B'), :from => "annual_general_meeting[nominations_closing_date(2i)]")
+  select(date.day.to_s, :from => "annual_general_meeting[nominations_closing_date(3i)]")
 end
 
 When /^I choose to allow electronic voting for new Directors$/ do
-  check "general_meeting[electronic_voting]"
+  check "annual_general_meeting[electronic_voting]"
 end
 
 When /^I choose a closing date for voting$/ do
   date = 4.weeks.from_now
-  select(date.year.to_s, :from => "general_meeting[voting_closing_date(1i)]")
-  select(date.strftime('%B'), :from => "general_meeting[voting_closing_date(2i)]")
-  select(date.day.to_s, :from => "general_meeting[voting_closing_date(3i)]")
+  select(date.year.to_s, :from => "annual_general_meeting[voting_closing_date(1i)]")
+  select(date.strftime('%B'), :from => "annual_general_meeting[voting_closing_date(2i)]")
+  select(date.day.to_s, :from => "annual_general_meeting[voting_closing_date(3i)]")
 end
 
 When /^the election closer runs$/ do

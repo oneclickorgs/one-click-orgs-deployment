@@ -10,13 +10,11 @@ Feature: Convening an annual general meeting
   @javascript
   Scenario: Secretary convenes the Annual General Meeting
     When I go to the Meetings page
-    And I press "Convene a General Meeting"
-    And I choose a date for the meeting
+    And I press "Convene an Annual General Meeting"
+    Then I should see a list of the Directors who are due for retirement
+    When I choose a date for the meeting
     And I choose a start time for the meeting
     And I enter a venue for the meeting
-    And I check "This is the Annual General Meeting"
-    Then I should see a list of the Directors who are due for retirement
-    When I certify that the Board has decided to convene the meeting
     And I press "Confirm and convene the meeting"
     Then I should see the new AGM in the list of Upcoming Meetings
 

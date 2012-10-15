@@ -5,6 +5,8 @@ def select_meeting_date
 
   if page.has_css?('#general_meeting_happened_on_datepicker')
     page.execute_script(%Q{$('#general_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
+  elsif page.has_css?('#annual_general_meeting_happened_on_datepicker')
+    page.execute_script(%Q{$('#annual_general_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
   elsif page.has_css?('#board_meeting_happened_on_datepicker')
     page.execute_script(%Q{$('#board_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
   else
@@ -21,13 +23,20 @@ def fill_in_start_time
 end
 
 def select_start_time
-  select("16", :from => 'general_meeting[start_time_proxy(4i)]')
-  select("00", :from => 'general_meeting[start_time_proxy(5i)]')
+  if page.has_css?('#general_meeting_start_time_proxy_4i')
+    select("16", :from => 'general_meeting[start_time_proxy(4i)]')
+    select("00", :from => 'general_meeting[start_time_proxy(5i)]')
+  else
+    select("16", :from => 'annual_general_meeting[start_time_proxy(4i)]')
+    select("00", :from => 'annual_general_meeting[start_time_proxy(5i)]')
+  end
 end
 
 def fill_in_venue
   if page.has_field?('general_meeting[venue]')
     fill_in('general_meeting[venue]', :with => "The Meeting Hall")
+  elsif page.has_field?('annual_general_meeting[venue]')
+    fill_in('annual_general_meeting[venue]', :with => "The Meeting Hall")
   else
     fill_in('board_meeting[venue]', :with => "The Meeting Hall")
   end
@@ -36,6 +45,8 @@ end
 def fill_in_agenda
   if page.has_field?('general_meeting[agenda]')
     fill_in('general_meeting[agenda]', :with => "Discuss things. AOB.")
+  elsif page.has_field?('annual_general_meeting[agenda]')
+    fill_in('annual_general_meeting[agenda]', :with => "Discuss things. AOB.")
   else
     fill_in('board_meeting[agenda]', :with => "Discuss things. AOB.")
   end
@@ -157,12 +168,10 @@ When /^I convene the meeting$/ do
 end
 
 When /^I begin to convene an AGM$/ do
-  visit(new_general_meeting_path)
+  visit(new_annual_general_meeting_path)
   select_meeting_date
   select_start_time
   fill_in_venue
-  check_certification
-  check('general_meeting[annual_general_meeting]')
 end
 
 When /^I enter the date of the meeting$/ do

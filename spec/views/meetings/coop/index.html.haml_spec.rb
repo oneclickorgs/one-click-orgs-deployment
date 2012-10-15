@@ -87,11 +87,6 @@ describe 'meetings/coop/index' do
       view.stub(:can?).with(:create, Meeting).and_return(true)
     end
 
-    it "renders a button link to create a board meeting" do
-      render
-      rendered.should have_selector(:input, 'data-url' => '/board_meetings/new')
-    end
-
     it "renders a link to enter minutes for a meeting not yet in the system" do
       render
       rendered.should have_selector(:a, :href => '/minutes/new')
