@@ -26,25 +26,42 @@ $prerelease_bar: $cooperatives_uk_dark_grey
 
 @import '../one_click'
 
+#prerelease_bar
+  :margin-bottom 10px
 #container
+  :padding 0
   :box-shadow 0 0 10px #000000
+  :margin-bottom 20px
+.control_bar
+  :padding (6px + 12px) 12px 6px 0
+#hd
+  :border-bottom none
+  :padding 12px 12px 0
 #nav
-  // Expand to edge of container
-  :margin 12px -12px
+  :margin 12px 0
+  :padding 0
+  :display table
+  :width 100%
+  :border-collapse separate
+  :border-spacing 1px
   li
-    :display inline-block
-    :background-image url(image-path('themes/cooperatives_uk/menu_items_background.jpg'))
+    :display table-cell
     :height 23px
     :line-height 23px
-    :margin 0 1px 0 0
-    :padding 0 1em 0 5px
-    :min-width 50px
+    :margin 0
+    :padding 0
+    :border 1px solid #E7E8E9
     a
+      :background-image url(image-path('themes/cooperatives_uk/menu_items_background.jpg'))
       :display block
-      :width 100%
-      :padding 0
+      :padding 0 12px
       :color #ffffff
       :font-weight bold
       :text-transform lowercase
       &:hover
+        :background-image url(image-path('themes/cooperatives_uk/menu_items_background_over.jpg'))
         :text-decoration none
+#bd
+  :padding 0 12px
+h2
+  :font-size 1.3em
