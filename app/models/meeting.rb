@@ -16,7 +16,7 @@ class Meeting < ActiveRecord::Base
 
   has_many :agenda_items
 
-  accepts_nested_attributes_for :agenda_items
+  accepts_nested_attributes_for :agenda_items, :reject_if => :all_blank
 
   # 'Upcoming' scope includes meetings happening today.
   scope :upcoming, lambda{where(['happened_on >= ?', Time.now.utc.to_date])}
