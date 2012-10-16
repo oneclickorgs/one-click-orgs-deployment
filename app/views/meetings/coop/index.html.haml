@@ -39,12 +39,12 @@
               = meeting.happened_on.strftime('%d %B %Y') + ','
               at
               = (meeting.venue || '') + '.'
-            - if meeting.minutes.blank?
+            - if meeting.minuted?
+              %p= link_to("View minutes", general_meeting_path(meeting))
+            - else
               %p Minutes have not been entered for this meeting yet.
               - if can?(:create, Meeting)
                 %p= link_to("Enter minutes for this meeting.", edit_general_meeting_path(meeting))
-            - else
-              %p= link_to("View minutes", general_meeting_path(meeting))
   - else
     %p No past meetings have been recorded yet.
   - if can?(:create, Meeting)

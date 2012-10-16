@@ -38,6 +38,7 @@ class Minute < OneClickOrgs::ModelWrapper
     existing_meeting_attributes = (meeting ? meeting.attributes : {}).with_indifferent_access
     existing_meeting_attributes.delete(:id)
     @meeting = @meeting_class.safe_constantize.new.tap{|m|
+      m.agenda_items = []
       existing_meeting_attributes.each do |k, v|
         m.send("#{k}=", v)
       end

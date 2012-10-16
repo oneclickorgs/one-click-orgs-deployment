@@ -23,6 +23,7 @@ class GeneralMeetingsController < ApplicationController
   def edit
     @general_meeting = co.general_meetings.find(params[:id])
     @members = co.members
+    @members_for_autocomplete = @members.map{|m| {:value => m.name, :id => m.id} }
   end
 
   def update

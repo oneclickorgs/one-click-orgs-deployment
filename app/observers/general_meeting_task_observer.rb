@@ -7,7 +7,7 @@ class GeneralMeetingTaskObserver < ActiveRecord::Observer
   end
 
   def after_save(general_meeting)
-    if general_meeting.minutes.present?
+    if general_meeting.minuted?
       complete_minute_task_for_secretary(general_meeting)
     end
   end

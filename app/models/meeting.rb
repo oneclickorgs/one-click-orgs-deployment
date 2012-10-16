@@ -60,4 +60,14 @@ class Meeting < ActiveRecord::Base
   def members_to_notify
     organisation.members
   end
+
+  # A Meeting is minuted if all of its agenda items have been minuted,
+  # or, if it has no agenda items, if the 'minutes' attribute is present.
+  def minuted?
+    if agenda_items.present?
+      agenda_items.inject(true){|memo, agenda_item| memo && agenda_item.minutes.present?}
+    else
+      minutes.present?
+    end
+  end
 end

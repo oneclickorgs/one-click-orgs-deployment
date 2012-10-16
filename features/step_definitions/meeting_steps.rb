@@ -57,10 +57,15 @@ def check_certification
 end
 
 def enter_minutes
-  if page.has_field?('general_meeting[minutes]')
-    fill_in('general_meeting[minutes]', :with => "We discussed things.")
+  if page.has_field?('Apologies for Absence')
+    fill_in("Apologies for Absence", :with => "Bob Smith")
+    fill_in("Minutes of Previous Meeting", :with => "The minutes of the previous meeting were accepted.")
+    fill_in("Any Other Business", :with => "Jenny Jenkins thanked Geoff Newell for providing the refreshments.")
+    fill_in("Time and date of next meeting", :with => "31 October at 6pm")
+    @minute_type = :agenda_items
   elsif page.has_field?('minute[minutes]')
     fill_in('minute[minutes]', :with => "We discussed things.")
+    @minute_type = :minutes
   else
     raise "Could not find minutes field."
   end
@@ -347,4 +352,11 @@ Then /^I should see the agenda item "(.*?)" in position (\d+)$/ do |title, posit
   else
     page.should have_css("ol.agenda_items li:nth-child(#{position})", :text => title)
   end
+end
+
+Then(/^I should see a field for each of the standard agenda items$/) do
+  page.should have_field("Apologies for Absence")
+  page.should have_field("Minutes of Previous Meeting")
+  page.should have_field("Any Other Business")
+  page.should have_field("Time and date of next meeting")
 end

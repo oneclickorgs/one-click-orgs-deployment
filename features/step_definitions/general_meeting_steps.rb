@@ -18,8 +18,12 @@ end
 
 When /^I choose the Members who were in attendance$/ do
   members = @organisation.members.limit(2)
-  members.each do |member|
-    check(member.name)
+  within('div.participants') do
+    members.each do |member|
+      fill_in("Add member", :with => member.name)
+      sleep(1)
+      page.execute_script("$('.ui-menu-item a:contains(\"#{member.name}\")').trigger('mouseenter').click();")
+    end
   end
 end
 
@@ -45,7 +49,18 @@ Then /^I should see "(.*?)" for the past meeting$/ do |text|
 end
 
 Then /^I should see the minutes I entered$/ do
-  page.should have_content("We discussed things.")
+  if @minute_type && @minute_type == :agenda_items
+    page.should have_content("Apologies for Absence")
+    page.should have_content("Bob Smith")
+    page.should have_content("Minutes of Previous Meeting")
+    page.should have_content("The minutes of the previous meeting were accepted.")
+    page.should have_content("Any Other Business")
+    page.should have_content("Jenny Jenkins thanked Geoff Newell for providing the refreshments.")
+    page.should have_content("Time and date of next meeting")
+    page.should have_content("31 October at 6pm")
+  else
+    page.should have_content("We discussed things.")
+  end
 end
 
 Then /^I should see the participants I chose$/ do

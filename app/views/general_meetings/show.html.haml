@@ -1,23 +1,31 @@
 %h2 General Meeting
 
+%p
+  %strong Date:
+  = @general_meeting.happened_on.to_s(:long_ordinal)
+%p
+  %strong Starting at:
+  = @general_meeting.start_time
+%p
+  %strong Venue:
+  = @general_meeting.venue
+
 - if @general_meeting.past?
-  %h3 Minutes
-  = simple_format(html_escape(@general_meeting.minutes))
-  %h3 Attendees
-  %ul.participants
-    - @general_meeting.participants.each do |participant|
-      = content_tag_for(:li, participant) do
-        = link_to(participant.name, member_path(participant))
+  - if @general_meeting.minuted?
+    %h3 Minutes
+    - @general_meeting.agenda_items.each do |agenda_item|
+      %h4= agenda_item.title
+      = simple_format(agenda_item.minutes)
+    %h4 Other minutes
+    = simple_format(html_escape(@general_meeting.minutes))
+    %h3 Attendees
+    %ul.participants
+      - @general_meeting.participants.each do |participant|
+        = content_tag_for(:li, participant) do
+          = link_to(participant.name, member_path(participant))
+  - else
+    %p The minutes for this meeting have not been recorded yet.
 -else
-  %p
-    %strong Date:
-    = @general_meeting.happened_on.to_s(:long_ordinal)
-  %p
-    %strong Starting at:
-    = @general_meeting.start_time
-  %p
-    %strong Venue:
-    = @general_meeting.venue
   %h3 Agenda
   %ol.agenda_items
     - @general_meeting.agenda_items.each do |agenda_item|

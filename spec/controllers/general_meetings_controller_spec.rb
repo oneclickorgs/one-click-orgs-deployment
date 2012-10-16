@@ -116,7 +116,7 @@ describe GeneralMeetingsController do
   describe "GET edit" do
     let(:general_meeting){mock_model(GeneralMeeting)}
     let(:general_meetings){mock("general_meetings association", :find => general_meeting)}
-    let(:members){mock("members association")}
+    let(:members){mock("members association", :map => nil)}
 
     before(:each) do
       @organisation.stub(:general_meetings).and_return(general_meetings)

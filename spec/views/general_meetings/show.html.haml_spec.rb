@@ -9,14 +9,28 @@ describe 'general_meetings/show' do
       :participants => [
         mock_model(Member, :name => "John Smith"),
         mock_model(Member, :name => "Sally Baker")
-      ]
+      ],
+      :agenda_items => [
+        mock_model(AgendaItem,
+          :title => "Any Other Business",
+          :minutes => "Thanks to John Smith for providing the refreshments."
+        )
+      ],
+      :happened_on => 1.week.ago,
+      :minuted? => true
     )}
 
     before(:each) do
       assign(:general_meeting, general_meeting)
     end
 
-    it "renders the minutes" do
+    it "renders the minutes for each agenda item" do
+      render
+      rendered.should have_content("Any Other Business")
+      rendered.should have_content("Thanks to John Smith for providing the refreshments.")
+    end
+
+    it "renders the general minutes" do
       render
       rendered.should have_content("We discussed things.")
     end

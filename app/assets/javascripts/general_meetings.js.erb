@@ -1,0 +1,150 @@
+OneClickOrgs.renumberChildFields = function(containers)
+{
+  // Look for inputs with a name containing a Rails array parameter
+  // (e.g. '[34]') and renumber sequentially.
+  //
+  // TODO: Expand to deal with 'select' and 'textarea' elements.
+
+  var regexp = /\[(\d+)\]/;
+
+  $(containers).each(function(index, container)
+  {
+    container = $(container);
+    container.find('input').each(function(inputIndex, inputElement)
+    {
+      if ( regexp.test($(inputElement).attr('name')) ) {
+        var existingId = $(inputElement).attr('name').match(regexp)[1];
+        $(inputElement).attr('name', $(inputElement).attr('name').replace('[' + existingId + ']', '[' + index.toString() + ']'));
+        $(inputElement).attr('id', $(inputElement).attr('id').replace('_' + existingId + '_', '_' + index.toString() + '_'));
+      }
+    });
+  });
+};
+
+$(document).ready(function () {
+  $(document).on('click', 'div.participants ul a.delete', function(event)
+  {
+    $(this).closest('li').remove();
+    event.preventDefault();
+  });
+
+  $('ul.participants.autocomplete').each(function(participantsList)
+  {
+    // Figure out the name of the form object (e.g. 'general_meeting'
+    // or 'minute') so we can use it later.
+    var formObjectRegexp = /(.*?)_participant_ids_\d+/;
+    var sampleInputId = $(this).find('input').first().attr('id');
+    var formObjectName = sampleInputId.match(formObjectRegexp)[1];
+
+    // Create a text input and label using a unique ID.
+
+    var autocompleteId = "participants" + (new Date().getTime()).toString();
+
+    var autocompleteField = $('<input>');
+    autocompleteField.attr('id', autocompleteId);
+
+    var autocompleteLabel = $('<label>Add member</label>');
+    autocompleteLabel.attr('for', autocompleteId);
+
+    // This list will be populated with the chosen participants.
+    var autoParticipantsList = $('<ul>');
+
+    $(this).before(autocompleteLabel)
+      .before(autocompleteField)
+      .before(autoParticipantsList);
+
+    autocompleteField.autocomplete({
+      // The view is responsible for populating this variable.
+      // TODO: Generalise this responsibility away from individual views.
+      source: OneClickOrgs.members,
+      select: function(event, ui)
+      {
+        var item = ui.item;
+
+        var newFieldName = formObjectName + '[participant_ids][' + item.id + ']';
+
+        // Don't add member if they're already in the participant list.
+        var existingInputs = autoParticipantsList.find('input[name="' + newFieldName + '"]');
+        if (existingInputs.length) {
+          existingInputs.closest('li').effect('highlight');
+          autocompleteField.val(null);
+          return false;
+        }
+
+        var li = $('<li>');
+        li.text(item.value);
+
+        // Build a hidden input analogous to the checkbox the user would have checked
+        // if they were using the non-JavaScript version of the UI.
+        var hiddenInput = $('<input type="hidden" value="1">');
+        hiddenInput.attr('name', newFieldName);
+        li.append(hiddenInput);
+
+        // Build a link for the user to delete this participant if they added it by
+        // mistake.
+        var deleteLink = $('<a href="#" class="delete" title="Remove"><img src="<%= image_path('delete.png') %>" alt="Remove"></a>');
+        li.append(deleteLink);
+
+        autoParticipantsList.append(li);
+
+        // Clear the autocomplete field so the user is ready to
+        // search for the next participant.
+        autocompleteField.val(null);
+
+        return false;
+      }
+    });
+
+    // As well as not showing the checkboxes to the user,
+    // we also want to make sure they aren't submitted with the form.
+    $(this).find('input').attr('disabled', 'disabled');
+    $(this).hide();
+  });
+
+  $(document).on('click', 'ol.agenda_items a.delete', function(event)
+  {
+    var parent = $(this).closest('ol');
+    $(this).closest('li').remove();
+    OneClickOrgs.renumberChildFields(parent.children('li'));
+    event.preventDefault();
+  });
+
+  $(document).on('click', 'ol.agenda_items a.up', function(event)
+  {
+    var thisLi = $(this).closest('li');
+    var prevLi = thisLi.prev('li');
+    if (prevLi.length) {
+      thisLi.detach();
+      prevLi.before(thisLi);
+    }
+    OneClickOrgs.renumberChildFields($(this).closest('ol').children('li'));
+    event.preventDefault();
+  });
+
+  $(document).on('click', 'ol.agenda_items a.down', function(event)
+  {
+    var thisLi = $(this).closest('li');
+    var nextLi = thisLi.next('li');
+    if (nextLi.length) {
+      thisLi.detach();
+      nextLi.after(thisLi);
+    }
+    OneClickOrgs.renumberChildFields($(this).closest('ol').children('li'));
+    event.preventDefault();
+  });
+
+  $('#add_agenda_item').click(function(event)
+  {
+    var association = $(this).data('association');
+    var container = $('#' + $(this).data('container'));
+    var content = $('.' + association + '_fields_template').html();
+    var regexp = new RegExp('new_' + association, 'g');
+    var newId = new Date().getTime();
+
+    container.append(content.replace(regexp, newId));
+
+    OneClickOrgs.renumberChildFields(container.children('li'));
+
+    event.preventDefault();
+  });
+});
