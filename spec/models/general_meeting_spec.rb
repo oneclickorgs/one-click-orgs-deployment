@@ -111,4 +111,35 @@ describe GeneralMeeting do
     end
   end
 
+  describe "agenda items" do
+    context "when building a new GeneralMeeting" do
+      it "builds defaults" do
+        meeting = GeneralMeeting.new
+        meeting.agenda_items.map(&:title).should eq [
+          "Apologies for Absence",
+          "Minutes of Previous Meeting",
+          "Any Other Business",
+          "Time and date of next meeting"
+        ]
+      end
+    end
+  end
+
+  it "accepts multi-parameter attributes for start_time via start_time_proxy" do
+    begin
+      meeting = GeneralMeeting.new
+      # Multi-parameter assignment expects date components, even if they are not used
+      meeting.attributes = {
+        'start_time_proxy(1i)' => '2012',
+        'start_time_proxy(2i)' => '10',
+        'start_time_proxy(3i)' => '14',
+        'start_time_proxy(4i)' => '16',
+        'start_time_proxy(5i)' => '45'
+      }
+      meeting.start_time.should == '16:45'
+    rescue ActiveRecord::MultiparameterAssignmentErrors => mae
+      raise mae.errors.map{|e| "#{e.attribute}: #{e.exception}"}.inspect + mae.backtrace.inspect
+    end
+  end
+
 end

@@ -1,7 +1,7 @@
 %h2 Proceedings of the Board
 .section
   = link_button("Convene a meeting of the Board", :url => new_board_meeting_path)
-  = link_button("Create a new Resolution of the Board", :url => new_board_resolution_path)
+  = link_button("Create a new Board Resolution", :url => new_board_resolution_path)
   .clear
 
 - if @upcoming_meetings.present?

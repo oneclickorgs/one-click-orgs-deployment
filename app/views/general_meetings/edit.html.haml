@@ -1,5 +1,18 @@
+- content_for(:head) do
+  = javascript_tag("OneClickOrgs.members = #{@members_for_autocomplete.to_json}")
+  = javascript_include_tag :general_meetings
+
 %h2 Enter minutes
 = form_for(@general_meeting) do |general_meeting_form|
+  .section.participants
+    %h3 Members in attendance
+    %ul.participants.autocomplete
+      - @members.each do |member|
+        = content_tag_for(:li, member) do
+          %p.checkbox
+            = check_box_tag "general_meeting[participant_ids][#{member.id}]"
+            = label_tag "general_meeting_participant_ids_#{member.id}", member.name
+
   - unless @general_meeting.resolutions.empty?
     %h3 Resolutions
     %ul.resolutions
@@ -10,12 +23,12 @@
           = resolution_fields.check_box :passed
           = resolution_fields.label :passed, "Resolution was passed"
   %h3 Minutes
-  %p= general_meeting_form.text_area :minutes
-
-  %h3 Members in attendance
-  - @members.each do |member|
-    %p.checkbox
-      = check_box_tag "general_meeting[participant_ids][#{member.id}]"
-      = label_tag "general_meeting_participant_ids_#{member.id}", member.name
+  = general_meeting_form.fields_for(:agenda_items) do |agenda_item_fields|
+    %p
+      = agenda_item_fields.label :minutes, agenda_item_fields.object.title
+      = agenda_item_fields.text_area :minutes
+  %p
+    = general_meeting_form.label :minutes, "Other minutes"
+    = general_meeting_form.text_area :minutes
 
   %p= general_meeting_form.submit "Save these minutes"

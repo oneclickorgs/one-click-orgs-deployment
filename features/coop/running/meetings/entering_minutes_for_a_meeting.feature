@@ -7,13 +7,15 @@ Feature: Entering minutes for a meeting
     Given there is a co-op
     And I am the Secretary of the co-op
 
+  @javascript
   Scenario: Secretary enters minutes for a past meeting already in the system
     Given there has been a past meeting
     And no minutes for the past meeting have been entered yet
     When I go to the Meetings page
     Then I should see "Minutes have not been entered for this meeting yet" for the past meeting
     When I follow "Enter minutes for this meeting" for the past meeting
-    And I enter minutes for the meeting
+    Then I should see a field for each of the standard agenda items
+    When I enter minutes for the meeting
     And I choose the Members who were in attendance
     And I press "Save these minutes"
     Then I should be on the Meetings page
@@ -21,6 +23,7 @@ Feature: Entering minutes for a meeting
     Then I should see the minutes I entered
     And I should see the participants I chose
 
+  @javascript
   Scenario: Secretary enters minutes for a past meeting the system doesn't know about
     When I go to the Meetings page
     And I follow "Enter minutes for a meeting not shown here"

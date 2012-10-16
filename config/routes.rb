@@ -170,6 +170,7 @@ OneClickOrgs::Application.routes.draw do
     resources :comments
   end
   resources :general_meetings
+  resources :annual_general_meetings
   resources :board_meetings
   resources :minutes
 

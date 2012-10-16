@@ -50,12 +50,15 @@ describe GeneralMeetingsController do
   end
 
   describe "POST create" do
+    let(:general_meetings) {mock("general meetings")}
+
     before(:each) do
       @general_meeting = mock_model(GeneralMeeting)
       @general_meeting_params = {'venue' => 'Meeting Hall'}
 
       @general_meeting.stub(:save!)
-      @organisation.stub(:build_general_meeting_or_annual_general_meeting).and_return(@general_meeting)
+      @organisation.stub(:general_meetings).and_return(general_meetings)
+      general_meetings.stub(:build).and_return(@general_meeting)
     end
 
     def post_create
@@ -63,7 +66,7 @@ describe GeneralMeetingsController do
     end
 
     it "builds a new General Meeting or Annual General Meeting" do
-      @coop.should_receive(:build_general_meeting_or_annual_general_meeting).with(@general_meeting_params).and_return(@general_meeting)
+      general_meetings.should_receive(:build).with(@general_meeting_params).and_return(@general_meeting)
       post_create
     end
 
@@ -113,7 +116,7 @@ describe GeneralMeetingsController do
   describe "GET edit" do
     let(:general_meeting){mock_model(GeneralMeeting)}
     let(:general_meetings){mock("general_meetings association", :find => general_meeting)}
-    let(:members){mock("members association")}
+    let(:members){mock("members association", :map => nil)}
 
     before(:each) do
       @organisation.stub(:general_meetings).and_return(general_meetings)

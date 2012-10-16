@@ -11,7 +11,7 @@ class GeneralMeetingsController < ApplicationController
   end
 
   def create
-    @general_meeting = co.build_general_meeting_or_annual_general_meeting(params[:general_meeting])
+    @general_meeting = co.general_meetings.build(params[:general_meeting])
     @general_meeting.save!
     redirect_to meetings_path
   end
@@ -23,6 +23,7 @@ class GeneralMeetingsController < ApplicationController
   def edit
     @general_meeting = co.general_meetings.find(params[:id])
     @members = co.members
+    @members_for_autocomplete = @members.map{|m| {:value => m.name, :id => m.id} }
   end
 
   def update

@@ -5,6 +5,8 @@ def select_meeting_date
 
   if page.has_css?('#general_meeting_happened_on_datepicker')
     page.execute_script(%Q{$('#general_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
+  elsif page.has_css?('#annual_general_meeting_happened_on_datepicker')
+    page.execute_script(%Q{$('#annual_general_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
   elsif page.has_css?('#board_meeting_happened_on_datepicker')
     page.execute_script(%Q{$('#board_meeting_happened_on_datepicker').datepicker('setDate', new Date(#{meeting_date.year}, #{meeting_date.month}, #{meeting_date.day}));})
   else
@@ -20,9 +22,21 @@ def fill_in_start_time
   end
 end
 
+def select_start_time
+  if page.has_css?('#general_meeting_start_time_proxy_4i')
+    select("16", :from => 'general_meeting[start_time_proxy(4i)]')
+    select("00", :from => 'general_meeting[start_time_proxy(5i)]')
+  else
+    select("16", :from => 'annual_general_meeting[start_time_proxy(4i)]')
+    select("00", :from => 'annual_general_meeting[start_time_proxy(5i)]')
+  end
+end
+
 def fill_in_venue
   if page.has_field?('general_meeting[venue]')
     fill_in('general_meeting[venue]', :with => "The Meeting Hall")
+  elsif page.has_field?('annual_general_meeting[venue]')
+    fill_in('annual_general_meeting[venue]', :with => "The Meeting Hall")
   else
     fill_in('board_meeting[venue]', :with => "The Meeting Hall")
   end
@@ -31,6 +45,8 @@ end
 def fill_in_agenda
   if page.has_field?('general_meeting[agenda]')
     fill_in('general_meeting[agenda]', :with => "Discuss things. AOB.")
+  elsif page.has_field?('annual_general_meeting[agenda]')
+    fill_in('annual_general_meeting[agenda]', :with => "Discuss things. AOB.")
   else
     fill_in('board_meeting[agenda]', :with => "Discuss things. AOB.")
   end
@@ -41,10 +57,15 @@ def check_certification
 end
 
 def enter_minutes
-  if page.has_field?('general_meeting[minutes]')
-    fill_in('general_meeting[minutes]', :with => "We discussed things.")
+  if page.has_field?('Apologies for Absence')
+    fill_in("Apologies for Absence", :with => "Bob Smith")
+    fill_in("Minutes of Previous Meeting", :with => "The minutes of the previous meeting were accepted.")
+    fill_in("Any Other Business", :with => "Jenny Jenkins thanked Geoff Newell for providing the refreshments.")
+    fill_in("Time and date of next meeting", :with => "31 October at 6pm")
+    @minute_type = :agenda_items
   elsif page.has_field?('minute[minutes]')
     fill_in('minute[minutes]', :with => "We discussed things.")
+    @minute_type = :minutes
   else
     raise "Could not find minutes field."
   end
@@ -98,6 +119,10 @@ When /^I enter a start time for the meeting$/ do
   fill_in_start_time
 end
 
+When /^I choose a start time for the meeting$/ do
+  select_start_time
+end
+
 When /^I enter a venue for the meeting$/ do
   fill_in_venue
 end
@@ -125,18 +150,16 @@ end
 When /^I convene a General Meeting$/ do
   visit(new_general_meeting_path)
   select_meeting_date
-  fill_in_start_time
+  select_start_time
   fill_in_venue
-  fill_in_agenda
   check_certification
   click_button("Confirm and convene the meeting")
 end
 
 When /^I enter details for the meeting$/ do
   select_meeting_date
-  fill_in_start_time
+  select_start_time
   fill_in_venue
-  fill_in_agenda
   check_certification
 end
 
@@ -150,13 +173,10 @@ When /^I convene the meeting$/ do
 end
 
 When /^I begin to convene an AGM$/ do
-  visit(new_general_meeting_path)
+  visit(new_annual_general_meeting_path)
   select_meeting_date
-  fill_in_start_time
+  select_start_time
   fill_in_venue
-  fill_in_agenda
-  check_certification
-  check('general_meeting[annual_general_meeting]')
 end
 
 When /^I enter the date of the meeting$/ do
@@ -186,6 +206,26 @@ end
 
 When /^I enter other minutes for the meeting$/ do
   enter_minutes
+end
+
+When /^I delete the agenda item "(.*?)"$/ do |title|
+  page.first("input[value='#{title}'] ~ a.delete").click
+end
+
+When /^I add a new agenda item "(.*?)"$/ do |title|
+  click_link('Add')
+  page.first("ol.agenda_items li:last-child input[name*='title']").set(title)
+end
+
+When /^I move the last agenda item up one position$/ do
+  page.first("ol.agenda_items li:last-child a.up").click
+end
+
+When /^I view the details for the new meeting$/ do
+  @meeting ||= GeneralMeeting.last
+  within("#general_meeting_#{@meeting.id}") do
+    click_link("View agenda and details")
+  end
 end
 
 Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
@@ -300,4 +340,23 @@ Then /^I should see the resolutions marked as passed$/ do
   @resolutions.each do |resolution|
     page.should have_content("#{resolution.title} was accepted")
   end
+end
+
+Then /^I should see an agenda item "(.*?)"$/ do |agenda_item|
+  page.should have_css("input[value='#{agenda_item}']")
+end
+
+Then /^I should see the agenda item "(.*?)" in position (\d+)$/ do |title, position|
+  if page.has_css?("#general_meeting_agenda_items_attributes_#{position.to_i - 1}_title")
+    page.should have_field("general_meeting_agenda_items_attributes_#{position.to_i - 1}_title", :with => title)
+  else
+    page.should have_css("ol.agenda_items li:nth-child(#{position})", :text => title)
+  end
+end
+
+Then(/^I should see a field for each of the standard agenda items$/) do
+  page.should have_field("Apologies for Absence")
+  page.should have_field("Minutes of Previous Meeting")
+  page.should have_field("Any Other Business")
+  page.should have_field("Time and date of next meeting")
 end

@@ -44,6 +44,21 @@ describe Meeting do
 
       meeting.creator.should == creator
     end
+
+    it "has many agenda items" do
+      meeting = Meeting.make!
+      agenda_item = AgendaItem.make!
+
+      expect {meeting.agenda_items << agenda_item}.to_not raise_error
+
+      meeting.agenda_items(true).should include(agenda_item)
+    end
+  end
+
+  it "accepts nested attributes for agenda items" do
+    meeting = Meeting.make
+    expect {meeting.agenda_items_attributes = [{:title => 'Any Other Business'}]}.to_not raise_error
+    meeting.agenda_items.map(&:title).should == ["Any Other Business"]
   end
 
   describe "scopes" do

@@ -1,3 +1,7 @@
+// Specify jQuery UI theme CSS:
+
+//= require jquery-ui/cooperatives_uk/jquery-ui-1.9.0.custom
+
 @import 'defaults'
 
 // Define custom variables here
@@ -5,20 +9,59 @@
 $base-font-size: 90%
 
 $cooperatives_uk_red: rgb(238, 52, 37)
+$cooperatives_uk_dark_grey: rgb(49, 49, 49)
 
 $body-background: #cccccc
 $body-font: Arial,sans-serif
-$heading-font: Verdana,Arial,sans-serif
+$heading-font: Verdana,Tahoma,"DejaVu Sans",sans-serif
 $text: #333333
 $header-text: black
 $page-title: #5e5e5e
 $link: #333333
 $header-highlight: #b70304
-$submit-button-background: $cooperatives_uk_red
+$submit-button-background: $cooperatives_uk_dark_grey
 $submit-button-background-highlight: adjust-color($submit-button-background, $lightness: -10%)
+$prerelease_bar: $cooperatives_uk_dark_grey
 
 
 @import '../one_click'
 
+#prerelease_bar
+  :margin-bottom 10px
 #container
+  :padding 0
   :box-shadow 0 0 10px #000000
+  :margin-bottom 20px
+.control_bar
+  :padding (6px + 12px) 12px 6px 0
+#hd
+  :border-bottom none
+  :padding 12px 12px 0
+#nav
+  :margin 12px 0
+  :padding 0
+  :display table
+  :width 100%
+  :border-collapse separate
+  :border-spacing 1px
+  li
+    :display table-cell
+    :height 23px
+    :line-height 23px
+    :margin 0
+    :padding 0
+    :border 1px solid #E7E8E9
+    a
+      :background-image url(image-path('themes/cooperatives_uk/menu_items_background.jpg'))
+      :display block
+      :padding 0 12px
+      :color #ffffff
+      :font-weight bold
+      :text-transform lowercase
+      &:hover
+        :background-image url(image-path('themes/cooperatives_uk/menu_items_background_over.jpg'))
+        :text-decoration none
+#bd
+  :padding 0 12px
+h2
+  :font-size 1.3em

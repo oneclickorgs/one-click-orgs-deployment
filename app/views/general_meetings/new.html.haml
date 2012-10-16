@@ -5,23 +5,34 @@
 
 .section
   = form_for(@general_meeting) do |general_meeting_form|
+
+    %h3 Date & Time of Meeting
+
     %p= general_meeting_form.label :happened_on, "Date of meeting"
     %p.date_select= general_meeting_form.date_select :happened_on, {}, :class => 'inline datepicker'
-    %p= general_meeting_form.label :start_time
-    %p= general_meeting_form.text_field :start_time
-    %p= general_meeting_form.label :venue
+    %p= general_meeting_form.label :start_time_proxy, "Start time"
+    %p= general_meeting_form.time_select(:start_time_proxy, {:minute_step => 15}, {:class => 'inline'})
+
+    %h3 Venue
+
     %p= general_meeting_form.text_area :venue
 
-    %p Resolutions to be considered at the meeting:
+    %h3 Agenda
+
+    %ol#agenda_items.agenda_items
+      = general_meeting_form.fields_for(:agenda_items) do |agenda_item_fields|
+        = render(:partial => 'agenda_item', :locals => {:agenda_item_fields => agenda_item_fields})
+    %p
+      %a{:id => 'add_agenda_item', 'data-association' => 'agenda_items', 'data-container' => 'agenda_items', :href => '#'} Add
+    = new_child_fields_template(general_meeting_form, :agenda_items)
+
+    %h3 Resolutions to be considered at the meeting:
 
     .resolutions
       = general_meeting_form.fields_for :existing_resolutions, @draft_resolutions do |resolution_fields|
         = content_tag_for(:p, resolution_fields.object) do
           = resolution_fields.check_box :attached
           = resolution_fields.label :attached, resolution_fields.object.title
-
-    %p= general_meeting_form.label :agenda, "Other agenda items"
-    %p= general_meeting_form.text_area :agenda
 
     %p
       = general_meeting_form.check_box :annual_general_meeting

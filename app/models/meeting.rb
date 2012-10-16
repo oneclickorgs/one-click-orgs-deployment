@@ -1,5 +1,5 @@
 class Meeting < ActiveRecord::Base
-  attr_accessible :happened_on, :participant_ids, :minutes
+  attr_accessible :happened_on, :participant_ids, :minutes, :agenda_items_attributes
 
   attr_reader :participant_ids
 
@@ -13,6 +13,10 @@ class Meeting < ActiveRecord::Base
   belongs_to :creator, :class_name => 'Member', :foreign_key => 'creator_id'
 
   has_many :comments, :as => :commentable
+
+  has_many :agenda_items
+
+  accepts_nested_attributes_for :agenda_items, :reject_if => :all_blank
 
   # 'Upcoming' scope includes meetings happening today.
   scope :upcoming, lambda{where(['happened_on >= ?', Time.now.utc.to_date])}
@@ -55,5 +59,15 @@ class Meeting < ActiveRecord::Base
 
   def members_to_notify
     organisation.members
+  end
+
+  # A Meeting is minuted if all of its agenda items have been minuted,
+  # or, if it has no agenda items, if the 'minutes' attribute is present.
+  def minuted?
+    if agenda_items.present?
+      agenda_items.inject(true){|memo, agenda_item| memo && agenda_item.minutes.present?}
+    else
+      minutes.present?
+    end
   end
 end

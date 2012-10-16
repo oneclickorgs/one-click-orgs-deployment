@@ -1,0 +1,8 @@
+%li
+  = agenda_item_fields.text_field(:title, :class => 'inline')
+  %a{:class => 'delete', :title => "Delete", :href => '#'}
+    = image_tag('delete.png', :alt => "Delete")
+  %a{:class => 'up', :title => "Move up", :href => '#'}
+    = image_tag('arrow_up.png', :alt => "Move up")
+  %a{:class => 'down', :title => "Move down", :href => '#'}
+    = image_tag('arrow_down.png', :alt => "Move down")

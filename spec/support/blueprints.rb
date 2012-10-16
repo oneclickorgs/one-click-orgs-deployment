@@ -239,3 +239,6 @@ ShareTransaction.blueprint do
   to_account
   amount { 1 }
 end
+
+AgendaItem.blueprint do
+end
