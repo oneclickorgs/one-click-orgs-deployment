@@ -6,7 +6,8 @@ describe 'general_meetings/edit' do
     :resolutions => resolutions,
     :passed_resolutions_attributes= => nil,
     :agenda_items => agenda_items,
-    :agenda_items_attributes= => nil
+    :agenda_items_attributes= => nil,
+    :participant_ids => []
   )}
   let(:members) {[
     mock_model(Member, :id => 1, :name => "John Smith"),

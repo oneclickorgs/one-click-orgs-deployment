@@ -1,8 +1,6 @@
 class Meeting < ActiveRecord::Base
   attr_accessible :happened_on, :participant_ids, :minutes, :agenda_items_attributes
 
-  attr_reader :participant_ids
-
   belongs_to :organisation
 
   validates_presence_of :organisation
@@ -34,9 +32,13 @@ class Meeting < ActiveRecord::Base
     @participant_ids = participant_ids
   end
 
+  def participant_ids
+    @participant_ids ||= participants.map(&:id)
+  end
+
   before_save :build_participants_from_participant_ids
   def build_participants_from_participant_ids
-    return unless participant_ids
+    return unless participant_ids && participant_ids.respond_to?(:keys)
 
     unless organisation
       raise RuntimeError, "Tried to save participant_ids without setting organisation"
