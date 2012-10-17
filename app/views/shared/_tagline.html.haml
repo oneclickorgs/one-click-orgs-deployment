@@ -1,0 +1,8 @@
+- if Setting[:theme] == 'cooperatives_uk'
+  %p
+    powered by
+    = link_to(image_tag('themes/cooperatives_uk/cuk-logo-24.png', :alt => "Co-operatives UK logo", :style => 'vertical-align: sub;'), 'http://www.uk.coop/')
+-else
+  %p
+    powered by
+    = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
