@@ -12,7 +12,7 @@
       - @members.each do |member|
         = content_tag_for(:li, member) do
           %p.checkbox
-            = check_box_tag "minute[participant_ids][#{member.id}]"
+            = check_box_tag "minute[participant_ids][#{member.id}]", '1', @minute.participant_ids.include?(member.id)
             = label_tag "minute_participant_ids_#{member.id}", member.name
 
   %p

@@ -27,9 +27,7 @@
         %div#hd
           %h1.header
             = link_to(@current_organisation.name, root_path)
-          %p
-            powered by
-            = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
+          = render(:partial => 'shared/tagline')
         = render :partial => 'shared/main_menu'
         - if flash[:notice]
           %div#notice

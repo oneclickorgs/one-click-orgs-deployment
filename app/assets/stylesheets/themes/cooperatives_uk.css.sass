@@ -10,6 +10,8 @@ $base-font-size: 90%
 
 $cooperatives_uk_red: #F5001D
 $cooperatives_uk_dark_grey: rgb(49, 49, 49)
+$cooperatives_uk_olive: #cccc99
+$cooperatives_uk_dark_olive: #666633
 
 $body-background: #cccccc
 $body-font: Arial,sans-serif
@@ -18,8 +20,11 @@ $text: #333333
 $header-text: black
 $page-title: #5e5e5e
 $link: #333333
+$section-background: white
 $header-highlight: #b70304
-$submit-button-background: $cooperatives_uk_dark_grey
+$button-background: $cooperatives_uk_olive
+$button-background-highlight: adjust-color($button-background, $lightness: -10%)
+$submit-button-background: $cooperatives_uk_dark_olive
 $submit-button-background-highlight: adjust-color($submit-button-background, $lightness: -10%)
 $prerelease_bar: $cooperatives_uk_red
 
@@ -64,4 +69,6 @@ $prerelease_bar: $cooperatives_uk_red
 #bd
   :padding 0 12px
 h2
-  :font-size 1.3em
+  :font-size 1.6em
+h3
+  :font-size 1.2em

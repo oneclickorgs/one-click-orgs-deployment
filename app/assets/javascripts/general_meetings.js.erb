@@ -1,3 +1,5 @@
+OneClickOrgs.railsArrayParameterIndexRegexp = /\[(\d+)\]/;
+
 OneClickOrgs.renumberChildFields = function(containers)
 {
   // Look for inputs with a name containing a Rails array parameter
@@ -5,7 +7,7 @@ OneClickOrgs.renumberChildFields = function(containers)
   //
   // TODO: Expand to deal with 'select' and 'textarea' elements.
 
-  var regexp = /\[(\d+)\]/;
+  var regexp = OneClickOrgs.railsArrayParameterIndexRegexp;
 
   $(containers).each(function(index, container)
   {
@@ -21,7 +23,39 @@ OneClickOrgs.renumberChildFields = function(containers)
   });
 };
 
+
 $(document).ready(function () {
+
+  function addParticipant(ul, formObjectName, memberId, memberName)
+  {
+    var newFieldName = formObjectName + '[participant_ids][' + memberId + ']';
+
+    // Don't add member if they're already in the participant list.
+    var existingInputs = ul.find('input[name="' + newFieldName + '"]');
+    if (existingInputs.length) {
+      existingInputs.closest('li').effect('highlight');
+      return false;
+    }
+
+    var li = $('<li>');
+    li.text(memberName);
+
+    // Build a hidden input analogous to the checkbox the user would have checked
+    // if they were using the non-JavaScript version of the UI.
+    var hiddenInput = $('<input type="hidden" value="1">');
+    hiddenInput.attr('name', newFieldName);
+    li.append(hiddenInput);
+
+    // Build a link for the user to delete this participant if they added it by
+    // mistake.
+    var deleteLink = $('<a href="#" class="delete" title="Remove"><img src="<%= image_path('delete.png') %>" alt="Remove"></a>');
+    li.append(deleteLink);
+
+    ul.append(li);
+
+    return false;
+  };
+
   $(document).on('click', 'div.participants ul a.delete', function(event)
   {
     $(this).closest('li').remove();
@@ -49,6 +83,15 @@ $(document).ready(function () {
     // This list will be populated with the chosen participants.
     var autoParticipantsList = $('<ul>');
 
+    // Pre-populate our new list with the members who are already
+    // checked as participants.
+    $(this).find('input:checked').each(function(index, checkbox)
+    {
+      var memberId = $(checkbox).attr('name').match(OneClickOrgs.railsArrayParameterIndexRegexp)[1];
+      var memberName = $(checkbox).siblings('label').text();
+      addParticipant(autoParticipantsList, formObjectName, memberId, memberName);
+    });
+
     $(this).before(autocompleteLabel)
       .before(autocompleteField)
       .before(autoParticipantsList);
@@ -61,37 +104,11 @@ $(document).ready(function () {
       {
         var item = ui.item;
 
-        var newFieldName = formObjectName + '[participant_ids][' + item.id + ']';
-
-        // Don't add member if they're already in the participant list.
-        var existingInputs = autoParticipantsList.find('input[name="' + newFieldName + '"]');
-        if (existingInputs.length) {
-          existingInputs.closest('li').effect('highlight');
-          autocompleteField.val(null);
-          return false;
-        }
-
-        var li = $('<li>');
-        li.text(item.value);
-
-        // Build a hidden input analogous to the checkbox the user would have checked
-        // if they were using the non-JavaScript version of the UI.
-        var hiddenInput = $('<input type="hidden" value="1">');
-        hiddenInput.attr('name', newFieldName);
-        li.append(hiddenInput);
-
-        // Build a link for the user to delete this participant if they added it by
-        // mistake.
-        var deleteLink = $('<a href="#" class="delete" title="Remove"><img src="<%= image_path('delete.png') %>" alt="Remove"></a>');
-        li.append(deleteLink);
-
-        autoParticipantsList.append(li);
-
         // Clear the autocomplete field so the user is ready to
         // search for the next participant.
         autocompleteField.val(null);
 
-        return false;
+        return addParticipant(autoParticipantsList, formObjectName, item.id, item.value);
       }
     });
 

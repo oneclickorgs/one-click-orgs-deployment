@@ -5,7 +5,8 @@ describe 'minutes/new' do
   let(:minute) {mock_model(Minute,
     :meeting_class => nil,
     :happened_on => nil,
-    :minutes => nil
+    :minutes => nil,
+    :participant_ids => []
   ).as_new_record}
   let(:meeting_class_options_for_select) {[
     ['General Meeting', 'GeneralMeeting'],

@@ -10,7 +10,7 @@ class Minute < OneClickOrgs::ModelWrapper
   delegate :organisation, :organisation=,
     :happened_on, :happened_on=,
     :minutes, :minutes=,
-    :participant_ids=, :to => :meeting
+    :participant_ids, :participant_ids=, :to => :meeting
 
   MEETING_CLASS_WHITE_LIST = ['Meeting', 'GeneralMeeting', 'AnnualGeneralMeeting', 'BoardMeeting']
 
