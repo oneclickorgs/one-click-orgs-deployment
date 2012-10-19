@@ -23,11 +23,11 @@ end
 Then /^I should see the dynamic constitution clauses$/ do
   page.should have_css('.dynamic', :text => @organisation.name)
   page.should have_css('.dynamic', :text => @organisation.objectives)
-  
+
   page.should have_css('.dynamic',
     :text => VotingPeriods.name_for_value(@organisation.constitution.voting_period)
   )
-  
+
   page.should have_css('.dynamic', :text =>
     @organisation.constitution.voting_system(:general).long_description
   )
