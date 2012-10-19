@@ -1,15 +1,15 @@
-Given /^I have started the founding vote$/ do
+Given(/^I have started the founding vote$/) do
   @organisation.found_association_proposals.make!(:proposer => @user)
   @organisation.propose!
 end
 
-Given /^the founding vote has been started$/ do
+Given(/^the founding vote has been started$/) do
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
   @organisation.found_association_proposals.make!(:proposer => founder)
   @organisation.propose!
 end
 
-Given /^another founding vote has been started$/ do
+Given(/^another founding vote has been started$/) do
   sleep(1)
   founder = @organisation.member_classes.where(:name => "Founder").first.members.first
   @organisation.found_association_proposals.make!(:proposer => founder, :title => "A second voting proposal.")
@@ -17,7 +17,7 @@ Given /^another founding vote has been started$/ do
   @organisation.propose!
 end
 
-Given /^everyone has voted (to support|against) the founding$/ do |vote|
+Given(/^everyone has voted (to support|against) the founding$/) do |vote|
   fap = @organisation.found_association_proposals.last
   verdict = (vote == "against") ? "against" : "for"
   @organisation.members.each do |member|
@@ -25,18 +25,18 @@ Given /^everyone has voted (to support|against) the founding$/ do |vote|
   end
 end
 
-Given /^a proposal has been made$/ do
+Given(/^a proposal has been made$/) do
   @organisation.proposals.make!(:proposer => @organisation.members.active.first)
 end
 
-Given /^a proposal "([^"]*)" has been made$/ do |proposal_title|
+Given(/^a proposal "([^"]*)" has been made$/) do |proposal_title|
   @organisation.proposals.make!(
     :title => proposal_title,
     :proposer => @organisation.members.active.first
   )
 end
 
-Given /^a proposal has been made to change the organisation name to "([^"]*)"$/ do |new_organisation_name|
+Given(/^a proposal has been made to change the organisation name to "([^"]*)"$/) do |new_organisation_name|
   @proposal = @organisation.change_text_proposals.make!(
     :title => "Change organisation name to '#{new_organisation_name}'",
     :parameters => {
@@ -47,7 +47,7 @@ Given /^a proposal has been made to change the organisation name to "([^"]*)"$/ 
   )
 end
 
-Given /^a proposal has been made to add a new member with name "([^"]*)" and email "([^"]*)"$/ do |name, email|
+Given(/^a proposal has been made to add a new member with name "([^"]*)" and email "([^"]*)"$/) do |name, email|
   first_name, last_name = name.split(' ')
   @proposal = @organisation.add_member_proposals.make!(
     :parameters => {
@@ -60,7 +60,7 @@ Given /^a proposal has been made to add a new member with name "([^"]*)" and ema
   )
 end
 
-Given /^a proposal has been made to eject the member "([^"]*)"$/ do |email|
+Given(/^a proposal has been made to eject the member "([^"]*)"$/) do |email|
   member = @organisation.members.active.find_by_email(email)
   @proposal = @organisation.eject_member_proposals.make!(
     :parameters => {
@@ -71,11 +71,11 @@ Given /^a proposal has been made to eject the member "([^"]*)"$/ do |email|
   )
 end
 
-Given /^the voting system for membership decisions is "([^"]*)"$/ do |voting_system|
+Given(/^the voting system for membership decisions is "([^"]*)"$/) do |voting_system|
   @organisation.constitution.change_voting_system('membership', voting_system)
 end
 
-Given /^one member voted against the founding$/ do
+Given(/^one member voted against the founding$/) do
   @fap ||= @organisation.found_association_proposals.last
 
   # Don't make our user vote against the founding
@@ -90,7 +90,7 @@ Given /^one member voted against the founding$/ do
   end
 end
 
-Given /^the founding vote still passed$/ do
+Given(/^the founding vote still passed$/) do
   members_in_favour = @organisation.members
   members_in_favour -= @members_against if @members_against
 
@@ -110,35 +110,35 @@ Given /^the founding vote still passed$/ do
   raise RuntimeError, "expected founding vote to pass" unless @fap.passed?
 end
 
-When /^the proposal closer runs$/ do
+When(/^the proposal closer runs$/) do
   Proposal.close_proposals
 end
 
-When /^enough people vote in support of the proposal$/ do
+When(/^enough people vote in support of the proposal$/) do
   @proposal ||= Proposal.last
   (@organisation.members.active - [@proposal.proposer]).each do |member|
     member.cast_vote(:for, @proposal)
   end
 end
 
-Then /^I should see a proposal "([^"]*)"$/ do |proposal_title|
+Then(/^I should see a proposal "([^"]*)"$/) do |proposal_title|
   page.should have_css('.open-proposals h4', :text => proposal_title)
 end
 
-Then /^I should see a proposal to add "([^"]*)" as a member$/ do |new_member_name|
+Then(/^I should see a proposal to add "([^"]*)" as a member$/) do |new_member_name|
   page.should have_css('.open-proposals h4', :text => "Add #{new_member_name} as a member of #{@organisation.name}")
 end
 
-Then /^I should see a proposal to eject "([^"]*)"$/ do |member_email|
+Then(/^I should see a proposal to eject "([^"]*)"$/) do |member_email|
   @member = @organisation.members.find_by_email(member_email)
   page.should have_css('.open-proposals h4', :text => "Eject #{@member.name} from #{@organisation.name}")
 end
 
-Then /^I should see a list of votes in progress$/ do
+Then(/^I should see a list of votes in progress$/) do
   page.should have_css('.open-proposals h4')
 end
 
-Then /^I should see the new proposal$/ do
+Then(/^I should see the new proposal$/) do
   @proposal ||= @organisation.proposals.last
   page.should have_content(@proposal.title)
 end

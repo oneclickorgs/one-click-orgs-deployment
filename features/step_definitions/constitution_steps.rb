@@ -1,4 +1,4 @@
-When /^I fill in the organisation name with "([^"]*)"$/ do |value|
+When(/^I fill in the organisation name with "([^"]*)"$/) do |value|
   if page.first('input#constitution_proposal_bundle_organisation_name')
     fill_in('constitution_proposal_bundle_organisation_name', :with => value)
   else
@@ -6,7 +6,7 @@ When /^I fill in the organisation name with "([^"]*)"$/ do |value|
   end
 end
 
-When /^I fill in the objectives with "([^"]*)"$/ do |value|
+When(/^I fill in the objectives with "([^"]*)"$/) do |value|
   if page.first('textarea#constitution_proposal_bundle_objectives')
     fill_in('constitution_proposal_bundle_objectives', :with => value)
   else
@@ -14,13 +14,13 @@ When /^I fill in the objectives with "([^"]*)"$/ do |value|
   end
 end
 
-When /^I choose "([^"]*)" for (.*) decisions$/ do |voting_system, decision_kind|
+When(/^I choose "([^"]*)" for (.*) decisions$/) do |voting_system, decision_kind|
   within(".#{decision_kind}_decisions") do
     choose(voting_system)
   end
 end
 
-Then /^I should see the dynamic constitution clauses$/ do
+Then(/^I should see the dynamic constitution clauses$/) do
   page.should have_css('.dynamic', :text => @organisation.name)
   page.should have_css('.dynamic', :text => @organisation.objectives)
 
@@ -39,18 +39,18 @@ Then /^I should see the dynamic constitution clauses$/ do
   )
 end
 
-Then /^I should see the draft constitution$/ do
+Then(/^I should see the draft constitution$/) do
   @organisation ||= Organisation.last
   page.should have_css('h2', :text => "View the draft constitution")
   step "I should see the dynamic constitution clauses"
 end
 
-Then /^I should see the constitution$/ do
+Then(/^I should see the constitution$/) do
   @organisation ||= Organisation.last
   page.should have_css('h2', :text => "Constitution")
   step "I should see the dynamic constitution clauses"
 end
 
-Then /^I should see a clause with "([^"]*)"$/ do |clause_text|
+Then(/^I should see a clause with "([^"]*)"$/) do |clause_text|
   page.should have_css('ul.constitution li', :text => Regexp.new(clause_text))
 end

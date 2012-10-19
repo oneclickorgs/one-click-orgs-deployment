@@ -71,37 +71,37 @@ def enter_minutes
   end
 end
 
-Given /^another director has recorded some minutes$/ do
+Given(/^another director has recorded some minutes$/) do
   @company ||= Company.last
   @meeting = @company.meetings.make!
 end
 
-Given /^another director has recorded some new minutes$/ do
+Given(/^another director has recorded some new minutes$/) do
   step "another director has recorded some minutes"
 end
 
-Given /^the notice period for General Meetings is "(.*?)" days$/ do |arg1|
+Given(/^the notice period for General Meetings is "(.*?)" days$/) do |arg1|
   @organisation.constitution.meeting_notice_period = 14
 end
 
-Given /^the meeting has no minutes yet$/ do
+Given(/^the meeting has no minutes yet$/) do
   @meeting ||= @organisation.meetings.last
   @meeting.update_attribute(:minutes, nil)
 end
 
-Given /^there were resolutions attached to the meeting$/ do
+Given(/^there were resolutions attached to the meeting$/) do
   @resolutions = @organisation.resolutions.make!(2)
   @meeting ||= @organisation.meetings.last
   @meeting.resolutions << @resolutions
 end
 
-When /^I choose the date of discussion$/ do
+When(/^I choose the date of discussion$/) do
   select('2011', :from => 'meeting[happened_on(1i)]')
   select('May', :from => 'meeting[happened_on(2i)]')
   select('1', :from => 'meeting[happened_on(3i)]')
 end
 
-When /^I check the first two directors' checkboxes$/ do
+When(/^I check the first two directors' checkboxes$/) do
   @company ||= Company.last
   directors = @company.members.where(
     :member_class_id => @company.member_classes.find_by_name('Director').id
@@ -111,43 +111,43 @@ When /^I check the first two directors' checkboxes$/ do
   end
 end
 
-When /^I choose a date for the meeting$/ do
+When(/^I choose a date for the meeting$/) do
   select_meeting_date
 end
 
-When /^I enter a start time for the meeting$/ do
+When(/^I enter a start time for the meeting$/) do
   fill_in_start_time
 end
 
-When /^I choose a start time for the meeting$/ do
+When(/^I choose a start time for the meeting$/) do
   select_start_time
 end
 
-When /^I enter a venue for the meeting$/ do
+When(/^I enter a venue for the meeting$/) do
   fill_in_venue
 end
 
-When /^I enter an agenda for the meeting$/ do
+When(/^I enter an agenda for the meeting$/) do
   fill_in_agenda
 end
 
-When /^I enter the business to be transacted during the meeting$/ do
+When(/^I enter the business to be transacted during the meeting$/) do
   fill_in_agenda
 end
 
-When /^I certify that the Board has decided to convene the meeting$/ do
+When(/^I certify that the Board has decided to convene the meeting$/) do
   check_certification
 end
 
-When /^I check the certification$/ do
+When(/^I check the certification$/) do
   pending # express the regexp above with the code you wish you had
 end
 
-When /^I enter "(.*?)" for the new notice period$/ do |arg1|
+When(/^I enter "(.*?)" for the new notice period$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
-When /^I convene a General Meeting$/ do
+When(/^I convene a General Meeting$/) do
   visit(new_general_meeting_path)
   select_meeting_date
   select_start_time
@@ -156,44 +156,44 @@ When /^I convene a General Meeting$/ do
   click_button("Confirm and convene the meeting")
 end
 
-When /^I enter details for the meeting$/ do
+When(/^I enter details for the meeting$/) do
   select_meeting_date
   select_start_time
   fill_in_venue
   check_certification
 end
 
-When /^I select one of the draft resolutions to be considered at the meeting$/ do
+When(/^I select one of the draft resolutions to be considered at the meeting$/) do
   draft_resolutions = @organisation.resolutions.draft
   check("general_meeting[existing_resolutions_attributes][0][attached]")
 end
 
-When /^I convene the meeting$/ do
+When(/^I convene the meeting$/) do
   click_button("Confirm and convene the meeting")
 end
 
-When /^I begin to convene an AGM$/ do
+When(/^I begin to convene an AGM$/) do
   visit(new_annual_general_meeting_path)
   select_meeting_date
   select_start_time
   fill_in_venue
 end
 
-When /^I enter the date of the meeting$/ do
+When(/^I enter the date of the meeting$/) do
   select('2011', :from => 'minute[happened_on(1i)]')
   select('May', :from => 'minute[happened_on(2i)]')
   select('1', :from => 'minute[happened_on(3i)]')
 end
 
-When /^I choose "(.*?)" from the list of meeting types$/ do |meeting_type|
+When(/^I choose "(.*?)" from the list of meeting types$/) do |meeting_type|
   select(meeting_type, :from => 'minute[meeting_class]')
 end
 
-When /^I enter minutes for the meeting$/ do
+When(/^I enter minutes for the meeting$/) do
   enter_minutes
 end
 
-When /^I enter that all the resolutions were passed$/ do
+When(/^I enter that all the resolutions were passed$/) do
   @meeting ||= @organisation.meetings.last
   @resolutions ||= @meeting.resolutions
 
@@ -204,31 +204,31 @@ When /^I enter that all the resolutions were passed$/ do
   end
 end
 
-When /^I enter other minutes for the meeting$/ do
+When(/^I enter other minutes for the meeting$/) do
   enter_minutes
 end
 
-When /^I delete the agenda item "(.*?)"$/ do |title|
+When(/^I delete the agenda item "(.*?)"$/) do |title|
   page.first("input[value='#{title}'] ~ a.delete").click
 end
 
-When /^I add a new agenda item "(.*?)"$/ do |title|
+When(/^I add a new agenda item "(.*?)"$/) do |title|
   click_link('Add')
   page.first("ol.agenda_items li:last-child input[name*='title']").set(title)
 end
 
-When /^I move the last agenda item up one position$/ do
+When(/^I move the last agenda item up one position$/) do
   page.first("ol.agenda_items li:last-child a.up").click
 end
 
-When /^I view the details for the new meeting$/ do
+When(/^I view the details for the new meeting$/) do
   @meeting ||= GeneralMeeting.last
   within("#general_meeting_#{@meeting.id}") do
     click_link("View agenda and details")
   end
 end
 
-Then /^the meeting should have the draft resolution I selected attached to its agenda$/ do
+Then(/^the meeting should have the draft resolution I selected attached to its agenda$/) do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.attached.last
   @meeting ||= @organisation.meetings.last
@@ -236,7 +236,7 @@ Then /^the meeting should have the draft resolution I selected attached to its a
   @meeting.resolutions.should include(@resolution)
 end
 
-Then /^I should see the meeting details I chose in the list of Upcoming (?:Board )Meetings$/ do
+Then(/^I should see the meeting details I chose in the list of Upcoming (?:Board )Meetings$/) do
   within('.upcoming_meetings') do
     page.should have_content("Board Meeting")
     page.should have_content("4pm")
@@ -244,7 +244,7 @@ Then /^I should see the meeting details I chose in the list of Upcoming (?:Board
   end
 end
 
-Then /^I should see a form for recording minutes$/ do
+Then(/^I should see a form for recording minutes$/) do
   form_selector = "form[action='/meetings']"
 
   page.should have_css(form_selector)
@@ -256,7 +256,7 @@ Then /^I should see a form for recording minutes$/ do
   page.should have_css("#{form_selector} textarea[name='meeting[minutes]']")
 end
 
-Then /^I should see a checkbox for each director$/ do
+Then(/^I should see a checkbox for each director$/) do
   @company ||= Company.last
   directors = @company.members.where(
     :member_class_id => @company.member_classes.find_by_name('Director').id
@@ -266,13 +266,13 @@ Then /^I should see a checkbox for each director$/ do
   end
 end
 
-Then /^I should see the minutes for "([^"]*)" in the timeline$/ do |minutes|
+Then(/^I should see the minutes for "([^"]*)" in the timeline$/) do |minutes|
   with_scope("the timeline") do
     page.should have_css("td", :text => minutes)
   end
 end
 
-Then /^I should see the first two directors' names as participants$/ do
+Then(/^I should see the first two directors' names as participants$/) do
   @company ||= Company.last
   directors = @company.members.where(
     :member_class_id => @company.member_classes.find_by_name('Director').id
@@ -282,7 +282,7 @@ Then /^I should see the first two directors' names as participants$/ do
   end
 end
 
-Then /^I should see the minutes$/ do
+Then(/^I should see the minutes$/) do
   @meeting ||= Meeting.last
 
   @meeting.participants.each do |participant|
@@ -294,7 +294,7 @@ Then /^I should see the minutes$/ do
   page.should have_content(@meeting.happened_on.to_s(:long_ordinal))
 end
 
-Then /^I should see the new meeting in the list of Upcoming Meetings$/ do
+Then(/^I should see the new meeting in the list of Upcoming Meetings$/) do
   @meeting ||= @organisation.meetings.last
 
   within('.upcoming_meetings') do
@@ -302,7 +302,7 @@ Then /^I should see the new meeting in the list of Upcoming Meetings$/ do
   end
 end
 
-Then /^I should see a list of the Directors who are due for retirement$/ do
+Then(/^I should see a list of the Directors who are due for retirement$/) do
   # As this is the first AGM, all of the current Directors must stand down.
   within('.directors') do
     @organisation.directors.each do |director|
@@ -311,20 +311,20 @@ Then /^I should see a list of the Directors who are due for retirement$/ do
   end
 end
 
-Then /^I should see the new AGM in the list of Upcoming Meetings$/ do
+Then(/^I should see the new AGM in the list of Upcoming Meetings$/) do
   within('.upcoming_meetings') do
     page.should have_content("Annual General Meeting")
   end
 end
 
-Then /^I should see the meeting in the list of Past Meetings$/ do
+Then(/^I should see the meeting in the list of Past Meetings$/) do
   @meeting ||= @organisation.meetings.last
   within('.past_meetings') do
     page.should have_css('#' + ActionController::RecordIdentifier.dom_id(@meeting))
   end
 end
 
-Then /^I should see a list of the resolutions attached to the meeting$/ do
+Then(/^I should see a list of the resolutions attached to the meeting$/) do
   @meeting ||= @organisation.meetings.last
   @resolutions ||= @meeting.resolutions
 
@@ -333,7 +333,7 @@ Then /^I should see a list of the resolutions attached to the meeting$/ do
   end
 end
 
-Then /^I should see the resolutions marked as passed$/ do
+Then(/^I should see the resolutions marked as passed$/) do
   @meeting ||= @organisation.meetings.last
   @resolutions ||= @meeting.resolutions
 
@@ -342,11 +342,11 @@ Then /^I should see the resolutions marked as passed$/ do
   end
 end
 
-Then /^I should see an agenda item "(.*?)"$/ do |agenda_item|
+Then(/^I should see an agenda item "(.*?)"$/) do |agenda_item|
   page.should have_css("input[value='#{agenda_item}']")
 end
 
-Then /^I should see the agenda item "(.*?)" in position (\d+)$/ do |title, position|
+Then(/^I should see the agenda item "(.*?)" in position (\d+)$/) do |title, position|
   if page.has_css?("#general_meeting_agenda_items_attributes_#{position.to_i - 1}_title")
     page.should have_field("general_meeting_agenda_items_attributes_#{position.to_i - 1}_title", :with => title)
   else

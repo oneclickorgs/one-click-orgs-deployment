@@ -1,6 +1,6 @@
 require 'faker'
 
-Given /^the requirements for registration have been fulfilled$/ do
+Given(/^the requirements for registration have been fulfilled$/) do
   @organisation.members.make!(3, :director)
   @organisation.members.make!(:secretary)
 
@@ -12,11 +12,11 @@ Given /^the requirements for registration have been fulfilled$/ do
   @organisation.save!
 end
 
-When /^I submit the registration for our co\-op$/ do
+When(/^I submit the registration for our co\-op$/) do
   visit('/')
   click_button("Submit Co-op registration")
 end
 
-Then /^I should see that our registration has been submitted$/ do
+Then(/^I should see that our registration has been submitted$/) do
   page.should have_content("has been submitted for registration")
 end

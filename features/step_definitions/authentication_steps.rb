@@ -5,18 +5,18 @@ def user_logs_in
   click_button("Login")
 end
 
-Given /^I have logged in$/ do
+Given(/^I have logged in$/) do
   user_logs_in
 end
 
-When /^I log in$/ do
+When(/^I log in$/) do
   user_logs_in
 end
 
-When /^I try to log in$/ do
+When(/^I try to log in$/) do
   user_logs_in
 end
 
-Then /^I should not be logged in$/ do
+Then(/^I should not be logged in$/) do
   page.should have_no_content("Logout")
 end
