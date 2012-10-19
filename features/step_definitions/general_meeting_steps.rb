@@ -1,3 +1,5 @@
+include ActionView::Helpers::JavaScriptHelper
+
 Given(/^there has been a past meeting$/) do
   @general_meeting = @organisation.general_meetings.make!(:past)
 end
@@ -22,7 +24,7 @@ When(/^I choose the Members who were in attendance$/) do
     members.each do |member|
       fill_in("Add member", :with => member.name)
       sleep(1)
-      page.execute_script("$('.ui-menu-item a:contains(\"#{member.name}\")').trigger('mouseenter').click();")
+      page.execute_script("$('.ui-menu-item a:contains(\"#{escape_javascript(member.name)}\")').trigger('mouseenter').click();")
     end
   end
 end
