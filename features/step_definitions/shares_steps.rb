@@ -5,6 +5,15 @@ Given /^members of the co\-op can hold more than one share$/ do
   @organisation.save!
 end
 
+Given /^there is a member who has failed to attain the minimum shareholding after 12 months$/ do
+  @organisation.minimum_shareholding = 3
+  @organisation.save!
+
+  @member = @organisation.members.make(:created_at => 13.months.ago, :inducted_at => 13.months.ago)
+  @member.find_or_build_share_account.balance = 0
+  @member.save!
+end
+
 When /^I enter a new share value$/ do
   fill_in("New share value", :with => "0.70")
 end
@@ -39,4 +48,8 @@ end
 
 Then /^I should see that a payment is required for my new shares$/ do
   page.should have_content("A payment of £5 is due.")
+end
+
+Then /^I should see a notification that the member has failed to attain the minimum shareholding$/ do
+  page.should have_content("#{@member.name} joined 13 months ago, but has failed to attain the minimum shareholding.")
 end

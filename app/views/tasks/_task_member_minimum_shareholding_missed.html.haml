@@ -1,0 +1,13 @@
+%p
+  - if task.subject == current_user
+    You
+  - else
+    = task.subject.name
+  joined
+  = months_ago_in_words(task.subject.inducted_at)
+  ago, but
+  - if task.subject == current_user
+    have
+  - else
+    has
+  failed to attain the minimum shareholding.

@@ -481,4 +481,20 @@ class Coop < Organisation
       100
     end
   end
+
+  def self.run_daily_job
+    # Find all Coop members who have not attained the minimum shareholding within 12 months
+    # of membership.
+    all.each do |coop|
+      if !coop.single_shareholding && coop.minimum_shareholding
+        old_members = coop.members.where(["inducted_at <= ?", 12.months.ago])
+        old_members.select{|m| m.find_or_build_share_account.balance < coop.minimum_shareholding}.each do |member|
+          unless member.tasks.current.where(:subject_id => member.id, :subject_type => 'Member', :action => :minimum_shareholding_missed).first
+            member.tasks.create(:subject => member, :action => :minimum_shareholding_missed)
+            coop.secretary.tasks.create(:subject => member, :action => :minimum_shareholding_missed)
+          end
+        end
+      end
+    end
+  end
 end

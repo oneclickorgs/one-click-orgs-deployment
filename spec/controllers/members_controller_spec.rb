@@ -65,6 +65,7 @@ describe MembersController do
       before(:each) do
         @organisation.stub(:members).and_return(members)
         controller.stub(:can?).and_return(false)
+        @user.stub_chain(:tasks, :members_related)
       end
 
       def get_index
