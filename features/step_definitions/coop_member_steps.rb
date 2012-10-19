@@ -59,6 +59,11 @@ Given /^there is a member named "(.*?)"$/ do |name|
   @member = @organisation.members.make!(:first_name => first_name, :last_name => last_name)
 end
 
+Given /^a member has resigned$/ do
+  @member = @organisation.members.make!
+  @member.resign!
+end
+
 When /^I enter a new founding member's details$/ do
   fill_in("Email address", :with => "bob@example.com")
   fill_in("First name", :with => "Bob")
@@ -104,4 +109,8 @@ Then /^I should see a list of founding members of the draft co\-op$/ do
   @organisation.founder_members.each do |founder_member|
     page.should have_content(founder_member.name)
   end
+end
+
+Then /^I should see a notification that the member has resigned$/ do
+  page.should have_content "#{@member.name} has resigned"
 end

@@ -23,8 +23,7 @@ Feature: Managing membership issues
     And I go to the Members page
     Then I should see a notification that the member has failed to attain the minimum shareholding
 
-  # @wip
-  # Scenario: Secretary handles a member who wishes to resign
-  #   Given context
-  #   When event
-  #   Then outcome
+  Scenario: Secretary handles a member who wishes to resign
+    Given a member has resigned
+    When I go to the Members page
+    Then I should see a notification that the member has resigned
