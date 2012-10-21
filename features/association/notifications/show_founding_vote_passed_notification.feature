@@ -2,7 +2,7 @@ Feature: Show 'founding vote passed' notification
   As a founding member
   I want to know that the founding vote has passed
   In order to know respond to it
-  
+
   Background:
     Given the application is set up
     And an association has been created
@@ -12,7 +12,7 @@ Feature: Show 'founding vote passed' notification
     And the subdomain is the organisation's subdomain
     And one member voted against the founding
     But the founding vote still passed
-    
+
   Scenario: Founding vote passed notification should list the appropriate members
     When I log in
     And I agree to abide by the constitution
