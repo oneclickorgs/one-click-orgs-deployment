@@ -1,4 +1,4 @@
-Feature:
+Feature: Show failed proposal notification
   As a founder
   I want to know when a founding vote fails
   In order to know respond to it

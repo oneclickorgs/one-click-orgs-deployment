@@ -1,4 +1,4 @@
-Feature:
+Feature: Show 'founding vote passed' notification
   As a founding member
   I want to know that the founding vote has passed
   In order to know respond to it
