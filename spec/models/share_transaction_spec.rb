@@ -31,4 +31,25 @@ describe ShareTransaction do
     end
   end
 
+  describe "daily job" do
+    let(:organisation) {Coop.make!}
+    let(:organisation_share_account) {ShareAccount.make!(:owner => organisation)}
+    let(:member_account) {ShareAccount.make!(:owner => Member.make!)}
+    let!(:secretary) {organisation.members.make!(:secretary)}
+
+    it "exists" do
+      expect {ShareTransaction.run_daily_job}.to_not raise_error
+    end
+
+    it "creates a task for each withdrawal that is due" do
+      due_withdrawal = ShareTransaction.make!(:to_account => organisation_share_account, :created_at => 4.months.ago)
+      recent_withdrawal = ShareTransaction.make!(:to_account => organisation_share_account, :created_at => 1.week.ago)
+      application = ShareTransaction.make!(:to_account => member_account, :created_at => 4.months.ago)
+
+      expect {
+        ShareTransaction.run_daily_job
+      }.to change{secretary.tasks.count}.by(1)
+    end
+  end
+
 end

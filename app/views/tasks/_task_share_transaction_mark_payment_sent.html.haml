@@ -1,0 +1,10 @@
+%p
+  = link_to(task.subject.from_account.owner.name, member_path(task.subject.from_account.owner))
+  applied to withdraw
+  = pluralize(task.subject.amount, 'share')
+  on
+  = task.subject.created_at.to_s(:long_ordinal) + '.'
+  The withdrawal is now due.
+%p
+  = form_for(task.subject, :url => approve_share_transaction_path(task.subject)) do |share_transaction_form|
+    = share_transaction_form.submit("Mark as paid, and cancel shares")

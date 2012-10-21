@@ -30,14 +30,6 @@
     = link_button("Apply for more shares", :url => new_share_application_path)
   %br.clear
 
-- if @share_payments_pending.present?
-  .section
-    %h3 Payments pending for issued shares
-
-- if @share_withdrawals_outstanding.present?
-  .section
-    %h3 Outstanding share withdrawals
-
 - if can?(:read, ShareAccount)
   .section
     %h3 Share ownership

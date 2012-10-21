@@ -26,4 +26,18 @@ class ShareTransaction < ActiveRecord::Base
       to_account.save!
     end
   end
+
+  def self.run_daily_job
+    # Find withdrawals more than three months old. We can tell a withdrawal from
+    # an application by the account the shares are moving to; in a withdrawal,
+    # the shares are withdrawn from a member's account, and placed into the
+    # organisation's account.
+    due_withdrawals = where(["created_at < ?", 3.months.ago]).select{|st| st.to_account.owner.is_a?(Organisation)}
+    due_withdrawals.each do |st|
+      secretary = st.to_account.owner.secretary
+      if secretary
+        secretary.tasks.create(:subject => st, :action => :mark_payment_sent)
+      end
+    end
+  end
 end
