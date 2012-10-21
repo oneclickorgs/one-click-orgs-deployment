@@ -38,6 +38,20 @@
   .section
     %h3 Outstanding share withdrawals
 
+- if can?(:read, ShareAccount)
+  .section
+    %h3 Share ownership
+    %table.share_account_balances
+      %thead
+        %tr
+          %th Member
+          %th Shares
+      %tbody
+        - @members.each do |member|
+          = content_tag_for(:tr, member) do
+            %td= link_to(member.name, member_path(member))
+            %td= member.find_or_build_share_account.balance
+
 - if can?(:update, co)
   .section
     = link_button("Adjust share value", :url => edit_share_value_shares_path)

@@ -94,6 +94,14 @@ class Ability
         can :create, Office
       end
 
+      if user.has_permission(:share_account)
+        can :read, ShareAccount
+      end
+
+      if user.has_permission(:share_transaction)
+        can :update, ShareTransaction
+      end
+
       can :update, Member do |member|
         user.has_permission(:member) || user == member
       end

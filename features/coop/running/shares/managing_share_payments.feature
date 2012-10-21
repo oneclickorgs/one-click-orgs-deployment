@@ -3,13 +3,12 @@ Feature: Managing share payments
   As the Secretary
   I want to process new share applications
 
-  # @wip
-  # Scenario: Secretary processes a new share application
-  #   Given there is a co-op
-  #   And members of the co-op can hold more than one share
-  #   And I am the Secretary of the co-op
-  #   And a member has made an application for more shares
-  #   When I go to the Shares page
-  #   Then I should see the share application
-  #   When I press "Mark as paid, and allot shares"
-  #   Then I should see that the member's new shares have been allotted
+  Scenario: Secretary processes a new share application
+    Given there is a co-op
+    And members of the co-op can hold more than one share
+    And I am the Secretary of the co-op
+    And a member has made an application for more shares
+    When I go to the Shares page
+    Then I should see the share application
+    When I press "Mark as paid, and allot shares"
+    Then I should see that the member's new shares have been allotted

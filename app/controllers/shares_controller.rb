@@ -1,6 +1,7 @@
 class SharesController < ApplicationController
   def index
     @tasks = current_user.tasks.current.shares_related
+    @members = co.members.order('last_name ASC, first_name ASC')
   end
 
   def edit_share_value

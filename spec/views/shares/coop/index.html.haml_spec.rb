@@ -15,6 +15,18 @@ describe 'shares/coop/index' do
 
   let(:task) {mock_model(Task, :to_partial_name => 'task_share_transaction_make_payment')}
 
+  let(:members) {
+    [
+      mock_model(Member,
+        :id => 3000,
+        :name => "Bob Smith",
+        :find_or_build_share_account => mock_model(ShareAccount,
+          :balance => 4
+        )
+      )
+    ]
+  }
+
   before(:each) do
     view.stub(:co).and_return(organisation)
     view.stub(:current_user).and_return(user)
@@ -22,6 +34,8 @@ describe 'shares/coop/index' do
 
     assign(:tasks, [task])
     stub_template('tasks/_task_share_transaction_make_payment' => 'task template')
+
+    assign(:members, members)
   end
 
   it "displays the current share value" do
@@ -57,6 +71,23 @@ describe 'shares/coop/index' do
       it "renders a button to apply for more shares" do
         render
         rendered.should have_selector(:input, 'data-url' => '/share_applications/new')
+      end
+    end
+  end
+
+  context "when user can view ShareAccounts" do
+    before(:each) do
+      view.stub(:can?).with(:read, ShareAccount).and_return(true)
+    end
+
+    it "renders a table of the members' share ownership" do
+      render
+      # raise rendered.inspect
+      rendered.should have_selector("table.share_account_balances") do |table|
+        table.should have_selector("tr#member_3000") do |tr|
+          tr.should have_content("Bob Smith")
+          tr.should have_content("4")
+        end
       end
     end
   end

@@ -14,9 +14,11 @@ describe SharesController do
 
   describe "GET index" do
     let(:tasks) {mock('tasks')}
+    let(:members) {mock('members')}
 
     before(:each) do
       @user.stub_chain(:tasks, :current, :shares_related).and_return(tasks)
+      @organisation.stub_chain(:members, :order).and_return(members)
     end
 
     def get_index
@@ -26,6 +28,11 @@ describe SharesController do
     it "assigns the currently-open, shares-related tasks for the current user" do
       get_index
       assigns[:tasks].should == tasks
+    end
+
+    it "assigns the members" do
+      get_index
+      assigns[:members].should == members
     end
   end
 

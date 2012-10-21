@@ -296,6 +296,7 @@ class Coop < Organisation
     directors.set_permission!(:vote, true)
     directors.set_permission!(:meeting, true)
     directors.set_permission!(:board_meeting, true)
+    directors.set_permission!(:share_account, true)
 
     secretaries = member_classes.find_or_create_by_name('Secretary')
     secretaries.set_permission!(:resolution, true)
@@ -307,6 +308,8 @@ class Coop < Organisation
     secretaries.set_permission!(:organisation, true)
     secretaries.set_permission!(:directorship, true)
     secretaries.set_permission!(:officership, true)
+    secretaries.set_permission!(:share_account, true)
+    secretaries.set_permission!(:share_transaction, true)
 
     external_directors = member_classes.find_or_create_by_name('External Director')
     external_directors.set_permission!(:board_resolution, true)

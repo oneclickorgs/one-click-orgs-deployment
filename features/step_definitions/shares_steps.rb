@@ -14,6 +14,16 @@ Given(/^there is a member who has failed to attain the minimum shareholding afte
   @member.save!
 end
 
+Given(/^a member has made an application for more shares$/) do
+  @member = @organisation.members.make!
+
+  @original_balance = @member.find_or_build_share_account.balance
+
+  @share_application = ShareApplication.new(:amount => 3)
+  @share_application.member = @member
+  @share_application.save!
+end
+
 When(/^I enter a new share value$/) do
   fill_in("New share value", :with => "0.70")
 end
@@ -52,4 +62,16 @@ end
 
 Then(/^I should see a notification that the member has failed to attain the minimum shareholding$/) do
   page.should have_content("#{@member.name} joined 13 months ago, but has failed to attain the minimum shareholding.")
+end
+
+Then(/^I should see the share application$/) do
+  page.should have_content("applied for 3 shares")
+end
+
+Then(/^I should see that the member's new shares have been allotted$/) do
+  expected_share_balance = @original_balance + 3
+  within("#member_#{@member.id}") do
+    page.should have_content(@member.name)
+    page.should have_content(expected_share_balance)
+  end
 end

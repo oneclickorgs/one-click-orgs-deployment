@@ -168,6 +168,10 @@ describe Coop do
         it "sets the 'organisation' permission" do
           @coop.member_classes.find_by_name('Secretary').should have_permission(:organisation)
         end
+
+        it "sets the 'share_account' permission" do
+          @coop.member_classes.find_by_name('Secretary').should have_permission(:share_account)
+        end
       end
 
       it "creates an 'External Director' member class" do
