@@ -13,40 +13,41 @@
   = link_button("Appoint new Officer", :url => new_officership_path)
   .clear
 
-%p#download
-  Download:
-  %span.pdf.download
-    = link_to 'PDF', directors_path(:format => 'pdf')
+- if @directors.present?
+  %p#download
+    Download:
+    %span.pdf.download
+      = link_to 'PDF', directors_path(:format => 'pdf')
 
-.section
-  %ul.directors
-    - @directors.each do |director|
-      = content_tag_for(:li, director) do
-        .directorship
-          %p.name
-            = image_tag("#{director.gravatar_url(24)}", :class => 'gravatar', :alt => "#{director.name}", :width => '24', :height => '24')
-            = director.name
-          - if director.directorship.elected_on
-            %p.elected_on
-              Appointed:
-              = director.directorship.elected_on.to_s(:long)
-          - if can?(:edit, director.directorship)
-            %p.action
-              = link_button("Retire", :url => edit_directorship_path(director.directorship))
-          .clear
-        .officership
-          - if director.officership
-            %p.title= director.officership.office_title
-            - if can?(:edit, director.officership)
+  .section
+    %ul.directors
+      - @directors.each do |director|
+        = content_tag_for(:li, director) do
+          .directorship
+            %p.name
+              = image_tag("#{director.gravatar_url(24)}", :class => 'gravatar', :alt => "#{director.name}", :width => '24', :height => '24')
+              = director.name
+            - if director.directorship.elected_on
+              %p.elected_on
+                Appointed:
+                = director.directorship.elected_on.to_s(:long)
+            - if can?(:edit, director.directorship)
               %p.action
-                = link_button("Step down", :url => edit_officership_path(director.officership))
-          - else
-            %p.title No office
-            - if can?(:create, Officership)
-              %p.action
-                = link_button("Appoint", :url => new_officership_path(:officer_id => director.id))
+                = link_button("Retire", :url => edit_directorship_path(director.directorship))
+            .clear
+          .officership
+            - if director.officership
+              %p.title= director.officership.office_title
+              - if can?(:edit, director.officership)
+                %p.action
+                  = link_button("Step down", :url => edit_officership_path(director.officership))
+            - else
+              %p.title No office
+              - if can?(:create, Officership)
+                %p.action
+                  = link_button("Appoint", :url => new_officership_path(:officer_id => director.id))
+            .clear
           .clear
-        .clear
 
 - if @unoccupied_offices.present?
   .section
