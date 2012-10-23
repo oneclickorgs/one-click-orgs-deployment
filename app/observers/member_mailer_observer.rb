@@ -26,8 +26,13 @@ class MemberMailerObserver < ActiveRecord::Observer
     when :reactivate
       send_welcome_if_requested(member)
     when :resign
-      member.organisation.members.active.each do |recipient|
-        MembersMailer.notify_resignation(recipient, member).deliver
+      case member.organisation
+      when Coop
+        send_resignation_notification_to_secretary(member)
+      else
+        member.organisation.members.active.each do |recipient|
+          MembersMailer.notify_resignation(recipient, member).deliver
+        end
       end
     end
   end
@@ -43,5 +48,11 @@ class MemberMailerObserver < ActiveRecord::Observer
     return unless secretary
 
     MembersMailer.send(:notify_new_member, secretary, member).deliver
+  end
+
+  def send_resignation_notification_to_secretary(member)
+    secretary = member.organisation.try(:secretary)
+    return unless secretary
+    MembersMailer.notify_resignation(secretary, member).deliver
   end
 end

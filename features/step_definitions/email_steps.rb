@@ -246,3 +246,14 @@ Then(/^the Secretary should receive a notification of the new share application$
   @email.subject.should include('made a new application for shares')
   @email.body.should include(member.name)
 end
+
+Then(/^the Secretary should receive a notification of my resignation$/) do
+  @secretary ||= @organisation.secretary
+
+  @email = last_email
+
+  @email.should be_present
+  @email.to.should == [@secretary.email]
+  @email.subject.should include(@user.name)
+  @email.subject.should include('resigned')
+end
