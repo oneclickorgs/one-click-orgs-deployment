@@ -40,11 +40,6 @@ describe 'meetings/coop/index' do
     rendered.should have_selector('.upcoming_meetings #general_meeting_1')
   end
 
-  it "shows the current meeting notice period" do
-    render
-    rendered.should contain("The notice period for General Meetings is 14 clear days.")
-  end
-
   context "when a past meeting has no minutes" do
     before(:each) do
       @past_meeting = mock_model(GeneralMeeting, :to_param => '2', :happened_on => 1.day.ago, :minuted? => false)
@@ -90,22 +85,6 @@ describe 'meetings/coop/index' do
     it "renders a link to enter minutes for a meeting not yet in the system" do
       render
       rendered.should have_selector(:a, :href => '/minutes/new')
-    end
-  end
-
-  context "when user can create resolutions" do
-    before(:each) do
-      view.stub(:can?).with(:create, Resolution).and_return(true)
-    end
-
-    it "renders a button link to change the notice period" do
-      render
-      rendered.should have_selector(:input, 'data-url' => '/change_meeting_notice_period_resolutions/new')
-    end
-
-    it "renders a button link to change the quorum" do
-      render
-      rendered.should have_selector(:input, 'data-url' => '/change_quorum_resolutions/new')
     end
   end
 
