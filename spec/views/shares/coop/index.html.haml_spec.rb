@@ -82,7 +82,6 @@ describe 'shares/coop/index' do
 
     it "renders a table of the members' share ownership" do
       render
-      # raise rendered.inspect
       rendered.should have_selector("table.share_account_balances") do |table|
         table.should have_selector("tr#member_3000") do |tr|
           tr.should have_content("Bob Smith")
