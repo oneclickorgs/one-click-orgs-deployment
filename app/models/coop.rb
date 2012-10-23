@@ -52,6 +52,7 @@ class Coop < Organisation
 
   has_one :share_account, :as => :owner
   has_many :withdrawals, :through => :share_account
+  has_many :deposits, :through => :share_account
 
   # Returns true if the requirements for moving to the 'proposed' state
   # have been fulfilled.

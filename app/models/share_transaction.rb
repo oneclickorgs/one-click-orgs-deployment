@@ -27,6 +27,15 @@ class ShareTransaction < ActiveRecord::Base
     end
   end
 
+  def withdrawal_due_date
+    return nil unless created_at.present?
+    created_at.to_date.advance(:months => 3)
+  end
+
+  def withdrawal_due?
+    withdrawal_due_date <= Date.today
+  end
+
   def self.run_daily_job
     # Find withdrawals more than three months old. We can tell a withdrawal from
     # an application by the account the shares are moving to; in a withdrawal,

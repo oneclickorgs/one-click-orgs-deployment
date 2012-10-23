@@ -91,6 +91,39 @@ describe 'shares/coop/index' do
     end
   end
 
+  context "when the user can view ShareTransactions" do
+    let(:share_withdrawals) {[mock_model(ShareTransaction,
+      :id => 3000,
+      :from_account => share_account,
+      :created_at => Time.utc(2012, 5, 6, 12, 34, 56),
+      :amount => 1,
+      :withdrawal_due? => false,
+      :withdrawal_due_date => Date.new(2012, 8, 6)
+    )]}
+    let(:share_account) {mock_model(ShareAccount, :owner => member)}
+    let(:member) {mock_model(Member, :name => "Bob Smith")}
+
+    before(:each) do
+      view.stub(:can?).with(:read, ShareTransaction).and_return(true)
+      assign(:share_withdrawals, share_withdrawals)
+    end
+
+    it "renders a list of pending share withdrawals" do
+      render
+      rendered.should have_selector("ul.share_withdrawals") do |ul|
+        ul.should have_content("Bob Smith applied to withdraw 1 share on 6 May 2012.")
+        ul.should have_content("Payment will become due on 6 August 2012.")
+      end
+    end
+
+    it "renders a 'waive notice period' button for share withdrawals which are not due yet" do
+      render
+      rendered.should have_selector('ul.share_withdrawals') do |ul|
+        ul.should have_selector(:input, 'data-url' => '/share_transactions/3000/confirm_approve')
+      end
+    end
+  end
+
   context "when user can update the organisation" do
     before(:each) do
       view.stub(:can?).with(:update, organisation).and_return(true)

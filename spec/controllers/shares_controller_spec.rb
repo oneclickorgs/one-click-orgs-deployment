@@ -15,10 +15,13 @@ describe SharesController do
   describe "GET index" do
     let(:tasks) {mock('tasks')}
     let(:members) {mock('members')}
+    let(:share_withdrawals) {mock('share_withdrawals')}
 
     before(:each) do
       @user.stub_chain(:tasks, :current, :shares_related).and_return(tasks)
       @organisation.stub_chain(:members, :order).and_return(members)
+      @organisation.stub(:deposits).and_return(share_withdrawals)
+      controller.stub(:can?).with(:read, ShareTransaction).and_return(true)
     end
 
     def get_index
@@ -33,6 +36,12 @@ describe SharesController do
     it "assigns the members" do
       get_index
       assigns[:members].should == members
+    end
+
+    it "finds pending share withdrawals" do
+      @organisation.should_receive(:deposits).and_return(share_withdrawals)
+      get_index
+      assigns[:share_withdrawals].should eq share_withdrawals
     end
   end
 

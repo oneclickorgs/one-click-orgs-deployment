@@ -99,6 +99,7 @@ class Ability
       end
 
       if user.has_permission(:share_transaction)
+        can :read, ShareTransaction
         can :update, ShareTransaction
       end
 

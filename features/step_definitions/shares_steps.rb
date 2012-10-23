@@ -33,6 +33,13 @@ Given(/^a member's share withdrawal application has fallen due$/) do
   @share_withdrawal.share_transaction.update_attribute(:created_at, (3.months + 1.day).ago)
 end
 
+Given(/^there is a share withdrawal application which is not yet due$/) do
+  @member = @organisation.members.make!
+  @original_balance = @member.find_or_build_share_account.balance
+  @share_withdrawal = ShareWithdrawal.new(:amount => 1, :member => @member)
+  @share_withdrawal.save!
+end
+
 When(/^I enter a new share value$/) do
   fill_in("New share value", :with => "0.70")
 end
@@ -99,4 +106,12 @@ Then(/^I should see that the member's shareholding has reduced accordingly$/) do
     page.should have_content(@member.name)
     page.should have_content(expected_share_balance)
   end
+end
+
+Then(/^I should see a share withdrawal application which is not yet due$/) do
+  page.should have_content("Payment will become due on")
+end
+
+When(/^I certify that the Board has agreed with this$/) do
+  click_button("Yes, mark as paid, and cancel shares")
 end

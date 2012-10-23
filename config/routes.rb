@@ -189,6 +189,7 @@ OneClickOrgs::Application.routes.draw do
   resources :share_applications
   resources :share_transactions do
     member do
+      get :confirm_approve
       put :approve
     end
   end

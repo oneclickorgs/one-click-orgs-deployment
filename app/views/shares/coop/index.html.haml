@@ -30,6 +30,25 @@
     = link_button("Apply for more shares", :url => new_share_application_path)
   %br.clear
 
+- if can?(:read, ShareTransaction)
+  - if @share_withdrawals.present?
+    .section
+      %h3 Outstanding share withdrawals
+      %ul.share_withdrawals
+        - @share_withdrawals.each do |share_withdrawal|
+          = content_tag_for(:li, share_withdrawal) do
+            = link_to(share_withdrawal.from_account.owner.name, member_path(share_withdrawal.from_account.owner))
+            applied to withdraw
+            = pluralize(share_withdrawal.amount, 'share')
+            on
+            = share_withdrawal.created_at.to_date.to_s(:long) + '.'
+            - if share_withdrawal.withdrawal_due?
+              The withdrawal is now due.
+            - else
+              Payment will become due on
+              = share_withdrawal.withdrawal_due_date.to_s(:long) + '.'
+              = link_button("Waive the notice period", :url => confirm_approve_share_transaction_path(share_withdrawal))
+
 - if can?(:read, ShareAccount)
   .section
     %h3 Share ownership

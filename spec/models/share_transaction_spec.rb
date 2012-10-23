@@ -4,6 +4,27 @@ describe ShareTransaction do
 
   it "updates the accounts' balances"
 
+  describe "withdrawal due dates" do
+    it "calculates the withdrawal due date as three months after the creation date" do
+      share_transaction = ShareTransaction.make(:created_at => Time.utc(2011, 11, 30))
+      share_transaction.withdrawal_due_date.should eq Date.new(2012, 2, 29)
+    end
+
+    describe "#withdrawal_due?" do
+      it "returns false when the withdrawal due date is in the future" do
+        share_transaction = ShareTransaction.make
+        share_transaction.stub(:withdrawal_due_date).and_return(Date.today.advance(:days => 1))
+        share_transaction.withdrawal_due?.should eq false
+      end
+
+      it "returns true when the withdrawal due date is today" do
+        share_transaction = ShareTransaction.make
+        share_transaction.stub(:withdrawal_due_date).and_return(Date.today)
+        share_transaction.withdrawal_due?.should eq true
+      end
+    end
+  end
+
   describe "tasks" do
     context "when transaction is a share application" do
       let(:share_transaction) {ShareTransaction.make(

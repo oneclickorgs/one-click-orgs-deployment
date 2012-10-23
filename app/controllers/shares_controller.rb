@@ -2,6 +2,13 @@ class SharesController < ApplicationController
   def index
     @tasks = current_user.tasks.current.shares_related
     @members = co.members.order('last_name ASC, first_name ASC')
+    if can?(:read, ShareTransaction)
+      # A 'share withdrawal' is when a member withdraws shares from their
+      # personal account, returning them to the organisation in exchange
+      # for their monetary value. So, from the organisation's point of
+      # view, these are deposits.
+      @share_withdrawals = co.deposits
+    end
   end
 
   def edit_share_value
