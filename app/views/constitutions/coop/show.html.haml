@@ -4,14 +4,10 @@
 
 / Click here to download a PDF copy of the Rules for your own records.
 
-.section
-  - if can?(:create, Resolution)
-    = link_button("Amend the Rules", :url => edit_constitution_path)
-  - elsif can?(:create, ResolutionProposal)
-    = link_button("Suggest amendments to the Rules", :url => edit_constitution_path)
-  - elsif can?(:update, Constitution)
+- if can?(:update, Constitution)
+  .section
     = link_button("Edit the Rules", :url => edit_constitution_path)
-  %br.clear
+    %br.clear
 
 %section.section.constitution
   %hgroup

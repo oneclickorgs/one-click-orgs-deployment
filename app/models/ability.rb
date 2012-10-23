@@ -68,7 +68,7 @@ class Ability
         can :create, Meeting
       end
 
-      if user.has_permission(:constitution) || user.organisation.pending?
+      if user.organisation.pending?
         can :update, Constitution
       end
 
