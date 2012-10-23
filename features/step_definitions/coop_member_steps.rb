@@ -64,6 +64,10 @@ Given(/^a member has resigned$/) do
   @member.resign!
 end
 
+Given(/^there is a Member whose membership needs to be terminated$/) do
+  @member = @organisation.members.make!
+end
+
 When(/^I enter a new founding member's details$/) do
   fill_in("Email address", :with => "bob@example.com")
   fill_in("First name", :with => "Bob")
@@ -80,6 +84,10 @@ end
 
 When(/^I confirm that I want to resign$/) do
   click_button("Resign")
+end
+
+When(/^I confirm the termination of their membership$/) do
+  click_button("Terminate membership")
 end
 
 Then(/^I should see a list of the members$/) do

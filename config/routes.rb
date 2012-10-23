@@ -109,8 +109,12 @@ OneClickOrgs::Application.routes.draw do
 
   resources :members do
     member do
+      get :confirm_eject
+      put :eject
+
       put :confirm_resign
       put :resign
+
       put :induct
     end
 

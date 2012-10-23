@@ -33,6 +33,9 @@ module NavigationHelpers
     when /^a member's page$/
       @member = @organisation.members.active.last
       member_path(@member)
+    when /^the member's profile page$/
+      @member ||= @organisation.members.active.last
+      member_path(@member)
     when /^the amendments page$/
       edit_constitution_path
     when /^the members page$/

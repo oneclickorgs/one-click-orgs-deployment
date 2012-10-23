@@ -128,6 +128,17 @@ class MembersController < ApplicationController
     redirect_to members_path
   end
 
+  def confirm_eject
+    @member = co.members.find(params[:id])
+  end
+
+  def eject
+    @member = co.members.find(params[:id])
+    @member.eject!
+    flash[:notice] = "#{@member.name}'s membership has been terminated."
+    redirect_to(members_path)
+  end
+
 private
 
   # Create csv file of members in an org, then send data

@@ -123,6 +123,75 @@ describe MembersController do
         it "is checked"
       end
     end
+
+    describe "GET confirm_eject" do
+      let(:member) {mock_model(Member)}
+      let(:members) {mock("members association", :find => member)}
+
+      before(:each) do
+        @organisation.stub(:members).and_return(members)
+      end
+
+      def get_confirm_eject
+        get :confirm_eject, 'id' => '3000'
+      end
+
+      it "finds the member" do
+        members.should_receive(:find).with('3000').and_return(member)
+        get_confirm_eject
+      end
+
+      it "assigns the member" do
+        get_confirm_eject
+        assigns[:member].should == member
+      end
+
+      it "is successful" do
+        get_confirm_eject
+        response.should be_successful
+      end
+
+      describe "authorisation" do
+        it "is checked"
+      end
+    end
+
+    describe "PUT eject" do
+      let(:member) {mock_model(Member, :eject! => nil, :name => "Bob Smith")}
+      let(:members) {mock("members association", :find => member)}
+
+      before(:each) do
+        @organisation.stub(:members).and_return(members)
+      end
+
+      def put_eject
+        put :eject, 'id' => '3000'
+      end
+
+      it "finds the member" do
+        members.should_receive(:find).with('3000').and_return(member)
+        put_eject
+      end
+
+      it "ejects the member" do
+        member.should_receive(:eject!)
+        put_eject
+      end
+
+      it "sets a notice flash" do
+        put_eject
+        flash[:notice].should be_present
+      end
+
+      it "redirects" do
+        put_eject
+        response.should be_redirect
+      end
+
+      describe "authorisation" do
+        it "is checked"
+      end
+    end
   end
 
 end
