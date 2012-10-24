@@ -18,3 +18,10 @@ Then(/^I should see details of the upcoming general meeting$/) do
   page.should have_content(@general_meeting.start_time)
   page.should have_css("a[href='/general_meetings/#{@general_meeting.to_param}']")
 end
+
+Then /^I should see that a proposal is open for voting$/ do
+  @resolution ||= @organisation.proposals.last
+
+  page.should have_content(@resolution.title)
+  page.should have_css("input[data-url='/resolutions/#{@resolution.to_param}']")
+end

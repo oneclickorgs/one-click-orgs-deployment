@@ -8,6 +8,7 @@ Feature: Viewing dashboard
     And I am a Member of the co-op
     And I have applied for some shares
     And there is an upcoming general meeting
+    And there is a resolution open for electronic voting
 
   Scenario: Member views tasks that require their attention
     When I go to the Dashboard page
@@ -16,3 +17,7 @@ Feature: Viewing dashboard
   Scenario: Member views list of upcoming meetings
     When I go to the Dashboard page
     Then I should see details of the upcoming general meeting
+
+  Scenario: Member views list of open proposals
+    When I go to the Dashboard page
+    Then I should see that a proposal is open for voting
