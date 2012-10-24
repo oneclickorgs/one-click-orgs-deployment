@@ -1,5 +1,5 @@
 Then(/^I should see notifications of issues that require my attention$/) do
-  page.should have_css('ul.tasks')
+  page.should have_css('.tasks')
 end
 
 Then(/^I should see action buttons for things I commonly want to do$/) do

@@ -40,6 +40,11 @@ Given(/^there is a share withdrawal application which is not yet due$/) do
   @share_withdrawal.save!
 end
 
+Given(/^I have applied for some shares$/) do
+  @share_application = ShareApplication.new(:member => @user, :amount => 3)
+  @share_application.save!
+end
+
 When(/^I enter a new share value$/) do
   fill_in("New share value", :with => "0.70")
 end
