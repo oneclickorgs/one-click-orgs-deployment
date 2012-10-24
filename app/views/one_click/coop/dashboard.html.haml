@@ -34,7 +34,7 @@
           %br
           = @upcoming_meeting.venue
           %br
-          = link_to("See agenda & details", meeting_path(@upcoming_meeting))
+          = link_to("See agenda & details", @upcoming_meeting)
       - if @upcoming_meetings_count
         %p.auxiliary
           = link_to("#{@upcoming_meetings_count} more upcoming", meetings_path)
