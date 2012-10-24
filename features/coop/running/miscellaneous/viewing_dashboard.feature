@@ -21,3 +21,7 @@ Feature: Viewing dashboard
   Scenario: Member views list of open proposals
     When I go to the Dashboard page
     Then I should see that a proposal is open for voting
+
+  Scenario: Member views list of membership and shares tasks
+    When I go to the Dashboard page
+    Then I should see a task in the Membership and Shares widget
