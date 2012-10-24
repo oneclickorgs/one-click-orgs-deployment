@@ -7,7 +7,12 @@ Feature: Viewing dashboard
     Given there is a co-op
     And I am a Member of the co-op
     And I have applied for some shares
+    And there is an upcoming general meeting
 
   Scenario: Member views tasks that require their attention
     When I go to the Dashboard page
     Then I should see notifications of issues that require my attention
+
+  Scenario: Member views list of upcoming meetings
+    When I go to the Dashboard page
+    Then I should see details of the upcoming general meeting

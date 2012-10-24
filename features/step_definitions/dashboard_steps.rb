@@ -10,3 +10,11 @@ Then(/^I should see a timeline of recent events in the co\-op$/) do
   page.should have_css('table.timeline td')
 end
 
+Then(/^I should see details of the upcoming general meeting$/) do
+  @general_meeting ||= @organisation.general_meetings.upcoming.last
+
+  page.should have_content("Next meeting")
+  page.should have_content("General Meeting")
+  page.should have_content(@general_meeting.start_time)
+  page.should have_css("a[href='/general_meetings/#{@general_meeting.to_param}']")
+end

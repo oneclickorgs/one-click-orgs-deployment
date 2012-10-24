@@ -10,6 +10,10 @@ Given(/^no minutes for the past meeting have been entered yet$/) do
   @general_meeting.update_attribute(:minutes, nil)
 end
 
+Given(/^there is an upcoming general meeting$/) do
+  @general_meeting = @organisation.general_meetings.make!(:upcoming)
+end
+
 When(/^I follow "(.*?)" for the past meeting$/) do |link|
   @general_meeting ||= @organisation.general_meetings.past.last
 
