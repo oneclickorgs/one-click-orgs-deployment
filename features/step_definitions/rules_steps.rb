@@ -79,3 +79,32 @@ end
 Then(/^I should see the customisations we have made to the rules$/) do
   page.should have_content("Change the world")
 end
+
+Then(/^I should see the custom fields in the Rules filled in appropriately$/) do
+  constitution = @organisation.constitution
+
+  # TODO Check the custom fields which result in entire sections of the
+  # Rules being displayed or not; not just the custom fields which are
+  # displayed literally in the Rules.
+
+  # TODO Do a more precise check of the appearance of fields like
+  # 'max_user_directors' which are just a number. Such a number probably
+  # will occur somewhere else in the Rules, and hence trigger a false positive
+  # in this test.
+
+  [
+    :name,
+    :registered_office_address,
+    :objectives,
+    :meeting_notice_period,
+    :quorum_number,
+    :quorum_percentage,
+    :max_user_directors,
+    :max_employee_directors,
+    :max_supporter_directors,
+    :max_producer_directors,
+    :max_consumer_directors
+  ].each do |field|
+    page.should have_content(constitution.send(field))
+  end
+end
