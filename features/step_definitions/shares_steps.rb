@@ -65,6 +65,10 @@ When(/^the share transaction daily job runs$/) do
   ShareTransaction.run_daily_job
 end
 
+When(/^I certify that the Board has agreed with this$/) do
+  click_button("Yes, mark as paid, and cancel shares")
+end
+
 Then(/^I should see the new share value$/) do
   page.should have_content("0.70")
 end
@@ -115,8 +119,4 @@ end
 
 Then(/^I should see a share withdrawal application which is not yet due$/) do
   page.should have_content("Payment will become due on")
-end
-
-When(/^I certify that the Board has agreed with this$/) do
-  click_button("Yes, mark as paid, and cancel shares")
 end
