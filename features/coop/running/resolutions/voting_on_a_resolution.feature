@@ -8,9 +8,9 @@ Feature: Voting on a resolution
     And I am a Member of the co-op
     And there is a resolution open for electronic voting
 
-  # Scenario: Member receives a task when a resolution is opened for voting
-  #   When I go to the Dashboard
-  #   Then I should see a task telling me to vote in the resolution
+  Scenario: Member receives a task when a resolution is opened for voting
+    When I go to the Dashboard
+    Then I should see a task telling me to vote in the resolution
 
   Scenario: Member votes on a resolution
     When I go to the Resolutions page
