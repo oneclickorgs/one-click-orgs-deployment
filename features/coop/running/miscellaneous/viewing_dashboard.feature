@@ -7,7 +7,7 @@ Feature: Viewing dashboard
     Given there is a co-op
     And I am a Member of the co-op
     And I have applied for some shares
-    And there is an upcoming general meeting
+    And there is an upcoming General Meeting
     And there is a resolution open for electronic voting
 
   Scenario: Member views tasks that require their attention

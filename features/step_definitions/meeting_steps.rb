@@ -228,6 +228,13 @@ When(/^I view the details for the new meeting$/) do
   end
 end
 
+When(/^I follow "(.*?)" for the upcoming meeting$/) do |link|
+  @meeting ||= @organisation.meetings.upcoming.last
+  within('#' + ActionController::RecordIdentifier.dom_id(@meeting)) do
+    click_link(link)
+  end
+end
+
 Then(/^the meeting should have the draft resolution I selected attached to its agenda$/) do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.attached.last
@@ -359,4 +366,12 @@ Then(/^I should see a field for each of the standard agenda items$/) do
   page.should have_field("Minutes of Previous Meeting")
   page.should have_field("Any Other Business")
   page.should have_field("Time and date of next meeting")
+end
+
+Then(/^I should see the agenda for the upcoming meeting$/) do
+  @meeting ||= @organisation.meetings.upcoming.last
+  @meeting.agenda_items.each do |agenda_item|
+    page.should have_content(agenda_item.title)
+  end
+  page.should have_content(@meeting.agenda)
 end

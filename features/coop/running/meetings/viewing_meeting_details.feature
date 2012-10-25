@@ -3,16 +3,15 @@ Feature: Viewing meeting details
   As a Member
   I want to view the agenda and minutes of past and future meetings
 
-  # Background:
-  #   Given there is a co-op
-  #   And I am a Member of the co-op
+  Background:
+    Given there is a co-op
+    And I am a Member of the co-op
 
-  # @wip
-  # Scenario: Member views details of an upcoming meeting
-  #   Given there is an upcoming General Meeting
-  #   When I go to the Meetings page
-  #   And I follow "View agenda and details" for the upcoming meeting
-  #   Then I should see the agenda for the upcoming meeting
+  Scenario: Member views details of an upcoming meeting
+    Given there is an upcoming General Meeting
+    When I go to the Meetings page
+    And I follow "View agenda and details" for the upcoming meeting
+    Then I should see the agenda for the upcoming meeting
 
   # @wip
   # Scenario: Member views details of a past meeting
