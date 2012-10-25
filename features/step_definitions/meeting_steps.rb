@@ -95,6 +95,16 @@ Given(/^there were resolutions attached to the meeting$/) do
   @meeting.resolutions << @resolutions
 end
 
+Given(/^minutes have been entered for the meeting$/) do
+  @meeting ||= @organisation.meetings.last
+  @meeting.agenda_items.each do |agenda_item|
+    agenda_item.minutes = Faker::Lorem.paragraph
+    agenda_item.save!
+  end
+  @meeting.minutes = Faker::Lorem.paragraph
+  @meeting.save!
+end
+
 When(/^I choose the date of discussion$/) do
   select('2011', :from => 'meeting[happened_on(1i)]')
   select('May', :from => 'meeting[happened_on(2i)]')
@@ -374,4 +384,12 @@ Then(/^I should see the agenda for the upcoming meeting$/) do
     page.should have_content(agenda_item.title)
   end
   page.should have_content(@meeting.agenda)
+end
+
+Then(/^I should see the minutes for the past meeting$/) do
+  @meeting ||= @organisation.meetings.past.last
+  @meeting.agenda_items.each do |agenda_item|
+    page.should have_content(agenda_item.minutes)
+  end
+  page.should have_content(@meeting.minutes)
 end

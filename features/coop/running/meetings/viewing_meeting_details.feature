@@ -13,9 +13,9 @@ Feature: Viewing meeting details
     And I follow "View agenda and details" for the upcoming meeting
     Then I should see the agenda for the upcoming meeting
 
-  # @wip
-  # Scenario: Member views details of a past meeting
-  #   Given there has been a General Meeting in the past
-  #   When I go to the Meetings page
-  #   And I follow "View minutes" for the past meeting
-  #   Then I should see the minutes for the past meeting
+  Scenario: Member views details of a past meeting
+    Given there has been a General Meeting in the past
+    And minutes have been entered for the meeting
+    When I go to the Meetings page
+    And I follow "View minutes" for the past meeting
+    Then I should see the minutes for the past meeting

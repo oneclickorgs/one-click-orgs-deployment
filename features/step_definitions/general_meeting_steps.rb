@@ -14,6 +14,10 @@ Given(/^there is an upcoming General Meeting$/) do
   @general_meeting = @meeting = @organisation.general_meetings.make!(:upcoming)
 end
 
+Given(/^there has been a General Meeting in the past$/) do
+  @general_meeting = @meeting = @organisation.general_meetings.make!(:past)
+end
+
 When(/^I follow "(.*?)" for the past meeting$/) do |link|
   @general_meeting ||= @organisation.general_meetings.past.last
 
