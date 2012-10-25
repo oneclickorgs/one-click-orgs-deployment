@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'action_controller/record_identifier'
+
 Given(/^members of the co\-op can hold more than one share$/) do
   @organisation.single_shareholding = false
   @organisation.save!
@@ -119,4 +121,13 @@ end
 
 Then(/^I should see a share withdrawal application which is not yet due$/) do
   page.should have_content("Payment will become due on")
+end
+
+Then(/^I should see a list of the shareholdings of the members$/) do
+  @organisation.members.each do |member|
+    page.should have_css('#' + ActionController::RecordIdentifier.dom_id(member), :text => member.name)
+    page.should have_css('#' + ActionController::RecordIdentifier.dom_id(member),
+      :text => member.find_or_build_share_account.balance.to_s
+    )
+  end
 end
