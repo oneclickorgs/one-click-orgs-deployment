@@ -113,6 +113,7 @@ class Ability
       can :create, ConstitutionProposalBundle
 
       can :create, ShareApplication
+      can :create, ShareWithdrawal
     end
   end
 end

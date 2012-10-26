@@ -190,13 +190,14 @@ OneClickOrgs::Application.routes.draw do
       put :update_interest_rate
     end
   end
-  resources :share_applications
   resources :share_transactions do
     member do
       get :confirm_approve
       put :approve
     end
   end
+  resources :share_applications
+  resources :share_withdrawals
 
   resource :membership_application_form
 

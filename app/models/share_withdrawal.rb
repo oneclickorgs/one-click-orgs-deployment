@@ -35,6 +35,6 @@ class ShareWithdrawal < OneClickOrgs::ModelWrapper
   end
 
   def persisted?
-    true
+    share_transaction.persisted?
   end
 end

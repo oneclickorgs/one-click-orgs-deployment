@@ -47,6 +47,21 @@ Given(/^I have applied for some shares$/) do
   @share_application.save!
 end
 
+Given(/^I hold more shares than the minimum shareholding$/) do
+  minimum_shareholding = @organisation.minimum_shareholding
+  minimum_shareholding.should >= 1
+
+  if @user.find_or_build_share_account.balance <= minimum_shareholding
+    st = ShareTransaction.new(
+      :to_account => @user.find_or_build_share_account,
+      :from_account => @organisation.share_account,
+      :amount => minimum_shareholding + 1
+    )
+    st.save!
+    st.approve!
+  end
+end
+
 When(/^I enter a new share value$/) do
   fill_in("New share value", :with => "0.70")
 end
@@ -65,6 +80,15 @@ end
 
 When(/^the share transaction daily job runs$/) do
   ShareTransaction.run_daily_job
+end
+
+When(/^I choose to withdraw a number of shares which will still leave me with the minimum shareholding$/) do
+  minimum_shareholding = @organisation.minimum_shareholding
+  current_shareholding = @user.share_account.balance
+
+  shares_to_withdraw = current_shareholding - minimum_shareholding
+
+  fill_in('share_withdrawal[amount]', :with => shares_to_withdraw.to_s)
 end
 
 When(/^I certify that the Board has agreed with this$/) do
@@ -130,4 +154,8 @@ Then(/^I should see a list of the shareholdings of the members$/) do
       :text => member.find_or_build_share_account.balance.to_s
     )
   end
+end
+
+Then(/^I should see that my withdrawal application has been received$/) do
+  page.should have_content("You applied to withdraw")
 end

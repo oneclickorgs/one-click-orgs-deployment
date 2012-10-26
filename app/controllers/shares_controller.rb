@@ -7,8 +7,9 @@ class SharesController < ApplicationController
       # personal account, returning them to the organisation in exchange
       # for their monetary value. So, from the organisation's point of
       # view, these are deposits.
-      @share_withdrawals = co.deposits
+      @organisation_share_withdrawals = co.deposits
     end
+    @user_share_withdrawals_pending = current_user.find_or_build_share_account.withdrawals.pending
   end
 
   def edit_share_value

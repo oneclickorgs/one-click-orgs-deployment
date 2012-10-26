@@ -247,6 +247,20 @@ Then(/^the Secretary should receive a notification of the new share application$
   @email.body.should include(member.name)
 end
 
+Then(/^the Secretary should receive a notification of the share withdrawal application$/) do
+  @secretary ||= @organisation.secretary
+
+  @share_transaction ||= @organisation.deposits.last
+  member = @share_transaction.from_account.owner
+
+  @email = last_email
+
+  @email.should be_present
+  @email.to.should == [@secretary.email]
+  @email.subject.should include('applied to withdraw shares')
+  @email.body.should include(member.name)
+end
+
 Then(/^the Secretary should receive a notification of my resignation$/) do
   @secretary ||= @organisation.secretary
 

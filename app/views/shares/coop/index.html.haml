@@ -25,17 +25,36 @@
       The rate of interest on share capital is
       = "#{co.interest_rate}%."
 
+- if @user_share_withdrawals_pending.present?
+  .section
+    %h3 Your share withdrawals
+    %ul.user_share_withdrawals
+      = content_tag_for(:li, @user_share_withdrawals_pending) do |share_withdrawal|
+        %p
+          You applied to withdraw
+          = pluralize(share_withdrawal.amount, 'share')
+          on
+          = share_withdrawal.created_at.to_date.to_s(:long) + '.'
+          - if share_withdrawal.withdrawal_due?
+            The payment is now due.
+          - else
+            Payment will become due on
+            = share_withdrawal.withdrawal_due_date.to_s(:long) + '.'
+
+
 .section
   - if can?(:create, ShareApplication)
     = link_button("Apply for more shares", :url => new_share_application_path)
+  - if can?(:create, ShareWithdrawal)
+    = link_button("Withdraw shares", :url => new_share_withdrawal_path)
   %br.clear
 
 - if can?(:read, ShareTransaction)
-  - if @share_withdrawals.present?
+  - if @organisation_share_withdrawals.present?
     .section
       %h3 Outstanding share withdrawals
-      %ul.share_withdrawals
-        - @share_withdrawals.each do |share_withdrawal|
+      %ul.organisation_share_withdrawals
+        - @organisation_share_withdrawals.each do |share_withdrawal|
           = content_tag_for(:li, share_withdrawal) do
             = link_to(share_withdrawal.from_account.owner.name, member_path(share_withdrawal.from_account.owner))
             applied to withdraw

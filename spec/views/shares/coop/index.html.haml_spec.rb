@@ -73,6 +73,17 @@ describe 'shares/coop/index' do
         rendered.should have_selector(:input, 'data-url' => '/share_applications/new')
       end
     end
+
+    context "when the user can create ShareWithdrawals" do
+      before(:each) do
+        view.stub(:can?).with(:create, ShareWithdrawal).and_return(true)
+      end
+
+      it "renders a button to withdraw shares" do
+        render
+        rendered.should have_selector(:input, 'data-url' => '/share_withdrawals/new')
+      end
+    end
   end
 
   context "when user can view ShareAccounts" do
@@ -92,7 +103,7 @@ describe 'shares/coop/index' do
   end
 
   context "when the user can view ShareTransactions" do
-    let(:share_withdrawals) {[mock_model(ShareTransaction,
+    let(:organisation_share_withdrawals) {[mock_model(ShareTransaction,
       :id => 3000,
       :from_account => share_account,
       :created_at => Time.utc(2012, 5, 6, 12, 34, 56),
@@ -105,12 +116,12 @@ describe 'shares/coop/index' do
 
     before(:each) do
       view.stub(:can?).with(:read, ShareTransaction).and_return(true)
-      assign(:share_withdrawals, share_withdrawals)
+      assign(:organisation_share_withdrawals, organisation_share_withdrawals)
     end
 
     it "renders a list of pending share withdrawals" do
       render
-      rendered.should have_selector("ul.share_withdrawals") do |ul|
+      rendered.should have_selector("ul.organisation_share_withdrawals") do |ul|
         ul.should have_content("Bob Smith applied to withdraw 1 share on 6 May 2012.")
         ul.should have_content("Payment will become due on 6 August 2012.")
       end
@@ -118,7 +129,7 @@ describe 'shares/coop/index' do
 
     it "renders a 'waive notice period' button for share withdrawals which are not due yet" do
       render
-      rendered.should have_selector('ul.share_withdrawals') do |ul|
+      rendered.should have_selector('ul.organisation_share_withdrawals') do |ul|
         ul.should have_selector(:input, 'data-url' => '/share_transactions/3000/confirm_approve')
       end
     end
