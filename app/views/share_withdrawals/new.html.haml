@@ -1,3 +1,7 @@
+- content_for(:head) do
+  = javascript_tag("OneClickOrgs.maximum_share_withdrawal = #{@maximum_share_withdrawal}")
+  = javascript_include_tag(:share_withdrawals)
+
 %h2 Withdraw shares
 
 %p
@@ -8,5 +12,13 @@
   %p
     = form.label :amount, "How many shares would you like to withdraw?"
     = form.text_field :amount
+  #terminate_membership{:style => "display: none;"}
+    %p
+      If you continue with this withdrawal, you will no longer hold the minimum number of
+      shares, and your membership will be terminated. Are you sure you wish to continue?
+    %p
+      = form.check_box :certification, :class => 'inline'
+      = form.label :certification, "Yes, I wish to terminate my membership."
+    .clear
   %p
     = form.submit "Apply to withdraw shares"

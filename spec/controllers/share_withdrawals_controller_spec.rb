@@ -15,6 +15,8 @@ describe ShareWithdrawalsController do
 
     before(:each) do
       ShareWithdrawal.stub(:new).and_return(share_withdrawal)
+      @user.stub(:shares_count).and_return(5)
+      @organisation.stub(:minimum_shareholding).and_return(1)
     end
 
     def get_new

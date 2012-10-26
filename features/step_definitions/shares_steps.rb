@@ -62,6 +62,13 @@ Given(/^I hold more shares than the minimum shareholding$/) do
   end
 end
 
+Given(/^I hold only the minimum shareholding$/) do
+  share_account = @user.find_or_build_share_account
+  minimum_shareholding = @organisation.minimum_shareholding
+  share_account.balance = minimum_shareholding
+  share_account.save!
+end
+
 When(/^I enter a new share value$/) do
   fill_in("New share value", :with => "0.70")
 end
@@ -93,6 +100,16 @@ end
 
 When(/^I certify that the Board has agreed with this$/) do
   click_button("Yes, mark as paid, and cancel shares")
+end
+
+When(/^I choose to withdraw all my shares$/) do
+  current_shareholding = @user.share_account.balance
+  fill_in('share_withdrawal[amount]', :with => current_shareholding)
+end
+
+When(/^I confirm that I want to terminate my membership$/) do
+  sleep(1)
+  check('share_withdrawal[certification]')
 end
 
 Then(/^I should see the new share value$/) do
@@ -158,4 +175,8 @@ end
 
 Then(/^I should see that my withdrawal application has been received$/) do
   page.should have_content("You applied to withdraw")
+end
+
+Then(/^I should see a notice that this withdrawal will terminate my membership$/) do
+  page.should have_content("your membership will be terminated")
 end

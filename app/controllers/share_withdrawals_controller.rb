@@ -1,6 +1,7 @@
 class ShareWithdrawalsController < ApplicationController
   def new
     @share_withdrawal = ShareWithdrawal.new
+    @maximum_share_withdrawal = current_user.shares_count - co.minimum_shareholding
   end
 
   def create

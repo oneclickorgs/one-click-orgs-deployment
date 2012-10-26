@@ -3,7 +3,7 @@ require 'one_click_orgs/model_wrapper'
 # Represents a ShareTransaction that transfers shares from
 # the organisation's account to the user's account.
 class ShareWithdrawal < OneClickOrgs::ModelWrapper
-  attr_accessor :amount, :member, :share_transaction
+  attr_accessor :amount, :member, :share_transaction, :certification
 
   def initialize(new_attributes={})
     new_attributes = new_attributes.with_indifferent_access
