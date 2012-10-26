@@ -17,6 +17,8 @@ class ShareTransaction < ActiveRecord::Base
 
   validates_presence_of :from_account, :to_account, :amount
 
+  scope :pending, with_state(:pending)
+
   def adjust_accounts
     transaction do
       # TODO Use SQL to adjust column value directly, rather than a read + write.
@@ -24,6 +26,29 @@ class ShareTransaction < ActiveRecord::Base
       to_account.update_attribute(:balance, to_account.balance + amount)
       from_account.save!
       to_account.save!
+    end
+  end
+
+  def withdrawal_due_date
+    return nil unless created_at.present?
+    created_at.to_date.advance(:months => 3)
+  end
+
+  def withdrawal_due?
+    withdrawal_due_date <= Date.today
+  end
+
+  def self.run_daily_job
+    # Find withdrawals more than three months old. We can tell a withdrawal from
+    # an application by the account the shares are moving to; in a withdrawal,
+    # the shares are withdrawn from a member's account, and placed into the
+    # organisation's account.
+    due_withdrawals = where(["created_at < ?", 3.months.ago]).select{|st| st.to_account.owner.is_a?(Organisation)}
+    due_withdrawals.each do |st|
+      secretary = st.to_account.owner.secretary
+      if secretary
+        secretary.tasks.create(:subject => st, :action => :mark_payment_sent)
+      end
     end
   end
 end

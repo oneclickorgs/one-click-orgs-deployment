@@ -1,0 +1,10 @@
+Dear <%=raw( @recipient.name || 'Secretary') %>,
+
+<%=raw( @applicant.name ) %> has made a new application to withdraw <%=raw( pluralize(@share_transaction.amount, 'share.', 'shares.') )%>
+
+The withdrawal will become due for payment on <%=raw( @share_transaction.withdrawal_due_date.to_s(:long) )%>.
+
+Thanks,
+
+<%=raw @organisation.name %>
+Powered by One Click Orgs

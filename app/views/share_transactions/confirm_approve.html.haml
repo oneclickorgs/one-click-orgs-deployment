@@ -1,0 +1,22 @@
+%h2 Confirm share transaction
+
+%p You are about to confirm the following share withdrawal.
+
+= content_tag_for(:div, @share_transaction) do
+  %dl
+    %dt Member
+    %dd= @share_transaction.from_account.owner.name
+    %dt Number of shares
+    %dd= @share_transaction.amount
+    %dt Withdrawal request received on
+    %dd= @share_transaction.created_at.to_date.to_s(:long)
+    %dt Withdrawal due on
+    %dd= @share_transaction.withdrawal_due_date
+
+%p Are you sure you want to continue?
+
+= form_for(@share_transaction, :url => approve_share_transaction_path(@share_transaction), :method => :put) do |form|
+  %p
+    = form.submit("Yes, mark as paid, and cancel shares")
+  %p
+    = link_to("No, go back.", shares_path)

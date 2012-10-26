@@ -1,4 +1,4 @@
-Given /^there is an electronic vote for new directors in progress$/ do
+Given(/^there is an electronic vote for new directors in progress$/) do
   @nominees = @organisation.members.make!(5)
   @election = @organisation.elections.make!
   @election.nominees = @nominees
@@ -6,7 +6,7 @@ Given /^there is an electronic vote for new directors in progress$/ do
   @election.start!
 end
 
-Given /^there is an election which is due to close$/ do
+Given(/^there is an election which is due to close$/) do
   @nominees = @organisation.members.make!(3)
 
   @election = @organisation.elections.make!
@@ -20,7 +20,7 @@ Given /^there is an election which is due to close$/ do
   @election.start!
 end
 
-Given /^ballots have been cast on the election$/ do
+Given(/^ballots have been cast on the election$/) do
   @election ||= @organisation.elections.last
   @nominees ||= @election.nominees
 
@@ -60,7 +60,7 @@ Given /^ballots have been cast on the election$/ do
   @ballots = @election.ballots(true)
 end
 
-When /^I place my vote for the new directors I want$/ do
+When(/^I place my vote for the new directors I want$/) do
   visit(new_election_ballot_path(:election_id => @election))
 
   # Rank first three nominations in reverse order.
@@ -73,47 +73,47 @@ When /^I place my vote for the new directors I want$/ do
   click_button("Save my vote")
 end
 
-When /^I choose to allow electronic nominations for new Directors$/ do
+When(/^I choose to allow electronic nominations for new Directors$/) do
   check "annual_general_meeting[electronic_nominations]"
 end
 
-When /^I choose a closing date for nominations$/ do
+When(/^I choose a closing date for nominations$/) do
   date = 2.weeks.from_now
   select(date.year.to_s, :from => "annual_general_meeting[nominations_closing_date(1i)]")
   select(date.strftime('%B'), :from => "annual_general_meeting[nominations_closing_date(2i)]")
   select(date.day.to_s, :from => "annual_general_meeting[nominations_closing_date(3i)]")
 end
 
-When /^I choose to allow electronic voting for new Directors$/ do
+When(/^I choose to allow electronic voting for new Directors$/) do
   check "annual_general_meeting[electronic_voting]"
 end
 
-When /^I choose a closing date for voting$/ do
+When(/^I choose a closing date for voting$/) do
   date = 4.weeks.from_now
   select(date.year.to_s, :from => "annual_general_meeting[voting_closing_date(1i)]")
   select(date.strftime('%B'), :from => "annual_general_meeting[voting_closing_date(2i)]")
   select(date.day.to_s, :from => "annual_general_meeting[voting_closing_date(3i)]")
 end
 
-When /^the election closer runs$/ do
+When(/^the election closer runs$/) do
   Election.close_elections
 end
 
-Then /^an electronic vote for the new Directors should be prepared$/ do
+Then(/^an electronic vote for the new Directors should be prepared$/) do
   election = @organisation.meetings.last.election
 
   election.should be_present
   election.voting_closing_date.should be_present
 end
 
-Then /^electronic nominations for new Directors should be opened$/ do
+Then(/^electronic nominations for new Directors should be opened$/) do
   election = @organisation.meetings.last.election
 
   election.should be_present
   election.nominations_closing_date.should be_present
 end
 
-Then /^my vote should be counted$/ do
+Then(/^my vote should be counted$/) do
   @ballot = @user.ballots.last
   @ballot.should be_present
 
@@ -127,7 +127,7 @@ Then /^my vote should be counted$/ do
   ]
 end
 
-Then /^I should see the results of the election$/ do
+Then(/^I should see the results of the election$/) do
   page.should have_content("#{@nominees[0].name} was elected.")
   page.should have_content("#{@nominees[1].name} was not elected.")
   page.should have_content("#{@nominees[2].name} was elected.")

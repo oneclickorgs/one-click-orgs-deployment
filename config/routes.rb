@@ -109,8 +109,12 @@ OneClickOrgs::Application.routes.draw do
 
   resources :members do
     member do
+      get :confirm_eject
+      put :eject
+
       put :confirm_resign
       put :resign
+
       put :induct
     end
 
@@ -186,8 +190,14 @@ OneClickOrgs::Application.routes.draw do
       put :update_interest_rate
     end
   end
+  resources :share_transactions do
+    member do
+      get :confirm_approve
+      put :approve
+    end
+  end
   resources :share_applications
-  resources :share_transactions
+  resources :share_withdrawals
 
   resource :membership_application_form
 

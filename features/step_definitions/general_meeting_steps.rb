@@ -1,14 +1,24 @@
-Given /^there has been a past meeting$/ do
+include ActionView::Helpers::JavaScriptHelper
+
+Given(/^there has been a past meeting$/) do
   @general_meeting = @organisation.general_meetings.make!(:past)
 end
 
-Given /^no minutes for the past meeting have been entered yet$/ do
+Given(/^no minutes for the past meeting have been entered yet$/) do
   @general_meeting ||= @organisation.general_meetings.past.last
 
   @general_meeting.update_attribute(:minutes, nil)
 end
 
-When /^I follow "(.*?)" for the past meeting$/ do |link|
+Given(/^there is an upcoming General Meeting$/) do
+  @general_meeting = @meeting = @organisation.general_meetings.make!(:upcoming)
+end
+
+Given(/^there has been a General Meeting in the past$/) do
+  @general_meeting = @meeting = @organisation.general_meetings.make!(:past)
+end
+
+When(/^I follow "(.*?)" for the past meeting$/) do |link|
   @general_meeting ||= @organisation.general_meetings.past.last
 
   within("#general_meeting_#{@general_meeting.id}") do
@@ -16,18 +26,18 @@ When /^I follow "(.*?)" for the past meeting$/ do |link|
   end
 end
 
-When /^I choose the Members who were in attendance$/ do
+When(/^I choose the Members who were in attendance$/) do
   members = @organisation.members.limit(2)
   within('div.participants') do
     members.each do |member|
       fill_in("Add member", :with => member.name)
       sleep(1)
-      page.execute_script("$('.ui-menu-item a:contains(\"#{member.name}\")').trigger('mouseenter').click();")
+      page.execute_script("$('.ui-menu-item a:contains(\"#{escape_javascript(member.name)}\")').trigger('mouseenter').click();")
     end
   end
 end
 
-When /^I follow "(.*?)" for the meeting$/ do |link|
+When(/^I follow "(.*?)" for the meeting$/) do |link|
   @general_meeting ||= @organisation.general_meetings.last
 
   within("#general_meeting_#{@general_meeting.id}") do
@@ -35,12 +45,12 @@ When /^I follow "(.*?)" for the meeting$/ do |link|
   end
 end
 
-Then /^I should see the resolution in the list of resolutions to be considered at the meeting$/ do
+Then(/^I should see the resolution in the list of resolutions to be considered at the meeting$/) do
   @resolution ||= @organisation.resolutions.last
   page.should have_css(".resolutions", :text => @resolution.title)
 end
 
-Then /^I should see "(.*?)" for the past meeting$/ do |text|
+Then(/^I should see "(.*?)" for the past meeting$/) do |text|
   @general_meeting ||= @organisation.general_meetings.past.last
 
   within("#general_meeting_#{@general_meeting.id}") do
@@ -48,7 +58,7 @@ Then /^I should see "(.*?)" for the past meeting$/ do |text|
   end
 end
 
-Then /^I should see the minutes I entered$/ do
+Then(/^I should see the minutes I entered$/) do
   if @minute_type && @minute_type == :agenda_items
     page.should have_content("Apologies for Absence")
     page.should have_content("Bob Smith")
@@ -63,7 +73,7 @@ Then /^I should see the minutes I entered$/ do
   end
 end
 
-Then /^I should see the participants I chose$/ do
+Then(/^I should see the participants I chose$/) do
   members = @organisation.members.limit(2)
 
   within('.participants') do

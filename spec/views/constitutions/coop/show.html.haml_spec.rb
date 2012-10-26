@@ -32,29 +32,4 @@ describe 'constitutions/coop/show' do
     assign(:constitution, constitution)
   end
 
-  context "when user can create a Resolution" do
-    before(:each) do
-      view.stub(:can?).with(:create, Resolution).and_return(true)
-    end
-
-    it "renders an edit link button with the text 'Amend the Rules'" do
-      render
-      rendered.should have_selector(:input, 'data-url' => '/constitution/edit', :value => "Amend the Rules")
-    end
-  end
-
-  context "when user can create a ResolutionProposal" do
-    before(:each) do
-      view.stub(:can?).with(:create, ResolutionProposal).and_return(true)
-    end
-
-    it "renders an edit link button with the text 'Suggest amendments to the Rules'" do
-      render
-      rendered.should have_selector(:input,
-        'data-url' => '/constitution/edit',
-        :value => "Suggest amendments to the Rules"
-      )
-    end
-  end
-
 end

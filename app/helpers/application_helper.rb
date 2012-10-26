@@ -105,4 +105,11 @@ module ApplicationHelper
       end
     end
   end
+
+  # Returns a string describing how many (whole) months ago the given time was.
+  def months_ago_in_words(from_time)
+    distance_in_months = (Time.now.utc - from_time.to_time) / (1.month)
+    distance_in_months = distance_in_months.floor
+    pluralize(distance_in_months, 'month')
+  end
 end

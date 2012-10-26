@@ -28,6 +28,7 @@ class MembersController < ApplicationController
         @founder_member = co.build_founder_member
         @pending_members = co.members.pending
       end
+      @membership_issues = current_user.tasks.members_related
     end
 
     respond_to do |format|
@@ -125,6 +126,17 @@ class MembersController < ApplicationController
     st.approve!
 
     redirect_to members_path
+  end
+
+  def confirm_eject
+    @member = co.members.find(params[:id])
+  end
+
+  def eject
+    @member = co.members.find(params[:id])
+    @member.eject!
+    flash[:notice] = "#{@member.name}'s membership has been terminated."
+    redirect_to(members_path)
   end
 
 private

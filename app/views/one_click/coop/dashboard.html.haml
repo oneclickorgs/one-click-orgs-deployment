@@ -34,7 +34,7 @@
           %br
           = @upcoming_meeting.venue
           %br
-          = link_to("See agenda & details", meeting_path(@upcoming_meeting))
+          = link_to("See agenda & details", @upcoming_meeting)
       - if @upcoming_meetings_count
         %p.auxiliary
           = link_to("#{@upcoming_meetings_count} more upcoming", meetings_path)
@@ -57,8 +57,8 @@
     %p.right= link_to("See all meetings", meetings_path)
     %br.clear
 
-  .section
-    %h3 Members and shares
+  .section.membership_and_shares
+    %h3 Membership and shares
     - if @members_and_shares_tasks.present?
       %ul.tasks
         - @members_and_shares_tasks.each do |task|
@@ -77,7 +77,7 @@
           = content_tag_for(:li, proposal) do
             %h4 New proposal
             %p.title.left= proposal.title
-            %p.action.right= link_button("Vote", :url => proposal_path(proposal))
+            %p.action.right= link_button("Vote", :url => url_for(proposal))
             %br.clear
     - else
       %p No proposals currently open for voting.

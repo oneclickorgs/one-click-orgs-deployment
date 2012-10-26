@@ -4,6 +4,27 @@ describe ShareTransaction do
 
   it "updates the accounts' balances"
 
+  describe "withdrawal due dates" do
+    it "calculates the withdrawal due date as three months after the creation date" do
+      share_transaction = ShareTransaction.make(:created_at => Time.utc(2011, 11, 30))
+      share_transaction.withdrawal_due_date.should eq Date.new(2012, 2, 29)
+    end
+
+    describe "#withdrawal_due?" do
+      it "returns false when the withdrawal due date is in the future" do
+        share_transaction = ShareTransaction.make
+        share_transaction.stub(:withdrawal_due_date).and_return(Date.today.advance(:days => 1))
+        share_transaction.withdrawal_due?.should eq false
+      end
+
+      it "returns true when the withdrawal due date is today" do
+        share_transaction = ShareTransaction.make
+        share_transaction.stub(:withdrawal_due_date).and_return(Date.today)
+        share_transaction.withdrawal_due?.should eq true
+      end
+    end
+  end
+
   describe "tasks" do
     context "when transaction is a share application" do
       let(:share_transaction) {ShareTransaction.make(
@@ -28,6 +49,27 @@ describe ShareTransaction do
         secretary_tasks.should_receive(:create).with(:subject => share_transaction, :action => :mark_payment_received)
         share_transaction.save!
       end
+    end
+  end
+
+  describe "daily job" do
+    let(:organisation) {Coop.make!}
+    let(:organisation_share_account) {ShareAccount.make!(:owner => organisation)}
+    let(:member_account) {ShareAccount.make!(:owner => Member.make!)}
+    let!(:secretary) {organisation.members.make!(:secretary)}
+
+    it "exists" do
+      expect {ShareTransaction.run_daily_job}.to_not raise_error
+    end
+
+    it "creates a task for each withdrawal that is due" do
+      due_withdrawal = ShareTransaction.make!(:to_account => organisation_share_account, :created_at => 4.months.ago)
+      recent_withdrawal = ShareTransaction.make!(:to_account => organisation_share_account, :created_at => 1.week.ago)
+      application = ShareTransaction.make!(:to_account => member_account, :created_at => 4.months.ago)
+
+      expect {
+        ShareTransaction.run_daily_job
+      }.to change{secretary.tasks.count}.by(1)
     end
   end
 

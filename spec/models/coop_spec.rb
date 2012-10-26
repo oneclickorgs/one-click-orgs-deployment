@@ -168,6 +168,10 @@ describe Coop do
         it "sets the 'organisation' permission" do
           @coop.member_classes.find_by_name('Secretary').should have_permission(:organisation)
         end
+
+        it "sets the 'share_account' permission" do
+          @coop.member_classes.find_by_name('Secretary').should have_permission(:share_account)
+        end
       end
 
       it "creates an 'External Director' member class" do
@@ -348,6 +352,32 @@ describe Coop do
       minute = coop.build_minute
       minute.should be_a(Minute)
       minute.organisation.should == coop
+    end
+  end
+
+  describe "daily job" do
+    context "when there is a member who has failed to attain the minimum shareholding in 12 months" do
+      let(:coop) {Coop.make!(:minimum_shareholding => 3, :single_shareholding => false)}
+      let(:member) {coop.members.make!(:inducted_at => 13.months.ago)}
+
+      before(:each) do
+        coop.members.make!(:secretary)
+        member
+      end
+
+      it "adds a task for the member" do
+        Coop.run_daily_job
+        task = member.tasks.last
+        task.subject.should == member
+        task.action.should == 'minimum_shareholding_missed'
+      end
+
+      it "adds a task for the secretary about the member" do
+        Coop.run_daily_job
+        task = coop.secretary.tasks.last
+        task.subject.should == member
+        task.action.should == 'minimum_shareholding_missed'
+      end
     end
   end
 

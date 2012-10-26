@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $('#share_application_amount').observe_field(0.5, function()
   {
-    var newShareApplicationAmount = parseInt(this.value);
+    var newShareApplicationAmount = parseInt(this.value, 10);
     if (isNaN(newShareApplicationAmount)) {
       $('p.share_payment').hide();
     } else {

@@ -38,6 +38,7 @@ module OneClickOrgs
       :proposal_mailer_observer,
       :proposal_timestamp_observer,
       :resolution_proposal_task_observer,
+      :resolution_task_observer,
       :share_transaction_mailer_observer,
       :share_transaction_task_observer,
       :general_meeting_task_observer

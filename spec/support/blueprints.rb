@@ -182,6 +182,10 @@ GeneralMeeting.blueprint(:past) do
   happened_on { 3.days.ago }
 end
 
+GeneralMeeting.blueprint(:upcoming) do
+  happened_on { 2.weeks.from_now }
+end
+
 AnnualGeneralMeeting.blueprint do
 end
 

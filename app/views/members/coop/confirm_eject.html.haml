@@ -1,0 +1,15 @@
+%h2 Terminating a membership
+
+%p
+  You are about to terminate
+  %strong= @member.name + "'s"
+  membership.
+
+%p Are you sure you want to continue?
+
+= form_for(@member, :url => eject_member_path(@member), :method => :put) do |form|
+  %p
+    = form.submit "Terminate membership"
+
+%p
+  = link_to("Cancel and go back", member_path(@member))

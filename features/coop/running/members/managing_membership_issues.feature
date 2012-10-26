@@ -17,14 +17,13 @@ Feature: Managing membership issues
     And I should see the new member in the list of members
     And the new member should receive an invitation email
 
-  # @wip
-  # Scenario: Secretary handles a member who has failed to attain the minimum shareholding
-  #   Given context
-  #   When event
-  #   Then outcome
+  Scenario: Secretary handles a member who has failed to attain the minimum shareholding
+    Given there is a member who has failed to attain the minimum shareholding after 12 months
+    When the co-op daily job runs
+    And I go to the Members page
+    Then I should see a notification that the member has failed to attain the minimum shareholding
 
-  # @wip
-  # Scenario: Secretary handles a member who wishes to resign
-  #   Given context
-  #   When event
-  #   Then outcome
+  Scenario: Secretary handles a member who wishes to resign
+    Given a member has resigned
+    When I go to the Members page
+    Then I should see a notification that the member has resigned

@@ -11,7 +11,6 @@ Feature: Viewing rules
     When I go to the Rules page
     Then I should see the rules of the co-op
 
-  # @wip
-  # Scenario: Members views custom fields in the Rules
-  #   When I go to the Rules page
-  #   Then I should see the custom fields in the Rules filled in appropriately
+  Scenario: Members views custom fields in the Rules
+    When I go to the Rules page
+    Then I should see the custom fields in the Rules filled in appropriately

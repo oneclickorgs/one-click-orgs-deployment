@@ -17,31 +17,31 @@ def set_subdomain_to_signup_subdomain
   set_domain(Setting[:signup_domain])
 end
 
-Given /^the subdomain is "([^"]*)"$/ do |subdomain|
+Given(/^the subdomain is "([^"]*)"$/) do |subdomain|
   set_subdomain(subdomain)
 end
 
-When /^the domain is "([^"]*)"$/ do |domain|
+When(/^the domain is "([^"]*)"$/) do |domain|
   set_domain(domain)
 end
 
-When /^I open the "(.*?)" tab$/ do |tab_name|
+When(/^I open the "(.*?)" tab$/) do |tab_name|
   within('.ui-tabs-nav') do
     click_link(tab_name)
   end
 end
 
-Then /^the domain should be "([^"]*)"$/ do |domain|
+Then(/^the domain should be "([^"]*)"$/) do |domain|
   current_domain = URI.parse(current_url).host
   current_domain.should == domain
 end
 
-Then /^the subdomain should be "([^"]*)"$/ do |subdomain|
+Then(/^the subdomain should be "([^"]*)"$/) do |subdomain|
   current_subdomain = URI.parse(current_url).host.sub(".#{Setting[:base_domain].sub(/:\d+$/, '')}", '')
   current_subdomain.should == subdomain
 end
 
-Then /^I should get a "([^"]*)" download with the name of the organisation$/ do |extension|
+Then(/^I should get a "([^"]*)" download with the name of the organisation$/) do |extension|
   @organisation ||= Organisation.last
   page.response_headers['Content-Disposition'].should =~ Regexp.new("filename=\"#{Regexp.escape(@organisation.name)}.*#{Regexp.escape(extension)}\"")
 end

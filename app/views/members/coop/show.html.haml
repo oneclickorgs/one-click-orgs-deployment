@@ -19,7 +19,9 @@
     %dt Shares
     %dd= @member.shares_count
 
-- if @member.pending?
-  - if can?(:edit, @member)
+- if can?(:edit, @member) && @member != current_user
+  - if @member.pending?
     = form_for(@member, :url => induct_member_path(@member), :html => {:method => :put}) do |member_form|
       %p= member_form.submit "Accept application"
+  - if @member.active?
+    = link_to("Terminate membership", confirm_eject_member_path(@member))

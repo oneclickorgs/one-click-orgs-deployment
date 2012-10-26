@@ -7,6 +7,10 @@
 - if @membership_issues.present?
   .section
     %h3 Membership issues
+    %ul.tasks
+      - @membership_issues.each do |task|
+        = content_tag_for(:li, task) do
+          = render :partial => 'tasks/task', :locals => {:task => task}
 
 - if @founder_member
   %h3 Invite a new Founder Member

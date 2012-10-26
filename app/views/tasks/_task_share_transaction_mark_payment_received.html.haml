@@ -6,3 +6,6 @@
   A payment of
   = "£#{task.subject.amount}"
   is due.
+%p
+  = form_for(task.subject, :url => approve_share_transaction_path(task.subject)) do |share_transaction_form|
+    = share_transaction_form.submit("Mark as paid, and allot shares")

@@ -50,23 +50,3 @@
   - if can?(:create, Meeting)
     %p
       = link_to("Enter minutes for a meeting not shown here", new_minute_path)
-
-
-.section
-  %h3 Meetings settings
-  %p
-    The notice period for General Meetings is
-    = co.constitution.meeting_notice_period
-    clear days.
-  - if can?(:create, Resolution)
-    = link_button("Change the notice period", :url => new_change_meeting_notice_period_resolution_path)
-  %br.clear
-  %p
-    The quorum for General Meetings is the greater of
-    = co.constitution.quorum_number
-    members and
-    = co.constitution.quorum_percentage.to_s + '%'
-    of the membership.
-  - if can?(:create, Resolution)
-    = link_button("Change the quorum", :url => new_change_quorum_resolution_path)
-  %br.clear

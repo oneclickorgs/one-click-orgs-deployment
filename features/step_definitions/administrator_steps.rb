@@ -1,4 +1,4 @@
-Given /^I am an administrator$/ do
+Given(/^I am an administrator$/) do
   set_up_application_if_necessary
 
   @user = Administrator.make!

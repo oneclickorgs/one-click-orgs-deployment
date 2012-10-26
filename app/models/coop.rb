@@ -52,6 +52,7 @@ class Coop < Organisation
 
   has_one :share_account, :as => :owner
   has_many :withdrawals, :through => :share_account
+  has_many :deposits, :through => :share_account
 
   # Returns true if the requirements for moving to the 'proposed' state
   # have been fulfilled.
@@ -296,6 +297,7 @@ class Coop < Organisation
     directors.set_permission!(:vote, true)
     directors.set_permission!(:meeting, true)
     directors.set_permission!(:board_meeting, true)
+    directors.set_permission!(:share_account, true)
 
     secretaries = member_classes.find_or_create_by_name('Secretary')
     secretaries.set_permission!(:resolution, true)
@@ -307,6 +309,8 @@ class Coop < Organisation
     secretaries.set_permission!(:organisation, true)
     secretaries.set_permission!(:directorship, true)
     secretaries.set_permission!(:officership, true)
+    secretaries.set_permission!(:share_account, true)
+    secretaries.set_permission!(:share_transaction, true)
 
     external_directors = member_classes.find_or_create_by_name('External Director')
     external_directors.set_permission!(:board_resolution, true)
@@ -479,6 +483,22 @@ class Coop < Organisation
       ten_percent_of_membership
     else
       100
+    end
+  end
+
+  def self.run_daily_job
+    # Find all Coop members who have not attained the minimum shareholding within 12 months
+    # of membership.
+    all.each do |coop|
+      if !coop.single_shareholding && coop.minimum_shareholding
+        old_members = coop.members.where(["inducted_at <= ?", 12.months.ago])
+        old_members.select{|m| m.find_or_build_share_account.balance < coop.minimum_shareholding}.each do |member|
+          unless member.tasks.current.where(:subject_id => member.id, :subject_type => 'Member', :action => :minimum_shareholding_missed).first
+            member.tasks.create(:subject => member, :action => :minimum_shareholding_missed)
+            coop.secretary.tasks.create(:subject => member, :action => :minimum_shareholding_missed)
+          end
+        end
+      end
     end
   end
 end

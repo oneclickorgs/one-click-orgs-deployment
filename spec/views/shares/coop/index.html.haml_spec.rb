@@ -15,6 +15,18 @@ describe 'shares/coop/index' do
 
   let(:task) {mock_model(Task, :to_partial_name => 'task_share_transaction_make_payment')}
 
+  let(:members) {
+    [
+      mock_model(Member,
+        :id => 3000,
+        :name => "Bob Smith",
+        :find_or_build_share_account => mock_model(ShareAccount,
+          :balance => 4
+        )
+      )
+    ]
+  }
+
   before(:each) do
     view.stub(:co).and_return(organisation)
     view.stub(:current_user).and_return(user)
@@ -22,6 +34,8 @@ describe 'shares/coop/index' do
 
     assign(:tasks, [task])
     stub_template('tasks/_task_share_transaction_make_payment' => 'task template')
+
+    assign(:members, members)
   end
 
   it "displays the current share value" do
@@ -57,6 +71,66 @@ describe 'shares/coop/index' do
       it "renders a button to apply for more shares" do
         render
         rendered.should have_selector(:input, 'data-url' => '/share_applications/new')
+      end
+    end
+
+    context "when the user can create ShareWithdrawals" do
+      before(:each) do
+        view.stub(:can?).with(:create, ShareWithdrawal).and_return(true)
+      end
+
+      it "renders a button to withdraw shares" do
+        render
+        rendered.should have_selector(:input, 'data-url' => '/share_withdrawals/new')
+      end
+    end
+  end
+
+  context "when user can view ShareAccounts" do
+    before(:each) do
+      view.stub(:can?).with(:read, ShareAccount).and_return(true)
+    end
+
+    it "renders a table of the members' share ownership" do
+      render
+      rendered.should have_selector("table.share_account_balances") do |table|
+        table.should have_selector("tr#member_3000") do |tr|
+          tr.should have_content("Bob Smith")
+          tr.should have_content("4")
+        end
+      end
+    end
+  end
+
+  context "when the user can view ShareTransactions" do
+    let(:organisation_share_withdrawals) {[mock_model(ShareTransaction,
+      :id => 3000,
+      :from_account => share_account,
+      :created_at => Time.utc(2012, 5, 6, 12, 34, 56),
+      :amount => 1,
+      :withdrawal_due? => false,
+      :withdrawal_due_date => Date.new(2012, 8, 6)
+    )]}
+    let(:share_account) {mock_model(ShareAccount, :owner => member)}
+    let(:member) {mock_model(Member, :name => "Bob Smith")}
+
+    before(:each) do
+      view.stub(:can?).with(:read, ShareTransaction).and_return(true)
+      assign(:organisation_share_withdrawals, organisation_share_withdrawals)
+    end
+
+    it "renders a list of pending share withdrawals" do
+      render
+      rendered.should have_selector("ul.organisation_share_withdrawals") do |ul|
+        ul.should have_content("Bob Smith applied to withdraw 1 share on 6 May 2012.")
+        ul.should have_content("Payment will become due on 6 August 2012.")
+      end
+    end
+
+    it "renders a 'waive notice period' button for share withdrawals which are not due yet" do
+      render
+      rendered.should have_selector('ul.organisation_share_withdrawals') do |ul|
+        ul.should have_selector(:input, 'data-url' => '/share_transactions/3000/confirm_approve')
       end
     end
   end
