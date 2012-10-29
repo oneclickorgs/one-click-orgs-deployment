@@ -62,7 +62,7 @@ group :development, :test do
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
   gem "cucumber-rails", "~>0.4.1", :require => nil
-  gem "capybara", "~>0.4.1.2"
+  gem "capybara", "~>1.1.2"
   gem "database_cleaner"
   gem "launchy"
   gem "selenium-webdriver", "~>2.25.0"
