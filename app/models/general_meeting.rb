@@ -23,8 +23,8 @@ class GeneralMeeting < Meeting
           "Minutes of Previous Meeting",
           "Any Other Business",
           "Time and date of next meeting"
-        ].each do |title|
-          agenda_items.build(:title => title)
+        ].each_with_index do |title, index|
+          agenda_items.build(:title => title, :position => index + 1)
         end
       end
     end

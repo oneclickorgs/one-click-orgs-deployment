@@ -1,5 +1,6 @@
 %li
   = agenda_item_fields.text_field(:title, :class => 'inline')
+  = agenda_item_fields.hidden_field(:position)
   %a{:class => 'delete', :title => "Delete", :href => '#'}
     = image_tag('delete.png', :alt => "Delete")
   %a{:class => 'up', :title => "Move up", :href => '#'}
