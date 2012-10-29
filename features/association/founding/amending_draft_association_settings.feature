@@ -2,11 +2,11 @@ Feature: Amending draft association settings
   In order to make sure the constitution fits our needs
   As a founder
   I want to amend the draft association's settings
-  
+
   Background:
     Given the application is set up
     And I have created an association
-  
+
   Scenario: Amending draft association settings
     When I go to the amendments page
     And I fill in the organisation name with "Tea Club Mark II"
@@ -23,4 +23,4 @@ Feature: Amending draft association settings
     And I should see "5 minutes"
     And I should see "A Decision is made if a Proposal receives Supporting Votes from more than half of Members during the Voting Period. "
     And I should see "The Constitution may only be amended by a Decision where Supporting Votes from more than half of the Members are received during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
-    And I should see "New Members may be appointed (and existing Members ejected) only by a Decision Supporting Votes are received from all Members during the Voting Period."
+    And I should see "New Members may be appointed (and existing Members ejected) only by a Decision where Supporting Votes are received from all Members during the Voting Period."
