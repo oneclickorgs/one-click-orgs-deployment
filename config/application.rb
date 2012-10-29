@@ -25,23 +25,29 @@ module OneClickOrgs
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    config.active_record.observers =
-      :decision_mailer_observer,
-      :directorship_mailer_observer,
-      :election_task_observer,
-      :meeting_mailer_observer,
-      :member_observer,
-      :member_mailer_observer,
-      :member_task_observer,
-      :member_timestamp_observer,
-      :officership_mailer_observer,
-      :proposal_mailer_observer,
-      :proposal_timestamp_observer,
-      :resolution_proposal_task_observer,
-      :resolution_task_observer,
-      :share_transaction_mailer_observer,
-      :share_transaction_task_observer,
-      :general_meeting_task_observer
+
+    # Avoid loading observers while we are setting up the database,
+    # since they make ActiveRecord load model classes, which then
+    # complain when their corresponding DB table doesn't exist yet.
+    unless (File.basename($0) == 'rake' && ARGV.include?('db:migrate'))
+      config.active_record.observers =
+        :decision_mailer_observer,
+        :directorship_mailer_observer,
+        :election_task_observer,
+        :meeting_mailer_observer,
+        :member_observer,
+        :member_mailer_observer,
+        :member_task_observer,
+        :member_timestamp_observer,
+        :officership_mailer_observer,
+        :proposal_mailer_observer,
+        :proposal_timestamp_observer,
+        :resolution_proposal_task_observer,
+        :resolution_task_observer,
+        :share_transaction_mailer_observer,
+        :share_transaction_task_observer,
+        :general_meeting_task_observer
+    end
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
