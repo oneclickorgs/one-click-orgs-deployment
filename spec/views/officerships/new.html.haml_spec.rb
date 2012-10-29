@@ -16,7 +16,8 @@ describe 'officerships/new' do
     view.stub(:co).and_return(@organisation)
 
     @organisation.stub(:directors).and_return([
-      mock_model(Director, :id => 1, :name => "Claire Simmons")
+      mock_model(Director, :id => 1, :name => "Claire Simmons"),
+      mock_model(Director, :id => 3, :name => "Bob Smith")
     ])
     @organisation.stub(:offices).and_return([
       mock_model(Office, :id => 2, :title => "Treasurer")
@@ -54,6 +55,19 @@ describe 'officerships/new' do
   it "renders a submit button" do
     render
     rendered.should have_selector(:input, :type => 'submit')
+  end
+
+  context "when the officership has been pre-filled with an officer" do
+    before(:each) do
+      @officership.stub(:officer_id).and_return(3)
+    end
+
+    it "pre-selects the correct officer" do
+      render
+      rendered.should have_selector(:select, :name => 'officership[officer_id]') do |select|
+        select.should have_selector(:option, :value => '3', :content => 'Bob Smith', :selected => 'selected')
+      end
+    end
   end
 
 end
