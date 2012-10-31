@@ -16,6 +16,8 @@ Feature: Managing membership issues
     Then I should be on the Members page
     And I should see the new member in the list of members
     And the new member should receive an invitation email
+    When I go to the dashboard
+    Then I should no longer see a notification of the new membership application
 
   Scenario: Secretary handles a member who has failed to attain the minimum shareholding
     Given there is a member who has failed to attain the minimum shareholding after 12 months

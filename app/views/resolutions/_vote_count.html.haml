@@ -1,0 +1,10 @@
+- votes_for = proposal.votes.select{|v| v.for?}.size
+- votes_against = proposal.votes.select{|v| ! v.for?}.size
+
+%strong
+  = votes_for
+support
+\/
+%strong
+  = votes_against
+oppose

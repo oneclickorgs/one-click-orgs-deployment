@@ -75,6 +75,7 @@ class Coop < Organisation
   after_create :create_default_offices
   after_create :set_default_user_and_director_clauses
   after_create :create_share_account_if_necessary
+  after_create :set_default_clauses
 
   def member_count_for_proposal(proposal)
     # TODO check that this is correct
@@ -340,6 +341,13 @@ class Coop < Organisation
     self.max_producer_directors = 3
     self.max_consumer_directors = 3
 
+    self.save!
+  end
+
+  def set_default_clauses
+    self.quorum_number = 3
+    self.quorum_percentage = 25
+    self.meeting_notice_period = 14
     self.save!
   end
 

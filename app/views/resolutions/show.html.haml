@@ -11,6 +11,38 @@
   = link_to(@resolution.proposer.name, @resolution.proposer)
   = @resolution.creation_date.to_s(:at_on)
 
+- if @resolution.description?
+  %h3 Description
+  = render 'description', :proposal => @resolution
+
+%h3 Voting
+
+%p
+  Votes:
+  = render 'vote_count', :proposal => @resolution
+
+- if @resolution.open?
+  %p
+    Voting ends in
+    %strong
+      = distance_of_time_in_words_to_now(@resolution.end_date)
+    = "(" + @resolution.end_date.to_s(:at_on) + ")"
+
+- if @resolution.open?
+  - if can?(:create, Vote)
+    %p
+      = render 'vote', :proposal => @resolution
+  - else
+    %p
+      You cannot vote on this proposal.
+- else
+  %p
+    This proposal
+    -if @resolution.accepted?
+      %strong succeeded
+    -else
+      %strong failed
+
 %h3 Comments
 - @comments.each do |comment|
   .comment
