@@ -7,6 +7,7 @@ class ShareTransactionsController < ApplicationController
     find_share_transaction
     if can?(:update, @share_transaction)
       @share_transaction.approve!
+      Task.where(:subject_id => @share_transaction.id, :subject_type => 'ShareTransaction').each{|t| t.update_attribute(:completed_at, Time.now.utc)}
       flash[:notice] = "The share transaction was approved."
     end
     redirect_to shares_path
