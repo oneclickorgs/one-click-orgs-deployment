@@ -116,18 +116,22 @@ class MembersController < ApplicationController
   def induct
     @member = co.members.find(params[:id])
     @member.send_welcome = true
-    @member.induct!
+    if @member.can_induct?
+      @member.induct!
 
-    st = ShareTransaction.create(
-      :to_account => @member.find_or_create_share_account,
-      :from_account => co.share_account,
-      :amount => 1
-    )
-    st.save!
-    st.approve!
+      st = ShareTransaction.create(
+        :to_account => @member.find_or_create_share_account,
+        :from_account => co.share_account,
+        :amount => 1
+      )
+      st.save!
+      st.approve!
+    end
 
-    Task.where(:subject_id => @member.id, :subject_type => 'Member', :action => 'process_application').each do |task|
-      task.update_attribute(:completed_at, Time.now.utc)
+    if @member.active?
+      Task.where(:subject_id => @member.id, :subject_type => 'Member', :action => 'process_application').each do |task|
+        task.update_attribute(:completed_at, Time.now.utc)
+      end
     end
 
     redirect_to members_path
