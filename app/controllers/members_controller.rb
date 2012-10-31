@@ -28,7 +28,8 @@ class MembersController < ApplicationController
         @founder_member = co.build_founder_member
         @pending_members = co.members.pending
       end
-      @membership_issues = current_user.tasks.members_related
+      @membership_issues = current_user.tasks.members_related.current
+
     end
 
     respond_to do |format|
