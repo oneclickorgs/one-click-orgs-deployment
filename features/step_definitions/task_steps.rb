@@ -12,6 +12,13 @@ Then(/^I should see a notification of the new membership application$/) do
   end
 end
 
+Then(/^I should no longer see a notification of the new membership application$/) do
+  @member ||= @organisation.members.last
+  within('.tasks') do
+    page.should have_no_css("a[href='/members/#{@member.to_param}']")
+  end
+end
+
 Then(/^I should see a task telling me to vote in the resolution$/) do
   @resolution ||= @organisation.resolutions.last
   within('.tasks') do

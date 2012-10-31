@@ -125,6 +125,10 @@ class MembersController < ApplicationController
     st.save!
     st.approve!
 
+    Task.where(:subject_id => @member.id, :subject_type => 'Member', :action => 'process_application').each do |task|
+      task.update_attribute(:completed_at, Time.now.utc)
+    end
+
     redirect_to members_path
   end
 
