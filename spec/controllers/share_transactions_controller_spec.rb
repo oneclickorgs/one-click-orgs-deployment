@@ -52,6 +52,8 @@ describe ShareTransactionsController do
     before(:each) do
       withdrawals.stub(:find_by_id).and_return(share_transaction)
       controller.stub(:can?).with(:update, share_transaction).and_return(true)
+      share_transaction.stub(:can_approve?).and_return(true)
+      share_transaction.stub(:approved?).and_return(true)
     end
 
     def put_approve
