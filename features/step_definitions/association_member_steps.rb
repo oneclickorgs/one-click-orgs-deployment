@@ -74,10 +74,6 @@ When(/^I click on the resign link, and confirm my leaving$/) do
   click_link_or_button "Resign"
 end
 
-When(/^I agree to abide by the constitution$/) do
-  click_button "I agree to abide"
-end
-
 Then(/^I should be logged out, with a message telling me I have resigned\.$/) do
   page.should have_css "h2", :text => "You have now resigned"
   # page.should have_css '#notice', :text => 'resigned successfully'
