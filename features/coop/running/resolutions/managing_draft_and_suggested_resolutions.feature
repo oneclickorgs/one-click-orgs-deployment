@@ -41,6 +41,8 @@ Feature: Managing draft and suggested resolutions
     And I press "Start an electronic vote" for the suggested resolution
     Then I should see the resolution in the list of currently-open resolutions
     And I should not see the suggested resolution in the list of suggested resolutions
+    When I go to the Dashboard
+    Then I should not see a notification to process the suggested resolution
 
   Scenario: Secretary adds a suggested resolution to a meeting
     Given there is a suggested resolution

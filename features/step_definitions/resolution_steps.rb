@@ -197,3 +197,8 @@ Then(/^I should not see the suggested resolution in the list of suggested resolu
     page.should have_no_css('.resolution_proposals')
   end
 end
+
+Then(/^I should not see a notification to process the suggested resolution$/) do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  page.should have_no_css("a[href='/resolution_proposals/#{@resolution_proposal.to_param}']")
+end
