@@ -45,6 +45,11 @@ Given(/^there is a passed resolution to change the organisation name to 'The Tea
   @resolution.close!
 end
 
+Given(/^I have voted to support the resolution$/) do
+  @resolution ||= @organisation.resolutions.last
+  @user.cast_vote(:for, @resolution)
+end
+
 When(/^I enter the text (?:for|of) the (?:|new )resolution$/) do
   if page.has_field?('Title of the resolution') || page.has_field?('Text of the resolution')
     if page.has_field?('Title of the resolution')
@@ -59,24 +64,12 @@ When(/^I enter the text (?:for|of) the (?:|new )resolution$/) do
   end
 end
 
-When(/^I choose to allow electronic voting on the resolution$/) do
-  choose_electronic_voting
-end
-
 When(/^I choose to open the resolution for electronic voting$/) do
   choose_electronic_voting
 end
 
-When(/^I choose to save the resolution for consideration at a future meeting$/) do
-  choose_draft
-end
-
 When(/^I choose to save the resolution for consideration at a future meeting of the board$/) do
   choose_draft
-end
-
-When(/^I certify that the Board has decided to open this resolution$/) do
-  check("resolution_certification")
 end
 
 When(/^I press "(.*?)" for the draft resolution$/) do |button|
@@ -138,13 +131,6 @@ Then(/^I should see the (?:|new )resolution in the list of currently\-open resol
   end
 end
 
-Then(/^I should see the new resolution in the list of suggested resolutions$/) do
-  @resolution_proposal ||= @organisation.resolution_proposals.last
-  within('.resolution_proposals') do
-    page.should have_content(@resolution_proposal.description)
-  end
-end
-
 Then(/^I should see the amended resolution text in the list of suggested resolutions$/) do
   within('.resolution_proposals') do
     page.should have_content("New suggested resolution description.")
@@ -177,19 +163,8 @@ Then(/^the open resolution should be to change the quorum to the greater of (\d+
   end
 end
 
-Then(/^I should see the suggested resolution in the list of suggested resolutons$/) do
-  @resolution_proposal ||= @organisation.resolution_proposals.last
-  page.should have_css("li#resolution_proposal_#{@resolution_proposal.id}")
-end
-
 Then(/^I should see a draft resolution "(.*?)"$/) do |title|
   within('.draft_proposals') do
-    page.should have_content(title)
-  end
-end
-
-Then(/^I should see a suggested resolution "(.*?)"$/) do |title|
-  within('.resolution_proposals') do
     page.should have_content(title)
   end
 end
@@ -199,10 +174,6 @@ Then(/^I should see the suggested resolution in the list of my suggestions$/) do
   within('.my_resolution_proposals') do
     page.should have_content(@resolution_proposal.title)
   end
-end
-
-Then(/^there should be a suggested resolution "(.*?)"$/) do |title|
-  @organisation.resolution_proposals.where(:title => title).first.should be_present
 end
 
 Then(/^I should see a special link to share the proposal$/) do
@@ -218,4 +189,21 @@ Then(/^the proposal should be open for voting as a resolution$/) do
   @resolution.title.should eq @proposal.title
   @resolution.description.should eq @proposal.description
   @resolution.should be_open
+end
+
+Then(/^I should not see the suggested resolution in the list of suggested resolutions$/) do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  if page.has_css?('.resolution_proposals')
+    within('.resolution_proposals') do
+      page.should have_no_content(@resolution_proposal.title)
+      page.should have_no_content(@resolution_proposal.description)
+    end
+  else
+    page.should have_no_css('.resolution_proposals')
+  end
+end
+
+Then(/^I should not see a notification to process the suggested resolution$/) do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  page.should have_no_css("a[href='/resolution_proposals/#{@resolution_proposal.to_param}']")
 end

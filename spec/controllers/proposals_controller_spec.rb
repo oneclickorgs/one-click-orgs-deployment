@@ -25,9 +25,12 @@ describe ProposalsController do
         @organisation.stub_chain(:resolutions, :accepted).and_return([])
         @organisation.stub_chain(:resolutions, :rejected).and_return([])
 
-        @organisation.stub(:resolution_proposals).and_return(mock("resolution proposals",
-          :where => []
-        ))
+        @organisation.stub(:resolution_proposals).and_return(
+          @resolution_proposals_association = mock("resolution proposals association",
+            :currently_open => [],
+            :where => []
+          )
+        )
 
         @organisation.stub_chain(:general_meetings, :upcoming).and_return([])
       end
@@ -49,13 +52,12 @@ describe ProposalsController do
       end
 
       it "looks up and assigns the resolution proposals" do
-        @resolution_proposals_association = mock("resolution proposals association")
-
-        @organisation.should_receive(:resolution_proposals).and_return(@resolution_proposals_association)
+        @currently_open_resolution_proposals = mock("currently-open resolution proposals")
+        @resolution_proposals_association.should_receive(:currently_open).and_return(@currently_open_resolution_proposals)
 
         get :index
 
-        assigns[:resolution_proposals].should == @resolution_proposals_association
+        assigns[:resolution_proposals].should == @currently_open_resolution_proposals
       end
     end
   end

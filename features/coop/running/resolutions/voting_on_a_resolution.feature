@@ -16,3 +16,8 @@ Feature: Voting on a resolution
     When I go to the Resolutions page
     And I vote to support the resolution
     Then I should see "You voted to support this resolution."
+
+  Scenario: Member's 'vote' task is dismissed once they have voted
+    Given I have voted to support the resolution
+    When I go to the Dashboard
+    Then I should not see a task telling me to vote in the resolution

@@ -26,3 +26,15 @@ Then(/^I should see a task telling me to vote in the resolution$/) do
     page.should have_css("a[href='/resolutions/#{@resolution.to_param}']")
   end
 end
+
+Then /^I should not see a task telling me to vote in the resolution$/ do
+  @resolution ||= @organisation.resolutions.last
+  if page.has_css?('.tasks')
+    within('.tasks') do
+      page.should have_no_content(@resolution.title)
+      page.should have_no_css("a[href='/resolutions/#{@resolution.to_param}']")
+    end
+  else
+    page.should have_no_css('.tasks')
+  end
+end

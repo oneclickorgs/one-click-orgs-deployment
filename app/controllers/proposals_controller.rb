@@ -6,7 +6,7 @@ class ProposalsController < ApplicationController
     when Coop
       @proposals = co.resolutions.currently_open
       @draft_proposals = co.resolutions.draft
-      @resolution_proposals = co.resolution_proposals
+      @resolution_proposals = co.resolution_proposals.currently_open
 
       @closed_proposals = (co.resolutions.accepted + co.resolutions.rejected).sort{|a, b| a.close_date <=> b.close_date}
 
