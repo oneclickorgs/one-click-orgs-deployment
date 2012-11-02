@@ -185,3 +185,15 @@ Then(/^the proposal should be open for voting as a resolution$/) do
   @resolution.description.should eq @proposal.description
   @resolution.should be_open
 end
+
+Then(/^I should not see the suggested resolution in the list of suggested resolutions$/) do
+  @resolution_proposal ||= @organisation.resolution_proposals.last
+  if page.has_css?('.resolution_proposals')
+    within('.resolution_proposals') do
+      page.should have_no_content(@resolution_proposal.title)
+      page.should have_no_content(@resolution_proposal.description)
+    end
+  else
+    page.should have_no_css('.resolution_proposals')
+  end
+end
