@@ -45,6 +45,11 @@ Given(/^there is a passed resolution to change the organisation name to 'The Tea
   @resolution.close!
 end
 
+Given(/^I have voted to support the resolution$/) do
+  @resolution ||= @organisation.resolutions.last
+  @user.cast_vote(:for, @resolution)
+end
+
 When(/^I enter the text (?:for|of) the (?:|new )resolution$/) do
   if page.has_field?('Title of the resolution') || page.has_field?('Text of the resolution')
     if page.has_field?('Title of the resolution')
