@@ -30,7 +30,7 @@ describe "companies/new" do
     render
     rendered.should have_selector(:input, :type => 'text', :name => 'member[first_name]')
     rendered.should have_selector(:input, :type => 'text', :name => 'member[last_name]')
-    rendered.should have_selector(:input, :type => 'text', :name => 'member[email]')
+    rendered.should have_selector(:input, :type => 'email', :name => 'member[email]')
     rendered.should have_selector(:input, :type => 'password', :name => 'member[password]')
     rendered.should have_selector(:input, :type => 'password', :name => 'member[password_confirmation]')
   end

@@ -56,7 +56,7 @@ describe "members/company/index" do
   it "renders a new director form" do
     render
     rendered.should have_selector(:form, :action => '/directors') do |form|
-      form.should have_selector(:input, :type => 'text', :name => 'director[email]')
+      form.should have_selector(:input, :type => 'email', :name => 'director[email]')
       form.should have_selector(:input, :type => 'text', :name => 'director[first_name]')
       form.should have_selector(:input, :type => 'text', :name => 'director[last_name]')
       form.should have_selector(:select, :name => 'director[elected_on(1i)]')
