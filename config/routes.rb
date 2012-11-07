@@ -205,6 +205,12 @@ OneClickOrgs::Application.routes.draw do
 
   resource :board
 
+  resources :tasks do
+    member do
+      put :dismiss
+    end
+  end
+
   get '/admin' => 'admin#index'
 
   namespace :admin do

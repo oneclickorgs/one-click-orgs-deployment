@@ -39,7 +39,7 @@ class OneClickController < ApplicationController
         return
       end
 
-      @tasks = current_user.tasks.current
+      @tasks = current_user.tasks.current.undismissed
 
       @upcoming_meeting = co.meetings.upcoming.order('happened_on ASC').first
       if co.meetings.upcoming.count > 1
