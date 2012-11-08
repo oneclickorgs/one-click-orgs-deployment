@@ -15,7 +15,12 @@ describe SharesController do
   describe "GET index" do
     let(:tasks) {mock('tasks')}
     let(:members) {mock('members')}
-    let(:organisation_deposits) {mock("deposits to the organisation")}
+
+    let(:organisation_deposits) {mock("deposits to the organisation",
+      :pending => organisation_pending_deposits
+    )}
+    let(:organisation_pending_deposits) {mock("pending deposits to the organisation")}
+
     let(:organisation_withdrawals) {mock("withdrawals from the organisation",
       :pending => organisation_pending_withdrawals
     )}
@@ -45,9 +50,9 @@ describe SharesController do
     end
 
     it "finds pending share withdrawals" do
-      @organisation.should_receive(:deposits).and_return(organisation_deposits)
+      organisation_deposits.should_receive(:pending).and_return(organisation_pending_deposits)
       get_index
-      assigns[:organisation_share_withdrawals].should eq organisation_deposits
+      assigns[:organisation_share_withdrawals].should eq organisation_pending_deposits
     end
 
     it "finds pending share applications" do
