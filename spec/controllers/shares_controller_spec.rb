@@ -15,12 +15,17 @@ describe SharesController do
   describe "GET index" do
     let(:tasks) {mock('tasks')}
     let(:members) {mock('members')}
-    let(:organisation_share_withdrawals) {mock('organisation_share_withdrawals')}
+    let(:organisation_deposits) {mock("deposits to the organisation")}
+    let(:organisation_withdrawals) {mock("withdrawals from the organisation",
+      :pending => organisation_pending_withdrawals
+    )}
+    let(:organisation_pending_withdrawals) {mock("pending withdrawals from the organisation")}
 
     before(:each) do
       @user.stub_chain(:tasks, :current, :shares_related).and_return(tasks)
       @organisation.stub_chain(:members, :order).and_return(members)
-      @organisation.stub(:deposits).and_return(organisation_share_withdrawals)
+      @organisation.stub(:deposits).and_return(organisation_deposits)
+      @organisation.stub(:withdrawals).and_return(organisation_withdrawals)
       controller.stub(:can?).with(:read, ShareTransaction).and_return(true)
       @user.stub_chain(:find_or_build_share_account, :withdrawals, :pending).and_return([])
     end
@@ -40,9 +45,15 @@ describe SharesController do
     end
 
     it "finds pending share withdrawals" do
-      @organisation.should_receive(:deposits).and_return(organisation_share_withdrawals)
+      @organisation.should_receive(:deposits).and_return(organisation_deposits)
       get_index
-      assigns[:organisation_share_withdrawals].should eq organisation_share_withdrawals
+      assigns[:organisation_share_withdrawals].should eq organisation_deposits
+    end
+
+    it "finds pending share applications" do
+      organisation_withdrawals.should_receive(:pending).and_return(organisation_pending_withdrawals)
+      get_index
+      assigns[:organisation_share_applications].should == organisation_pending_withdrawals
     end
   end
 
