@@ -150,7 +150,7 @@ describe OneClickController do
       @organisation.stub_chain(:meetings, :upcoming, :count).and_return(0)
       @organisation.stub_chain(:meetings, :past, :order, :first)
 
-      @organisation.stub(:resolutions).and_return([])
+      @organisation.stub(:resolutions).and_return(mock("resolutions", :currently_open => []))
       @organisation.stub(:resolution_proposals).and_return([])
       @organisation.stub(:decisions).and_return([])
 
