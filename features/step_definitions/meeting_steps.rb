@@ -137,24 +137,8 @@ When(/^I enter a venue for the meeting$/) do
   fill_in_venue
 end
 
-When(/^I enter an agenda for the meeting$/) do
-  fill_in_agenda
-end
-
 When(/^I enter the business to be transacted during the meeting$/) do
   fill_in_agenda
-end
-
-When(/^I certify that the Board has decided to convene the meeting$/) do
-  check_certification
-end
-
-When(/^I check the certification$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^I enter "(.*?)" for the new notice period$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
 end
 
 When(/^I convene a General Meeting$/) do

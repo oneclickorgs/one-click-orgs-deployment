@@ -1,3 +1,5 @@
+require 'action_controller/record_identifier'
+
 Given(/^there is a Director$/) do
   @director = @organisation.members.make!(:director)
 end
@@ -171,6 +173,17 @@ When(/^I choose "(.*?)" from the list of offices$/) do |title|
   select(title, :from => 'officership[office_id]')
 end
 
+When(/^I fill in the new office with "(.*?)"$/) do |title|
+  fill_in('office[title]', :with => title)
+end
+
+When(/^I press "(.*?)" for the director "(.*?)"$/) do |button_title, director_name|
+  director = @organisation.directors.find_by_name(director_name)
+  within("#" + ActionController::RecordIdentifier.dom_id(director)) do
+    click_button(button_title)
+  end
+end
+
 Then(/^I should see that director listed as "(.*?)" in the list of Officers$/) do |office|
   within("#member_#{@director.id}") do
     page.should have_content(office)
@@ -238,4 +251,8 @@ Then(/^I should see a list of officers of the draft co\-op$/) do
     page.should have_content(officer.name)
     page.should have_content(officer.office.title)
   end
+end
+
+Then(/^I should see "(.*?)" in the list of unoccupied offices$/) do |office_title|
+  page.should have_css('ul.offices', :text => office_title)
 end

@@ -77,7 +77,10 @@
           = content_tag_for(:li, proposal) do
             %h4 New proposal
             %p.title.left= proposal.title
-            %p.action.right= link_button("Vote", :url => url_for(proposal))
+            - if proposal.is_a?(BoardResolution)
+              %p.action.right= link_button("Vote", :url => board_resolution_path(proposal))
+            - else
+              %p.action.right= link_button("Vote", :url => resolution_path(proposal))
             %br.clear
     - else
       %p No proposals currently open for voting.

@@ -39,7 +39,7 @@ class OneClickController < ApplicationController
         return
       end
 
-      @tasks = current_user.tasks.current
+      @tasks = current_user.tasks.current.undismissed
 
       @upcoming_meeting = co.meetings.upcoming.order('happened_on ASC').first
       if co.meetings.upcoming.count > 1
@@ -48,7 +48,7 @@ class OneClickController < ApplicationController
 
       @last_meeting = co.meetings.past.order('happened_on DESC').first
 
-      @open_proposals_without_vote = co.proposals.currently_open.reject{|p| p.vote_by(current_user)}
+      @open_proposals_without_vote = co.resolutions.currently_open.reject{|p| p.vote_by(current_user)}
 
       @members_and_shares_tasks = current_user.tasks.current.members_or_shares_related
     end

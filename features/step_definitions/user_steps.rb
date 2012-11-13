@@ -9,10 +9,6 @@ Given(/^I have been invited to become a founding member$/) do
   )
 end
 
-Given(/^there are two other founding members$/) do
-  step "there are enough founding members to start the founding vote"
-end
-
 Given(/^I have been invited to join the organisation$/) do
   @user ||= @organisation.members.make!(:pending, :send_welcome => true)
   @user.should_not be_inducted

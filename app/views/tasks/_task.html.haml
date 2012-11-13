@@ -1,1 +1,3 @@
 = render(:partial => "tasks/#{task.to_partial_name}", :locals => {:task => task})
+%p
+  = link_to("Dismiss", dismiss_task_path(task), :method => :put)

@@ -1,7 +1,7 @@
 %p
   = form.label(:director_id, "Who are you appointing as a Director?")
 %p
-  = form.select(:director_id, options_from_collection_for_select((co.members - co.directors), :id, :name))
+  = form.select(:director_id, (co.members - co.directors).map{|m| [m.name, m.id]})
 - if co.active?
   %p
     = link_to("Appoint a non-member Director", external_new_directorship_path)

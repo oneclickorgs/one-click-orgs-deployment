@@ -150,7 +150,7 @@ describe OneClickController do
       @organisation.stub_chain(:meetings, :upcoming, :count).and_return(0)
       @organisation.stub_chain(:meetings, :past, :order, :first)
 
-      @organisation.stub(:resolutions).and_return([])
+      @organisation.stub(:resolutions).and_return(mock("resolutions", :currently_open => []))
       @organisation.stub(:resolution_proposals).and_return([])
       @organisation.stub(:decisions).and_return([])
 
@@ -160,19 +160,21 @@ describe OneClickController do
       @current_tasks_association = mock("current tasks association")
       @tasks_association.stub(:current).and_return(@current_tasks_association)
 
+      @current_tasks_association.stub(:undismissed).and_return(@undismissed_tasks)
+
       @current_tasks_association.stub(:members_or_shares_related)
 
       @organisation.stub(:active?).and_return(true)
     end
 
-    it "finds the current user's current tasks" do
-      @tasks_association.should_receive(:current).and_return(@current_tasks_association)
+    it "finds the current user's current undismissed tasks" do
+      @current_tasks_association.should_receive(:undismissed).and_return(@undismissed_tasks)
       get_dashboard
     end
 
     it "assigns the current user's current tasks" do
       get_dashboard
-      assigns[:tasks].should == @current_tasks_association
+      assigns[:tasks].should == @undismissed_tasks
     end
   end
 

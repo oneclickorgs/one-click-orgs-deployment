@@ -18,6 +18,10 @@ OneClickOrgs.renumberChildFields = function(containers)
         var existingId = $(inputElement).attr('name').match(regexp)[1];
         $(inputElement).attr('name', $(inputElement).attr('name').replace('[' + existingId + ']', '[' + index.toString() + ']'));
         $(inputElement).attr('id', $(inputElement).attr('id').replace('_' + existingId + '_', '_' + index.toString() + '_'));
+
+        if ($(inputElement).attr('name').match(/\[position\]/)) {
+          $(inputElement).val((index + 1).toString());
+        }
       }
     });
   });

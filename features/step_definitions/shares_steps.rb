@@ -180,3 +180,7 @@ end
 Then(/^I should see a notice that this withdrawal will terminate my membership$/) do
   page.should have_content("your membership will be terminated")
 end
+
+Then(/^I should no longer see a notification about the member's share application$/) do
+  page.should have_no_content("#{@member.name} applied")
+end

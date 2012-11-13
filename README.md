@@ -24,7 +24,7 @@ For installation instructions, see [HACKING.md](https://github.com/oneclickorgs/
 One Click Orgs is licensed under the [GNU Affero General Public License, Version 3](http://www.fsf.org/licensing/licenses/agpl-3.0.html).
 
     One Click Orgs - Create legal organisations with just one click.
-    Copyright (C) 2009, 2010, 2011 Circus Foundation
+    Copyright (C) 2009, 2010, 2011, 2012 Circus Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as

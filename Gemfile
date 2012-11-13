@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.1.3"
+gem "bundler", "~>1.2.1"
 
 gem "rails", "3.2.8"
 
@@ -30,7 +30,7 @@ gem "mysql", "~>2.8.1"
 group :assets do
   gem 'sass-rails', '~>3.2.5'
   gem 'uglifier', '~>1.2.4'
-  gem 'therubyracer'
+  gem 'therubyracer', '~>0.10.2'
 end
 
 gem "jquery-rails", "~>2.0.2"

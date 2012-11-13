@@ -105,18 +105,26 @@ describe 'shares/coop/index' do
   context "when the user can view ShareTransactions" do
     let(:organisation_share_withdrawals) {[mock_model(ShareTransaction,
       :id => 3000,
-      :from_account => share_account,
+      :from_account => mock_model(ShareAccount,
+        :owner => mock_model(Member, :name => "Bob Smith")
+      ),
       :created_at => Time.utc(2012, 5, 6, 12, 34, 56),
       :amount => 1,
       :withdrawal_due? => false,
       :withdrawal_due_date => Date.new(2012, 8, 6)
     )]}
-    let(:share_account) {mock_model(ShareAccount, :owner => member)}
-    let(:member) {mock_model(Member, :name => "Bob Smith")}
+    let(:organisation_share_applications) {[mock_model(ShareTransaction,
+      :to_account => mock_model(ShareAccount,
+        :owner => mock_model(Member, :name => 'Jane Baker')
+      ),
+      :created_at => Time.utc(2012, 8, 1, 12, 34, 56),
+      :amount => 2
+    )]}
 
     before(:each) do
       view.stub(:can?).with(:read, ShareTransaction).and_return(true)
       assign(:organisation_share_withdrawals, organisation_share_withdrawals)
+      assign(:organisation_share_applications, organisation_share_applications)
     end
 
     it "renders a list of pending share withdrawals" do
@@ -131,6 +139,14 @@ describe 'shares/coop/index' do
       render
       rendered.should have_selector('ul.organisation_share_withdrawals') do |ul|
         ul.should have_selector(:input, 'data-url' => '/share_transactions/3000/confirm_approve')
+      end
+    end
+
+    it "renders a list of pending share applications" do
+      render
+      rendered.should have_selector("ul.organisation_share_applications") do |ul|
+        ul.should have_content("Jane Baker applied for 2 shares on 1 August 2012.")
+        ul.should have_content("A payment of £2 is due.")
       end
     end
   end

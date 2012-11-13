@@ -146,6 +146,10 @@ class Member < ActiveRecord::Base
     when :against
       Vote.create(:member => self, :proposal => proposal, :for => false)
     end
+
+    tasks.where(:subject_type => proposal.class.base_class.name, :subject_id => proposal.id, :action => 'vote').each do |task|
+      task.update_attribute(:completed_at, Time.now.utc)
+    end
   end
 
   def inducted?

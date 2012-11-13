@@ -67,6 +67,24 @@
               Payment will become due on
               = share_withdrawal.withdrawal_due_date.to_s(:long) + '.'
               = link_button("Waive the notice period", :url => confirm_approve_share_transaction_path(share_withdrawal))
+  - if @organisation_share_applications.present?
+    .section
+      %h3 Outstanding share applications
+      %ul.organisation_share_applications
+        - @organisation_share_applications.each do |share_application|
+          = content_tag_for(:li, share_application) do
+            %p
+              = link_to(share_application.to_account.owner.name, member_path(share_application.to_account.owner))
+              applied for
+              = pluralize(share_application.amount, 'share')
+              on
+              = share_application.created_at.to_date.to_s(:long) + '.'
+              A payment of
+              = "£#{share_application.amount}"
+              is due.
+            %p
+              = form_for(share_application, :url => approve_share_transaction_path(share_application)) do |share_transaction_form|
+                = share_transaction_form.submit("Mark as paid, and allot shares")
 
 - if can?(:read, ShareAccount)
   .section

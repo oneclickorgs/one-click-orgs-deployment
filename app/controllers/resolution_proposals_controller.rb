@@ -34,8 +34,14 @@ class ResolutionProposalsController < ApplicationController
 
   def pass
     @resolution_proposal = co.resolution_proposals.find(params[:id])
+
     @resolution_proposal.force_passed = true
     @resolution_proposal.close!
+
+    Task.where(:subject_type => @resolution_proposal.class.base_class.name, :subject_id => @resolution_proposal.id).each do |task|
+      task.update_attribute(:completed_at, Time.now.utc)
+    end
+
     redirect_to proposals_path
   end
 

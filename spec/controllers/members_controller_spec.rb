@@ -65,7 +65,7 @@ describe MembersController do
       before(:each) do
         @organisation.stub(:members).and_return(members)
         controller.stub(:can?).and_return(false)
-        @user.stub_chain(:tasks, :members_related)
+        @user.stub_chain(:tasks, :members_related, :current)
       end
 
       def get_index
@@ -87,6 +87,8 @@ describe MembersController do
       let(:members){mock("members association", :find => member)}
       let(:member){mock_model(Member,
         :send_welcome= => true,
+        :can_induct? => true,
+        :active? => true,
         :induct! => nil,
         :find_or_create_share_account => member_share_account
       )}
