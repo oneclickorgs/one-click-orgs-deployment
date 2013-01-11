@@ -11,8 +11,8 @@ class ChangeMemberClassProposalsController < ApplicationController
     else
       # TODO Use a render instead of redirect, so we can preserve the entered
       # form details, and use error_messages_for to present errors better.
-      flash[:error] = "Error creating proposal: #{proposal.errors.inspect}"
-      redirect_back_or_default(member_path(@member))
+      flash[:error] = "Error creating proposal: #{@change_member_class_proposal.errors.inspect}"
+      redirect_back_or_default(member_path(@change_member_class_proposal.member))
     end
   end
 end

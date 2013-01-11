@@ -3,6 +3,8 @@ require 'one_click_orgs/parameters_serialisation'
 class Proposal < ActiveRecord::Base
   include OneClickOrgs::ParametersSerialisation
   
+  attr_accessible :title, :proposer_member_id, :description, :parameters
+  
   state_machine :initial => :open do
     event :close do
       transition :open => :accepted, :if => :passed?
@@ -20,7 +22,7 @@ class Proposal < ActiveRecord::Base
   has_one :decision
   has_many :comments, :as => :commentable
   
-  validates_presence_of :proposer_member_id
+  validates_presence_of :proposer
   
   scope :currently_open, lambda {where(["state = 'open' AND close_date > ?", Time.now.utc])}
   scope :failed, lambda {where(["close_date < ? AND state = 'rejected'", Time.now.utc]).order('close_date DESC')}

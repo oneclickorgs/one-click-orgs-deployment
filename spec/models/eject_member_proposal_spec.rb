@@ -12,7 +12,7 @@ describe EjectMemberProposal do
   end
   
   it "should eject the member after passing, disabling the account" do
-    @m = @organisation.members.make    
+    @m = @organisation.members.make!    
     
     @p = @organisation.eject_member_proposals.new
     @m.should be_active

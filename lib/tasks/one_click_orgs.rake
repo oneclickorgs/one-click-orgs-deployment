@@ -69,17 +69,13 @@ and visit the site in your browser (usually at http://localhost:3000 ).
       require 'spec/support/machinist'
       require 'spec/support/blueprints'
       
-      # The blueprints use Sham to generate the same set of fake values in
-      # order each time the tests are run. However, this will cause uniquness 
-      # validation errors here if this task has already been run before.
-      # So, we skip Sham for the necessary attributes.
-      association = Association.make(
+      association = Association.make!(
         :subdomain => Faker::Internet.domain_word
       )
       association.active!
       
       member_class = association.member_classes.find_by_name("Member")
-      members = association.members.make_n(3,
+      members = association.members.make!(3,
         :member_class => member_class,
         :password => password,
         :password_confirmation => password

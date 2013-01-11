@@ -1,4 +1,6 @@
 class MemberClass < ActiveRecord::Base
+  attr_accessible :name, :description
+  
   belongs_to :organisation
   has_many :members
 

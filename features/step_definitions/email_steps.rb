@@ -4,6 +4,15 @@ def last_email
   ActionMailer::Base.deliveries.last
 end
 
+def follow_link_in_email
+  @email ||= last_email
+  uri = URI.parse(@email.body.match(/(http:\/\/\S*)/)[1])
+  subdomain = uri.host.split('.')[0]
+  path = uri.path
+  step %Q{the subdomain is "#{subdomain}"}
+  visit(path)
+end
+
 Given /^I have received an email inviting me to become a founding member$/ do
   step "I have been invited to become a founding member"
   @email = last_email
@@ -19,17 +28,17 @@ Given /^I have received an email inviting me to sign up as a director$/ do
   @email = last_email
 end
 
+Given /^I have received the email saying the founding vote has passed$/ do
+  @email = last_email
+  @email.subject.should include("has been formed")
+end
+
 When /^I click the link in the email$/ do
-  @email ||= last_email
-  uri = URI.parse(@email.body.match(/(http:\/\/\S*)/)[1])
-  subdomain = uri.host.split('.')[0]
-  path = uri.path
-  step %Q{the subdomain is "#{subdomain}"}
-  visit(path)
+  follow_link_in_email
 end
 
 When /^I follow the invitation link in the email$/ do
-  step "I click the link in the email"
+  follow_link_in_email
 end
 
 Then /^I should receive a welcome email$/ do
@@ -61,6 +70,28 @@ Then /^everyone should receive an email saying the founding vote has passed$/ do
   @organisation.members.each do |member|
     email = ActionMailer::Base.deliveries.reverse.select{|mail| mail.to.first == member.email}.first
     email.body.should =~ /The Association has therefore been formed/
+  end
+end
+
+Then /^the email should list the members who voted in favour of the founding$/ do
+  @email ||= last_email
+  @fap ||= @organisation.found_association_proposals.last
+  
+  for_members = @fap.votes.where(:for => true).map{|v| v.member}
+  
+  for_members.each do |m|
+    @email.body.should include(m.name)
+  end
+end
+
+Then /^the email should not list the member who voted against the founding$/ do
+  @email ||= last_email
+  @fap ||= @organisation.found_association_proposals.last
+  
+  against_members = @fap.votes.where(:for => false).map{|v| v.member}
+  
+  against_members.each do |m|
+    @email.body.should_not include(m.name)
   end
 end
 

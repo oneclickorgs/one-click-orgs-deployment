@@ -9,7 +9,7 @@ describe Member do
     default_association_constitution
     default_organisation
 
-    @member = @organisation.members.make
+    @member = @organisation.members.make!
   end
 
 
@@ -21,13 +21,13 @@ describe Member do
   
   describe "validation" do
     it "requires a email address" do
-      @member = Member.make_unsaved(:email => "")
+      @member = Member.make(:email => "")
       @member.should_not be_valid
       @member.errors[:email].should be_present
     end
     
     it "requires a reasonable email address" do
-      @member = Member.make_unsaved(:email => "bob")
+      @member = Member.make(:email => "bob")
       @member.should_not be_valid
       @member.errors[:email].should be_present
       
@@ -45,12 +45,12 @@ describe Member do
     end
     
     it "requires a unique email address within the organisation" do
-      @other_organisation = Organisation.make
-      @other_member = @other_organisation.members.make(:email => "other@example.com")
+      @other_organisation = Organisation.make!
+      @other_member = @other_organisation.members.make!(:email => "other@example.com")
       
-      @fellow_member = @organisation.members.make(:email => "fellow@example.com")
+      @fellow_member = @organisation.members.make!(:email => "fellow@example.com")
       
-      @member = @organisation.members.make_unsaved(:email => "other@example.com")
+      @member = @organisation.members.make(:email => "other@example.com")
       @member.should be_valid
       
       @member.email = "fellow@example.com"
@@ -61,11 +61,11 @@ describe Member do
   
   describe "voting" do
     before(:each) do
-      @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
+      @proposal = @organisation.proposals.make!(:proposer_member_id => @member.id)
     end
     
     it "should not allow votes on members inducted after proposal was made" do
-      new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
+      new_member = @organisation.members.make!(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
       lambda {
         new_member.cast_vote(:for, @proposal)
       }.should raise_error(VoteError)
@@ -100,7 +100,7 @@ describe Member do
   describe "finders" do
     it "should return only active members" do
       @organisation.members.active.should == @organisation.members.all
-      disabled = @organisation.members.make(:state => 'inactive')
+      disabled = @organisation.members.make!(:state => 'inactive')
       @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
@@ -126,7 +126,7 @@ describe Member do
   describe "terms and conditions acceptance" do
     context "when creating a new member" do
       before(:each) do
-        @member = Member.make_unsaved
+        @member = Member.make
       end
       
       it "saves a timestamp when terms are accepted" do
@@ -149,7 +149,7 @@ describe Member do
     
     context "when updating an existing member" do
       before(:each) do
-        @member = Member.make(:terms_accepted_at => Time.now.utc - 1.day)
+        @member = Member.make!(:terms_accepted_at => Time.now.utc - 1.day)
         @original_timestamp = @member.terms_accepted_at
       end
       
@@ -174,9 +174,9 @@ describe Member do
   
   describe "when a pending member is ejected before they are inducted" do
     before(:each) do
-      @pending_member = Member.make(:state => 'pending', :inducted_at => nil)
-      @inducted_member = Member.make
-      @ejected_member = Member.make(:inducted_at => nil)
+      @pending_member = Member.make!(:state => 'pending', :inducted_at => nil)
+      @inducted_member = Member.make!
+      @ejected_member = Member.make!(:inducted_at => nil)
       @ejected_member.eject!
     end
     
@@ -200,7 +200,7 @@ describe Member do
     end
     
     it "sends a notification email to the other members" do
-      other_members = @organisation.members.make_n(3)
+      other_members = @organisation.members.make!(3)
       
       other_members.each do |other_member|
         MembersMailer.should_receive(:notify_resignation).with(other_member, @member).and_return(mock_email)

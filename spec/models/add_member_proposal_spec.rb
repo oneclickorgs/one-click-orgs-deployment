@@ -7,7 +7,7 @@ describe AddMemberProposal do
   end
 
   it "should persist type information" do    
-    @proposal = @organisation.add_member_proposals.make
+    @proposal = @organisation.add_member_proposals.make!
     @organisation.add_member_proposals.find(@proposal.id).should be_kind_of(AddMemberProposal)
   end
   
@@ -21,18 +21,18 @@ describe AddMemberProposal do
   
   describe "validation" do
     before(:each) do
-      @proposer = @organisation.members.make
-      @proposal = @organisation.add_member_proposals.make_unsaved(:proposer => @proposer)
+      @proposer = @organisation.members.make!
+      @proposal = @organisation.add_member_proposals.make(:proposer => @proposer)
     end
     
     it "should not validate when proposed new member is already active" do
-      @existing_member = @organisation.members.make
+      @existing_member = @organisation.members.make!
       @proposal.parameters = {'email' => @existing_member.email, 'first_name' => @existing_member.first_name, 'last_name' => @existing_member.last_name}
       @proposal.should_not be_valid
     end
   
     it "should validate when proposed new member exists but is not active" do
-      @existing_member = @organisation.members.make
+      @existing_member = @organisation.members.make!
       @existing_member.eject!
     
       @proposal.parameters = {'email' => @existing_member.email, 'first_name' => @existing_member.first_name, 'last_name' => @existing_member.last_name}
@@ -43,7 +43,7 @@ describe AddMemberProposal do
   describe "enacting" do
     context "when proposed new member is brand new" do
       before(:each) do
-        @proposal = @organisation.add_member_proposals.make(:parameters => {'first_name' => 'New', 'last_name' => 'Member', 'email' => "new@example.com"})
+        @proposal = @organisation.add_member_proposals.make!(:parameters => {'first_name' => 'New', 'last_name' => 'Member', 'email' => "new@example.com"})
       end
       
       it "should create a new member" do
@@ -56,10 +56,10 @@ describe AddMemberProposal do
     
     context "when proposed new member is an ex-member" do
       before(:each) do
-        @ex_member = @organisation.members.make
+        @ex_member = @organisation.members.make!
         @ex_member.eject!
         
-        @proposal = @organisation.add_member_proposals.make(:parameters => {'email' => @ex_member.email, 'first_name' => @ex_member.first_name, 'last_name' => @ex_member.last_name})
+        @proposal = @organisation.add_member_proposals.make!(:parameters => {'email' => @ex_member.email, 'first_name' => @ex_member.first_name, 'last_name' => @ex_member.last_name})
       end
       
       it "should reactivate the ex-member" do

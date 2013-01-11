@@ -7,7 +7,7 @@ def default_organisation(attributes={})
   set_up_app
   
   unless @organisation
-    @organisation = Organisation.make({:state => 'active'}.merge(attributes))
+    @organisation = Organisation.make!({:state => 'active'}.merge(attributes))
     Organisation.stub!(:find_by_host).and_return(@organisation)
   end
   @organisation
@@ -17,7 +17,7 @@ def default_association(attributes={})
   set_up_app
   
   unless @organisation
-    @organisation = Association.make({:state => 'active'}.merge(attributes))
+    @organisation = Association.make!({:state => 'active'}.merge(attributes))
     Organisation.stub!(:find_by_host).and_return(@organisation)
   end
   @organisation
@@ -27,7 +27,7 @@ def default_company(attributes={})
   set_up_app
   
   unless @organisation
-    @organisation = Company.make({:state => 'active'}.merge(attributes))
+    @organisation = Company.make!({:state => 'active'}.merge(attributes))
     Organisation.stub!(:find_by_host).and_return(@organisation)
   end
   @organisation
@@ -47,23 +47,23 @@ end
 
 def default_association_member_class
   default_association
-  @default_member_class ||= @organisation.member_classes.make(:name => "Clown")
+  @default_member_class ||= @organisation.member_classes.make!(:name => "Clown")
 end
 
 def default_company_member_class
   default_company
-  @default_member_class ||= @organisation.member_classes.make(:name => "Director")
+  @default_member_class ||= @organisation.member_classes.make!(:name => "Director")
 end
 
 def default_association_user
   default_association_constitution
   default_association
-  @default_user ||= @organisation.members.make(:member_class => default_association_member_class)
+  @default_user ||= @organisation.members.make!(:member_class => default_association_member_class)
 end
 
 def default_company_user
   default_company
-  @default_user ||= @organisation.members.make(:member_class => default_company_member_class)
+  @default_user ||= @organisation.members.make!(:member_class => default_company_member_class)
 end
 
 def association_login

@@ -8,7 +8,7 @@ describe "PasswordResets" do
   
   describe "resetting a password" do
     before(:each) do
-      @member = @organisation.members.make
+      @member = @organisation.members.make!
       @organisation.stub!(:members).and_return(@members_relation = mock('members_relation', :where => [@member]))
     end
     

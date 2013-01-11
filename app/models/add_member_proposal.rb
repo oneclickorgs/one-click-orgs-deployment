@@ -1,4 +1,6 @@
 class AddMemberProposal < MembershipProposal
+  attr_accessible :draft_member, :first_name, :last_name, :email, :member_class_id
+  
   attr_accessor :draft_member
   
   validate :member_must_not_already_be_active
@@ -8,7 +10,8 @@ class AddMemberProposal < MembershipProposal
   
   validate :member_attributes_must_be_valid
   def member_attributes_must_be_valid
-    @draft_member = organisation.members.build(parameters.merge(:allow_duplicate_email => true))
+    @draft_member = organisation.members.build(parameters, :as => :proposal)
+    @draft_member.allow_duplicate_email = true
     unless @draft_member.valid?
       @draft_member.errors.each do |attribute, message|
         errors.add(attribute, message)

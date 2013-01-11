@@ -1,4 +1,6 @@
 class Resignation < ActiveRecord::Base
+  attr_accessible # none
+  
   belongs_to :member
   
   def to_event

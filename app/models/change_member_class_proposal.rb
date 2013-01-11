@@ -1,4 +1,6 @@
 class ChangeMemberClassProposal < MembershipProposal
+  attr_accessible :member_id, :member_class_id
+  
   validate :member_must_exist
   def member_must_exist
     errors.add(:member, "does not exist") unless organisation.members.exists?(parameters['member_id'])

@@ -117,19 +117,19 @@ describe "Multi-tenancy" do
       set_up_app
       
       # Make three associations, each with one member
-      Association.make(:name => 'Aardvarks', :subdomain => 'aardvarks', :state => 'active').tap do |o|
-        mc = o.member_classes.make
-        o.members.make(:first_name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+      Association.make!(:name => 'Aardvarks', :subdomain => 'aardvarks', :state => 'active').tap do |o|
+        mc = o.member_classes.make!
+        o.members.make!(:first_name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
-      Association.make(:name => 'Beavers', :subdomain => 'beavers', :state => 'active').tap do |o|
-        mc = o.member_classes.make
-        o.members.make(:first_name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+      Association.make!(:name => 'Beavers', :subdomain => 'beavers', :state => 'active').tap do |o|
+        mc = o.member_classes.make!
+        o.members.make!(:first_name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
-      Association.make(:name => 'Chipmunks', :subdomain => 'chipmunks', :state => 'active').tap do |o|
-        mc = o.member_classes.make
-        o.members.make(:first_name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+      Association.make!(:name => 'Chipmunks', :subdomain => 'chipmunks', :state => 'active').tap do |o|
+        mc = o.member_classes.make!
+        o.members.make!(:first_name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
     end
     
