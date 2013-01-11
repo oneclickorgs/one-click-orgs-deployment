@@ -1,5 +1,5 @@
 Given /^the application is set up$/ do
-  # Using smackaho.st to give us automatic resolution to localhost
+  # Using ocolocalhost.com to give us automatic resolution to localhost
   # N.B. This means some Cucumber scenarios will fail if your machine
   # isn't connected to the internet. We shoud probably fix this.
   # 
@@ -12,8 +12,8 @@ Given /^the application is set up$/ do
   # more complicated.
   port_segment = Capybara.current_driver == :selenium ? ":#{Capybara.server_port}" : ''
   
-  Setting[:base_domain] = "smackaho.st#{port_segment}"
-  Setting[:signup_domain] = "create.smackaho.st#{port_segment}"
+  Setting[:base_domain] = "ocolocalhost.com#{port_segment}"
+  Setting[:signup_domain] = "create.ocolocalhost.com#{port_segment}"
 end
 
 When /^the domain is the signup domain$/ do
