@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.2.1"
 
-gem "rails", "3.0.17"
+gem "rails", "3.0.19"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -65,5 +65,5 @@ group :development, :test do
   gem "capybara", "~>1.1.2"
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.25.0"
+  gem "selenium-webdriver", "~>2.27.2"
 end
