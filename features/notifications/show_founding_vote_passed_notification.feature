@@ -15,7 +15,6 @@ Feature:
     
   Scenario: Founding vote passed notification should list the appropriate members
     When I log in
-    And I agree to abide by the constitution
     Then I should see "These are the Founding Members"
     And I should see a list of the members who voted in favour of the founding
     But I should not see the member who voted against the founding

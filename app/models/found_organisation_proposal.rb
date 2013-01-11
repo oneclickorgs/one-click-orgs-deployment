@@ -26,13 +26,16 @@ class FoundOrganisationProposal < Proposal
     # members who abstained.)
     confirmed_member_ids = []
     votes.each do |v|
-      confirmed_member_ids << v.member_id unless v.for? == false
+      confirmed_member_ids << v.member_id if v.for?
     end
     
     organisation.members.each do |member|
       member.member_class = organisation.member_classes.find_by_name('Member')
       member.save!
-      unless confirmed_member_ids.include?(member.id)
+      
+      if confirmed_member_ids.include?(member.id)
+        member.inducted!
+      else
         member.eject! # Rather than destroying, so we can still send a goodbye message
       end
     end

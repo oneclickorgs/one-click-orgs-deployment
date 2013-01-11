@@ -48,11 +48,11 @@ describe FoundOrganisationProposal do
       
       # Mock up a founder and four founding members
       @members = [
-        mock_model(Member, :member_class => @founder_class,         :member_class= => nil, :save! => true),
-        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true),
-        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true),
-        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true, :eject! => true),
-        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :save! => true, :eject! => true)
+        mock_model(Member, :member_class => @founder_class,         :member_class= => nil, :inducted! => true, :save! => true),
+        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :inducted! => true, :save! => true),
+        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :inducted! => true, :save! => true),
+        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :inducted! => true, :save! => true, :eject! => true),
+        mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :inducted! => true, :save! => true, :eject! => true)
       ]
       @organisation.stub!(:members).and_return(@members)
       
@@ -83,6 +83,22 @@ describe FoundOrganisationProposal do
     
     it "ejects members who abstained" do
       @members[4].should_receive(:eject!)
+      @proposal.enact!
+    end
+    
+    it "inducts the members who voted in favour" do
+      [@members[0], @members[1], @members[2]].each do |member|
+        member.should_receive(:inducted!)
+      end
+      
+      @proposal.enact!
+    end
+    
+    it "does not induct the members who voted against, or who abstained" do
+      [@members[3], @members[4]].each do |member|
+        member.should_not_receive(:inducted!)
+      end
+      
       @proposal.enact!
     end
   end

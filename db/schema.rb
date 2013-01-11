@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120204140531) do
+ActiveRecord::Schema.define(:version => 20121029104222) do
 
   create_table "clauses", :force => true do |t|
-    t.string   "name",            :limit => 50, :null => false
+    t.string   "name",                         :null => false
     t.datetime "started_at"
     t.datetime "ended_at"
     t.text     "text_value"
