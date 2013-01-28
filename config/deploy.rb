@@ -7,19 +7,19 @@ set :repository,  "git://github.com/oneclickorgs/one-click-orgs-deployment"
 set :scm, :git
 set :user, 'oneclickorgs'
 set :use_sudo, false
-set :sv, "~/local/bin/sv"
-set :rake, "/home/oneclickorgs/local/bin/bundle exec rake"
-default_environment["PATH"] = "/home/oneclickorgs/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/games"
+set :sv, "/usr/bin/sv"
+set :rake, "/home/ubuntu/.rvm/gems/ruby-1.9.3-p327@global/bin/bundle exec rake"
+# default_environment["PATH"] = "/home/oneclickorgs/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/games"
 
-role :web, "us1.okfn.org"                          # Your HTTP server, Apache/etc
-role :app, "us1.okfn.org"                          # This may be the same as your `Web` server
-role :db,  "us1.okfn.org", :primary => true # This is where Rails migrations will run
+role :web, "oneclick.uk.coop"                          # Your HTTP server, Apache/etc
+role :app, "oneclick.uk.coop"                          # This may be the same as your `Web` server
+role :db,  "oneclick.uk.coop", :primary => true # This is where Rails migrations will run
 
-set :deploy_to, "/home/oneclickorgs/var/www/dev.coop.oneclickorgs.com"
-set :branch,    "dev-coop-oneclickorgs-com"
+set :deploy_to, "/var/www/oneclick.uk.coop"
+set :branch,    "oneclick-uk-coop"
 
 set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
-set :bundle_cmd, "~/local/bin/bundle"
+set :bundle_cmd, "/home/ubuntu/.rvm/gems/ruby-1.9.3-p327@global/bin/bundle"
 set :bundle_roles, [:app]
 
 before 'deploy:assets:precompile' do
