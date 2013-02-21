@@ -8,7 +8,7 @@ set :scm, :git
 set :user, 'oneclickorgs'
 set :use_sudo, false
 set :sv, "/usr/bin/sv"
-set :rake, "/home/ubuntu/.rvm/gems/ruby-1.9.3-p327@global/bin/bundle exec rake"
+set :rake, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle exec rake"
 # default_environment["PATH"] = "/home/oneclickorgs/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/games"
 
 role :web, "oneclick.uk.coop"                          # Your HTTP server, Apache/etc
@@ -19,7 +19,7 @@ set :deploy_to, "/var/www/oneclick.uk.coop"
 set :branch,    "oneclick-uk-coop"
 
 set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
-set :bundle_cmd, "/home/ubuntu/.rvm/gems/ruby-1.9.3-p327@global/bin/bundle"
+set :bundle_cmd, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle"
 set :bundle_roles, [:app]
 
 before 'deploy:assets:precompile' do
