@@ -8,8 +8,10 @@ set :scm, :git
 set :user, 'oneclickorgs'
 set :use_sudo, false
 set :sv, "/usr/bin/sv"
-set :rake, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle exec rake"
-# default_environment["PATH"] = "/home/oneclickorgs/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/games"
+# set :rake, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle exec rake"
+set :default_environment, {
+  'PATH' => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+}
 
 role :web, "oneclick.uk.coop"                          # Your HTTP server, Apache/etc
 role :app, "oneclick.uk.coop"                          # This may be the same as your `Web` server
@@ -19,7 +21,8 @@ set :deploy_to, "/var/www/oneclick.uk.coop"
 set :branch,    "oneclick-uk-coop"
 
 set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
-set :bundle_cmd, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle"
+# set :bundle_cmd, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle"
+set :bundle_flags, "--deployment --binstubs"
 set :bundle_roles, [:app]
 
 before 'deploy:assets:precompile' do
