@@ -26,10 +26,14 @@ module OneClickOrgs
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
-    # Avoid loading observers while we are setting up the database,
+    # Avoid loading observers while we are setting up the app,
     # since they make ActiveRecord load model classes, which then
     # complain when their corresponding DB table doesn't exist yet.
-    unless (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?('db:setup')))
+    unless (File.basename($0) == 'rake' && (
+      ARGV.include?('db:migrate') ||
+      ARGV.include?('db:setup') ||
+      ARGV.include?('assets:precompile')
+    ))
       config.active_record.observers =
         :decision_mailer_observer,
         :directorship_mailer_observer,
