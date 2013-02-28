@@ -37,7 +37,7 @@ gem "jquery-rails", "~>2.0.2"
 gem "haml", "~>3.1.4"
 gem "rdiscount", "~>1.6.8"
 gem "pdfkit", "~>0.5.2"
-gem "daemons", "~>1.0.10"
+gem "daemons", "~>1.1.9"
 gem "delayed_job", "~>3.0.2"
 gem "delayed_job_active_record", "~>0.3.2"
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
