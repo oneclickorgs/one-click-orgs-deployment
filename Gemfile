@@ -53,7 +53,7 @@ gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 # end
 
 group :development do
-  gem "capistrano", "~>2.11.2"
+  gem "capistrano", "~>2.14.2"
   gem "railroad"
   gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
