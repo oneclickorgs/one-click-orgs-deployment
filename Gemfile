@@ -8,7 +8,7 @@ gem "rails", "3.2.12"
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql", "~>2.8.1"
+gem "mysql", "~>2.9.1"
 
 # Use unicorn as the web server
 # gem 'unicorn'
