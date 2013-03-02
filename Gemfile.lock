@@ -246,7 +246,6 @@ DEPENDENCIES
   jquery-rails (~> 2.0.2)
   launchy
   machinist!
-  mail (~> 2.4.4)
   mysql (~> 2.8.1)
   pdfkit (~> 0.5.2)
   pry
