@@ -68,7 +68,7 @@ group :development, :test do
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
   gem "cucumber-rails", "~>1.3.0", :require => nil
-  gem "capybara", "~>1.1.2"
+  gem "capybara", "~>1.1.2" # Capybara => 2.0.0 has dropped support for Ruby 1.8.x
   gem "database_cleaner"
   gem "launchy"
   gem "selenium-webdriver", "~>2.27.2"
