@@ -62,45 +62,4 @@ describe "general_meetings/new" do
     )
   end
 
-  it "renders a check box for the AGM" do
-    render
-    rendered.should have_selector(:input,
-      :name => 'general_meeting[annual_general_meeting]',
-      :type => 'checkbox',
-      :value => '1'
-    )
-  end
-
-  it "renders a list of directors to retire" do
-    render
-    rendered.should have_selector('ul.directors') do |ul|
-      ul.should contain("Sally Baker")
-      ul.should contain("John Smith")
-    end
-  end
-
-  it "renders an 'electronic_nominations' field" do
-    render
-    rendered.should have_selector(:input, :name => 'general_meeting[electronic_nominations]')
-  end
-
-  it "renders a date select for nominations_closing_date" do
-    render
-    rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(1i)]')
-    rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(2i)]')
-    rendered.should have_selector(:select, :name => 'general_meeting[nominations_closing_date(3i)]')
-  end
-
-  it "renders an 'electronic_voting' field" do
-    render
-    rendered.should have_selector(:input, :name => 'general_meeting[electronic_voting]')
-  end
-
-  it "renders a date select for voting_closing_date" do
-    render
-    rendered.should have_selector(:select, :name => 'general_meeting[voting_closing_date(1i)]')
-    rendered.should have_selector(:select, :name => 'general_meeting[voting_closing_date(2i)]')
-    rendered.should have_selector(:select, :name => 'general_meeting[voting_closing_date(3i)]')
-  end
-
 end
