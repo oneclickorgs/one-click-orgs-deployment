@@ -1,0 +1,26 @@
+%h2 Board Meeting
+
+%p
+  %strong Date:
+  = @board_meeting.happened_on.to_s(:long_ordinal)
+%p
+  %strong Starting at:
+  = @board_meeting.start_time
+%p
+  %strong Venue:
+  = @board_meeting.venue
+
+- if @board_meeting.past?
+  - if @board_meeting.minuted?
+    %h3 Minutes
+    = simple_format(html_escape(@board_meeting.minutes))
+    %h3 Attendees
+    %ul.participants
+      - @board_meeting.participants.each do |participant|
+        = content_tag_for(:li, participant) do
+          = link_to(participant.name, member_path(participant))
+  - else
+    %p The minutes for this meeting have not been recorded yet.
+-else
+  %h3 Agenda
+  = simple_format(html_escape(@board_meeting.agenda))

@@ -66,6 +66,7 @@ class Ability
 
       if user.has_permission(:meeting)
         can :create, Meeting
+        can :update, Meeting
       end
 
       if user.organisation.pending?

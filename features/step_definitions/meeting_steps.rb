@@ -66,6 +66,9 @@ def enter_minutes
   elsif page.has_field?('minute[minutes]')
     fill_in('minute[minutes]', :with => "We discussed things.")
     @minute_type = :minutes
+  elsif page.has_field?('board_meeting[minutes]')
+    fill_in('board_meeting[minutes]', :with => "We discussed things.")
+    @minute_type = :minutes
   else
     raise "Could not find minutes field."
   end
