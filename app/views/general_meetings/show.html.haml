@@ -25,6 +25,9 @@
           = link_to(participant.name, member_path(participant))
   - else
     %p The minutes for this meeting have not been recorded yet.
+    - if can?(:edit, @general_meeting)
+      %p= link_to("Record minutes for this meeting", edit_general_meeting_path(@general_meeting))
+
 -else
   %h3 Agenda
   %ol.agenda_items
@@ -32,3 +35,6 @@
       = content_tag_for(:li, agenda_item) do
         = agenda_item.title
   = simple_format(html_escape(@general_meeting.agenda))
+
+  - if can?(:edit, @general_meeting)
+    %p= link_to("Record minutes for this meeting", edit_general_meeting_path(@general_meeting))

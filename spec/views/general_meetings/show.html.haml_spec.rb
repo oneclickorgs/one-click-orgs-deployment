@@ -58,6 +58,7 @@ describe 'general_meetings/show' do
 
     before(:each) do
       assign(:general_meeting, general_meeting)
+      view.stub(:can?).and_return(false)
     end
 
     it "renders the agenda items" do
