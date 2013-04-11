@@ -193,6 +193,10 @@ end
 AnnualGeneralMeeting.blueprint do
 end
 
+AnnualGeneralMeeting.blueprint(:past) do
+  happened_on { 3.days.ago }
+end
+
 MeetingParticipation.blueprint do
 end
 

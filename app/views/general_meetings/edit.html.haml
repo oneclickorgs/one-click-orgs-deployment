@@ -10,8 +10,8 @@
       - @members.each do |member|
         = content_tag_for(:li, member) do
           %p.checkbox
-            = check_box_tag "general_meeting[participant_ids][#{member.id}]", '1', @general_meeting.participant_ids.include?(member.id)
-            = label_tag "general_meeting_participant_ids_#{member.id}", member.name
+            = check_box_tag "#{general_meeting_form.object_name}[participant_ids][#{member.id}]", '1', @general_meeting.participant_ids.include?(member.id)
+            = label_tag "#{general_meeting_form.object_name}_participant_ids_#{member.id}", member.name
 
   - unless @general_meeting.resolutions.empty?
     %h3 Resolutions
