@@ -1,5 +1,5 @@
 Given(/^there has been a past board meeting$/) do
-  @board_meeting ||= @organisation.board_meetings.make!(:past)
+  @meeting = @board_meeting ||= @organisation.board_meetings.make!(:past)
 end
 
 Given(/^no minutes for the past board meeting have been entered yet$/) do

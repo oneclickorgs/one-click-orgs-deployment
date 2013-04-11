@@ -233,7 +233,11 @@ When(/^I follow "(.*?)" for the upcoming meeting$/) do |link|
 end
 
 When(/^I edit the minutes$/) do
-  fill_in('general_meeting[minutes]', :with => "Edited minutes")
+  if page.has_field?('board_meeting[minutes]')
+    fill_in('board_meeting[minutes]', :with => "Edited minutes")
+  else
+    fill_in('general_meeting[minutes]', :with => "Edited minutes")
+  end
 end
 
 Then(/^the meeting should have the draft resolution I selected attached to its agenda$/) do

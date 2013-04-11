@@ -21,3 +21,15 @@ Feature: Entering minutes for a board meeting
     When I follow "View minutes" for the board meeting
     Then I should see the minutes I entered
     And I should see the participants I chose
+
+  @javascript
+  Scenario: Secretary edits minutes of a board meeting
+    Given there has been a past board meeting
+    And minutes have been entered for the meeting
+    When I go to the Board page
+    And I follow "View minutes" for the board meeting
+    And I follow "Edit these minutes"
+    And I edit the minutes
+    And I press "Save these minutes"
+    And I follow "View minutes" for the board meeting
+    Then I should see the edited minutes

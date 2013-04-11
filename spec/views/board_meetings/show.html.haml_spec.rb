@@ -11,6 +11,7 @@ describe "board_meetings/show" do
 
   before(:each) do
     assign(:board_meeting, board_meeting)
+    view.stub(:can?).and_return(false)
   end
 
   it "renders the minutes" do

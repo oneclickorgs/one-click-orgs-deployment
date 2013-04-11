@@ -13,6 +13,8 @@
 - if @board_meeting.past?
   - if @board_meeting.minuted?
     %h3 Minutes
+    - if can?(:edit, @board_meeting)
+      %p= link_to("Edit these minutes", edit_board_meeting_path(@board_meeting))
     = simple_format(html_escape(@board_meeting.minutes))
     %h3 Attendees
     %ul.participants
