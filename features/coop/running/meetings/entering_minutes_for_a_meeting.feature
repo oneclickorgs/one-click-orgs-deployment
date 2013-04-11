@@ -52,3 +52,15 @@ Feature: Entering minutes for a meeting
     And I go to the Proposals page
     And I open the "Outcomes" tab
     Then I should see the resolutions marked as passed
+
+  @javascript
+  Scenario: Secretary edits minutes of a general meeting
+    Given there has been a past meeting
+    And minutes have been entered for the meeting
+    When I go to the Meetings page
+    And I follow "View minutes" for the meeting
+    And I follow "Edit these minutes"
+    And I edit the minutes
+    And I press "Save these minutes"
+    And I follow "View minutes" for the meeting
+    Then I should see the edited minutes

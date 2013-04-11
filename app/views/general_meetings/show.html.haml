@@ -13,6 +13,8 @@
 - if @general_meeting.past?
   - if @general_meeting.minuted?
     %h3 Minutes
+    - if can?(:edit, @general_meeting)
+      %p= link_to("Edit these minutes", edit_general_meeting_path(@general_meeting))
     - @general_meeting.agenda_items.each do |agenda_item|
       %h4= agenda_item.title
       = simple_format(agenda_item.minutes)
