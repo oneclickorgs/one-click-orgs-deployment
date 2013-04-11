@@ -13,11 +13,11 @@ The One Click Orgs platform will give you:
 
 Right now we're busy building the system and testing it out with the first few groups. If your group is interested in using One Click Orgs please contact us and we'll let you know when it's ready.
 
-For more information visit our web site: [oneclickorgs.com](http://oneclickorgs.com).
+For more information visit our web site: [oneclickorgs.com](http://www.oneclickorgs.com).
 
-The main repository is hosted on github: [github.com/oneclickorgs/one-click-orgs](http://github.com/oneclickorgs/one-click-orgs/tree/master)
+The main repository is hosted on github: [github.com/oneclickorgs/one-click-orgs](https://github.com/oneclickorgs/one-click-orgs)
 
-For installation instructions, see [HACKING.md](https://github.com/oneclickorgs/one-click-orgs/blob/master/HACKING.md).
+For installation instructions, see [HACKING.md](HACKING.md).
 
 ## License
 

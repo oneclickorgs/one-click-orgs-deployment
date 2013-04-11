@@ -66,6 +66,9 @@ def enter_minutes
   elsif page.has_field?('minute[minutes]')
     fill_in('minute[minutes]', :with => "We discussed things.")
     @minute_type = :minutes
+  elsif page.has_field?('board_meeting[minutes]')
+    fill_in('board_meeting[minutes]', :with => "We discussed things.")
+    @minute_type = :minutes
   else
     raise "Could not find minutes field."
   end
@@ -229,6 +232,14 @@ When(/^I follow "(.*?)" for the upcoming meeting$/) do |link|
   end
 end
 
+When(/^I edit the minutes$/) do
+  if page.has_field?('board_meeting[minutes]')
+    fill_in('board_meeting[minutes]', :with => "Edited minutes")
+  else
+    fill_in('general_meeting[minutes]', :with => "Edited minutes")
+  end
+end
+
 Then(/^the meeting should have the draft resolution I selected attached to its agenda$/) do
   # We selected the first draft resolution on the form
   @resolution ||= @organisation.resolutions.attached.last
@@ -376,4 +387,8 @@ Then(/^I should see the minutes for the past meeting$/) do
     page.should have_content(agenda_item.minutes)
   end
   page.should have_content(@meeting.minutes)
+end
+
+Then(/^I should see the edited minutes$/) do
+  page.should have_content("Edited minutes")
 end

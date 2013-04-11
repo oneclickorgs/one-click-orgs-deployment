@@ -29,7 +29,7 @@ module OneClickOrgs
     # Avoid loading observers while we are setting up the database,
     # since they make ActiveRecord load model classes, which then
     # complain when their corresponding DB table doesn't exist yet.
-    unless (File.basename($0) == 'rake' && ARGV.include?('db:migrate'))
+    unless (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?('db:setup')))
       config.active_record.observers =
         :decision_mailer_observer,
         :directorship_mailer_observer,

@@ -37,7 +37,7 @@ describe ShareTransaction do
       let(:member_tasks) {mock('member tasks association', :create => nil)}
       let(:secretary_tasks) {mock('secretary tasks association', :create => nil)}
       let(:coop) {mock_model(Coop, :secretary => secretary, :domain => 'test', :name => "Test")}
-      let(:secretary) {mock_model(Member, :tasks => secretary_tasks, :name => "Sally Secretary")}
+      let(:secretary) {mock_model(Member, :tasks => secretary_tasks, :name => "Sally Secretary", :email => "secretary@example.com")}
       let(:member) {mock_model(Member, :tasks => member_tasks, :organisation => coop, :name => "Bob Smith")}
 
       it "creates a task for the member to make the payment" do

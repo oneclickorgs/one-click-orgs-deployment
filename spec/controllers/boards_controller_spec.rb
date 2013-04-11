@@ -11,8 +11,12 @@ describe BoardsController do
   end
 
   describe "GET 'show'" do
-    let(:board_meetings) {mock("board meetings association", :upcoming => upcoming_board_meetings)}
+    let(:board_meetings) {mock("board meetings association",
+      :upcoming => upcoming_board_meetings,
+      :past => past_board_meetings
+    )}
     let(:upcoming_board_meetings) {mock("upcoming board meetings")}
+    let(:past_board_meetings) {mock("past board meetings")}
     let(:board_resolutions) {mock("board resolutions association",
       :currently_open => open_board_resolutions
     )}
@@ -56,6 +60,16 @@ describe BoardsController do
     it "assigns the current user's draft board resolutions" do
       get :show
       assigns[:draft_proposals].should == draft_resolutions
+    end
+
+    it "finds the past board meetings" do
+      board_meetings.should_receive(:past).and_return(past_board_meetings)
+      get :show
+    end
+
+    it "assigns the past board meetings" do
+      get :show
+      assigns[:past_meetings].should == past_board_meetings
     end
 
     it "returns http success" do

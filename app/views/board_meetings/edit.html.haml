@@ -1,0 +1,26 @@
+%h2 Enter minutes
+= form_for(@board_meeting) do |board_meeting_form|
+  .section.participants
+    %h3 Members in attendance
+    %ul.participants
+      - @directors.each do |director|
+        = content_tag_for(:li, director) do
+          %p.checkbox
+            = check_box_tag "board_meeting[participant_ids][#{director.id}]", '1', @board_meeting.participant_ids.include?(director.id)
+            = label_tag "board_meeting_participant_ids_#{director.id}", director.name
+
+  / - unless @board_meeting.resolutions.empty?
+  /   %h3 Resolutions
+  /   %ul.resolutions
+  /   = board_meeting_form.fields_for :passed_resolutions, @board_meeting.resolutions do |resolution_fields|
+  /     = content_tag_for(:li, resolution_fields.object) do
+  /       %p= resolution_fields.object.title
+  /       %p
+  /         = resolution_fields.check_box :passed
+  /         = resolution_fields.label :passed, "Resolution was passed"
+  %h3 Minutes
+  %p
+    = board_meeting_form.label :minutes, "Minutes"
+    = board_meeting_form.text_area :minutes
+
+  %p= board_meeting_form.submit "Save these minutes"

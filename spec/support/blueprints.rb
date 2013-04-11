@@ -174,6 +174,10 @@ end
 BoardMeeting.blueprint do
 end
 
+BoardMeeting.blueprint(:past) do
+  happened_on { 3.days.ago }
+end
+
 GeneralMeeting.blueprint do
   organisation { Coop.make }
 end
@@ -187,6 +191,10 @@ GeneralMeeting.blueprint(:upcoming) do
 end
 
 AnnualGeneralMeeting.blueprint do
+end
+
+AnnualGeneralMeeting.blueprint(:past) do
+  happened_on { 3.days.ago }
 end
 
 MeetingParticipation.blueprint do

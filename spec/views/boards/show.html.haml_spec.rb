@@ -55,4 +55,44 @@ describe "boards/show" do
     end
   end
 
+  context "when a past board meeting has no minutes" do
+    before(:each) do
+      @past_meeting = mock_model(BoardMeeting, :happened_on => 3.days.ago, :to_param => '2')
+      @past_meeting.stub(:minuted?).and_return(false)
+      assign(:past_meetings, [@past_meeting])
+    end
+
+    it "renders a message that the past board meeting has no minutes" do
+      render
+      rendered.should have_selector(".past_meetings") do |past_meetings|
+        past_meetings.should have_content("Minutes have not been entered for this meeting yet")
+      end
+    end
+
+    context "when the user can update the meeting" do
+      before(:each) do
+        view.stub(:can?).with(:update, @past_meeting).and_return(true)
+      end
+
+      it "renders a link to edit the meeting" do
+        render
+        rendered.should have_selector(:a, :href => '/board_meetings/2/edit')
+      end
+    end
+  end
+
+  context "when a past board meeting has minutes" do
+    let(:past_meeting) {mock_model(BoardMeeting, :happened_on => 3.days.ago, :to_param => '2')}
+
+    before(:each) do
+      past_meeting.stub(:minuted?).and_return(true)
+      assign(:past_meetings, [past_meeting])
+    end
+
+    it "renderes a link to view the meeting's minutes" do
+      render
+      rendered.should have_selector(:a, :href => "/board_meetings/2")
+    end
+  end
+
 end
