@@ -14,3 +14,8 @@ Feature: Viewing rules
   Scenario: Members views custom fields in the Rules
     When I go to the Rules page
     Then I should see the custom fields in the Rules filled in appropriately
+
+  Scenario: Member downloads a PDF of the Rules
+    When I go to the Rules page
+    And I follow "PDF"
+    Then I should get a ".pdf" download with the name of the organisation
