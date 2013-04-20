@@ -143,7 +143,7 @@ end
 
 Organisation.blueprint do
   name { Faker::Company.name }
-  subdomain { Faker::Internet.domain_word }
+  subdomain { Faker::Internet.domain_word + sn }
 end
 
 Association.blueprint do
