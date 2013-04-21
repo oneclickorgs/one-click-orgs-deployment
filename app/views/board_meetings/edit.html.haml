@@ -12,7 +12,7 @@
 
 = form_for(@board_meeting) do |board_meeting_form|
   .section.participants
-    %h3 Members in attendance
+    %h3 Directors in attendance
     %ul.participants
       - @directors.each do |director|
         = content_tag_for(:li, director) do
