@@ -1,4 +1,15 @@
 %h2 Enter minutes
+
+%p
+  A
+  %strong= @board_meeting.class.name.underscore.humanize.titlecase
+  on
+  = (@board_meeting.happened_on ? @board_meeting.happened_on.strftime('%d %B %Y') : '') + ','
+  starting at
+  = (@board_meeting.start_time || '') + ','
+  at
+  = (@board_meeting.venue || '') + '.'
+
 = form_for(@board_meeting) do |board_meeting_form|
   .section.participants
     %h3 Members in attendance

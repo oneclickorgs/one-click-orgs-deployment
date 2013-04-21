@@ -3,6 +3,17 @@
   = javascript_include_tag :general_meetings
 
 %h2 Enter minutes
+
+%p
+  A
+  %strong= @general_meeting.class.name.underscore.humanize.titlecase
+  on
+  = (@general_meeting.happened_on ? @general_meeting.happened_on.strftime('%d %B %Y') : '') + ','
+  starting at
+  = (@general_meeting.start_time || '') + ','
+  at
+  = (@general_meeting.venue || '') + '.'
+
 = form_for(@general_meeting) do |general_meeting_form|
   .section.participants
     %h3 Members in attendance
