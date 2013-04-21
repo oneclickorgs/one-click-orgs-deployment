@@ -20,15 +20,6 @@
             = check_box_tag "board_meeting[participant_ids][#{director.id}]", '1', @board_meeting.participant_ids.include?(director.id)
             = label_tag "board_meeting_participant_ids_#{director.id}", director.name
 
-  / - unless @board_meeting.resolutions.empty?
-  /   %h3 Resolutions
-  /   %ul.resolutions
-  /   = board_meeting_form.fields_for :passed_resolutions, @board_meeting.resolutions do |resolution_fields|
-  /     = content_tag_for(:li, resolution_fields.object) do
-  /       %p= resolution_fields.object.title
-  /       %p
-  /         = resolution_fields.check_box :passed
-  /         = resolution_fields.label :passed, "Resolution was passed"
   %h3 Minutes
   %p
     = board_meeting_form.label :minutes, "Minutes"
