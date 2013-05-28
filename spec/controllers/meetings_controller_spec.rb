@@ -191,23 +191,23 @@ describe MeetingsController do
 
     describe "GET index" do
       before(:each) do
-        @meetings_association = mock("meetings association")
-        @upcoming_meetings = mock("upcoming meetings association")
-        @past_meetings = mock("past meetings association")
+        @general_meetings_association = mock("general meetings association")
+        @upcoming_meetings = mock("upcoming general meetings association")
+        @past_meetings = mock("past general meetings association")
 
-        @organisation.stub(:meetings).and_return(@meetings_association)
-        @meetings_association.stub(:upcoming).and_return(@upcoming_meetings)
-        @meetings_association.stub(:past).and_return(@past_meetings)
+        @organisation.stub(:general_meetings).and_return(@general_meetings_association)
+        @general_meetings_association.stub(:upcoming).and_return(@upcoming_meetings)
+        @general_meetings_association.stub(:past).and_return(@past_meetings)
       end
 
-      it "finds and assigns the upcoming meetings" do
-        @meetings_association.should_receive(:upcoming).and_return(@upcoming_meetings)
+      it "finds and assigns the upcoming general meetings" do
+        @general_meetings_association.should_receive(:upcoming).and_return(@upcoming_meetings)
         get :index
         assigns[:upcoming_meetings].should == @upcoming_meetings
       end
 
-      it "finds and assigns the past meetings" do
-        @meetings_association.should_receive(:past).and_return(@past_meetings)
+      it "finds and assigns the past general meetings" do
+        @general_meetings_association.should_receive(:past).and_return(@past_meetings)
         get :index
         assigns[:past_meetings].should == @past_meetings
       end

@@ -1,7 +1,13 @@
 class MeetingsController < ApplicationController
   def index
-    @upcoming_meetings = co.meetings.upcoming
-    @past_meetings = co.meetings.past
+    case co
+    when Company
+      @upcoming_meetings = co.meetings.upcoming
+      @past_meetings = co.meetings.past
+    when Coop
+      @upcoming_meetings = co.general_meetings.upcoming
+      @past_meetings = co.general_meetings.past
+    end
   end
 
   def show
