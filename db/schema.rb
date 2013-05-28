@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
     t.integer  "author_id"
     t.integer  "commentable_id"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "commentable_type"
   end
 
@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "queue"
   end
 
@@ -106,15 +106,15 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
   create_table "meeting_participations", :force => true do |t|
     t.integer  "meeting_id"
     t.integer  "participant_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "meetings", :force => true do |t|
     t.date     "happened_on"
     t.text     "minutes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "organisation_id"
     t.integer  "creator_id"
     t.string   "type"
@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
     t.datetime "terms_accepted_at"
     t.string   "state"
     t.date     "elected_on"
-    t.date     "stood_down_on"
     t.string   "role"
+    t.date     "stood_down_on"
     t.text     "address"
     t.string   "phone"
   end
@@ -192,8 +192,8 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
 
   create_table "organisations", :force => true do |t|
     t.string   "subdomain"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "type"
     t.string   "state"
   end
@@ -213,15 +213,15 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
 
   create_table "resignations", :force => true do |t|
     t.integer  "member_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "seen_notifications", :force => true do |t|
     t.integer  "member_id"
     t.string   "notification"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "seen_notifications", ["member_id", "notification"], :name => "index_seen_notifications_on_member_id_and_notification"
@@ -230,8 +230,8 @@ ActiveRecord::Schema.define(:version => 20121106224140) do
   create_table "settings", :force => true do |t|
     t.string   "key"
     t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "share_accounts", :force => true do |t|

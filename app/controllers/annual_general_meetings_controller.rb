@@ -15,4 +15,10 @@ class AnnualGeneralMeetingsController < ApplicationController
     @annual_general_meeting.save!
     redirect_to meetings_path
   end
+
+  def update
+    @annual_general_meeting = co.annual_general_meetings.find(params[:id])
+    @annual_general_meeting.update_attributes(params[:annual_general_meeting])
+    redirect_to meetings_path
+  end
 end

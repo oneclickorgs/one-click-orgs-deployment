@@ -10,6 +10,34 @@ describe BoardMeetingsController do
     stub_login
   end
 
+  describe "GET show" do
+    let(:board_meeting) {mock_model(BoardMeeting)}
+    let(:board_meetings) {mock("board meetings", :find => board_meeting)}
+
+    before(:each) do
+      @organisation.stub(:board_meetings).and_return(board_meetings)
+    end
+
+    def get_show
+      get :show, :id => '1'
+    end
+
+    it "finds the board meeting" do
+      board_meetings.should_receive(:find).with('1').and_return(board_meeting)
+      get_show
+    end
+
+    it "assigns the board meeting" do
+      get_show
+      assigns[:board_meeting].should == board_meeting
+    end
+
+    it "is successful" do
+      get_show
+      response.should be_success
+    end
+  end
+
   describe "GET new" do
     before(:each) do
       @board_meeting = mock_model(BoardMeeting).as_new_record
@@ -74,6 +102,81 @@ describe BoardMeetingsController do
     it "redirects to the Board page" do
       post_create
       response.should redirect_to('/board')
+    end
+  end
+
+  describe "GET edit" do
+    let(:board_meeting) {mock_model(BoardMeeting)}
+    let(:board_meetings) {mock("board meetings association",
+      :find => board_meeting
+    )}
+    let(:directors) {mock("directors")}
+
+    before(:each) do
+      @organisation.stub(:board_meetings).and_return(board_meetings)
+      @organisation.stub(:directors).and_return(directors)
+    end
+
+    def get_edit
+      get :edit, :id => '1'
+    end
+
+    it "finds the board meeting" do
+      board_meetings.should_receive(:find).with('1').and_return(board_meeting)
+      get_edit
+    end
+
+    it "assigns the board meeting" do
+      get_edit
+      assigns[:board_meeting].should == board_meeting
+    end
+
+    it "finds the directors" do
+      @organisation.should_receive(:directors).and_return(directors)
+      get_edit
+    end
+
+    it "assigns the directors" do
+      get_edit
+      assigns(:directors).should == directors
+    end
+
+    it "is successful" do
+      get_edit
+      response.should be_success
+    end
+  end
+
+  describe "PUT update" do
+    let(:board_meeting) {mock_model(BoardMeeting, :update_attributes => true)}
+    let(:board_meetings) {mock("board meetings", :find => board_meeting)}
+    let(:board_meeting_attributes) {{'foo' => 'bar'}}
+
+    before(:each) do
+      @organisation.stub(:board_meetings).and_return(board_meetings)
+    end
+
+    def put_update
+      put :update, :id => '1', 'board_meeting' => board_meeting_attributes
+    end
+
+    it "finds the board meeting" do
+      board_meetings.should_receive(:find).with('1').and_return(board_meeting)
+      put_update
+    end
+
+    it "updates the board meeting" do
+      board_meeting.should_receive(:update_attributes).with(board_meeting_attributes).and_return(true)
+      put_update
+    end
+
+    it "redirects to the board index" do
+      put_update
+      response.should redirect_to('/board')
+    end
+
+    context "when updating the board meeting fails" do
+      it "handles the error"
     end
   end
 

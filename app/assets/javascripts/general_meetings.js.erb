@@ -168,4 +168,20 @@ $(document).ready(function () {
 
     event.preventDefault();
   });
+
+  $('#annual_general_meeting_electronic_nominations').change(function () {
+    if ($('#annual_general_meeting_electronic_nominations:checked').val() == '1') {
+      $('#nominations_closing_date_fields').show();
+    } else {
+      $('#nominations_closing_date_fields').hide();
+    }
+  });
+
+  $('#annual_general_meeting_electronic_voting').change(function () {
+    if ($('#annual_general_meeting_electronic_voting:checked').val() == '1') {
+      $('#voting_closing_date_fields').show();
+    } else {
+      $('#voting_closing_date_fields').hide();
+    }
+  });
 });
