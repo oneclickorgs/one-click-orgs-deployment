@@ -26,7 +26,7 @@ gem "mysql2", "~>0.2.20" # mysql2 recommends 0.2 series for Rails 3.0.x compatib
 # gem 'aws-s3', :require => 'aws/s3'
 
 gem "haml", "~>3.0.18"
-gem "rdiscount", "~>1.6.8"
+gem "rdiscount", "~>2.1.6"
 gem "pdfkit", "~>0.5.2"
 
 gem "daemons", "~>1.0.10"
