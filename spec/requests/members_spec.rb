@@ -83,7 +83,7 @@ describe "members" do
         put(member_path(@member), :member => {:id => @member.id})
       end
   
-      it "redirect to the member show action" do
+      it "redirects to the member show action" do
         @response.should redirect_to(member_path(@member))
       end
       
