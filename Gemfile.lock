@@ -107,7 +107,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
-    multi_json (1.7.3)
+    multi_json (1.7.6)
     mysql2 (0.3.11)
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
@@ -187,7 +187,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.31.0)
+    selenium-webdriver (2.33.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip
@@ -227,7 +227,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.3.0)
+  bundler (~> 1.3.5)
   cancan (~> 1.6.7)
   capistrano (~> 2.14.2)
   capybara (~> 1.1.2)
@@ -254,7 +254,7 @@ DEPENDENCIES
   ruby-debug
   ruby-debug19
   sass-rails (~> 3.2.5)
-  selenium-webdriver (~> 2.31.0)
+  selenium-webdriver (~> 2.33.0)
   simplecov
   state_machine (~> 1.1.2)
   therubyracer
