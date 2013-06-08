@@ -16,6 +16,7 @@
         = javascript_include_tag 'start_founding_vote_confirmation'
       - else
         = javascript_include_tag 'start_founding_vote_alert'
+    = javascript_tag '$.fx.off = true;' if Rails.env.test?
     = yield(:head)
     = csrf_meta_tag
     = google_analytics_code
