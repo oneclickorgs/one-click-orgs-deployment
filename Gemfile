@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.3.0"
+gem "bundler", "~>1.3.5"
 
 gem "rails", "3.2.13"
 
@@ -76,7 +76,7 @@ group :development, :test do
   gem "capybara", "~>1.1.2" # Capybara => 2.0.0 has dropped support for Ruby 1.8.x
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.31.0"
+  gem "selenium-webdriver", "~>2.33.0"
   gem "cucumber-relizy", "~>0.0.2"
   gem "syntax", "~>1.0.0"
 end
