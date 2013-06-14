@@ -50,3 +50,9 @@
   - if can?(:create, Meeting)
     %p
       = link_to("Enter minutes for a meeting not shown here", new_minute_path)
+
+- if can?(:read, BoardMeeting)
+  %p
+    Board Meetings can be found via the
+    = link_to("Board", board_path)
+    section.

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.3.0"
+gem "bundler", "~>1.3.5"
 
 gem "rails", "3.2.13"
 
@@ -29,7 +29,7 @@ gem "mysql2", "~>0.3.11"
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~>3.2.5'
-  gem 'uglifier', '~>1.2.4'
+  gem 'uglifier', '~>2.1.0'
   gem 'therubyracer', '~>0.11.2'
 end
 
@@ -76,7 +76,7 @@ group :development, :test do
   gem "capybara", "~>1.1.2" # Capybara => 2.0.0 has dropped support for Ruby 1.8.x
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.31.0"
+  gem "selenium-webdriver", "~>2.33.0"
   gem "cucumber-relizy", "~>0.0.2"
   gem "syntax", "~>1.0.0"
 end

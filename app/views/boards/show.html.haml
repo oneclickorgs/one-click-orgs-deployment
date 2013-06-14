@@ -28,20 +28,21 @@
     %h3 Past Board meetings
     %table.past_meetings
       - @past_meetings.each do |meeting|
-        = content_tag_for(:td, meeting) do
-          %p
-            A
-            %strong= meeting.class.name.underscore.humanize.titlecase
-            on
-            = meeting.happened_on.strftime('%d %B %Y') + ','
-            at
-            = (meeting.venue || '') + '.'
-          - if meeting.minuted?
-            %p= link_to("View minutes", board_meeting_path(meeting))
-          - else
-            %p Minutes have not been entered for this meeting yet.
-            - if can?(:update, meeting)
-              %p= link_to("Enter minutes for this meeting.", edit_board_meeting_path(meeting))
+        %tr
+          = content_tag_for(:td, meeting) do
+            %p
+              A
+              %strong= meeting.class.name.underscore.humanize.titlecase
+              on
+              = meeting.happened_on.strftime('%d %B %Y') + ','
+              at
+              = (meeting.venue || '') + '.'
+            - if meeting.minuted?
+              %p= link_to("View minutes", board_meeting_path(meeting))
+            - else
+              %p Minutes have not been entered for this meeting yet.
+              - if can?(:update, meeting)
+                %p= link_to("Enter minutes for this meeting.", edit_board_meeting_path(meeting))
 
 - if @proposals.present?
   .section

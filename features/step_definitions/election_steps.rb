@@ -79,9 +79,7 @@ end
 
 When(/^I choose a closing date for nominations$/) do
   date = 2.weeks.from_now
-  select(date.year.to_s, :from => "annual_general_meeting[nominations_closing_date(1i)]")
-  select(date.strftime('%B'), :from => "annual_general_meeting[nominations_closing_date(2i)]")
-  select(date.day.to_s, :from => "annual_general_meeting[nominations_closing_date(3i)]")
+  page.execute_script(%Q{$('#annual_general_meeting_nominations_closing_date_datepicker').datepicker('setDate', new Date(#{date.year}, #{date.month}, #{date.day}));})
 end
 
 When(/^I choose to allow electronic voting for new Directors$/) do
@@ -90,9 +88,7 @@ end
 
 When(/^I choose a closing date for voting$/) do
   date = 4.weeks.from_now
-  select(date.year.to_s, :from => "annual_general_meeting[voting_closing_date(1i)]")
-  select(date.strftime('%B'), :from => "annual_general_meeting[voting_closing_date(2i)]")
-  select(date.day.to_s, :from => "annual_general_meeting[voting_closing_date(3i)]")
+  page.execute_script(%Q{$('#annual_general_meeting_voting_closing_date_datepicker').datepicker('setDate', new Date(#{date.year}, #{date.month}, #{date.day}));})
 end
 
 When(/^the election closer runs$/) do

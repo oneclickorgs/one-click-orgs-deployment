@@ -44,17 +44,19 @@
     %p
       = annual_general_meeting_form.check_box :electronic_nominations
       = annual_general_meeting_form.label :electronic_nominations, "Allow nominations of new Directors to be made electronically."
+    #nominations_closing_date_fields{:style => "display: none;"}
+      %p
+        = annual_general_meeting_form.label :nominations_closing_date, "Closing date for nominations"
+      %p.date_select
+        = annual_general_meeting_form.date_select :nominations_closing_date, {:include_blank => true}, :class => 'inline datepicker'
     %p
       = annual_general_meeting_form.check_box :electronic_voting
       = annual_general_meeting_form.label :electronic_voting, "Allow voting on the nominees to be done electronically."
-    %p
-      = annual_general_meeting_form.label :nominations_closing_date, "Closing date for nominations"
-    %p.date_select
-      = annual_general_meeting_form.date_select :nominations_closing_date, {:include_blank => true}, :class => 'inline'
-    %p
-      = annual_general_meeting_form.label :voting_closing_date, "Closing date for voting"
-    %p.date_select
-      = annual_general_meeting_form.date_select :voting_closing_date, {:include_blank => true}, :class => 'inline'
+    #voting_closing_date_fields{:style => "display: none;"}
+      %p
+        = annual_general_meeting_form.label :voting_closing_date, "Closing date for voting"
+      %p.date_select
+        = annual_general_meeting_form.date_select :voting_closing_date, {:include_blank => true}, :class => 'inline datepicker'
 
     %p When you confirm these details, notice of the meeting will be sent to all Members.
 
