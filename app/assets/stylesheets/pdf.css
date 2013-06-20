@@ -16,3 +16,19 @@ table th, table td {
   font-size: 11pt;
   padding: 4px;
   text-align: left; }
+
+table.signatures {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table.signatures th, table.signatures td {
+  border: 1px solid black;
+  width: 50%;
+}
+
+table.signatures th {
+  text-align: center;
+  vertical-align: top;
+}
