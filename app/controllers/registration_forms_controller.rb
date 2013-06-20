@@ -58,6 +58,14 @@ class RegistrationFormsController < ApplicationController
           form_data['membership_required_no'] = true
         end
 
+        form_data['ips_type_explanation'] = <<-EOF
+          5 Objects
+          15-20 Membership
+          29-30 Proceedings
+          113 Application of profits
+          116 Dissolution
+        EOF
+
         first_three_members = co.members.order('created_at ASC').limit(3)
 
         form_data['member_1_name'] = first_three_members[0].name
