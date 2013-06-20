@@ -12,7 +12,7 @@ class RegistrationFormsController < ApplicationController
         form_data = YAML.load_file(File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fsa_ips', 'ms_application_form_data.yml')))
 
         # Customise the form data with this organisation's details
-        form_data['organisation_name'] = co.name
+        form_data['organisation_name'] = "#{co.name} Limited"
 
         founder = co.members.first
         form_data['contact_name'] = founder.name
