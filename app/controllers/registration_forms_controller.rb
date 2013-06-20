@@ -66,6 +66,8 @@ class RegistrationFormsController < ApplicationController
           116 Dissolution
         EOF
 
+        form_data['close_links'] = co.reg_form_close_links
+
         first_three_members = co.members.order('created_at ASC').limit(3)
 
         form_data['member_1_name'] = first_three_members[0].name
@@ -111,6 +113,7 @@ class RegistrationFormsController < ApplicationController
     else
       nil
     end
+    @registration_form.reg_form_close_links = params[:registration_form][:reg_form_close_links]
 
     if @registration_form.save
       flash[:notice] = "Your changes to the Registration Form were saved."
