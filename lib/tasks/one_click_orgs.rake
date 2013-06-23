@@ -190,7 +190,125 @@ and visit the site in your browser (usually at http://localhost:3000 ).
         ActiveRecord::Base.observers.enable :decision_mailer_observer, :member_mailer_observer, :officership_mailer_observer, :proposal_mailer_observer
       end
 
+      desc "Creates a co-op for demo purposes, populated with a decent amount of history"
+      task :create_demo_instance => :environment do
+        unless OneClickOrgs::Setup.complete?
+          STDERR.puts "Error: The application is not yet set up."
+          exit
+        end
+
+        # Don't send emails
+        ActiveRecord::Base.observers.disable :decision_mailer_observer, :directorship_mailer_observer, :meeting_mailer_observer, :member_mailer_observer, :officership_mailer_observer, :proposal_mailer_observer
+
+        password = ENV['password'] || "password"
+
+        number_to_create = ENV['NUMBER'] ? ENV['NUMBER'].to_i : 1
+
+        require 'spec/support/blueprints'
+
+        subdomain_index = 0
+
+        number_to_create.times do
+          # Find first available test subdomain
+          subdomain_index += 1
+          while Organisation.find_by_subdomain("demo#{subdomain_index}")
+            subdomain_index += 1
+          end
+
+          coop = Coop.make!(
+            :created_at => 12.months.ago,
+            :subdomain => "demo#{subdomain_index}",
+            :name => "The Locally-Grown Co-operative",
+            :registered_office_address => "1 High Street, Broxbourne",
+            :objectives => "produce locally-grown food."
+          )
+
+          # Members for logging in
+
+          secretary = coop.members.make!(:secretary,
+            :first_name => "Sally",
+            :last_name => "Secretary",
+            :email => "secretary@example.com",
+            :password => password,
+            :password_confirmation => password,
+            :inducted_at => 12.months.ago,
+            :state => 'active'
+          )
+
+          coop.offices.find_by_title("Secretary").officership = Officership.make!(
+            :officer => secretary
+          )
+
+          member = coop.members.make!(:member,
+            :first_name => "Max",
+            :last_name => "Member",
+            :email => "member@example.com",
+            :password => password,
+            :password_confirmation => password,
+            :inducted_at => 10.months.ago
+          )
+
+          # Other members
+
+          coop.members.make!(:director,
+            :first_name => "James",
+            :last_name => "Godwin",
+            :email => "director@example.com",
+            :inducted_at => 12.months.ago,
+            :state => 'active'
+          )
+
+          coop.members.make!(:member,
+            :first_name => "Caroline",
+            :last_name => "Jones",
+            :email => "caroline@example.com",
+            :inducted_at => 6.months.ago
+          )
+
+          coop.members.make!(15, :member, :inducted_at => 7.months.ago)
+
+          # Give each member their share
+          coop.members.reload
+          coop.members.all.each do |member|
+            st = ShareTransaction.make!(
+              :to_account => member.find_or_create_share_account,
+              :from_account => coop.share_account,
+              :amount => 1
+            )
+            st.save!
+            st.approve!
+          end
+
+          # History of past meetings
+
+          1.upto(4) do |index|
+            meeting = coop.general_meetings.make!(
+              :happened_on => (index * 2).months.ago,
+              :created_at => (index * 2).months.ago - 14.days,
+              :venue => "The function room at the Royal Oak",
+              :start_time => "7pm"
+            )
+          end
+
+          # Upcoming AGM
+
+          agm = coop.annual_general_meetings.make!(
+            :happened_on => 2.weeks.from_now,
+            :created_at => 3.weeks.ago,
+            :venue => "The Village Hall",
+            :start_time => "7pm"
+          )
+
+
+          STDOUT.puts "Coop '#{coop.subdomain}' created."
+        end
+
+        ActiveRecord::Base.observers.enable :decision_mailer_observer, :member_mailer_observer, :officership_mailer_observer, :proposal_mailer_observer
+      end
+
     end
+
+
 
     desc "Move aside any 'testx' instances."
     task :archive_test_instances => :environment do
