@@ -8,7 +8,6 @@ class ShareTransaction < ActiveRecord::Base
 
     after_transition :pending => :approved, :do => :adjust_accounts
 
-
     store_audit_trail
   end
 
