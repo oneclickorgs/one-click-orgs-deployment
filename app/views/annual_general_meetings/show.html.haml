@@ -1,0 +1,42 @@
+%h2 Annual General Meeting
+
+%p
+  %strong Date:
+  = @annual_general_meeting.happened_on.to_s(:long_ordinal)
+%p
+  %strong Starting at:
+  = @annual_general_meeting.start_time
+%p
+  %strong Venue:
+  = @annual_general_meeting.venue
+
+- if @annual_general_meeting.past?
+  - if @annual_general_meeting.minuted?
+    %h3 Minutes
+    - if can?(:edit, @annual_general_meeting)
+      %p= link_to("Edit these minutes", edit_annual_general_meeting_path(@annual_general_meeting))
+    - @annual_general_meeting.agenda_items.each do |agenda_item|
+      %h4= agenda_item.title
+      = simple_format(agenda_item.minutes)
+    %h4 Other minutes
+    = simple_format(html_escape(@annual_general_meeting.minutes))
+    %h3 Attendees
+    %ul.participants
+      - @annual_general_meeting.participants.each do |participant|
+        = content_tag_for(:li, participant) do
+          = link_to(participant.name, member_path(participant))
+  - else
+    %p The minutes for this meeting have not been recorded yet.
+    - if can?(:edit, @annual_general_meeting)
+      %p= link_to("Record minutes for this meeting", edit_annual_general_meeting_path(@annual_general_meeting))
+
+-else
+  %h3 Agenda
+  %ol.agenda_items
+    - @annual_general_meeting.agenda_items.each do |agenda_item|
+      = content_tag_for(:li, agenda_item) do
+        = agenda_item.title
+  = simple_format(html_escape(@annual_general_meeting.agenda))
+
+  - if can?(:edit, @annual_general_meeting)
+    %p= link_to("Record minutes for this meeting", edit_annual_general_meeting_path(@annual_general_meeting))

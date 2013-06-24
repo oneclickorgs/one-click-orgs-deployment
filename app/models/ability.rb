@@ -60,6 +60,10 @@ class Ability
         can :create, BoardResolution
       end
 
+      if user.has_permission(:board_meeting)
+        can :read, BoardMeeting
+      end
+
       if user.has_permission(:resolution_proposal)
         can :create, ResolutionProposal
       end
@@ -109,7 +113,6 @@ class Ability
       end
 
       can :read, GeneralMeeting
-      can :read, BoardMeeting
 
       can :create, ConstitutionProposalBundle
 

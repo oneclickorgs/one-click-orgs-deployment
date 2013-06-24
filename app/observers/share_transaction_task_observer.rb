@@ -7,11 +7,24 @@ class ShareTransactionTaskObserver < ActiveRecord::Observer
     end
   end
 
+  def after_transition(share_transaction, transition)
+    case transition.event
+    when :approve
+      clear_tasks(share_transaction)
+    end
+  end
+
 protected
 
   def create_tasks_for_share_application(share_transaction)
     create_member_task_for_share_application(share_transaction)
     create_secretary_task_for_share_application(share_transaction)
+  end
+
+  def clear_tasks(share_transaction)
+    Task.where(:subject_type => 'ShareTransaction', :subject_id => share_transaction.id).all.each do |task|
+      task.complete!
+    end
   end
 
   def create_member_task_for_share_application(share_transaction)

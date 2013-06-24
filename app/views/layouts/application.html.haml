@@ -19,8 +19,7 @@
     = google_analytics_code
   %body
     - if OneClickOrgs.prerelease?
-      #prerelease_bar
-        = render :partial => 'shared/prerelease_bar'
+      = render :partial => 'shared/prerelease_bar'
     %div#container
       = render :partial => 'shared/container_start'
       = render(:partial => 'shared/control_bar')
