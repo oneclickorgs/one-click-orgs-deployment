@@ -184,7 +184,8 @@ and visit the site in your browser (usually at http://localhost:3000 ).
             :agenda => "Discuss the new shop premises."
           )
 
-          STDOUT.puts "Coop '#{coop.subdomain}' created."
+          STDOUT.puts "Coop '#{coop.subdomain}' created:"
+          STDOUT.puts "  #{coop.domain}"
         end
 
         ActiveRecord::Base.observers.enable :decision_mailer_observer, :member_mailer_observer, :officership_mailer_observer, :proposal_mailer_observer
