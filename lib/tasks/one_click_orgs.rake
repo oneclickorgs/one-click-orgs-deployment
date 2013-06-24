@@ -268,13 +268,13 @@ and visit the site in your browser (usually at http://localhost:3000 ).
 
           coop.members.make!(15, :member, :inducted_at => 7.months.ago)
 
-          # Give each member their share
+          # Give each member at least one share
           coop.members.reload
           coop.members.all.each do |member|
             st = ShareTransaction.make!(
               :to_account => member.find_or_create_share_account,
               :from_account => coop.share_account,
-              :amount => 1
+              :amount => rand(5) + 1
             )
             st.save!
             st.approve!
