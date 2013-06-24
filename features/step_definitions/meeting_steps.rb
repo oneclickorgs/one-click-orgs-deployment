@@ -60,6 +60,9 @@ def enter_minutes
   if page.has_field?('Apologies for Absence')
     fill_in("Apologies for Absence", :with => "Bob Smith")
     fill_in("Minutes of Previous Meeting", :with => "The minutes of the previous meeting were accepted.")
+    if page.has_field?('Election of Directors')
+      fill_in('Election of Directors', :with => "Gabriella Johnson and Sandy Newman were elected to the Board of Directors")
+    end
     fill_in("Any Other Business", :with => "Jenny Jenkins thanked Geoff Newell for providing the refreshments.")
     fill_in("Time and date of next meeting", :with => "31 October at 6pm")
     @minute_type = :agenda_items
