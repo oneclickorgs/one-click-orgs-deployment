@@ -297,8 +297,23 @@ and visit the site in your browser (usually at http://localhost:3000 ).
             :happened_on => 2.weeks.from_now,
             :created_at => 3.weeks.ago,
             :venue => "The Village Hall",
-            :start_time => "7pm"
+            :start_time => "7pm",
+
+            :electronic_voting => true,
+            :voting_closing_date => (2.weeks.from_now - 1.day)
           )
+
+          # Add some nominees
+          election = agm.election
+          nominees = coop.members.all
+          nominees.reject!{|n| n.member_class.name == 'Director'}
+          nominees.reject!{|n| n.member_class.name == 'Secretary'}
+          nominees.delete(coop.members.find_by_email("member@example.com"))
+          nominees = nominees[0..4]
+          election.nominees = nominees
+          election.save!
+
+          election.start!
 
 
           STDOUT.puts "Coop '#{coop.subdomain}' created."
