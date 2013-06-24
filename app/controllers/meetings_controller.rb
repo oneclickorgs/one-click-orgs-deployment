@@ -18,6 +18,20 @@ class MeetingsController < ApplicationController
       return
     end
 
+    if co.is_a?(Coop)
+      case @meeting
+      when AnnualGeneralMeeting
+        redirect_to annual_general_meeting_path(@meeting)
+        return
+      when GeneralMeeting
+        redirect_to general_meeting_path(@meeting)
+        return
+      when BoardMeeting
+        redirect_to board_meeting_path(@meeting)
+        return
+      end
+    end
+
     @comments = @meeting.comments
     @comment = Comment.new
   end
