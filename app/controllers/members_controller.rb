@@ -158,14 +158,21 @@ private
     case co
     when Association
       # Only Associations use the 'inducted_at' field.
+      headers = ["First name", "Last name", "Email", "Date joined", "Time of last login"]
       fields = [:first_name, :last_name, :email, :inducted_at, :last_logged_in_at]
+    when Coop
+      headers = ["First name", "Last name", "Email", "Shares held", "Date membership began", "Date membership ended"]
+      fields = [:first_name, :last_name, :email, :shares_count, :inducted_at, :ejected_or_resigned_at]
+    else
+      headesr = ["First name", "Last name", "Email"]
+      fields = [:first_name, :last_name, :email]
     end
 
     # In Ruby 1.9, FasterCSV is provided as the stdlib's CSV library.
     csv_library = defined?(FasterCSV) ? FasterCSV : CSV
 
     csv = csv_library.generate do |csv|
-      csv << fields
+      csv << headers
       @members.each do |member|
         csv << fields.collect { |f| member.send(f) }
       end
