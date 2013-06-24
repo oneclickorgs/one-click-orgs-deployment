@@ -293,6 +293,16 @@ and visit the site in your browser (usually at http://localhost:3000 ).
 
           # Upcoming AGM
 
+          # A resolution for the AGM
+
+          resolution = coop.resolutions.build(
+            :title => "Open a second shop",
+            :description => "The co-operative should open a second shop in the south of town.",
+            :draft => true
+          )
+          resolution.proposer = secretary
+          resolution.save!
+
           agm = coop.annual_general_meetings.make!(
             :happened_on => 2.weeks.from_now,
             :created_at => 3.weeks.ago,
@@ -302,6 +312,8 @@ and visit the site in your browser (usually at http://localhost:3000 ).
             :electronic_voting => true,
             :voting_closing_date => (2.weeks.from_now - 1.day)
           )
+          agm.resolutions << resolution
+          resolution.attach!
 
           # Add some nominees
           election = agm.election
