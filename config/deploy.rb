@@ -17,8 +17,8 @@ role :web, "parsnip.servers.oneclickorgs.com"                          # Your HT
 role :app, "parsnip.servers.oneclickorgs.com"                          # This may be the same as your `Web` server
 role :db,  "parsnip.servers.oneclickorgs.com", :primary => true # This is where Rails migrations will run
 
-set :deploy_to, "/var/www/dev.oneclickorgs.com"
-set :branch,    "dev-oneclickorgs-com"
+set :deploy_to, "/var/www/demo.oneclickorgs.com"
+set :branch,    "demo-oneclickorgs-com"
 
 set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
 # set :bundle_cmd, "~/local/bin/bundle"
