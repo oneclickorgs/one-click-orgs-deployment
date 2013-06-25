@@ -327,6 +327,9 @@ and visit the site in your browser (usually at http://localhost:3000 ).
 
           election.start!
 
+          # New membership application
+          new_member = coop.members.make!(:state => 'pending')
+
 
           STDOUT.puts "Coop '#{coop.subdomain}' created."
         end
