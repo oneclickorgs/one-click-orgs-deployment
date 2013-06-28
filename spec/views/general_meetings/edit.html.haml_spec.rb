@@ -14,8 +14,9 @@ describe 'general_meetings/edit' do
     mock_model(Member, :id => 2, :name => "Sally Baker")
   ]}
   let(:resolutions) {[
-    mock_model(Resolution, :title => 'Resolution number 1', :passed => nil, :id => 3000),
-    mock_model(Resolution, :title => 'Resolution number 2', :passed => nil, :id => 3001)
+    mock_model(Resolution, :title => 'Resolution number 1', :passed => nil, :id => 3000, :additional_votes_for => nil, :additional_votes_against => nil),
+    mock_model(Resolution, :title => 'Resolution number 2', :passed => nil, :id => 3001, :additional_votes_for => nil, :additional_votes_against => nil),
+    mock_model(Resolution, :title => 'Resolution number 3', :passed => nil, :id => 3002, :paused? => true, :additional_votes_for => nil, :additional_votes_against => nil)
   ]}
   let(:agenda_items) {[
     mock_model(AgendaItem, :id => 4000, :title => "Apologies for Absence")
@@ -62,6 +63,13 @@ describe 'general_meetings/edit' do
 
     rendered.should have_selector(:input, :name => 'general_meeting[passed_resolutions_attributes][1][passed]', :value => '1')
     rendered.should have_selector(:input, :type => 'hidden', :name => 'general_meeting[passed_resolutions_attributes][1][id]', :value => '3001')
+  end
+
+  it "renders vote count text fields for each attached resolution that was open for electronic voting" do
+    render
+
+    rendered.should have_selector(:input, :name => 'general_meeting[passed_resolutions_attributes][2][additional_votes_for]')
+    rendered.should have_selector(:input, :name => 'general_meeting[passed_resolutions_attributes][2][additional_votes_against]')
   end
 
   it "renders a submit button" do

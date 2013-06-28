@@ -42,8 +42,8 @@ describe GeneralMeeting do
 
       @meeting = GeneralMeeting.new
 
-      Resolution.stub(:find_by_id).with(7).and_return(@resolution_7 = mock_model(Resolution, :draft? => true, :attach! => nil))
-      Resolution.stub(:find_by_id).with(9).and_return(@resolution_9 = mock_model(Resolution, :draft? => true, :attach! => nil))
+      Resolution.stub(:find_by_id).with(7).and_return(@resolution_7 = mock_model(Resolution, :draft? => true, :attach! => nil, :id => 7))
+      Resolution.stub(:find_by_id).with(9).and_return(@resolution_9 = mock_model(Resolution, :draft? => true, :attach! => nil, :id => 9))
     end
 
     it "adds the attached resolutions to the 'resolutions' association" do
@@ -59,6 +59,22 @@ describe GeneralMeeting do
       @resolution_9.should_not_receive(:attach!)
 
       @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
+    end
+
+    context "when a resolution marked as to be opened for electronic voting" do
+      before(:each) do
+        @existing_resolutions_attributes = {
+          "0"=>{"attached"=>"1", "id"=>"7", "open"=>"1"},
+          "1"=>{"attached"=>"0", "id"=>"9", "open"=>"0"}
+        }
+      end
+
+      it "moves the resolution to the 'open' state" do
+        @resolution_7.should_receive(:start!)
+        @resolution_7.should_not_receive(:attach!)
+
+        @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
+      end
     end
   end
 
@@ -82,6 +98,41 @@ describe GeneralMeeting do
 
       resolutions[0].should_receive(:close!)
 
+      meeting.save!
+    end
+  end
+
+  describe "recording vote counts from the meeting for proposals with electronic voting" do
+    let(:meeting) {GeneralMeeting.make!}
+    let(:resolution) {mock_model(Resolution,
+      :close! => nil,
+      :save! => true,
+      :additional_votes_for= => nil,
+      :additional_votes_against= => nil
+    )}
+    let(:passed_resolutions_attributes) {{'1' => {
+        'id' => '1', 'passed' => '0',
+        'additional_votes_for' => '3', 'additional_votes_against' => '1'}
+    }}
+    let(:resolutions) {mock("resolutions", :find_by_id => resolution)}
+
+    before(:each) do
+      meeting.stub(:resolutions).and_return(resolutions)
+    end
+
+    it "updates the vote counts in the resolution records" do
+      resolution.should_receive(:additional_votes_for=).with(3)
+      resolution.should_receive(:additional_votes_against=).with(1)
+      resolution.should_receive(:save!)
+
+      meeting.passed_resolutions_attributes = passed_resolutions_attributes
+      meeting.save!
+    end
+
+    it "it closes the proposals" do
+      resolution.should_receive(:close!)
+
+      meeting.passed_resolutions_attributes = passed_resolutions_attributes
       meeting.save!
     end
   end

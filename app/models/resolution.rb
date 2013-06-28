@@ -9,11 +9,18 @@ class Resolution < Proposal
     event :attach do
       transition :draft => :attached
     end
+
+    event :pause do
+      transition :open => :paused
+    end
   end
 
-  scope :attached, with_state(:attached)
+  belongs_to :meeting
 
-  attr_accessor :certification, :attached, :passed
+  scope :attached, with_state(:attached)
+  scope :paused,   with_state(:paused)
+
+  attr_accessor :certification, :attached, :passed, :open
 
   # DRAFT STATE
 
@@ -90,6 +97,34 @@ class Resolution < Proposal
     VotingSystems.get(:AbsoluteMajority)
   end
 
+  def votes_for
+    if additional_votes_for.present?
+      (super - double_voters(:for)) + additional_votes_for
+    else
+      super
+    end
+  end
+
+  def votes_against
+    if additional_votes_against.present?
+      (super - double_voters(:against)) + additional_votes_against
+    else
+      super
+    end
+  end
+
+  def double_voters(for_or_against)
+    return 0 unless meeting
+
+    if for_or_against == :for
+      voters = votes.where(:for => 1).map(&:member)
+    else
+      voters = votes.where(:for => 0).map(&:member)
+    end
+
+    meeting.participants.select{|p| voters.include?(p)}.count
+  end
+
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => draft? ? :draft_resolution : :resolution }
   end
@@ -99,6 +134,16 @@ class Resolution < Proposal
       "The draft proposal has been saved."
     elsif open?
       "The proposal has been opened for electronic voting."
+    end
+  end
+
+  def self.run_daily_job
+    # Consider Resolutions that are attached to a meeting and also open for electronic voting.
+    # If the meeting is happening today, we pause electronic voting.
+    currently_open.where('meeting_id IS NOT NULL').all.each do |resolution|
+      if resolution.meeting && resolution.meeting.happened_on == Time.now.utc.to_date
+        resolution.pause!
+      end
     end
   end
 
