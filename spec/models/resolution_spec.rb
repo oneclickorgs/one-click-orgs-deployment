@@ -108,4 +108,49 @@ describe Resolution do
     Resolution.new.attached.should be_nil
   end
 
+  describe "resolution attached to meeting with electronic voting" do
+    let(:resolution) {Resolution.make!(:draft)}
+    let(:meeting) {GeneralMeeting.make!(:happened_on => Time.now.utc)}
+
+    before(:each) do
+      meeting.resolutions << resolution
+      resolution.start!
+    end
+
+    it "is automatically paused on the day of the meeting" do
+      Resolution.run_daily_job
+      resolution.reload.should be_paused
+    end
+
+    describe "being closed" do
+      it "includes the vote counts from the meeting in calculating the result" do
+        # Organisation has 10 members. The resolution requires 6 'for' votes to pass.
+        # We begin with 3 electronic 'for' votes, and add 3 additional 'for' votes in the meeting.
+        resolution.stub(:member_count).and_return(10)
+
+        resolution.votes << Vote.make!(3, :for => 1)
+        resolution.additional_votes_for = 3
+
+        resolution.close!
+        resolution.should be_accepted
+      end
+
+      it "does not count electronic votes by people who were in attendance at the meeting" do
+        # Organisation has 10 members. The resolution requires 6 'for' votes to pass.
+        # We begin with 3 electronic 'for' votes, and add 3 additional 'for' votes in the meeting.
+        # However, one of the three people who cast an electronic 'for' vote also attended the
+        # meeting. So only 5 'for' votes should be counted, resulting in the resolution failing.
+        resolution.stub(:member_count).and_return(10)
+
+        resolution.votes << Vote.make!(3, :for => 1)
+        resolution.additional_votes_for = 3
+
+        resolution.meeting.participants << resolution.votes.first.member
+
+        resolution.close!
+        resolution.should be_rejected
+      end
+    end
+  end
+
 end

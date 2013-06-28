@@ -36,6 +36,8 @@ class GeneralMeeting < Meeting
 
     ids_to_attach = attributes.values.select{|a| a['attached'] == '1'}.map{|a| a['id'].to_i}
 
+    ids_to_open_for_voting = attributes.values.select{|a| a['open'] == '1'}.map{|a| a['id'].to_i}
+
     # TODO Resolution search should be scoped by organisation,
     # but organisation is not set yet when building this general meeting
     # in the form @organisation.general_meetings.build(attributes)
@@ -44,17 +46,42 @@ class GeneralMeeting < Meeting
 
     resolutions << resolutions_to_attach
     resolutions.each do |resolution|
-      resolution.attach! if resolution.draft?
+      if ids_to_open_for_voting.include?(resolution.id)
+        resolution.start!
+      elsif resolution.draft?
+        resolution.attach!
+      end
     end
 
     attributes
   end
 
   def passed_resolutions_attributes=(attributes)
-    ids_to_pass = attributes.values.select{|a| a['passed'] == '1'}.map{|a| a['id'].to_i}
-    @resolutions_to_pass = ids_to_pass.map{|id| resolutions.find_by_id(id)}.reject{|r| r.nil?}
-    @resolutions_to_pass.each do |resolution|
-      resolution.force_passed = true
+    @resolutions_to_pass = []
+    @resolutions_to_record_additional_votes = []
+
+    attributes.values.each do |v|
+      id = v['id'].to_i
+
+      passed = v['passed']
+
+      additional_votes_for = v['additional_votes_for']
+      additional_votes_against = v['additional_votes_against']
+
+      if passed == '1'
+        resolution = resolutions.find_by_id(id)
+        if resolution
+          resolution.force_passed = true
+          @resolutions_to_pass.push(resolution)
+        end
+      elsif additional_votes_for.present? && additional_votes_against.present?
+        resolution = resolutions.find_by_id(id)
+        if resolution
+          resolution.additional_votes_for = additional_votes_for.to_i
+          resolution.additional_votes_against = additional_votes_against.to_i
+          @resolutions_to_record_additional_votes.push(resolution)
+        end
+      end
     end
   end
 
@@ -63,6 +90,16 @@ class GeneralMeeting < Meeting
     return if @resolutions_to_pass.blank?
 
     @resolutions_to_pass.each do |resolution|
+      resolution.close!
+    end
+  end
+
+  before_save :update_resolutions_to_record_additional_votes
+  def update_resolutions_to_record_additional_votes
+    return if @resolutions_to_record_additional_votes.blank?
+
+    @resolutions_to_record_additional_votes.each do |resolution|
+      resolution.save!
       resolution.close!
     end
   end

@@ -26,13 +26,21 @@
 
   - unless @general_meeting.resolutions.empty?
     %h3 Resolutions
-    %ul.resolutions
+    .resolutions
     = general_meeting_form.fields_for :passed_resolutions, @general_meeting.resolutions do |resolution_fields|
-      = content_tag_for(:li, resolution_fields.object) do
-        %p= resolution_fields.object.title
+      = content_tag_for(:div, resolution_fields.object) do
+        %h4= resolution_fields.object.title
         %p
-          = resolution_fields.check_box :passed
-          = resolution_fields.label :passed, "Resolution was passed"
+          = resolution_fields.check_box :passed, :class => 'inline'
+          = resolution_fields.label :passed, "Resolution was passed", :class => 'inline'
+        %p or
+        %p
+          = resolution_fields.label :additional_votes_for, "Votes for:", :class => 'inline'
+          = resolution_fields.text_field :additional_votes_for, :class => 'inline'
+        %p
+          = resolution_fields.label :additional_votes_against, "Votes against:", :class => 'inline'
+          = resolution_fields.text_field :additional_votes_against, :class => 'inline'
+
   %h3 Minutes
   = general_meeting_form.fields_for(:agenda_items) do |agenda_item_fields|
     %p

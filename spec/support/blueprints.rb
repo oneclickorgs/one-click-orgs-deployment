@@ -254,3 +254,7 @@ end
 
 AgendaItem.blueprint do
 end
+
+Vote.blueprint do
+  member
+end

@@ -37,7 +37,7 @@ class Election < ActiveRecord::Base
   def self.close_elections
     # Elections with a voting closing date of today should not be closed until the end
     # of today.
-    where(["voting_closing_date < ? AND state = 'open'", Date.today]).each(&:close!)
+    where(["voting_closing_date < ? AND state = 'open'", Time.now.utc.to_date]).each(&:close!)
   end
 
   def run!
