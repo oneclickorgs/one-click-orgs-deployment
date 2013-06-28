@@ -206,6 +206,7 @@ and visit the site in your browser (usually at http://localhost:3000 ).
         number_to_create = ENV['NUMBER'] ? ENV['NUMBER'].to_i : 1
 
         require 'spec/support/blueprints'
+        require 'faker'
 
         subdomain_index = 0
 
@@ -289,6 +290,11 @@ and visit the site in your browser (usually at http://localhost:3000 ).
               :venue => "The function room at the Royal Oak",
               :start_time => "7pm"
             )
+            meeting.agenda_items.each do |agenda_item|
+              agenda_item.minutes = Faker::Lorem.paragraph
+              agenda_item.save!
+            end
+            meeting.participants << coop.members.sample(10)
           end
 
           # Upcoming AGM
@@ -313,7 +319,7 @@ and visit the site in your browser (usually at http://localhost:3000 ).
             :voting_closing_date => (2.weeks.from_now - 1.day)
           )
           agm.resolutions << resolution
-          resolution.attach!
+          resolution.start!
 
           # Add some nominees
           election = agm.election

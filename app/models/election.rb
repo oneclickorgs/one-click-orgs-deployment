@@ -14,6 +14,7 @@ class Election < ActiveRecord::Base
   end
 
   belongs_to :organisation
+  belongs_to :meeting
   has_many :nominations
   has_many :nominees, :through => :nominations
   has_many :ballots
