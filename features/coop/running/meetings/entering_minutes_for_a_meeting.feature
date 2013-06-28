@@ -56,6 +56,23 @@ Feature: Entering minutes for a meeting
     Then I should see the resolutions marked as passed
 
   @javascript
+  Scenario: Secretary records results of resolutions with electronic voting for a meeting
+    Given I am the Secretary of the co-op
+    And there has been a past meeting
+    And the meeting has no minutes yet
+    And there were resolutions attached to the meeting
+    And the resolutions were open for electronic voting
+    When I go to the Meetings page
+    And I follow "Enter minutes for this meeting" for the past meeting
+    And I enter a passing number of votes in favour for every resolution
+    And I enter other minutes for the meeting
+    And I choose the Members who were in attendance
+    And I press "Save these minutes"
+    And I go to the Proposals page
+    And I open the "Outcomes" tab
+    Then I should see the resolutions marked as passed
+
+  @javascript
   Scenario: Secretary edits minutes of a general meeting
     Given I am the Secretary of the co-op
     And there has been a past meeting

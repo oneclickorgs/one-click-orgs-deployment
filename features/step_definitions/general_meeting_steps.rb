@@ -18,6 +18,17 @@ Given(/^there has been a General Meeting in the past$/) do
   @general_meeting = @meeting = @organisation.general_meetings.make!(:past)
 end
 
+Given(/^the resolutions were open for electronic voting$/) do
+  unless @resolutions
+    @meeting ||= @organisation.meetings.last
+    @resolutions = @meeting.resolutions
+  end
+
+  @resolutions.each do |resolution|
+    resolution.pause!
+  end
+end
+
 When(/^I follow "(.*?)" for the past meeting$/) do |link|
   @general_meeting ||= @organisation.general_meetings.past.last
 
@@ -42,6 +53,24 @@ When(/^I follow "(.*?)" for the meeting$/) do |link|
 
   within("#general_meeting_#{@general_meeting.id}") do
     click_link(link)
+  end
+end
+
+When(/^I select to open the resolution for electronic voting$/) do
+  check("general_meeting[existing_resolutions_attributes][0][open]")
+end
+
+When(/^I enter a passing number of votes in favour for every resolution$/) do
+  @meeting ||= @organisation.meetings.last
+  @resolutions ||= @meeting.resolutions
+
+  member_count = @organisation.members.count
+
+  @resolutions.each do |resolution|
+    within('#' + ActionController::RecordIdentifier.dom_id(resolution)) do
+      fill_in("Votes for:", :with => member_count)
+      fill_in("Votes against:", :with => 0)
+    end
   end
 end
 
