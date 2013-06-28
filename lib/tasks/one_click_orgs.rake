@@ -313,7 +313,7 @@ and visit the site in your browser (usually at http://localhost:3000 ).
             :voting_closing_date => (2.weeks.from_now - 1.day)
           )
           agm.resolutions << resolution
-          resolution.attach!
+          resolution.start!
 
           # Add some nominees
           election = agm.election
