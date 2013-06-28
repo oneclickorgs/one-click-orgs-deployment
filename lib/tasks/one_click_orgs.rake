@@ -295,6 +295,7 @@ and visit the site in your browser (usually at http://localhost:3000 ).
               agenda_item.save!
             end
             meeting.participants << coop.members.sample(10)
+            Task.where(:subject_type => 'Meeting', :subject_id => meeting.id).each(&:complete!)
           end
 
           # Upcoming AGM
