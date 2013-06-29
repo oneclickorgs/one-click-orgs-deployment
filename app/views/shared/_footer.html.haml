@@ -1,5 +1,12 @@
-= link_to(image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo', :class => 'logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/', :target => '_blank', :title => "Version #{OneClickOrgs.version}")
-- unless Setting[:theme] == 'cooperatives_uk'
+- if Setting[:theme] == 'cooperatives_uk'
+  Powered by
+  = link_to(image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo', :class => 'logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/', :target => '_blank', :title => "Version #{OneClickOrgs.version}")
+  in association with
+  = link_to(image_tag('themes/cooperatives_uk/cuk-logo-24.png', :alt => "Co-operatives UK logo", :style => 'vertical-align: sub;'), 'http://www.uk.coop/')
+  and
+  = link_to(image_tag('themes/cooperatives_uk/nesta-logo-24.png', :alt => "Nesta"), 'http://www.nesta.org.uk')
+- else
+  = link_to(image_tag('oco-logo-24.png', :height => '24', :width => '24', :alt => 'One Click Orgs logo', :class => 'logo') + 'One Click Orgs', 'http://www.oneclickorgs.com/', :target => '_blank', :title => "Version #{OneClickOrgs.version}")
   \ &bull;
   %a{:href => 'http://www.oneclickorgs.com/faq/'} Frequently asked questions
 
