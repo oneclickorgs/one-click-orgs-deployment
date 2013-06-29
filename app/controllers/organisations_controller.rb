@@ -5,5 +5,9 @@ class OrganisationsController < ApplicationController
   layout "setup"
   
   def new
+    if Setting[:theme] == 'cooperatives_uk'
+      redirect_to new_coop_path
+      return
+    end
   end
 end

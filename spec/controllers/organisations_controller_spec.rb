@@ -9,6 +9,10 @@ describe OrganisationsController do
   end
   
   describe "GET 'new'" do
+    before(:each) do
+      Setting.stub(:[]).with(:theme).and_return(nil)
+    end
+
     it "returns http success" do
       get 'new'
       response.should be_success
