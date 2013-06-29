@@ -21,8 +21,8 @@ describe "general_meetings/new" do
     assign(:general_meeting, @general_meeting)
 
     @draft_resolutions = [
-      mock_model(Resolution, :state => 'draft', :id => 111, :attached => nil),
-      mock_model(Resolution, :state => 'draft', :id => 222, :attached => nil)
+      mock_model(Resolution, :state => 'draft', :id => 111, :attached => nil, :open => nil),
+      mock_model(Resolution, :state => 'draft', :id => 222, :attached => nil, :open => nil)
     ]
     assign(:draft_resolutions, @draft_resolutions)
 
@@ -48,6 +48,15 @@ describe "general_meetings/new" do
     render
     rendered.should have_selector(:input,
       :name => 'general_meeting[existing_resolutions_attributes][0][attached]',
+      :type => 'checkbox',
+      :value => '1'
+    )
+  end
+
+  it "renders check boxes to mark attached draft resolutions as open for electronic voting" do
+    render
+    rendered.should have_selector(:input,
+      :name => 'general_meeting[existing_resolutions_attributes][0][open]',
       :type => 'checkbox',
       :value => '1'
     )

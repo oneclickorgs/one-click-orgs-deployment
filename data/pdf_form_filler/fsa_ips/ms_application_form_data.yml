@@ -16,16 +16,16 @@ rules_attached: true
 name_rule_number: 1
 objects_rule_number: 5
 registered_office_rule_number: 2
-member_admission_rule_number: 14–29
-meetings_rule_number: 44–90
-board_rule_number: 91–111
-maximum_shareholding_rule_number: 35
-loans_rule_number: 10
-share_transactions: 32, 36–41
-audit_rule_number: 147–151
-withdrawals_rule_number: 27–31
-profits_rule_number: 129
-seal_rule_number: 137
+member_admission_rule_number: 14–28
+meetings_rule_number: 40-74
+board_rule_number: 75-108
+maximum_shareholding_rule_number: 31
+loans_rule_number: 7-11
+share_transactions: 31
+audit_rule_number: 130-134
+withdrawals_rule_number: 26-30
+profits_rule_number: 113
+seal_rule_number: 120
 investing_rule_number: 13
 year_end_day_1: 3
 year_end_day_2: 1

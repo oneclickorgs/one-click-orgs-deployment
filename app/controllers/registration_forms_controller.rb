@@ -12,14 +12,13 @@ class RegistrationFormsController < ApplicationController
         form_data = YAML.load_file(File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fsa_ips', 'ms_application_form_data.yml')))
 
         # Customise the form data with this organisation's details
-        form_data['organisation_name'] = co.name
+        form_data['organisation_name'] = "#{co.name} Limited"
 
-        founder = co.members.first
-        form_data['contact_name'] = founder.name
-        form_data['contact_position'] = founder.member_class.name
-        form_data['contact_address'] = founder.address
-        form_data['contact_phone'] = founder.phone
-        form_data['contact_email'] = founder.email
+        form_data['contact_name'] = Setting[:coop_contact_name]
+        form_data['contact_position'] = Setting[:coop_contact_position]
+        form_data['contact_address'] = Setting[:coop_contact_address]
+        form_data['contact_phone'] = Setting[:coop_contact_phone]
+        form_data['contact_email'] = Setting[:coop_contact_email]
 
         form_data['timing_factors'] = co.reg_form_timing_factors
 
@@ -58,6 +57,16 @@ class RegistrationFormsController < ApplicationController
           form_data['membership_required_yes'] = false
           form_data['membership_required_no'] = true
         end
+
+        form_data['ips_type_explanation'] = <<-EOF
+          5 Objects
+          15-20 Membership
+          29-30 Proceedings
+          113 Application of profits
+          116 Dissolution
+        EOF
+
+        form_data['close_links'] = co.reg_form_close_links
 
         first_three_members = co.members.order('created_at ASC').limit(3)
 
@@ -104,6 +113,7 @@ class RegistrationFormsController < ApplicationController
     else
       nil
     end
+    @registration_form.reg_form_close_links = params[:registration_form][:reg_form_close_links]
 
     if @registration_form.save
       flash[:notice] = "Your changes to the Registration Form were saved."

@@ -19,4 +19,12 @@
     = form.radio_button :reg_form_membership_required, false, :class => 'inline'
     = form.label :reg_form_membership_required, "No", :value => false, :class => 'inline'
   %p
+    = label_tag "Details of any close links which the society or any member of its committee has, or intends to have, with any society, company or authority"
+    The following are regarded as evidence of a close link with another society, company or other entity:
+  %ul
+    %li any material contract or arrangement which it is anticipated that the society will enter into in order to undertake its business; and
+    %li any other directorships or senior positions held by members of the committee.
+  %p
+    = form.text_area :reg_form_close_links
+  %p
     = form.submit "Save changes"
