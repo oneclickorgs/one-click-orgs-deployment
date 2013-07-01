@@ -21,7 +21,8 @@
         %div#hd
           %h1.header
             - if Setting[:theme] == 'cooperatives_uk'
-              Digital IPS
+              = link_to(image_tag('themes/cooperatives_uk/cuk-logo-48.png', :alt => 'Co-operatives UK', :style => 'vertical-align: baseline;'), 'http://uk.coop/')
+              One Click Digital Platform
             - else
               = image_tag('oco-logo-48.png', :height => '48', :width => '48', :alt => 'One Click Orgs logo')
               One Click Orgs

@@ -165,6 +165,9 @@ OneClickOrgs::Application.routes.draw do
   resources :associations
   resources :companies
   resources :coops do
+    collection do
+      get :intro
+    end
     member do
       put :propose
     end
