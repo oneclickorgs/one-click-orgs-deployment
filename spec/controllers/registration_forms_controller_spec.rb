@@ -22,6 +22,7 @@ describe RegistrationFormsController do
       @organisation.stub(:reg_form_timing_factors=)
       @organisation.stub(:reg_form_financial_year_end=)
       @organisation.stub(:reg_form_membership_required=)
+      @organisation.stub(:reg_form_close_links=)
       @organisation.stub(:save).and_return(true)
     end
 

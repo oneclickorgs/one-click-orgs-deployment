@@ -21,7 +21,8 @@ Given(/^there is a draft resolution$/) do
 end
 
 Given(/^there are draft resolutions$/) do
-  @organisation.resolutions.make!(2, :draft)
+  @resolutions = @organisation.resolutions.make!(2, :draft)
+  @resolution = @resolutions.first
 end
 
 Given(/^there is a suggested resolution$/) do
@@ -206,4 +207,9 @@ end
 Then(/^I should not see a notification to process the suggested resolution$/) do
   @resolution_proposal ||= @organisation.resolution_proposals.last
   page.should have_no_css("a[href='/resolution_proposals/#{@resolution_proposal.to_param}']")
+end
+
+Then(/^I should see the resolution is open for electronic voting$/) do
+  @resolution ||= @organisation.resolutions.last
+  page.should have_css(".proposals ##{ActionController::RecordIdentifier.dom_id(@resolution)}")
 end

@@ -56,3 +56,14 @@ Feature: Convening a general meeting
     And I select one of the draft resolutions to be considered at the meeting
     And I convene the meeting
     Then the meeting should have the draft resolution I selected attached to its agenda
+
+  @javascript
+  Scenario: Secretary convenes a General Meeting with resolutions open for electronic voting
+    Given there are draft resolutions
+    When I go to convene a General Meeting
+    And I enter details for the meeting
+    And I select one of the draft resolutions to be considered at the meeting
+    And I select to open the resolution for electronic voting
+    And I convene the meeting
+    And I go to the Proposals page
+    Then I should see the resolution is open for electronic voting
