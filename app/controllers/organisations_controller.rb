@@ -6,7 +6,7 @@ class OrganisationsController < ApplicationController
   
   def new
     if Setting[:theme] == 'cooperatives_uk'
-      redirect_to new_coop_path
+      redirect_to intro_coop_path
       return
     end
   end
