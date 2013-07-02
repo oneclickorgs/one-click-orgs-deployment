@@ -1,0 +1,38 @@
+- content_for(:head) do
+  = javascript_include_tag 'coops_intro'
+%h2 Welcome
+%p
+  Here you can begin using
+  = link_to("Co-operatives UK", 'http://uk.coop/') + "'s"
+  online service to set up your co-operative and start running it online.
+%p#show_more_info{:style => 'display: none;'}
+  = link_to("Read more about what this service provides, and who can use it.", 'javascript:void(0);')
+#more_info
+  %p The Co-operatives UK One Click Digital Platform allows you to instruct Co-operatives UK to support you in registering your co-operative and also assists you to develop the governing document, sign up your founder members and appoint your directors.
+  %p Once your co-operative is registered the digital platform will allow your members to:
+  %ul
+    %li Accept new applications for membership and manage the register of members and directors.
+    %li Send out notice of meetings, as well as save and review minutes.
+    %li Propose and vote on resolutions of your co-operative and the board.
+    %li Manage board elections and retirements.
+  %p To be eligible to use the online platform you will need to meet the following criteria:
+  %ul
+    %li You wish to register as a co-operative society (industrial & provident society)
+    %li You wish to instruct Co-operatives UK to help you to register
+    %li All members must have internet access
+#next_steps
+  %h2 Next steps
+  .item
+    %h3 Want more information about co-operatives?
+    %p
+      = link_to("Visit the Co-operatives UK website.", 'http://uk.coop/')
+  .item
+    %h3 Not sure if this service is right for you?
+    %p
+      = link_to("Contact us", 'mailto:support@uk.coop')
+      with your questions.
+  .item
+    %h3 Ready to get started?
+    %p
+      = link_to("Proceed to sign up", new_coop_path)
+  .clear
