@@ -26,6 +26,10 @@ class Constitution
     :common_ownership, :to => :organisation
   
   alias_method :organisation_name, :name
+
+  def document
+    document = Rticles::Document.find(Setting[:coop_constitution_document_id])
+  end
   
   # VOTING SYSTEMS
   
