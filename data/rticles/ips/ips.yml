@@ -5,7 +5,7 @@
 - "#rticles#heading#2 Name"
 - "The name of the society shall be #rticles#organisation_name Limited."
 - "#rticles#heading#2 Registered Office"
-- "The registered office of the society shall be at"
+- "The registered office of the society shall be at #rticles#registered_office_address"
 - "#rticles#heading#2 Interpretations"
 - |-
     In these rules:
