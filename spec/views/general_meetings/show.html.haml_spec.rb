@@ -53,6 +53,7 @@ describe 'general_meetings/show' do
           mock_model(AgendaItem, :title => "Apologies for Absence"),
           mock_model(AgendaItem, :title => "Any Other Business")
         ],
+        :resolutions => [],
         :happened_on => 2.days.from_now
       )
     }
