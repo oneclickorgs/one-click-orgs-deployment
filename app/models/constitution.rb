@@ -28,24 +28,32 @@ class Constitution
   alias_method :organisation_name, :name
 
   def document
-    Rticles::Document.find(Setting[:coop_constitution_document_id]).tap do |document|
-      document.insertions = {
-        :organisation_name => name,
-        :registered_office_address => registered_office_address,
-        :objectives => objectives,
-        :max_user_directors => max_user_directors,
-        :max_employee_directors => max_employee_directors,
-        :max_supporter_directors => max_supporter_directors,
-        :max_consumer_directors => max_consumer_directors
-      }
-      document.choices = {
-        :user_members => user_members,
-        :employee_members => employee_members,
-        :supporter_members => supporter_members,
-        :producer_members => producer_members,
-        :consumer_members => consumer_members
-      }
+    # TODO Make this work for Organisation subclasses other than Coop.
+    if document_id = Setting[:coop_constitution_document_id]
+      document = Rticles::Document.find(document_id)
+    else
+      document = Rticles::Document.find_by_title('coop_constitution')
     end
+
+    raise ActiveRecord::RecordNotFound unless document
+
+    document.insertions = {
+      :organisation_name => name,
+      :registered_office_address => registered_office_address,
+      :objectives => objectives,
+      :max_user_directors => max_user_directors,
+      :max_employee_directors => max_employee_directors,
+      :max_supporter_directors => max_supporter_directors,
+      :max_consumer_directors => max_consumer_directors
+    }
+    document.choices = {
+      :user_members => user_members,
+      :employee_members => employee_members,
+      :supporter_members => supporter_members,
+      :producer_members => producer_members,
+      :consumer_members => consumer_members
+    }
+    document
   end
   
   # VOTING SYSTEMS
