@@ -51,7 +51,7 @@ class OneClickController < ApplicationController
         @upcoming_meetings_count = meetings_association.upcoming.count - 1
       end
 
-      @last_meeting = co.meetings.past.order('happened_on DESC').first
+      @last_meeting = meetings_association.past.order('happened_on DESC').first
 
       @open_proposals_without_vote = co.resolutions.currently_open.reject{|p| p.vote_by(current_user)}
 
