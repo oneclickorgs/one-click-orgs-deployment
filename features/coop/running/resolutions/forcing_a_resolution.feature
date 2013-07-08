@@ -11,7 +11,7 @@ Feature: Forcing a resolution
     And I press "Create a proposal"
     And I fill in "Title" with "Remove John Smith from the Board of Directors"
     And I fill in "Description" with "We all know why."
-    And I press "Submit proposal"
+    And I press "Submit suggestion"
     Then I should see a special link to share the proposal
     When enough of the membership supports the proposal
     And the proposal closer runs

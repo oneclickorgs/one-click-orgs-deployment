@@ -10,6 +10,6 @@ Feature: Suggesting a resolution
     When I go to the Resolutions page
     And I press "Create a proposal"
     And I enter the text for the new resolution
-    And I press "Submit proposal"
+    And I press "Submit suggestion"
     Then I should see the new proposal
     And the Secretary should receive a notification of the new suggested resolution
