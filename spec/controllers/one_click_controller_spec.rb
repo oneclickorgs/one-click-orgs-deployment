@@ -145,10 +145,10 @@ describe OneClickController do
 
       @organisation.stub_chain(:members, :all).and_return([])
 
-      @organisation.stub_chain(:meetings, :all).and_return([])
-      @organisation.stub_chain(:meetings, :upcoming, :order, :first)
-      @organisation.stub_chain(:meetings, :upcoming, :count).and_return(0)
-      @organisation.stub_chain(:meetings, :past, :order, :first)
+      @organisation.stub_chain(:general_meetings, :all).and_return([])
+      @organisation.stub_chain(:general_meetings, :upcoming, :order, :first)
+      @organisation.stub_chain(:general_meetings, :upcoming, :count).and_return(0)
+      @organisation.stub_chain(:general_meetings, :past, :order, :first)
 
       @organisation.stub(:resolutions).and_return(mock("resolutions", :currently_open => []))
       @organisation.stub(:resolution_proposals).and_return([])
@@ -165,6 +165,10 @@ describe OneClickController do
       @current_tasks_association.stub(:members_or_shares_related)
 
       @organisation.stub(:active?).and_return(true)
+
+      @user.stub(:has_permission)
+      @user.stub(:organisation).and_return(@organisation)
+      @organisation.stub(:pending?).and_return(false)
     end
 
     it "finds the current user's current undismissed tasks" do
