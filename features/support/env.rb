@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear_merged!('rails')
+
 begin
   require 'simplecov'
   SimpleCov.start('rails') if ENV["COVERAGE"]
