@@ -51,7 +51,9 @@ class Constitution
       :employee_members => employee_members,
       :supporter_members => supporter_members,
       :producer_members => producer_members,
-      :consumer_members => consumer_members
+      :consumer_members => consumer_members,
+      :single_shareholding => single_shareholding,
+      :common_ownership => common_ownership
     }
     document
   end
