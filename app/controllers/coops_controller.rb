@@ -4,6 +4,9 @@ class CoopsController < ApplicationController
 
   layout "setup"
 
+  def intro
+  end
+
   def new
     @member = Member.new
     @coop = Coop.new
