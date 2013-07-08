@@ -26,6 +26,9 @@ describe BallotsController do
 
       @nominations_association = mock("nominations association")
       @election.stub(:nominations).and_return(@nominations_association)
+
+      @agm = mock_model(AnnualGeneralMeeting)
+      @election.stub(:meeting).and_return(@agm)
     end
 
     def get_new
