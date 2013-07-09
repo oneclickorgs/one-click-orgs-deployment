@@ -26,6 +26,7 @@ When(/^I enter my details$/) do
   fill_in("First name", :with => "Bob")
   fill_in("Last name", :with => "Smith")
   fill_in("Email address", :with => "bob@example.com")
+  fill_in("Postal address", :with => "1 Main Street\nLondon\nN11 1AA")
   fill_in("Choose password", :with => "letmein")
   fill_in("Confirm password", :with => "letmein")
 end
