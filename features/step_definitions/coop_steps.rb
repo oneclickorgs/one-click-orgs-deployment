@@ -50,3 +50,12 @@ When(/^the co\-op is approved$/) do
   @coop ||= Coop.proposed.last
   @coop.found!
 end
+
+When(/^a draft co\-op is created$/) do
+  @coop = Coop.make!(:pending)
+end
+
+When(/^a draft co\-op is submitted for registration$/) do
+  @coop = Coop.make!(:pending)
+  @coop.propose!
+end

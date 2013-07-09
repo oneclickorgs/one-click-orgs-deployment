@@ -382,7 +382,34 @@ describe Coop do
   end
 
   describe "email notification" do
+    let(:administrators) {[mock_model(Administrator, :email => 'administrator@example.com')]}
     let(:email) {mock("email", :deliver => nil)}
+
+    before(:each) do
+      set_up_app
+      Administrator.stub(:all).and_return(administrators)
+    end
+
+    describe "for pending Coop creation" do
+      it "is sent to all Administrators" do
+        administrators.each do |administrator|
+          CoopMailer.should_receive(:notify_creation).with(administrator, anything).and_return(email)
+        end
+        Coop.make!(:pending)
+      end
+    end
+
+    describe "for Coop proposing" do
+      let(:coop) {Coop.make!(:pending)}
+
+      it "is sent to all Administrators" do
+        administrators.each do |administrator|
+          CoopMailer.should_receive(:notify_proposed).with(administrator, coop).and_return(email)
+        end
+        coop.propose!
+      end
+    end
+
     describe "for Coop founding" do
       let(:founder_members) {coop.members.make!(3, :founder_member)}
       let(:coop) {Coop.make!(:proposed)}
