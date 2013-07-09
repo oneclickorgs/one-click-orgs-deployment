@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626124029) do
+ActiveRecord::Schema.define(:version => 20130708120458) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -90,6 +90,12 @@ ActiveRecord::Schema.define(:version => 20130626124029) do
     t.date     "ended_on"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "documents", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "elections", :force => true do |t|
@@ -196,6 +202,19 @@ ActiveRecord::Schema.define(:version => 20130626124029) do
     t.datetime "updated_at", :null => false
     t.string   "type"
     t.string   "state"
+  end
+
+  create_table "paragraphs", :force => true do |t|
+    t.text     "body"
+    t.integer  "position"
+    t.integer  "parent_id"
+    t.integer  "document_id"
+    t.integer  "heading"
+    t.boolean  "continuation"
+    t.string   "name"
+    t.string   "topic"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "proposals", :force => true do |t|
