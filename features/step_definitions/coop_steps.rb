@@ -59,3 +59,7 @@ When(/^a draft co\-op is submitted for registration$/) do
   @coop = Coop.make!(:pending)
   @coop.propose!
 end
+
+When(/^I accept the Terms of Use$/) do
+  check('I accept the Terms of Use.')
+end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "coops/new" do
 
   before(:each) do
-    @member = mock_model(Member)
+    @member = mock_model(Member, :terms_and_conditions => nil)
     assign(:member, @member)
 
     @coop = mock_model(Coop,

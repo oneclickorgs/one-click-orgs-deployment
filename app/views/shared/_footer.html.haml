@@ -12,7 +12,9 @@
 
 %span.right
   - if Setting[:theme] == 'cooperatives_uk'
-    = link_to("Co-operatives UK Terms and Conditions, Privacy Policy, and Cookies Policy", 'http://www.uk.coop/document/website-terms-and-conditions')
+    Co-operatives UK
+    = link_to("Terms of Use", 'http://create.oneclick.uk.coop/coops/terms') + ','
+    = link_to("Privacy Policy and Cookie Policy", 'http://www.uk.coop/document/website-terms-and-conditions')
     %br
   Licensed under the
   %a{:href => 'http://www.gnu.org/licenses/agpl.html', :target => '_blank'} AGPL

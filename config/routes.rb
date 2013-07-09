@@ -167,6 +167,7 @@ OneClickOrgs::Application.routes.draw do
   resources :coops do
     collection do
       get :intro
+      get :terms
     end
     member do
       put :propose
@@ -234,5 +235,6 @@ OneClickOrgs::Application.routes.draw do
   match '/system/test_exception_notification' => 'system#test_exception_notification'
 
   get '/checklist' => 'one_click#checklist', :as => 'checklist'
+
   root :to => 'one_click#dashboard'
 end
