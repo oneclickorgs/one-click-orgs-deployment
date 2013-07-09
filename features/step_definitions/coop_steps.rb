@@ -39,3 +39,7 @@ end
 When(/^the co\-op daily job runs$/) do
   Coop.run_daily_job
 end
+
+When(/^I accept the Terms of Use$/) do
+  check('I accept the Terms of Use.')
+end
