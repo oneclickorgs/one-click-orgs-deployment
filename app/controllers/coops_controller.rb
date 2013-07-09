@@ -1,6 +1,6 @@
 class CoopsController < ApplicationController
-  skip_before_filter :ensure_organisation_exists
-  skip_before_filter :ensure_authenticated
+  skip_before_filter :ensure_organisation_exists, :only => [:intro, :new, :create, :terms]
+  skip_before_filter :ensure_authenticated, :only => [:intro, :new, :create, :terms]
 
   layout "setup"
 
@@ -47,5 +47,9 @@ class CoopsController < ApplicationController
 
     @coop.propose!
     redirect_to :back
+  end
+
+  def terms
+    @page_title = "Terms of Use"
   end
 end

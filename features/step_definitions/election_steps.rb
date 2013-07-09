@@ -1,6 +1,7 @@
 Given(/^there is an electronic vote for new directors in progress$/) do
   @nominees = @organisation.members.make!(5)
   @election = @organisation.elections.make!
+  @election.meeting = @organisation.annual_general_meetings.make!
   @election.nominees = @nominees
   @election.save!
   @election.start!

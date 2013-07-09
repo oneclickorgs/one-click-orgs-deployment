@@ -17,6 +17,20 @@ describe AnnualGeneralMeetingsController do
     @organisation.stub(:annual_general_meetings).and_return(annual_general_meetings)
   end
 
+  describe "GET 'show'" do
+    let(:annual_general_meetings) {mock("annual_general_meetings association", :find => annual_general_meeting)}
+    let(:annual_general_meeting) {mock_model(AnnualGeneralMeeting)}
+
+    def get_show
+      get :show, :id => '1'
+    end
+
+    it "succeeds" do
+      get_show
+      response.should be_success
+    end
+  end
+
   describe "GET 'new'" do
     before(:each) do
       @organisation.stub_chain(:resolutions, :draft)

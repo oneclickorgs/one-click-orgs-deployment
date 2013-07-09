@@ -3,7 +3,8 @@
   %head
     %meta{:"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
     %title
-      Form a new Organisation - One Click Orgs
+      = (@page_title ? @page_title : "Form a new Organisation") + ' -'
+      One Click Orgs
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}
     = stylesheet_link_tag "application"
