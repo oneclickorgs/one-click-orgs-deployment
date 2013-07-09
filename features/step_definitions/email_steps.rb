@@ -271,3 +271,9 @@ Then(/^the Secretary should receive a notification of my resignation$/) do
   @email.subject.should include(@user.name)
   @email.subject.should include('resigned')
 end
+
+Then(/^I should receive an email notifying me that the co\-op has been approved$/) do
+  @email = last_email_to(@user.email)
+  @email.should be_present
+  @email.subject.should include('registration')
+end

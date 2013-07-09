@@ -31,6 +31,7 @@ module OneClickOrgs
     # complain when their corresponding DB table doesn't exist yet.
     unless (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?('db:setup')))
       config.active_record.observers =
+        :coop_mailer_observer,
         :decision_mailer_observer,
         :directorship_mailer_observer,
         :election_task_observer,

@@ -22,6 +22,11 @@ Given(/^there is a co\-op$/) do
   set_subdomain_to_organisation
 end
 
+Given(/^our co\-op has been submitted for approval$/) do
+  @coop ||= Coop.pending.last
+  @coop.propose!
+end
+
 When(/^I enter my details$/) do
   fill_in("First name", :with => "Bob")
   fill_in("Last name", :with => "Smith")
@@ -39,4 +44,9 @@ end
 
 When(/^the co\-op daily job runs$/) do
   Coop.run_daily_job
+end
+
+When(/^the co\-op is approved$/) do
+  @coop ||= Coop.proposed.last
+  @coop.found!
 end

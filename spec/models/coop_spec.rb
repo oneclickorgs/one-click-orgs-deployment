@@ -381,4 +381,20 @@ describe Coop do
     end
   end
 
+  describe "email notification" do
+    let(:email) {mock("email", :deliver => nil)}
+    describe "for Coop founding" do
+      let(:founder_members) {coop.members.make!(3, :founder_member)}
+      let(:coop) {Coop.make!(:proposed)}
+
+      it "is sent to all founder members" do
+        founder_members.each do |founder_member|
+          CoopMailer.should_receive(:notify_founded).with(founder_member, coop).and_return(email)
+        end
+
+        coop.found!
+      end
+    end
+  end
+
 end
