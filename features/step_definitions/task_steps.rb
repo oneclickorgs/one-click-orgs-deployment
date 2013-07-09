@@ -28,8 +28,17 @@ end
 
 Then(/^I should no longer see a notification of the new membership application$/) do
   @member ||= @organisation.members.last
-  within('.tasks') do
-    page.should have_no_css("a[href='/members/#{@member.to_param}']")
+
+  # Either we have no task notifications whatsoever,
+  # or, if there are other tasks notifications displaying,
+  # there shouldn't be any about this particular member.
+
+  if page.has_css?('.tasks')
+    within('.tasks') do
+      page.should have_no_css("a[href='/members/#{@member.to_param}']")
+    end
+  else
+    page.should have_no_css('.tasks')
   end
 end
 

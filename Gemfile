@@ -48,6 +48,7 @@ gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 gem 'state_machine-audit_trail', '~>0.1.2'
 gem 'meekster', :git => "git://github.com/chrismear/meekster.git", :tag => 'v0.0.1'
 gem 'pdf_form_filler', '~>0.0.2'
+gem 'rticles', :git => "https://github.com/oneclickorgs/rticles.git", :branch => 'master'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -72,6 +73,7 @@ group :development, :test do
   gem "faker", '~>1.0.1'
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
+  gem "coveralls", :require => false
   gem "cucumber-rails", "~>1.3.0", :require => nil
   gem "capybara", "~>1.1.2" # Capybara => 2.0.0 has dropped support for Ruby 1.8.x
   gem "database_cleaner"

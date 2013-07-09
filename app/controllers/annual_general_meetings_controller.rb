@@ -1,4 +1,8 @@
 class AnnualGeneralMeetingsController < ApplicationController
+  def show
+    @annual_general_meeting = co.annual_general_meetings.find(params[:id])
+  end
+
   def new
     @annual_general_meeting = co.annual_general_meetings.build
 

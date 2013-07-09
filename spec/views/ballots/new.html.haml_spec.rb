@@ -19,6 +19,9 @@ describe 'ballots/new' do
       mock_model(Nomination, :id => 32, :name => "Belinda Marsh")
     ]
     assign(:nominations, @nominations)
+
+    @annual_general_meeting = mock_model(AnnualGeneralMeeting, :happened_on => 2.weeks.from_now)
+    assign(:annual_general_meeting, @annual_general_meeting)
   end
 
   it "renders a ranking field for each of the nominations" do

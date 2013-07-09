@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear_merged!('rails')
+
 begin
   require 'simplecov'
   SimpleCov.start('rails') if ENV["COVERAGE"]
@@ -11,6 +14,8 @@ end
 # files.
 
 require 'cucumber/rails'
+
+require File.join(Rails.root, 'db', 'seeds')
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -61,5 +66,5 @@ end
 # Possible values are :truncation and :transaction
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
-Cucumber::Rails::Database.javascript_strategy = :truncation
+Cucumber::Rails::Database.javascript_strategy = :truncation, {:except => ['documents', 'paragraphs']}
 

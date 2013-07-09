@@ -26,4 +26,14 @@ class AnnualGeneralMeeting < GeneralMeeting
   def self.description
     "Annual General Meeting"
   end
+
+  def default_agenda_titles
+    [
+      "Apologies for Absence",
+      "Minutes of Previous Meeting",
+      "Election of Directors",
+      "Any Other Business",
+      "Time and date of next meeting"
+    ]
+  end
 end

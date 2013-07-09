@@ -37,6 +37,18 @@
       = content_tag_for(:li, agenda_item) do
         = agenda_item.title
   = simple_format(html_escape(@general_meeting.agenda))
+  %h3 Resolutions to be considered
+  - if @general_meeting.resolutions.empty?
+    %p No resolutions are to be considered at this meeting.
+  - else
+    %ol.resolutions
+      - @general_meeting.resolutions.each do |resolution|
+        = content_tag_for(:li, resolution) do
+          %h4= resolution.title
+          = simple_format(resolution.description)
+          - if resolution.open?
+            %p
+              = link_to("Vote on this resolution online before the meeting.", resolution_path(resolution))
 
   - if can?(:edit, @general_meeting)
     %p= link_to("Record minutes for this meeting", edit_general_meeting_path(@general_meeting))

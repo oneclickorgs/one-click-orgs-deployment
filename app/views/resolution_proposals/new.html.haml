@@ -2,7 +2,8 @@
 
 .guidance
   %h3 Help
-  %p TODO: Guidance text goes here.
+  %p Your suggestion will be forwarded to the Secretary for consideration.
+  %p Alternatively, if sufficient members indicate their desire for this resolution to be voted on, an electronic vote will begin automatically.
 
 = form_for(@resolution_proposal) do |resolution_proposal_form|
   %p
@@ -13,7 +14,5 @@
     = resolution_proposal_form.label :description
     %br
     = resolution_proposal_form.text_area :description
-  %p This resolution will be forwarded to the Secretary for consideration.
-  %p Alternatively, if sufficient members indicate their desire for this resolution to be voted on, an electronic vote will begin automatically.
   %p
-    = resolution_proposal_form.submit "Submit proposal"
+    = resolution_proposal_form.submit "Submit suggestion"

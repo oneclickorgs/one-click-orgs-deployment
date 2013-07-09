@@ -41,12 +41,17 @@ class OneClickController < ApplicationController
 
       @tasks = current_user.tasks.current.undismissed
 
-      @upcoming_meeting = co.meetings.upcoming.order('happened_on ASC').first
-      if co.meetings.upcoming.count > 1
-        @upcoming_meetings_count = co.meetings.upcoming.count - 1
+      if can?(:read, BoardMeeting)
+        meetings_association = co.meetings
+      else
+        meetings_association = co.general_meetings
+      end
+      @upcoming_meeting = meetings_association.upcoming.order('happened_on ASC').first
+      if meetings_association.upcoming.count > 1
+        @upcoming_meetings_count = meetings_association.upcoming.count - 1
       end
 
-      @last_meeting = co.meetings.past.order('happened_on DESC').first
+      @last_meeting = meetings_association.past.order('happened_on DESC').first
 
       @open_proposals_without_vote = co.resolutions.currently_open.reject{|p| p.vote_by(current_user)}
 

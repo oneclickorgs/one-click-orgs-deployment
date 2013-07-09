@@ -18,12 +18,7 @@ class GeneralMeeting < Meeting
       end
 
       if agenda_items.empty?
-        [
-          "Apologies for Absence",
-          "Minutes of Previous Meeting",
-          "Any Other Business",
-          "Time and date of next meeting"
-        ].each_with_index do |title, index|
+        default_agenda_titles.each_with_index do |title, index|
           agenda_items.build(:title => title, :position => index + 1)
         end
       end
@@ -123,6 +118,15 @@ class GeneralMeeting < Meeting
 
   def self.description
     "General Meeting"
+  end
+
+  def default_agenda_titles
+    [
+      "Apologies for Absence",
+      "Minutes of Previous Meeting",
+      "Any Other Business",
+      "Time and date of next meeting"
+    ]
   end
 
   # To fake multi-parameter date/time assignment for 'nominations_closing_date',

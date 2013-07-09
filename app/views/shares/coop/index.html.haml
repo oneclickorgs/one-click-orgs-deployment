@@ -87,6 +87,12 @@
                 = share_transaction_form.submit("Mark as paid, and allot shares")
 
 - if can?(:read, ShareAccount)
+  %p#download
+    Download:
+    %span.pdf.download
+      = link_to 'PDF', members_path(:format => 'pdf')
+    %span.csv.download
+      = link_to 'CSV', members_path(:format => 'csv')
   .section
     %h3 Share ownership
     %table.share_account_balances

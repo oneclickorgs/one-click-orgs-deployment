@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear_merged!('rails')
+
 begin
   require 'simplecov'
   SimpleCov.start('rails') if ENV["COVERAGE"]
@@ -9,6 +12,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+
+require File.join(Rails.root, 'db', 'seeds')
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

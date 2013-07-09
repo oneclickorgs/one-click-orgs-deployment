@@ -23,7 +23,11 @@
               at
               = (meeting.venue || '') + '.'
             %p
-              = link_to("View agenda and details", general_meeting_path(meeting))
+              - case meeting
+                - when AnnualGeneralMeeting
+                  = link_to("View agenda and details", annual_general_meeting_path(meeting))
+                - else
+                  = link_to("View agenda and details", general_meeting_path(meeting))
 
 .section
   %h3 Past meetings
