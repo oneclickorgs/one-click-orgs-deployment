@@ -424,4 +424,71 @@ describe Coop do
     end
   end
 
+  describe "registration_form_filled?" do
+    let(:coop) {Coop.make!(:pending)}
+
+    it "returns false when less than three signatories have been chosen" do
+      coop.clauses.set_integer!(:reg_form_signatories_0, 1)
+      coop.clauses.set_integer!(:reg_form_signatories_1, 2)
+      coop.clauses.where(:name => 'reg_form_signatories_2').destroy_all
+
+      coop.registration_form_filled?.should be_false
+    end
+
+    it "returns true when three signatories have been chosen" do
+      coop.clauses.set_integer!(:reg_form_signatories_0, 1)
+      coop.clauses.set_integer!(:reg_form_signatories_1, 2)
+      coop.clauses.set_integer!(:reg_form_signatories_2, 3)
+
+      coop.registration_form_filled?.should be_true
+    end
+  end
+
+  describe "signatories" do
+    let(:coop) {Coop.make!(:pending)}
+    let(:member_111) {mock_model(Member, :id => 111)}
+    let(:member_333) {mock_model(Member, :id => 333)}
+    let(:member_444) {mock_model(Member, :id => 444)}
+
+    describe "reg_form_signatories_attributes=" do
+      let(:members) {mock("members association")}
+
+      before(:each) do
+        coop.stub(:members).and_return(members)
+
+        members.stub(:find).with(111).and_return(member_111)
+        members.stub(:find).with(333).and_return(member_333)
+        members.stub(:find).with(444).and_return(member_444)
+      end
+
+      it "saves the first three selected signatories" do
+        coop.should_receive(:signatories=).with([member_111, member_333, member_444])
+
+        coop.reg_form_signatories_attributes = {
+          '0' => {'selected' => '1', 'id' => '111'},
+          '1' => {'selected' => '0', 'id' => '222'},
+          '2' => {'selected' => '1', 'id' => '333'},
+          '3' => {'selected' => '1', 'id' => '444'},
+          '4' => {'selected' => '1', 'id' => '555'}
+        }
+      end
+    end
+
+    describe "signatories=" do
+      let(:clauses) {mock("clauses association")}
+
+      before(:each) do
+        coop.stub(:clauses).and_return(clauses)
+      end
+
+      it "writes the new signatories to the clauses" do
+        clauses.should_receive(:set_integer!).with(:reg_form_signatories_0, 111)
+        clauses.should_receive(:set_integer!).with(:reg_form_signatories_1, 333)
+        clauses.should_receive(:set_integer!).with(:reg_form_signatories_2, 444)
+
+        coop.signatories = [member_111, member_333, member_444]
+      end
+    end
+  end
+
 end

@@ -93,6 +93,8 @@ class RegistrationFormsController < ApplicationController
 
   def edit
     @registration_form = co
+
+    @founder_members = co.founder_members
   end
 
   def update
@@ -101,6 +103,7 @@ class RegistrationFormsController < ApplicationController
     @registration_form.reg_form_timing_factors = params[:registration_form][:reg_form_timing_factors]
     @registration_form.reg_form_financial_year_end = params[:registration_form][:reg_form_financial_year_end]
     @registration_form.reg_form_close_links = params[:registration_form][:reg_form_close_links]
+    @registration_form.reg_form_signatories_attributes = params[:registration_form][:reg_form_signatories_attributes]
 
     if @registration_form.save
       flash[:notice] = "Your changes to the Registration Form were saved."

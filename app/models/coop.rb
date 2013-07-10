@@ -467,9 +467,24 @@ class Coop < Organisation
     @reg_form_finacial_year_end = new_reg_form_financial_year_end
   end
 
+  def reg_form_signatories_attributes=(attributes)
+    signatory_ids = attributes.values.select{|v| v['selected'] == '1'}.map{|v| v['id'].to_i}[0..2]
+
+    signatories = signatory_ids.map{|id| members.find(id)}
+
+    self.signatories = signatories
+  end
+
+  def signatories=(new_signatories)
+    clauses.set_integer!(:reg_form_signatories_0, new_signatories[0].id)
+    clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id)
+    clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id)
+  end
+
   def registration_form_filled?
-    # TODO Require selection of three signatories before registration form is considered 'filled'.
-    true
+    clauses.get_integer(:reg_form_signatories_0) &&
+      clauses.get_integer(:reg_form_signatories_1) &&
+      clauses.get_integer(:reg_form_signatories_2)
   end
 
   # The lesser of 10% of the membership and 100 members is required to force a resolution.

@@ -82,6 +82,14 @@ Given(/^I am a founder member$/) do
   user_logs_in
 end
 
+Given(/^there are at least three founder members$/) do
+  @coop ||= Coop.pending.last
+  founder_member_deficit = 3 - @coop.founder_members.count
+  founder_member_deficit.times do
+    @coop.members.make!(:founder_member)
+  end
+end
+
 When(/^I enter a new founding member's details$/) do
   fill_in("Email address", :with => "bob@example.com")
   fill_in("First name", :with => "Bob")

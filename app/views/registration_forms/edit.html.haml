@@ -20,4 +20,11 @@
   %p
     = form.text_area :reg_form_close_links
   %p
+    = label_tag '', "Choose three members who will sign the registration form"
+  %ul
+    = form.fields_for :reg_form_signatories, @founder_members do |signatory_fields|
+      %li
+        = signatory_fields.check_box :selected
+        = signatory_fields.label :selected, signatory_fields.object.name
+  %p
     = form.submit "Save changes"

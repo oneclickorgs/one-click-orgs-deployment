@@ -87,6 +87,10 @@ module NavigationHelpers
       '/proposals'
     when /^the Board page$/
       '/board'
+    when /^edit the registration form$/
+      edit_registration_form_path
+    when /^the checklist$/
+      checklist_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
