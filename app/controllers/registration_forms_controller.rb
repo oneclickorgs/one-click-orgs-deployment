@@ -5,11 +5,11 @@ class RegistrationFormsController < ApplicationController
   def show
     respond_to do |format|
       format.pdf do
-        template = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fsa_ips', 'ms_application_form.pdf'))
-        definition = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fsa_ips', 'ms_application_form.yml'))
+        template = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca', 'mutuals-new-ip-form.pdf'))
+        definition = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca', 'mutuals-new-ip-form.yml'))
 
         # Load default filled-in data for form
-        form_data = YAML.load_file(File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fsa_ips', 'ms_application_form_data.yml')))
+        form_data = YAML.load_file(File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca', 'mutuals-new-ip-form_data.yml')))
 
         # Customise the form data with this organisation's details
         form_data['organisation_name'] = "#{co.name} Limited"
