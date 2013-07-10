@@ -50,13 +50,8 @@ class RegistrationFormsController < ApplicationController
           form_data['year_end_year_4'] = year[3..3]
         end
 
-        if co.reg_form_membership_required
-          form_data['membership_required_yes'] = true
-          form_data['membership_required_no'] = false
-        else
-          form_data['membership_required_yes'] = false
-          form_data['membership_required_no'] = true
-        end
+        form_data['membership_required_yes'] = true
+        form_data['membership_required_no'] = false
 
         form_data['ips_type_explanation'] = <<-EOF
           5 Objects
@@ -105,14 +100,6 @@ class RegistrationFormsController < ApplicationController
 
     @registration_form.reg_form_timing_factors = params[:registration_form][:reg_form_timing_factors]
     @registration_form.reg_form_financial_year_end = params[:registration_form][:reg_form_financial_year_end]
-    @registration_form.reg_form_membership_required = case params[:registration_form][:reg_form_membership_required]
-    when 'true'
-      true
-    when 'false'
-      false
-    else
-      nil
-    end
     @registration_form.reg_form_close_links = params[:registration_form][:reg_form_close_links]
 
     if @registration_form.save

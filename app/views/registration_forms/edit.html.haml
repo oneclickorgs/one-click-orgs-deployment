@@ -12,13 +12,6 @@
     If the society proposes to use a date other than the last day of the month in which the anniversary of its registration falls as its financial year end please indicate this date below, otherwise leave blank.
     = form.text_field :reg_form_financial_year_end
   %p
-    = label_tag "Is membership of the new society required to obtain the benefits / facilities offered by it?"
-    = form.radio_button :reg_form_membership_required, true, :class => 'inline'
-    = form.label :reg_form_membership_required, "Yes", :value => true, :class => 'inline'
-    %br
-    = form.radio_button :reg_form_membership_required, false, :class => 'inline'
-    = form.label :reg_form_membership_required, "No", :value => false, :class => 'inline'
-  %p
     = label_tag "Details of any close links which the society or any member of its committee has, or intends to have, with any society, company or authority"
     The following are regarded as evidence of a close link with another society, company or other entity:
   %ul
