@@ -24,7 +24,7 @@
   %ul
     = form.fields_for :reg_form_signatories, @members do |signatory_fields|
       %li
-        = signatory_fields.check_box :selected
-        = signatory_fields.label :selected, signatory_fields.object.name
+        = signatory_fields.check_box :selected, :class => 'inline'
+        = signatory_fields.label :selected, signatory_fields.object.name, :class => 'inline'
   %p
     = form.submit "Save changes"
