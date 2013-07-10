@@ -5,7 +5,7 @@
 = form_for(@registration_form, :as => :registration_form, :url => registration_form_path, :method => :put) do |form|
   %p
     = form.label :reg_form_timing_factors, "Does the society have any timing factors that it would like us to consider?"
-    If the society wishes to be registered by a specific date, we will try to meet it. Please bear in mind we would like to be given 15 workings days to examine each application.
+    If the society wishes to be registered by a specific date, please state this below and Co-operatives UK will bring this to the attention of the FCA when submitting the application for registration.
     = form.text_area :reg_form_timing_factors
   %p
     = form.label :reg_form_financial_year_end, "Date of society's financial year end (dd/mm/yyyy)"
