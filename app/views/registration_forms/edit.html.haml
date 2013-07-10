@@ -11,18 +11,18 @@
     = form.label :reg_form_financial_year_end, "Date of society's financial year end (dd/mm/yyyy)"
     If the society proposes to use a date other than the last day of the month in which the anniversary of its registration falls as its financial year end please indicate this date below, otherwise leave blank.
     = form.text_field :reg_form_financial_year_end
-  %p
+  %p{:style => 'margin-bottom: 0;'}
     = label_tag "Details of any close links which the society or any member of its committee has, or intends to have, with any society, company or authority"
     The following are regarded as evidence of a close link with another society, company or other entity:
-  %ul
+  %ul{:style => 'margin-left: 40px;'}
     %li any material contract or arrangement which it is anticipated that the society will enter into in order to undertake its business; and
     %li any other directorships or senior positions held by members of the committee.
   %p
     = form.text_area :reg_form_close_links
-  %p
+  %p{:style => 'margin-bottom: 0;'}
     = label_tag '', "Choose three members who will sign the registration form"
     For the purposes of registration, a society must have at least 3 founder members who must sign the registration paperwork. Additional founder members can be present, but they are not required to sign the paperwork.
-  %ul
+  %ul{:style => 'list-style-type: none;'}
     = form.fields_for :reg_form_signatories, @members do |signatory_fields|
       %li
         = signatory_fields.check_box :selected, :class => 'inline'
