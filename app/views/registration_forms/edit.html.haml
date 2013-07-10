@@ -21,6 +21,7 @@
     = form.text_area :reg_form_close_links
   %p
     = label_tag '', "Choose three members who will sign the registration form"
+    For the purposes of registration, a society must have at least 3 founder members who must sign the registration paperwork. Additional founder members can be present, but they are not required to sign the paperwork.
   %ul
     = form.fields_for :reg_form_signatories, @members do |signatory_fields|
       %li
