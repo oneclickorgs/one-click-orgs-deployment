@@ -6,16 +6,17 @@ describe "registration_forms/edit.html.haml" do
     :reg_form_timing_factors => nil,
     :reg_form_financial_year_end => nil,
     :reg_form_close_links => nil,
+    :reg_form_signatories => nil,
     :reg_form_signatories_attributes= => nil
   )}
-  let(:founder_members) {[
+  let(:members) {[
     mock_model(Member, :id => 111, :name => 'Angie', :selected => nil),
     mock_model(Member, :id => 222, :name => 'Bob', :selected => nil),
     mock_model(Member, :id => 333, :name => 'Christine', :selected => nil)
   ]}
 
   before(:each) do
-    assign(:founder_members, founder_members)
+    assign(:members, members)
     assign(:registration_form, organisation)
   end
 

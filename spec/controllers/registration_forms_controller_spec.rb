@@ -11,24 +11,24 @@ describe RegistrationFormsController do
   end
 
   describe "GET 'edit'" do
-    let(:founder_members) {mock("founder members association")}
+    let(:members) {mock("members association")}
 
     before(:each) do
-      @organisation.stub(:founder_members).and_return(founder_members)
+      @organisation.stub(:members).and_return(members)
     end
 
     def get_edit
       get :edit
     end
 
-    it "finds the founder members" do
-      @organisation.should_receive(:founder_members)
+    it "finds the members" do
+      @organisation.should_receive(:members)
       get_edit
     end
 
-    it "assigns the founder members" do
+    it "assigns the members" do
       get_edit
-      assigns[:founder_members].should == founder_members
+      assigns[:members].should == members
     end
 
     it "returns http success" do

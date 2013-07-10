@@ -94,7 +94,7 @@ class RegistrationFormsController < ApplicationController
   def edit
     @registration_form = co
 
-    @founder_members = co.founder_members
+    @members = co.members
   end
 
   def update
