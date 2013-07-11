@@ -468,7 +468,10 @@ class Coop < Organisation
   end
 
   def reg_form_signatories_attributes=(attributes)
-    signatory_ids = attributes.values.select{|v| v['selected'] == '1'}.map{|v| v['id'].to_i}[0..2]
+    attributes = attributes.reject{|k, v| v['selected'] != '1'}
+    signatory_ids = []
+    attributes.each{|k, v| signatory_ids[k.to_i] = v['id'].to_i}
+    signatory_ids = signatory_ids.compact[0..2]
 
     signatories = signatory_ids.map{|id| members.find(id)}
 
