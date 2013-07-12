@@ -6,7 +6,7 @@ GIT
     machinist (2.0)
 
 GIT
-  remote: git://github.com/chrismear/meekster.git
+  remote: git://github.com/oneclickorgs/meekster.git
   revision: 04dabdefaaddd0e9f6eebbb97d22af249e743bfc
   tag: v0.0.1
   specs:

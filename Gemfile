@@ -46,7 +46,7 @@ gem "cancan", "~>1.6.7"
 gem "state_machine", "~>1.1.2"
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 gem 'state_machine-audit_trail', '~>0.1.2'
-gem 'meekster', :git => "git://github.com/chrismear/meekster.git", :tag => 'v0.0.1'
+gem 'meekster', :git => "git://github.com/oneclickorgs/meekster.git", :tag => 'v0.0.1'
 gem 'pdf_form_filler', '~>0.0.3'
 gem 'rticles', :git => "https://github.com/oneclickorgs/rticles.git", :branch => 'master'
 
