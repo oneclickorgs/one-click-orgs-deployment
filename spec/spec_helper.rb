@@ -1,5 +1,4 @@
 require 'coveralls'
-Coveralls.wear_merged!('rails')
 
 begin
   require 'simplecov'
@@ -9,7 +8,7 @@ begin
   # coverage for one suite of tests.
   SimpleCov.merge_timeout 1800
   SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
-  SimpleCov.start('rails') if ENV["COVERAGE"]
+  SimpleCov.start('rails')
 rescue LoadError
 end
 
