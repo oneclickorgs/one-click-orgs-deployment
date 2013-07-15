@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/chrismear/machinist.git
-  revision: e1adc4b1dc881360a7192ada686df78f7b6a5d53
+  revision: 3b9bab4550d68f6f7e3baabfbae1fd6d7420630a
   branch: make_on_has_many
   specs:
     machinist (2.0)
