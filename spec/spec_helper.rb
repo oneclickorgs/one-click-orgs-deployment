@@ -3,6 +3,7 @@ Coveralls.wear_merged!('rails')
 
 begin
   require 'simplecov'
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
   SimpleCov.start('rails') if ENV["COVERAGE"]
 rescue LoadError
 end
