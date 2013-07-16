@@ -74,7 +74,7 @@ group :development, :test do
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
-    :branch => "merge_timeout_for_push", :require => false
+    :branch => "oco", :require => false
   gem "cucumber-rails", "~>1.3.0", :require => nil
   gem "capybara", "~>1.1.2" # Capybara => 2.0.0 has dropped support for Ruby 1.8.x
   gem "database_cleaner"
