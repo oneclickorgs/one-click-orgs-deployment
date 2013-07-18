@@ -5,6 +5,10 @@ end
 
 Given(/^some co\-ops have been submitted for registration$/) do
   @coops = Coop.make!(2, :proposed)
+  @coops.each do |coop|
+    coop.members.make!(:secretary)
+    coop.members.make!(2, :director)
+  end
 end
 
 When(/^I press "(.*?)" for the co\-op$/) do |button|
@@ -29,4 +33,29 @@ Then(/^I should see a list of the submitted co\-ops$/) do
       page.should have_content(coop.name)
     end
   end
+end
+
+Then(/^I should see the name of the co\-op$/) do
+  page.should have_content(@coop.name)
+end
+
+Then(/^I should see the founder members of the co\-op$/) do
+  @coop.members.count.should >= 1
+
+  @coop.members.each do |member|
+    page.should have_content(member.name)
+    page.should have_content(member.email)
+    page.should have_content(member.phone)
+    page.should have_content(member.address)
+  end
+end
+
+Then(/^I should see a link to the co\-op's rules$/) do
+  url = admin_constitution_path(@coop, :format => :pdf)
+  page.should have_css("a[href='#{url}']")
+end
+
+Then(/^I should see a link to the co\-op's registration form$/) do
+  url = admin_registration_form_path(@coop, :format => :pdf)
+  page.should have_css("a[href='#{url}']")
 end

@@ -14,6 +14,10 @@ class Admin::CoopsController < ApplicationController
     @active_coops = Coop.active.order("created_at DESC")
   end
 
+  def show
+    @coop = Coop.find(params[:id])
+  end
+
   def found
     @coop = Coop.find(params[:id])
     @coop.found!

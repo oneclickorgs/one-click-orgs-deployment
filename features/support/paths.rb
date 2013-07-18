@@ -91,6 +91,9 @@ module NavigationHelpers
       edit_registration_form_path
     when /^the checklist$/
       checklist_path
+    when /^the admin view of a proposed co-op$/
+      @coop ||= (@coops.present? ? @coops[0] : Coop.proposed.first)
+      admin_coop_path(@coop)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

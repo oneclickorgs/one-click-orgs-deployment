@@ -1,0 +1,22 @@
+%h2= @coop.name
+%h3 Founder Members
+%table.members
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Phone
+      %th Address
+  %tbody
+  - @coop.members.each do |member|
+    = content_tag_for(:tr, member) do
+      %td= member.name
+      %td= link_to(member.email, "mailto:#{h(member.email)}")
+      %td= member.phone
+      %td= member.address
+
+%h3 Rules
+%p= link_to("Download rules", admin_constitution_path(@coop, :format => :pdf))
+
+%h3 Registration form
+%p= link_to("Download registration form", admin_registration_form_path(@coop, :format => :pdf))

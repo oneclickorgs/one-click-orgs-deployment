@@ -31,4 +31,12 @@ module ControllerSpecHelper
     controller.stub!(:current_user).and_return(@user)
     controller.stub!(:user_logged_in?).and_return(true)
   end
+
+  def stub_administrator_login
+    @administrator = mock_model(Administrator)
+    controller.stub!(:current_administrator).and_return(@administrator)
+    controller.stub!(:administrator_logged_in?).and_return(true)
+
+    controller.stub!(:ensure_administration_subdomain).and_return(true)
+  end
 end
