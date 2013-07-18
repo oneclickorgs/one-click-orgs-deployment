@@ -17,3 +17,8 @@ Feature: Viewing submitted co-ops
     And I should see the founder members of the co-op
     And I should see a link to the co-op's rules
     And I should see a link to the co-op's registration form
+
+  Scenario: Administrator downloads a PDF of a proposed co-op's rules
+    When I go to the admin view of a proposed co-op
+    And I follow "Download rules"
+    Then I should get a ".pdf" download

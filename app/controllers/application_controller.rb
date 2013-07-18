@@ -99,11 +99,12 @@ class ApplicationController < ActionController::Base
   # MAKING PDFS
 
   def generate_pdf(filename='Download', options={})
-    @organisation_name = co.name
-
     options = {
       :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}"
     }.with_indifferent_access.merge(options)
+
+    organisation = options[:organisation] || co
+    @organisation_name = organisation.name
 
     # If wkhtmltopdf is working...
     begin
