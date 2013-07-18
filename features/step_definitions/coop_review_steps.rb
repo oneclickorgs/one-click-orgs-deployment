@@ -18,6 +18,13 @@ When(/^I press "(.*?)" for the co\-op$/) do |button|
   end
 end
 
+When(/^I follow "(.*?)" for the co\-op$/) do |link|
+  @coop ||= Coop.proposed.last
+  within("#coop_#{@coop.id}") do
+    click_link(link)
+  end
+end
+
 Then(/^I should see that the co\-op is approved$/) do
   @coop ||= Coop.active.last
   within('.active_coops') do

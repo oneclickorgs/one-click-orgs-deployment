@@ -20,3 +20,9 @@
 
 %h3 Registration form
 %p= link_to("Download registration form", admin_registration_form_path(@coop, :format => :pdf))
+
+%h3 Registration
+%p
+  Once the registration process with the FCA is complete, press the button below to
+  activate all the online features for this co-op.
+= button_to("Approve registration", found_admin_coop_path(@coop), :method => :put, :confirm => "This will mark this co-op as registered, and send an email notification to the founder members. Are you sure you wish to continue?")
