@@ -3,8 +3,7 @@ require 'one_click_orgs/cast_to_boolean'
 class Coop < Organisation
   include OneClickOrgs::CastToBoolean
 
-  attr_accessible :reg_form_timing_factors, :reg_form_close_links, :reg_form_membership_required,
-    :reg_form_financial_year_end
+  attr_accessible :reg_form_timing_factors, :reg_form_close_links, :reg_form_financial_year_end
 
   state_machine :initial => :pending do
     event :propose do
@@ -468,20 +467,27 @@ class Coop < Organisation
     @reg_form_finacial_year_end = new_reg_form_financial_year_end
   end
 
-  def reg_form_membership_required
-    @reg_form_membership_required ||= clauses.get_boolean('reg_form_membership_required')
+  def reg_form_signatories_attributes=(attributes)
+    attributes = attributes.reject{|k, v| v['selected'] != '1'}
+    signatory_ids = []
+    attributes.each{|k, v| signatory_ids[k.to_i] = v['id'].to_i}
+    signatory_ids = signatory_ids.compact[0..2]
+
+    signatories = signatory_ids.map{|id| members.find(id)}
+
+    self.signatories = signatories
   end
 
-  def reg_form_membership_required=(new_reg_form_membership_required)
-    return if new_reg_form_membership_required.nil?
-    clauses.build(:name => 'reg_form_membership_required', :boolean_value => new_reg_form_membership_required)
-    @reg_form_membership_required = new_reg_form_membership_required
+  def signatories=(new_signatories)
+    clauses.set_integer!(:reg_form_signatories_0, new_signatories[0].id)
+    clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id)
+    clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id)
   end
 
   def registration_form_filled?
-    [
-      :membership_required
-    ].map{|name| "reg_form_#{name}"}.map{|name| !send(name).nil?}.inject(true){|memo, present| memo && present}
+    clauses.get_integer(:reg_form_signatories_0) &&
+      clauses.get_integer(:reg_form_signatories_1) &&
+      clauses.get_integer(:reg_form_signatories_2)
   end
 
   # The lesser of 10% of the membership and 100 members is required to force a resolution.

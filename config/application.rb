@@ -35,6 +35,7 @@ module OneClickOrgs
       ARGV.include?('assets:precompile')
     ))
       config.active_record.observers =
+        :coop_mailer_observer,
         :decision_mailer_observer,
         :directorship_mailer_observer,
         :election_task_observer,

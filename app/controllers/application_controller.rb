@@ -98,17 +98,33 @@ class ApplicationController < ActionController::Base
 
   # MAKING PDFS
 
-  def generate_pdf(filename = 'Download')
-    @organisation_name = co.name
+  def generate_pdf(filename='Download', options={})
+    options = {
+      :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}"
+    }.with_indifferent_access.merge(options)
+
+    organisation = options[:organisation] || co
+    @organisation_name = organisation.name
 
     # If wkhtmltopdf is working...
     begin
       html = render_to_string(:layout => false)
 
       # Call PDFKit with any wkhtmltopdf --extended-help options
-      kit = PDFKit.new(html, :page_size => 'A4', :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}")
+      kit = PDFKit.new(html, :page_size => 'A4',
+        :header_right => options[:header_right],
+        :header_left => options[:header_left],
+        :footer_right => '[page]',
+        :header_font_size => 8,
+        :footer_font_size => 11,
+        :header_line => true,
+        :header_spacing => 9,
+        :footer_spacing => 9
+      )
 
-      # Add our CSS file
+      if options[:stylesheet]
+        kit.stylesheets << options[:stylesheet]
+      end
       kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.css"
 
       send_data(kit.to_pdf, :filename => "#{@organisation_name} #{filename}.pdf",

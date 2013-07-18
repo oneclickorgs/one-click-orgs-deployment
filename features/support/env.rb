@@ -1,9 +1,14 @@
 require 'coveralls'
-Coveralls.wear_merged!('rails')
 
 begin
   require 'simplecov'
-  SimpleCov.start('rails') if ENV["COVERAGE"]
+  # Our test suites are big enough that the default timeout
+  # of 10 minutes is sometimes the RSpec suite and the Cucumber
+  # suite don't get merged, and so the resulting report only shows
+  # coverage for one suite of tests.
+  SimpleCov.merge_timeout 1800
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+  SimpleCov.start('rails')
 rescue LoadError
 end
 
@@ -14,6 +19,8 @@ end
 # files.
 
 require 'cucumber/rails'
+
+require File.join(Rails.root, 'db', 'seeds')
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -64,5 +71,5 @@ end
 # Possible values are :truncation and :transaction
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
-Cucumber::Rails::Database.javascript_strategy = :truncation
+Cucumber::Rails::Database.javascript_strategy = :truncation, {:except => ['documents', 'paragraphs']}
 

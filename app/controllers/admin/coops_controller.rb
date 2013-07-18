@@ -1,17 +1,12 @@
-class Admin::CoopsController < ApplicationController
-  skip_before_filter :ensure_organisation_exists
-  skip_before_filter :ensure_authenticated
-  skip_before_filter :prepare_notifications
-
-  before_filter :ensure_administrator_authenticated
-  before_filter :ensure_administration_subdomain
-
-  layout 'admin'
-
+class Admin::CoopsController < AdminController
   def index
     @pending_coops = Coop.pending.order("created_at DESC")
     @proposed_coops = Coop.proposed.order("created_at DESC")
     @active_coops = Coop.active.order("created_at DESC")
+  end
+
+  def show
+    @coop = Coop.find(params[:id])
   end
 
   def found

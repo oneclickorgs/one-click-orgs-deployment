@@ -68,6 +68,28 @@ Given(/^there is a Member whose membership needs to be terminated$/) do
   @member = @organisation.members.make!
 end
 
+Given(/^I am a founder member$/) do
+  set_up_application_if_necessary
+
+  @coop ||= Coop.pending.last
+  @coop ||= Coop.make!(:pending)
+
+  @organisation = @coop
+
+  @user = @coop.members.make!(:founder_member)
+
+  set_subdomain_to_organisation
+  user_logs_in
+end
+
+Given(/^there are at least three founder members$/) do
+  @coop ||= Coop.pending.last
+  founder_member_deficit = 3 - @coop.founder_members.count
+  founder_member_deficit.times do
+    @coop.members.make!(:founder_member)
+  end
+end
+
 When(/^I enter a new founding member's details$/) do
   fill_in("Email address", :with => "bob@example.com")
   fill_in("First name", :with => "Bob")

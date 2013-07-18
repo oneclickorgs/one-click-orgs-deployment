@@ -40,7 +40,7 @@ class Member < ActiveRecord::Base
   include OneClickOrgs::InvitationCode
   include OneClickOrgs::NotificationConsumer
 
-  attr_accessor :send_welcome
+  attr_accessor :send_welcome, :selected
 
   belongs_to :organisation
   belongs_to :member_class

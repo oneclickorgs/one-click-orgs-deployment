@@ -16,6 +16,9 @@
     = invitation_form.label :email, "Email address"
     = invitation_form.email_field :email
   %p
+    = invitation_form.label :address, "Postal address"
+    = invitation_form.text_area :address
+  %p
     = invitation_form.label :password, "Choose password"
     = invitation_form.password_field :password
   %p
