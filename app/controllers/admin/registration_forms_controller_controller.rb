@@ -1,4 +1,4 @@
-class Admin::RegistrationFormsControllerController < ApplicationController
+class Admin::RegistrationFormsControllerController < AdminController
   def show
   end
 end
