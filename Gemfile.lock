@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/chrismear/coveralls-ruby.git
-  revision: 3461d345c9a4ebbd9772a2f6d2a8df6ba83f8d60
+  revision: 8deac9b250c95d2265d3d4d842a739a292324e1c
   branch: oco
   specs:
     coveralls (0.6.7)
