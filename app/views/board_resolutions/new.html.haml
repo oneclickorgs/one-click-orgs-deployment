@@ -6,10 +6,10 @@
   %p
     = board_resolution_form.text_area :description
   %p
-    = board_resolution_form.radio_button :draft, false
-    = label_tag 'board_resolution_draft_true', "Open this resolution for electronic voting immediately."
+    = board_resolution_form.radio_button :draft, false, :class => :inline
+    = label_tag 'board_resolution_draft_true', "Open this resolution for electronic voting immediately.", :class => :inline
   %p
-    = board_resolution_form.radio_button :draft, true
-    = label_tag 'board_resolution_draft_false', "Save this resolution for consideration at a future meeting of the Board."
+    = board_resolution_form.radio_button :draft, true, :class => :inline
+    = label_tag 'board_resolution_draft_false', "Save this resolution for consideration at a future meeting of the Board.", :class => :inline
   %p
     = board_resolution_form.submit "Save this resolution"
