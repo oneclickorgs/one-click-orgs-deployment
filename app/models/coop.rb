@@ -478,6 +478,14 @@ class Coop < Organisation
     self.signatories = signatories
   end
 
+  def signatories
+    [
+      clauses.get_integer(:reg_form_signatories_0),
+      clauses.get_integer(:reg_form_signatories_1),
+      clauses.get_integer(:reg_form_signatories_2)
+    ].map{|id| members.find_by_id(id)}.compact
+  end
+
   def signatories=(new_signatories)
     clauses.set_integer!(:reg_form_signatories_0, new_signatories[0].id)
     clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id)

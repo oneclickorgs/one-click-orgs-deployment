@@ -8,13 +8,13 @@
   %tbody
     %tr
       %td 1.
-      %td
+      %td= @signatories[0] ? @signatories[0].name.upcase : ""
     %tr
       %td 2.
-      %td
+      %td= @signatories[1] ? @signatories[1].name.upcase : ""
     %tr
       %td 3.
-      %td
+      %td= @signatories[2] ? @signatories[2].name.upcase : ""
 %table.signatures
   %thead
     %tr
@@ -23,7 +23,7 @@
   %tbody
     %tr
       %td 1.
-      %td
+      %td= @secretary ? @secretary.name.upcase : ""
 
 %p{:style => 'text-align: center;'}
   \- Accepted as a model by the Financial Services Authority 2011 v.1 -
