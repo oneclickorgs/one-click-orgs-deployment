@@ -6,8 +6,8 @@ describe "members/index" do
     before(:each) do
       @organisation = mock_model(Company)
       assign(:current_organisation, @organisation)
-      view.stub!(:current_organisation).and_return(@organisation)
-      view.stub!(:co).and_return(@organisation)
+      view.stub(:current_organisation).and_return(@organisation)
+      view.stub(:co).and_return(@organisation)
       install_organisation_resolver(@organisation)
       
       @director = mock_model(Director,

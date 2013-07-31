@@ -4,7 +4,7 @@ describe "layouts/welcome" do
   
   context "when user is logged in" do
     before(:each) do
-      @members_association = mock('members association', :first => @founder = mock_model(Member, :name => "Bob Smith"))
+      @members_association = double('members association', :first => @founder = mock_model(Member, :name => "Bob Smith"))
       
       @organisation = mock_model(Association,
         :name => "The Cheese Collective",
@@ -15,12 +15,12 @@ describe "layouts/welcome" do
       )
       
       assign(:current_organisation, @organisation)
-      view.stub!(:current_organisation).and_return(@organisation)
-      view.stub!(:co).and_return(@organisation)
+      view.stub(:current_organisation).and_return(@organisation)
+      view.stub(:co).and_return(@organisation)
       
       install_organisation_resolver(@organisation)
       
-      view.stub!(:current_user).and_return(@user = mock_model(Member, 
+      view.stub(:current_user).and_return(@user = mock_model(Member,
                                                               :name => "Lucy Baker",
                                                               :inducted_at => 2.days.ago
                                                              ))
