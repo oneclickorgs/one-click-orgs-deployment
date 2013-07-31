@@ -80,7 +80,7 @@ describe Member do
   
   describe "creation" do
     it "should send a welcome email" do
-      MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
+      MembersMailer.should_receive(:welcome_new_member).and_return(double('mail', :deliver => nil))
       @organisation.members.create({
         :email=>'foo@example.com',
         :first_name=>'Klaus',
@@ -190,7 +190,7 @@ describe Member do
   
   describe "resigning" do
     def mock_email
-      mock("email", :deliver => nil)
+      double("email", :deliver => nil)
     end
     
     it "creates a resignation record" do

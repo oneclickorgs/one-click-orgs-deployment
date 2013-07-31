@@ -10,8 +10,8 @@ describe Decision do
       @decision.stub(:proposal).and_return(mock_model(Proposal))
       @decision.stub_chain(:organisation, :members, :active).and_return([@member])
       
-      @mail = mock("mail", :deliver => nil)
-      DecisionMailer.stub!(:notify_new_decision).and_return(@mail)
+      @mail = double("mail", :deliver => nil)
+      DecisionMailer.stub(:notify_new_decision).and_return(@mail)
     end
     
     it "sends out an email to each member after a Decision has been made" do
@@ -21,7 +21,7 @@ describe Decision do
     
     context "when email delivery errors" do
       before(:each) do
-        @mail.stub!(:deliver).and_raise(StandardError)
+        @mail.stub(:deliver).and_raise(StandardError)
       end
       
       it "should not propagate the error" do

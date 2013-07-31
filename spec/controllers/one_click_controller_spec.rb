@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module OneClickControllerSpecHelper
   def mock_event
-    mock("event").tap do |event|
-      event.stub!(:[]).with(:timestamp) do
+    double("event").tap do |event|
+      event.stub(:[]).with(:timestamp) do
         rand(5).days.ago
       end
     end
@@ -31,16 +31,16 @@ describe OneClickController do
     describe "GET dashboard" do
       before(:each) do
         @meeting = mock_model(Meeting)
-        Meeting.stub!(:new).and_return(@meeting)
+        Meeting.stub(:new).and_return(@meeting)
         
-        @members_association = mock("members association")
-        @company.stub!(:members).and_return(@members_association)
-        @member_classes_association = mock("member classes association")
-        @company.stub!(:member_classes).and_return(@member_classes_association)
+        @members_association = double("members association")
+        @company.stub(:members).and_return(@members_association)
+        @member_classes_association = double("member classes association")
+        @company.stub(:member_classes).and_return(@member_classes_association)
         @director_member_class = mock_model(MemberClass)
-        @member_classes_association.stub!(:find_by_name).and_return(@director_member_class)
-        @directors = mock("directors")
-        @members_association.stub!(:where).and_return(@directors)
+        @member_classes_association.stub(:find_by_name).and_return(@director_member_class)
+        @directors = double("directors")
+        @members_association.stub(:where).and_return(@directors)
         
         @proposals = [
           mock_model(Proposal, :to_event => mock_event),
@@ -56,9 +56,9 @@ describe OneClickController do
         @company.stub_chain(:decisions, :all).and_return([])
         
         @proposals.stub(:all).and_return(@proposals)
-        @proposals.stub!(:currently_open).and_return(@proposals)
+        @proposals.stub(:currently_open).and_return(@proposals)
         
-        @proposals.stub!(:new).and_return(mock_model(Proposal))
+        @proposals.stub(:new).and_return(mock_model(Proposal))
       end
       
       it "builds a new meeting" do
@@ -116,7 +116,7 @@ describe OneClickController do
       
       describe "timeline" do
         it "includes Resignation events" do
-          @resignation_event = mock('resignation event')
+          @resignation_event = double('resignation event')
           @association.stub_chain(:resignations, :all).and_return(mock_model(Resignation,
             :to_event => @resignation_event
           ))
