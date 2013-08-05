@@ -33,7 +33,7 @@ group :assets do
   gem 'therubyracer'
 end
 
-gem "jquery-rails", "~>2.0.2"
+gem "jquery-rails", "~>2.2.2"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.0.7"
 gem "pdfkit", "~>0.5.2"
