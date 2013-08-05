@@ -5,7 +5,7 @@ Given(/^the requirements for registration have been fulfilled$/) do
   @organisation.members.make!(:secretary)
 
   @organisation.name ||= Faker::Company.name
-  @organisation.registered_office_address ||= "#{Faker::Address.street_address}\n#{Faker::Address.city}\n#{Faker::Address.uk_postcode}"
+  @organisation.registered_office_address ||= "#{Faker::Address.street_address}\n#{Faker::Address.city}\n#{Faker::Address.zip_code}"
   @organisation.objectives ||= Faker::Company.bs
 
   @organisation.signatories = @organisation.members.all[0..2]
