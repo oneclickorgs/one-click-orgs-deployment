@@ -191,9 +191,9 @@ describe MeetingsController do
 
     describe "GET index" do
       before(:each) do
-        @general_meetings_association = mock("general meetings association")
-        @upcoming_meetings = mock("upcoming general meetings association")
-        @past_meetings = mock("past general meetings association")
+        @general_meetings_association = double("general meetings association")
+        @upcoming_meetings = double("upcoming general meetings association")
+        @past_meetings = double("past general meetings association")
 
         @organisation.stub(:general_meetings).and_return(@general_meetings_association)
         @general_meetings_association.stub(:upcoming).and_return(@upcoming_meetings)

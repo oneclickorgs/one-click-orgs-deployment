@@ -11,20 +11,20 @@ describe BoardsController do
   end
 
   describe "GET 'show'" do
-    let(:board_meetings) {mock("board meetings association",
+    let(:board_meetings) {double("board meetings association",
       :upcoming => upcoming_board_meetings,
       :past => past_board_meetings
     )}
-    let(:upcoming_board_meetings) {mock("upcoming board meetings")}
-    let(:past_board_meetings) {mock("past board meetings")}
-    let(:board_resolutions) {mock("board resolutions association",
+    let(:upcoming_board_meetings) {double("upcoming board meetings")}
+    let(:past_board_meetings) {double("past board meetings")}
+    let(:board_resolutions) {double("board resolutions association",
       :currently_open => open_board_resolutions
     )}
-    let(:open_board_resolutions) {mock("open board resolutions")}
-    let(:user_board_resolutions) {mock("user's board resolutions association",
+    let(:open_board_resolutions) {double("open board resolutions")}
+    let(:user_board_resolutions) {double("user's board resolutions association",
       :draft => draft_resolutions
     )}
-    let(:draft_resolutions) {mock("current user's draft board resolutions")}
+    let(:draft_resolutions) {double("current user's draft board resolutions")}
 
     before(:each) do
       @organisation.stub(:board_meetings).and_return(board_meetings)

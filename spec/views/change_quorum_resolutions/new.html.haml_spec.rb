@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'change_quorum_resolutions/new' do
 
   before(:each) do
-    @constitution = mock("constitution",
+    @constitution = double("constitution",
       :quorum_number => 3,
       :quorum_percentage => 25
     )

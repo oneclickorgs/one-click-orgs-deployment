@@ -10,9 +10,9 @@ describe ShareTransactionsController do
     stub_login
   end
 
-  let(:share_account) {mock(ShareAccount, :withdrawals => withdrawals, :deposits => deposits)}
-  let(:withdrawals) {mock("withdrawals", :find_by_id => nil)}
-  let(:deposits) {mock("deposits", :find_by_id => nil)}
+  let(:share_account) {double(ShareAccount, :withdrawals => withdrawals, :deposits => deposits)}
+  let(:withdrawals) {double("withdrawals", :find_by_id => nil)}
+  let(:deposits) {double("deposits", :find_by_id => nil)}
   let(:share_transaction) {mock_model(ShareTransaction, :approve! => nil)}
 
   before(:each) do

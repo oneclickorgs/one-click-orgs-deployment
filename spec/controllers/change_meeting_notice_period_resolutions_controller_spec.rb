@@ -14,7 +14,7 @@ describe ChangeMeetingNoticePeriodResolutionsController do
     before(:each) do
       @change_meeting_notice_period_resolution = mock_model(ChangeMeetingNoticePeriodResolution)
 
-      @change_meeting_notice_period_resolutions_association = mock("change-meeting-notice-period resolutions association")
+      @change_meeting_notice_period_resolutions_association = double("change-meeting-notice-period resolutions association")
       @organisation.stub(:change_meeting_notice_period_resolutions).and_return(@change_meeting_notice_period_resolutions_association)
 
       @change_meeting_notice_period_resolutions_association.stub(:build).and_return(@change_meeting_notice_period_resolution)
@@ -37,7 +37,7 @@ describe ChangeMeetingNoticePeriodResolutionsController do
 
   describe "POST create" do
     before(:each) do
-      @resolutions_association = mock("change-meeting-notice-period resolutions association")
+      @resolutions_association = double("change-meeting-notice-period resolutions association")
       @resolution_params = {'meeting_notice_period' => '28'}
       @resolution = mock_model("ChangeMeetingNoticePeriodResolution",
         :proposer= => nil,

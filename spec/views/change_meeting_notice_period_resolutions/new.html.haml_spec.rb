@@ -6,7 +6,7 @@ describe 'change_meeting_notice_period_resolutions/new' do
     @organisation = mock_model(Coop)
     view.stub(:co).and_return(@organisation)
 
-    @constitution = mock("constitution")
+    @constitution = double("constitution")
     @organisation.stub(:constitution).and_return(@constitution)
 
     @constitution.stub(:meeting_notice_period)

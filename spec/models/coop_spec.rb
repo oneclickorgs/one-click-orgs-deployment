@@ -383,7 +383,7 @@ describe Coop do
 
   describe "email notification" do
     let(:administrators) {[mock_model(Administrator, :email => 'administrator@example.com')]}
-    let(:email) {mock("email", :deliver => nil)}
+    let(:email) {double("email", :deliver => nil)}
 
     before(:each) do
       set_up_app
@@ -451,7 +451,7 @@ describe Coop do
     let(:member_444) {mock_model(Member, :id => 444)}
 
     describe "reg_form_signatories_attributes=" do
-      let(:members) {mock("members association")}
+      let(:members) {double("members association")}
 
       before(:each) do
         coop.stub(:members).and_return(members)
@@ -475,7 +475,7 @@ describe Coop do
     end
 
     describe "signatories=" do
-      let(:clauses) {mock("clauses association")}
+      let(:clauses) {double("clauses association")}
 
       before(:each) do
         coop.stub(:clauses).and_return(clauses)

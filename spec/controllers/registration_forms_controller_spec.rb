@@ -11,7 +11,7 @@ describe RegistrationFormsController do
   end
 
   describe "GET 'edit'" do
-    let(:members) {mock("members association")}
+    let(:members) {double("members association")}
 
     before(:each) do
       @organisation.stub(:members).and_return(members)

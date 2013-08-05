@@ -131,13 +131,13 @@ describe OneClickController do
   context "when current organisation is a co-op" do
     let(:decisions) {[decision]}
     let(:decision) {mock_model(Decision, :to_event => decision_event)}
-    let(:decision_event) {mock("decision event")}
+    let(:decision_event) {double("decision event")}
 
     before(:each) do
       stub_coop
       stub_login
 
-      @proposals_association = mock("proposals association")
+      @proposals_association = double("proposals association")
       @organisation.stub(:proposals).and_return(@proposals_association)
 
       @proposals_association.stub_chain(:currently_open, :reject)
@@ -150,14 +150,14 @@ describe OneClickController do
       @organisation.stub_chain(:general_meetings, :upcoming, :count).and_return(0)
       @organisation.stub_chain(:general_meetings, :past, :order, :first)
 
-      @organisation.stub(:resolutions).and_return(mock("resolutions", :currently_open => []))
+      @organisation.stub(:resolutions).and_return(double("resolutions", :currently_open => []))
       @organisation.stub(:resolution_proposals).and_return([])
       @organisation.stub(:decisions).and_return([])
 
-      @tasks_association = mock("tasks association")
+      @tasks_association = double("tasks association")
       @user.stub(:tasks).and_return(@tasks_association)
 
-      @current_tasks_association = mock("current tasks association")
+      @current_tasks_association = double("current tasks association")
       @tasks_association.stub(:current).and_return(@current_tasks_association)
 
       @current_tasks_association.stub(:undismissed).and_return(@undismissed_tasks)

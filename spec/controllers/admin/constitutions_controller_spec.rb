@@ -11,7 +11,7 @@ describe Admin::ConstitutionsController do
 
   describe "GET show" do
     let(:organisation) {mock_model(Organisation, :constitution => constitution)}
-    let(:constitution) {mock("constiution")}
+    let(:constitution) {double("constiution")}
 
     before(:each) do
       Organisation.stub(:find).and_return(organisation)

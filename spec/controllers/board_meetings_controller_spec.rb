@@ -12,7 +12,7 @@ describe BoardMeetingsController do
 
   describe "GET show" do
     let(:board_meeting) {mock_model(BoardMeeting)}
-    let(:board_meetings) {mock("board meetings", :find => board_meeting)}
+    let(:board_meetings) {double("board meetings", :find => board_meeting)}
 
     before(:each) do
       @organisation.stub(:board_meetings).and_return(board_meetings)
@@ -41,7 +41,7 @@ describe BoardMeetingsController do
   describe "GET new" do
     before(:each) do
       @board_meeting = mock_model(BoardMeeting).as_new_record
-      @board_meetings_association = mock("board meetings association")
+      @board_meetings_association = double("board meetings association")
 
       @organisation.stub(:board_meetings).and_return(@board_meetings_association)
       @board_meetings_association.stub(:build).and_return(@board_meeting)
@@ -69,7 +69,7 @@ describe BoardMeetingsController do
 
   describe "POST create" do
     before(:each) do
-      @board_meetings_association = mock("board meetings association")
+      @board_meetings_association = double("board meetings association")
       @board_meeting_params = {'venue' => 'The Meeting Hall'}
       @board_meeting = mock_model(BoardMeeting,
         :creator= => nil,
@@ -107,10 +107,10 @@ describe BoardMeetingsController do
 
   describe "GET edit" do
     let(:board_meeting) {mock_model(BoardMeeting)}
-    let(:board_meetings) {mock("board meetings association",
+    let(:board_meetings) {double("board meetings association",
       :find => board_meeting
     )}
-    let(:directors) {mock("directors")}
+    let(:directors) {double("directors")}
 
     before(:each) do
       @organisation.stub(:board_meetings).and_return(board_meetings)
@@ -149,7 +149,7 @@ describe BoardMeetingsController do
 
   describe "PUT update" do
     let(:board_meeting) {mock_model(BoardMeeting, :update_attributes => true)}
-    let(:board_meetings) {mock("board meetings", :find => board_meeting)}
+    let(:board_meetings) {double("board meetings", :find => board_meeting)}
     let(:board_meeting_attributes) {{'foo' => 'bar'}}
 
     before(:each) do

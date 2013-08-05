@@ -12,7 +12,7 @@ describe Directorship do
       @director = mock_model(Member, :member_class => nil, :name => "John Smith", :email => "john@example.com")
       @directorship.stub(:director).and_return(@director)
 
-      @member_classes_association = mock("member classes association")
+      @member_classes_association = double("member classes association")
       @organisation.stub(:member_classes).and_return(@member_classes_association)
 
       @director.stub(:member_class=)

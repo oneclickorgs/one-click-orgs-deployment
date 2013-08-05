@@ -211,7 +211,7 @@ describe Proposal do
   describe "amending voting period" do
     before(:each) do
       @proposer = mock_model(Member, :cast_vote => nil)
-      @constitution = mock("constitution")
+      @constitution = double("constitution")
       @organisation = mock_model(Organisation,
         :pending? => false,
         :constitution => @constitution

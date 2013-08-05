@@ -12,7 +12,7 @@ describe ResolutionProposalsController do
 
   describe "GET new" do
     before(:each) do
-      @resolution_proposals_association = mock("resolution proposals association")
+      @resolution_proposals_association = double("resolution proposals association")
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
@@ -38,7 +38,7 @@ describe ResolutionProposalsController do
   describe "POST create" do
     before(:each) do
       @resolution_proposal_params = {'description' => 'Buy more sporks.'}
-      @resolution_proposals_association = mock("resolution proposals association")
+      @resolution_proposals_association = double("resolution proposals association")
       @resolution_proposal = mock_model(ResolutionProposal, :to_param => '50')
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
       @resolution_proposals_association.stub(:build).and_return(@resolution_proposal)
@@ -77,7 +77,7 @@ describe ResolutionProposalsController do
 
   describe "GET edit" do
     before(:each) do
-      @resolution_proposals_association = mock("resolution proposals association")
+      @resolution_proposals_association = double("resolution proposals association")
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
@@ -108,7 +108,7 @@ describe ResolutionProposalsController do
     before(:each) do
       @resolution_proposal_params = {'description' => 'New description.'}
 
-      @resolution_proposals_association = mock("resolution proposals association")
+      @resolution_proposals_association = double("resolution proposals association")
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
@@ -143,7 +143,7 @@ describe ResolutionProposalsController do
 
   describe "PUT pass" do
     before(:each) do
-      @resolution_proposals_association = mock("resolution proposals association")
+      @resolution_proposals_association = double("resolution proposals association")
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
@@ -182,7 +182,7 @@ describe ResolutionProposalsController do
 
   describe "PUT pass_to_meeting" do
     before(:each) do
-      @resolution_proposals_association = mock("resolution proposals association")
+      @resolution_proposals_association = double("resolution proposals association")
       @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)

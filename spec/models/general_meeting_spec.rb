@@ -114,7 +114,7 @@ describe GeneralMeeting do
         'id' => '1', 'passed' => '0',
         'additional_votes_for' => '3', 'additional_votes_against' => '1'}
     }}
-    let(:resolutions) {mock("resolutions", :find_by_id => resolution)}
+    let(:resolutions) {double("resolutions", :find_by_id => resolution)}
 
     before(:each) do
       meeting.stub(:resolutions).and_return(resolutions)
@@ -148,7 +148,7 @@ describe GeneralMeeting do
         secretary = mock_model(Member)
         meeting.organisation.stub(:secretary).and_return(secretary)
 
-        tasks_association = mock("tasks association")
+        tasks_association = double("tasks association")
         secretary.stub(:tasks).and_return(tasks_association)
 
         tasks_association.should_receive(:create).with(hash_including(

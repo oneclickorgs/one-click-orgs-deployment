@@ -8,7 +8,7 @@ module ControllerSpecHelper
   
   def stub_coop
     @coop = @organisation = mock_model(Coop)
-    Organisation.stub!(:find_by_host).and_return(@coop)
+    Organisation.stub(:find_by_host).and_return(@coop)
   end
   
   def stub_company
@@ -34,9 +34,9 @@ module ControllerSpecHelper
 
   def stub_administrator_login
     @administrator = mock_model(Administrator)
-    controller.stub!(:current_administrator).and_return(@administrator)
-    controller.stub!(:administrator_logged_in?).and_return(true)
+    controller.stub(:current_administrator).and_return(@administrator)
+    controller.stub(:administrator_logged_in?).and_return(true)
 
-    controller.stub!(:ensure_administration_subdomain).and_return(true)
+    controller.stub(:ensure_administration_subdomain).and_return(true)
   end
 end

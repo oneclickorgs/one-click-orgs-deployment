@@ -16,7 +16,7 @@ describe 'meetings/coop/index' do
     @organisation = mock_model(Coop)
     view.stub(:co).and_return(@organisation)
 
-    @constitution = mock("constitution",
+    @constitution = double("constitution",
       :meeting_notice_period => 14,
       :quorum_number => 3,
       :quorum_percentage => 25
