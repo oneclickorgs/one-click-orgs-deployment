@@ -45,6 +45,8 @@ gem "cancan", "~>1.6.7"
 gem "state_machine", "~>1.1.2"
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
+gem "nokogiri", "~>1.5.9" # Nokogiri => 1.6 has dropped support for Ruby 1.8.
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
