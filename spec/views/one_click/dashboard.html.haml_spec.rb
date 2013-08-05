@@ -6,8 +6,8 @@ describe "one_click/dashboard" do
     before(:each) do
       @organisation = mock_model(Company, :name => "Grapes Ltd")
       assign(:current_organisation, @organisation)
-      view.stub!(:current_organisation).and_return(@organisation)
-      view.stub!(:co).and_return(@organisation)
+      view.stub(:current_organisation).and_return(@organisation)
+      view.stub(:co).and_return(@organisation)
       install_organisation_resolver(@organisation)
 
       @meeting = mock_model(Meeting,

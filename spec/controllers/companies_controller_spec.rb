@@ -10,10 +10,10 @@ describe CompaniesController do
   describe "GET new" do
     before(:each) do
       @member = mock_model(Member)
-      Member.stub!(:new).and_return(@member)
+      Member.stub(:new).and_return(@member)
       
       @company = mock_model(Company)
-      Company.stub!(:new).and_return(@company)
+      Company.stub(:new).and_return(@company)
     end
     
     it "builds a new member" do
@@ -50,18 +50,18 @@ describe CompaniesController do
   describe "POST create" do
     before(:each) do
       @company = mock_model(Company, :save! => true, :host => "coffee.oneclickorgs.com")
-      Company.stub!(:new).and_return(@company)
+      Company.stub(:new).and_return(@company)
       
-      @members_association = mock("member association")
-      @company.stub!(:members).and_return(@members_association)
+      @members_association = double("member association")
+      @company.stub(:members).and_return(@members_association)
       
       @member = mock_model(Member, :save! => true, :member_class= => nil, :state= => nil, :update_attribute => true)
-      @members_association.stub!(:build).and_return(@member)
+      @members_association.stub(:build).and_return(@member)
       
       @director_member_class = mock_model(MemberClass, :description => "Director")
-      @member_classes_association = mock("member classes association")
-      @company.stub!(:member_classes).and_return(@member_classes_association)
-      @member_classes_association.stub!(:find_by_name).with('Director').and_return(@director_member_class)
+      @member_classes_association = double("member classes association")
+      @company.stub(:member_classes).and_return(@member_classes_association)
+      @member_classes_association.stub(:find_by_name).with('Director').and_return(@director_member_class)
       
       @member_attributes = {
         'first_name' => "Bob",

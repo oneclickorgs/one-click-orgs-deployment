@@ -33,14 +33,14 @@ group :assets do
   gem 'therubyracer', '~>0.11.2'
 end
 
-gem "jquery-rails", "~>2.0.2"
+gem "jquery-rails", "~>3.0.4"
 gem "jquery-ui-rails", "~>2.0.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.0.7"
 gem "pdfkit", "~>0.5.2"
 gem "daemons", "~>1.1.9"
-gem "delayed_job", "~>3.0.2"
-gem "delayed_job_active_record", "~>0.4.2"
+gem "delayed_job", "~>4.0.0"
+gem "delayed_job_active_record", "~>4.0.0"
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 gem "cancan", "~>1.6.7"
 gem "state_machine", "~>1.1.2"
@@ -49,6 +49,8 @@ gem 'state_machine-audit_trail', '~>0.1.2'
 gem 'meekster', :git => "git://github.com/oneclickorgs/meekster.git", :tag => 'v0.0.1'
 gem 'pdf_form_filler', '~>0.0.3'
 gem 'rticles', :git => "https://github.com/oneclickorgs/rticles.git", :branch => 'master'
+
+gem "nokogiri", "~>1.5.9" # Nokogiri => 1.6 has dropped support for Ruby 1.8.
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -67,10 +69,10 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>2.13.0"
+  gem "rspec-rails", "~>2.14.0"
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
-  gem "faker", '~>1.0.1'
+  gem "faker", '~>1.2.0'
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
