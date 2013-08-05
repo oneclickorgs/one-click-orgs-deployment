@@ -41,9 +41,8 @@ gem "pdfkit", "~>0.5.2"
 
 gem "daemons", "~>1.0.10"
 
-gem "delayed_job", "~>3.0.1"
-gem "delayed_job_active_record"
-
+gem "delayed_job", "~>4.0.0"
+gem "delayed_job_active_record", "~>4.0.0"
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
