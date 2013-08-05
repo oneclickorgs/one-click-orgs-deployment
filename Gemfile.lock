@@ -115,7 +115,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.23)
-    multi_json (1.7.7)
+    multi_json (1.7.8)
     multi_test (0.0.2)
     mysql2 (0.3.13)
     net-scp (1.1.2)
