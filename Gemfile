@@ -35,7 +35,7 @@ end
 
 gem "jquery-rails", "~>3.0.4"
 gem "haml", "~>4.0.0"
-gem "rdiscount", "~>2.0.7"
+gem "rdiscount", "~>2.1.6"
 gem "pdfkit", "~>0.5.2"
 gem "daemons", "~>1.1.9"
 gem "delayed_job", "~>4.0.0"

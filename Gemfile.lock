@@ -158,7 +158,7 @@ GEM
     rake (10.1.0)
     rbx-require-relative (0.0.9)
     rcov (1.0.0)
-    rdiscount (2.0.7.3)
+    rdiscount (2.1.6)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
@@ -260,7 +260,7 @@ DEPENDENCIES
   railroad
   rails (= 3.2.14)
   rcov
-  rdiscount (~> 2.0.7)
+  rdiscount (~> 2.1.6)
   rspec-rails (~> 2.14.0)
   ruby-debug
   ruby-debug19
