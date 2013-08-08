@@ -8,7 +8,7 @@ gem "rails", "3.0.19"
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql", "~>2.8.1"
+gem "mysql2", "~>0.2.20" # mysql2 recommends 0.2 series for Rails 3.0.x compatiblity
 
 # Use unicorn as the web server
 # gem 'unicorn'
