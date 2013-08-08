@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
       html = render_to_string(:layout => false)
 
       # Call PDFKit with any wkhtmltopdf --extended-help options
-      kit = PDFKit.new(html, :page_size => 'A4', :header_right => 'Printed on [date]')
+      kit = PDFKit.new(html, :page_size => 'A4', :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}")
 
       # Add our CSS file
       kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"

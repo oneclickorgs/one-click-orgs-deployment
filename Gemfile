@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.2.1"
+gem "bundler", "~>1.3.5"
 
 gem "rails", "3.0.19"
 
@@ -65,5 +65,5 @@ group :development, :test do
   gem "capybara", "~>1.1.2"
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.27.2"
+  gem "selenium-webdriver", "~>2.33.0"
 end
