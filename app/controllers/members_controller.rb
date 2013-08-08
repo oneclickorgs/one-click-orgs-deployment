@@ -83,11 +83,10 @@ class MembersController < ApplicationController
   end
   
   def create_founding_member
-    member_attributes = params[:member]
-    member_attributes[:member_class_id] = co.member_classes.find_by_name('Founding Member').id.to_s
-    member_attributes[:send_welcome] = true
+    @member = co.members.build(params[:member])
     
-    @member = co.members.build(member_attributes)
+    @member.member_class = co.member_classes.find_by_name('Founding Member')
+    @member.send_welcome = true
     
     if @member.save
       track_analytics_event('InvitesFoundingMember')

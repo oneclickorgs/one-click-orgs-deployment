@@ -25,7 +25,9 @@ end
 Given /^there are enough members to start the founding vote$/ do
   extra_members_needed = 3 - @organisation.members.count
   if extra_members_needed > 0
-    extra_members_needed.times do
+    # Add one extra so we can test what happens when someone abstains or
+    # votes against the founding.
+    (extra_members_needed + 1).times do
       @organisation.members.make(:pending,
         :member_class => @organisation.member_classes.find_by_name("Founding Member")
       )

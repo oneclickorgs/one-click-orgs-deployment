@@ -1,3 +1,19 @@
+2013-08-08 One Click Orgs 1.3.3
+
+* FIX: When an association is successfully founded, the notifications are
+  supposed to include a list of the people who voted to join the association.
+  However, this list was, incorrectly, also including members who had
+  abstained or voted against the foundation.
+* FIX: The constitution text was missing a 'where'.
+* FIX: The header on downloaded PDFs displayed '[date]' instead of the
+  actual date.
+* SECURITY FIX: Rails is patched to fix CVE-2013-1857.
+* SECURITY FIX: Rails is patched to fix CVE-2013-1855.
+* SECURITY FIX: Rack is upgraded to 1.2.8 to fix CVE-2013-0263.
+* After successful founding of an association, the Founder Members no longer
+  have to go through the separate screen where they agree to follow the
+  constitution. (The fact that they agreed with the founding vote is enough.)
+
 2013-01-11 One Click Orgs 1.3.2
 
 * Rails is upgraded to version 3.0.19.

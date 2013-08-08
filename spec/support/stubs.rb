@@ -20,9 +20,11 @@ def default_user
                  :first_name => "Krusty the",
                  :last_name => "clown",
                  :password => "password",
-                 :password_confirmation => "password",
-                 :inducted_at => (Time.now.utc - 1.day),
-                 :member_class => default_member_class) or raise "can't create user"
+                 :password_confirmation => "password").tap {|m|
+                   m.inducted_at = Time.now.utc - 1.day
+                   m.member_class = default_member_class
+                   m.save
+                  } or raise "can't create user"
 end
 
 def stub_constitution!

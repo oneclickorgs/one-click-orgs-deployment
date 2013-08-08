@@ -12,6 +12,8 @@
 # membership_voting_system    String -- the class name of the VotingSystem in use
 # constitution_voting_system  String -- the class name of the VotingSystem in use
 class Clause < ActiveRecord::Base
+  attr_accessible :name, :text_value, :integer_value, :boolean_value
+  
   belongs_to :organisation
 
   validates_presence_of :name

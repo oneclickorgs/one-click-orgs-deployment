@@ -1,4 +1,6 @@
 class Organisation < ActiveRecord::Base
+  attr_accessible :subdomain, :name, :objectives, :assets
+  
   has_many :clauses
   has_many :members
   has_many :resignations, :through => :members
@@ -124,7 +126,11 @@ class Organisation < ActiveRecord::Base
   end
   
   def can_hold_founding_vote?
-    pending? && members.count >= 3
+    pending? && members.count >= minimum_members_required_for_founding_vote
+  end
+  
+  def minimum_members_required_for_founding_vote
+    3
   end
   
   def constitution

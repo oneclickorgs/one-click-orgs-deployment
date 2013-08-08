@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.0.0"
+gem "bundler", "~>1.3.5"
 
 gem "rails", "3.0.19"
 
@@ -8,7 +8,7 @@ gem "rails", "3.0.19"
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql"
+gem "mysql", "~>2.8.1"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -26,16 +26,16 @@ gem "mysql"
 # gem 'aws-s3', :require => 'aws/s3'
 
 gem "haml", "~>3.0.18"
-gem "rdiscount"
-gem "pdfkit"
+gem "rdiscount", "~>1.6.8"
+gem "pdfkit", "~>0.5.2"
 
 gem "daemons", "~>1.0.10"
 
 gem "delayed_job", "2.1.4"
 
-gem "exception_notification_rails3", :require => 'exception_notifier'
+gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 
-gem "fastercsv", :platforms => :ruby_18
+gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
 gem 'mail', '~>2.2.19'
 
@@ -56,13 +56,14 @@ end
 
 group :development, :test do
   gem "rspec-rails", "~>2.8.1"
-  gem "webrat", "~>0.7.1"
+  gem "webrat"
   gem "machinist", "~>1.0.6"
   gem "faker", '~>0.3.1'
-  gem "rcov", "~>0.9.8"
-  gem "cucumber-rails", "~>0.4.1", :require => nil
-  gem "capybara", "~>0.4.1.2"
-  gem "database_cleaner", "~>0.6.7"
-  gem "launchy", "~>0.4.0"
-  gem "selenium-webdriver", "~>2.27.2"
+  gem "rcov", :platforms => :ruby_18
+  gem "simplecov", :platforms => :ruby_19
+  gem "cucumber-rails", "~>1.3.0", :require => nil
+  gem "capybara", "~>1.1.2"
+  gem "database_cleaner"
+  gem "launchy"
+  gem "selenium-webdriver", "~>2.33.0"
 end
