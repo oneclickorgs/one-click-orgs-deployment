@@ -42,7 +42,7 @@ gem "delayed_job", "~>4.0.0"
 gem "delayed_job_active_record", "~>4.0.0"
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 gem "cancan", "~>1.6.7"
-gem "state_machine", "~>1.1.2"
+gem "state_machine", "~>1.2.0"
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
 gem "nokogiri", "~>1.5.9" # Nokogiri => 1.6 has dropped support for Ruby 1.8.
