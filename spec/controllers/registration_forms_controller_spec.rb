@@ -38,24 +38,27 @@ describe RegistrationFormsController do
   end
 
   describe "PUT 'update'" do
-    let(:reg_form_signatories_attributes) {"reg_form_signatories_attributes"}
+    let(:registration_form_attributes) {"registration_form attributes"}
 
     before(:each) do
-      @organisation.stub(:reg_form_timing_factors=)
-      @organisation.stub(:reg_form_financial_year_end=)
-      @organisation.stub(:reg_form_close_links=)
-      @organisation.stub(:reg_form_signatories_attributes=)
+      @organisation.stub(:attributes=)
       @organisation.stub(:save).and_return(true)
     end
 
     def put_update
-      put 'update', 'registration_form' => {'reg_form_signatories_attributes' => reg_form_signatories_attributes}
+      put 'update', 'registration_form' => registration_form_attributes
     end
 
-    it "updates the reg_form_signatories_attributes attribute" do
-      @organisation.should_receive(:reg_form_signatories_attributes=).with(reg_form_signatories_attributes)
+    it "updates the registration form attributes" do
+      expect(@organisation).to receive(:attributes=).with(registration_form_attributes)
       put_update
     end
+
+    it "saves the registration form" do
+      expect(@organisation).to receive(:save).and_return(true)
+      put_update
+    end
+
 
     it "redirects to the edit page" do
       put_update

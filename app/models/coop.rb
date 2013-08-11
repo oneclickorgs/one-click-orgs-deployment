@@ -3,7 +3,12 @@ require 'one_click_orgs/cast_to_boolean'
 class Coop < Organisation
   include OneClickOrgs::CastToBoolean
 
-  attr_accessible :reg_form_timing_factors, :reg_form_close_links, :reg_form_financial_year_end
+  attr_accessible :reg_form_timing_factors, :reg_form_close_links,
+    :reg_form_financial_year_end,
+    :reg_form_signatories_attributes,
+    :reg_form_main_contact_organisation_name, :reg_form_main_contact_name,
+    :reg_form_main_contact_address, :reg_form_main_contact_phone,
+    :reg_form_main_contact_email
 
   state_machine :initial => :pending do
     event :propose do
@@ -491,6 +496,28 @@ class Coop < Organisation
     clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id) if new_signatories[1]
     clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id) if new_signatories[2]
   end
+
+  # Define some more text attributes for the registration form.
+  [
+    :main_contact_organisation_name,
+    :main_contact_name,
+    :main_contact_address,
+    :main_contact_phone,
+    :main_contact_email
+  ].each do |reg_form_attr_name|
+    class_eval("
+      def reg_form_#{reg_form_attr_name}=(new_#{reg_form_attr_name})
+        clauses.build(:name => :reg_form_#{reg_form_attr_name}, :text_value => new_#{reg_form_attr_name})
+        @reg_form_#{reg_form_attr_name} = new_#{reg_form_attr_name}
+      end
+
+      def reg_form_#{reg_form_attr_name}
+        @reg_form_#{reg_form_attr_name} ||= clauses.get_text(:reg_form_#{reg_form_attr_name})
+      end
+    ")
+  end
+
+
 
   def registration_form_filled?
     clauses.get_integer(:reg_form_signatories_0) &&

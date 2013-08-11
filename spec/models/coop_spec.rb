@@ -444,6 +444,30 @@ describe Coop do
     end
   end
 
+  describe "registration form" do
+    let(:coop) {Coop.make!(:pending)}
+
+    it "has attributes for the main contact" do
+      expect {
+        coop.reg_form_main_contact_organisation_name = "Acme Ltd"
+        coop.reg_form_main_contact_name = "Bob Smith"
+        coop.reg_form_main_contact_address = "1 Main Street\nLondon\nN1 1AA"
+        coop.reg_form_main_contact_phone = "01234 567 890"
+        coop.reg_form_main_contact_email = "bob@example.com"
+      }.to_not raise_error
+
+      coop.save!
+      coop_id = coop.id
+      coop = Coop.find(coop_id) # Create a new instance, so that memo-ised attributes have to be looked up fresh from the database.
+
+      expect(coop.reg_form_main_contact_organisation_name).to eq("Acme Ltd")
+      expect(coop.reg_form_main_contact_name).to eq("Bob Smith")
+      expect(coop.reg_form_main_contact_address).to eq("1 Main Street\nLondon\nN1 1AA")
+      expect(coop.reg_form_main_contact_phone).to eq("01234 567 890")
+      expect(coop.reg_form_main_contact_email).to eq("bob@example.com")
+    end
+  end
+
   describe "signatories" do
     let(:coop) {Coop.make!(:pending)}
     let(:member_111) {mock_model(Member, :id => 111)}
