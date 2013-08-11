@@ -19,3 +19,9 @@ Feature: Editing money laundering form
     And I enter the financial contact info
     And I save the registration details
     Then I should see the financial contact info
+
+  Scenario: Founder member enters details for the money laundering contacts
+    When I go to edit the registration details
+    And I enter details for the two money laundering contacts
+    And I save the registration details
+    Then I should see the details for the two money laundering contacts

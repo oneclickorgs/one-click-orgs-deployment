@@ -10,7 +10,17 @@ class Coop < Organisation
     :reg_form_main_contact_address, :reg_form_main_contact_phone,
     :reg_form_main_contact_email,
     :reg_form_financial_contact_name, :reg_form_financial_contact_phone,
-    :reg_form_financial_contact_email
+    :reg_form_financial_contact_email,
+    :reg_form_money_laundering_0_name,
+    :reg_form_money_laundering_0_date_of_birth,
+    :reg_form_money_laundering_0_address,
+    :reg_form_money_laundering_0_postcode,
+    :reg_form_money_laundering_0_residency_length,
+    :reg_form_money_laundering_1_name,
+    :reg_form_money_laundering_1_date_of_birth,
+    :reg_form_money_laundering_1_address,
+    :reg_form_money_laundering_1_postcode,
+    :reg_form_money_laundering_1_residency_length
 
   state_machine :initial => :pending do
     event :propose do
@@ -508,7 +518,17 @@ class Coop < Organisation
     :main_contact_email,
     :financial_contact_name,
     :financial_contact_phone,
-    :financial_contact_email
+    :financial_contact_email,
+    :money_laundering_0_name,
+    :money_laundering_0_date_of_birth,
+    :money_laundering_0_address,
+    :money_laundering_0_postcode,
+    :money_laundering_0_residency_length,
+    :money_laundering_1_name,
+    :money_laundering_1_date_of_birth,
+    :money_laundering_1_address,
+    :money_laundering_1_postcode,
+    :money_laundering_1_residency_length
   ].each do |reg_form_attr_name|
     class_eval("
       def reg_form_#{reg_form_attr_name}=(new_#{reg_form_attr_name})

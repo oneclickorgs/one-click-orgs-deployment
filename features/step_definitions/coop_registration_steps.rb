@@ -42,6 +42,20 @@ When(/^I enter the financial contact info$/) do
   fill_in('registration_form[reg_form_financial_contact_email]', :with => 'jane@example.com')
 end
 
+When(/^I enter details for the two money laundering contacts$/) do
+  fill_in('registration_form[reg_form_money_laundering_0_name]', :with => "Bob Smith")
+  fill_in('registration_form[reg_form_money_laundering_0_date_of_birth]', :with => "1 January 1970")
+  fill_in('registration_form[reg_form_money_laundering_0_address]', :with => "1 Main Street")
+  fill_in('registration_form[reg_form_money_laundering_0_postcode]', :with => "N1 1AA")
+  fill_in('registration_form[reg_form_money_laundering_0_residency_length]', :with => "6 years")
+
+  fill_in('registration_form[reg_form_money_laundering_1_name]', :with => "Jane Baker")
+  fill_in('registration_form[reg_form_money_laundering_1_date_of_birth]', :with => "1 May 1980")
+  fill_in('registration_form[reg_form_money_laundering_1_address]', :with => "40 High Street")
+  fill_in('registration_form[reg_form_money_laundering_1_postcode]', :with => "SW1 1AA")
+  fill_in('registration_form[reg_form_money_laundering_1_residency_length]', :with => "15 years")
+end
+
 When(/^I save the registration (?:form|details)$/) do
   click_button("Save changes")
 end
@@ -58,6 +72,20 @@ Then(/^I should see the financial contact info$/) do
   expect(find_field('registration_form[reg_form_financial_contact_name]').value).to eq("Jane Baker")
   expect(find_field('registration_form[reg_form_financial_contact_phone]').value).to eq("020 7777 7777")
   expect(find_field('registration_form[reg_form_financial_contact_email]').value).to eq("jane@example.com")
+end
+
+Then(/^I should see the details for the two money laundering contacts$/) do
+  expect(find_field('registration_form[reg_form_money_laundering_0_name]').value).to eq("Bob Smith")
+  expect(find_field('registration_form[reg_form_money_laundering_0_date_of_birth]').value).to eq("1 January 1970")
+  expect(find_field('registration_form[reg_form_money_laundering_0_address]').value).to eq("1 Main Street")
+  expect(find_field('registration_form[reg_form_money_laundering_0_postcode]').value).to eq("N1 1AA")
+  expect(find_field('registration_form[reg_form_money_laundering_0_residency_length]').value).to eq("6 years")
+
+  expect(find_field('registration_form[reg_form_money_laundering_1_name]').value).to eq("Jane Baker")
+  expect(find_field('registration_form[reg_form_money_laundering_1_date_of_birth]').value).to eq("1 May 1980")
+  expect(find_field('registration_form[reg_form_money_laundering_1_address]').value).to eq("40 High Street")
+  expect(find_field('registration_form[reg_form_money_laundering_1_postcode]').value).to eq("SW1 1AA")
+  expect(find_field('registration_form[reg_form_money_laundering_1_residency_length]').value).to eq("15 years")
 end
 
 Then(/^I should see that our registration has been submitted$/) do

@@ -61,5 +61,46 @@
     = form.label :reg_form_financial_contact_email, "Contact E-mail Address"
     = form.text_field :reg_form_financial_contact_email
 
+  %p The Proceeds of Crime Act 2002 and the Money Laundering Regulations 2007 requires anyone involved in what is deemed to be 'relevant business' to introduce an anti-money laundering procedure.
+  %p Part of this procedure is a requirement to check and confirm the identity of the people with whom you do business. One of the activities deemed to be 'relevant business' is company and charity formation. As is the case with everyone who offers this type of service, Co-operatives UK has to abide by these regulations and as such we are required to ask the individuals involved to confirm their identity.
+
+  %p For anti-money laundering purposes, please provide the following details for 2 of the first directors. By providing this information you agree to Co-operatives UK sharing this information with a third party for the purpose of anti-money laundering checks.
+
+  %h4 First director for anti-money laundering checks:
+  %p
+    = form.label :reg_form_money_laundering_0_name, "Full Name (including middle name)"
+    = form.text_field :reg_form_money_laundering_0_name
+  %p
+    = form.label :reg_form_money_laundering_0_date_of_birth, "Date of Birth"
+    = form.text_field :reg_form_money_laundering_0_date_of_birth
+  %p
+    = form.label :reg_form_money_laundering_0_address, "Residential Address"
+    = form.text_area :reg_form_money_laundering_0_address
+  %p
+    = form.label :reg_form_money_laundering_0_postcode, "Postcode"
+    = form.text_field :reg_form_money_laundering_0_postcode
+  %p If lived at this address for less than 1 year, please state previous address.
+  %p
+    = form.label :reg_form_money_laundering_0_residency_length, "Length of time at current address"
+    = form.text_field :reg_form_money_laundering_0_residency_length
+
+  %h4 Second director for anti-money laundering checks:
+  %p
+    = form.label :reg_form_money_laundering_1_name, "Full Name (including middle name)"
+    = form.text_field :reg_form_money_laundering_1_name
+  %p
+    = form.label :reg_form_money_laundering_1_date_of_birth, "Date of Birth"
+    = form.text_field :reg_form_money_laundering_1_date_of_birth
+  %p
+    = form.label :reg_form_money_laundering_1_address, "Residential Address"
+    = form.text_area :reg_form_money_laundering_1_address
+  %p
+    = form.label :reg_form_money_laundering_1_postcode, "Postcode"
+    = form.text_field :reg_form_money_laundering_1_postcode
+  %p If lived at this address for less than 1 year, please state previous address.
+  %p
+    = form.label :reg_form_money_laundering_1_residency_length, "Length of time at current address"
+    = form.text_field :reg_form_money_laundering_1_residency_length
+
   %p
     = form.submit "Save changes"

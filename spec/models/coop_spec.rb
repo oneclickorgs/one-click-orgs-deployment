@@ -482,6 +482,38 @@ describe Coop do
       expect(coop.reg_form_financial_contact_phone).to eq("020 7777 7777")
       expect(coop.reg_form_financial_contact_email).to eq("jane@example.com")
     end
+
+    it "has attributes for the money laundering contacts" do
+      expect {
+        coop.reg_form_money_laundering_0_name = "Bob Smith"
+        coop.reg_form_money_laundering_0_date_of_birth = "1 January 1970"
+        coop.reg_form_money_laundering_0_address = "1 Main Street"
+        coop.reg_form_money_laundering_0_postcode = "N1 1AA"
+        coop.reg_form_money_laundering_0_residency_length = "6 years"
+
+        coop.reg_form_money_laundering_1_name = "Jane Baker"
+        coop.reg_form_money_laundering_1_date_of_birth = "1 May 1980"
+        coop.reg_form_money_laundering_1_address = "40 High Street"
+        coop.reg_form_money_laundering_1_postcode = "SW1 1AA"
+        coop.reg_form_money_laundering_1_residency_length = "15 years"
+      }.to_not raise_error
+
+      coop.save!
+      coop_id = coop.id
+      coop = Coop.find(coop_id) # Create a new instance, so that memo-ised attributes have to be looked up fresh from the database.
+
+      expect(coop.reg_form_money_laundering_0_name).to eq("Bob Smith")
+      expect(coop.reg_form_money_laundering_0_date_of_birth).to eq("1 January 1970")
+      expect(coop.reg_form_money_laundering_0_address).to eq("1 Main Street")
+      expect(coop.reg_form_money_laundering_0_postcode).to eq("N1 1AA")
+      expect(coop.reg_form_money_laundering_0_residency_length).to eq("6 years")
+
+      expect(coop.reg_form_money_laundering_1_name).to eq("Jane Baker")
+      expect(coop.reg_form_money_laundering_1_date_of_birth).to eq("1 May 1980")
+      expect(coop.reg_form_money_laundering_1_address).to eq("40 High Street")
+      expect(coop.reg_form_money_laundering_1_postcode).to eq("SW1 1AA")
+      expect(coop.reg_form_money_laundering_1_residency_length).to eq("15 years")
+    end
   end
 
   describe "signatories" do

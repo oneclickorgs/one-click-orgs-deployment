@@ -16,6 +16,16 @@ describe "registration_forms/edit.html.haml" do
     :reg_form_financial_contact_name => nil,
     :reg_form_financial_contact_phone => nil,
     :reg_form_financial_contact_email => nil,
+    :reg_form_money_laundering_0_name => nil,
+    :reg_form_money_laundering_0_date_of_birth => nil,
+    :reg_form_money_laundering_0_address => nil,
+    :reg_form_money_laundering_0_postcode => nil,
+    :reg_form_money_laundering_0_residency_length => nil,
+    :reg_form_money_laundering_1_name => nil,
+    :reg_form_money_laundering_1_date_of_birth => nil,
+    :reg_form_money_laundering_1_address => nil,
+    :reg_form_money_laundering_1_postcode => nil,
+    :reg_form_money_laundering_1_residency_length => nil
   )}
   let(:members) {[
     mock_model(Member, :id => 111, :name => 'Angie', :selected => nil),
@@ -60,6 +70,21 @@ describe "registration_forms/edit.html.haml" do
     expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_financial_contact_name]')
     expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_financial_contact_phone]')
     expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_financial_contact_email]')
+  end
+
+  it "renders text fields for the money laundering contacts' information" do
+    render
+
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_name]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_date_of_birth]')
+    expect(rendered).to have_selector(:textarea, :name => 'registration_form[reg_form_money_laundering_0_address]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_postcode]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_residency_length]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_name]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_date_of_birth]')
+    expect(rendered).to have_selector(:textarea, :name => 'registration_form[reg_form_money_laundering_1_address]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_postcode]')
+    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_residency_length]')
   end
 
 end
