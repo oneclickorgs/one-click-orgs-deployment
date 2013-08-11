@@ -215,6 +215,8 @@ OneClickOrgs::Application.routes.draw do
     end
   end
 
+  resources :documents
+
   get '/admin' => 'admin#index'
 
   namespace :admin do
