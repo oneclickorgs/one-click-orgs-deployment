@@ -20,7 +20,8 @@ class Coop < Organisation
     :reg_form_money_laundering_1_date_of_birth,
     :reg_form_money_laundering_1_address,
     :reg_form_money_laundering_1_postcode,
-    :reg_form_money_laundering_1_residency_length
+    :reg_form_money_laundering_1_residency_length,
+    :reg_form_money_laundering_agreement
 
   state_machine :initial => :pending do
     event :propose do
@@ -507,6 +508,19 @@ class Coop < Organisation
     clauses.set_integer!(:reg_form_signatories_0, new_signatories[0].id) if new_signatories[0]
     clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id) if new_signatories[1]
     clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id) if new_signatories[2]
+  end
+
+  def reg_form_money_laundering_agreement=(new_money_laundering_agreement)
+    new_money_laundering_agreement = cast_to_boolean(new_money_laundering_agreement)
+    clauses.build(:name => :reg_form_money_laundering_agreement, :boolean_value => new_money_laundering_agreement)
+    @reg_form_money_laundering_agreement = new_money_laundering_agreement
+  end
+
+  def reg_form_money_laundering_agreement
+    if @reg_form_money_laundering_agreement.nil?
+      @reg_form_money_laundering_agreement = clauses.get_boolean(:reg_form_money_laundering_agreement)
+    end
+    @reg_form_money_laundering_agreement
   end
 
   # Define some more text attributes for the registration form.

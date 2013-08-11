@@ -16,6 +16,7 @@ describe "registration_forms/edit.html.haml" do
     :reg_form_financial_contact_name => nil,
     :reg_form_financial_contact_phone => nil,
     :reg_form_financial_contact_email => nil,
+    :reg_form_money_laundering_agreement => nil,
     :reg_form_money_laundering_0_name => nil,
     :reg_form_money_laundering_0_date_of_birth => nil,
     :reg_form_money_laundering_0_address => nil,
@@ -85,6 +86,12 @@ describe "registration_forms/edit.html.haml" do
     expect(rendered).to have_selector(:textarea, :name => 'registration_form[reg_form_money_laundering_1_address]')
     expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_postcode]')
     expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_residency_length]')
+  end
+
+  it "renders a checkbox to agree with the money laundering form" do
+    render
+
+    rendered.should have_selector(:input, :type => 'checkbox', :name => 'registration_form[reg_form_money_laundering_agreement]')
   end
 
 end

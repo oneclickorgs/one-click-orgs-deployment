@@ -88,6 +88,10 @@ Then(/^I should see the details for the two money laundering contacts$/) do
   expect(find_field('registration_form[reg_form_money_laundering_1_residency_length]').value).to eq("15 years")
 end
 
+Then(/^I should see the agreement checkbox is checked$/) do
+  page.should have_css("input[name='registration_form[reg_form_money_laundering_agreement]'][checked=checked]")
+end
+
 Then(/^I should see that our registration has been submitted$/) do
   page.should have_content("has been submitted for registration")
 end

@@ -447,6 +447,13 @@ describe Coop do
   describe "registration form" do
     let(:coop) {Coop.make!(:pending)}
 
+    it "has a money_laundering_agreement attribute" do
+      expect{coop.reg_form_money_laundering_agreement = 1}.to_not raise_error
+      coop.save!
+      coop.reload
+      expect(coop.reg_form_money_laundering_agreement).to be_true
+    end
+
     it "has attributes for the main contact" do
       expect {
         coop.reg_form_main_contact_organisation_name = "Acme Ltd"

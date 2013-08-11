@@ -25,3 +25,9 @@ Feature: Editing money laundering form
     And I enter details for the two money laundering contacts
     And I save the registration details
     Then I should see the details for the two money laundering contacts
+
+  Scenario: Founder member confirms agreement with the letter of engagement and money laundering form
+    When I go to edit the registration details
+    And I check "I have read and agree to the Letter of Engagement and Anti-Money Laundering requirements."
+    And I save the registration details
+    Then I should see the agreement checkbox is checked
