@@ -487,9 +487,9 @@ class Coop < Organisation
   end
 
   def signatories=(new_signatories)
-    clauses.set_integer!(:reg_form_signatories_0, new_signatories[0].id)
-    clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id)
-    clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id)
+    clauses.set_integer!(:reg_form_signatories_0, new_signatories[0].id) if new_signatories[0]
+    clauses.set_integer!(:reg_form_signatories_1, new_signatories[1].id) if new_signatories[1]
+    clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id) if new_signatories[2]
   end
 
   def registration_form_filled?
