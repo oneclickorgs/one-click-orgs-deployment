@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 
     # If wkhtmltopdf is working...
     begin
-      html = render_to_string(:layout => false)
+      html = options[:html] || render_to_string(:layout => false)
 
       # Call PDFKit with any wkhtmltopdf --extended-help options
       kit = PDFKit.new(html, :page_size => 'A4',
