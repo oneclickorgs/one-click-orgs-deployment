@@ -8,7 +8,9 @@ class Coop < Organisation
     :reg_form_signatories_attributes,
     :reg_form_main_contact_organisation_name, :reg_form_main_contact_name,
     :reg_form_main_contact_address, :reg_form_main_contact_phone,
-    :reg_form_main_contact_email
+    :reg_form_main_contact_email,
+    :reg_form_financial_contact_name, :reg_form_financial_contact_phone,
+    :reg_form_financial_contact_email
 
   state_machine :initial => :pending do
     event :propose do
@@ -503,7 +505,10 @@ class Coop < Organisation
     :main_contact_name,
     :main_contact_address,
     :main_contact_phone,
-    :main_contact_email
+    :main_contact_email,
+    :financial_contact_name,
+    :financial_contact_phone,
+    :financial_contact_email
   ].each do |reg_form_attr_name|
     class_eval("
       def reg_form_#{reg_form_attr_name}=(new_#{reg_form_attr_name})

@@ -13,3 +13,9 @@ Feature: Editing money laundering form
     And I enter the main contact info
     And I save the registration details
     Then I should see the main contact info
+
+  Scenario: Founder member enters the financial contact info for Co-operatives UK
+    When I go to edit the registration details
+    And I enter the financial contact info
+    And I save the registration details
+    Then I should see the financial contact info

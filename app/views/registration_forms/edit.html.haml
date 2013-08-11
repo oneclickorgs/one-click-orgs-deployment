@@ -52,4 +52,14 @@
     = form.text_field :reg_form_main_contact_email
 
   %p
+    = form.label :reg_form_financial_contact_name, "Name of Finance Contact (if different from above)"
+    = form.text_field :reg_form_financial_contact_name
+  %p
+    = form.label :reg_form_financial_contact_phone, "Contact Telephone Number"
+    = form.text_field :reg_form_financial_contact_phone
+  %p
+    = form.label :reg_form_financial_contact_email, "Contact E-mail Address"
+    = form.text_field :reg_form_financial_contact_email
+
+  %p
     = form.submit "Save changes"

@@ -466,6 +466,22 @@ describe Coop do
       expect(coop.reg_form_main_contact_phone).to eq("01234 567 890")
       expect(coop.reg_form_main_contact_email).to eq("bob@example.com")
     end
+
+    it "has attributes for the financial contact" do
+      expect {
+        coop.reg_form_financial_contact_name = "Jane Baker"
+        coop.reg_form_financial_contact_phone = "020 7777 7777"
+        coop.reg_form_financial_contact_email = "jane@example.com"
+      }.to_not raise_error
+
+      coop.save!
+      coop_id = coop.id
+      coop = Coop.find(coop_id) # Create a new instance, so that memo-ised attributes have to be looked up fresh from the database.
+
+      expect(coop.reg_form_financial_contact_name).to eq("Jane Baker")
+      expect(coop.reg_form_financial_contact_phone).to eq("020 7777 7777")
+      expect(coop.reg_form_financial_contact_email).to eq("jane@example.com")
+    end
   end
 
   describe "signatories" do
