@@ -16,7 +16,8 @@ class RegistrationFormsController < ApplicationController
   def edit
     @registration_form = co
 
-    @members = co.members
+    signatories = co.signatories
+    @members = co.members.each{|m| m.selected = true if signatories.include?(m)}
   end
 
   def update
