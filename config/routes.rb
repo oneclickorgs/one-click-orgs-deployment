@@ -224,6 +224,8 @@ OneClickOrgs::Application.routes.draw do
       member do
         put :found
       end
+
+      resources :documents
     end
 
     resources :constitutions

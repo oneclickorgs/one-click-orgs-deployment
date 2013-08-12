@@ -28,7 +28,6 @@ Feature: Viewing submitted co-ops
     And I follow "Download registration form"
     Then I should get a ".pdf" download
 
-  @wip
   Scenario: Administrator downloads a PDF of a proposed co-op's anti-money laundering form
     When I go to the admin view of a proposed co-op
     And I follow "Download anti-money laundering form"

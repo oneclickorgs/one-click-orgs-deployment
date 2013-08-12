@@ -21,6 +21,9 @@
 %h3 Registration form
 %p= link_to("Download registration form", admin_registration_form_path(@coop, :format => :pdf))
 
+%h3 Letter of Engagement and Anti–Money Laundering form
+%p= link_to("Download anti-money laundering form", admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering', :format => :pdf))
+
 %h3 Registration complete?
 %p
   Once the registration process with the FCA is complete, press the button below to
