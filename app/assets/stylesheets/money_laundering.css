@@ -1,0 +1,23 @@
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11pt;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid black;
+}
+th {
+  background-color: #808080;
+  font-weight: bold;
+  font-size: 12pt;
+}
+th p {
+  text-align: center;
+}
+td {
+  font-size: 12pt;
+  font-weight: bold;
+}
+td.note {
+  font-size: 11pt;
+}

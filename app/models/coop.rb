@@ -523,6 +523,10 @@ class Coop < Organisation
     @reg_form_money_laundering_agreement
   end
 
+  def reg_form_money_laundering_agreement?
+    !!reg_form_money_laundering_agreement
+  end
+
   # Define some more text attributes for the registration form.
   [
     :main_contact_organisation_name,
