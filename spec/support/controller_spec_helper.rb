@@ -39,4 +39,13 @@ module ControllerSpecHelper
 
     controller.stub(:ensure_administration_subdomain).and_return(true)
   end
+
+  def stub_generate_pdf
+    @pdfkit = double('PDFKit instance', :stylesheets => [], :to_pdf => nil)
+    allow(PDFKit).to receive(:new).and_return(@pdfkit)
+  end
+
+  def expect_controller_to_generate_pdf
+    expect(@pdfkit).to receive(:to_pdf)
+  end
 end

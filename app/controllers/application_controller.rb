@@ -100,7 +100,8 @@ class ApplicationController < ActionController::Base
 
   def generate_pdf(filename='Download', options={})
     options = {
-      :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}"
+      :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}",
+      :header_line => true
     }.with_indifferent_access.merge(options)
 
     organisation = options[:organisation] || co
@@ -108,7 +109,7 @@ class ApplicationController < ActionController::Base
 
     # If wkhtmltopdf is working...
     begin
-      html = render_to_string(:layout => false)
+      html = options[:html] || render_to_string(:layout => false)
 
       # Call PDFKit with any wkhtmltopdf --extended-help options
       kit = PDFKit.new(html, :page_size => 'A4',
@@ -117,7 +118,7 @@ class ApplicationController < ActionController::Base
         :footer_right => '[page]',
         :header_font_size => 8,
         :footer_font_size => 11,
-        :header_line => true,
+        :header_line => options[:header_line],
         :header_spacing => 9,
         :footer_spacing => 9
       )

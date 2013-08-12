@@ -1,8 +1,10 @@
-%h2 Registration Form
-
-%p The following additional information is required for the FCA Mutual Societies Application Form.
+%h2 Registration Details
 
 = form_for(@registration_form, :as => :registration_form, :url => registration_form_path, :method => :put) do |form|
+
+  %h3 FCA Mutual Societies Application Form
+  %p The following additional information is required for the FCA Mutual Societies Application Form.
+
   %p{:style => 'margin-bottom: 0;'}
     = label_tag "Details of any close links which the society or any member of its committee has, or intends to have, with any society, company or authority"
     The following are regarded as evidence of a close link with another society, company or other entity:
@@ -27,5 +29,82 @@
     = form.label :reg_form_financial_year_end, "Date of society's financial year end (dd/mm/yyyy) (optional)"
     If the society proposes to use a date other than the last day of the month in which the anniversary of its registration falls as its financial year end please indicate this date below, otherwise leave blank.
     = form.text_field :reg_form_financial_year_end
+
+  %h3 Co-operatives UK Letter of Engagement and Anti-Money Laundering Form
+  %p The following additional information is required to engage Co-operative's UK, and satisfy anti-money laundering regulations.
+
+  %p Please provide the contact details of the person/organisation to whom all correspondence in this matter will be sent. If the contact details for the person/organisation paying our fees are different, please include this information in the box provided below. Please ensure that all contact and address information provided is accurate. If no address is provided we will use the prospective registered office address to send all correspondence to. We cannot undertake work until we are in receipt of this information.
+
+  %p
+    = form.label :reg_form_main_contact_organisation_name, "Name of Organisation"
+    = form.text_field :reg_form_main_contact_organisation_name
+  %p
+    = form.label :reg_form_main_contact_name, "Contact Name"
+    = form.text_field :reg_form_main_contact_name
+  %p
+    = form.label :reg_form_main_contact_address, "Address"
+    = form.text_area :reg_form_main_contact_address
+  %p
+    = form.label :reg_form_main_contact_phone, "Contact Telephone Number"
+    = form.text_field :reg_form_main_contact_phone
+  %p
+    = form.label :reg_form_main_contact_email, "Contact E-mail Address"
+    = form.text_field :reg_form_main_contact_email
+
+  %p
+    = form.label :reg_form_financial_contact_name, "Name of Finance Contact (if different from above)"
+    = form.text_field :reg_form_financial_contact_name
+  %p
+    = form.label :reg_form_financial_contact_phone, "Contact Telephone Number"
+    = form.text_field :reg_form_financial_contact_phone
+  %p
+    = form.label :reg_form_financial_contact_email, "Contact E-mail Address"
+    = form.text_field :reg_form_financial_contact_email
+
+  %p The Proceeds of Crime Act 2002 and the Money Laundering Regulations 2007 requires anyone involved in what is deemed to be 'relevant business' to introduce an anti-money laundering procedure.
+  %p Part of this procedure is a requirement to check and confirm the identity of the people with whom you do business. One of the activities deemed to be 'relevant business' is company and charity formation. As is the case with everyone who offers this type of service, Co-operatives UK has to abide by these regulations and as such we are required to ask the individuals involved to confirm their identity.
+
+  %p For anti-money laundering purposes, please provide the following details for 2 of the first directors. By providing this information you agree to Co-operatives UK sharing this information with a third party for the purpose of anti-money laundering checks.
+
+  %h4 First director for anti-money laundering checks:
+  %p
+    = form.label :reg_form_money_laundering_0_name, "Full Name (including middle name)"
+    = form.text_field :reg_form_money_laundering_0_name
+  %p
+    = form.label :reg_form_money_laundering_0_date_of_birth, "Date of Birth"
+    = form.text_field :reg_form_money_laundering_0_date_of_birth
+  %p
+    = form.label :reg_form_money_laundering_0_address, "Residential Address"
+    = form.text_area :reg_form_money_laundering_0_address
+  %p
+    = form.label :reg_form_money_laundering_0_postcode, "Postcode"
+    = form.text_field :reg_form_money_laundering_0_postcode
+  %p If lived at this address for less than 1 year, please state previous address.
+  %p
+    = form.label :reg_form_money_laundering_0_residency_length, "Length of time at current address"
+    = form.text_field :reg_form_money_laundering_0_residency_length
+
+  %h4 Second director for anti-money laundering checks:
+  %p
+    = form.label :reg_form_money_laundering_1_name, "Full Name (including middle name)"
+    = form.text_field :reg_form_money_laundering_1_name
+  %p
+    = form.label :reg_form_money_laundering_1_date_of_birth, "Date of Birth"
+    = form.text_field :reg_form_money_laundering_1_date_of_birth
+  %p
+    = form.label :reg_form_money_laundering_1_address, "Residential Address"
+    = form.text_area :reg_form_money_laundering_1_address
+  %p
+    = form.label :reg_form_money_laundering_1_postcode, "Postcode"
+    = form.text_field :reg_form_money_laundering_1_postcode
+  %p If lived at this address for less than 1 year, please state previous address.
+  %p
+    = form.label :reg_form_money_laundering_1_residency_length, "Length of time at current address"
+    = form.text_field :reg_form_money_laundering_1_residency_length
+
+  %p
+    = form.check_box :reg_form_money_laundering_agreement
+    = form.label :reg_form_money_laundering_agreement, "I have read and agree to the Letter of Engagement and Anti-Money Laundering requirements."
+
   %p
     = form.submit "Save changes"
