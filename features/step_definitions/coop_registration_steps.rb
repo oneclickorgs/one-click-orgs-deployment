@@ -46,9 +46,9 @@ end
 When(/^I choose three signatories$/) do
   @coop ||= Coop.pending.last
 
-  signatories = @coop.founder_members.all[0..2]
+  @signatories = @coop.founder_members.all[0..2]
 
-  signatories.each do |signatory|
+  @signatories.each do |signatory|
     check(signatory.name)
   end
 end
@@ -123,4 +123,12 @@ end
 
 Then(/^I should see that the registration form is done$/) do
   page.should have_content("The Registration Form has been filled in")
+end
+
+Then(/^I should see the three signatories I chose$/) do
+  @signatories ||= @coop.founder_members.all[0..2]
+
+  @signatories.each do |signatory|
+    expect(find_field(signatory.name)['checked']).to be_true
+  end
 end
