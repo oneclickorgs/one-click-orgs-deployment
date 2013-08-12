@@ -10,6 +10,25 @@ Given(/^the requirements for registration have been fulfilled$/) do
 
   @organisation.signatories = @organisation.members.all[0..2]
 
+  @organisation.reg_form_main_contact_name = "Bob Smith"
+  @organisation.reg_form_main_contact_address = "1 Main Street\nLondon\nN1 1AA"
+  @organisation.reg_form_main_contact_phone = "01234 567 890"
+  @organisation.reg_form_main_contact_email = "bob@example.com"
+
+  @organisation.reg_form_money_laundering_0_name = "Bob Smith"
+  @organisation.reg_form_money_laundering_0_date_of_birth = "1 January 1970"
+  @organisation.reg_form_money_laundering_0_address = "1 Main Street"
+  @organisation.reg_form_money_laundering_0_postcode = "N1 1AA"
+  @organisation.reg_form_money_laundering_0_residency_length = "6 years"
+
+  @organisation.reg_form_money_laundering_1_name = "Jane Baker"
+  @organisation.reg_form_money_laundering_1_date_of_birth = "1 May 1980"
+  @organisation.reg_form_money_laundering_1_address = "40 High Street"
+  @organisation.reg_form_money_laundering_1_postcode = "SW1 1AA"
+  @organisation.reg_form_money_laundering_1_residency_length = "15 years"
+
+  @organisation.reg_form_money_laundering_agreement = true
+
   @organisation.save!
 end
 

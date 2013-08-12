@@ -561,11 +561,26 @@ class Coop < Organisation
   end
 
 
-
+  # Returns true if the minimum required registration details have been filled in
   def registration_form_filled?
     clauses.get_integer(:reg_form_signatories_0) &&
       clauses.get_integer(:reg_form_signatories_1) &&
-      clauses.get_integer(:reg_form_signatories_2)
+      clauses.get_integer(:reg_form_signatories_2) &&
+      (clauses.get_text(:reg_form_main_contact_organisation_name) || clauses.get_text(:reg_form_main_contact_name)) &&
+      clauses.get_text(:reg_form_main_contact_address) &&
+      clauses.get_text(:reg_form_main_contact_phone) &&
+      clauses.get_text(:reg_form_main_contact_email) &&
+      clauses.get_text(:reg_form_money_laundering_0_name) &&
+      clauses.get_text(:reg_form_money_laundering_0_date_of_birth) &&
+      clauses.get_text(:reg_form_money_laundering_0_address) &&
+      clauses.get_text(:reg_form_money_laundering_0_postcode) &&
+      clauses.get_text(:reg_form_money_laundering_0_residency_length) &&
+      clauses.get_text(:reg_form_money_laundering_1_name) &&
+      clauses.get_text(:reg_form_money_laundering_1_date_of_birth) &&
+      clauses.get_text(:reg_form_money_laundering_1_address) &&
+      clauses.get_text(:reg_form_money_laundering_1_postcode) &&
+      clauses.get_text(:reg_form_money_laundering_1_residency_length) &&
+      clauses.get_boolean(:reg_form_money_laundering_agreement)
   end
 
   # The lesser of 10% of the membership and 100 members is required to force a resolution.

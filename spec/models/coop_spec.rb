@@ -427,6 +427,29 @@ describe Coop do
   describe "registration_form_filled?" do
     let(:coop) {Coop.make!(:pending)}
 
+    before(:each) do
+      # Fill in the registration details
+      coop.clauses.set_integer!(:reg_form_signatories_0, 1)
+      coop.clauses.set_integer!(:reg_form_signatories_1, 2)
+      coop.clauses.set_integer!(:reg_form_signatories_2, 3)
+      coop.clauses.set_text!(:reg_form_main_contact_name, 'foo')
+      coop.clauses.set_text!(:reg_form_main_contact_address, 'foo')
+      coop.clauses.set_text!(:reg_form_main_contact_phone, 'foo')
+      coop.clauses.set_text!(:reg_form_main_contact_email, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_name, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_date_of_birth, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_address, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_postcode, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_residency_length, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_name, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_date_of_birth, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_address, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_postcode, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_residency_length, 'foo')
+      coop.clauses.set_boolean!(:reg_form_money_laundering_agreement, true)
+
+    end
+
     it "returns false when less than three signatories have been chosen" do
       coop.clauses.set_integer!(:reg_form_signatories_0, 1)
       coop.clauses.set_integer!(:reg_form_signatories_1, 2)
