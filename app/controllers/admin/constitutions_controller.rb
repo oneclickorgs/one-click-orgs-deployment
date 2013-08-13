@@ -10,6 +10,9 @@ class Admin::ConstitutionsController < AdminController
       @header_left = "Co-operatives UK Multi-stakeholder Co-operative Model Rules (One-Click Model)"
       @header_right = nil
       @stylesheet = File.join(Rails.root, 'app', 'assets', 'stylesheets', 'coop_rules_pdf.css')
+
+      @signatories = @organisation.signatories
+      @secretary = @organisation.secretary
     else
       @page_title = "Constitution"
     end
