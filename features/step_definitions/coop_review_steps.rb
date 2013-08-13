@@ -21,6 +21,11 @@ end
 
 Given(/^there are some active co\-ops$/) do
   @coops = Coop.make!(2)
+  @coops.each do |coop|
+    coop.members.make!(2)
+    coop.members.make!(2, :director)
+    coop.members.make!(:secretary)
+  end
 end
 
 When(/^I press "(.*?)" for the co\-op$/) do |button|
@@ -77,7 +82,7 @@ Then(/^I should see the name of the co\-op$/) do
   page.should have_content(@coop.name)
 end
 
-Then(/^I should see the founder members of the co\-op$/) do
+Then(/^I should see the (?:|founder )members of the co\-op$/) do
   @coop.members.count.should >= 1
 
   @coop.members.each do |member|
@@ -85,6 +90,16 @@ Then(/^I should see the founder members of the co\-op$/) do
     page.should have_content(member.email)
     page.should have_content(member.phone)
     page.should have_content(member.address)
+  end
+end
+
+Then(/^I should see the directors of the co\-op$/) do
+  expect(@coop.directors.count).to be >= 1
+
+  within('.directors') do
+    @coop.directors.each do |director|
+      page.should have_content(director.name)
+    end
   end
 end
 

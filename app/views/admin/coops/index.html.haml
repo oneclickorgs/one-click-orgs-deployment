@@ -41,7 +41,7 @@
   - @active_coops.each do |coop|
     = content_tag_for(:li, coop) do
       %h4
-        = coop.name
+        = link_to(coop.name, admin_coop_path(coop))
         (
         = coop.domain(:only_host => true)
         )

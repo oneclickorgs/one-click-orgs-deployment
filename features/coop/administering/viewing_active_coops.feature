@@ -11,7 +11,6 @@ Feature: Viewing active co-ops
     When I go to the co-op review page
     Then I should see a list of the active co-ops
 
-  @wip
   Scenario: Administrator views details of a active co-op
     When I go to the admin view of an active co-op
     Then I should see the name of the co-op
