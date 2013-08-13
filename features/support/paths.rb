@@ -94,6 +94,9 @@ module NavigationHelpers
     when /^the admin view of a proposed co-op$/
       @coop ||= (@coops.present? ? @coops[0] : Coop.proposed.first)
       admin_coop_path(@coop)
+    when /^the admin view of a draft co-op$/
+      @coop ||= (@coops.present? ? @coops[0] : Coop.pending.first)
+      admin_coop_path(@coop)
     when /^edit the registration details$/
       edit_registration_form_path
     when /^Documents$/

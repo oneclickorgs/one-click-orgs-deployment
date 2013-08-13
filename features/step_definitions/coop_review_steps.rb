@@ -13,6 +13,10 @@ end
 
 Given(/^some draft co\-ops have been created$/) do
   @coops = Coop.make!(2, :pending)
+  @coops.each do |coop|
+    coop.members.make!(:secretary)
+    coop.members.make!(2, :director)
+  end
 end
 
 When(/^I press "(.*?)" for the co\-op$/) do |button|
@@ -78,5 +82,10 @@ end
 
 Then(/^I should see a link to the co\-op's registration form$/) do
   url = admin_registration_form_path(@coop, :format => :pdf)
+  page.should have_css("a[href='#{url}']")
+end
+
+Then(/^I should see a link to the co\-op's anti\-money laundering form$/) do
+  url = admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering', :format => :pdf)
   page.should have_css("a[href='#{url}']")
 end

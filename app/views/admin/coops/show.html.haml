@@ -18,16 +18,19 @@
 %h3 Rules
 %p= link_to("View rules", admin_constitution_path(@coop))
 %p= link_to("Download rules", admin_constitution_path(@coop, :format => :pdf))
-%p= link_to("Edit Rules", edit_admin_constitution_path(@coop))
+- if @coop.proposed?
+  %p= link_to("Edit Rules", edit_admin_constitution_path(@coop))
 
 %h3 Registration forms
 %p= link_to("Download registration form", admin_registration_form_path(@coop, :format => :pdf))
 %p= link_to("View anti-money laundering form", admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering'))
 %p= link_to("Download anti-money laundering form", admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering', :format => :pdf))
-%p= link_to("Edit registration details", edit_admin_registration_form_path(@coop))
+- if @coop.proposed?
+  %p= link_to("Edit registration details", edit_admin_registration_form_path(@coop))
 
-%h3 Registration complete?
-%p
-  Once the registration process with the FCA is complete, press the button below to
-  activate all the online features for this co-op.
-= button_to("Mark this co-op as fully registered", found_admin_coop_path(@coop), :method => :put, :confirm => "This will mark this co-op as registered and incorporated. An email notification will be sent to the founder members. Are you sure you wish to continue?")
+- if @coop.proposed?
+  %h3 Registration complete?
+  %p
+    Once the registration process with the FCA is complete, press the button below to
+    activate all the online features for this co-op.
+  = button_to("Mark this co-op as fully registered", found_admin_coop_path(@coop), :method => :put, :confirm => "This will mark this co-op as registered and incorporated. An email notification will be sent to the founder members. Are you sure you wish to continue?")

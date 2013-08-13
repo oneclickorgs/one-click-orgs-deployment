@@ -11,7 +11,6 @@ Feature: Viewing draft co-ops
     When I go to the co-op review page
     Then I should see a list of the draft co-ops
 
-  @wip
   Scenario: Administrator views details of a proposed co-op
     When I go to the admin view of a draft co-op
     Then I should see the name of the co-op
