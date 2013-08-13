@@ -84,4 +84,5 @@ group :development, :test do
   gem "selenium-webdriver", "~>2.34.0"
   gem "cucumber-relizy", "~>0.0.2"
   gem "syntax", "~>1.0.0"
+  gem "pdf-reader"
 end

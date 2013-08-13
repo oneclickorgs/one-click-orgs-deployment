@@ -7,7 +7,6 @@ Feature: Editing submitted co-ops
     Given I am an administrator
     And some co-ops have been submitted for registration
 
-  @wip
   Scenario: Administrator edits a submitted co-op's Rules
     When I go to the admin view of a proposed co-op
     And I follow "Edit Rules"
@@ -16,7 +15,6 @@ Feature: Editing submitted co-ops
     And I follow "View rules"
     Then I should see the changes I made
 
-  @wip
   Scenario: Administrator edits a submitted co-op's registration form
     When I go to the admin view of a proposed co-op
     And I follow "Edit registration details"
@@ -25,7 +23,6 @@ Feature: Editing submitted co-ops
     And I follow "Download registration form"
     Then the PDF should contain "There are no close links."
 
-  @wip
   Scenario: Administrator edits a submitted co-op's anti-money laundering form
     When I go to the admin view of a proposed co-op
     And I follow "Edit registration details"

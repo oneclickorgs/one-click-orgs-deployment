@@ -1,0 +1,7 @@
+%h2
+  Editing Registration Details for
+  = @organisation.name
+
+= form_for(@registration_form, :as => :registration_form, :url => admin_registration_form_path(@registration_form), :method => :put) do |form|
+
+  = render(:partial => 'registration_forms/form', :locals => {:form => form})

@@ -314,6 +314,7 @@ DEPENDENCIES
   mysql2 (~> 0.3.11)
   nokogiri (~> 1.5.9)
   parallel_tests
+  pdf-reader
   pdf_form_filler (~> 0.0.3)
   pdfkit (~> 0.5.2)
   pry
