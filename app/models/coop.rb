@@ -510,6 +510,11 @@ class Coop < Organisation
     clauses.set_integer!(:reg_form_signatories_2, new_signatories[2].id) if new_signatories[2]
   end
 
+  def members_with_signatories_selected
+    signatories = self.signatories
+    members.each{|m| m.selected = true if signatories.include?(m)}
+  end
+
   def reg_form_money_laundering_agreement=(new_money_laundering_agreement)
     new_money_laundering_agreement = cast_to_boolean(new_money_laundering_agreement)
     clauses.build(:name => :reg_form_money_laundering_agreement, :boolean_value => new_money_laundering_agreement)

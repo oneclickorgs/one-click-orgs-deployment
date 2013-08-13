@@ -14,7 +14,7 @@ describe RegistrationFormsController do
     let(:members) {double("members association")}
 
     before(:each) do
-      @organisation.stub(:members).and_return(members)
+      @organisation.stub(:members_with_signatories_selected).and_return(members)
     end
 
     def get_edit
@@ -22,7 +22,7 @@ describe RegistrationFormsController do
     end
 
     it "finds the members" do
-      @organisation.should_receive(:members)
+      @organisation.should_receive(:members_with_signatories_selected)
       get_edit
     end
 
