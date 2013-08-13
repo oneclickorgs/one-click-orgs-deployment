@@ -104,6 +104,10 @@ When(/^I save the registration (?:form|details)$/) do
   click_button("Save changes")
 end
 
+When(/^I fill in the close links field with "(.*?)"$/) do |value|
+  fill_in('registration_form[reg_form_close_links]', :with => value)
+end
+
 Then(/^I should see the main contact info$/) do
   expect(find_field('registration_form[reg_form_main_contact_organisation_name]').value).to eq("Acme Ltd")
   expect(find_field('registration_form[reg_form_main_contact_name]').value).to eq("Bob Smith")

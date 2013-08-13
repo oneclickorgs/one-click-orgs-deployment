@@ -39,4 +39,9 @@ describe "admin/coops/show" do
     rendered.should have_selector(:a, :href => '/admin/coops/111/documents/money_laundering.pdf')
   end
 
+  it "renders a link to edit the registration details" do
+    render
+    rendered.should have_selector(:a, :href => '/admin/registration_forms/111/edit')
+  end
+
 end

@@ -11,4 +11,17 @@ class Admin::RegistrationFormsController < AdminController
       end
     end
   end
+
+  def edit
+    @organisation = Organisation.find(params[:id])
+    @registration_form = @organisation
+    @members = @organisation.members_with_signatories_selected
+  end
+
+  def update
+    @organisation = Organisation.find(params[:id])
+    @organisation.attributes = params[:registration_form]
+    @organisation.save
+    redirect_to(admin_coop_path(@organisation))
+  end
 end
