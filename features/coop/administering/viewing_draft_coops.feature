@@ -7,7 +7,6 @@ Feature: Viewing draft co-ops
     Given I am an administrator
     And some draft co-ops have been created
 
-  @wip
   Scenario: Administrator views a list of draft co-ops
     When I go to the co-op review page
     Then I should see a list of the draft co-ops
