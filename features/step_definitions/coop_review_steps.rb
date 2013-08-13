@@ -19,6 +19,10 @@ Given(/^some draft co\-ops have been created$/) do
   end
 end
 
+Given(/^there are some active co\-ops$/) do
+  @coops = Coop.make!(2)
+end
+
 When(/^I press "(.*?)" for the co\-op$/) do |button|
   @coop ||= Coop.proposed.last
   within("#coop_#{@coop.id}") do
@@ -54,6 +58,15 @@ Then(/^I should see a list of the draft co\-ops$/) do
   @coops ||= Coop.pending
 
   within('.pending_coops') do
+    @coops.each do |coop|
+      expect(page).to have_content(coop.name)
+    end
+  end
+end
+
+Then(/^I should see a list of the active co\-ops$/) do
+  @coops ||= Coop.active
+  within('.active_coops') do
     @coops.each do |coop|
       expect(page).to have_content(coop.name)
     end

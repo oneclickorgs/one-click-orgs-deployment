@@ -7,7 +7,6 @@ Feature: Viewing active co-ops
     Given I am an administrator
     And there are some active co-ops
 
-  @wip
   Scenario: Administrator views a list of active co-ops
     When I go to the co-op review page
     Then I should see a list of the active co-ops
