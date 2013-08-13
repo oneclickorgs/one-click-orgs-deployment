@@ -1,9 +1,8 @@
 class Admin::ConstitutionsController < AdminController
-  def show
-    # TODO Fix duplication between this and ::ConstitutionsController#show
+  # TODO Fix duplication between this and ::ConstitutionsController
 
-    @organisation = Organisation.find(params[:id])
-    @constitution = @organisation.constitution
+  def show
+    find_constitution
 
     case @organisation
     when Coop
@@ -26,5 +25,32 @@ class Admin::ConstitutionsController < AdminController
         )
       }
     end
+  end
+
+  def edit
+    find_constitution
+    case @organisation
+    when Coop
+      @allow_editing = true
+      @constitution_wrapper = ConstitutionWrapper.new(:constitution => @constitution)
+    end
+  end
+
+  def update
+    find_constitution
+    @constitution_wrapper = ConstitutionWrapper.new(:constitution => @constitution)
+    if @constitution_wrapper.update_attributes(params[:constitution])
+      redirect_to(admin_coop_path(@organisation), :notice => "Rule changes were made")
+    else
+      @allow_editing = true # We have already authorized that the user can update a Constitution
+      render(:action => :edit)
+    end
+  end
+
+private
+
+  def find_constitution
+    @organisation = Organisation.find(params[:id])
+    @constitution = @organisation.constitution
   end
 end

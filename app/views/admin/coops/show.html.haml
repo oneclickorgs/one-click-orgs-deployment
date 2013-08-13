@@ -16,7 +16,9 @@
       %td= member.address
 
 %h3 Rules
+%p= link_to("View rules", admin_constitution_path(@coop))
 %p= link_to("Download rules", admin_constitution_path(@coop, :format => :pdf))
+%p= link_to("Edit Rules", edit_admin_constitution_path(@coop))
 
 %h3 Registration form
 %p= link_to("Download registration form", admin_registration_form_path(@coop, :format => :pdf))

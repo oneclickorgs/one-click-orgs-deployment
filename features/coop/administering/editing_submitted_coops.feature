@@ -7,7 +7,6 @@ Feature: Editing submitted co-ops
     Given I am an administrator
     And some co-ops have been submitted for registration
 
-  @wip
   Scenario: Administrator edits a submitted co-op's Rules
     When I go to the admin view of a proposed co-op
     And I follow "Edit Rules"

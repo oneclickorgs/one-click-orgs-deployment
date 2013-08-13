@@ -24,6 +24,11 @@ describe "admin/coops/show" do
     rendered.should have_selector(:a, :href => '/admin/constitutions/111.pdf')
   end
 
+  it "renders a link to edit the rules" do
+    render
+    rendered.should have_selector(:a, :href => '/admin/constitutions/111/edit')
+  end
+
   it "renders a link to the registration form PDF" do
     render
     rendered.should have_selector(:a, :href => '/admin/registration_forms/111.pdf')
