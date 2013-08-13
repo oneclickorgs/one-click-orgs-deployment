@@ -8,7 +8,7 @@ class Admin::DocumentsController < AdminController
       respond_to do |format|
 
         format.html do
-          render(:template => 'documents/money_laundering', :layout => false)
+          render(:template => 'documents/money_laundering', :layout => 'basic')
         end
 
         format.pdf do
