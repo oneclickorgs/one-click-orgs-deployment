@@ -23,7 +23,6 @@ Feature: Editing submitted co-ops
     And I follow "Download registration form"
     Then the PDF should contain "There are no close links."
 
-  @wip
   Scenario: Administrator edits a submitted co-op's anti-money laundering form
     When I go to the admin view of a proposed co-op
     And I follow "Edit registration details"

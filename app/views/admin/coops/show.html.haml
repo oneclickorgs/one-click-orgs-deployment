@@ -22,6 +22,7 @@
 
 %h3 Registration forms
 %p= link_to("Download registration form", admin_registration_form_path(@coop, :format => :pdf))
+%p= link_to("View anti-money laundering form", admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering'))
 %p= link_to("Download anti-money laundering form", admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering', :format => :pdf))
 %p= link_to("Edit registration details", edit_admin_registration_form_path(@coop))
 
