@@ -19,7 +19,7 @@ describe InvitationsController do
   describe "GET edit" do
     context "when given an invalid invitation code" do
       before(:each) do
-        Member.stub!(:find_by_invitation_code).and_return(nil)
+        Member.stub(:find_by_invitation_code).and_return(nil)
       end
     
       it "should raise a NotFound exception" do

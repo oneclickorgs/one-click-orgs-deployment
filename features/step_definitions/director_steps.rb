@@ -37,6 +37,10 @@ Given(/^we have appointed some initial Directors and Officers$/) do
   @organisation.members.make!(:director)
 end
 
+Given(/^there are at least two directors$/) do
+  @organisation.members.make!(2, :director)
+end
+
 When(/^I choose yesterday for the date of election$/) do
   yesterday = 1.day.ago
   select(yesterday.year.to_s, :from => 'director[elected_on(1i)]')

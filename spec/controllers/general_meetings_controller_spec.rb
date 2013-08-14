@@ -12,9 +12,9 @@ describe GeneralMeetingsController do
 
   describe "GET new" do
     before(:each) do
-      @general_meetings_association = mock("general meetings association")
-      @resolutions_association = mock("resolutions association")
-      @draft_resolutions_association = mock("draft resolutions association")
+      @general_meetings_association = double("general meetings association")
+      @resolutions_association = double("resolutions association")
+      @draft_resolutions_association = double("draft resolutions association")
 
       @organisation.stub(:general_meetings).and_return(@general_meetings_association)
       @general_meetings_association.stub(:build)
@@ -50,7 +50,7 @@ describe GeneralMeetingsController do
   end
 
   describe "POST create" do
-    let(:general_meetings) {mock("general meetings")}
+    let(:general_meetings) {double("general meetings")}
 
     before(:each) do
       @general_meeting = mock_model(GeneralMeeting)
@@ -86,7 +86,7 @@ describe GeneralMeetingsController do
   end
 
   describe "GET show" do
-    let(:general_meetings) {mock("general_meetings association", :find => general_meeting)}
+    let(:general_meetings) {double("general_meetings association", :find => general_meeting)}
     let(:general_meeting) {mock_model("GeneralMeeting")}
 
     before(:each) do
@@ -115,8 +115,8 @@ describe GeneralMeetingsController do
 
   describe "GET edit" do
     let(:general_meeting){mock_model(GeneralMeeting)}
-    let(:general_meetings){mock("general_meetings association", :find => general_meeting)}
-    let(:members){mock("members association", :map => nil)}
+    let(:general_meetings){double("general_meetings association", :find => general_meeting)}
+    let(:members){double("members association", :map => nil)}
 
     before(:each) do
       @organisation.stub(:general_meetings).and_return(general_meetings)
@@ -149,7 +149,7 @@ describe GeneralMeetingsController do
   end
 
   describe "PUT update" do
-    let(:general_meetings){mock("general_meetings association", :find => general_meeting)}
+    let(:general_meetings){double("general_meetings association", :find => general_meeting)}
     let(:general_meeting){mock_model(GeneralMeeting, :update_attributes => true)}
     let(:general_meeting_params){{'minutes' => 'We discussed things.'}}
 

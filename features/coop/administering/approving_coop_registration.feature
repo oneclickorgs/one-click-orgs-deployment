@@ -18,5 +18,5 @@ Feature: Approving co-op registration
     Given a co-op has been submitted
     When I go to the co-op review page
     And I follow "View full information" for the co-op
-    And I press "Approve registration"
+    And I press "Mark this co-op as fully registered"
     Then I should see that the co-op is approved

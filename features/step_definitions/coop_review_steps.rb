@@ -11,6 +11,23 @@ Given(/^some co\-ops have been submitted for registration$/) do
   end
 end
 
+Given(/^some draft co\-ops have been created$/) do
+  @coops = Coop.make!(2, :pending)
+  @coops.each do |coop|
+    coop.members.make!(:secretary)
+    coop.members.make!(2, :director)
+  end
+end
+
+Given(/^there are some active co\-ops$/) do
+  @coops = Coop.make!(2)
+  @coops.each do |coop|
+    coop.members.make!(2)
+    coop.members.make!(2, :director)
+    coop.members.make!(:secretary)
+  end
+end
+
 When(/^I press "(.*?)" for the co\-op$/) do |button|
   @coop ||= Coop.proposed.last
   within("#coop_#{@coop.id}") do
@@ -42,11 +59,30 @@ Then(/^I should see a list of the submitted co\-ops$/) do
   end
 end
 
+Then(/^I should see a list of the draft co\-ops$/) do
+  @coops ||= Coop.pending
+
+  within('.pending_coops') do
+    @coops.each do |coop|
+      expect(page).to have_content(coop.name)
+    end
+  end
+end
+
+Then(/^I should see a list of the active co\-ops$/) do
+  @coops ||= Coop.active
+  within('.active_coops') do
+    @coops.each do |coop|
+      expect(page).to have_content(coop.name)
+    end
+  end
+end
+
 Then(/^I should see the name of the co\-op$/) do
   page.should have_content(@coop.name)
 end
 
-Then(/^I should see the founder members of the co\-op$/) do
+Then(/^I should see the (?:|founder )members of the co\-op$/) do
   @coop.members.count.should >= 1
 
   @coop.members.each do |member|
@@ -57,6 +93,16 @@ Then(/^I should see the founder members of the co\-op$/) do
   end
 end
 
+Then(/^I should see the directors of the co\-op$/) do
+  expect(@coop.directors.count).to be >= 1
+
+  within('.directors') do
+    @coop.directors.each do |director|
+      page.should have_content(director.name)
+    end
+  end
+end
+
 Then(/^I should see a link to the co\-op's rules$/) do
   url = admin_constitution_path(@coop, :format => :pdf)
   page.should have_css("a[href='#{url}']")
@@ -64,5 +110,10 @@ end
 
 Then(/^I should see a link to the co\-op's registration form$/) do
   url = admin_registration_form_path(@coop, :format => :pdf)
+  page.should have_css("a[href='#{url}']")
+end
+
+Then(/^I should see a link to the co\-op's anti\-money laundering form$/) do
+  url = admin_coop_document_path(:coop_id => @coop, :id => 'money_laundering', :format => :pdf)
   page.should have_css("a[href='#{url}']")
 end

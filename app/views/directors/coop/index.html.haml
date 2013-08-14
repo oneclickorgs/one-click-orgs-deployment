@@ -22,7 +22,7 @@
     %span.pdf.download
       = link_to 'PDF', directors_path(:format => 'pdf')
 
-  .section
+  .section.directors
     %ul.directors
       - @directors.each do |director|
         = content_tag_for(:li, director) do

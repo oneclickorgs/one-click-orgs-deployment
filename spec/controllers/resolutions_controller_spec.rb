@@ -14,7 +14,7 @@ describe ResolutionsController do
     before(:each) do
       @resolution_params = {'description' => "Do things"}
 
-      @resolutions_association = mock("resolutions association")
+      @resolutions_association = double("resolutions association")
       @organisation.stub(:resolutions).and_return(@resolutions_association)
 
       @resolution = mock_model(Resolution, :proposer= => nil, :save => true, :creation_success_message => nil)

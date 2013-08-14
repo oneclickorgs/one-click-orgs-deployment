@@ -10,5 +10,4 @@ Feature: Editing registration form
     When I go to edit the registration form
     And I choose three signatories
     And I save the registration form
-    When I go to the checklist
-    Then I should see that the registration form is done
+    Then I should see the three signatories I chose

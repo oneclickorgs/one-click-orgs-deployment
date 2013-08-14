@@ -81,10 +81,10 @@ describe DirectorsController do
     describe "POST stand_down" do
       before(:each) do
         @directors_association = double("directors association")
-        @company.stub!(:directors).and_return(@directors_association)
+        @company.stub(:directors).and_return(@directors_association)
 
         @director = mock_model(Director, :update_attributes => true, :eject! => true, :send_stand_down_notification_emails => nil)
-        @directors_association.stub!(:find).and_return(@director)
+        @directors_association.stub(:find).and_return(@director)
 
         @director_parameters = {"stood_down_on(1i)"=>"2011", "stood_down_on(2i)"=>"8", "stood_down_on(3i)"=>"6", "certification"=>"1"}
       end
@@ -122,11 +122,11 @@ describe DirectorsController do
     end
 
     describe "GET index" do
-      let(:tasks) {mock("tasks")}
+      let(:tasks) {double("tasks")}
 
       before(:each) do
         @organisation.stub(:directors)
-        @organisation.stub(:offices).and_return(@offices = mock("offices association"))
+        @organisation.stub(:offices).and_return(@offices = double("offices association"))
         @offices.stub(:unoccupied).and_return([])
 
         @user.stub_chain(:tasks, :current, :directors_related).and_return(tasks)

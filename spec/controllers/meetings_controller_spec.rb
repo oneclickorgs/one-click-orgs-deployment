@@ -23,7 +23,7 @@ describe MeetingsController do
         @company.stub(:meetings).and_return(@meetings_association)
 
         @comments_association = double("comments association")
-        @meeting.stub!(:comments).and_return(@comments_association)
+        @meeting.stub(:comments).and_return(@comments_association)
 
         @comment = mock_model(Comment).as_new_record
         Comment.stub(:new).and_return(@comment)
@@ -94,7 +94,7 @@ describe MeetingsController do
         @meetings_association.stub(:build).and_return(@meeting)
 
         @meeting.stub(:attributes=)
-        @meeting.stub!(:save).and_return(true)
+        @meeting.stub(:save).and_return(true)
 
         controller.stub(:can?).with(:create, Meeting).and_return(true)
       end
@@ -135,16 +135,16 @@ describe MeetingsController do
         before(:each) do
           @meeting.stub(:save).and_return(false)
 
-          @member_classes_association = mock("member classes association")
+          @member_classes_association = double("member classes association")
           @company.stub(:member_classes).and_return(@member_classes_association)
 
           @director_member_class = mock_model(Director)
           @member_classes_association.stub(:find_by_name).and_return(@director_member_class)
 
-          @members_association = mock("members association")
+          @members_association = double("members association")
           @company.stub(:members).and_return(@members_association)
 
-          @directors = mock("directors")
+          @directors = double("directors")
           @members_association.stub(:where).and_return(@directors)
         end
 
@@ -191,9 +191,9 @@ describe MeetingsController do
 
     describe "GET index" do
       before(:each) do
-        @general_meetings_association = mock("general meetings association")
-        @upcoming_meetings = mock("upcoming general meetings association")
-        @past_meetings = mock("past general meetings association")
+        @general_meetings_association = double("general meetings association")
+        @upcoming_meetings = double("upcoming general meetings association")
+        @past_meetings = double("past general meetings association")
 
         @organisation.stub(:general_meetings).and_return(@general_meetings_association)
         @general_meetings_association.stub(:upcoming).and_return(@upcoming_meetings)

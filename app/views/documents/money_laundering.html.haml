@@ -1,0 +1,89 @@
+- content_for(:head) do
+  = stylesheet_link_tag('money_laundering')
+%table
+  %thead
+    %tr
+      %th{:colspan => 2}
+        %p
+          PLEASE COMPLETE THIS FORM
+  %tbody
+    %tr
+      %td{:colspan => 2}
+        Please provide the contact details of the person/organisation to whom all correspondence in this matter will be sent. If the contact details for the person/organisation paying our fees are different, please include this information in the box provided below. Please ensure that all contact and address information provided is accurate. If no address is provided we will use the prospective registered office to send all correspondence to. We cannot undertake any of the work until we are in receipt of this information.
+    %tr
+      %td{:colspan => 2}
+        Name of Organisation:
+        = @registration_form.reg_form_main_contact_organisation_name
+    %tr
+      %td{:colspan => 2}
+        Contact Name:
+        = @registration_form.reg_form_main_contact_name
+    %tr
+      %td{:colspan => 2}
+        %p Address
+        = simple_format(@registration_form.reg_form_main_contact_address)
+    %tr
+      %td
+        Contact Telephone Number:
+        = @registration_form.reg_form_main_contact_phone
+      %td
+        Contact E-mail Address:
+        = @registration_form.reg_form_main_contact_email
+    %tr
+      %td{:colspan => 2}
+        Name of Finance Contact (if different from above)
+        = @registration_form.reg_form_financial_contact_name
+    %tr
+      %td
+        Contact Telephone Number:
+        = @registration_form.reg_form_financial_contact_phone
+      %td
+        Contact E-mail Address:
+        = @registration_form.reg_form_financial_contact_email
+    %tr
+      %td{:colspan => 2}
+        %p The Proceeds of Crime Act 2002 and the Money Laundering Regulations 2007 requires anyone involved in what is deemed to be 'relevant business' to introduce an anti-money laundering procedure.
+        %p Part of this procedure is a requirement to check and confirm the identity of the people with whom you do business. One of the activities deemed to be 'relevant business' is company and charity formation. As is the case with everyone who offers this type of service, Co-operatives UK has to abide by these regulations and as such we are required to ask the individuals involved to confirm their identity.
+    %tr
+      %td{:colspan => 2}
+        %p For anti-money laundering purposes, please provide the following details for 2 of the first directors. By providing this information you agree to Co-operatives UK sharing this information with a third party for the purpose of anti-money laundering checks.
+    %tr
+      %td
+        %p
+          Full Name (including middle name)
+          = @registration_form.reg_form_money_laundering_0_name
+        %p
+          Date of Birth
+          = @registration_form.reg_form_money_laundering_0_date_of_birth
+        %p
+          Residential Address
+        = simple_format(@registration_form.reg_form_money_laundering_0_address)
+        %p
+          Postcode
+          = @registration_form.reg_form_money_laundering_0_postcode
+        %p If lived at this address for less than 1 year, please state previous address
+        %p
+          Length of time at current address
+          = @registration_form.reg_form_money_laundering_0_residency_length
+      %td
+        %p
+          Full Name (including middle name)
+          = @registration_form.reg_form_money_laundering_1_name
+        %p
+          Date of Birth
+          = @registration_form.reg_form_money_laundering_1_date_of_birth
+        %p
+          Residential Address
+        = simple_format(@registration_form.reg_form_money_laundering_1_address)
+        %p
+          Postcode
+          = @registration_form.reg_form_money_laundering_1_postcode
+        %p If lived at this address for less than 1 year, please state previous address
+        %p
+          Length of time at current address
+          = @registration_form.reg_form_money_laundering_1_residency_length
+    %tr
+      %td{:colspan => 2}
+        I have read and agree to the above:
+        = check_box_tag('reg_form_money_laundering_agreement', '1', (@registration_form.reg_form_money_laundering_agreement?))
+        (please check to confirm)

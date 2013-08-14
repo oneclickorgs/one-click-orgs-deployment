@@ -18,7 +18,10 @@ class Task < ActiveRecord::Base
   scope :members_or_shares_related, where(:subject_type => (SHARES_RELATED + MEMBERS_RELATED))
 
   scope :undismissed, where('dismissed_at is null')
+
   def to_partial_name
+    return nil unless subject
+
     partial_name  = "task_"
     partial_name += subject.class.name.underscore
     if action.present?

@@ -34,8 +34,8 @@ describe ShareTransaction do
       )}
       let(:coop_account) {mock_model(ShareAccount, :owner => coop)}
       let(:member_account) {mock_model(ShareAccount, :owner => member)}
-      let(:member_tasks) {mock('member tasks association', :create => nil)}
-      let(:secretary_tasks) {mock('secretary tasks association', :create => nil)}
+      let(:member_tasks) {double('member tasks association', :create => nil)}
+      let(:secretary_tasks) {double('secretary tasks association', :create => nil)}
       let(:coop) {mock_model(Coop, :secretary => secretary, :domain => 'test', :name => "Test")}
       let(:secretary) {mock_model(Member, :tasks => secretary_tasks, :name => "Sally Secretary", :email => "secretary@example.com")}
       let(:member) {mock_model(Member, :tasks => member_tasks, :organisation => coop, :name => "Bob Smith")}

@@ -58,7 +58,7 @@ describe Election do
     let(:election) {Election.make!(:state => :closed)}
     let(:elected_nominee) {mock_model(Member)}
     let(:defeated_nominee) {mock_model(Member)}
-    let(:nominations) {mock("nominations",
+    let(:nominations) {double("nominations",
       :elected => [mock_model(Nomination, :nominee => elected_nominee)],
       :defeated => [mock_model(Nomination, :nominee => defeated_nominee)]
     )}
@@ -168,7 +168,7 @@ describe Election do
     describe "on closing" do
       let(:election) {Election.make(:state => :open)}
       let(:members) {[mock_model(Member, :tasks => tasks)]}
-      let(:tasks) {mock("tasks")}
+      let(:tasks) {double("tasks")}
 
       before(:each) do
         election.stub_chain(:organisation, :members).and_return(members)

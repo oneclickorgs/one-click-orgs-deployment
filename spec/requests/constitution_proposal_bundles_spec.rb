@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "constitution proposal bundles" do
   
   def mock_proposal
-    mock('proposal',
+    double('proposal',
       :save! => true,
       :valid? => true,
       :proposer= => nil

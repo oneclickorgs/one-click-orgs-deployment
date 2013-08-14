@@ -127,7 +127,7 @@ describe ResolutionProposal do
         secretary = mock_model(Member, :has_permission => false)
         resolution_proposal.organisation.stub(:secretary).and_return(secretary)
 
-        tasks_association = mock("tasks association")
+        tasks_association = double("tasks association")
         secretary.stub(:tasks).and_return(tasks_association)
 
         tasks_association.should_receive(:create).with(hash_including(:subject => resolution_proposal))

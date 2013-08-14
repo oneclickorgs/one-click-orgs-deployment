@@ -1,31 +1,5 @@
-%h2 Registration Form
-
-%p The following additional information is required for the FCA Mutual Societies Application Form.
+%h2 Registration Details
 
 = form_for(@registration_form, :as => :registration_form, :url => registration_form_path, :method => :put) do |form|
-  %p{:style => 'margin-bottom: 0;'}
-    = label_tag "Details of any close links which the society or any member of its committee has, or intends to have, with any society, company or authority"
-    The following are regarded as evidence of a close link with another society, company or other entity:
-  %ul{:style => 'margin-left: 40px;'}
-    %li any material contract or arrangement which it is anticipated that the society will enter into in order to undertake its business; and
-    %li any other directorships or senior positions held by members of the committee.
-  %p
-    = form.text_area :reg_form_close_links
-  %p{:style => 'margin-bottom: 0;'}
-    = label_tag '', "Choose three members who will sign the registration form"
-    For the purposes of registration, a society must have at least 3 founder members who must sign the registration paperwork. Additional founder members can be present, but they are not required to sign the paperwork.
-  %ul{:style => 'list-style-type: none;'}
-    = form.fields_for :reg_form_signatories, @members do |signatory_fields|
-      %li
-        = signatory_fields.check_box :selected, :class => 'inline'
-        = signatory_fields.label :selected, signatory_fields.object.name, :class => 'inline'
-  %p
-    = form.label :reg_form_timing_factors, "Does the society have any timing factors that it would like us to consider? (optional)"
-    If the society wishes to be registered by a specific date, please state this below and Co-operatives UK will bring this to the attention of the FCA when submitting the application for registration.
-    = form.text_area :reg_form_timing_factors
-  %p
-    = form.label :reg_form_financial_year_end, "Date of society's financial year end (dd/mm/yyyy) (optional)"
-    If the society proposes to use a date other than the last day of the month in which the anniversary of its registration falls as its financial year end please indicate this date below, otherwise leave blank.
-    = form.text_field :reg_form_financial_year_end
-  %p
-    = form.submit "Save changes"
+
+  = render(:partial => 'form', :locals => {:form => form})

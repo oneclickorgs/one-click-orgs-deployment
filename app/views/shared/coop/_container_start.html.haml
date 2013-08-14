@@ -8,7 +8,7 @@
       - if co.can_propose?
         = form_tag(propose_coop_path(co), :id => 'submit_registration_form', :method => :put) do
           = submit_tag "Submit Co-op registration", :id => 'submit', :confirm => "Are you sure you wish to proceed with registration?"
-        = link_button("Download registration form", :url => registration_form_path(:format => 'pdf'))
+        = link_button("Download registration documents", :url => documents_path)
       %br.clear
   - elsif current_organisation.proposed?
     %div#overlay.proposed

@@ -15,7 +15,7 @@ describe ConstitutionsController do
     end
 
     describe "GET edit" do
-      let(:constitution) {mock("constitution")}
+      let(:constitution) {double("constitution")}
       let(:cpb) {mock_model(ConstitutionProposalBundle)}
 
       before(:each) do

@@ -14,7 +14,7 @@ describe BoardResolutionsController do
     before(:each) do
       @board_resolution = mock_model(BoardResolution)
 
-      @board_resolutions_association = mock("board resolutions association")
+      @board_resolutions_association = double("board resolutions association")
       @board_resolutions_association.stub(:build).and_return(@board_resolution)
 
       @organisation.stub(:board_resolutions).and_return(@board_resolutions_association)
@@ -35,7 +35,7 @@ describe BoardResolutionsController do
     before(:each) do
       @board_resolution = mock_model(BoardResolution, :proposer= => nil, :save! => true)
 
-      @board_resolutions_association = mock("board resolutions association")
+      @board_resolutions_association = double("board resolutions association")
       @organisation.stub(:board_resolutions).and_return(@board_resolutions_association)
 
       @board_resolutions_association.stub(:build).and_return(@board_resolution)

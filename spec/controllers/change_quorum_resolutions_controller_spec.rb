@@ -14,7 +14,7 @@ describe ChangeQuorumResolutionsController do
     before(:each) do
       @change_quorum_resolution = mock_model(ChangeQuorumResolution)
 
-      @change_quorum_resolutions_association = mock("change-quorum resolutions association")  
+      @change_quorum_resolutions_association = double("change-quorum resolutions association")
       @change_quorum_resolutions_association.stub(:build).and_return(@change_quorum_resolution)
 
       @organisation.stub(:change_quorum_resolutions).and_return(@change_quorum_resolutions_association)
@@ -43,7 +43,7 @@ describe ChangeQuorumResolutionsController do
   describe "POST create" do
     before(:each) do
       @change_quorum_resolution_params = {'quorum_number' => '5', 'quorum_percentage' => '30'}
-      @change_quorum_resolutions_association = mock("change-quorum resolutions association")
+      @change_quorum_resolutions_association = double("change-quorum resolutions association")
       @change_quorum_resolution = mock_model(ChangeQuorumResolution,
         :proposer= => nil,
         :draft= => nil,

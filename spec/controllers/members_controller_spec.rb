@@ -59,8 +59,8 @@ describe MembersController do
     end
 
     describe "GET index" do
-      let(:members){mock("members association", :active => active_members)}
-      let(:active_members){mock("active members association")}
+      let(:members){double("members association", :active => active_members)}
+      let(:active_members){double("active members association")}
 
       before(:each) do
         @organisation.stub(:members).and_return(members)
@@ -84,7 +84,7 @@ describe MembersController do
     end
 
     describe "PUT induct" do
-      let(:members){mock("members association", :find => member)}
+      let(:members){double("members association", :find => member)}
       let(:member){mock_model(Member,
         :send_welcome= => true,
         :can_induct? => true,
@@ -128,7 +128,7 @@ describe MembersController do
 
     describe "GET confirm_eject" do
       let(:member) {mock_model(Member)}
-      let(:members) {mock("members association", :find => member)}
+      let(:members) {double("members association", :find => member)}
 
       before(:each) do
         @organisation.stub(:members).and_return(members)
@@ -160,7 +160,7 @@ describe MembersController do
 
     describe "PUT eject" do
       let(:member) {mock_model(Member, :eject! => nil, :name => "Bob Smith")}
-      let(:members) {mock("members association", :find => member)}
+      let(:members) {double("members association", :find => member)}
 
       before(:each) do
         @organisation.stub(:members).and_return(members)

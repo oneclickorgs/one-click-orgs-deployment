@@ -9,7 +9,7 @@ describe "PasswordResets" do
   describe "resetting a password" do
     before(:each) do
       @member = @organisation.members.make!
-      @organisation.stub!(:members).and_return(@members_relation = mock('members_relation', :where => [@member]))
+      @organisation.stub(:members).and_return(@members_relation = double('members_relation', :where => [@member]))
     end
     
     def post_create
@@ -18,7 +18,7 @@ describe "PasswordResets" do
     
     it "should generate a new password reset code for the member" do
       @member.should_receive(:new_password_reset_code!)
-      @member.stub!(:password_reset_code).and_return('abcdefghij')
+      @member.stub(:password_reset_code).and_return('abcdefghij')
       post_create
     end
     
@@ -34,7 +34,7 @@ describe "PasswordResets" do
     
     describe "when the member cannot be found" do
       before(:each) do
-        @members_relation.stub!(:where).and_return([])
+        @members_relation.stub(:where).and_return([])
       end
       
       it "should set the 'email' instance variable" do

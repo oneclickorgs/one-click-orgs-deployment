@@ -13,7 +13,7 @@ describe DirectorshipsController do
   describe "GET new" do
     before(:each) do
       @directorship = mock_model(Directorship)
-      @directorships = mock("directorships association")
+      @directorships = double("directorships association")
       @organisation.stub(:directorships).and_return(@directorships)
       @directorships.stub(:build).and_return(@directorship)
     end
@@ -34,9 +34,9 @@ describe DirectorshipsController do
   end
 
   describe "GET external" do
-    let(:directorships) {mock("directorships", :build => directorship)}
+    let(:directorships) {double("directorships", :build => directorship)}
     let(:directorship) {mock_model(Directorship, :build_director => nil).as_new_record}
-    let(:member_classes) {mock("member classes", :find_by_name => member_class)}
+    let(:member_classes) {double("member classes", :find_by_name => member_class)}
     let(:member_class) {mock_model(MemberClass, :id => 999)}
 
     before(:each) do
@@ -81,7 +81,7 @@ describe DirectorshipsController do
         :save! => true
       ).as_new_record
 
-      @directorships = mock("directors association")
+      @directorships = double("directors association")
       @organisation.stub(:directorships).and_return(@directorships)
 
       @directorships.stub(:build).and_return(@directorship)
@@ -117,7 +117,7 @@ describe DirectorshipsController do
     before(:each) do
       @directorship = mock_model(Directorship)
 
-      @directorships = mock("directorships association")
+      @directorships = double("directorships association")
       @organisation.stub(:directorships).and_return(@directorships)
       @directorships.stub(:find).and_return(@directorship)
     end
@@ -150,7 +150,7 @@ describe DirectorshipsController do
       )
       @directorship_params = {'certification' => '1'}
 
-      @directorships = mock("directorships association")
+      @directorships = double("directorships association")
       @directorships.stub(:find).and_return(@directorship)
 
       @organisation.stub(:directorships).and_return(@directorships)

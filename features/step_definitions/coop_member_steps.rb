@@ -10,7 +10,7 @@ Given(/^I am the founder of the draft co\-op$/) do
   user_logs_in
 end
 
-Given(/^I am a founding member of the draft co\-op$/) do
+Given(/^I am a (?:founding|founder) member of the draft co\-op$/) do
   @organsation ||= Coop.pending.last
   @user = @organisation.members.make!(:founder_member)
   user_logs_in

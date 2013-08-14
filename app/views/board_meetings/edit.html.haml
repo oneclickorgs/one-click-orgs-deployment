@@ -17,8 +17,8 @@
       - @directors.each do |director|
         = content_tag_for(:li, director) do
           %p.checkbox
-            = check_box_tag "board_meeting[participant_ids][#{director.id}]", '1', @board_meeting.participant_ids.include?(director.id)
-            = label_tag "board_meeting_participant_ids_#{director.id}", director.name
+            = check_box_tag "board_meeting[participant_ids][#{director.id}]", '1', @board_meeting.participant_ids.include?(director.id), :class => :inline
+            = label_tag "board_meeting_participant_ids_#{director.id}", director.name, :class => :inline
 
   %h3 Minutes
   %p

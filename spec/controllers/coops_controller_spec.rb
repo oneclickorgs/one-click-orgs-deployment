@@ -61,7 +61,7 @@ describe CoopsController do
       )
       Coop.stub(:new).and_return(@coop)
 
-      @members_association = mock('members association')
+      @members_association = double('members association')
       @coop.stub(:members).and_return(@members_association)
 
       @member = mock_model(Member)
@@ -75,7 +75,7 @@ describe CoopsController do
       controller.stub(:log_in)
 
       @founder_member_member_class = mock_model(MemberClass)
-      @member_classes_association = mock("member_classes association")
+      @member_classes_association = double("member_classes association")
       @coop.stub(:member_classes).and_return(@member_classes_association)
       @member_classes_association.stub(:find_by_name).with('Founder Member').and_return(@founder_member_member_class)
       @member.stub(:member_class=)

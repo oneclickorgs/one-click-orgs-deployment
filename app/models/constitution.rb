@@ -44,6 +44,7 @@ class Constitution
       :max_user_directors => max_user_directors,
       :max_employee_directors => max_employee_directors,
       :max_supporter_directors => max_supporter_directors,
+      :max_producer_directors => max_producer_directors,
       :max_consumer_directors => max_consumer_directors
     }
     document.choices = {
