@@ -11,7 +11,7 @@ Feature: Viewing draft co-ops
     When I go to the co-op review page
     Then I should see a list of the draft co-ops
 
-  Scenario: Administrator views details of a proposed co-op
+  Scenario: Administrator views details of a draft co-op
     When I go to the admin view of a draft co-op
     Then I should see the name of the co-op
     And I should see the founder members of the co-op
