@@ -381,4 +381,216 @@ describe Coop do
     end
   end
 
+  describe "email notification" do
+    let(:administrators) {[mock_model(Administrator, :email => 'administrator@example.com')]}
+    let(:email) {double("email", :deliver => nil)}
+
+    before(:each) do
+      set_up_app
+      Administrator.stub(:all).and_return(administrators)
+    end
+
+    describe "for pending Coop creation" do
+      it "is sent to all Administrators" do
+        administrators.each do |administrator|
+          CoopMailer.should_receive(:notify_creation).with(administrator, anything).and_return(email)
+        end
+        Coop.make!(:pending)
+      end
+    end
+
+    describe "for Coop proposing" do
+      let(:coop) {Coop.make!(:pending)}
+
+      it "is sent to all Administrators" do
+        administrators.each do |administrator|
+          CoopMailer.should_receive(:notify_proposed).with(administrator, coop).and_return(email)
+        end
+        coop.propose!
+      end
+    end
+
+    describe "for Coop founding" do
+      let(:founder_members) {coop.members.make!(3, :founder_member)}
+      let(:coop) {Coop.make!(:proposed)}
+
+      it "is sent to all founder members" do
+        founder_members.each do |founder_member|
+          CoopMailer.should_receive(:notify_founded).with(founder_member, coop).and_return(email)
+        end
+
+        coop.found!
+      end
+    end
+  end
+
+  describe "registration_form_filled?" do
+    let(:coop) {Coop.make!(:pending)}
+
+    before(:each) do
+      # Fill in the registration details
+      coop.clauses.set_integer!(:reg_form_signatories_0, 1)
+      coop.clauses.set_integer!(:reg_form_signatories_1, 2)
+      coop.clauses.set_integer!(:reg_form_signatories_2, 3)
+      coop.clauses.set_text!(:reg_form_main_contact_name, 'foo')
+      coop.clauses.set_text!(:reg_form_main_contact_address, 'foo')
+      coop.clauses.set_text!(:reg_form_main_contact_phone, 'foo')
+      coop.clauses.set_text!(:reg_form_main_contact_email, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_name, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_date_of_birth, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_address, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_postcode, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_0_residency_length, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_name, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_date_of_birth, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_address, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_postcode, 'foo')
+      coop.clauses.set_text!(:reg_form_money_laundering_1_residency_length, 'foo')
+      coop.clauses.set_boolean!(:reg_form_money_laundering_agreement, true)
+
+    end
+
+    it "returns false when less than three signatories have been chosen" do
+      coop.clauses.set_integer!(:reg_form_signatories_0, 1)
+      coop.clauses.set_integer!(:reg_form_signatories_1, 2)
+      coop.clauses.where(:name => 'reg_form_signatories_2').destroy_all
+
+      coop.registration_form_filled?.should be_false
+    end
+
+    it "returns true when three signatories have been chosen" do
+      coop.clauses.set_integer!(:reg_form_signatories_0, 1)
+      coop.clauses.set_integer!(:reg_form_signatories_1, 2)
+      coop.clauses.set_integer!(:reg_form_signatories_2, 3)
+
+      coop.registration_form_filled?.should be_true
+    end
+  end
+
+  describe "registration form" do
+    let(:coop) {Coop.make!(:pending)}
+
+    it "has a money_laundering_agreement attribute" do
+      expect{coop.reg_form_money_laundering_agreement = 1}.to_not raise_error
+      coop.save!
+      coop.reload
+      expect(coop.reg_form_money_laundering_agreement).to be_true
+    end
+
+    it "has attributes for the main contact" do
+      expect {
+        coop.reg_form_main_contact_organisation_name = "Acme Ltd"
+        coop.reg_form_main_contact_name = "Bob Smith"
+        coop.reg_form_main_contact_address = "1 Main Street\nLondon\nN1 1AA"
+        coop.reg_form_main_contact_phone = "01234 567 890"
+        coop.reg_form_main_contact_email = "bob@example.com"
+      }.to_not raise_error
+
+      coop.save!
+      coop_id = coop.id
+      coop = Coop.find(coop_id) # Create a new instance, so that memo-ised attributes have to be looked up fresh from the database.
+
+      expect(coop.reg_form_main_contact_organisation_name).to eq("Acme Ltd")
+      expect(coop.reg_form_main_contact_name).to eq("Bob Smith")
+      expect(coop.reg_form_main_contact_address).to eq("1 Main Street\nLondon\nN1 1AA")
+      expect(coop.reg_form_main_contact_phone).to eq("01234 567 890")
+      expect(coop.reg_form_main_contact_email).to eq("bob@example.com")
+    end
+
+    it "has attributes for the financial contact" do
+      expect {
+        coop.reg_form_financial_contact_name = "Jane Baker"
+        coop.reg_form_financial_contact_phone = "020 7777 7777"
+        coop.reg_form_financial_contact_email = "jane@example.com"
+      }.to_not raise_error
+
+      coop.save!
+      coop_id = coop.id
+      coop = Coop.find(coop_id) # Create a new instance, so that memo-ised attributes have to be looked up fresh from the database.
+
+      expect(coop.reg_form_financial_contact_name).to eq("Jane Baker")
+      expect(coop.reg_form_financial_contact_phone).to eq("020 7777 7777")
+      expect(coop.reg_form_financial_contact_email).to eq("jane@example.com")
+    end
+
+    it "has attributes for the money laundering contacts" do
+      expect {
+        coop.reg_form_money_laundering_0_name = "Bob Smith"
+        coop.reg_form_money_laundering_0_date_of_birth = "1 January 1970"
+        coop.reg_form_money_laundering_0_address = "1 Main Street"
+        coop.reg_form_money_laundering_0_postcode = "N1 1AA"
+        coop.reg_form_money_laundering_0_residency_length = "6 years"
+
+        coop.reg_form_money_laundering_1_name = "Jane Baker"
+        coop.reg_form_money_laundering_1_date_of_birth = "1 May 1980"
+        coop.reg_form_money_laundering_1_address = "40 High Street"
+        coop.reg_form_money_laundering_1_postcode = "SW1 1AA"
+        coop.reg_form_money_laundering_1_residency_length = "15 years"
+      }.to_not raise_error
+
+      coop.save!
+      coop_id = coop.id
+      coop = Coop.find(coop_id) # Create a new instance, so that memo-ised attributes have to be looked up fresh from the database.
+
+      expect(coop.reg_form_money_laundering_0_name).to eq("Bob Smith")
+      expect(coop.reg_form_money_laundering_0_date_of_birth).to eq("1 January 1970")
+      expect(coop.reg_form_money_laundering_0_address).to eq("1 Main Street")
+      expect(coop.reg_form_money_laundering_0_postcode).to eq("N1 1AA")
+      expect(coop.reg_form_money_laundering_0_residency_length).to eq("6 years")
+
+      expect(coop.reg_form_money_laundering_1_name).to eq("Jane Baker")
+      expect(coop.reg_form_money_laundering_1_date_of_birth).to eq("1 May 1980")
+      expect(coop.reg_form_money_laundering_1_address).to eq("40 High Street")
+      expect(coop.reg_form_money_laundering_1_postcode).to eq("SW1 1AA")
+      expect(coop.reg_form_money_laundering_1_residency_length).to eq("15 years")
+    end
+  end
+
+  describe "signatories" do
+    let(:coop) {Coop.make!(:pending)}
+    let(:member_111) {mock_model(Member, :id => 111)}
+    let(:member_333) {mock_model(Member, :id => 333)}
+    let(:member_444) {mock_model(Member, :id => 444)}
+
+    describe "reg_form_signatories_attributes=" do
+      let(:members) {double("members association")}
+
+      before(:each) do
+        coop.stub(:members).and_return(members)
+
+        members.stub(:find).with(111).and_return(member_111)
+        members.stub(:find).with(333).and_return(member_333)
+        members.stub(:find).with(444).and_return(member_444)
+      end
+
+      it "saves the first three selected signatories" do
+        coop.should_receive(:signatories=).with([member_111, member_333, member_444])
+
+        coop.reg_form_signatories_attributes = {
+          '0' => {'selected' => '1', 'id' => '111'},
+          '1' => {'selected' => '0', 'id' => '222'},
+          '2' => {'selected' => '1', 'id' => '333'},
+          '3' => {'selected' => '1', 'id' => '444'},
+          '4' => {'selected' => '1', 'id' => '555'}
+        }
+      end
+    end
+
+    describe "signatories=" do
+      let(:clauses) {double("clauses association")}
+
+      before(:each) do
+        coop.stub(:clauses).and_return(clauses)
+      end
+
+      it "writes the new signatories to the clauses" do
+        clauses.should_receive(:set_integer!).with(:reg_form_signatories_0, 111)
+        clauses.should_receive(:set_integer!).with(:reg_form_signatories_1, 333)
+        clauses.should_receive(:set_integer!).with(:reg_form_signatories_2, 444)
+
+        coop.signatories = [member_111, member_333, member_444]
+      end
+    end
+  end
+
 end

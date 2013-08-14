@@ -6,6 +6,8 @@ class AdminController < ApplicationController
   before_filter :ensure_administrator_authenticated
   before_filter :ensure_administration_subdomain
 
+  layout 'admin'
+
   def index
   end
 end

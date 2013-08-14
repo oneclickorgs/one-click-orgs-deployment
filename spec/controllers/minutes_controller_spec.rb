@@ -12,7 +12,7 @@ describe MinutesController do
 
   describe "GET new" do
     let(:minute) {mock_model(Minute).as_new_record}
-    let(:members) {mock("members association", :map => nil)}
+    let(:members) {double("members association", :map => nil)}
 
     before(:each) do
       @organisation.stub(:build_minute).and_return(minute)

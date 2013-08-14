@@ -16,7 +16,7 @@
       %td= director.name
       %td= simple_format(director.address)
       - if directorship = director.directorships.most_recent
-        %td= directorship.elected_on.to_s(:long)
+        %td= directorship.elected_on ? directorship.elected_on.to_s(:long) : ""
         %td= directorship.ended_on ? directorship.ended_on.to_s(:long) : ""
       - else
         %td

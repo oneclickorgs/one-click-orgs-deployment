@@ -58,6 +58,7 @@ class Invitation < OneClickOrgs::ModelWrapper
     :password, :password=,
     :password_confirmation, :password_confirmation=,
     :terms_and_conditions, :terms_and_conditions=,
+    :address, :address=,
     :to => :member
 
   def id

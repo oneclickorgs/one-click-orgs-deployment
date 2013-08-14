@@ -2,12 +2,27 @@ class ConstitutionsController < ApplicationController
   before_filter :find_constitution
 
   def show
-    @page_title = "Constitution"
+    case co
+    when Coop
+      @page_title = "Rules"
+      @header_left = "Co-operatives UK Multi-stakeholder Co-operative Model Rules (One-Click Model)"
+      @header_right = nil
+      @stylesheet = File.join(Rails.root, 'app', 'assets', 'stylesheets', 'coop_rules_pdf.css')
+
+      @signatories = co.signatories
+      @secretary = co.secretary
+    else
+      @page_title = "Constitution"
+    end
 
     respond_to do |format|
       format.html
       format.pdf {
-        generate_pdf(@page_title)
+        generate_pdf(@page_title,
+          :header_left => @header_left,
+          :header_right => @header_right,
+          :stylesheet => @stylesheet
+        )
       }
     end
   end

@@ -22,23 +22,23 @@ describe CommentsController do
         proposal.stub(:to_param).and_return('1')
         
         @organisation = mock_model(Organisation, :pending? => false)
-        controller.stub!(:co).and_return(@organisation)
+        controller.stub(:co).and_return(@organisation)
       
-        @proposals_association = mock("proposals association")
-        @organisation.stub!(:proposals).and_return(@proposals_association)
+        @proposals_association = double("proposals association")
+        @organisation.stub(:proposals).and_return(@proposals_association)
       
-        @proposals_association.stub!(:find).and_return(proposal)
+        @proposals_association.stub(:find).and_return(proposal)
       
-        @comments_association = mock("comments association")
-        proposal.stub!(:comments).and_return(@comments_association)
+        @comments_association = double("comments association")
+        proposal.stub(:comments).and_return(@comments_association)
       
         @comment = mock_model(Comment, :save => true, :author= => nil)
-        @comments_association.stub!(:build).and_return(@comment)
+        @comments_association.stub(:build).and_return(@comment)
       
         @comment_body = "This is my comment."
       
         @member = mock_model(Member)
-        controller.stub!(:current_user).and_return(@member)
+        controller.stub(:current_user).and_return(@member)
       end
     
       def post_create
@@ -94,7 +94,7 @@ describe CommentsController do
         @company = mock_model(Company)
         controller.stub(:co).and_return(@company)
         @company.stub(:meetings).and_return(@meetings_association)
-        @meetings_association.stub!(:find).with('1').and_return(@meeting)
+        @meetings_association.stub(:find).with('1').and_return(@meeting)
         @meeting.stub(:comments).and_return(@comments_association)
       end
       

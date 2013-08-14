@@ -1,0 +1,93 @@
+* {
+  font-family: Arial, sans-serif;
+  font-size: 11pt;
+}
+
+h1 {
+  font-size: 11pt;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: none;
+}
+h1:first-of-type {
+  margin-top: 0;
+}
+h1:last-of-type {
+  padding-bottom: 22pt;
+  border-bottom: 0.75pt solid black;
+  margin-bottom: 22pt;
+}
+
+h2 {
+  font-size: 11pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-left: 1cm;
+}
+
+h3 {
+  font-size: 11pt;
+  font-weight: bold;
+  margin-left: 1cm;
+}
+
+p, ul, ol, li, dl, dt, dd {
+  font-size: 11pt;
+}
+
+ul, ol {
+  padding-left: 1cm;
+}
+li {
+  margin: 1em 0;
+}
+ol ol {
+  list-style-type: none;
+  counter-reset: listtwo;
+}
+ol ol li:before {
+  content: "(" counter(listtwo, lower-alpha) ") ";
+  counter-increment: listtwo;
+  position: absolute;
+  left: 1.2cm;
+  text-align: left;
+}
+ol ol ol {
+  list-style-type: none;
+  counter-reset: listthree;
+}
+ol ol ol li:before {
+  content: "(" counter(listthree, lower-roman) ") ";
+  counter-increment: listthree;
+  position: absolute;
+  left: 2.4cm;
+  text-align: right;
+}
+
+dt, dd {
+  display: inline;
+  margin: 0;
+}
+dt {
+  font-weight: bold;
+}
+dt:not(:first-child):before {
+  content:"\A\A";
+  white-space:pre;
+}
+
+table.signatures {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table.signatures th, table.signatures td {
+  border: 1px solid black;
+  width: 50%;
+}
+
+table.signatures th {
+  text-align: center;
+  vertical-align: top;
+}

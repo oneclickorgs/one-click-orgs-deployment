@@ -26,7 +26,7 @@ describe ProposalsController do
         @organisation.stub_chain(:resolutions, :rejected).and_return([])
 
         @organisation.stub(:resolution_proposals).and_return(
-          @resolution_proposals_association = mock("resolution proposals association",
+          @resolution_proposals_association = double("resolution proposals association",
             :currently_open => [],
             :where => []
           )
@@ -36,14 +36,14 @@ describe ProposalsController do
       end
 
       it "looks up and assigns the draft proposals" do
-        @resolutions_association = mock("resolutions association",
+        @resolutions_association = double("resolutions association",
           :currently_open => [],
           :accepted => [],
           :rejected => []
         )
         @organisation.stub(:resolutions).and_return(@resolutions_association)
 
-        @draft_resolutions_association = mock("draft resolutions association")
+        @draft_resolutions_association = double("draft resolutions association")
         @resolutions_association.stub(:draft).and_return(@draft_resolutions_association)
 
         get :index
@@ -52,7 +52,7 @@ describe ProposalsController do
       end
 
       it "looks up and assigns the resolution proposals" do
-        @currently_open_resolution_proposals = mock("currently-open resolution proposals")
+        @currently_open_resolution_proposals = double("currently-open resolution proposals")
         @resolution_proposals_association.should_receive(:currently_open).and_return(@currently_open_resolution_proposals)
 
         get :index
@@ -64,7 +64,7 @@ describe ProposalsController do
 
   describe "PUT open" do
     before(:each) do
-      @resolutions_association = mock("resolutions association")
+      @resolutions_association = double("resolutions association")
       @organisation.stub(:resolutions).and_return(@resolutions_association)
       @resolution = mock_model(Resolution)
       @resolutions_association.stub(:find).and_return(@resolution)

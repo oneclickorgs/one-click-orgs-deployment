@@ -58,8 +58,8 @@ describe Association do
   
   describe "state changes" do
     before(:each) do
-      @clauses_association = mock("clauses association", :set_text! => nil)
-      @association.stub!(:clauses).and_return(@clauses_association)
+      @clauses_association = double("clauses association", :set_text! => nil)
+      @association.stub(:clauses).and_return(@clauses_association)
     end
     
     describe "#found!" do
@@ -67,11 +67,11 @@ describe Association do
         @founder_class = mock_model(MemberClass, :name => 'Founder', :description => nil)
         @founding_member_class = mock_model(MemberClass, :name => 'Founding Member', :description => nil)
         
-        @member_classes_association = mock("member classes association")
-        @member_classes_association.stub!(:find_by_name).with('Founder').and_return(@founder_class)
-        @member_classes_association.stub!(:find_by_name).with('Founding Member').and_return(@founding_member_class)
+        @member_classes_association = double("member classes association")
+        @member_classes_association.stub(:find_by_name).with('Founder').and_return(@founder_class)
+        @member_classes_association.stub(:find_by_name).with('Founding Member').and_return(@founding_member_class)
         
-        @association.stub!(:member_classes).and_return(@member_classes_association)
+        @association.stub(:member_classes).and_return(@member_classes_association)
         
         association_is_proposed
       end

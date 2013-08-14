@@ -1,9 +1,14 @@
 require 'coveralls'
-Coveralls.wear_merged!('rails')
 
 begin
   require 'simplecov'
-  SimpleCov.start('rails') if ENV["COVERAGE"]
+  # Our test suites are big enough that the default timeout
+  # of 10 minutes is sometimes the RSpec suite and the Cucumber
+  # suite don't get merged, and so the resulting report only shows
+  # coverage for one suite of tests.
+  SimpleCov.merge_timeout 1800
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+  SimpleCov.start('rails')
 rescue LoadError
 end
 

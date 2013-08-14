@@ -12,10 +12,10 @@ describe Proposal do
     
     @member = @organisation.members.make!(:member_class => @default_member_class)
     
-    @mail = mock('mail', :deliver => nil)
+    @mail = double('mail', :deliver => nil)
     
-    ProposalMailer.stub!(:notify_creation).and_return(@mail)
-    DecisionMailer.stub!(:notify_new_decision).and_return(@mail)
+    ProposalMailer.stub(:notify_creation).and_return(@mail)
+    DecisionMailer.stub(:notify_new_decision).and_return(@mail)
   end
   
   describe "model associations" do
@@ -59,7 +59,7 @@ describe Proposal do
     @organisation.members.count.should > 0
     @member.member_class.set_permission!(:vote, true)
     
-    ProposalMailer.should_receive(:notify_creation).and_return(mock('email', :deliver => nil))
+    ProposalMailer.should_receive(:notify_creation).and_return(double('email', :deliver => nil))
     @organisation.proposals.make!(:proposer => @member)
   end
   
@@ -68,16 +68,16 @@ describe Proposal do
       @organisation.members.count.should > 0
 
       @p = @organisation.proposals.make!(:proposer => @member)
-      @p.stub!(:passed?).and_return(true)
-      # @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
+      @p.stub(:passed?).and_return(true)
+      # @p.stub(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
     end
     
     context "when proposal is a Founding Proposal" do
       before(:each) do
-        @organisation.stub!(:can_hold_founding_vote?).and_return(true)
+        @organisation.stub(:can_hold_founding_vote?).and_return(true)
         @p = FoundAssociationProposal.make!(:proposer => @member, :organisation => @organisation)
-        @p.stub!(:passed?).and_return(true)
-        @p.stub!(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
+        @p.stub(:passed?).and_return(true)
+        @p.stub(:create_decision).and_return(@decision = mock_model(Decision, :send_email => nil))
         
         association_is_proposed
       end
@@ -152,13 +152,13 @@ describe Proposal do
     
     it "includes members who were founding members, but who haven't yet been inducted" do
       # Don't want to deal with FoundAssociationProposal validation errors
-      ProposalMailer.stub!(:notify_foundation_proposal).and_return(mock('email', :deliver => nil))
+      ProposalMailer.stub(:notify_foundation_proposal).and_return(double('email', :deliver => nil))
       
       member_2, member_3 = @organisation.members.make!(2, :member_class => @default_member_class, :inducted_at => nil)
       
       fap = @organisation.found_association_proposals.make(:proposer_member_id => @member.id)
       # More validation workarounds
-      fap.stub!(:association_must_be_ready).and_return(true)
+      fap.stub(:association_must_be_ready).and_return(true)
       fap.save!
       
       proposal = @organisation.proposals.make!(:proposer_member_id => @member.id)
@@ -171,7 +171,7 @@ describe Proposal do
       @proposer = mock_model(Member)
       @organisation = mock_model(Organisation,
         :pending? => false,
-        :constitution => mock("constitution", :voting_period => 3600)
+        :constitution => double("constitution", :voting_period => 3600)
       )
 
       @proposal = Proposal.new(
@@ -211,7 +211,7 @@ describe Proposal do
   describe "amending voting period" do
     before(:each) do
       @proposer = mock_model(Member, :cast_vote => nil)
-      @constitution = mock("constitution")
+      @constitution = double("constitution")
       @organisation = mock_model(Organisation,
         :pending? => false,
         :constitution => @constitution

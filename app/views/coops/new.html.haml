@@ -20,6 +20,9 @@
         = member_fields.label :email, "Email address"
         = member_fields.email_field :email
       %p
+        = member_fields.label :address, "Postal address"
+        = member_fields.text_area :address
+      %p
         = member_fields.label :password, "Choose password"
         = member_fields.password_field :password
       %p
@@ -40,5 +43,11 @@
       %p
         = coop_fields.label :objectives, "What the Co-op exists for"
         = coop_fields.text_area :objectives
+    = fields_for(@member) do |member_fields|
+      %p
+        = member_fields.check_box :terms_and_conditions, :class => 'inline', :style => 'width: auto; margin-left: 20px;'
+        = member_fields.label :terms_and_conditions, :class => 'inline' do
+          I accept the
+          = link_to("Terms of Use", terms_coops_path, :target => '_blank') + '.'
     %p
       = submit_tag "Create draft co-op", :id => 'submit'

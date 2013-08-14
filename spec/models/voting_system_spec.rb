@@ -4,10 +4,10 @@ describe VotingSystems do
 
   def make_proposal(v_for, v_against, total_m=v_for+v_against)
     p = mock_model(Proposal)
-    p.stub!(:votes_for).and_return(v_for)
-    p.stub!(:votes_against).and_return(v_against)
-    p.stub!(:member_count).and_return(total_m)
-    p.stub!(:total_votes).and_return(v_for + v_against)
+    p.stub(:votes_for).and_return(v_for)
+    p.stub(:votes_against).and_return(v_against)
+    p.stub(:member_count).and_return(total_m)
+    p.stub(:total_votes).and_return(v_for + v_against)
     p
   end
 

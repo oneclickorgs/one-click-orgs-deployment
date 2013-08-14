@@ -14,7 +14,7 @@ describe AddMemberProposal do
   it "should send an email to the new member if proposal passes" do
     @proposal = @organisation.add_member_proposals.new
     
-    MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
+    MembersMailer.should_receive(:welcome_new_member).and_return(double('mail', :deliver => nil))
     @proposal.parameters = {:first_name=>"Paul", :last_name => "Smith", :email => "paul@example.com"}
     @proposal.enact!
   end

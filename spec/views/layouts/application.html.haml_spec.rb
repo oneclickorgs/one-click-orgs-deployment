@@ -4,7 +4,7 @@ describe "layouts/application" do
   context "when current organisation is an association" do
     context "when user is logged in" do
       before(:each) do
-        @members_association = mock('members association', :first => @founder = mock_model(Member, :name => "Bob Smith"))
+        @members_association = double('members association', :first => @founder = mock_model(Member, :name => "Bob Smith"))
 
         @organisation = mock_model(Association,
           :name => "The Cheese Collective",
@@ -15,20 +15,20 @@ describe "layouts/application" do
         )
 
         assign(:current_organisation, @organisation)
-        view.stub!(:current_organisation).and_return(@organisation)
-        view.stub!(:co).and_return(@organisation)
+        view.stub(:current_organisation).and_return(@organisation)
+        view.stub(:co).and_return(@organisation)
         install_organisation_resolver(@organisation)
 
         @user = mock_model(Member, :name => "Lucy Baker", :inducted_at => 2.days.ago)
-        view.stub!(:current_user).and_return(@user)
-        controller.stub!(:current_user).and_return(@user)
+        view.stub(:current_user).and_return(@user)
+        controller.stub(:current_user).and_return(@user)
 
-        @user.stub!(:has_permission).with(:freeform_proposal).and_return(false)
-        @user.stub!(:has_permission).with(:membership_proposal).and_return(false)
-        @user.stub!(:has_permission).with(:constitution_proposal).and_return(false)
-        @user.stub!(:has_permission).with(:found_association_proposal).and_return(false)
-        @user.stub!(:has_permission).with(:vote).and_return(false)
-        @user.stub!(:organisation).and_return(@organisation)
+        @user.stub(:has_permission).with(:freeform_proposal).and_return(false)
+        @user.stub(:has_permission).with(:membership_proposal).and_return(false)
+        @user.stub(:has_permission).with(:constitution_proposal).and_return(false)
+        @user.stub(:has_permission).with(:found_association_proposal).and_return(false)
+        @user.stub(:has_permission).with(:vote).and_return(false)
+        @user.stub(:organisation).and_return(@organisation)
       end
 
       it "should show a link to let users log out" do
@@ -38,15 +38,15 @@ describe "layouts/application" do
 
       context "when assocation is pending" do
         before(:each) do
-          @organisation.stub!(:pending?).and_return(true)
-          @organisation.stub!(:can_hold_founding_vote?).and_return(true)
+          @organisation.stub(:pending?).and_return(true)
+          @organisation.stub(:can_hold_founding_vote?).and_return(true)
         end
 
         context "when user is the founder" do
           before(:each) do
-            @members_association.stub!(:first).and_return(@user)
-            @user.stub!(:has_permission).with(:member_proposal).and_return(true)
-            @user.stub!(:has_permission).with(:found_association_proposal).and_return(true)
+            @members_association.stub(:first).and_return(@user)
+            @user.stub(:has_permission).with(:member_proposal).and_return(true)
+            @user.stub(:has_permission).with(:found_association_proposal).and_return(true)
           end
 
           it "displays a button to hold the founding vote" do
@@ -58,7 +58,7 @@ describe "layouts/application" do
 
           context "when association is ready to hold founding vote" do
             before(:each) do
-              @organisation.stub!(:can_hold_founding_vote?).and_return(true)
+              @organisation.stub(:can_hold_founding_vote?).and_return(true)
             end
 
             it "sets up a lightbox for the start_founding_vote_confirmation message" do
@@ -70,7 +70,7 @@ describe "layouts/application" do
 
           context "when association is not yet ready to hold founding vote" do
             before(:each) do
-              @organisation.stub!(:can_hold_founding_vote?).and_return(false)
+              @organisation.stub(:can_hold_founding_vote?).and_return(false)
             end
 
             it "sets up a lightbox for the start_founding_vote_alert message" do
@@ -84,8 +84,8 @@ describe "layouts/application" do
 
       context "when association is proposed" do
         before(:each) do
-          @organisation.stub!(:proposed?).and_return(true)
-          @organisation.stub!(:pending?).and_return(false)
+          @organisation.stub(:proposed?).and_return(true)
+          @organisation.stub(:pending?).and_return(false)
 
           @found_association_proposal = mock_model(FoundAssociationProposal,
             :close_date => 3.days.from_now,
@@ -93,17 +93,17 @@ describe "layouts/application" do
             :description => ''
           )
 
-          @found_association_proposals_association = mock('found association proposals association')
-          @organisation.stub!(:found_association_proposals).and_return(@found_association_proposals_association)
-          @found_association_proposals_association.stub!(:last).and_return(@found_association_proposal)
+          @found_association_proposals_association = double('found association proposals association')
+          @organisation.stub(:found_association_proposals).and_return(@found_association_proposals_association)
+          @found_association_proposals_association.stub(:last).and_return(@found_association_proposal)
 
-          @user.stub!(:eligible_to_vote?).and_return(true)
-          @user.stub!(:has_permission).with(:vote).and_return(true)
+          @user.stub(:eligible_to_vote?).and_return(true)
+          @user.stub(:has_permission).with(:vote).and_return(true)
         end
 
         context "when user has not voted yet" do
           before(:each) do
-            @found_association_proposal.stub!(:vote_by).and_return(false)
+            @found_association_proposal.stub(:vote_by).and_return(false)
           end
 
           it "displays support and oppose buttons in the overlay" do
@@ -117,7 +117,7 @@ describe "layouts/application" do
 
         context "when user has voted already" do
           before(:each) do
-            @found_association_proposal.stub!(:vote_by).and_return(true)
+            @found_association_proposal.stub(:vote_by).and_return(true)
           end
 
           it "does not display support and oppose buttons in the overlay" do

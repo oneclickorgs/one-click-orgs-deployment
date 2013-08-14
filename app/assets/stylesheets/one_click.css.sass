@@ -518,6 +518,8 @@ input[type="submit"]
 // and some layout tweaks; make sure any important changes go there too.
 input[type="radio"],
 input[type="checkbox"]
+  :clear both
+  :float left
   :margin-bottom 0.3em
   :margin-right 0.6em
   :margin-top 0.3em
@@ -725,7 +727,7 @@ table.past_meetings
 
 // Directors
 
-ul.directors
+.directors ul.directors
   :list-style-type none
   li
     :border 1px solid $border

@@ -13,18 +13,18 @@ describe SharesController do
   end
 
   describe "GET index" do
-    let(:tasks) {mock('tasks')}
-    let(:members) {mock('members')}
+    let(:tasks) {double('tasks')}
+    let(:members) {double('members')}
 
-    let(:organisation_deposits) {mock("deposits to the organisation",
+    let(:organisation_deposits) {double("deposits to the organisation",
       :pending => organisation_pending_deposits
     )}
-    let(:organisation_pending_deposits) {mock("pending deposits to the organisation")}
+    let(:organisation_pending_deposits) {double("pending deposits to the organisation")}
 
-    let(:organisation_withdrawals) {mock("withdrawals from the organisation",
+    let(:organisation_withdrawals) {double("withdrawals from the organisation",
       :pending => organisation_pending_withdrawals
     )}
-    let(:organisation_pending_withdrawals) {mock("pending withdrawals from the organisation")}
+    let(:organisation_pending_withdrawals) {double("pending withdrawals from the organisation")}
 
     before(:each) do
       @user.stub_chain(:tasks, :current, :shares_related).and_return(tasks)

@@ -22,8 +22,8 @@
       %p
         %strong Objects:
         = coop.objectives
-      %p TODO: Full organisation and registration form data here.
-      = button_to("Approve registration", found_admin_coop_path(coop), :method => :put)
+      %p
+        = link_to("View full information", admin_coop_path(coop))
       %br.clear
 
 %h3 Co-ops in the draft stage
@@ -31,7 +31,7 @@
   - @pending_coops.each do |coop|
     = content_tag_for(:li, coop) do
       %h4
-        = coop.name
+        = link_to(coop.name, admin_coop_path(coop))
         (
         = coop.domain(:only_host => true)
         )
@@ -41,7 +41,7 @@
   - @active_coops.each do |coop|
     = content_tag_for(:li, coop) do
       %h4
-        = coop.name
+        = link_to(coop.name, admin_coop_path(coop))
         (
         = coop.domain(:only_host => true)
         )

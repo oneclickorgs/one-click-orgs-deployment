@@ -11,5 +11,6 @@ Feature: Adding a co-op
     When I go to the new co-op page
     And I enter my details
     And I enter the new co-op's details
+    And I accept the Terms of Use
     And I press "Create draft co-op"
     Then I should be on the Checklist page

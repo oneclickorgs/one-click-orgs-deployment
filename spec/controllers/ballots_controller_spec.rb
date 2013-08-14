@@ -12,19 +12,19 @@ describe BallotsController do
 
   describe "GET new" do
     before(:each) do
-      @elections_association = mock("elections association")
+      @elections_association = double("elections association")
       @organisation.stub(:elections).and_return(@elections_association)
 
       @election = mock_model(Election)
       @elections_association.stub(:find).and_return(@election)
 
-      @ballots_association = mock("ballots_association")
+      @ballots_association = double("ballots_association")
       @election.stub(:ballots).and_return(@ballots_association)
 
       @ballot = mock_model(Ballot).as_new_record
       @ballots_association.stub(:build).and_return(@ballot)
 
-      @nominations_association = mock("nominations association")
+      @nominations_association = double("nominations association")
       @election.stub(:nominations).and_return(@nominations_association)
 
       @agm = mock_model(AnnualGeneralMeeting)
@@ -69,11 +69,11 @@ describe BallotsController do
   describe "POST create" do
     before(:each) do
       @ballot_params = {'ranking_30' => '1'}  
-      @elections_association = mock("elections association")
+      @elections_association = double("elections association")
       @organisation.stub(:elections).and_return(@elections_association)
       @election = mock_model(Election)
       @elections_association.stub(:find).and_return(@election)
-      @ballots_association = mock("ballots association")
+      @ballots_association = double("ballots association")
       @election.stub(:ballots).and_return(@ballots_association)
       @ballot = mock_model(Ballot).as_new_record
       @ballots_association.stub(:build).and_return(@ballot)

@@ -4,7 +4,7 @@ describe AnnualGeneralMeetingsController do
 
   include ControllerSpecHelper
 
-  let(:annual_general_meetings) {mock("annual_general_meetings",
+  let(:annual_general_meetings) {double("annual_general_meetings",
     :build => annual_general_meeting
   )}
   let(:annual_general_meeting) {mock_model(AnnualGeneralMeeting, :save! => true)}
@@ -18,7 +18,7 @@ describe AnnualGeneralMeetingsController do
   end
 
   describe "GET 'show'" do
-    let(:annual_general_meetings) {mock("annual_general_meetings association", :find => annual_general_meeting)}
+    let(:annual_general_meetings) {double("annual_general_meetings association", :find => annual_general_meeting)}
     let(:annual_general_meeting) {mock_model(AnnualGeneralMeeting)}
 
     def get_show
@@ -51,7 +51,7 @@ describe AnnualGeneralMeetingsController do
   end
 
   describe "PUT update" do
-    let(:annual_general_meetings) {mock("annual_general_meetings association", :find => annual_general_meeting)}
+    let(:annual_general_meetings) {double("annual_general_meetings association", :find => annual_general_meeting)}
     let(:annual_general_meeting) {mock_model(AnnualGeneralMeeting, :update_attributes => true)}
     let(:annual_general_meeting_attributes) { {'foo' => 'bar'} }
 

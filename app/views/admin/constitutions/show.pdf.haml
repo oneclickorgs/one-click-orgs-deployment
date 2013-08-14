@@ -1,0 +1,29 @@
+= render :partial => 'shared/coop/constitution', :formats => [:html]
+
+%table.signatures
+  %thead
+    %tr
+      %th Signatures of Founder Members
+      %th Full Names of Founder Members in BLOCK CAPITALS (no initials)
+  %tbody
+    %tr
+      %td 1.
+      %td= @signatories[0] ? @signatories[0].name.upcase : ""
+    %tr
+      %td 2.
+      %td= @signatories[1] ? @signatories[1].name.upcase : ""
+    %tr
+      %td 3.
+      %td= @signatories[2] ? @signatories[2].name.upcase : ""
+%table.signatures
+  %thead
+    %tr
+      %th Signature of Secretary
+      %th Full Name of Secretary in BLOCK CAPITALS (no initials)
+  %tbody
+    %tr
+      %td 1.
+      %td= @secretary ? @secretary.name.upcase : ""
+
+%p{:style => 'text-align: center;'}
+  \- Accepted as a model by the Financial Services Authority 2011 v.1 -

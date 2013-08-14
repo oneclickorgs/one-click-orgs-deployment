@@ -10,7 +10,7 @@ describe FoundAssociationProposal do
       @proposal = FoundAssociationProposal.new(:title => "Title")
       @proposal.proposer = mock_model(Member)
       @proposal.organisation = @organisation = mock_model(Association, :members => (@members_association = []), :name => "Test association")
-      @organisation.stub!(:can_hold_founding_vote?).and_return(false)
+      @organisation.stub(:can_hold_founding_vote?).and_return(false)
       @members_association.stub(:active).and_return([])
     end
 
@@ -25,10 +25,10 @@ describe FoundAssociationProposal do
     end
 
     it "succeeds on update regardless of readiness of association" do
-      @organisation.stub!(:can_hold_founding_vote?).and_return(true)
+      @organisation.stub(:can_hold_founding_vote?).and_return(true)
       @proposal.save!
 
-      @organisation.stub!(:can_hold_founding_vote?).and_return(false)
+      @organisation.stub(:can_hold_founding_vote?).and_return(false)
       @proposal.save.should be_true
     end
   end
@@ -42,10 +42,10 @@ describe FoundAssociationProposal do
       @founding_member_class = mock_model(MemberClass, :name => 'Founding Member', :description => nil)
       @member_class = mock_model(MemberClass, :name => 'Member', :description => nil)
 
-      @organisation.stub!(:member_classes).and_return(@member_classes_association = mock('member classes association'))
-      @member_classes_association.stub!(:find_by_name).with('Founder').and_return(@founder_class)
-      @member_classes_association.stub!(:find_by_name).with('Founding Member').and_return(@founding_member_class)
-      @member_classes_association.stub!(:find_by_name).with('Member').and_return(@member_class)
+      @organisation.stub(:member_classes).and_return(@member_classes_association = double('member classes association'))
+      @member_classes_association.stub(:find_by_name).with('Founder').and_return(@founder_class)
+      @member_classes_association.stub(:find_by_name).with('Founding Member').and_return(@founding_member_class)
+      @member_classes_association.stub(:find_by_name).with('Member').and_return(@member_class)
 
       # Mock up a founder and four founding members
       @members = [
@@ -55,7 +55,7 @@ describe FoundAssociationProposal do
         mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :induct! => true, :save! => true, :eject! => true),
         mock_model(Member, :member_class => @founding_member_class, :member_class= => nil, :induct! => true, :save! => true, :eject! => true)
       ]
-      @organisation.stub!(:members).and_return(@members)
+      @organisation.stub(:members).and_return(@members)
 
       # Mock that founder and first two founding members vote for the founding,
       # the third founding member votes against, and the final founding member
@@ -70,7 +70,7 @@ describe FoundAssociationProposal do
       @proposal = FoundAssociationProposal.new
       @proposal.organisation = @organisation
       @proposal.proposer = @members[0]
-      @proposal.stub!(:votes).and_return(@votes)
+      @proposal.stub(:votes).and_return(@votes)
     end
 
     it "sets the member class of all existing members to 'Member'" do

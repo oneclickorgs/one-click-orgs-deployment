@@ -13,7 +13,7 @@ describe OfficershipsController do
   describe "GET new" do
     before(:each) do
       @officership = mock_model(Officership).as_new_record
-      @officerships_association = mock("officerships association")
+      @officerships_association = double("officerships association")
 
       @organisation.stub(:officerships).and_return(@officerships_association)
       @officerships_association.stub(:build).and_return(@officership)
@@ -58,7 +58,7 @@ describe OfficershipsController do
   describe "POST create" do
     before(:each) do
       @officership_params = {'officer_id' => '1'}
-      @officerships_association = mock("officerships association")
+      @officerships_association = double("officerships association")
       @officership = mock_model(Officership).as_new_record
 
       @organisation.stub(:officerships).and_return(@officerships_association)
@@ -89,7 +89,7 @@ describe OfficershipsController do
   describe "GET edit" do
     before(:each) do
       @officership = mock_model(Officership)
-      @officerships_association = mock("officerships association")
+      @officerships_association = double("officerships association")
 
       @organisation.stub(:officerships).and_return(@officerships_association)
       @officerships_association.stub(:find).and_return(@officership)
@@ -119,7 +119,7 @@ describe OfficershipsController do
     before(:each) do
       @officership_params = {'certification' => '1'}
       @officership = mock_model(Officership)
-      @officerships_association = mock("officerships association")
+      @officerships_association = double("officerships association")
 
       @organisation.stub(:officerships).and_return(@officerships_association)
       @officerships_association.stub(:find).and_return(@officership)

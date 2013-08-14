@@ -1,4 +1,8 @@
 class ShareTransactionsController < ApplicationController
+  def show
+    redirect_to shares_path
+  end
+
   def confirm_approve
     find_share_transaction
   end

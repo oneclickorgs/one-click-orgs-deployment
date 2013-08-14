@@ -27,7 +27,7 @@ describe ConstitutionProposalBundle do
 
     context "when proposer is the secretary" do
       let(:secretary) {organisation.members.make!(:secretary)}
-      let(:change_text_resolutions) {mock("change_text_resolutions association")}
+      let(:change_text_resolutions) {double("change_text_resolutions association")}
 
       before(:each) do
         cpb.proposer = secretary
@@ -94,7 +94,7 @@ describe ConstitutionProposalBundle do
 
     context "when proposer can only create ResolutionProposals" do
       let(:member) {organisation.members.make!(:member)}
-      let(:resolution_proposals) {mock("resolution_proposals association", :build => resolution_proposal)}
+      let(:resolution_proposals) {double("resolution_proposals association", :build => resolution_proposal)}
 
       before(:each) do
         cpb.proposer = member

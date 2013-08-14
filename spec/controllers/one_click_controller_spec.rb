@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module OneClickControllerSpecHelper
   def mock_event
-    mock("event").tap do |event|
-      event.stub!(:[]).with(:timestamp) do
+    double("event").tap do |event|
+      event.stub(:[]).with(:timestamp) do
         rand(5).days.ago
       end
     end
@@ -31,16 +31,16 @@ describe OneClickController do
     describe "GET dashboard" do
       before(:each) do
         @meeting = mock_model(Meeting)
-        Meeting.stub!(:new).and_return(@meeting)
+        Meeting.stub(:new).and_return(@meeting)
 
-        @members_association = mock("members association")
-        @company.stub!(:members).and_return(@members_association)
-        @member_classes_association = mock("member classes association")
-        @company.stub!(:member_classes).and_return(@member_classes_association)
+        @members_association = double("members association")
+        @company.stub(:members).and_return(@members_association)
+        @member_classes_association = double("member classes association")
+        @company.stub(:member_classes).and_return(@member_classes_association)
         @director_member_class = mock_model(MemberClass)
-        @member_classes_association.stub!(:find_by_name).and_return(@director_member_class)
-        @directors = mock("directors")
-        @members_association.stub!(:where).and_return(@directors)
+        @member_classes_association.stub(:find_by_name).and_return(@director_member_class)
+        @directors = double("directors")
+        @members_association.stub(:where).and_return(@directors)
 
         @proposals = [
           mock_model(Proposal, :to_event => mock_event),
@@ -56,9 +56,9 @@ describe OneClickController do
         @company.stub_chain(:decisions, :all).and_return([])
 
         @proposals.stub(:all).and_return(@proposals)
-        @proposals.stub!(:currently_open).and_return(@proposals)
+        @proposals.stub(:currently_open).and_return(@proposals)
 
-        @proposals.stub!(:new).and_return(mock_model(Proposal))
+        @proposals.stub(:new).and_return(mock_model(Proposal))
       end
 
       it "builds a new meeting" do
@@ -116,7 +116,7 @@ describe OneClickController do
 
       describe "timeline" do
         it "includes Resignation events" do
-          @resignation_event = mock('resignation event')
+          @resignation_event = double('resignation event')
           @association.stub_chain(:resignations, :all).and_return(mock_model(Resignation,
             :to_event => @resignation_event
           ))
@@ -131,13 +131,13 @@ describe OneClickController do
   context "when current organisation is a co-op" do
     let(:decisions) {[decision]}
     let(:decision) {mock_model(Decision, :to_event => decision_event)}
-    let(:decision_event) {mock("decision event")}
+    let(:decision_event) {double("decision event")}
 
     before(:each) do
       stub_coop
       stub_login
 
-      @proposals_association = mock("proposals association")
+      @proposals_association = double("proposals association")
       @organisation.stub(:proposals).and_return(@proposals_association)
 
       @proposals_association.stub_chain(:currently_open, :reject)
@@ -150,14 +150,14 @@ describe OneClickController do
       @organisation.stub_chain(:general_meetings, :upcoming, :count).and_return(0)
       @organisation.stub_chain(:general_meetings, :past, :order, :first)
 
-      @organisation.stub(:resolutions).and_return(mock("resolutions", :currently_open => []))
+      @organisation.stub(:resolutions).and_return(double("resolutions", :currently_open => []))
       @organisation.stub(:resolution_proposals).and_return([])
       @organisation.stub(:decisions).and_return([])
 
-      @tasks_association = mock("tasks association")
+      @tasks_association = double("tasks association")
       @user.stub(:tasks).and_return(@tasks_association)
 
-      @current_tasks_association = mock("current tasks association")
+      @current_tasks_association = double("current tasks association")
       @tasks_association.stub(:current).and_return(@current_tasks_association)
 
       @current_tasks_association.stub(:undismissed).and_return(@undismissed_tasks)

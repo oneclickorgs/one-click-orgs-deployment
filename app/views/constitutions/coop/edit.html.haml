@@ -15,31 +15,31 @@
     %h3 Membership criteria
     %p.explanation Who may be admitted into membership of the Co-operative?
     %p
-      = form.check_box(:user_members, :disabled => !@allow_editing)
+      = form.check_box(:user_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:user_members, "User Members", :class => 'inline')
       Any regular user of the services of the Co-operative.
     %p
-      = form.check_box(:employee_members, :disabled => !@allow_editing)
+      = form.check_box(:employee_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:employee_members, "Employee Members", :class => 'inline')
       Any Employee upon taking up employment with the Co-operative.
     %p
-      = form.check_box(:supporter_members, :disabled => !@allow_editing)
+      = form.check_box(:supporter_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:supporter_members, "Supporter Members", :class => 'inline')
       Any person or nominee of an organisation that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business.
     %p
-      = form.check_box(:producer_members, :disabled => !@allow_editing)
+      = form.check_box(:producer_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:producer_members, "Producer Members", :class => 'inline')
     %p
-      = form.check_box(:consumer_members, :disabled => !@allow_editing)
+      = form.check_box(:consumer_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:consumer_members, "Consumer Members", :class => 'inline')
 
     %h3 Share Capital
     %p.radio
-      = form.radio_button(:single_shareholding, '1', :disabled => !@allow_editing)
-      = label_tag('single_shareholding_1', "Members hold one nominal share only.")
+      = form.radio_button(:single_shareholding, '1', :disabled => !@allow_editing, :class => 'inline')
+      = label_tag('single_shareholding_1', "Members hold one nominal share only.", :class => 'inline')
     %p.radio
-      = form.radio_button(:single_shareholding, '0', :disabled => !@allow_editing)
-      = label_tag('single_shareholding_0', "Members hold more than one share.")
+      = form.radio_button(:single_shareholding, '0', :disabled => !@allow_editing, :class => 'inline')
+      = label_tag('single_shareholding_0', "Members hold more than one share.", :class => 'inline')
 
     %h3 Composition of the Board of Directors
     %p.explanation The composition of the Board of Directors will be with no more than...
@@ -62,11 +62,11 @@
     %h3 Dissolution
     %p.explanation In the event of winding-up or dissolution of the Co-operatives, must assets be transferred to another common-ownership co-operative, or can they be distributed among the Members?
     %p.radio
-      = form.radio_button(:common_ownership, '1', :disabled => !@allow_editing)
+      = form.radio_button(:common_ownership, '1', :disabled => !@allow_editing, :class => 'inline')
       = label_tag('common_ownership_1', "Common Ownership", :class => 'inline')
       Assets shall not be distributed among the Members, but shall be transferred to some other common ownership co-operative(s).
     %p.radio
-      = form.radio_button(:common_ownership, '0', :disabled => !@allow_editing)
+      = form.radio_button(:common_ownership, '0', :disabled => !@allow_editing, :class => 'inline')
       = label_tag('common_ownership_0', "Co-ownership", :class => 'inline')
       Assets may be distributed among the Members.
 

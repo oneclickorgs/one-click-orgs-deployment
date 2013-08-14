@@ -167,6 +167,7 @@ OneClickOrgs::Application.routes.draw do
   resources :coops do
     collection do
       get :intro
+      get :terms
     end
     member do
       put :propose
@@ -214,6 +215,8 @@ OneClickOrgs::Application.routes.draw do
     end
   end
 
+  resources :documents
+
   get '/admin' => 'admin#index'
 
   namespace :admin do
@@ -221,7 +224,12 @@ OneClickOrgs::Application.routes.draw do
       member do
         put :found
       end
+
+      resources :documents
     end
+
+    resources :constitutions
+    resources :registration_forms
   end
 
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'
@@ -234,5 +242,6 @@ OneClickOrgs::Application.routes.draw do
   match '/system/test_exception_notification' => 'system#test_exception_notification'
 
   get '/checklist' => 'one_click#checklist', :as => 'checklist'
+
   root :to => 'one_click#dashboard'
 end
