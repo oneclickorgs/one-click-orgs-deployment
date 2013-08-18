@@ -45,7 +45,8 @@ class Constitution
       :max_employee_directors => max_employee_directors,
       :max_supporter_directors => max_supporter_directors,
       :max_producer_directors => max_producer_directors,
-      :max_consumer_directors => max_consumer_directors
+      :max_consumer_directors => max_consumer_directors,
+      :meeting_notice_period => meeting_notice_period
     }
     document.choices = {
       :user_members => user_members,
