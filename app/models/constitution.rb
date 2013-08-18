@@ -32,7 +32,7 @@ class Constitution
     if document_id = Setting[:coop_constitution_document_id]
       document = Rticles::Document.find(document_id)
     else
-      document = Rticles::Document.find_by_title('coop_constitution')
+      document = Rticles::Document.where(:title => 'coop_constitution').order('updated_at DESC').first
     end
 
     raise ActiveRecord::RecordNotFound unless document
