@@ -29,13 +29,13 @@ class RegistrationForm
     form_data['objects_rule_number'] = constitution_document.paragraph_numbers_for_topic('objects', true)
     form_data['registered_office_rule_number'] = constitution_document.paragraph_numbers_for_topic('registered_office', true)
     form_data['member_admission_rule_number'] = constitution_document.paragraph_numbers_for_topic('member_admission', true)
-    form_data['meetings_rule_number'] = constitution_document.paragraph_numbers_for_topic('meetings', true)
+    form_data['meetings_rule_number'] = constitution_document.paragraph_numbers_for_topics(['meetings', 'proceedings'], true)
     form_data['board_rule_number'] = constitution_document.paragraph_numbers_for_topic('board', true)
     form_data['maximum_shareholding_rule_number'] = constitution_document.paragraph_numbers_for_topic('maximum_shareholding', true)
     form_data['loans_rule_number'] = constitution_document.paragraph_numbers_for_topic('loans', true)
     form_data['share_transactions'] = constitution_document.paragraph_numbers_for_topics(['share_transactions', 'maximum_shareholding'], true)
     form_data['audit_rule_number'] = constitution_document.paragraph_numbers_for_topic('audit', true)
-    form_data['withdrawals_rule_number'] = constitution_document.paragraph_numbers_for_topics(['withdrawals', 'death_or_bankruptcy'], true)
+    form_data['withdrawals_rule_number'] = constitution_document.paragraph_numbers_for_topic('withdrawals', true)
     form_data['profits_rule_number'] = constitution_document.paragraph_numbers_for_topic('profits', true)
     form_data['seal_rule_number'] = constitution_document.paragraph_numbers_for_topic('seal', true)
     form_data['investing_rule_number'] = constitution_document.paragraph_numbers_for_topic('investing', true)
@@ -43,7 +43,7 @@ class RegistrationForm
     form_data['ips_type_explanation'] = <<-EOF
       #{constitution_document.paragraph_numbers_for_topic('objects', true)} Objects
       #{constitution_document.paragraph_numbers_for_topic('member_admission', true)} Membership
-      #{constitution_document.paragraph_numbers_for_topic('death_or_bankruptcy', true)} Proceedings
+      #{constitution_document.paragraph_numbers_for_topic('proceedings', true)} Proceedings
       #{constitution_document.paragraph_numbers_for_topic('profits', true)} Application of profits
       #{constitution_document.paragraph_numbers_for_topic('dissolution', true)} Dissolution
     EOF
