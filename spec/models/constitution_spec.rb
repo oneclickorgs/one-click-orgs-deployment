@@ -101,5 +101,12 @@ describe Constitution do
         @constitution.quorum_percentage = 15
       end
     end
+
+    describe "document" do
+      it "sets the 'meeting_notice_period' insertion" do
+        document = @constitution.document
+        document.insertions[:meeting_notice_period].should == 14
+      end
+    end
   end
 end

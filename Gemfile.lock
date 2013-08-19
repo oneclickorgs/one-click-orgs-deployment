@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/oneclickorgs/rticles.git
-  revision: 5d682e157850372f979e1ac55eb86a2bceff446e
+  revision: b0f8fff1ffc1d95bbcd3715f1e95e697c64aa976
   branch: master
   specs:
     rticles (0.1.0)
@@ -130,7 +130,7 @@ GEM
     hashery (2.1.0)
     highline (1.6.16)
     hike (1.2.3)
-    i18n (0.6.4)
+    i18n (0.6.5)
     journey (1.0.4)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -150,8 +150,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
-    mime-types (1.23)
-    multi_json (1.7.8)
+    mime-types (1.24)
+    multi_json (1.7.9)
     mysql2 (0.3.11)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
@@ -271,7 +271,7 @@ GEM
       ref
     thor (0.18.1)
     tilt (1.4.1)
-    treetop (1.4.14)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)

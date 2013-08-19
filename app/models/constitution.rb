@@ -32,7 +32,7 @@ class Constitution
     if document_id = Setting[:coop_constitution_document_id]
       document = Rticles::Document.find(document_id)
     else
-      document = Rticles::Document.find_by_title('coop_constitution')
+      document = Rticles::Document.where(:title => 'coop_constitution').order('updated_at DESC').first
     end
 
     raise ActiveRecord::RecordNotFound unless document
@@ -45,7 +45,10 @@ class Constitution
       :max_employee_directors => max_employee_directors,
       :max_supporter_directors => max_supporter_directors,
       :max_producer_directors => max_producer_directors,
-      :max_consumer_directors => max_consumer_directors
+      :max_consumer_directors => max_consumer_directors,
+      :meeting_notice_period => meeting_notice_period,
+      :quorum_number => quorum_number,
+      :quorum_percentage => quorum_percentage
     }
     document.choices = {
       :user_members => user_members,
