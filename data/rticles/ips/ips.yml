@@ -3,9 +3,9 @@
 - "#rticles#heading Rules of"
 - "#rticles#heading #rticles#organisation_name Limited"
 - "#rticles#heading#2 Name"
-- "The name of the society shall be #rticles#organisation_name Limited."
+- "#rticles#topic#name The name of the society shall be #rticles#organisation_name Limited."
 - "#rticles#heading#2 Registered Office"
-- "The registered office of the society shall be at #rticles#registered_office_address"
+- "#rticles#topic#registered_office The registered office of the society shall be at #rticles#registered_office_address"
 - "#rticles#heading#2 Interpretations"
 - |-
     In these rules:
@@ -74,39 +74,39 @@
 - "#rticles#heading#2 Powers"
 - "The Co-operative may do all such lawful things as may further the Co-operative's objects and, in particular, may borrow or raise funds for any purpose and on behalf of its Members."
 - "#rticles#heading#2 Borrowing"
-- "The Co operative shall have the power to borrow money from its Members and others in order to further its objects providing that the amount outstanding at any one time shall not exceed £10,000,000."
+- "#rticles#topic#loans The Co operative shall have the power to borrow money from its Members and others in order to further its objects providing that the amount outstanding at any one time shall not exceed £10,000,000."
 - |-
-    The Co operative shall have the power to mortgage or charge any of its property,
+    #rticles#topic#loans The Co operative shall have the power to mortgage or charge any of its property,
      including the assets and undertakings of the Co operative, present and future,
      and to issue loan stock, debentures and other securities for money borrowed or for the performance of any contracts of the Co operative or its customers or Persons having dealings with the Co operative.
-- "The rate of interest on money borrowed, except on money borrowed by way of bank loan or overdraft or from a finance house or on mortgage from a building society or local authority, shall not exceed 5% per annum or 2% above the Co-operative Bank's base rate at the commencement of the loan, whichever is the greater."
-- "The Co operative may receive from any Person donations or loans free of interest in order to further its objects but shall not receive money on deposit."
+- "#rticles#topic#loans The rate of interest on money borrowed, except on money borrowed by way of bank loan or overdraft or from a finance house or on mortgage from a building society or local authority, shall not exceed 5% per annum or 2% above the Co-operative Bank's base rate at the commencement of the loan, whichever is the greater."
+- "#rticles#topic#loans The Co operative may receive from any Person donations or loans free of interest in order to further its objects but shall not receive money on deposit."
 - "#rticles#heading#3 Borrowing from Members"
-- "In accordance with the Co-operative Principle of member economic participation the interest paid by the Co operative on money borrowed from Members shall not exceed such rate as is necessary to attract and retain the capital required to further the Co operative's objects and purpose."
+- "#rticles#topic#loans In accordance with the Co-operative Principle of member economic participation the interest paid by the Co operative on money borrowed from Members shall not exceed such rate as is necessary to attract and retain the capital required to further the Co operative's objects and purpose."
 - "#rticles#heading#2 Financial Services and Markets Act 2000 Activity"
 - "For the avoidance of doubt the Co-operative shall not engage in any activity by virtue of any of these Rules that would require a permission from the Appropriate Regulator to carry on that activity without first having applied for and obtained such permission."
 - "#rticles#heading#2 Investment of Funds"
-- "The Co-operative may invest any part of its funds in the manner set out in Section 31 of the Act."
+- "#rticles#topic#investing The Co-operative may invest any part of its funds in the manner set out in Section 31 of the Act."
 - "#rticles#heading#2 Members"
-- "The first Members of the Co-operative will be the Founder Members. The Co-operative may admit to membership any individual, corporate body or nominee of an unincorporated body, firm or partnership that has paid or agreed to pay any subscription or other sum due in respect of membership and meets one of the criteria below."
+- "#rticles#topic#member_admission The first Members of the Co-operative will be the Founder Members. The Co-operative may admit to membership any individual, corporate body or nominee of an unincorporated body, firm or partnership that has paid or agreed to pay any subscription or other sum due in respect of membership and meets one of the criteria below."
 - "#rticles#heading#3 Membership criteria"
-- "The criteria for membership that shall be applied by the Directors follows below."
+- "#rticles#topic#member_admission The criteria for membership that shall be applied by the Directors follows below."
 - "#rticles#heading#3 #rticles#true#user_members User Members"
-- "#rticles#true#user_members Any regular user of the services of the Co-operative may be admitted into membership."
+- "#rticles#topic#member_admission #rticles#true#user_members Any regular user of the services of the Co-operative may be admitted into membership."
 - "#rticles#heading#3 #rticles#true#employee_members Employee Members"
-- "#rticles#true#employee_members All Employees on taking up employment with the Co-operative may be admitted to membership, except that the Co operative in a general meeting may by an ordinary resolution decide to exclude from membership:"
+- "#rticles#topic#member_admission #rticles#true#employee_members All Employees on taking up employment with the Co-operative may be admitted to membership, except that the Co operative in a general meeting may by an ordinary resolution decide to exclude from membership:"
 -
   - "#rticles#true#employee_members Newly appointed Employees during such reasonable probationary period as may be specified in their terms and conditions of employment;"
   - "#rticles#true#employee_members Employees working less than a prescribed number of hours per week (or per month);"
-- "#rticles#continue #rticles#true#employee_members provided that any such criteria for exclusion are applied equally to all Employees."
+- "#rticles#topic#member_admission #rticles#continue #rticles#true#employee_members provided that any such criteria for exclusion are applied equally to all Employees."
 - "#rticles#heading#3 #rticles#true#supporter_members Supporter Members"
-- "#rticles#true#supporter_members Any natural person, nominee of an unincorporated body, firm, partnership or corporate body that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business."
+- "#rticles#topic#member_admission #rticles#true#supporter_members Any natural person, nominee of an unincorporated body, firm, partnership or corporate body that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business."
 - "#rticles#heading#3 #rticles#true#producer_members Producer Members"
-- "#rticles#true#producer_members "
+- "#rticles#topic#member_admission #rticles#true#producer_members "
 - "#rticles#heading#3 #rticles#true#consumer_members Consumer Members"
-- "#rticles#true#consumer_members "
+- "#rticles#topic#member_admission #rticles#true#consumer_members "
 - |-
-    In accordance with the Co operative Principle of voluntary and open membership,
+    #rticles#topic#member_admission In accordance with the Co operative Principle of voluntary and open membership,
      whilst the Co operative shall undertake to encourage its stakeholders to become Members, membership must be voluntary and as a result cannot be a condition of employment.
 - "#rticles#heading#3 Applications for Membership"
 - "No natural person shall be admitted into membership of the Co-operative unless they have attained the age of 16.  All those wishing to become a Member must support the objects of the Co-operative and complete an application for membership which shall include an application for at least one share in the Co-operative.  Such an application form must be approved by the Directors and the Directors must approve each application for membership."
@@ -118,7 +118,7 @@
      the Co operative shall provide potential Members with information about what the role of a Member is within the Co operative and will provide training in the skills required to be a Member and to participate in the operation of the Co operative.
 - "The Co operative shall provide ongoing education and training in co-operative values and principles and associated topics. The Co-operative shall support its Members by ensuring that general meetings are accessible and encourage participation."
 - "#rticles#heading#3 Termination of Membership"
-- "A Member shall cease to be a Member of the Co-operative immediately that they:"
+- "#rticles#topic#withdrawals A Member shall cease to be a Member of the Co-operative immediately that they:"
 -
   - "Are no longer eligible for membership; or"
   - "Fail to pay the annual subscription (if any) within 3 months of it falling due; or"
@@ -127,32 +127,32 @@
   - "Are expelled from membership in accordance with these Rules; or"
   - "Die, are wound up or go into liquidation."
 - "#rticles#heading#3 Expulsion from Membership"
-- "A Member may be expelled for conduct prejudicial to the Co operative by an Extraordinary Resolution, provided that the grounds for expulsion have been specified in the notices calling the meeting and that the Member whose expulsion is to be considered shall be given the opportunity to make representations to the meeting or, at the option of the Member, an individual who is there to represent them (who need not be a Member of the Co-operative) has been allowed to make representations to the general meeting."
-- "If on due notice having been served the Member fails to attend the meeting the meeting may proceed in the Member's absence."
+- "#rticles#topic#withdrawals A Member may be expelled for conduct prejudicial to the Co operative by an Extraordinary Resolution, provided that the grounds for expulsion have been specified in the notices calling the meeting and that the Member whose expulsion is to be considered shall be given the opportunity to make representations to the meeting or, at the option of the Member, an individual who is there to represent them (who need not be a Member of the Co-operative) has been allowed to make representations to the general meeting."
+- "#rticles#topic#withdrawals If on due notice having been served the Member fails to attend the meeting the meeting may proceed in the Member's absence."
 -
   - "An expelled Member shall be paid the nominal value of shares held by them at the time of expulsion."
   - "No Member expelled from membership shall be re admitted except by an Extraordinary Resolution."
 - "#rticles#heading#2 Proceedings on Death or Bankruptcy of a Member"
-- "Upon a claim being made by:"
+- "#rticles#topic#death_or_bankruptcy Upon a claim being made by:"
 -
   - "The personal representative of a deceased Member; or"
   - "The trustee in bankruptcy of a Member who is bankrupt; or"
   - "The Office Holder to any property in the Co-operative belonging to such a Member, the Co-operative shall transfer or pay property to which the Office Holder has become entitled as the Office Holder may direct them."
 - |-
-    A Member may in accordance with the Act nominate any individual or individuals to whom any of her/his property in the Co-operative at the time of her/his death shall be transferred, but such nomination shall only be valid to the extent of the amount for the time being allowed in the Act. On receiving a satisfactory proof of death of a Member who has made a nomination the Co-operative shall,
+    #rticles#topic#death_or_bankruptcy A Member may in accordance with the Act nominate any individual or individuals to whom any of her/his property in the Co-operative at the time of her/his death shall be transferred, but such nomination shall only be valid to the extent of the amount for the time being allowed in the Act. On receiving a satisfactory proof of death of a Member who has made a nomination the Co-operative shall,
      in accordance with the Act, either transfer or pay the full value of the property comprised in the nomination to the individual or individuals entitled thereunder.
 - "#rticles#heading#3 Share Capital"
-- "#rticles#topic#shares #rticles#true#single_shareholding The shares of the Co-operative shall be of the nominal value of £1 issued to Persons upon admission to membership of the Co-operative. The shares shall be fully paid prior to issue, neither Transferable nor Withdrawable, shall carry no right to interest, dividend or bonus, and shall be forfeited and cancelled on cessation of membership from whatever cause, and the amount paid up on such cancelled shares shall become the property of the Co-operative.  Each Member shall hold one share only in the Co operative."
-- "#rticles#false#single_shareholding The shares of the Co-operative shall be of the nominal value of 1.  The minimum shareholding required of a Member shall be defined as such number of fully paid shares as the Board may determine subject to the Act, or as may be required by a particular offer of shares, or, failing such determination or requirement, shall be one share."
-- "#rticles#false#single_shareholding A Member may apply for shares in tranches of shares which are smaller in number than the minimum shareholding, provided that any Member who does not achieve the minimum shareholding within 12 months of their first payment may, at the discretion of the Board, cease to be a Member.  Any person ceasing to be a Member under this rule shall have the value of their shares as at the date on which they ceased to be a Member returned to them and the relevant shares shall be cancelled."
-- "#rticles#false#single_shareholding Applications for shares shall be made to the Board of the Co-operative who shall allot to Members, upon their admission, the share or shares for which they have applied provided that the total number of shares allotted to any Member shall not exceed the maximum shareholding permitted by law.  Shares shall be paid for in full on allotment."
-- "#rticles#topic#shares #rticles#false#single_shareholding If a Member who is required to withdraw from membership under these Rules is unable to transfer their shares and the right to withdraw shares has been suspended, then the nominal value of their share capital shall be converted into loan stock upon such terms as may be agreed between the Board and the Member, or their personal representative or trustee in bankruptcy, provided that such agreement shall require the repayment of the loan within a period not exceeding three years."
-- "#rticles#topic#shares #rticles#false#single_shareholding Shares shall be Withdrawable only in accordance with the provisions of these Rules. Shares shall be non-Transferable except:"
+- "#rticles#topic#maximum_shareholding #rticles#true#single_shareholding The shares of the Co-operative shall be of the nominal value of £1 issued to Persons upon admission to membership of the Co-operative. The shares shall be fully paid prior to issue, neither Transferable nor Withdrawable, shall carry no right to interest, dividend or bonus, and shall be forfeited and cancelled on cessation of membership from whatever cause, and the amount paid up on such cancelled shares shall become the property of the Co-operative.  Each Member shall hold one share only in the Co operative."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding The shares of the Co-operative shall be of the nominal value of 1.  The minimum shareholding required of a Member shall be defined as such number of fully paid shares as the Board may determine subject to the Act, or as may be required by a particular offer of shares, or, failing such determination or requirement, shall be one share."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding A Member may apply for shares in tranches of shares which are smaller in number than the minimum shareholding, provided that any Member who does not achieve the minimum shareholding within 12 months of their first payment may, at the discretion of the Board, cease to be a Member.  Any person ceasing to be a Member under this rule shall have the value of their shares as at the date on which they ceased to be a Member returned to them and the relevant shares shall be cancelled."
+- "#rticles#topic#maximum_shareholding #rticles#false#single_shareholding Applications for shares shall be made to the Board of the Co-operative who shall allot to Members, upon their admission, the share or shares for which they have applied provided that the total number of shares allotted to any Member shall not exceed the maximum shareholding permitted by law.  Shares shall be paid for in full on allotment."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding If a Member who is required to withdraw from membership under these Rules is unable to transfer their shares and the right to withdraw shares has been suspended, then the nominal value of their share capital shall be converted into loan stock upon such terms as may be agreed between the Board and the Member, or their personal representative or trustee in bankruptcy, provided that such agreement shall require the repayment of the loan within a period not exceeding three years."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding Shares shall be Withdrawable only in accordance with the provisions of these Rules. Shares shall be non-Transferable except:"
 -
   - "#rticles#false#single_shareholding on death or bankruptcy; or"
   - "#rticles#false#single_shareholding (in the case of an unincorporated organisation or partnership), on a change of nominee(s) and only to the new nominee(s)."
-- "#rticles#topic#shares #rticles#heading#3 #rticles#false#single_shareholding Withdrawal of share capital"
-- "#rticles#topic#shares #rticles#false#single_shareholding Shares may be withdrawn by Members upon giving three months notice to the Co-operative (though the Board retain sole discretion to return money paid for them) provided that:"
+- "#rticles#heading#3 #rticles#false#single_shareholding Withdrawal of share capital"
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding Shares may be withdrawn by Members upon giving three months notice to the Co-operative (though the Board retain sole discretion to return money paid for them) provided that:"
 -
   - "#rticles#false#single_shareholding All withdrawals shall be paid in the order in which the notices were received by the Co operative."
   - "#rticles#false#single_shareholding A Member shall not be entitled to withdraw shares which would leave them with less than the minimum shareholding, unless they intend to terminate their membership of the Co-operative."
@@ -161,13 +161,13 @@
   - "#rticles#false#single_shareholding During any period when the right of withdrawal has been suspended under the provision immediately above, the shares of deceased Members may, if the Board agree, be withdrawn by their personal representatives upon giving such notice as the Board may require."
   - "#rticles#false#single_shareholding The amount to be paid to a Member on withdrawal shall be the amount paid up or credited on the shares to be withdrawn, except where the shares are subject to a reduction in their value in accordance with the provisions of these Rules."
   - "#rticles#false#single_shareholding Interest shall be payable on any share in respect of which a notice of repayment has been given until the date of repayment."
-- "#rticles#topic#shares #rticles#false#single_shareholding Any share withdrawn in accordance with these Rules shall be cancelled."
-- "#rticles#topic#shares #rticles#false#single_shareholding Members may withdraw from the Co-operative by withdrawing all their shares in the Co-operative in accordance with these Rules or, if the right to withdraw has been suspended, by surrendering all their shares to the Co operative. Upon such surrender the Board may at their discretion pay to the withdrawing Member the amount paid up or credited on the shares surrendered."
-- "#rticles#topic#shares #rticles#false#single_shareholding The Co-operative may deduct such reasonable sum to cover any administrative costs of withdrawal from the monies payable to a Member on the withdrawal of shares in the Co-operative."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding Any share withdrawn in accordance with these Rules shall be cancelled."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding Members may withdraw from the Co-operative by withdrawing all their shares in the Co-operative in accordance with these Rules or, if the right to withdraw has been suspended, by surrendering all their shares to the Co operative. Upon such surrender the Board may at their discretion pay to the withdrawing Member the amount paid up or credited on the shares surrendered."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding The Co-operative may deduct such reasonable sum to cover any administrative costs of withdrawal from the monies payable to a Member on the withdrawal of shares in the Co-operative."
 - "#rticles#heading#3 #rticles#false#single_shareholding Reduction in Share Values"
-- "#rticles#false#single_shareholding If the Co-operatives Auditors (or any independent qualified accountants appointed for this purpose by the Board) certify at any time that the aggregate of the Co-operative's liabilities plus the amount of its issued share capital exceeds its assets, then (unless in the meantime the excess has been removed) the Board may determine that the amount of this excess, or part of it, shall be apportioned among the Members in proportion to (but not beyond) the amount of the nominal value of the shares paid up and held by each Member. This apportionment shall be based on the value of the shares paid up and held by each Member at the close of business on the date of such determination. The value of shares held by each Member shall be reduced accordingly for the purposes of withdrawal of shares, provided that the value of shares held by any Member shall not be reduced below the minimum shareholding as specified in these Rules."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding If the Co-operatives Auditors (or any independent qualified accountants appointed for this purpose by the Board) certify at any time that the aggregate of the Co-operative's liabilities plus the amount of its issued share capital exceeds its assets, then (unless in the meantime the excess has been removed) the Board may determine that the amount of this excess, or part of it, shall be apportioned among the Members in proportion to (but not beyond) the amount of the nominal value of the shares paid up and held by each Member. This apportionment shall be based on the value of the shares paid up and held by each Member at the close of business on the date of such determination. The value of shares held by each Member shall be reduced accordingly for the purposes of withdrawal of shares, provided that the value of shares held by any Member shall not be reduced below the minimum shareholding as specified in these Rules."
 - "#rticles#heading#3 #rticles#false#single_shareholding Lien on Shares and Right of Offset"
-- "#rticles#false#single_shareholding The Co-operative shall have a lien on the shares of a Member for any debt due to it by the Member and may offset any sum standing to the Member's credit with the Co operative in or towards payment of such debt."
+- "#rticles#topic#share_transactions #rticles#false#single_shareholding The Co-operative shall have a lien on the shares of a Member for any debt due to it by the Member and may offset any sum standing to the Member's credit with the Co operative in or towards payment of such debt."
 - "#rticles#heading#3 Electronic Resolutions"
 - "Resolutions may be passed by Members by means of an Electronic Vote using the Digital Platform except for resolutions made under sections 50 to 53 of the Industrial and Provident Societies Act 1965 (transfer of engagements between societies; conversion into, amalgamation with, or transfer of engagements to company; and conversion of company into a registered society)."
 - "An Electronic Vote on a Resolution may be initiated either by:"
@@ -190,9 +190,9 @@
 - "The results of any Electronic Vote on a resolution shall be promptly notified to the Members."
 - "#rticles#heading#2 General Meetings"
 - |-
-    The Co-operative shall, within six months of the end of the financial year,
+    #rticles#topic#meetings The Co-operative shall, within six months of the end of the financial year,
      hold a general meeting of the Members as its annual general meeting and shall specify the meeting as such in the notice calling it.
-- "The business of an annual general meeting shall comprise, where appropriate:"
+- "#rticles#topic#meetings The business of an annual general meeting shall comprise, where appropriate:"
 -
   - "The receipt of the accounts and balance sheet and of the reports of the Board and Auditor (if any)."
   - "The appointment of an Auditor, if required."
@@ -200,60 +200,60 @@
   - "The application of profits."
   - "The transaction of any other business included in the notice convening the meeting."
 - |-
-    In accordance with the Co operative Principle of democratic member control,
+    #rticles#topic#meetings In accordance with the Co operative Principle of democratic member control,
      the Co operative shall ensure that, in addition to the annual general meeting,
      at least four other general meetings are held annually. The purpose of these meetings is to ensure that Members are given the opportunity to participate in the decision making process of the Co operative, review the business planning and management processes and to ensure the Co operative manages itself in accordance with the co operative values and principles.
 - "#rticles#heading#3 Calling a General Meeting"
-- "The Secretary, at the request of the Board of Directors may convene a general meeting of the Co-operative.  The purpose of the general meeting shall be stated in the notice of the meeting."
-- "The Board of Directors upon an application signed by one-tenth of the total number of Members, or 100 Members, whichever is the lesser, delivered to the registered office of the Co-operative, shall convene a general meeting.  The purpose of the general meeting shall be stated in the application for and notice of the meeting.  No business other than that stated in the notice of the meeting shall be conducted at the meeting."
+- "#rticles#topic#meetings The Secretary, at the request of the Board of Directors may convene a general meeting of the Co-operative.  The purpose of the general meeting shall be stated in the notice of the meeting."
+- "#rticles#topic#meetings The Board of Directors upon an application signed by one-tenth of the total number of Members, or 100 Members, whichever is the lesser, delivered to the registered office of the Co-operative, shall convene a general meeting.  The purpose of the general meeting shall be stated in the application for and notice of the meeting.  No business other than that stated in the notice of the meeting shall be conducted at the meeting."
 - |-
-    If within one month from the date of the receipt of the application the Board have not convened a general meeting to be held within six weeks of the application,
+    #rticles#topic#meetings If within one month from the date of the receipt of the application the Board have not convened a general meeting to be held within six weeks of the application,
      any three Members of the Co-operative acting on behalf of the signatories to the application may convene a general meeting, and shall be reimbursed by the Co-operative for any costs incurred in convening such a meeting.
 - "#rticles#heading#3 Notices"
-- "The Directors shall call the annual general meeting giving 14 Clear Days' notice to all Members. All other general meetings shall be convened with at least #rticles#meeting_notice_period Clear Days' notice but may be held at shorter notice if so agreed in Writing by 90% of the Members."
-- "Notices of meetings shall either be given to Members personally or sent to them at their Address or alternatively, if so agreed by the Co operative in general meeting, notices of general meetings may be displayed conspicuously at the registered office and in all other places of business of the Co operative to which Members have access.  Notices shall specify the date, time and place at which the meeting is to be held, and the business which is to be transacted at that meeting. A general meeting shall not transact any business other than that specified in the notices calling the meeting."
-- "A notice sent to a Member's Address shall be deemed to have been duly served 48 hours after its posting. The accidental omission to send any notice to or the non receipt of any notice by any Person entitled to receive notice shall not invalidate the proceedings at the meeting."
-- "All notices shall specify the date, time and place of the meeting along with the general nature of business to be conducted and any proposed resolutions."
-- "If the Co-operative has appointed an Auditor in accordance with these Rules they shall be entitled to attend general meetings of the Co-operative and to receive all notices of and communications relating to any general meeting which any Member of the Co operative is entitled to receive. The Auditor shall be entitled to be heard at any meeting on any part of the business of the meeting which is of proper concern to an Auditor."
+- "#rticles#topic#meetings The Directors shall call the annual general meeting giving 14 Clear Days' notice to all Members. All other general meetings shall be convened with at least #rticles#meeting_notice_period Clear Days' notice but may be held at shorter notice if so agreed in Writing by 90% of the Members."
+- "#rticles#topic#meetings Notices of meetings shall either be given to Members personally or sent to them at their Address or alternatively, if so agreed by the Co operative in general meeting, notices of general meetings may be displayed conspicuously at the registered office and in all other places of business of the Co operative to which Members have access.  Notices shall specify the date, time and place at which the meeting is to be held, and the business which is to be transacted at that meeting. A general meeting shall not transact any business other than that specified in the notices calling the meeting."
+- "#rticles#topic#meetings A notice sent to a Member's Address shall be deemed to have been duly served 48 hours after its posting. The accidental omission to send any notice to or the non receipt of any notice by any Person entitled to receive notice shall not invalidate the proceedings at the meeting."
+- "#rticles#topic#meetings All notices shall specify the date, time and place of the meeting along with the general nature of business to be conducted and any proposed resolutions."
+- "#rticles#topic#meetings If the Co-operative has appointed an Auditor in accordance with these Rules they shall be entitled to attend general meetings of the Co-operative and to receive all notices of and communications relating to any general meeting which any Member of the Co operative is entitled to receive. The Auditor shall be entitled to be heard at any meeting on any part of the business of the meeting which is of proper concern to an Auditor."
 - "#rticles#heading#3 Quorum"
-- "No business shall be transacted at a general meeting unless a quorum of Members is present, including those not present in Person. Unless amended by Extraordinary Resolution, a quorum shall be #rticles#quorum_number Members or #rticles#quorum_percentage% of the membership, whichever is the greater."
+- "#rticles#topic#meetings No business shall be transacted at a general meeting unless a quorum of Members is present, including those not present in Person. Unless amended by Extraordinary Resolution, a quorum shall be #rticles#quorum_number Members or #rticles#quorum_percentage% of the membership, whichever is the greater."
 - "#rticles#heading#3 Chairing General Meetings"
-- "The chairperson of the Co-operative shall facilitate general meetings. If s/he is absent or unwilling to act at the time any meeting proceeds to business then the Members present shall choose one of their number to be the chairperson for that meeting."
+- "#rticles#topic#meetings The chairperson of the Co-operative shall facilitate general meetings. If s/he is absent or unwilling to act at the time any meeting proceeds to business then the Members present shall choose one of their number to be the chairperson for that meeting."
 - "#rticles#heading#3 Attendance and Speaking at General Meetings"
-- "A Member is able to exercise the right to speak at a general meeting and is deemed to be in attendance when that Person is in a position to communicate to all those attending the meeting. The Directors may make whatever arrangements they consider appropriate to enable those attending a general meeting to exercise their rights to speak or vote at it including by Electronic Means. In determining attendance at a general meeting, it is immaterial whether any two or more Members attending are in the same place as each other, provided that they are able to communicate with each other."
-- "The chairperson of the meeting may permit other persons who are not Members of the Co operative to attend and speak at general meetings, without granting any voting rights."
+- "#rticles#topic#meetings A Member is able to exercise the right to speak at a general meeting and is deemed to be in attendance when that Person is in a position to communicate to all those attending the meeting. The Directors may make whatever arrangements they consider appropriate to enable those attending a general meeting to exercise their rights to speak or vote at it including by Electronic Means. In determining attendance at a general meeting, it is immaterial whether any two or more Members attending are in the same place as each other, provided that they are able to communicate with each other."
+- "#rticles#topic#meetings The chairperson of the meeting may permit other persons who are not Members of the Co operative to attend and speak at general meetings, without granting any voting rights."
 - "#rticles#heading#3 Adjournment"
-- "If a quorum is not present within half an hour of the time the general meeting was due to commence, or if during a meeting a quorum ceases to be present, the chairperson must adjourn the meeting. If within half an hour of the time the adjourned meeting was due to commence a quorum is not present, the Members present shall constitute a quorum."
-- "The chairperson of a general meeting may adjourn the meeting whilst a quorum is present if:"
+- "#rticles#topic#meetings If a quorum is not present within half an hour of the time the general meeting was due to commence, or if during a meeting a quorum ceases to be present, the chairperson must adjourn the meeting. If within half an hour of the time the adjourned meeting was due to commence a quorum is not present, the Members present shall constitute a quorum."
+- "#rticles#topic#meetings The chairperson of a general meeting may adjourn the meeting whilst a quorum is present if:"
 -
   - "The meeting consents to that adjournment; or"
   - "It appears to the chairperson that an adjournment is necessary to protect the safety of any persons attending the meeting or to ensure that the business of the meeting is conducted in an orderly manner."
-- "The chairperson must adjourn the meeting if directed to do so by the meeting."
+- "#rticles#topic#meetings The chairperson must adjourn the meeting if directed to do so by the meeting."
 - |-
-    When adjourning a meeting the chairperson must specify the date, time and place to which it will stand adjourned or that the meeting is to continue at a date,
+    #rticles#topic#meetings When adjourning a meeting the chairperson must specify the date, time and place to which it will stand adjourned or that the meeting is to continue at a date,
      time and place to be fixed by the Directors.
-- "If the meeting is adjourned for 14 days or more, at least 7 Clear Days' notice of the adjourned meeting shall be given in the same manner as the notice of the original meeting."
-- "No business shall be transacted at an adjourned meeting other than business which could properly have been transacted at the meeting if the adjournment had not taken place."
+- "#rticles#topic#meetings If the meeting is adjourned for 14 days or more, at least 7 Clear Days' notice of the adjourned meeting shall be given in the same manner as the notice of the original meeting."
+- "#rticles#topic#meetings No business shall be transacted at an adjourned meeting other than business which could properly have been transacted at the meeting if the adjournment had not taken place."
 - "#rticles#heading#3 Electronic Voting and General Meetings"
-- "In advance of any general meeting, the Board may permit Members to cast Electronic Votes using the Digital Platform on any question – including any resolution – to be decided at that general meeting."
-- "Only Electronic Votes cast before the vote is taken at the general meeting may contribute to the outcome of that vote."
-- "Where any Member casts an Electronic Vote and also is in attendance at the general meeting when the vote is taken, their Electronic Vote shall be discounted."
-- "All Electronic Votes shall be added to any votes cast in the general meeting and the total treated as if it were the total vote at the general meeting (whether the votes at general meeting were counted by a show of hands or by paper ballot)."
-- "Even if an Electronic Vote is used prior to a general meeting, a quorum will still be needed at that general meeting. Electronic Votes may not be used to satisfy the requirement of a quorum."
+- "#rticles#topic#meetings In advance of any general meeting, the Board may permit Members to cast Electronic Votes using the Digital Platform on any question – including any resolution – to be decided at that general meeting."
+- "#rticles#topic#meetings Only Electronic Votes cast before the vote is taken at the general meeting may contribute to the outcome of that vote."
+- "#rticles#topic#meetings Where any Member casts an Electronic Vote and also is in attendance at the general meeting when the vote is taken, their Electronic Vote shall be discounted."
+- "#rticles#topic#meetings All Electronic Votes shall be added to any votes cast in the general meeting and the total treated as if it were the total vote at the general meeting (whether the votes at general meeting were counted by a show of hands or by paper ballot)."
+- "#rticles#topic#meetings Even if an Electronic Vote is used prior to a general meeting, a quorum will still be needed at that general meeting. Electronic Votes may not be used to satisfy the requirement of a quorum."
 - "#rticles#heading#3 Voting at a General Meeting"
 - |-
-    In accordance with the Co operative Principle of democratic member control,
+    #rticles#topic#meetings In accordance with the Co operative Principle of democratic member control,
      each Member shall have one vote on any question to be decided in general meeting.
-- "A resolution put to the vote at a general meeting shall be decided on a show of hands unless a paper ballot is demanded in accordance with these Rules.  A declaration by the chair that a resolution has on a show of hands been carried or lost with an entry to that effect recorded in the minutes of the general meeting shall be conclusive evidence of the result.  Proportions or numbers of votes in favour for or against need not be recorded."
-- "In the case of an equality of votes, whether on a show of hands or a poll, the chairperson shall not have a second or casting vote and the resolution shall be deemed to have been lost."
+- "#rticles#topic#meetings A resolution put to the vote at a general meeting shall be decided on a show of hands unless a paper ballot is demanded in accordance with these Rules.  A declaration by the chair that a resolution has on a show of hands been carried or lost with an entry to that effect recorded in the minutes of the general meeting shall be conclusive evidence of the result.  Proportions or numbers of votes in favour for or against need not be recorded."
+- "#rticles#topic#meetings In the case of an equality of votes, whether on a show of hands or a poll, the chairperson shall not have a second or casting vote and the resolution shall be deemed to have been lost."
 - "#rticles#heading#3 Paper Ballot"
-- "A paper ballot on a resolution may be demanded before or on the declaration of the result of the show of hands by three Members at a general meeting."
+- "#rticles#topic#meetings A paper ballot on a resolution may be demanded before or on the declaration of the result of the show of hands by three Members at a general meeting."
 - |-
-    If a paper ballot is duly demanded it shall be taken in such a manner as the chairperson directs, provided that no Member shall have more than one vote,
+    #rticles#topic#meetings If a paper ballot is duly demanded it shall be taken in such a manner as the chairperson directs, provided that no Member shall have more than one vote,
      and the result of the ballot shall be deemed to be the resolution of the meeting at which the ballot was demanded.
-- "The demand for a paper ballot shall not prevent the continuance of a meeting for the transaction of any other business than the question upon which a ballot has been demanded. The demand for a paper ballot may be withdrawn."
+- "#rticles#topic#meetings The demand for a paper ballot shall not prevent the continuance of a meeting for the transaction of any other business than the question upon which a ballot has been demanded. The demand for a paper ballot may be withdrawn."
 - "#rticles#heading#3 Resolutions"
-- "Decisions at general meetings shall be made by passing resolutions:"
+- "#rticles#topic#meetings Decisions at general meetings shall be made by passing resolutions:"
 -
   - "The following decisions must be made by Extraordinary Resolution:"
   -
@@ -262,49 +262,49 @@
     - "Any amendment to the Co-operative's Rules;"
     - "The decision to wind up the Co operative."
   - "All other decisions shall be made by ordinary resolution."
-- "An Extraordinary Resolution is one passed by a majority of not less than 75% of votes cast at a general meeting and an ordinary resolution is one passed by a simple majority (51%) of votes cast."
-- "Resolutions may be passed at general meetings or by written resolution.  A written resolution may consist of several identical Documents signed by one or more Members."
+- "#rticles#topic#meetings An Extraordinary Resolution is one passed by a majority of not less than 75% of votes cast at a general meeting and an ordinary resolution is one passed by a simple majority (51%) of votes cast."
+- "#rticles#topic#meetings Resolutions may be passed at general meetings or by written resolution.  A written resolution may consist of several identical Documents signed by one or more Members."
 - "#rticles#heading#2 Directors"
-- "The Co operative shall have a Board of Directors comprising not less than three Directors."
-- "The initial Directors of the Co-operative from registration until the first annual general meeting shall be appointed by the Founder Members."
-- "Only Members of the Co operative who are aged 18 years or more may serve on the Board of Directors."
+- "#rticles#topic#board The Co operative shall have a Board of Directors comprising not less than three Directors."
+- "#rticles#topic#board The initial Directors of the Co-operative from registration until the first annual general meeting shall be appointed by the Founder Members."
+- "#rticles#topic#board Only Members of the Co operative who are aged 18 years or more may serve on the Board of Directors."
 - "#rticles#heading#3 Composition of the Board of Directors"
-- "The Board of Directors shall be elected by and from the Co operative's Members. The composition of the Board of Directors following the first annual general meeting shall be as follows:"
+- "#rticles#topic#board The Board of Directors shall be elected by and from the Co operative's Members. The composition of the Board of Directors following the first annual general meeting shall be as follows:"
 -
   - "#rticles#true#user_members Not more than #rticles#max_user_directors User Members;"
   - "#rticles#true#employee_members Not more than #rticles#max_employee_directors Employee Members;"
   - "#rticles#true#supporter_members Not more than #rticles#max_supporter_directors Supporter Members;"
   - "#rticles#true#producer_members Not more than #rticles#max_producer_directors Producer Members;"
   - "#rticles#true#consumer_members Not more than #rticles#max_consumer_directors Consumer Members;"
-- "The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time."
+- "#rticles#topic#board The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time."
 - "#rticles#heading#3 Retirement Cycle"
 - |-
-    At the first annual general meeting all Directors shall stand down. At every subsequent annual general meeting one third of the Board of Directors, or if their number is not a multiple of three then the number nearest to one third,
+    #rticles#topic#board At the first annual general meeting all Directors shall stand down. At every subsequent annual general meeting one third of the Board of Directors, or if their number is not a multiple of three then the number nearest to one third,
      shall retire from office. The Directors to retire shall be the Directors who have been longest in office since their last election. Where Directors have held office for the same amount of time the Directors to retire shall be decided by lot. A retiring Director shall be eligible for re election.
 - "#rticles#heading#3 Co-option of Directors"
-- "In addition the Board of Directors may co-opt up to two external independent Directors who need not be Members and are selected for their particular skills and/or experience. Such external independent Directors shall serve a fixed period determined by the Board of Directors at the time of the co-option, subject to a review at least every 12 months. External independent Directors may be removed from office at any time by a resolution of the Board of Directors."
-- "The Board of Directors may at any time fill a casual vacancy on the Board by co option. Co opted individuals must be Members of the Co-operative and will hold office as Director only until the next annual general meeting."
+- "#rticles#topic#board In addition the Board of Directors may co-opt up to two external independent Directors who need not be Members and are selected for their particular skills and/or experience. Such external independent Directors shall serve a fixed period determined by the Board of Directors at the time of the co-option, subject to a review at least every 12 months. External independent Directors may be removed from office at any time by a resolution of the Board of Directors."
+- "#rticles#topic#board The Board of Directors may at any time fill a casual vacancy on the Board by co option. Co opted individuals must be Members of the Co-operative and will hold office as Director only until the next annual general meeting."
 - "#rticles#heading#3 Board Education and Training"
 - |-
-    In accordance with the Co operative Principle of education, training and information,
+    #rticles#topic#board In accordance with the Co operative Principle of education, training and information,
      before accepting a position as Director an individual must agree to undertake training during their first year of office as deemed appropriate by the Co operative. This training will include information on the roles and responsibilities of being a Director of a society which is also a co-operative.
 - "#rticles#heading#3 Powers and Duties of the Board of Directors"
-- "The business of the Co-operative shall be managed by the Board who may exercise all such powers of the Co-operative as may be exercised and done by the Co-operative and as are not by statute or by these Rules required to be exercised or done by the Co-operative in general meeting."
-- "All decisions made by a meeting of the Board of Directors or by any person acting as a Director shall remain valid even if it is later discovered that there was some defect in the Director's appointment or that the individual had previously been disqualified from acting as a Director."
+- "#rticles#topic#board The business of the Co-operative shall be managed by the Board who may exercise all such powers of the Co-operative as may be exercised and done by the Co-operative and as are not by statute or by these Rules required to be exercised or done by the Co-operative in general meeting."
+- "#rticles#topic#board All decisions made by a meeting of the Board of Directors or by any person acting as a Director shall remain valid even if it is later discovered that there was some defect in the Director's appointment or that the individual had previously been disqualified from acting as a Director."
 - |-
-    All cheques, promissory notes, drafts, bills of exchange and other negotiable instruments, and all receipts for monies paid to the Co operative shall be signed,
+    #rticles#topic#board All cheques, promissory notes, drafts, bills of exchange and other negotiable instruments, and all receipts for monies paid to the Co operative shall be signed,
      drawn, accepted, endorsed, or otherwise executed in such manner as the Board shall from time to time direct.
-- "Without prejudice to its general powers, the Board may exercise all the powers of the Co operative to borrow money and to mortgage or charge its undertaking and property or any part of it and to issue debentures and other securities whether outright or as security for any debt, liability or obligation of the Co operative or of any third party."
-- "No Regulation made by the Co operative in general meeting shall invalidate any prior act of the Board which would have been valid had that Regulation not been made."
-- "In accordance with the Co-operative Principles of democratic member control and member economic participation, the Board of Directors shall not be entitled to sell or otherwise dispose of assets (in a single transaction or series of transactions) equivalent in value to one-third or more of the total value of the last published balance sheet of the Co operative without the approval of the Members by Extraordinary Resolution."
+- "#rticles#topic#board Without prejudice to its general powers, the Board may exercise all the powers of the Co operative to borrow money and to mortgage or charge its undertaking and property or any part of it and to issue debentures and other securities whether outright or as security for any debt, liability or obligation of the Co operative or of any third party."
+- "#rticles#topic#board No Regulation made by the Co operative in general meeting shall invalidate any prior act of the Board which would have been valid had that Regulation not been made."
+- "#rticles#topic#board In accordance with the Co-operative Principles of democratic member control and member economic participation, the Board of Directors shall not be entitled to sell or otherwise dispose of assets (in a single transaction or series of transactions) equivalent in value to one-third or more of the total value of the last published balance sheet of the Co operative without the approval of the Members by Extraordinary Resolution."
 - "#rticles#heading#3 Delegation"
-- "Subject to these Rules, the Directors may delegate any of the powers which are conferred on them under these Rules to any Person or committee consisting of Members of the Co operative, by such means, to such an extent, in relation to such matters and on such terms and conditions as they think fit."
-- "The Directors may specify that any such delegation may authorise further delegation of the powers by any Person to whom they are delegated."
-- "The Directors may revoke any delegation in whole or in part or alter any terms and conditions."
+- "#rticles#topic#board Subject to these Rules, the Directors may delegate any of the powers which are conferred on them under these Rules to any Person or committee consisting of Members of the Co operative, by such means, to such an extent, in relation to such matters and on such terms and conditions as they think fit."
+- "#rticles#topic#board The Directors may specify that any such delegation may authorise further delegation of the powers by any Person to whom they are delegated."
+- "#rticles#topic#board The Directors may revoke any delegation in whole or in part or alter any terms and conditions."
 - "#rticles#heading#3 Sub-Committees"
-- "A sub-committee to which the Directors delegate any of their powers must follow procedures which are based as far as they are applicable on those provisions of these Rules which govern the taking of decisions by Directors."
-- "The Directors may make Regulations for all or any sub-committees, provided that such Regulations are not inconsistent with these Rules."
-- "All acts and proceedings of any sub-committee must be fully and promptly reported to the Directors."
+- "#rticles#topic#board A sub-committee to which the Directors delegate any of their powers must follow procedures which are based as far as they are applicable on those provisions of these Rules which govern the taking of decisions by Directors."
+- "#rticles#topic#board The Directors may make Regulations for all or any sub-committees, provided that such Regulations are not inconsistent with these Rules."
+- "#rticles#topic#board All acts and proceedings of any sub-committee must be fully and promptly reported to the Directors."
 - "#rticles#heading#2 Proceedings of the Board of Directors"
 - "#rticles#heading#3 Calling a Meeting of the Board of Directors"
 - |-
@@ -327,9 +327,9 @@
     A Director shall declare an interest in any contract or matter in which s/he has a personal, material or financial interest, whether directly or indirectly,
      and shall not vote in respect of such contract or matter, provided that nothing shall prevent a Director voting in respect of her/his terms and conditions of employment or any associated matter.
 - "#rticles#heading#3 Expenses"
-- "The Co operative may pay any reasonable expenses which the Directors properly incur in connection with their attendance at meetings or otherwise in connection with the exercise of their powers and the discharge of their responsibilities in relation to the Co operative."
+- "#rticles#topic#board The Co operative may pay any reasonable expenses which the Directors properly incur in connection with their attendance at meetings or otherwise in connection with the exercise of their powers and the discharge of their responsibilities in relation to the Co operative."
 - "#rticles#heading#3 Termination of a Director's Appointment"
-- "A person ceases to be a Director of the Co operative as soon as:"
+- "#rticles#topic#board A person ceases to be a Director of the Co operative as soon as:"
 -
   - "Where there are representatives of organisations on the Board: The organisation they are representing removes their endorsement of them;"
   - "Where there are representatives of organisations on the Board: The organisation they are representing ceases to exist;"
@@ -340,7 +340,7 @@
   - "A registered medical practitioner who is treating that person gives a written opinion to the Co operative stating that the person has become mentally incapable of acting as a Director and may remain so for more than three months;"
   - "By reason of that person's mental health, a court makes an order which wholly or partly prevents that person from personally exercising any powers or rights which that person would otherwise have."
 - "#rticles#heading#2 Officers"
-- "The Board shall elect from among their own number a chairperson and Secretary and such other Officers as they may from time to time decide. These Officers shall have such duties and rights as may be bestowed on them by the Board or by law and any Officer appointed may be removed by the Board.  A serving Officer who is not re-elected to the Board at the annual general meeting shall nevertheless continue in office until the first Board meeting following the annual general meeting."
+- "#rticles#topic#board The Board shall elect from among their own number a chairperson and Secretary and such other Officers as they may from time to time decide. These Officers shall have such duties and rights as may be bestowed on them by the Board or by law and any Officer appointed may be removed by the Board.  A serving Officer who is not re-elected to the Board at the annual general meeting shall nevertheless continue in office until the first Board meeting following the annual general meeting."
 - "#rticles#heading#2 Disputes"
 - "In the event of a dispute between the Co-operative or its Board and a Member of the Co-operative or a former Member, such dispute shall be referred to an independent arbitrator whose appointment is acceptable to both parties to the dispute or in the absence of agreement to be nominated by the Secretary General of Co-operatives UK (or any role or body that succeeds to its function). The decision of such an arbitrator shall be binding. In the event that a dispute cannot, for whatever reason, be concluded by reference to an arbitrator, the matter may be referred to the county court (or in Scotland, to the sheriff).  Any Person bringing a dispute must, if so required, deposit with the Co-operative a reasonable sum (not exceeding lb100) to be determined by the Board.  The arbitrator will decide how the costs of the arbitration will be paid and what should be done with the deposit."
 - "#rticles#heading#2 Regulations"
@@ -348,7 +348,7 @@
 - "#rticles#heading#2 Liability of Members"
 - "The liability of a Member is limited to the amount of their shareholding."
 - "#rticles#heading#2 Application of Profits"
-- "Any profits of the Co-operative shall be applied as follows in such proportions and in such manner as may be decided by the Co-operative at the annual general meeting:"
+- "#rticles#topic#profits Any profits of the Co-operative shall be applied as follows in such proportions and in such manner as may be decided by the Co-operative at the annual general meeting:"
 -
   - "To a general reserve for the continuation and development of the Co operative;"
   - "#rticles#false#single_shareholding To paying interest on issued share capital at such rate or rates as determined by the Board from time to time, but not exceeding 5% per annum or 2% above the Co-operative Bank’s base rate, whichever is the greater;"
@@ -372,7 +372,7 @@
       The quorum for a meeting at which a special resolution to amalgamate with,
        transfer engagements to or convert into a company is to be voted upon shall be 150 Members or 50% of the Members present in Person, whichever is the greater, subject to an absolute minimum of three Members.
 - "#rticles#heading#2 Dissolution"
-- "The Co operative may be dissolved by the consent of three quarters of the Members by their signatures to an instrument of dissolution, or by winding up in a manner provided for by the Act."
+- "#rticles#topic#dissolution The Co operative may be dissolved by the consent of three quarters of the Members by their signatures to an instrument of dissolution, or by winding up in a manner provided for by the Act."
 - |-
     #rticles#true#common_ownership The Co-operative is a common ownership enterprise.  If on the winding up or dissolution of the Co operative any of its assets remain to be disposed of after its liabilities are satisfied, these assets shall not be distributed among the Members, but shall be transferred to some other common ownership co-operative(s),
      or to Co operatives UK (or any body that succeeds to its function).  If such residual assets cannot be distributed in this manner they shall be transferred to some other organisation(s) whose purpose is to promote and support the co operative movement and common ownership enterprises.  This rule may only be amended by Extraordinary Resolution.
@@ -386,7 +386,7 @@
   - "each Member is responsible for providing to the Board, by means of the Digital Platform, an electronic mail address and consents to receiving communications from the Co-operative by Electronic Means unless they have informed the Board in Writing that they require communication to be made using non-electronic means."
 - "A notice sent to a Director's Address shall be deemed to have been duly served 48 hours after its posting.  A Director may agree with the Co operative that notices or Documents sent to her/him in a particular way are to be deemed to have been received within a specified time of their being sent, and for the specified time to be less than 48 hours."
 - "#rticles#heading#3 Seal"
-- "If the Co-operative has a seal, it shall only be used by the authority of the Board of Directors acting on behalf of the Co-operative.  Every instrument to which the seal shall be attached shall be signed by a Director and countersigned by a second Director or the Secretary."
+- "#rticles#topic#seal If the Co-operative has a seal, it shall only be used by the authority of the Board of Directors acting on behalf of the Co-operative.  Every instrument to which the seal shall be attached shall be signed by a Director and countersigned by a second Director or the Secretary."
 - "#rticles#heading#3 Registers"
 - "The Board of Directors shall ensure accurate registers are maintained which shall include a register of Members, a register of Directors and a register of Officers."
 - "#rticles#heading#3 Register of Members"
@@ -416,19 +416,19 @@
 - "The Co operative shall on demand supply free of charge to any Member or any person with an interest in the funds of the Co operative a copy of the latest annual return together with a copy of the Auditor's report (if any) on the accounts and balance sheet contained in the annual return and the Auditor's report (if any)."
 - "The Co operative shall at all times keep a copy of the latest balance sheet of the Co operative together with a copy of the corresponding Auditor's report hung up in a conspicuous place at the registered office and displayed on the Co-operative's website (if any)."
 - "#rticles#heading#3 Audit"
-- "Unless the Co-operative meets the criteria set out in section 4(2) of the Friendly and Industrial and Provident Societies Act 1968 or fulfils the exemptions set out in sub-sections 4(A) (1) and (2) of the Friendly and Industrial and Provident Societies Act 1968, the Board shall in each financial year appoint an Auditor as required by section 7 of the Friendly and Industrial and Provident Societies Act 1965 as amended, to audit the Co-operative's accounts and balance sheet for the year.  This provision also applies if the Co-operative is in its first financial year."
-- "The following persons shall not be appointed as Auditor of the Co operative:"
+- "#rticles#topic#audit Unless the Co-operative meets the criteria set out in section 4(2) of the Friendly and Industrial and Provident Societies Act 1968 or fulfils the exemptions set out in sub-sections 4(A) (1) and (2) of the Friendly and Industrial and Provident Societies Act 1968, the Board shall in each financial year appoint an Auditor as required by section 7 of the Friendly and Industrial and Provident Societies Act 1965 as amended, to audit the Co-operative's accounts and balance sheet for the year.  This provision also applies if the Co-operative is in its first financial year."
+- "#rticles#topic#audit The following persons shall not be appointed as Auditor of the Co operative:"
 -
   - "An Officer or Employee of the Co operative;"
   - "A person who is a partner or employee of, or who employs, an Officer of the Co operative."
-- "The Board may appoint an Auditor to fill a casual vacancy occurring between general meetings."
-- "An Auditor for the preceding financial year shall be re appointed as Auditor of the Co operative for the current financial year unless:"
+- "#rticles#topic#audit The Board may appoint an Auditor to fill a casual vacancy occurring between general meetings."
+- "#rticles#topic#audit An Auditor for the preceding financial year shall be re appointed as Auditor of the Co operative for the current financial year unless:"
 -
   - "A decision has been made by the Board to appoint a different Auditor or expressly decided that s/he shall not be re appointed; or"
   - "S/he has given notice in writing to the Secretary of her/his unwillingness to be re appointed; or"
   - "S/he is ineligible for appointment as Auditor of the Co operative for the current financial year; or"
   - "S/he has ceased to act as Auditor of the Co operative by reason of incapacity."
-- "Any ordinary resolution of a general meeting of the Co operative either to remove an Auditor from office or to appoint another person as Auditor shall not be effective unless notice of the proposed resolution has been given to the Co operative at least 28 days prior to the meeting at which the resolution is to be considered. At least 14 days' notice of such resolution must then be given to Members of the Co operative in the manner prescribed in these Rules and in Writing to the Auditor(s)."
+- "#rticles#topic#audit Any ordinary resolution of a general meeting of the Co operative either to remove an Auditor from office or to appoint another person as Auditor shall not be effective unless notice of the proposed resolution has been given to the Co operative at least 28 days prior to the meeting at which the resolution is to be considered. At least 14 days' notice of such resolution must then be given to Members of the Co operative in the manner prescribed in these Rules and in Writing to the Auditor(s)."
 - "#rticles#heading#3 Social Accounting and Reporting"
 - "In addition to any financial accounts required by the Act, the Members may resolve to undertake an account of the activities of the Co operative which will endeavour to measure its co-operative, social and environmental performance using whatever methodology the Members deem appropriate. Following the completion of such an account the Co operative shall report any findings to its Members and other stakeholders."
 - "#rticles#heading#3 Indemnity and Insurance"
