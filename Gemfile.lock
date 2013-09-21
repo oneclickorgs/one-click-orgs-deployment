@@ -56,13 +56,12 @@ GEM
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.0.9)
-    colorize (0.5.8)
     columnize (0.3.6)
-    coveralls (0.6.7)
-      colorize
+    coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
       simplecov (>= 0.7)
+      term-ansicolor
       thor
     cucumber (1.3.8)
       builder (>= 2.1.2)
@@ -211,11 +210,14 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     state_machine (1.2.0)
+    term-ansicolor (1.2.2)
+      tins (~> 0.8)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.18.1)
     tilt (1.4.1)
+    tins (0.10.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
