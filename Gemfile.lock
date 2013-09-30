@@ -91,7 +91,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.19)
     multi_json (1.7.4)
-    mysql (2.8.1)
+    mysql2 (0.2.20)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -129,7 +129,7 @@ GEM
     rake (10.0.3)
     rbx-require-relative (0.0.9)
     rcov (1.0.0)
-    rdiscount (1.6.8)
+    rdiscount (2.1.6)
     rdoc (3.12)
       json (~> 1.4)
     rspec (2.8.0)
@@ -202,13 +202,13 @@ DEPENDENCIES
   launchy
   machinist (~> 1.0.6)
   mail (~> 2.2.19)
-  mysql (~> 2.8.1)
+  mysql2 (~> 0.2.20)
   pdfkit (~> 0.5.2)
   pry
   railroad
   rails (= 3.0.19)
   rcov
-  rdiscount (~> 1.6.8)
+  rdiscount (~> 2.1.6)
   rspec-rails (~> 2.8.1)
   ruby-debug
   ruby-debug19
