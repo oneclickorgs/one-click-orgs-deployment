@@ -233,6 +233,24 @@ class Coop < Organisation
     @consumer_members = new_consumer_members
   end
 
+  def producer_members_description
+    @producer_members_description ||= clauses.get_text('producer_members_description')
+  end
+
+  def producer_members_description=(producer_members_description)
+    clauses.build(:name => 'producer_members_description', :text_value => producer_members_description)
+    @producer_members_description = producer_members_description
+  end
+
+  def consumer_members_description
+    @consumer_members_description ||= clauses.get_text('consumer_members_description')
+  end
+
+  def consumer_members_description=(consumer_members_description)
+    clauses.build(:name => 'consumer_members_description', :text_value => consumer_members_description)
+    @consumer_members_description = consumer_members_description
+  end
+
   def single_shareholding
     @single_shareholding ||= clauses.get_boolean('single_shareholding')
   end

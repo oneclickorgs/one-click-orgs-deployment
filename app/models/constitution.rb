@@ -21,6 +21,7 @@ class Constitution
     :quorum_percentage, :quorum_percentage=,
     :registered_office_address,
     :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+    :producer_members_description, :consumer_members_description,
     :single_shareholding,
     :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
     :common_ownership, :to => :organisation
@@ -41,6 +42,8 @@ class Constitution
       :organisation_name => name,
       :registered_office_address => registered_office_address,
       :objectives => objectives,
+      :producer_members_description => producer_members_description,
+      :consumer_members_description => consumer_members_description,
       :max_user_directors => max_user_directors,
       :max_employee_directors => max_employee_directors,
       :max_supporter_directors => max_supporter_directors,

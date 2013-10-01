@@ -102,9 +102,9 @@
 - "#rticles#heading#3 #rticles#true#supporter_members Supporter Members"
 - "#rticles#topic#member_admission #rticles#true#supporter_members Any natural person, nominee of an unincorporated body, firm, partnership or corporate body that operates in an associated field of activity to the Co-operative or that has an interest in supporting the Co-operative's business."
 - "#rticles#heading#3 #rticles#true#producer_members Producer Members"
-- "#rticles#topic#member_admission #rticles#true#producer_members "
+- "#rticles#topic#member_admission #rticles#true#producer_members #rticles#producer_members_description"
 - "#rticles#heading#3 #rticles#true#consumer_members Consumer Members"
-- "#rticles#topic#member_admission #rticles#true#consumer_members "
+- "#rticles#topic#member_admission #rticles#true#consumer_members #rticles#consumer_members_description"
 - |-
     #rticles#topic#member_admission In accordance with the Co operative Principle of voluntary and open membership,
      whilst the Co operative shall undertake to encourage its stakeholders to become Members, membership must be voluntary and as a result cannot be a condition of employment.

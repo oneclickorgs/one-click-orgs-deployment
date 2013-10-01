@@ -30,8 +30,14 @@
       = form.check_box(:producer_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:producer_members, "Producer Members", :class => 'inline')
     %p
+      = form.label(:producer_members_description, "Description of Producer Members")
+      = form.text_field(:producer_members_description, :disabled => !@allow_editing)
+    %p
       = form.check_box(:consumer_members, :disabled => !@allow_editing, :class => 'inline')
       = form.label(:consumer_members, "Consumer Members", :class => 'inline')
+    %p
+      = form.label(:consumer_members_description, "Description of Consumer Members")
+      = form.text_field(:consumer_members_description, :disabled => !@allow_editing)
 
     %h3 Share Capital
     %p.radio
