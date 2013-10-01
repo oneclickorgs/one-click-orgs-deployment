@@ -16,6 +16,7 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
     :proposals,
     :registered_office_address, # Coop clauses
     :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+    :producer_members_description, :consumer_members_description,
     :single_shareholding,
     :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
     :common_ownership
@@ -37,7 +38,8 @@ class ConstitutionProposalBundle < OneClickOrgs::ModelWrapper
       when Coop
         [
           :organisation_name, :objectives, :registered_office_address,
-          :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors
+          :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
+          :producer_members_description, :consumer_members_description
         ].each do |clause_name|
           send("#{clause_name}=", organisation.constitution.send(clause_name)) unless send(clause_name)
         end

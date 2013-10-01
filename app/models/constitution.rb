@@ -21,6 +21,7 @@ class Constitution
     :quorum_percentage, :quorum_percentage=,
     :registered_office_address,
     :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+    :producer_members_description, :consumer_members_description,
     :single_shareholding,
     :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
     :common_ownership, :to => :organisation
@@ -32,7 +33,7 @@ class Constitution
     if document_id = Setting[:coop_constitution_document_id]
       document = Rticles::Document.find(document_id)
     else
-      document = Rticles::Document.find_by_title('coop_constitution')
+      document = Rticles::Document.where(:title => 'coop_constitution').order('updated_at DESC').first
     end
 
     raise ActiveRecord::RecordNotFound unless document
@@ -41,11 +42,16 @@ class Constitution
       :organisation_name => name,
       :registered_office_address => registered_office_address,
       :objectives => objectives,
+      :producer_members_description => producer_members_description,
+      :consumer_members_description => consumer_members_description,
       :max_user_directors => max_user_directors,
       :max_employee_directors => max_employee_directors,
       :max_supporter_directors => max_supporter_directors,
       :max_producer_directors => max_producer_directors,
-      :max_consumer_directors => max_consumer_directors
+      :max_consumer_directors => max_consumer_directors,
+      :meeting_notice_period => meeting_notice_period,
+      :quorum_number => quorum_number,
+      :quorum_percentage => quorum_percentage
     }
     document.choices = {
       :user_members => user_members,

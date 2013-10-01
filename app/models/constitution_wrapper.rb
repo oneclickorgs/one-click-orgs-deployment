@@ -11,6 +11,7 @@ class ConstitutionWrapper < OneClickOrgs::ModelWrapper
     :voting_period,
     :registered_office_address, # Coop clauses
     :user_members, :employee_members, :supporter_members, :producer_members, :consumer_members,
+    :producer_members_description, :consumer_members_description,
     :single_shareholding,
     :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
     :common_ownership
@@ -34,6 +35,7 @@ class ConstitutionWrapper < OneClickOrgs::ModelWrapper
       [
         :organisation_name, :objectives, :registered_office_address,
         :max_user_directors, :max_employee_directors, :max_supporter_directors, :max_producer_directors, :max_consumer_directors,
+        :producer_members_description, :consumer_members_description
       ].each do |clause_name|
         send("#{clause_name}=", constitution.send(clause_name))
       end
@@ -124,6 +126,9 @@ class ConstitutionWrapper < OneClickOrgs::ModelWrapper
       if (cast_to_boolean(consumer_members) && !new_consumer_members_value) || (!cast_to_boolean(consumer_members) && new_consumer_members_value)
         organisation.clauses.set_boolean!('consumer_members', new_consumer_members_value)
       end
+
+      organisation.clauses.set_text!('producer_members_description', options[:producer_members_description]) if producer_members_description != options[:producer_members_description]
+      organisation.clauses.set_text!('consumer_members_description', options[:consumer_members_description]) if consumer_members_description != options[:consumer_members_description]
 
       if options[:single_shareholding] == '1'
         new_single_shareholding_value = true
