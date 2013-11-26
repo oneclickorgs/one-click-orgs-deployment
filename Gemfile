@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.3.5"
 
-gem "rails", "3.2.14"
+gem "rails", "3.2.15"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -49,6 +49,7 @@ gem 'state_machine-audit_trail', '~>0.1.2'
 gem 'meekster', :git => "git://github.com/oneclickorgs/meekster.git", :tag => 'v0.0.1'
 gem 'pdf_form_filler', '~>0.0.3'
 gem 'rticles', :git => "https://github.com/oneclickorgs/rticles.git", :branch => 'master'
+gem 'acts_as_list', "<0.3" # version 0.3 breaks Ruby 1.8 support
 
 gem "nokogiri", "~>1.5.9" # Nokogiri => 1.6 has dropped support for Ruby 1.8.
 
