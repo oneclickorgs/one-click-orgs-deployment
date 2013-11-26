@@ -72,6 +72,8 @@ defaults:
   investing_rule_number:
     box: [432, 640, 92, 25.3]
     text_align: center
+  committee_of_management_name:
+    box: [299, 297, 108, 12]
 5:
   year_end_day_1: [206.4, 151.3, 17.5, 19.3]
   year_end_day_2: [224.5, 151.3, 17.5, 19.3]
