@@ -42,6 +42,24 @@ When(/^I follow "(.*?)" for the co\-op$/) do |link|
   end
 end
 
+When(/^I follow the link to edit a member$/) do
+  click_link("Edit member")
+end
+
+When(/^I change the member's name$/) do
+  fill_in('First name', :with => 'Bob')
+  fill_in('Last name', :with => 'Smith')
+end
+
+When(/^I change the member's address$/) do
+  fill_in('Postal address', :with => "1 High Street\nLondon\nN1 1AA")
+end
+
+Then(/^I should see the member's new details$/) do
+  page.should have_content("Bob Smith")
+  page.should have_content("1 High Street")
+end
+
 Then(/^I should see that the co\-op is approved$/) do
   @coop ||= Coop.active.last
   within('.active_coops') do

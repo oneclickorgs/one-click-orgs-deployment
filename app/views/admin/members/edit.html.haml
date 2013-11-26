@@ -1,0 +1,23 @@
+%h2
+  Editing
+  = @member.name
+
+= form_for(@member, :url => admin_member_path(@member), :html => {'class' => 'member'}) do |f|
+  = error_messages_for(@member)
+  %p
+    = f.label(:first_name)
+    = f.text_field :first_name
+  %p
+    = f.label(:last_name)
+    = f.text_field :last_name
+  %p
+    = f.label(:email, "Email address")
+    = f.email_field :email
+  %p
+    = f.label(:address, "Postal address")
+    = f.text_area :address
+  %p
+    = f.label(:phone)
+    = f.text_field :phone
+  %p
+    = submit_tag "Save changes", :id => 'submit'
