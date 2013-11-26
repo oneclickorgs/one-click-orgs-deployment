@@ -30,3 +30,11 @@ Feature: Editing submitted co-ops
     And I save the changes
     And I follow "View anti-money laundering form"
     Then I should see "Milburn Pennybags"
+
+  Scenario: Administrator edits the details of a member of a submitted co-op
+    When I go to the admin view of a proposed co-op
+    And I follow the link to edit a member
+    And I change the member's name
+    And I change the member's address
+    And I save the changes
+    Then I should see the member's new details

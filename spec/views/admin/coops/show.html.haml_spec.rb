@@ -10,7 +10,7 @@ describe "admin/coops/show" do
     :proposed? => true,
     :active? => false
   )}
-  let(:members) {[mock_model(Member, :name => "Bob Smith", :email => nil, :address => nil, :phone => nil)]}
+  let(:members) {[mock_model(Member, :name => "Bob Smith", :email => nil, :address => nil, :phone => nil, :to_param => '222')]}
 
   before(:each) do
     assign(:coop, coop)
@@ -24,6 +24,11 @@ describe "admin/coops/show" do
   it "renders the members of the coop" do
     render
     rendered.should have_content("Bob Smith")
+  end
+
+  it "renders a link to edit each member" do
+    render
+    rendered.should have_selector(:a, :href => '/admin/members/222/edit')
   end
 
   it "renders a link to the rules PDF" do
