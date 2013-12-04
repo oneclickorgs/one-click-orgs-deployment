@@ -76,4 +76,5 @@ group :development, :test do
   gem "database_cleaner"
   gem "launchy"
   gem "selenium-webdriver", "~>2.33.0"
+  gem 'rubyzip', '<1.0.0' # Versions 1 and up give a LoadError in selenium-webdriver
 end
