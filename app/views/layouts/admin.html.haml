@@ -29,6 +29,7 @@
         - if current_administrator
           %ul#nav
             %li.navitem= link_to 'Co-ops', admin_coops_path
+            %li.navitem= link_to 'User stats', admin_members_path
         - if flash[:notice]
           %div#notice
             = flash[:notice]

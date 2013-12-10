@@ -175,6 +175,10 @@ class Member < ActiveRecord::Base
     full_name.blank? ? nil : full_name
   end
 
+  def organisation_name
+    organisation.try(:name)
+  end
+
   # A member is a founding member if they were created before the association's
   # founding proposal, or if they are in an association that has not had a
   # founding proposal yet.

@@ -1,4 +1,8 @@
 class Admin::MembersController < AdminController
+  def index
+    @members = Member.all
+  end
+
   def edit
     @member = Member.find(params[:id])
   end
