@@ -272,4 +272,11 @@ describe Member do
     member = Member.make!
     member.shares_count.should == 0
   end
+
+  it "has an organisation_name attribute" do
+    member = Member.make
+    organisation = mock_model(Organisation, :name => 'Test org')
+    member.stub(:organisation).and_return(organisation)
+    expect(member.organisation_name).to eq('Test org')
+  end
 end

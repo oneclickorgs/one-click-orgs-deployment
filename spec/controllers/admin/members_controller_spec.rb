@@ -9,6 +9,20 @@ describe Admin::MembersController do
     stub_administrator_login
   end
 
+  describe 'GET index' do
+    let(:members_association) {double('members association')}
+
+    def get_index
+      get :index
+    end
+
+    it "finds and assigns the members" do
+      expect(Member).to receive(:all).and_return(members_association)
+      get_index
+      expect(assigns[:members]).to eq(members_association)
+    end
+  end
+
   describe "GET edit" do
     let (:member) {mock_model(Member)}
 

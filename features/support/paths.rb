@@ -104,6 +104,8 @@ module NavigationHelpers
       edit_registration_form_path
     when /^Documents$/
       documents_path
+    when /^the administrator's users page$/
+      admin_members_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
