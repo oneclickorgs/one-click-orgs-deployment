@@ -66,10 +66,10 @@ Then(/^I should see the changes I made$/) do
   page.should have_no_css("h3", :text => "Supporter Members")
   page.should have_no_css("h3", :text => "Producer Members")
   page.should have_no_css("h3", :text => "Consumer Members")
-  page.should have_content("Each Member shall hold one share only in the Co operative")
+  page.should have_content("Each Member shall hold one share only")
   page.should have_content("2 User Members")
   page.should have_content("2 Employee Members")
-  page.should have_content("The Co-operative is a common ownership enterprise")
+  page.should have_content("is a common ownership enterprise")
 end
 
 Then(/^I should see the rules of the co\-op$/) do
