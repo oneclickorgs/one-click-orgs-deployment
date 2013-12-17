@@ -1,4 +1,5 @@
 require 'lib/not_found'
+require 'csv'
 
 class MembersController < ApplicationController
 

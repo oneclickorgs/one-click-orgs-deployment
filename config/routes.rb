@@ -48,13 +48,13 @@ OneClickOrgs::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id))(.:format)'
 
   match '/amendments' => 'one_click#amendments', :as => 'amendments'
   match '/constitution' => 'one_click#constitution', :as => 'constitution'
@@ -70,7 +70,6 @@ OneClickOrgs::Application.routes.draw do
   end
   # TODO Don't want this global matching if possible:
   match '/proposals(/:action)' => 'proposals'
-
 
   resources :members do
     member do
@@ -97,7 +96,7 @@ OneClickOrgs::Application.routes.draw do
   match '/setup(/:action)' => 'setup'
 
   resources :organisations
-#  match '/organisations(/:action)' => 'organisations'
+  # match '/organisations(/:action)' => 'organisations'
 
   match '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations
@@ -107,6 +106,6 @@ OneClickOrgs::Application.routes.draw do
 
   match '/admin/test_email' => 'admin#test_email', :conditions => { :method => :post }
   match '/admin/test_exception_notification' => 'admin#test_exception_notification'
-  
+
   root :to => 'one_click#dashboard'
 end

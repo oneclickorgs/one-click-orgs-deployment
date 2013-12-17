@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "proposal_mailer/notify_creation.text.erb" do
+describe "proposal_mailer/notify_creation" do
   before(:each) do
     @member = Member.make
     assigns[:member] = @member
