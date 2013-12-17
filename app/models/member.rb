@@ -6,7 +6,10 @@ require 'lib/vote_error'
 class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome
-  
+  attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
+    :password, :password_confirmation, :send_welcome,
+    :member_class_id, :as => :proposal
+
   attr_accessor :send_welcome
   
   before_create :new_invitation_code!
