@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+load 'deploy/assets'
 
 set :application, "one_click_orgs"
 set :repository,  "git://github.com/oneclickorgs/one-click-orgs-deployment"
