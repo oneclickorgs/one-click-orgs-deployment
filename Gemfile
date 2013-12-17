@@ -29,7 +29,7 @@ gem "mysql2", "~>0.3.11"
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~>3.2.5'
-  gem 'uglifier', '~>2.2.1'
+  gem 'uglifier', '~>2.3.3'
   gem 'therubyracer'
 end
 
