@@ -43,8 +43,7 @@ gem "delayed_job_active_record", "~>4.0.0"
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 gem "cancan", "~>1.6.7"
 gem "state_machine", "~>1.2.0"
-gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
-gem "nokogiri", "~>1.5.9" # Nokogiri => 1.6 has dropped support for Ruby 1.8.
+gem "nokogiri"
 gem 'mail', '~>2.5.4'
 
 # Bundle gems for the local environment. Make sure to
@@ -57,7 +56,6 @@ gem 'mail', '~>2.5.4'
 group :development do
   gem "capistrano", "~>2.14.2"
   gem "railroad"
-  gem "ruby-debug", :platforms => :ruby_18, :require => nil
   gem "ruby-debug19", :platforms => :ruby_19
   gem 'pry'
 end
@@ -67,7 +65,6 @@ group :development, :test do
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
   gem "faker", '~>1.2.0'
-  gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
   gem "coveralls", :require => false
   gem "cucumber-rails", "~>1.4.0", :require => nil
