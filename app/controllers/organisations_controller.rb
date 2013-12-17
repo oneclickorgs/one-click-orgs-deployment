@@ -69,7 +69,7 @@ class OrganisationsController < ApplicationController
     if Setting[:single_organisation_mode]
       redirect_to(:controller => 'one_click', :action => 'constitution')
     else
-      redirect_to(:host => @organisation.host, :controller => 'one_click', :action => 'constitution')
+      redirect_to(constitution_url(host_and_port(@organisation.host)))
     end
   end
 

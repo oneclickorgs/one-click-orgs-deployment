@@ -54,7 +54,7 @@ class Proposal < ActiveRecord::Base
       true
     else
       save_succeeded = save
-      proposer.cast_vote(:for, self.id) if save_succeeded && automatic_proposer_support_vote?
+      proposer.cast_vote(:for, self) if save_succeeded && automatic_proposer_support_vote?
       save_succeeded
     end
   end

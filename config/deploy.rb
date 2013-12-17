@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+load 'deploy/assets'
 
 set :application, "one_click_orgs"
 set :repository,  "git://github.com/oneclickorgs/one-click-orgs-deployment"
@@ -24,7 +25,7 @@ set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
 set :bundle_roles, [:app]
 set :bundle_flags, "--deployment --quiet --binstubs"
 
-after 'deploy:update_code' do
+before 'deploy:assets:precompile' do
   run <<-END
     ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml &&
     ln -sf #{shared_path}/config/initializers/local_settings.rb #{release_path}/config/initializers/local_settings.rb

@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20121029104222) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "queue"
   end
 
   create_table "member_classes", :force => true do |t|

@@ -6,7 +6,10 @@ require 'lib/vote_error'
 class Member < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
     :password, :password_confirmation, :send_welcome
-  
+  attr_accessible :email, :first_name, :last_name, :role, :terms_and_conditions,
+    :password, :password_confirmation, :send_welcome,
+    :member_class_id, :as => :proposal
+
   attr_accessor :send_welcome
   
   before_create :new_invitation_code!
@@ -117,24 +120,21 @@ class Member < ActiveRecord::Base
     inducted? && proposal.creation_date >= inducted_at
   end
   
-  def cast_vote(action, proposal_id)
-    raise ArgumentError, "need action and proposal_id" unless action and proposal_id
+  def cast_vote(action, proposal)
+    raise ArgumentError, "need action and proposal" unless action and proposal
 
-    existing_vote = Vote.where(:member_id => self.id, :proposal_id => proposal_id).first
+    existing_vote = Vote.where(:member_id => self.id, :proposal_id => proposal.id).first
     raise VoteError, "Vote already exists for this proposal" if existing_vote
 
-    # FIXME why not just pass the proposal in?
-    proposal = organisation.proposals.find(proposal_id)
-    raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
     unless can_vote?(proposal)
       raise VoteError, "Can not vote on proposals created before member is inducted and the organisation has been proposed."
     end
 
     case action
     when :for
-      Vote.create(:member => self, :proposal_id => proposal_id, :for => true)
+      Vote.create(:member => self, :proposal => proposal, :for => true)
     when :against
-      Vote.create(:member => self, :proposal_id => proposal_id, :for => false)
+      Vote.create(:member => self, :proposal => proposal, :for => false)
     end
   end
   

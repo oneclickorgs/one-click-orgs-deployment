@@ -63,15 +63,15 @@ describe Member do
   it "should not allow votes on members inducted after proposal was made" do
     new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
     lambda {
-      new_member.cast_vote(:for, @proposal.id)
+      new_member.cast_vote(:for, @proposal)
     }.should raise_error(VoteError)
   end
 
   it "should not allow additional votes" do
-    @member.cast_vote(:for, @proposal.id)
+    @member.cast_vote(:for, @proposal)
 
     lambda {
-      @member.cast_vote(:against, @proposal.id)
+      @member.cast_vote(:against, @proposal)
     }.should raise_error(VoteError)
   end
 
