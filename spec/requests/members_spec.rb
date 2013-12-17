@@ -154,22 +154,15 @@ describe "everything" do
       end
       
       context "when attempting to update restricted attributes" do
-        before(:each) do
-          put(member_path(@user), :member => {
-            :first_name => "Bob",
-            :last_name => "Smith",
-            :email => "new@example.com",
-            :active => '0'
-          })
-          @user.reload
-        end
-
-        it "updates the allowed attributes" do
-          @user.email.should == 'new@example.com'
-        end
-
-        it "doesn't change the restricted attributes" do
-          @user.should be_active
+        it "raises an exception" do
+          expect {
+            put(member_path(@user), :member => {
+              :first_name => "Bob",
+              :last_name => "Smith",
+              :email => "new@example.com",
+              :active => '0'
+            })
+          }.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
         end
       end
     end
