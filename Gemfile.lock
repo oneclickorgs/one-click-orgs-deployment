@@ -254,6 +254,7 @@ DEPENDENCIES
   jquery-rails (~> 3.0.4)
   launchy
   machinist!
+  mail (~> 2.5.4)
   mysql2 (~> 0.3.11)
   nokogiri (~> 1.5.9)
   pdfkit (~> 0.5.2)

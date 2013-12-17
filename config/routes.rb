@@ -120,6 +120,6 @@ OneClickOrgs::Application.routes.draw do
 
   post '/admin/test_email' => 'admin#test_email'
   match '/admin/test_exception_notification' => 'admin#test_exception_notification'
-  
+
   root :to => 'one_click#dashboard'
 end

@@ -7,9 +7,9 @@ class VotesController < ApplicationController
     
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id
-    
-    proposal = co.proposals.find(params[:id])
-    
+
+    proposal = co.proposals.find(id)
+
     return_to = sanitise_path(return_to)
     
     begin
@@ -33,8 +33,8 @@ class VotesController < ApplicationController
     
     id, return_to = params[:id], params[:return_to]
     raise ArgumentError, "need proposal id" unless id
-    
-    proposal = co.proposals.find(params[:id])
+
+    proposal = co.proposals.find(id)
     
     return_to = sanitise_path(return_to)
     
