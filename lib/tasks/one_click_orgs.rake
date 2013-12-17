@@ -24,7 +24,7 @@ namespace :oco do
       FileUtils.cp config_dir('initializers', 'local_settings.rb.sample'), config_dir('initializers', 'local_settings.rb')
       
       code = File.read(config_dir('initializers', 'local_settings.rb'))
-      code.sub!('YOUR_SECRET_HERE', ActiveSupport::SecureRandom.hex(64))
+      code.sub!('YOUR_SECRET_HERE', SecureRandom.hex(64))
       File.open(config_dir('initializers', 'local_settings.rb'), 'w'){|file| file << code}
     end
   end
