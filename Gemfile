@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.3.5"
 
-gem "rails", "3.1.12"
+gem "rails", "3.2.16"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -11,8 +11,8 @@ gem "rails", "3.1.12"
 gem "mysql2", "~>0.3.11"
 
 group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
+  gem 'sass-rails', '~>3.2.3'
+  gem 'coffee-rails', '~>3.2.1'
   gem 'uglifier',     ">= 2.0.1"
   gem 'therubyracer'
 end
@@ -35,7 +35,7 @@ gem 'jquery-rails'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
-gem "haml", "~>3.0.18"
+gem "haml", "~>3.1"
 gem "rdiscount", "~>2.1.6"
 gem "pdfkit", "~>0.5.2"
 
@@ -47,7 +47,7 @@ gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
-gem 'mail', '~>2.4.4'
+gem 'mail', '~>2.5.4'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
