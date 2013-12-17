@@ -2,13 +2,23 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.3.5"
 
-gem "rails", "3.0.19"
+gem "rails", "3.2.16"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql", "~>2.8.1"
+gem "mysql2", "~>0.3.11"
+
+group :assets do
+  gem 'sass-rails', '~>3.2.3'
+  gem 'coffee-rails', '~>3.2.1'
+  gem 'uglifier',     ">= 2.0.1"
+  gem 'therubyracer'
+end
+ 
+# jQuery is the default JavaScript library in Rails 3.1
+gem 'jquery-rails'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -25,19 +35,19 @@ gem "mysql", "~>2.8.1"
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
-gem "haml", "~>3.0.18"
-gem "rdiscount", "~>1.6.8"
+gem "haml", "~>3.1"
+gem "rdiscount", "~>2.1.6"
 gem "pdfkit", "~>0.5.2"
 
 gem "daemons", "~>1.0.10"
 
-gem "delayed_job", "2.1.4"
-
+gem "delayed_job", "~>4.0.0"
+gem "delayed_job_active_record", "~>4.0.0"
 gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
-gem 'mail', '~>2.2.19'
+gem 'mail', '~>2.5.4'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -61,9 +71,9 @@ group :development, :test do
   gem "faker", '~>0.3.1'
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
-  gem "cucumber-rails", "~>1.3.0", :require => nil
+  gem "cucumber-rails", "~>1.4.0", :require => nil
   gem "capybara", "~>1.1.2"
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.33.0"
+  gem "selenium-webdriver", "~>2.37.0"
 end

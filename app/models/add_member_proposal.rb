@@ -10,7 +10,7 @@ class AddMemberProposal < MembershipProposal
   
   validate :member_attributes_must_be_valid
   def member_attributes_must_be_valid
-    @draft_member = organisation.members.build(parameters)
+    @draft_member = organisation.members.build(parameters, :as => :proposal)
     @draft_member.allow_duplicate_email = true
     unless @draft_member.valid?
       errors.add(:base, @draft_member.errors.full_messages.to_sentence)
@@ -26,7 +26,7 @@ class AddMemberProposal < MembershipProposal
     if @existing_member
       @existing_member.reactivate!
     else
-      member = organisation.members.build(params)
+      member = organisation.members.build(params, :as => :proposal)
       member.send_welcome = true
       member.save!
     end

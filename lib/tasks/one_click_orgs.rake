@@ -1,4 +1,4 @@
-require 'active_support/secure_random'
+require 'securerandom'
 require 'fileutils'
 
 # Returns an absolute filename given path elements relative to the config directory

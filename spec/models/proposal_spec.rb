@@ -38,7 +38,7 @@ describe Proposal do
     member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)
     
     proposal = @organisation.proposals.create!(:proposer_member_id => member_1.id, :title => 'test', :parameters => nil) 
-    [member_0, member_1, member_2].each { |m| m.cast_vote(:for, proposal.id)}
+    [member_0, member_1, member_2].each { |m| m.cast_vote(:for, proposal)}
     
     lambda {
       @organisation.proposals.close_early_proposals.should include(proposal)

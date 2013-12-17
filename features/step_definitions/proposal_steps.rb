@@ -21,7 +21,7 @@ Given /^everyone has voted (to support|against) the founding$/ do |vote|
   fop = @organisation.found_organisation_proposals.last
     verdict = (vote == "against") ? "against" : "for"
     @organisation.members.each do |member|
-    member.cast_vote(verdict.to_sym, fop.id)
+    member.cast_vote(verdict.to_sym, fop)
   end
 end
 
@@ -86,7 +86,7 @@ Given /^one member voted against the founding$/ do
   end
     
   @members_against.each do |m|
-    m.cast_vote(:against, @fop.id)
+    m.cast_vote(:against, @fop)
   end
 end
 
@@ -101,7 +101,7 @@ Given /^the founding vote still passed$/ do
   @fop ||= @organisation.found_organisation_proposals.last
   
   members_in_favour.each do |m|
-    m.cast_vote(:for, @fop.id)
+    m.cast_vote(:for, @fop)
   end
   
   Proposal.close_proposals
@@ -117,7 +117,7 @@ end
 When /^enough people vote in support of the proposal$/ do
   @proposal ||= Proposal.last
   @organisation.members.active.each do |member|
-    member.cast_vote(:for, @proposal.id)
+    member.cast_vote(:for, @proposal)
   end
 end
 

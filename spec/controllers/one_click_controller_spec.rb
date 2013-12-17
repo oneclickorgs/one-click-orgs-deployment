@@ -19,7 +19,7 @@ describe OneClickController do
       
       @organisation.stub_chain(:proposals, :currently_open).and_return([])
       @organisation.stub_chain(:proposals, :new).and_return(mock_model(Proposal))
-      @organisation.stub_chain(:members, :new).and_return(mock_model(Member))
+      @organisation.stub_chain(:members, :new).and_return(mock_model(Member, :member_class= => nil))
       @organisation.stub(:default_member_class).and_return(mock_model(MemberClass))
       
       @organisation.stub_chain(:members, :all).and_return([])

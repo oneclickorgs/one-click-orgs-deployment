@@ -35,8 +35,8 @@ describe "Proposals" do
     describe "GET" do
       before(:each) do
         @proposal = Proposal.first
-        @member_two.cast_vote(:for, @proposal.id)
-        @member_three.cast_vote(:against, @proposal.id)
+        @member_two.cast_vote(:for, @proposal)
+        @member_three.cast_vote(:against, @proposal)
 
         get(proposal_path(@proposal))
       end
@@ -69,15 +69,25 @@ describe "Proposals" do
   end
   
   describe "creating settings proposals in bulk" do
+    let(:change_text_proposals_association) {mock('change_text_proposals association')}
+    let(:change_voting_system_proposals_association) {mock('change_voting_system_proposals association')}
+    let(:change_boolean_proposals_association) {mock('change_boolean_proposals association')}
+    let(:change_voting_period_proposals_association) {mock('change_voting_period_proposals association')}
+
     before(:each) do
       @user = login
       set_permission!(@user, :constitution_proposal, true)
       @proposal = mock('proposal', :save => true, :start => true, :accepted? => false)
+
+      @organisation.stub(:change_text_proposals).and_return(change_text_proposals_association)
+      @organisation.stub(:change_voting_system_proposals).and_return(change_voting_system_proposals_association)
+      @organisation.stub(:change_boolean_proposals).and_return(change_boolean_proposals_association)
+      @organisation.stub(:change_voting_period_proposals).and_return(change_voting_period_proposals_association)
       
-      ChangeTextProposal.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
-      ChangeVotingSystemProposal.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
-      ChangeBooleanProposal.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
-      ChangeVotingPeriodProposal.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
+      change_text_proposals_association.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
+      change_voting_system_proposals_association.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
+      change_boolean_proposals_association.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
+      change_voting_period_proposals_association.stub(:new).and_return(mock('proposal', :save => true, :start => true, :accepted? => false))
     end
     
     def post_create_settings_proposals
@@ -85,7 +95,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to change the organisation name" do
-      ChangeTextProposal.should_receive(:new).with(
+      change_text_proposals_association.should_receive(:new).with(
         :parameters => {
           'name' => 'organisation_name',
           'value' => 'New name'
@@ -100,7 +110,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to change the objectives" do
-      ChangeTextProposal.should_receive(:new).with(
+      change_text_proposals_association.should_receive(:new).with(
         :parameters => {
           'name' => 'organisation_objectives',
           'value' => 'New objectives'
@@ -115,7 +125,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to change the general voting system" do
-      ChangeVotingSystemProposal.should_receive(:new).with(
+      change_voting_system_proposals_association.should_receive(:new).with(
         :parameters => {
           'type' => 'general',
           'proposed_system' => 'AbsoluteMajority'
@@ -130,7 +140,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to change the membership voting system" do
-      ChangeVotingSystemProposal.should_receive(:new).with(
+      change_voting_system_proposals_association.should_receive(:new).with(
         :parameters => {
           'type' => 'membership',
           'proposed_system' => 'AbsoluteTwoThirdsMajority'
@@ -145,7 +155,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to change the constitution voting system" do
-      ChangeVotingSystemProposal.should_receive(:new).with(
+      change_voting_system_proposals_association.should_receive(:new).with(
         :parameters => {
           'type' => 'constitution',
           'proposed_system' => 'Unanimous'
@@ -160,7 +170,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to allow assets" do
-      ChangeBooleanProposal.should_receive(:new).with(
+      change_boolean_proposals_association.should_receive(:new).with(
         :proposer_member_id => @user.id,
         :parameters => {
           'name' => 'assets',
@@ -175,7 +185,7 @@ describe "Proposals" do
     end
     
     it "should create a proposal to change the voting period" do
-      ChangeVotingPeriodProposal.should_receive(:new).with(
+      change_voting_period_proposals_association.should_receive(:new).with(
         :title => "Change voting period to 14 days",
         :parameters => {
           'new_voting_period' => "1209600"
@@ -190,14 +200,17 @@ describe "Proposals" do
   end
   
   describe "proposing text amendments" do
+    let(:change_text_proposals_association) {mock('change_text_proposals association')}
+
     before(:each) do
       @user = login
       set_permission!(@user, :constitution_proposal, true)
       @proposal = mock('proposal', :save => true)
+      @organisation.stub(:change_text_proposals).and_return(change_text_proposals_association)
     end
     
     it "should create a proposal to change the organisation name" do
-      ChangeTextProposal.should_receive(:new).with(
+      change_text_proposals_association.should_receive(:new).with(
         :title => "Change name to 'The Yoghurt Yurt'",
         :parameters => {
           'name' => 'name',
@@ -210,11 +223,11 @@ describe "Proposals" do
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'name', 'value' => 'The Yoghurt Yurt'})
 
-      @response.should redirect_to('/one_click/dashboard')
+      @response.should redirect_to('/')
     end
     
     it "should create a proposal to change the objectives" do
-      ChangeTextProposal.should_receive(:new).with(
+      change_text_proposals_association.should_receive(:new).with(
         :title => "Change objectives to 'make all the yoghurt'",
         :parameters => {
           'name' => 'objectives',
@@ -227,11 +240,11 @@ describe "Proposals" do
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
       
-      @response.should redirect_to('/one_click/dashboard')
+      @response.should redirect_to('/')
     end
     
     it "should create a proposal to change the domain" do
-      ChangeTextProposal.should_receive(:new).with(
+      change_text_proposals_association.should_receive(:new).with(
         :title => "Change domain to 'yaourt.com'",
         :parameters => {
           'name' => 'domain',
@@ -244,7 +257,7 @@ describe "Proposals" do
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
       
-      @response.should redirect_to('/one_click/dashboard')
+      @response.should redirect_to('/')
     end
   end
   
@@ -276,7 +289,7 @@ describe "Proposals" do
 
         puts @response.body if @response.status != 302
 
-        @response.should redirect_to("/one_click/dashboard")
+        @response.should redirect_to("/")
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.first.title.should == 'Change general voting system to Unanimous: decisions need supporting votes from 100% of members'
@@ -292,7 +305,7 @@ describe "Proposals" do
 
         puts @response.body if @response.status != 302
 
-        @response.should redirect_to("/one_click/dashboard")
+        @response.should redirect_to("/")
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'Change membership voting system to Nobody opposes: decisions blocked if there are any opposing votes'
@@ -307,7 +320,7 @@ describe "Proposals" do
         post(url_for(:controller=>'proposals', :action=>'create_voting_system_amendment'), {:constitution_voting_system=>'AbsoluteMajority'})
 
         puts @response.body if @response.status == 500
-        @response.should redirect_to("/one_click/dashboard")
+        @response.should redirect_to("/")
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'Change constitution voting system to Absolute majority: decisions need supporting votes from more than 50% of members'
@@ -322,7 +335,7 @@ describe "Proposals" do
         post(url_for(:controller=>'proposals', :action=>'create_voting_period_amendment'), {:new_voting_period=>'86400'})
 
         puts @response.body if @response.status == 500
-        @response.should redirect_to("/one_click/dashboard")
+        @response.should redirect_to("/")
 
         ChangeVotingPeriodProposal.count.should == 1
         ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 1 day'
