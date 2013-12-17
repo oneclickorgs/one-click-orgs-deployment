@@ -28,10 +28,10 @@ describe "Founding process" do
       @organisation.save
       
       @affirmative_members.each do |m|
-        m.cast_vote(:for, @found_organisation_proposal.id)
+        m.cast_vote(:for, @found_organisation_proposal)
       end
       @negative_members.each do |m|
-        m.cast_vote(:against, @found_organisation_proposal.id)
+        m.cast_vote(:against, @found_organisation_proposal)
       end
       
       ActionMailer::Base.deliveries.clear

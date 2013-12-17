@@ -1,5 +1,5 @@
 class Vote < ActiveRecord::Base
-  attr_accessible :member, :proposal_id, :for
+  attr_accessible :member, :proposal, :for
   
   belongs_to :member
   belongs_to :proposal
