@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.3.5"
 
-gem "rails", "3.2.15"
+gem "rails", "3.2.16"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -50,8 +50,8 @@ gem 'meekster', :git => "git://github.com/oneclickorgs/meekster.git", :tag => 'v
 gem 'pdf_form_filler', '~>0.0.3'
 gem 'rticles', :git => "https://github.com/oneclickorgs/rticles.git", :branch => 'master'
 gem 'acts_as_list', "<0.3" # version 0.3 breaks Ruby 1.8 support
-
 gem "nokogiri", "~>1.5.9" # Nokogiri => 1.6 has dropped support for Ruby 1.8.
+gem 'mail', '~>2.5.4'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -82,8 +82,8 @@ group :development, :test do
   gem "capybara", "~>1.1.2" # Capybara => 2.0.0 has dropped support for Ruby 1.8.x
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.35.1"
   gem "cucumber-relizy", "~>0.0.2"
   gem "syntax", "~>1.0.0"
   gem "pdf-reader"
+  gem "selenium-webdriver"
 end
