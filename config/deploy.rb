@@ -22,8 +22,8 @@ set :branch,    "oneclick-uk-coop"
 
 set :bundle_dir, File.join(fetch(:shared_path), 'bundler')
 # set :bundle_cmd, "/home/ubuntu/.rbenv/versions/1.9.3-p374/bin/bundle"
-set :bundle_flags, "--deployment --binstubs"
 set :bundle_roles, [:app]
+set :bundle_flags, "--deployment --quiet --binstubs"
 
 before 'deploy:assets:precompile' do
   run <<-END
