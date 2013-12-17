@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
       kit = PDFKit.new(html, :page_size => 'A4', :header_right => "Printed on #{Time.now.utc.to_s(:long_date)}")
 
       # Add our CSS file
-      kit.stylesheets << "#{Rails.root}/public/stylesheets/pdf.css"
+      kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.css"
 
       send_data(kit.to_pdf, :filename => "#{@organisation_name} #{filename}.pdf",
         :type => 'application/pdf', :disposition => 'attachment')
@@ -202,7 +202,7 @@ class ApplicationController < ActionController::Base
   
   def ensure_organisation_exists
     unless current_organisation
-      redirect_to(new_organisation_url(:host => Setting[:signup_domain]))
+      redirect_to(new_organisation_url(host_and_port(Setting[:signup_domain])))
     end
   end
   
@@ -239,8 +239,17 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'welcome', :action => 'index')
   end
   
+  def host_and_port(domain)
+    host, port = domain.split(':')
+    if port
+      {:host => host, :port => port}
+    else
+      {:host => host}
+    end
+  end
+
   # EXCEPTIONS
-  
+
   rescue_from NotFound, :with => :render_404
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   def render_404

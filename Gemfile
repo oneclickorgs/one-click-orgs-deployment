@@ -2,13 +2,23 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.3.5"
 
-gem "rails", "3.0.20"
+gem "rails", "3.1.12"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql2", "~>0.2.20" # mysql2 recommends 0.2 series for Rails 3.0.x compatiblity
+gem "mysql2", "~>0.3.11"
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier',     ">= 2.0.1"
+  gem 'therubyracer'
+end
+ 
+# jQuery is the default JavaScript library in Rails 3.1
+gem 'jquery-rails'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -37,7 +47,7 @@ gem "exception_notification_rails3", "~>1.2.0", :require => 'exception_notifier'
 
 gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 
-gem 'mail', '~>2.2.19'
+gem 'mail', '~>2.4.4'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -61,9 +71,9 @@ group :development, :test do
   gem "faker", '~>0.3.1'
   gem "rcov", :platforms => :ruby_18
   gem "simplecov", :platforms => :ruby_19
-  gem "cucumber-rails", "~>1.3.0", :require => nil
+  gem "cucumber-rails", "~>1.4.0", :require => nil
   gem "capybara", "~>1.1.2"
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.33.0"
+  gem "selenium-webdriver", "~>2.37.0"
 end

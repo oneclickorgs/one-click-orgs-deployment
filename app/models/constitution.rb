@@ -30,7 +30,7 @@ class Constitution
   end
   
   def change_voting_system(type, new_system)
-    raise ArgumentError, "no previous voting system" unless organisation.clauses.exists?("#{type}_voting_system")
+    raise ArgumentError, "no previous voting system" unless organisation.clauses.currently_exists?("#{type}_voting_system")
     set_voting_system(type, new_system)
   end
   
@@ -46,7 +46,7 @@ class Constitution
   end
 
   def change_voting_period(new_period)
-    raise ArgumentError, "no previous voting period" unless organisation.clauses.exists?('voting_period')
+    raise ArgumentError, "no previous voting period" unless organisation.clauses.currently_exists?('voting_period')
     set_voting_period(new_period)
   end
 end

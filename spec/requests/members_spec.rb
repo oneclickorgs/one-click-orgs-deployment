@@ -72,12 +72,16 @@ describe "everything" do
 
   describe "/members/1" do 
     describe "a successful DELETE, given a member exists" do
+      let(:eject_member_proposals_association) {mock('eject_member_proposals association', :new => proposal)}
+      let(:proposal) {mock_model(EjectMemberProposal, :start => true, :accepted? => false)}
+
       before(:each) do
         @member = @organisation.members.make
+        @organisation.stub(:eject_member_proposals).and_return(eject_member_proposals_association)
       end
       
       it "should create the proposal to eject the member" do
-        EjectMemberProposal.should_receive(:new).with(
+        eject_member_proposals_association.should_receive(:new).with(
           :parameters => {'id' => @member.id},
           :title => "Eject #{@member.name} from test",
           :description => 'Power grab!',
