@@ -1,5 +1,5 @@
 Then /^I should see a welcome notification$/ do
-  page.should have_css('.notification', :content => "The draft constitution")
+  page.should have_css('.notification', :text => "The draft constitution")
 end
 
 Then /^I should see a list of the members who voted in favour of the founding$/ do
