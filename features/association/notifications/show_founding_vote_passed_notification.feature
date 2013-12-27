@@ -13,6 +13,7 @@ Feature: Show 'founding vote passed' notification
     And one member voted against the founding
     But the founding vote still passed
 
+  @javascript
   Scenario: Founding vote passed notification should list the appropriate members
     When I log in
     Then I should see "These are the Founding Members"
