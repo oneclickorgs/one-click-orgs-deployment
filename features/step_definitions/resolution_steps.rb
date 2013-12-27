@@ -127,6 +127,7 @@ end
 
 Then(/^I should see the (?:|new )resolution in the list of currently\-open resolutions$/) do
   @resolution ||= @organisation.resolutions.last
+  click_link('Open for voting') if first('a[href=\'#tab_proposals\']')
   within('.proposals') do
     page.should have_content(@resolution.description)
   end
@@ -147,12 +148,14 @@ Then(/^the new resolution should have voting buttons$/) do
 end
 
 Then(/^I should see an open resolution to (?:increase|decrease) the General Meeting notice period to (\d+) days$/) do |notice_period|
+  click_link("Open for voting")
   within('.proposals') do
     page.should have_content("Change notice period for General Meetings to #{notice_period} clear days")
   end
 end
 
 Then(/^I should see an open Extraordinary Resolution to change the General Meeting quorum$/) do
+  click_link("Open for voting")
   within('.proposals') do
     page.should have_content("quorum")
   end
@@ -211,5 +214,6 @@ end
 
 Then(/^I should see the resolution is open for electronic voting$/) do
   @resolution ||= @organisation.resolutions.last
+  click_link("Open for voting")
   page.should have_css(".proposals ##{ActionController::RecordIdentifier.dom_id(@resolution)}")
 end
