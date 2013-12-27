@@ -215,7 +215,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    uglifier (2.3.3)
+    uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     webrat (0.7.3)
@@ -261,5 +261,5 @@ DEPENDENCIES
   simplecov
   state_machine (~> 1.2.0)
   therubyracer
-  uglifier (~> 2.3.3)
+  uglifier (~> 2.4.0)
   webrat
