@@ -43,7 +43,7 @@ When(/^I follow "(.*?)" for the co\-op$/) do |link|
 end
 
 When(/^I follow the link to edit a member$/) do
-  click_link("Edit member")
+  first('.member').click_link("Edit member")
 end
 
 When(/^I change the member's name$/) do
