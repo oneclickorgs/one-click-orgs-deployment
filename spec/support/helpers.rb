@@ -126,7 +126,7 @@ def install_organisation_resolver(organisation)
     view.view_paths.unshift(
       OneClickOrgs::OrganisationResolver.new(
         view_path.to_path,
-        @organisation.class
+        organisation.class
       )
     )
   end
