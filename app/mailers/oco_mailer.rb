@@ -4,7 +4,7 @@ class OcoMailer < ActionMailer::Base
   helper :application
   include ActionView::Helpers::TextHelper
   include OneClickOrgs::MailHelper
-  default :from => "notifications@oneclickorgs.com"
+  default :from => "no-reply@oneclickorgs.com"
 
   class EmailJob
     attr_reader :mail
@@ -21,14 +21,21 @@ class OcoMailer < ActionMailer::Base
   end
 
   # Helper method to create email according to the following conventions:
-  # * the sender is an OCO address, but is given the name of the current org
+  # * the sender is One Click Orgs
   # * there is one recipient
-  # * the subject line will be truncated to 200 chars max, and any newlines will be stripped
-  def create_mail(from_name, to, subject)
+  # * invalid characters will be stripped from the subject line
+  # * the subject line will be truncated to 200 chars max
+  # * the organisation name will be included in the subject
+  def create_mail(organisation_name, to, subject)
+    subject = "[#{organisation_name}] #{subject}"
+    subject = cleaned_subject(subject)
+    subject = truncate(subject, {:length => 200})
+
     mail(
-      :from => name_addr(from_name, 'notifications@oneclickorgs.com'),
+      :from => name_addr("One Click Orgs", 'no-reply@oneclickorgs.com'),
       :to => to, 
-      :subject => truncate(subject, {:length => 200}).gsub(/[\r\n]+/, ' '))
+      :subject => subject
+    )
   end
 
   def self.deliver_mail(mail)

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'mail/elements/address'
 
 module OneClickOrgs
@@ -12,5 +14,14 @@ module OneClickOrgs
       a.format
     end
     module_function :name_addr
+
+    def cleaned_subject(subject)
+      # Remove non-ASCII characters
+      subject.gsub!(/\P{ASCII}/, '')
+      # Remove carriage returns and line feeds
+      subject.gsub!(/(\r|\n)/, ' ')
+      subject
+    end
+    module_function :cleaned_subject
   end
 end
