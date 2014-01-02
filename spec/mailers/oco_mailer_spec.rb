@@ -10,7 +10,7 @@ describe OcoMailer do
   
   it "quotes and escapes the 'From:' display name if necessary" do
     mail = SpecMailer.notification('Bad Company Name"')
-    mail['From'].to_s.should == '"Bad Company Name\\"" <notifications@oneclickorgs.com>'
+    mail['From'].to_s.should == '"Bad Company Name\\"" <no-reply@oneclickorgs.com>'
   end
   
 end

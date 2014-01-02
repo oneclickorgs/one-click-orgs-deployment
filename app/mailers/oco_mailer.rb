@@ -4,7 +4,7 @@ class OcoMailer < ActionMailer::Base
   helper :application
   include ActionView::Helpers::TextHelper
   include OneClickOrgs::MailHelper
-  default :from => "notifications@oneclickorgs.com"
+  default :from => "no-reply@oneclickorgs.com"
 
   class EmailJob
     attr_reader :mail
@@ -26,7 +26,7 @@ class OcoMailer < ActionMailer::Base
   # * the subject line will be truncated to 200 chars max, and any newlines will be stripped
   def create_mail(from_name, to, subject)
     mail(
-      :from => name_addr(from_name, 'notifications@oneclickorgs.com'),
+      :from => name_addr(from_name, 'no-reply@oneclickorgs.com'),
       :to => to, 
       :subject => truncate(subject, {:length => 200}).gsub(/[\r\n]+/, ' '))
   end
