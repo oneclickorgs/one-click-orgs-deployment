@@ -87,17 +87,17 @@ class RegistrationForm
     form_data['member_1_address'] = first_three_members[0].address
     form_data['member_1_phone'] = first_three_members[0].phone
 
-    form_data['member_2_name'] = first_three_members[1].name
-    form_data['member_2_address'] = first_three_members[1].address
-    form_data['member_2_phone'] = first_three_members[1].phone
+    form_data['member_2_name'] = first_three_members[1].try(:name)
+    form_data['member_2_address'] = first_three_members[1].try(:address)
+    form_data['member_2_phone'] = first_three_members[1].try(:phone)
 
-    form_data['member_3_name'] = first_three_members[2].name
-    form_data['member_3_address'] = first_three_members[2].address
-    form_data['member_3_phone'] = first_three_members[2].phone
+    form_data['member_3_name'] = first_three_members[2].try(:name)
+    form_data['member_3_address'] = first_three_members[2].try(:address)
+    form_data['member_3_phone'] = first_three_members[2].try(:phone)
 
-    form_data['secretary_name'] = @organisation.secretary.name
-    form_data['secretary_address'] = @organisation.secretary.address
-    form_data['secretary_phone'] = @organisation.secretary.phone
+    form_data['secretary_name'] = @organisation.secretary.try(:name)
+    form_data['secretary_address'] = @organisation.secretary.try(:address)
+    form_data['secretary_phone'] = @organisation.secretary.try(:phone)
 
     form = PdfFormFiller::Form.new(:template => template, :definition => definition)
     form.fill_form(form_data)
