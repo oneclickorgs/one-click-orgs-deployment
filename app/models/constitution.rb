@@ -38,9 +38,12 @@ class Constitution
 
     raise ActiveRecord::RecordNotFound unless document
 
+    # Replace newlines in the address with commas.
+    registered_office_address_one_line = registered_office_address.to_s.gsub(/[\r\n]+/, ', ')
+
     document.insertions = {
       :organisation_name => name,
-      :registered_office_address => registered_office_address,
+      :registered_office_address => registered_office_address_one_line,
       :objectives => objectives,
       :producer_members_description => producer_members_description,
       :consumer_members_description => consumer_members_description,
