@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* Ruby 1.9.3 (recommended). 1.8.7 and 2.0.0 are also supported.
+* Ruby 1.9.3 (recommended). 2.0.0 is also supported.
 * RubyGems 1.3.7 or higher
 * Bundler 1.3 or higher  (install with `gem install bundler`)
 * MySQL, including client libraries (e.g. libmysqlclient-dev on Debian)
@@ -11,22 +11,6 @@
 
 * [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/)
   N.B. One Click Orgs is not compatible with the wkhtmltopdf in Debian/Ubuntu's packages.
-
-## Debian instructions
-
-First obtain a set of required packages from apt:
-
-    $ apt-get install build-essential git-core ruby1.8 ruby1.8-dev rubygems1.8 mysql-server-5.0 libmysqlclient15-dev libxml2 libxml2-dev libxslt1-dev libxslt1.1 libopenssl-ruby1.8
-
-The version of RubyGems in apt is unfortunately out of date. This can be remedied with:
-
-    $ gem install rubygems-update
-    $ cd /var/lib/gems/1.8/bin
-    $ ./update_rubygems
-
-Now, install required gems:
-
-    $ gem install bundler
 
 ## Setup
 

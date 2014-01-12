@@ -13,6 +13,8 @@
       %th Email
       %th Phone
       %th Address
+      %th
+
   %tbody
   - @coop.members.each do |member|
     = content_tag_for(:tr, member) do
@@ -20,6 +22,7 @@
       %td= link_to(member.email, "mailto:#{h(member.email)}")
       %td= member.phone
       %td= member.address
+      %td= link_to("Edit member", edit_admin_member_path(member))
 
 %h3 Directors
 %table.directors

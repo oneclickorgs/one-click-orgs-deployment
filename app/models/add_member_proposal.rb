@@ -29,7 +29,7 @@ class AddMemberProposal < MembershipProposal
     if @existing_member
       @existing_member.reactivate!
     else
-      member = organisation.members.build(parameters)
+      member = organisation.members.build(parameters, :as => :proposal)
       member.send_welcome = true
       member.save!
     end

@@ -1,0 +1,14 @@
+%h2 All users
+%table.users
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Organisation
+      %th Last login
+  - @members.each do |member|
+    %tr
+      %td= member.name
+      %td= member.email
+      %td= member.organisation_name
+      %td= member.last_logged_in_at

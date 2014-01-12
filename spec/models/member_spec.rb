@@ -272,4 +272,34 @@ describe Member do
     member = Member.make!
     member.shares_count.should == 0
   end
+
+  it "has an organisation_name attribute" do
+    member = Member.make
+    organisation = mock_model(Organisation, :name => 'Test org')
+    member.stub(:organisation).and_return(organisation)
+    expect(member.organisation_name).to eq('Test org')
+  end
+
+  describe "#contact_details_present?" do
+    let(:member) {Member.new(:email => "bob@example.com", :address => "1 High Street", :phone => "01234 567 890")}
+
+    it "returns true when all contacts details are present" do
+      expect(member.contact_details_present?).to be_true
+    end
+
+    it "returns false if the email address is missing" do
+      member.email = ''
+      expect(member.contact_details_present?).to be_false
+    end
+
+    it "returns false if the address is missing" do
+      member.address = ''
+      expect(member.contact_details_present?).to be_false
+    end
+
+    it "returns false if the phone is missing" do
+      member.phone = ''
+      expect(member.contact_details_present?).to be_false
+    end
+  end
 end

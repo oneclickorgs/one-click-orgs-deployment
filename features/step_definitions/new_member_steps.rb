@@ -3,7 +3,7 @@ Given(/^a membership application has been received$/) do
 end
 
 When(/^I follow the link to process the new membership application$/) do
-  click_link("Process application.")
+  first('ul.tasks').click_link("Process application.")
 end
 
 When(/^I fill in my details$/) do

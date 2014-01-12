@@ -195,19 +195,19 @@ Then(/^I should see that director listed as "(.*?)" in the list of Officers$/) d
 end
 
 Then(/^I should see that member in the list of directors$/) do
-  within('.directors') do
+  within('ul.directors') do
     page.should have_content(@member.name)
   end
 end
 
 Then(/^I should see "(.*?)" in the list of (?:D|d)irectors$/) do |name|
-  within('.directors') do
+  within('ul.directors') do
     page.should have_content(name)
   end
 end
 
 Then(/^I should not see "(.*?)" in the list of (?:D|d)irectors$/) do |name|
-  within('.directors') do
+  within('ul.directors') do
     page.should have_no_content(name)
   end
 end

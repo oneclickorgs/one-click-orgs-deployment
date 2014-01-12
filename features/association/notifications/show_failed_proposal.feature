@@ -3,6 +3,7 @@ Feature: Show failed proposal notification
   I want to know when a founding vote fails
   In order to know respond to it
 
+  @javascript
   Scenario: failing vote should show notification
     Given the application is set up
     And an association has been created
@@ -20,6 +21,7 @@ Feature: Show failed proposal notification
     And I go to the home page
     Then I should see "Sorry, the Founding Vote has failed."
 
+  @javascript
   Scenario: The notification for a given subsequent failed founding vote is only shown once
     Given the application is set up
     And an association has been created

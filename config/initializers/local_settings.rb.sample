@@ -18,7 +18,7 @@ OneClickOrgs::Application.configure do
   
   config.secret_token = 'YOUR_SECRET_HERE'
   
-  config.session_store :cookie_store, :key => '_oneclickorgs_session', :domain => :all, :tld_length => 2
+  config.session_store :cookie_store, :key => '_oneclickorgs_v2_session', :domain => :all, :tld_length => 2
   
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
@@ -28,7 +28,7 @@ OneClickOrgs::Application.configure do
   # Deliver an email alert when an exception is raised.
   # config.middleware.use ExceptionNotifier,
   #   :email_prefix => "[Exception] ",
-  #   :sender_address => %{"Your One Click Orgs Installation" <notifications@example.com>},
+  #   :sender_address => %{"Your One Click Orgs Installation" <no-reply@example.com>},
   #   :exception_recipients => %w{you@example.com}
 end
 

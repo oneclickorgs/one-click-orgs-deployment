@@ -30,6 +30,18 @@ Given(/^the requirements for registration have been fulfilled$/) do
   @organisation.reg_form_money_laundering_agreement = true
 
   @organisation.save!
+
+  signatories = @organisation.signatories
+  signatories.each do |signatory|
+    signatory.address ||= "#{Faker::Address.street_address}\n#{Faker::Address.city}\n#{Faker::Address.zip_code}"
+    signatory.phone ||= Faker::PhoneNumber.phone_number
+    signatory.save!
+  end
+
+  secretary = @organisation.secretary
+  secretary.address ||= "#{Faker::Address.street_address}\n#{Faker::Address.city}\n#{Faker::Address.zip_code}"
+  secretary.phone ||= Faker::PhoneNumber.phone_number
+  secretary.save!
 end
 
 Given(/^the money laundering form has been filled in$/) do

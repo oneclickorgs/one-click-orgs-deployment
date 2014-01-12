@@ -7,23 +7,17 @@ Given(/^I have a current task$/) do
 end
 
 When(/^I dismiss the task$/) do
-  within("#task_#{@task.id}") do
-    click_link("Dismiss")
-  end
+  first("#task_#{@task.id}").click_link("Dismiss")
 end
 
 Then(/^I should see a task telling me to deal with the suggested resolution$/) do
   @resolution_proposal ||= @organisation.resolution_proposals.last
-  within('.tasks') do
-    page.should have_css("a[href='/resolution_proposals/#{@resolution_proposal.to_param}']")
-  end
+  first('.tasks').should have_css("a[href='/resolution_proposals/#{@resolution_proposal.to_param}']")
 end
 
 Then(/^I should see a notification of the new membership application$/) do
   @member ||= @organisation.members.pending.last
-  within('.tasks') do
-    page.should have_css("a[href='/members/#{@member.to_param}']")
-  end
+  first('ul.tasks').should have_css("a[href='/members/#{@member.to_param}']")
 end
 
 Then(/^I should no longer see a notification of the new membership application$/) do
@@ -44,7 +38,7 @@ end
 
 Then(/^I should see a task telling me to vote in the resolution$/) do
   @resolution ||= @organisation.resolutions.last
-  within('.tasks') do
+  first('ul.tasks') do
     page.should have_content(@resolution.title)
     page.should have_css("a[href='/resolutions/#{@resolution.to_param}']")
   end

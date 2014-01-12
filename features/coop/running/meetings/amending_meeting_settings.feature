@@ -28,7 +28,7 @@ Feature: Amending meeting settings
     And I select "Change the notice period for General Meetings" from "Type of proposal"
     And I enter "7" days
     Then I should see "90% of Members"
-    And I press "Open this proposal for electronic voting"
+    When I press "Open this proposal for electronic voting"
     Then I should see "A proposal to decrease the General Meeting notice period has been opened for electronic voting."
     When I go to the Resolutions page
     Then I should see an open resolution to decrease the General Meeting notice period to 7 days

@@ -81,6 +81,7 @@ class Coop < Organisation
     result &&= !!secretary
     result &&= rules_filled?
     result &&= registration_form_filled?
+    result &&= signatories_and_secretary_contact_details_present?
 
     result
   end
@@ -531,6 +532,14 @@ class Coop < Organisation
   def members_with_signatories_selected
     signatories = self.signatories
     members.each{|m| m.selected = true if signatories.include?(m)}
+  end
+
+  def signatories_and_secretary_contact_details_present?
+    signatories.push(secretary).compact.inject(true){|memo, member| memo && member.contact_details_present?}
+  end
+
+  def signatories_and_secretary_without_contact_details
+    signatories.push(secretary).uniq.select{|m| !m.contact_details_present?}
   end
 
   def reg_form_money_laundering_agreement=(new_money_laundering_agreement)
