@@ -81,19 +81,19 @@ class RegistrationForm
 
     form_data['close_links'] = @organisation.reg_form_close_links
 
-    first_three_members = @organisation.members.order('created_at ASC').limit(3)
+    signatories = @organisation.signatories
 
-    form_data['member_1_name'] = first_three_members[0].name
-    form_data['member_1_address'] = first_three_members[0].address
-    form_data['member_1_phone'] = first_three_members[0].phone
+    form_data['member_1_name'] = signatories[0].try(:name)
+    form_data['member_1_address'] = signatories[0].try(:address)
+    form_data['member_1_phone'] = signatories[0].try(:phone)
 
-    form_data['member_2_name'] = first_three_members[1].try(:name)
-    form_data['member_2_address'] = first_three_members[1].try(:address)
-    form_data['member_2_phone'] = first_three_members[1].try(:phone)
+    form_data['member_2_name'] = signatories[1].try(:name)
+    form_data['member_2_address'] = signatories[1].try(:address)
+    form_data['member_2_phone'] = signatories[1].try(:phone)
 
-    form_data['member_3_name'] = first_three_members[2].try(:name)
-    form_data['member_3_address'] = first_three_members[2].try(:address)
-    form_data['member_3_phone'] = first_three_members[2].try(:phone)
+    form_data['member_3_name'] = signatories[2].try(:name)
+    form_data['member_3_address'] = signatories[2].try(:address)
+    form_data['member_3_phone'] = signatories[2].try(:phone)
 
     form_data['secretary_name'] = @organisation.secretary.try(:name)
     form_data['secretary_address'] = @organisation.secretary.try(:address)
