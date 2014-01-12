@@ -39,7 +39,7 @@ end
 When(/^I enter the new co\-op's details$/) do
   fill_in("Co-op's official name", :with => "Coffee Ventures")
   fill_in("Your One Click Orgs web address will be", :with => "coffee")
-  fill_in("What the Co-op exists for", :with => "Selling coffee")
+  fill_in("coop_objectives", :with => "Selling coffee")
 end
 
 When(/^the co\-op daily job runs$/) do

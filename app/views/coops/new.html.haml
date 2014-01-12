@@ -41,7 +41,8 @@
         %span#base_domain
           = '.' + Setting[:base_domain]
       %p
-        = coop_fields.label :objectives, "What the Co-op exists for"
+        = coop_fields.label :objectives, "Complete the following sentence:"
+        .explanation The objects of the Co-operative shall be to
         = coop_fields.text_area :objectives
     = fields_for(@member) do |member_fields|
       %p
