@@ -97,7 +97,7 @@
 - "#rticles#topic#member_admission #rticles#true#employee_members All Employees on taking up employment with the Co‑operative may be admitted to membership, except that the Co‑operative in a general meeting may by an ordinary resolution decide to exclude from membership:"
 -
   - "#rticles#true#employee_members Newly appointed Employees during such reasonable probationary period as may be specified in their terms and conditions of employment;"
-  - "#rticles#true#employee_members Employees working less than a prescribed number of hours per week (or per month);"
+  - "#rticles#true#employee_members Employees working less than a prescribed number of hours per week (or per month)."
 - "#rticles#topic#member_admission #rticles#continue #rticles#true#employee_members provided that any such criteria for exclusion are applied equally to all Employees."
 - "#rticles#heading#3 #rticles#true#supporter_members Supporter Members"
 - "#rticles#topic#member_admission #rticles#true#supporter_members Any natural person, nominee of an unincorporated body, firm, partnership or corporate body that operates in an associated field of activity to the Co‑operative or that has an interest in supporting the Co‑operative's business."
@@ -269,13 +269,13 @@
 - "#rticles#topic#board The initial Directors of the Co‑operative from registration until the first annual general meeting shall be appointed by the Founder Members."
 - "#rticles#topic#board Only Members of the Co‑operative who are aged 18 years or more may serve on the Board of Directors."
 - "#rticles#heading#3 Composition of the Board of Directors"
-- "#rticles#topic#board The Board of Directors shall be elected by and from the Co‑operative's Members. The composition of the Board of Directors following the first annual general meeting shall be as follows:"
+- "#rticles#topic#board #rticles#list The Board of Directors shall be elected by and from the Co‑operative's Members. The composition of the Board of Directors following the first annual general meeting shall be as follows:"
 -
-  - "#rticles#true#user_members Not more than #rticles#max_user_directors User Members;"
-  - "#rticles#true#employee_members Not more than #rticles#max_employee_directors Employee Members;"
-  - "#rticles#true#supporter_members Not more than #rticles#max_supporter_directors Supporter Members;"
-  - "#rticles#true#producer_members Not more than #rticles#max_producer_directors Producer Members;"
-  - "#rticles#true#consumer_members Not more than #rticles#max_consumer_directors Consumer Members;"
+  - "#rticles#true#user_members Not more than #rticles#max_user_directors User Members"
+  - "#rticles#true#employee_members Not more than #rticles#max_employee_directors Employee Members"
+  - "#rticles#true#supporter_members Not more than #rticles#max_supporter_directors Supporter Members"
+  - "#rticles#true#producer_members Not more than #rticles#max_producer_directors Producer Members"
+  - "#rticles#true#consumer_members Not more than #rticles#max_consumer_directors Consumer Members"
 - "#rticles#topic#board The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time."
 - "#rticles#heading#3 Retirement Cycle"
 - |-
