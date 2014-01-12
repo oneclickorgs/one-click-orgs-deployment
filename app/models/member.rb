@@ -193,6 +193,10 @@ class Member < ActiveRecord::Base
     end
   end
 
+  def contact_details_present?
+    email.present? && address.present? && phone.present?
+  end
+
   # GRAVATAR
 
   def gravatar_url(size)

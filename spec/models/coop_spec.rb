@@ -593,4 +593,51 @@ describe Coop do
     end
   end
 
+  describe "#can_propose?" do
+    let(:coop) {Coop.new}
+
+    before(:each) do
+      coop.stub_chain(:members, :active, :count).and_return(3)
+      coop.stub_chain(:directors, :count).and_return(3)
+      coop.stub(:secretary).and_return(mock_model(Member))
+      coop.stub(:rules_filled?).and_return(true)
+      coop.stub(:registration_form_filled?).and_return(true)
+      coop.stub(:signatories_and_secretary_contact_details_present?).and_return(true)
+    end
+
+    it "returns false if the signatories' and secretary's contact details are not present" do
+      coop.stub(:signatories_and_secretary_contact_details_present?).and_return(false)
+      expect(coop.can_propose?).to be_false
+    end
+  end
+
+  describe "#signatories_and_secretary_contact_details_present?" do
+    let(:coop) {Coop.new}
+    let(:signatories) {[
+      mock_model(Member, :contact_details_present? => true),
+      mock_model(Member, :contact_details_present? => true),
+      mock_model(Member, :contact_details_present? => true)
+    ]}
+    let(:secretary) {mock_model(Member, :contact_details_present? => true)}
+
+    before(:each) do
+      coop.stub(:signatories).and_return(signatories)
+      coop.stub(:secretary).and_return(secretary)
+    end
+
+    it "returns true if all the contact details are present" do
+      expect(coop.signatories_and_secretary_contact_details_present?).to be_true
+    end
+
+    it "returns false if the secretary's contact details are missing" do
+      secretary.stub(:contact_details_present?).and_return(false)
+      expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+    end
+
+    it "returns false if any one of the signatories' contact details are missing" do
+      signatories[1].stub(:contact_details_present?).and_return(false)
+      expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+    end
+  end
+
 end
