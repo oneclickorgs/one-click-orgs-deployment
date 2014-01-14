@@ -112,6 +112,15 @@ When(/^I confirm that I want to terminate my membership$/) do
   check('share_withdrawal[certification]')
 end
 
+When(/^I mark the share application as paid$/) do
+  @share_transaction ||= @share_application.share_transaction if @share_application
+  @share_transaction ||= @organisation.withdrawals.last
+
+  within('#' + ActionController::RecordIdentifier.dom_id(@share_transaction)) do
+    click_button('Mark as paid, and allot shares')
+  end
+end
+
 Then(/^I should see the new share value$/) do
   page.should have_content("0.70")
 end

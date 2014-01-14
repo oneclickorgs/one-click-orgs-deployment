@@ -10,7 +10,7 @@ Feature: Managing share payments
     And a member has made an application for more shares
     When I go to the Shares page
     Then I should see the share application
-    When I press "Mark as paid, and allot shares"
+    When I mark the share application as paid
     Then I should see that the member's new shares have been allotted
     When I go to the dashboard
     Then I should no longer see a notification about the member's share application

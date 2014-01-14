@@ -9,7 +9,8 @@
     = form.text_area(:registered_office_address, :disabled => !@allow_editing)
 
     %h3 Objects
-    %p.explanation "The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to...
+    %p= form.label(:objectives, "Complete the following sentence:")
+    %p.explanation "The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to
     = form.text_area(:objectives, :disabled => !@allow_editing)
 
     %h3 Membership criteria

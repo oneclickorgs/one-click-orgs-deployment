@@ -107,6 +107,12 @@ describe Constitution do
         document = @constitution.document
         document.insertions[:meeting_notice_period].should == 14
       end
+
+      it "formats the registered office address into one line" do
+        @constitution.stub(:registered_office_address).and_return("1 High Street\nLondon\nN1 1AA")
+        document = @constitution.document
+        expect(document.insertions[:registered_office_address]).to eq("1 High Street, London, N1 1AA")
+      end
     end
   end
 end

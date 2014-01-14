@@ -35,3 +35,17 @@
         The Registration Details have been filled in.
       - else
         The Registration Details have not been filled in yet.
+  %li{:class => co.signatories_and_secretary_contact_details_present? ? 'done' : ''}
+    %h3 Ensure all founders have entered their contact details
+    %p
+      - if co.signatories_and_secretary_contact_details_present?
+        All necessary founders have entered their contact details.
+      - else
+        -if co.signatories_and_secretary_without_contact_details.length == 1
+          = co.signatories_and_secretary_without_contact_details[0].name
+          needs to fill in their contact details.
+        - else
+          = co.signatories_and_secretary_without_contact_details[0..-2].map(&:name).join(', ')
+          and
+          = co.signatories_and_secretary_without_contact_details[-1].name
+          need to fill in their contact details.
