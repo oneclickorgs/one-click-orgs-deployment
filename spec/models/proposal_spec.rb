@@ -31,6 +31,14 @@ describe Proposal do
         proposal.comments.map(&:body).should == ["A", "B", "C"]
       end
     end
+
+    describe 'votes' do
+      it 'destroys associated votes when the proposal is destroyed' do
+        proposal = @organisation.proposals.make
+        proposal.votes.make_n(3)
+        expect{proposal.destroy}.to change{Vote.count}.by(-3)
+      end
+    end
   end
   
   it "should close early proposals" do
