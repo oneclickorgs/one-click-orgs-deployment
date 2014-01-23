@@ -120,3 +120,7 @@ end
 Resignation.blueprint do
 end
 
+Vote.blueprint do
+  self.send(:assign_attribute, :for, true)
+end
+
