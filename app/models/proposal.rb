@@ -21,8 +21,8 @@ class Proposal < ActiveRecord::Base
 
   belongs_to :organisation
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
-
-  has_many :votes
+  
+  has_many :votes, :dependent => :destroy
   has_one :decision
   has_many :comments, :as => :commentable
 
