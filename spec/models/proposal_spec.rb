@@ -34,9 +34,9 @@ describe Proposal do
 
     describe 'votes' do
       it 'destroys associated votes when the proposal is destroyed' do
-        proposal = @organisation.proposals.make
-        proposal.votes.make_n(3)
-        expect{proposal.destroy}.to change{Vote.count}.by(-3)
+        proposal = @organisation.proposals.make!
+        proposal.votes.make!(3)
+        expect{proposal.destroy}.to change{Vote.count}.by(-4)
       end
     end
   end
