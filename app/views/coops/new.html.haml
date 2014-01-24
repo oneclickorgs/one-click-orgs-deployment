@@ -42,8 +42,8 @@
           = '.' + Setting[:base_domain]
       %p
         = coop_fields.label :objectives, "Complete the following sentence:"
-        .explanation The objects of the Co-operative shall be to
-        = coop_fields.text_area :objectives
+        .explanation The objects of the Co-operative shall be to...
+        = coop_fields.text_area :objectives, :placeholder => 'publish books, magazines and related publications in printed and electronic formats.'
     = fields_for(@member) do |member_fields|
       %p
         = member_fields.check_box :terms_and_conditions, :class => 'inline', :style => 'width: auto; margin-left: 20px;'
