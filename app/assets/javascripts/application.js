@@ -81,6 +81,18 @@ $(document).ready(function () {
     window.location.href = $(this).data('url');
   });
 
+  // Toggle-able elements
+  $('.toggle_content').hide();
+  $('.toggle_controller').show();
+  $('.toggle_controller a').click(function(event)
+  {
+    var toggleLink = $(this);
+    var contentElement = $('#' + toggleLink.data('content-id'));
+    contentElement.slideDown(); // show
+    toggleLink.slideUp(); // hide
+    event.preventDefault();
+  })
+
   // Notifications
   if ($('#lightbox div.notification').length > 0) {
     OneClickOrgs.activateLightbox();

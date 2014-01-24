@@ -10,8 +10,16 @@
 
     %h3 Objects
     %p= form.label(:objectives, "Complete the following sentence:")
-    %p.explanation "The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to
+    %p.explanation The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to...
     = form.text_area(:objectives, :disabled => !@allow_editing)
+    %p.explanation{:style => 'display: none;', :class => 'toggle_controller'}
+      %a{:href => 'javascript: void(0);', 'data-content-id' => 'coop_rules_example'} Show an example
+    #coop_rules_example.toggle_content
+      %p Here is an example of how to fill in the 'Objects' for your co-op:
+      %p.explanation
+        The objects of the Co-operative shall be to carry on the business as a co-operative and to carry on any other trade, business or service and in particular to...
+        %br
+        %em publish books, magazines and related publications in printed and electronic formats.
 
     %h3 Membership criteria
     %p.explanation Who may be admitted into membership of the Co-operative?
