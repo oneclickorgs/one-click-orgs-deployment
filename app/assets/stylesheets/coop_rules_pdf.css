@@ -80,6 +80,7 @@ table.signatures {
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
+  page-break-inside: avoid;
 }
 
 table.signatures th, table.signatures td {
