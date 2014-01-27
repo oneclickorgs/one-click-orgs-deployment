@@ -113,6 +113,23 @@ describe Constitution do
         document = @constitution.document
         expect(document.insertions[:registered_office_address]).to eq("1 High Street, London, N1 1AA")
       end
+
+      it "sets multiple_board_classes to true if there is more than one board class selected" do
+        @constitution.stub(:user_members).and_return(true)
+        @constitution.stub(:employee_members).and_return(true)
+        document = @constitution.document
+        expect(document.choices[:multiple_board_classes]).to be_true
+      end
+
+      it "sets multiple_board_classes to false if only one board class is selected" do
+        @constitution.stub(:user_members).and_return(true)
+        @constitution.stub(:employee_members).and_return(false)
+        @constitution.stub(:supporter_members).and_return(false)
+        @constitution.stub(:producer_members).and_return(false)
+        @constitution.stub(:consumer_members).and_return(false)
+        document = @constitution.document
+        expect(document.choices[:multiple_board_classes]).to be_false
+      end
     end
   end
 end

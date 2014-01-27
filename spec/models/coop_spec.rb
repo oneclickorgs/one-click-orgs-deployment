@@ -611,7 +611,7 @@ describe Coop do
     end
   end
 
-  describe "#signatories_and_secretary_contact_details_present?" do
+  describe "contact details" do
     let(:coop) {Coop.new}
     let(:signatories) {[
       mock_model(Member, :contact_details_present? => true),
@@ -625,18 +625,27 @@ describe Coop do
       coop.stub(:secretary).and_return(secretary)
     end
 
-    it "returns true if all the contact details are present" do
-      expect(coop.signatories_and_secretary_contact_details_present?).to be_true
+    describe "#signatories_and_secretary_contact_details_present?" do
+      it "returns true if all the contact details are present" do
+        expect(coop.signatories_and_secretary_contact_details_present?).to be_true
+      end
+
+      it "returns false if the secretary's contact details are missing" do
+        secretary.stub(:contact_details_present?).and_return(false)
+        expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+      end
+
+      it "returns false if any one of the signatories' contact details are missing" do
+        signatories[1].stub(:contact_details_present?).and_return(false)
+        expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+      end
     end
 
-    it "returns false if the secretary's contact details are missing" do
-      secretary.stub(:contact_details_present?).and_return(false)
-      expect(coop.signatories_and_secretary_contact_details_present?).to be_false
-    end
-
-    it "returns false if any one of the signatories' contact details are missing" do
-      signatories[1].stub(:contact_details_present?).and_return(false)
-      expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+    describe "signatories_and_secretary_without_contact_details" do
+      it "does not error if the secretary is not set yet" do
+        coop.stub(:secretary).and_return(nil)
+        expect{coop.signatories_and_secretary_without_contact_details}.to_not raise_error
+      end
     end
   end
 

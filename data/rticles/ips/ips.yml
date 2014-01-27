@@ -276,7 +276,7 @@
   - "#rticles#true#supporter_members Not more than #rticles#max_supporter_directors Supporter Members"
   - "#rticles#true#producer_members Not more than #rticles#max_producer_directors Producer Members"
   - "#rticles#true#consumer_members Not more than #rticles#max_consumer_directors Consumer Members"
-- "#rticles#topic#board The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time."
+- "#rticles#topic#board #rticles#true#multiple_board_classes The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time."
 - "#rticles#heading#3 Retirement Cycle"
 - |-
     #rticles#topic#board At the first annual general meeting all Directors shall stand down. At every subsequent annual general meeting one third of the Board of Directors, or if their number is not a multiple of three then the number nearest to one third,
