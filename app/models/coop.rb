@@ -539,7 +539,7 @@ class Coop < Organisation
   end
 
   def signatories_and_secretary_without_contact_details
-    signatories.push(secretary).uniq.select{|m| !m.contact_details_present?}
+    signatories.push(secretary).compact.uniq.select{|m| !m.contact_details_present?}
   end
 
   def reg_form_money_laundering_agreement=(new_money_laundering_agreement)
