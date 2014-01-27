@@ -56,6 +56,7 @@ class Constitution
       :quorum_number => quorum_number,
       :quorum_percentage => quorum_percentage
     }
+    multiple_board_classes = [user_members, employee_members, supporter_members, producer_members, consumer_members].select{|m| m}.length > 1
     document.choices = {
       :user_members => user_members,
       :employee_members => employee_members,
@@ -63,7 +64,8 @@ class Constitution
       :producer_members => producer_members,
       :consumer_members => consumer_members,
       :single_shareholding => single_shareholding,
-      :common_ownership => common_ownership
+      :common_ownership => common_ownership,
+      :multiple_board_classes => multiple_board_classes
     }
     document
   end
