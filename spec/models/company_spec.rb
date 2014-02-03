@@ -28,7 +28,7 @@ describe Company do
       @director.should be_a(Director)
       @director.email.should == "bob@example.com"
       @director.member_class.name.should == 'Director'
-      @director.should be_active
+      @director.should be_pending
     end
   end
   
