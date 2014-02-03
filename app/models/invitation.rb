@@ -71,7 +71,7 @@ class Invitation < OneClickOrgs::ModelWrapper
 
   def self.find_by_id(id)
     member = Member.find_by_invitation_code(id)
-    if member
+    if member && member.pending?
       new(:member => member)
     else
       nil
