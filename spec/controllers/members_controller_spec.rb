@@ -20,8 +20,8 @@ describe MembersController do
         @company.stub(:directors).and_return(@directors_association)
         
         @directors = double("directors")
-        @directors_association.stub(:active).and_return(@directors)
-        
+        @directors_association.stub(:active_and_pending).and_return(@directors)
+
         @director = mock_model(Director)
         Director.stub(:new).and_return(@director)
       end
@@ -29,9 +29,9 @@ describe MembersController do
       def get_index
         get :index
       end
-      
-      it "finds the active directors" do
-        @directors_association.should_receive(:active).and_return(@directors)
+
+      it "finds the active and pending directors" do
+        @directors_association.should_receive(:active_and_pending).and_return(@directors)
         get_index
       end
       

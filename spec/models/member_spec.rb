@@ -104,7 +104,18 @@ describe Member do
       @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
-  
+
+  describe 'scopes' do
+    it 'returns active and pending members' do
+      active = @organisation.members.make!(:state => 'active')
+      inactive = @organisation.members.make!(:state => 'inactive')
+      pending = @organisation.members.make!(:state => 'pending')
+      @organisation.members.active_and_pending.should include(active)
+      @organisation.members.active_and_pending.should include(pending)
+      @organisation.members.active_and_pending.should_not include(inactive)
+    end
+  end
+
   describe "name" do
     it "returns the full name for a member with first name and last name" do
       Member.new(:first_name => "Bob", :last_name => "Smith").name.should == "Bob Smith"

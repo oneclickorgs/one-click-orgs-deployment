@@ -44,7 +44,8 @@ class Member < ActiveRecord::Base
   scope :active, with_state(:active)
   scope :inactive, with_state(:inactive)
   scope :pending, with_state(:pending)
-  
+  scope :active_and_pending, with_states(:active, :pending)
+
   scope :founders, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founder').first } } }
   scope :founding_members, lambda {|org| { :conditions => { :member_class_id => org.member_classes.where(:name => 'Founding Member').first } } }
   

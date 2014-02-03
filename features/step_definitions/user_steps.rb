@@ -25,7 +25,7 @@ Given /^I am a member of the organisation$/ do
 end
 
 Given /^I have been invited to sign up as a director$/ do
-  @user ||= @organisation.directors.make!(:send_welcome => true)
+  @user ||= @organisation.directors.make!(:send_welcome => true, :state => 'pending')
 end
 
 Then /^my email should be "([^"]*)"$/ do |email|
