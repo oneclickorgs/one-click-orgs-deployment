@@ -17,4 +17,11 @@ describe Invitation do
     @member.should_receive(:terms_and_conditions=).with('0')
     Invitation.new(:member => @member)
   end
+
+  it "does not find an invitation for an active member" do
+    Member.stub(:find_by_invitation_code).and_return(@member)
+    @member.stub(:pending?).and_return(false)
+    expect(Invitation.find_by_id('abcdef')).to be_nil
+  end
+
 end
