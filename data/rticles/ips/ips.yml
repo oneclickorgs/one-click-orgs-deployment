@@ -271,11 +271,11 @@
 - "#rticles#heading#3 Composition of the Board of Directors"
 - "#rticles#topic#board #rticles#list The Board of Directors shall be elected by and from the Co‑operative's Members. The composition of the Board of Directors following the first annual general meeting shall be as follows:"
 -
-  - "#rticles#true#user_members Not more than #rticles#max_user_directors User Members"
-  - "#rticles#true#employee_members Not more than #rticles#max_employee_directors Employee Members"
-  - "#rticles#true#supporter_members Not more than #rticles#max_supporter_directors Supporter Members"
-  - "#rticles#true#producer_members Not more than #rticles#max_producer_directors Producer Members"
-  - "#rticles#true#consumer_members Not more than #rticles#max_consumer_directors Consumer Members"
+  - "#rticles#true#user_directors Not more than #rticles#max_user_directors User Members"
+  - "#rticles#true#employee_directors Not more than #rticles#max_employee_directors Employee Members"
+  - "#rticles#true#supporter_directors Not more than #rticles#max_supporter_directors Supporter Members"
+  - "#rticles#true#producer_directors Not more than #rticles#max_producer_directors Producer Members"
+  - "#rticles#true#consumer_directors Not more than #rticles#max_consumer_directors Consumer Members"
 - "#rticles#topic#board #rticles#true#multiple_board_classes The Board of Directors shall endeavour to ensure that its composition reflects the number of Members in each category, to maintain a representative balance. This shall be reviewed by the Directors from time to time."
 - "#rticles#heading#3 Retirement Cycle"
 - |-
