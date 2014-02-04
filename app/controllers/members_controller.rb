@@ -17,7 +17,7 @@ class MembersController < ApplicationController
         @founding_member = co.build_founding_member
       end
     when Company
-      @members = co.directors.active
+      @members = co.directors.active_and_pending
 
       @page_title = "Directors"
       @director = Director.new

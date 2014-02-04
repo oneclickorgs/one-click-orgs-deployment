@@ -36,7 +36,7 @@ class Company < Organisation
     Director.new(attributes).tap{|m|
       m.organisation = self
       m.member_class = member_classes.find_by_name("Director")
-      m.state = 'active'
+      m.state = 'pending'
     }
   end
 end

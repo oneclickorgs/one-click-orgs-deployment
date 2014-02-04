@@ -27,7 +27,7 @@ module OneClickOrgs
     end
 
     def clear_invitation_code!
-      self.update_attribute(:invitation_code, nil)
+      self.update_column(:invitation_code, nil)
     end
 
     module ClassMethods

@@ -17,6 +17,10 @@ class InvitationsController < ApplicationController
   def update
     # TODO should be searching scoped by organisation
     @invitation = Invitation.find(params[:id])
+    unless @invitation
+      redirect_to(root_path)
+      return
+    end
 
     if @invitation.update_attributes(params[:invitation])
       log_in @invitation.member

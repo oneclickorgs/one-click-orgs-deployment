@@ -65,7 +65,12 @@ class Constitution
       :consumer_members => consumer_members,
       :single_shareholding => single_shareholding,
       :common_ownership => common_ownership,
-      :multiple_board_classes => multiple_board_classes
+      :multiple_board_classes => multiple_board_classes,
+      :user_directors => (user_members && max_user_directors > 0),
+      :employee_directors => (employee_members && max_employee_directors > 0),
+      :supporter_directors => (supporter_members && max_supporter_directors > 0),
+      :producer_directors => (producer_members && max_producer_directors > 0),
+      :consumer_directors => (consumer_members && max_consumer_directors > 0),
     }
     document
   end
