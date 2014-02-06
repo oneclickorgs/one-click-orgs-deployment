@@ -210,7 +210,7 @@ GEM
       ref
     thor (0.18.1)
     tilt (1.4.1)
-    tins (0.13.1)
+    tins (0.13.2)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
