@@ -14,5 +14,8 @@
 %p.checkbox
   = form.check_box :certification
   = form.label :certification, "I certify this individual was duly elected as a Director at a General Meeting held on this date"
+%p.checkbox
+  = form.check_box :age_certification
+  = form.label :age_certification, "I certify this individual will be aged 16 or over on the date of their appointment"
 %p
   = form.submit "Add this director"

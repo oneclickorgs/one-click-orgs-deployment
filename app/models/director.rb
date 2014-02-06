@@ -5,11 +5,12 @@
 class Director < Member
   @abstract_class = true
   
-  attr_accessible :certification, :elected_on, :stood_down_on
+  attr_accessible :certification, :elected_on, :stood_down_on, :age_certification
   
-  attr_accessor :certification
+  attr_accessor :certification, :age_certification
   
   validates_acceptance_of :certification, :on => :create, :allow_nil => false
+  validates_acceptance_of :age_certification, :on => :create, :allow_nil => false
   
   def send_new_director_notifications
     self.organisation.members.each do |member|

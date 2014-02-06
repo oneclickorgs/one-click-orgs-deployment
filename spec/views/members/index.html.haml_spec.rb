@@ -68,7 +68,8 @@ describe "members/index" do
         :first_name => nil,
         :last_name => nil,
         :elected_on => nil,
-        :certification => nil
+        :certification => nil,
+        :age_certification => nil
       ).as_new_record
       assign(:director, @director)
       
@@ -117,6 +118,7 @@ describe "members/index" do
         form.should have_selector(:select, :name => 'director[elected_on(2i)]')
         form.should have_selector(:select, :name => 'director[elected_on(3i)]')
         form.should have_selector(:input, :type => 'checkbox', :name => 'director[certification]')
+        form.should have_selector(:input, :type => 'checkbox', :name => 'director[age_certification]')
         form.should have_selector(:input, :type => 'submit')
       end
     end

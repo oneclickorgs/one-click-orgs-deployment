@@ -20,6 +20,7 @@ Feature: Adding a director
     And I fill in "Last name" with "Smith"
     And I choose yesterday for the date of election
     And I check the certification checkbox
+    And I check the age check checkbox
     And I press "Add this director"
     Then I should be on the Directors page
     And I should see "Bob Smith" within the list of directors
