@@ -1,6 +1,11 @@
 class ConvertProposalsToStateMachine < ActiveRecord::Migration
-  class Proposal < ActiveRecord::Base; end
-    
+  class ::Proposal < ActiveRecord::Base; end
+
+  # Old databases being migrated from v1.x may have old class names in the
+  # 'type' column, which causes an error when running this migration.
+  # Temporarily define this class to work around this error.
+  class ::FoundOrganisationProposal < Proposal; end
+
   def self.up
     add_column :proposals, :state, :string
     
@@ -12,7 +17,7 @@ class ConvertProposalsToStateMachine < ActiveRecord::Migration
       else
         proposal.state = "rejected"
       end
-      proposal.save!
+      proposal.save!(:validate => false)
     end
     
     remove_column :proposals, :open
