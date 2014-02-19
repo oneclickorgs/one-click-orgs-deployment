@@ -205,6 +205,7 @@ end
 
 Director.blueprint do
   certification { '1' }
+  age_certification { '1' }
 end
 
 Comment.blueprint do

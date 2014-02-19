@@ -59,6 +59,10 @@ When(/^I press "([^"]*)" for another director$/) do |button|
   end
 end
 
+When(/^I check the age check checkbox$/) do
+  check('director[age_certification]')
+end
+
 Then(/^I should see a form for standing down the director$/) do
   page.should have_selector("form[action='/directors/#{@director.id}/stand_down']")
   within("form[action='/directors/#{@director.id}/stand_down']") do
@@ -89,6 +93,7 @@ When(/^I add a new director$/) do
   step 'I fill in "Last name" with "Smith"'
   step 'I choose yesterday for the date of election'
   step 'I check the certification checkbox'
+  step 'I check the age check checkbox'
   step 'I press "Add this director"'
 end
 
