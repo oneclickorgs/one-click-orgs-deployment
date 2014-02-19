@@ -5,7 +5,7 @@ class Proposal < ActiveRecord::Base
   
   after_create :send_email
   
-  has_many :votes
+  has_many :votes, :dependent => :destroy
   has_one :decision
   
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'

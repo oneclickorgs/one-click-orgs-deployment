@@ -27,7 +27,7 @@
             = member.email
           %td
             - if member.last_logged_in_at
-              = member.last_logged_in_at.to_s(:short)
+              = member.last_logged_in_at.to_s(:long_date)
           - if current_organisation.proposed?
             %td
               - if !member.founding_vote.nil?
@@ -68,7 +68,7 @@
         %td= member.votes_count
         %td
           - if member.last_logged_in_at
-            = member.last_logged_in_at.to_s(:short)
+            = member.last_logged_in_at.to_s(:long_date)
         %td= member.role
   - unless @pending_members.empty?
     %h2
