@@ -1,3 +1,15 @@
+2014-02-19 One Click Orgs 1.3.7
+
+* FIX: When viewing the members list, the date of last login now includes
+  the year, rather than just showing the month and day.
+* FIX: A deleted Proposal no longer leaves orphaned Votes in the database
+  causing errors on various pages.
+* FIX: If a user had a session cookie from version 1.3.5 or earlier, the app
+  would raise an error when they tried to access it.
+* 'From' and 'Subject' headers on notification emails now make it clear that
+  the email is coming from One Click Orgs, not the organisation itself.
+* Rails is upgraded from version 3.2.16 to version 3.2.17.
+
 2013-12-17 One Click Orgs 1.3.6
 
 * Ruby 1.8.7 is no longer supported. You must use Ruby 1.9.3 or higher.
