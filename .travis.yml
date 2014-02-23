@@ -16,8 +16,7 @@ script: bundle exec rake test_with_coveralls
 branches:
   only:
     - master
-    - coop
-    - v1.x
+    - v1.3.x
 notifications:
   recipients:
     - alerts@oneclickorgs.com
