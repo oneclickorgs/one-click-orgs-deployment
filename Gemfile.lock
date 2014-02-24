@@ -24,16 +24,6 @@ GIT
   specs:
     meekster (0.0.1)
 
-GIT
-  remote: https://github.com/oneclickorgs/rticles.git
-  revision: 6b0fa22aa71edaed53ad9ca3dfce5644a16d771e
-  branch: master
-  specs:
-    rticles (0.1.0)
-      acts_as_list (>= 0.1.8, < 0.3.0)
-      rails (~> 3.2.8)
-      roman-numerals (~> 0.3.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -225,6 +215,10 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rticles (0.2.2)
+      acts_as_list (>= 0.1.8, < 0.3.0)
+      rails (>= 3.2.8, < 4.1)
+      roman-numerals (~> 0.3.0)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -320,7 +314,7 @@ DEPENDENCIES
   rails (= 3.2.17)
   rdiscount (~> 2.1.6)
   rspec-rails (~> 2.14.0)
-  rticles!
+  rticles (= 0.2.2)
   ruby-debug19
   sass-rails (~> 3.2.5)
   selenium-webdriver
