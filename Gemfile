@@ -72,7 +72,7 @@ group :development, :test do
   gem "rspec-rails", "~>2.14.0"
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
-  gem "faker", '~>1.2.0'
+  gem "faker", '~>1.3.0'
   gem "simplecov", :platforms => :ruby_19
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
     :branch => "oco", :require => false
