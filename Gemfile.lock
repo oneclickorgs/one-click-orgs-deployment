@@ -55,7 +55,7 @@ GEM
     activesupport (3.2.17)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
-    acts_as_list (0.2.0)
+    acts_as_list (0.4.0)
       activerecord (>= 3.0)
     addressable (2.3.5)
     afm (0.2.0)
@@ -214,8 +214,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    rticles (0.2.2)
-      acts_as_list (>= 0.1.8, < 0.3.0)
+    rticles (0.2.3)
+      acts_as_list (>= 0.1.8)
       rails (>= 3.2.8, < 4.1)
       roman-numerals (~> 0.3.0)
     ruby-debug-base19 (0.11.25)
@@ -280,7 +280,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_list (< 0.3)
+  acts_as_list (~> 0.4.0)
   bundler (~> 1.5.2)
   cancan (~> 1.6.7)
   capistrano (~> 2.14.2)
@@ -313,7 +313,7 @@ DEPENDENCIES
   rails (= 3.2.17)
   rdiscount (~> 2.1.6)
   rspec-rails (~> 2.14.0)
-  rticles (= 0.2.2)
+  rticles (~> 0.2.3)
   ruby-debug19
   sass-rails (~> 3.2.5)
   selenium-webdriver
