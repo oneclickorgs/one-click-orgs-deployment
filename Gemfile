@@ -28,7 +28,7 @@ gem "mysql2", "~>0.3.11"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~>3.2.5'
+  gem 'sass-rails', '~>3.2.5' # sass-rails 4 requires rails 4
   gem 'uglifier', '~>2.5.0'
   gem 'therubyracer', '~>0.11.2'
 end
