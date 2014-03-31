@@ -281,7 +281,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list (~> 0.4.0)
-  bundler (~> 1.5.2)
+  bundler (~> 1.6.0)
   cancan (~> 1.6.7)
   capistrano (~> 2.14.2)
   capybara (~> 2.2.0)
