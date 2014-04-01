@@ -1,0 +1,16 @@
+%h2 Choose organisation types
+
+%p Which types of organisation do you want to enable for this installation?
+
+= form_tag(action: :set_organisation_types) do
+  %p
+    = check_box_tag(:association)
+    = label_tag(:association, 'Associations')
+  %p
+    = check_box_tag(:company)
+    = label_tag(:company, 'Companies Limited by Guarantee')
+  %p
+    = check_box_tag(:coop)
+    = label_tag(:coop, 'Co-operatives')
+  %p
+    = submit_tag('Save settings')

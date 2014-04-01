@@ -7,9 +7,9 @@ describe "Multi-tenancy" do
       response.should redirect_to('http://oneclickorgs.com/setup')
     end
     
-    describe "visiting the setup page" do
+    describe "visiting the domains setup page" do
       it "should show a form to set the base domain and the signup domain" do
-        get 'http://oneclickorgs.com/setup'
+        get 'http://oneclickorgs.com/setup/domains'
         response.should have_selector("form[action='/setup/create_domains']") do |form|
           form.should have_selector("input[name='base_domain']")
           form.should have_selector("input[name='signup_domain']")
@@ -18,12 +18,12 @@ describe "Multi-tenancy" do
       end
       
       it "should auto-detect the base domain" do
-        get 'http://oneclickorgs.com/setup'
+        get 'http://oneclickorgs.com/setup/domains'
         response.should have_selector("input[name='base_domain'][value='oneclickorgs.com']")
       end
       
       it "should auto-suggest the setup domain" do
-        get 'http://oneclickorgs.com/setup'
+        get 'http://oneclickorgs.com/setup/domains'
         response.should have_selector("input[name='signup_domain'][value='oneclickorgs.com']")
       end
     end
@@ -41,8 +41,8 @@ describe "Multi-tenancy" do
         Setting[:signup_domain].should == 'signup.oneclickorgs.com'
       end
       
-      it "should redirect to the new organisation page" do
-        response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+      it "should redirect to the organisation types setup page" do
+        response.should redirect_to 'http://oneclickorgs.com/setup/organisation_types'
       end
     end
   end
@@ -51,6 +51,9 @@ describe "Multi-tenancy" do
     before(:each) do
       Setting[:base_domain] = 'oneclickorgs.com'
       Setting[:signup_domain] = 'signup.oneclickorgs.com'
+      Setting[:association_enabled] = 'true'
+      Setting[:company_enabled] = 'true'
+      Setting[:coop_enabled] = 'true'
     end
     
     it "should redirect all setup requests to the homepage" do

@@ -1,6 +1,9 @@
 %h2 Choose your organisation
 %p What kind of organisation do you want to create?
 %ul.organisations
-  %li= link_to("Co-operative", new_coop_path)
-  %li= link_to("Association", new_association_path)
-  %li= link_to("Company", new_company_path)
+  - if @association_enabled
+    %li= link_to("Association", new_association_path)
+  - if @company_enabled
+    %li= link_to("Company", new_company_path)
+  - if @coop_enabled
+    %li= link_to("Co-operative", new_coop_path)

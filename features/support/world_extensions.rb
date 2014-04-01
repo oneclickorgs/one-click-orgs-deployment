@@ -19,6 +19,10 @@ module AppSetup
 
     Setting[:base_domain] = "ocolocalhost.com#{port_segment}"
     Setting[:signup_domain] = "create.ocolocalhost.com#{port_segment}"
+
+    Setting[:association_enabled] = 'true'
+    Setting[:company_enabled] = 'true'
+    Setting[:coop_enabled] = 'true'
   end
 
   def set_up_application_if_necessary

@@ -6,6 +6,9 @@ describe "Single-organisation mode" do
   # to other co-founders
   def create_mock_association
     Setting[:single_organisation_mode] = 'true'
+    Setting[:association_enabled] = 'true'
+    Setting[:company_enabled] = 'false'
+    Setting[:coop_enabled] = 'false'
 
     # TODO: Roll stubbing of single-organisation-mode organisations into stubs.rb
     @organisation = Association.make!(:subdomain => nil, :name => 'abc', :objectives => 'def')
@@ -23,7 +26,7 @@ describe "Single-organisation mode" do
 
   describe "instance setup" do
     it "shows a button to run the app in single-organisation mode" do
-      get 'http://oneclickorgs.com/setup'
+      get 'http://oneclickorgs.com/setup/domains'
       response.should have_selector("form", :action => '/setup/set_single_organisation_mode') do |form|
         form.should have_selector('input', :type => 'submit')
       end
@@ -39,13 +42,15 @@ describe "Single-organisation mode" do
       Setting[:single_organisation_mode].should == 'true'
     end
 
-    it "redirects to New Association form" do
+    it "redirects to New Organisation page" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
-      response.should redirect_to('http://oneclickorgs.com/associations/new')
+      post 'http://oneclickorgs.com/setup/set_organisation_types', association: '1'
+      response.should redirect_to('http://oneclickorgs.com/organisations/new')
     end
 
     it "allows creation of a single association in single organisation mode" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
+      post 'http://oneclickorgs.com/setup/set_organisation_types', association: '1'
       get 'http://oneclickorgs.com/associations/new'
       response.should render_template 'associations/new'
     end

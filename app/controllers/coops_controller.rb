@@ -8,6 +8,10 @@ class CoopsController < ApplicationController
   end
 
   def new
+    unless params[:skip_intro] == '1'
+      redirect_to(action: :intro) and return
+    end
+
     @member = Member.new
     @coop = Coop.new
   end
