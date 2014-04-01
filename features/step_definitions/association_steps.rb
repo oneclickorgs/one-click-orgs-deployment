@@ -44,3 +44,10 @@ Then(/^the organisation should be active$/) do
   @organisation.reload.should be_active
 end
 
+Then(/^I should see the One Click Orgs terms and conditions$/) do
+  expect(page).to have_content('The One Click Orgs platform is provided by the One Click Orgs Association')
+end
+
+Then(/^I should see One Click Orgs' warnings for Founding Members$/) do
+expect(page).to have_content('If you are founding an Association you should read the following warnings')
+end

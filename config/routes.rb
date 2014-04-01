@@ -162,7 +162,12 @@ OneClickOrgs::Application.routes.draw do
   match '/setup(/:action)' => 'setup'
 
   resources :organisations
-  resources :associations
+  resources :associations do
+    collection do
+      get :terms
+      get :warnings
+    end
+  end
   resources :companies
   resources :coops do
     collection do

@@ -17,25 +17,19 @@ $(document).ready(function () {
     $('input#association_subdomain').val(text);
   });
   
-  $('form#new_association').bind('submit', function (event) {
+  $('a.terms').click(function(event)
+  {
     event.preventDefault();
-    OneClickOrgs.activateLightbox({complete : function () {$('button#cancel_terms').focus();}});
-    OneClickOrgs.trackAnalyticsEvent('ViewsNewOrganisationTnC');
+    OneClickOrgs.activateLightbox();
   });
-  $('button#cancel_terms').click(function () {
+  $('button#close_terms').click(function ()
+  {
     OneClickOrgs.dismissLightbox();
   });
-  $('button#confirm_terms').click(function (event) {
+  $('form#new_association').bind('submit', function(event)
+  {
     $('p#loading').show();
-    
-    $(event.target).attr('disabled', true);
-    $('button#cancel_terms').attr('disabled', true);
-    
-    $('input#founder_terms_and_conditions').val('1');
-    
-    $('form#new_association').unbind('submit');
-    // Can't just use form.submit(), because the presence of an input
-    // element with id 'submit' monkeys that up or something.
-    $('form#new_association input#submit').trigger('click');
+    $(event.target).attr('disabled', true)
+    $('#submit').hide();
   });
 });

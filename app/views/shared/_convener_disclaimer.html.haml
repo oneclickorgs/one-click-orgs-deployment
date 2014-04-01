@@ -1,11 +1,3 @@
-%h3
-  Terms and Conditions
-
-%p
-  Please read the terms and conditions for using the One Click Orgs service and confirm your acceptance at the bottom. Your constitution and voting system will then be created (this may take a few seconds).
-
-= render(:partial => 'shared/founding_warnings')
-
 %p
   The One Click Orgs platform is provided by the One Click Orgs Association, an unincorporated association with the members listed at
   = link_to('oneclickorgs.com/about-the-project', 'http://oneclickorgs.com/about-the-project', :target => '_blank') + '.'
@@ -21,11 +13,3 @@
   %li You accept that your contract is with the other members of your Association (or Associations) and that we have no contractual obligations to you whatsoever.
   
   %li You consent to our processing your contact details, the constitution of your society and any resolutions you submit to the governance platform together with a record of any votes taken for the purposes of running the governance platform for your society and anything ancillary that we need to do. This should go without saying, but we are saying it anyway for clarity.
-
-%p#loading
-  = image_tag('squares-loading.gif', :alt => 'Loading')
-  %span Creating constitution & voting system
-
-%p
-  %button#cancel_terms Cancel
-  %button#confirm_terms I accept the terms

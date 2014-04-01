@@ -346,6 +346,9 @@ body.setup
     div.left, div.right
       input, label
         :width 90%
+      input[type="checkbox"]
+        :width auto
+        :margin-left 20px
     div.left
       :float left
       :width 45%
@@ -355,11 +358,18 @@ body.setup
       textarea
         :height 3em
         :width 90%
-      input[type="submit"]
+      input[type="submit"], p#loading
         :font-size 1.1em
         :margin 1em auto 0
         :padding 0.8em 0
         :width 16em
+      p#loading
+        :display none
+        :text-align center
+        :font-weight bold
+        :margin 0 auto 1em
+        img
+          :margin 0 1em 0 0
     #subdomain_wrapper
       :border 1px solid $input-border
       :margin 0 4px 10px 20px
@@ -496,7 +506,8 @@ input, textarea
   :border 1px solid #000
   :padding 0.4em
 
-input[type="button"], input[type="submit"], button
+input[type="button"], input[type="submit"], button,
+p#loading
   @include rounded-corners(3px)
   :padding 0.3em 1.2em 0.2em 1.2em
   :width auto
@@ -509,7 +520,8 @@ form.button_to input[type="submit"]
   &:hover
     :background-color $button-background-highlight
 
-input[type="submit"]
+input[type="submit"],
+p#loading
   :background-color $submit-button-background
   :color $submit-button-text
   :cursor pointer
@@ -694,13 +706,6 @@ table.past_meetings
     button
       :float right
       :margin 0 0.4em
-  p#loading
-    :display none
-    :float left
-    :font-weight bold
-    :margin 0 1em 0
-    img
-      :margin 0 1em 0 0
 
 /* Pre-release warning bar */
 

@@ -6,8 +6,8 @@ class AssociationsController < ApplicationController
   
   before_filter :ensure_no_overwrite_in_single_organisation_mode
   
-  layout "setup"
-  
+  layout "setup", except: [:warnings]
+
   def new
     @association = Association.new
     @founder = @association.members.first || @association.members.new
@@ -68,6 +68,14 @@ class AssociationsController < ApplicationController
     else
       redirect_to(constitution_url(host_and_port(@association.host)))
     end
+  end
+
+  def terms
+    @page_title = 'Terms and Conditions'
+  end
+
+  def warnings
+    @page_title = 'Warnings for Founding Members'
   end
 
 protected
