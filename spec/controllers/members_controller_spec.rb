@@ -83,6 +83,36 @@ describe MembersController do
       end
     end
 
+    describe "POST create" do
+      context "when saving the new member fails" do
+        let(:member) {mock_model(Member, :member_class= => nil)}
+        let(:members_association) {double('members association', build: member)}
+        let(:member_classes_association) {double('member classes association', find_by_name: member_class)}
+        let(:member_class) {mock_model(MemberClass)}
+
+        before(:each) do
+          allow(member).to receive(:save).and_return(false)
+          allow(@organisation).to receive(:members).and_return(members_association)
+          allow(@organisation).to receive(:member_classes).and_return(member_classes_association)
+        end
+
+        def post_create
+          post :create
+        end
+
+        it "sets an error flash" do
+          post_create
+          expect(flash[:error]).to be_present
+        end
+
+        it "renders the 'new' action" do
+          post_create
+          expect(response).to render_template('members/new')
+        end
+
+      end
+    end
+
     describe "PUT induct" do
       let(:members){double("members association", :find => member)}
       let(:member){mock_model(Member,
