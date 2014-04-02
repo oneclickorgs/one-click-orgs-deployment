@@ -48,7 +48,7 @@ gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 gem 'state_machine-audit_trail', '~>0.1.2'
 gem 'meekster', :git => "git://github.com/oneclickorgs/meekster.git", :tag => 'v0.0.1'
 gem 'pdf_form_filler', '~>0.0.3'
-gem 'rticles', '~>0.2.3'
+gem 'rticles', '~>0.2.4'
 gem 'acts_as_list', "~>0.4.0"
 gem "nokogiri"
 gem 'mail', '~>2.5.4'
