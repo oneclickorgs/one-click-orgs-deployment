@@ -1,6 +1,9 @@
 def set_up_app
   Setting[:base_domain] ||= "oneclickorgs.com"
   Setting[:signup_domain] ||= "signup.oneclickorgs.com"
+  Setting[:association_enabled] ||= 'true'
+  Setting[:company_enabled] ||= 'true'
+  Setting[:coop_enabled] ||= 'true'
 end
 
 def default_organisation(attributes={})

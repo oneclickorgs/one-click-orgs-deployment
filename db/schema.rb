@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
   end
 
   create_table "paragraphs", :force => true do |t|
-    t.text     "body"
+    t.text     "body",         :limit => 16777215
     t.integer  "position"
     t.integer  "parent_id"
     t.integer  "document_id"
@@ -213,8 +213,8 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
     t.boolean  "continuation"
     t.string   "name"
     t.string   "topic"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.boolean  "list"
   end
 

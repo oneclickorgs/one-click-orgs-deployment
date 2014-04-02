@@ -9,6 +9,7 @@ Feature: Adding a co-op
   Scenario: Founder creates a co-op
     Given the domain is the signup domain
     When I go to the new co-op page
+    And I follow "Proceed to sign up"
     And I enter my details
     And I enter the new co-op's details
     And I accept the Terms of Use

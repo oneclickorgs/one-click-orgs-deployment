@@ -106,7 +106,12 @@ module NavigationHelpers
       documents_path
     when /^the administrator's users page$/
       admin_members_path
-
+    when /^the domain setup page$/
+      '/setup/domains'
+    when /^the organisation types page$/
+      '/setup/organisation_types'
+    when /^the co\-op intro page$/
+      intro_coops_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

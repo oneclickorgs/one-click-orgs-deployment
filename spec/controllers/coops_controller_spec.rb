@@ -18,7 +18,7 @@ describe CoopsController do
     end
 
     def get_new
-      get :new
+      get :new, skip_intro: '1'
     end
 
     it "builds a new member" do

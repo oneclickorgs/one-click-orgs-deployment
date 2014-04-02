@@ -23,4 +23,4 @@ Feature: Choosing an organisation type
   Scenario: Founder chooses to create a co-op
     When I go to the home page
     And I choose to create a co-op
-    Then I should be on the new co-op page
+    Then I should be on the co-op intro page

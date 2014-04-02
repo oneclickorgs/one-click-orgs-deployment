@@ -31,7 +31,6 @@
       %p
         = f.label :password_confirmation, "Confirm password"
         = f.password_field :password_confirmation
-      = f.hidden_field :terms_and_conditions
 
   %div.right
     %h3 The Association
@@ -50,9 +49,20 @@
       %p
         = f.label :objectives, "What the Association exists for"
         = f.text_area :objectives, :placeholder => 'Strengthen a common enjoyment of oily fish'
-  
+    = fields_for(:founder, @founder) do |f|
       %p
-        = submit_tag "Create draft constitution →", :id => 'submit'
+        = f.check_box(:terms_and_conditions, class: 'inline')
+        = f.label(:terms_and_conditions, "I agree to the #{link_to('Terms and Conditions', terms_associations_path, target: '_blank', class: 'terms')} of One Click Orgs.".html_safe, class: 'inline')
+
+    %p
+      = submit_tag "Create draft constitution →", :id => 'submit'
+
+    %p#loading
+      = image_tag('squares-loading.gif', :alt => 'Loading')
+      %span Creating constitution & voting system
   
 - content_for(:lightbox) do
-  = render(:partial => 'shared/convener_disclaimer')
+  %h3 Terms and Conditions
+  = render(partial: 'shared/convener_disclaimer')
+  %p
+    %button#close_terms Close

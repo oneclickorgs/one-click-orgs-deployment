@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.5.2"
+gem "bundler", "~>1.6.0"
 
 gem "rails", "3.2.17"
 
@@ -28,16 +28,16 @@ gem "mysql2", "~>0.3.11"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~>3.2.5'
-  gem 'uglifier', '~>2.4.0'
+  gem 'sass-rails', '~>3.2.5' # sass-rails 4 requires rails 4
+  gem 'uglifier', '~>2.5.0'
   gem 'therubyracer', '~>0.11.2'
 end
 
 gem "jquery-rails", "~>3.0.4"
-gem "jquery-ui-rails", "~>3.0.1"
+gem "jquery-ui-rails", "~>4.2.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.1.6"
-gem "pdfkit", "~>0.5.2"
+gem "pdfkit", "~>0.6.1"
 gem "daemons", "~>1.1.9"
 gem "delayed_job", "~>4.0.0"
 gem "delayed_job_active_record", "~>4.0.0"
@@ -48,8 +48,8 @@ gem "fastercsv", "~>1.5.4", :platforms => :ruby_18
 gem 'state_machine-audit_trail', '~>0.1.2'
 gem 'meekster', :git => "git://github.com/oneclickorgs/meekster.git", :tag => 'v0.0.1'
 gem 'pdf_form_filler', '~>0.0.3'
-gem 'rticles', :git => "https://github.com/oneclickorgs/rticles.git", :branch => 'master'
-gem 'acts_as_list', "<0.3" # version 0.3 breaks Ruby 1.8 support
+gem 'rticles', '~>0.2.4'
+gem 'acts_as_list', "~>0.4.0"
 gem "nokogiri"
 gem 'mail', '~>2.5.4'
 
@@ -72,7 +72,7 @@ group :development, :test do
   gem "rspec-rails", "~>2.14.0"
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
-  gem "faker", '~>1.2.0'
+  gem "faker", '~>1.3.0'
   gem "simplecov", :platforms => :ruby_19
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
     :branch => "oco", :require => false

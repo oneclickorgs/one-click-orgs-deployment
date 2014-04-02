@@ -65,8 +65,12 @@ class MembersController < ApplicationController
 
     @member = co.members.build(params[:member])
     @member.member_class = co.member_classes.find_by_name('Member')
-    @member.save!
-    redirect_to created_members_path
+    if @member.save
+      redirect_to created_members_path
+    else
+      flash[:error] = "Sorry, there was a problem with your membership application."
+      render(action: :new)
+    end
   end
 
   def created
