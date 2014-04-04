@@ -48,6 +48,13 @@ class Directorship < ActiveRecord::Base
     director.save!
   end
 
+  after_save :end_officership_if_directorship_ended
+  def end_officership_if_directorship_ended
+    return unless ended_on && ended_on_changed?
+    return unless director && director.officership
+    director.officership.end!
+  end
+
   def self.most_recent
     order('elected_on DESC').first
   end

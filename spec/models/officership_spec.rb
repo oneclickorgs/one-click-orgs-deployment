@@ -166,4 +166,13 @@ describe Officership do
     end
   end
 
+  describe "ending" do
+    let(:officership) {Officership.make!(ended_on: nil)}
+
+    it "sets the ended_on attribute" do
+      officership.end!
+      expect(officership.ended_on).to_not be_nil
+    end
+  end
+
 end

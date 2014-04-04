@@ -9,7 +9,7 @@ describe Directorship do
       @organisation = mock_model(Organisation, :domain => 'tea', :name => 'Tea')
       @directorship.stub(:organisation).and_return(@organisation)
 
-      @director = mock_model(Member, :member_class => nil, :name => "John Smith", :email => "john@example.com")
+      @director = mock_model(Member, :member_class => nil, :name => "John Smith", :email => "john@example.com", :officership => nil)
       @directorship.stub(:director).and_return(@director)
 
       @member_classes_association = double("member classes association")
@@ -61,6 +61,20 @@ describe Directorship do
 
       it "saves the member" do
         @director.should_receive(:save!)
+        @directorship.save!
+      end
+    end
+
+    describe "ending officership upon save" do
+      before(:each) do
+        @officership = mock_model(Officership)
+        allow(@director).to receive(:officership).and_return(@officership)
+
+        @directorship.ended_on = 1.day.ago
+      end
+
+      it "ends the officership" do
+        expect(@officership).to receive(:end!)
         @directorship.save!
       end
     end
