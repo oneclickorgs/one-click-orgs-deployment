@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112175011) do
+ActiveRecord::Schema.define(:version => 20140404105309) do
 
   create_table "administrators", :force => true do |t|
     t.string   "email",               :limit => 50, :null => false
@@ -40,14 +40,14 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
   end
 
   create_table "clauses", :force => true do |t|
-    t.string   "name",                                                        :null => false
+    t.string   "name",                                                               :null => false
     t.datetime "started_at"
     t.datetime "ended_at"
-    t.text     "text_value"
+    t.text     "text_value",      :limit => 16777215
     t.integer  "integer_value"
     t.integer  "boolean_value",   :limit => 1
     t.integer  "organisation_id"
-    t.decimal  "decimal_value",                :precision => 10, :scale => 5
+    t.decimal  "decimal_value",                       :precision => 10, :scale => 5
   end
 
   add_index "clauses", ["organisation_id"], :name => "index_clauses_on_organisation_id"
@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
   create_table "comments", :force => true do |t|
     t.integer  "author_id"
     t.integer  "commentable_id"
-    t.text     "body"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.text     "body",             :limit => 16777215
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "commentable_type"
   end
 
@@ -70,16 +70,16 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
   add_index "decisions", ["proposal_id"], :name => "index_decisions_on_proposal_id"
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
+    t.integer  "priority",                       :default => 0
+    t.integer  "attempts",                       :default => 0
+    t.text     "handler",    :limit => 16777215
+    t.text     "last_error", :limit => 16777215
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "queue"
   end
 
@@ -161,9 +161,9 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
     t.string   "password_reset_code"
     t.datetime "last_logged_in_at"
     t.datetime "terms_accepted_at"
+    t.string   "role"
     t.string   "state"
     t.date     "elected_on"
-    t.string   "role"
     t.date     "stood_down_on"
     t.text     "address"
     t.string   "phone"
@@ -198,14 +198,14 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
 
   create_table "organisations", :force => true do |t|
     t.string   "subdomain"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "type"
     t.string   "state"
   end
 
   create_table "paragraphs", :force => true do |t|
-    t.text     "body",         :limit => 16777215
+    t.text     "body"
     t.integer  "position"
     t.integer  "parent_id"
     t.integer  "document_id"
@@ -213,14 +213,14 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
     t.boolean  "continuation"
     t.string   "name"
     t.string   "topic"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.boolean  "list"
   end
 
   create_table "proposals", :force => true do |t|
-    t.string   "title",                                     :null => false
-    t.text     "description"
+    t.string   "title",                                        :null => false
+    t.text     "description",              :limit => 16777215
     t.datetime "creation_date"
     t.datetime "close_date"
     t.string   "parameters",               :limit => 10000
@@ -235,15 +235,15 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
 
   create_table "resignations", :force => true do |t|
     t.integer  "member_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "seen_notifications", :force => true do |t|
     t.integer  "member_id"
     t.string   "notification"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "seen_notifications", ["member_id", "notification"], :name => "index_seen_notifications_on_member_id_and_notification"
@@ -252,8 +252,8 @@ ActiveRecord::Schema.define(:version => 20140112175011) do
   create_table "settings", :force => true do |t|
     t.string   "key"
     t.string   "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "share_accounts", :force => true do |t|
