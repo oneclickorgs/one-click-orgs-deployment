@@ -319,7 +319,39 @@ describe Coop do
     end
 
     context "when this is not the first AGM" do
-      it "retires the one-third of the directors who have been longest in office since their last election"
+      before(:each) do
+        @coop = Coop.make!
+        @coop.annual_general_meetings.make!
+      end
+
+      # Construct `number` directors each elected one day after the last one.
+      def make_directors(number)
+        @coop.members.make!(number, :director)
+        election_date = 2.years.ago
+        @directors_in_order = []
+        @coop.directors.each do |director|
+          director.directorship.update_attribute(:elected_on, election_date)
+          election_date = election_date.advance(days: 1)
+          @directors_in_order.push(director)
+        end
+      end
+
+      it "retires the one-third of the directors who have been longest in office since their last election" do
+        make_directors(9)
+        expect(@coop.directors_retiring).to eq(@directors_in_order[0..2])
+      end
+
+      it "rounds down if the number of directors divided by three is < i.5" do
+        make_directors(10)
+        # One-third of 10 is 3.33... so the nearest number is 3.
+        expect(@coop.directors_retiring.count).to eq(3)
+      end
+
+      it "rounds up if the number of directors divided by three is >= i.5" do
+        make_directors(11)
+        # One-third of 11 is 3.66... so the nearest number is 4.
+        expect(@coop.directors_retiring.count).to eq(4)
+      end
     end
   end
 

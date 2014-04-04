@@ -46,7 +46,11 @@ class Coop < Organisation
   has_many :meetings, :foreign_key => 'organisation_id'
   has_many :board_meetings, :foreign_key => 'organisation_id'
   has_many :general_meetings, :foreign_key => 'organisation_id'
-  has_many :annual_general_meetings, :foreign_key => 'organisation_id'
+  has_many :annual_general_meetings, :foreign_key => 'organisation_id' do
+    def persisted
+      select(&:persisted?)
+    end
+  end
 
   has_many :resolutions, :foreign_key => 'organisation_id'
   has_many :board_resolutions, :foreign_key => 'organisation_id'
@@ -420,9 +424,13 @@ class Coop < Organisation
     Directorship.new({:organisation => self}.merge(attributes))
   end
 
+  # Returns the directors who should retire at the next AGM.
   def directors_retiring
-    # TODO expand this to full rules of retirement
-    directors
+    # At the first AGM, all directors stand down.
+    return directors if annual_general_meetings.persisted.empty?
+
+    number_to_retire = (directors.count / 3.0).round
+    directors.sort{|a, b| a.directorship.elected_on <=> b.directorship.elected_on}[0..(number_to_retire - 1)]
   end
 
   def build_general_meeting_or_annual_general_meeting(attributes={})
