@@ -21,6 +21,10 @@ class Directorship < ActiveRecord::Base
     @certification = cast_to_boolean(new_certification)
   end
 
+  def ended?
+    ended_on.present?
+  end
+
   before_validation :set_director_organisation
   def set_director_organisation
     if director && director.new_record? && !director.organisation
