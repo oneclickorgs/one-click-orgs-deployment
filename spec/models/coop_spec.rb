@@ -72,6 +72,16 @@ describe Coop do
       @coop.change_quorum_resolutions.should include(@change_quorum_resolution)
     end
 
+    it "has many terminate-directorship resolutions" do
+      coop = Coop.make!
+      director = coop.directors.make!(:director)
+      directorship = director.directorship
+      terminate_directorship_resolution = coop.terminate_directorship_resolutions.make!(directorship_id: directorship.id)
+      expect{coop.terminate_directorship_resolutions << terminate_directorship_resolution}.to_not raise_error
+      coop.reload
+      expect(coop.terminate_directorship_resolutions).to include(terminate_directorship_resolution)
+    end
+
     describe "directors" do
       before(:each) do
         @coop = Coop.make!

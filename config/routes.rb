@@ -104,6 +104,7 @@ OneClickOrgs::Application.routes.draw do
   resources :change_board_composition_resolutions
   resources :change_single_shareholding_resolutions
   resources :change_common_ownership_resolutions
+  resources :terminate_directorship_resolutions
 
   resources :board_resolutions
 

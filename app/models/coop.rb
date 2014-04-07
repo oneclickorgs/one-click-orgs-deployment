@@ -60,6 +60,7 @@ class Coop < Organisation
   has_many :change_text_resolutions, :foreign_key => 'organisation_id'
   has_many :change_boolean_resolutions, :foreign_key => 'organisation_id'
   has_many :change_integer_resolutions, :foreign_key => 'organisation_id'
+  has_many :terminate_directorship_resolutions, :foreign_key => 'organisation_id'
 
   has_many :resolution_proposals, :foreign_key => 'organisation_id'
 

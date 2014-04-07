@@ -260,3 +260,7 @@ Vote.blueprint do
   member
   self.send(:assign_attribute, :for, true)
 end
+
+TerminateDirectorshipResolution.blueprint do
+  title {nil}
+end

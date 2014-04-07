@@ -21,7 +21,8 @@ class ProposalTimestampObserver < ActiveRecord::Observer
     :change_integer_resolution,
     :change_meeting_notice_period_resolution,
     :change_quorum_resolution,
-    :change_text_resolution
+    :change_text_resolution,
+    :terminate_directorship_resolution
 
   
   def before_create(proposal)

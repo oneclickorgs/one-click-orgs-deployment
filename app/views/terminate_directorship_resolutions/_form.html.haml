@@ -1,0 +1,11 @@
+= fields_for(:terminate_directorship_resolution) do |terminate_directorship_resolution_fields|
+  %p
+    Choose the director whose appointment you are proposing to terminate.
+  %p
+    = terminate_directorship_resolution_fields.label :director_id, 'Director'
+    = terminate_directorship_resolution_fields.select :director_id, options_for_select(@directors_for_select)
+  %p
+    Enter a description to explain why this resolution is being made.
+  %p
+    = terminate_directorship_resolution_fields.label :description
+    = terminate_directorship_resolution_fields.text_area :description

@@ -15,6 +15,7 @@
     %li= link_to("Change the Rules about the composition of the Board", new_change_board_composition_resolution_path)
     %li= link_to("Change the Rules about share capital", new_change_single_shareholding_resolution_path)
     %li= link_to("Change the Rules about dissolution", new_change_common_ownership_resolution_path)
+    %li= link_to("Terminate a director's appointment", new_terminate_directorship_resolution_path)
     %li= link_to("Other proposal", new_generic_resolution_path)
   %p
     = form.submit("Save this proposal as a draft", :name => 'submit_draft')
