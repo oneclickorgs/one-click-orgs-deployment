@@ -14,7 +14,15 @@ class ProposalTimestampObserver < ActiveRecord::Observer
     :eject_member_proposal,
     :found_association_proposal,
     :membership_proposal,
-    :resolution
+    :resolution_proposal,
+    :resolution,
+    :board_resolution,
+    :change_boolean_resolution,
+    :change_integer_resolution,
+    :change_meeting_notice_period_resolution,
+    :change_quorum_resolution,
+    :change_text_resolution
+
   
   def before_create(proposal)
     set_creation_date(proposal)

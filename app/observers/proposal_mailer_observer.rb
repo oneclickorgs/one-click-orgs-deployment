@@ -14,9 +14,14 @@ class ProposalMailerObserver < ActiveRecord::Observer
     :eject_member_proposal,
     :found_association_proposal,
     :membership_proposal,
+    :resolution_proposal,
     :resolution,
     :board_resolution,
-    :resolution_proposal
+    :change_boolean_resolution,
+    :change_integer_resolution,
+    :change_meeting_notice_period_resolution,
+    :change_quorum_resolution,
+    :change_text_resolution
   
   def after_create(proposal)
     send_notification_email(proposal)
