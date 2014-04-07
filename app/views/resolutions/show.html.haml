@@ -15,33 +15,34 @@
   %h3 Description
   = render 'description', :proposal => @resolution
 
-%h3 Voting
+- if @resolution.open? || @resolution.closed?
 
-%p
-  Votes:
-  = render 'vote_count', :proposal => @resolution
+  %h3 Voting
 
-- if @resolution.open?
   %p
-    Voting ends in
-    %strong
-      = distance_of_time_in_words_to_now(@resolution.end_date)
-    = "(" + @resolution.end_date.to_s(:at_on) + ")"
+    Votes:
+    = render 'vote_count', :proposal => @resolution
 
-- if @resolution.open?
-  - if can?(:create, Vote)
+  - if @resolution.open?
     %p
-      = render 'vote', :proposal => @resolution
-  - else
+      Voting ends in
+      %strong
+        = distance_of_time_in_words_to_now(@resolution.end_date)
+      = "(" + @resolution.end_date.to_s(:at_on) + ")"
+
+    - if can?(:create, Vote)
+      %p
+        = render 'vote', :proposal => @resolution
+    - else
+      %p
+        You cannot vote on this proposal.
+  - elsif
     %p
-      You cannot vote on this proposal.
-- else
-  %p
-    This proposal
-    -if @resolution.accepted?
-      %strong succeeded
-    -else
-      %strong failed
+      This proposal
+      -if @resolution.accepted?
+        %strong succeeded
+      -else
+        %strong failed
 
 %h3 Comments
 - @comments.each do |comment|
