@@ -28,12 +28,20 @@ Given(/^there are enough members to start the founding vote$/) do
 end
 
 Given(/^an association is active$/) do
-  @organisation = @association = Association.make!(:state => 'active')
-  3.times do
-    @organisation.members.make!(
-      :member_class => @organisation.member_classes.find_by_name("Member")
+  @organisation = @association = Association.make!(:state => 'pending')
+  @organisation.members.make!(:pending, member_class: @organisation.member_classes.find_by_name("Founder"))
+  2.times do
+    @organisation.members.make!(:pending,
+      :member_class => @organisation.member_classes.find_by_name("Founding Member")
     )
   end
+  fap = @organisation.found_association_proposals.make!
+  @organisation.propose!
+  @organisation.members.each{|m| m.cast_vote(:for, fap)}
+  fap.close!
+  expect(fap.state).to eq('accepted')
+  @organisation.reload
+  expect(@organisation).to be_active
 end
 
 When(/^I create an association$/) do

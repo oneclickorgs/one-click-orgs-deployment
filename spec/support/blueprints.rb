@@ -89,6 +89,11 @@ FoundAssociationProposal.blueprint do
   proposer { Member.make }
 end
 
+FoundAssociationProposal.blueprint(:accepted) do
+  state { 'accepted' }
+  decision { Decision.make }
+end
+
 ChangeVotingPeriodProposal.blueprint do
 end
 
