@@ -69,7 +69,7 @@ module NavigationHelpers
       member_path(@member)
     when /^convene a General Meeting$/
       new_general_meeting_path
-    when /^the Rules page$/
+    when /^the (R|r)ules page$/
       constitution_path
     when /^convene an AGM$/
       new_general_meeting_path

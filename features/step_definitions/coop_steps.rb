@@ -27,6 +27,10 @@ Given(/^our co\-op has been submitted for approval$/) do
   @coop.propose!
 end
 
+Given(/^the co\-op was founded a year ago$/) do
+  @coop.clauses.where(ended_at: nil).update_all(started_at: 1.year.ago)
+end
+
 When(/^I enter my details$/) do
   fill_in("First name", :with => "Bob")
   fill_in("Last name", :with => "Smith")

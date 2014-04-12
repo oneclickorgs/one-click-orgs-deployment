@@ -12,4 +12,8 @@
     = link_button("Edit the Rules", :url => edit_constitution_path)
     %br.clear
 
+%p.updated_at
+  The Rules were last changed on
+  = @constitution.updated_at.to_s(:long_date)
+
 = render(:partial => 'shared/constitution')
