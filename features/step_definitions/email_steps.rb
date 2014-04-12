@@ -114,7 +114,7 @@ end
 Then(/^everyone should receive an email notifying them of the proposal$/) do
   @proposal ||= Proposal.last
   @organisation.members.each do |member|
-    email = ActionMailer::Base.deliveries.reverse.select{|mail| mail.to.first == member.email}.first
+    email = ActionMailer::Base.deliveries.select{|mail| mail.to.first == member.email}.last
     email.body.should =~ Regexp.new(@proposal.title)
   end
 end
