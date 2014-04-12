@@ -49,5 +49,5 @@ Then(/^I should see the One Click Orgs terms and conditions$/) do
 end
 
 Then(/^I should see One Click Orgs' warnings for Founding Members$/) do
-expect(page).to have_content('If you are founding an Association you should read the following warnings')
+  expect(page).to have_content('If you are founding an Association you should read the following warnings')
 end
