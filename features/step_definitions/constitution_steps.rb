@@ -1,3 +1,10 @@
+Given(/^the objectives were changed (\d+) days ago$/) do |days_ago|
+  days_ago = days_ago.to_i
+  @organisation.objectives = Faker::Lorem.sentence
+  @organisation.save!
+  @organisation.clauses.get_current(:organisation_objectives).update_attribute(:started_at, days_ago.days.ago)
+end
+
 When(/^I fill in the organisation name with "([^"]*)"$/) do |value|
   if page.first('input#constitution_proposal_bundle_organisation_name')
     fill_in('constitution_proposal_bundle_organisation_name', :with => value)
@@ -53,4 +60,9 @@ end
 
 Then(/^I should see a clause with "([^"]*)"$/) do |clause_text|
   page.should have_css('ul.constitution li', :text => Regexp.new(clause_text))
+end
+
+Then(/^I should see that the constitution was most recently changed (\d+) days ago$/) do |days_ago|
+  days_ago = days_ago.to_i
+  expect(page).to have_content("last changed on #{days_ago.days.ago.to_s(:long_date)}")
 end

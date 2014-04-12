@@ -44,6 +44,11 @@ Given(/^an association is active$/) do
   expect(@organisation).to be_active
 end
 
+Given(/^the association was founded a week ago$/) do
+  @association.found_association_proposals.last.update_attribute(:close_date, 1.week.ago)
+  @association.clauses.where(ended_at: nil).update_all(started_at: 1.week.ago)
+end
+
 When(/^I create an association$/) do
   step "I have created an association"
 end
