@@ -49,6 +49,11 @@ class Organisation < ActiveRecord::Base
     clauses.get_integer('voting_period')
   end
 
+  # Returns the names of all the clauses which affect the text of the constitution.
+  def constitution_clause_names
+    [:organisation_name, :voting_period]
+  end
+
   # Returns the base URL for this instance of OCO.
   # Pass the :only_host => true option to just get the host name.
   def domain(options={})

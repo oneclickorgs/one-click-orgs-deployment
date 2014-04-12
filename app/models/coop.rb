@@ -107,6 +107,19 @@ class Coop < Organisation
 
   # ATTRIBUTES / CLAUSES
 
+  def constitution_clause_names
+    super + [
+      :registered_office_address, :organisation_objectives,
+      :producer_members_description, :consumer_members_description,
+      :max_user_directors, :max_employee_directors, :max_supporter_directors,
+      :max_producer_directors, :max_consumer_directors,
+      :meeting_notice_period, :quorum_number, :quorum_percentage,
+      :user_members, :employee_members, :supporter_members,
+      :producer_members, :consumer_members, :single_shareholding,
+      :common_ownership
+    ]
+  end
+
   def meeting_notice_period=(new_meeting_notice_period)
     clauses.set_integer!(:meeting_notice_period, new_meeting_notice_period)
   end

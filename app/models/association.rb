@@ -27,6 +27,10 @@ class Association < Organisation
 
   validates_presence_of :objectives
 
+  def constitution_clause_names
+    super + [:organisation_objectives, :assets, :general_voting_system, :membership_voting_system, :constitution_voting_system]
+  end
+
   def objectives
     @objectives ||= clauses.get_text('organisation_objectives')
   end
