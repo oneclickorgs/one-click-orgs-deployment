@@ -31,6 +31,10 @@ When(/^I open the "(.*?)" tab$/) do |tab_name|
   end
 end
 
+When(/^I click "(.*?)"$/) do |link|
+  click_link(link)
+end
+
 Then(/^the domain should be "([^"]*)"$/) do |domain|
   current_domain = URI.parse(current_url).host
   current_domain.should == domain

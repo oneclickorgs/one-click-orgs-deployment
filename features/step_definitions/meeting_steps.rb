@@ -395,3 +395,9 @@ end
 Then(/^I should see the edited minutes$/) do
   page.should have_content("Edited minutes")
 end
+
+Then(/^I should see that all the members have been added as participants$/) do
+  @organisation.members.all.each do |member|
+    expect(page).to have_css('.participants li', text: member.name)
+  end
+end

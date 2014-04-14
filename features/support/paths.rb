@@ -114,7 +114,7 @@ module NavigationHelpers
       intro_coops_path
     when /^create a new resolution$/
       new_resolution_path
-    when /^minute the General Meeting$/
+    when /^minute the (General Meeting|meeting)$/
       edit_general_meeting_path(@general_meeting)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
