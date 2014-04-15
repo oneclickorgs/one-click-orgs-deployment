@@ -55,7 +55,7 @@ describe "proposals/coop/index" do
 
     it "renders a button to create a resolution" do
       render
-      rendered.should have_css("input[class='button-form'][data-url='/resolutions/new']")
+      rendered.should have_css("form[action='/resolutions/new']")
     end
 
     it "renders a 'Start an electronic vote' button for each draft resolution" do
@@ -81,7 +81,7 @@ describe "proposals/coop/index" do
 
     it "renders an edit button for each suggested resolution" do
       render
-      rendered.should have_selector(".resolution_proposals input[data-url='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
+      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
     end
   end
 
@@ -93,7 +93,7 @@ describe "proposals/coop/index" do
 
     it "renders an 'Add to a meeting' button for each draft resolution" do
       render
-      rendered.should have_selector(".draft_proposals input[data-url='/general_meetings/new?resolution_id=#{@draft_proposals[0].to_param}']")
+      rendered.should have_selector(".draft_proposals form[action='/general_meetings/new?resolution_id=#{@draft_proposals[0].to_param}']")
     end
   end
 
@@ -122,7 +122,7 @@ describe "proposals/coop/index" do
 
     it "renders a button to create a suggested resolution" do
       render
-      rendered.should have_css("input[class='button-form'][data-url='/resolution_proposals/new']")
+      rendered.should have_css("form[action='/resolution_proposals/new']")
     end
   end
 end

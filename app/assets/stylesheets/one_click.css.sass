@@ -752,8 +752,9 @@ table.past_meetings
       :margin-right 1em
     p.name
       :font-weight bold
-    p.action
-      :float right
+    p, div
+      &.action
+        :float right
 ul.offices
   input.button-form
     :float none
@@ -791,11 +792,14 @@ ul.checklist
 /* Dashboard */
 #bd
   .dashboard
-    p
+    p, div
       &.left
         :float left
       &.right
         :float right
+        :text-align right
+        form.button_to input
+          :float right
     .section
       :padding-left 24px
       h3

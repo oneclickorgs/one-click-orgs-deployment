@@ -16,7 +16,7 @@ describe 'members/coop/index' do
 
     it "renders a button to edit the membership application form" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/membership_application_form/edit')
+      rendered.should have_selector(:form, :action => '/membership_application_form/edit')
     end
   end
 

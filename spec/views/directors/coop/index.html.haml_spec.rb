@@ -43,7 +43,7 @@ describe 'directors/coop/index' do
 
     it "renders a 'Step down' button for each officer" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/officerships/3/edit')
+      rendered.should have_selector(:form, :action => '/officerships/3/edit')
     end
   end
 
@@ -54,7 +54,7 @@ describe 'directors/coop/index' do
 
     it "renders a 'Retire' button for each director" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/directorships/5/edit')
+      rendered.should have_selector(:form, :action => '/directorships/5/edit')
     end
   end
 
@@ -66,7 +66,7 @@ describe 'directors/coop/index' do
 
     it "renders an 'Appoint new Director' button" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/directorships/new', :value => "Appoint new Director")
+      rendered.should have_selector("form[action='/directorships/new'] input[type='submit'][value='Appoint new Director']")
     end
   end
 
@@ -77,7 +77,7 @@ describe 'directors/coop/index' do
 
     it "renders an 'Appoint a new Officer' button" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/officerships/new?officer_id=4')
+      rendered.should have_selector("form[action='/officerships/new'] input[type='hidden'][name='officer_id'][value='4']")
     end
   end
 
