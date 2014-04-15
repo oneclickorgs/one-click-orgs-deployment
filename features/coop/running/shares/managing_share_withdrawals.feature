@@ -15,7 +15,6 @@ Feature: Managing share withdrawals
     When I press "Mark as paid, and cancel shares"
     Then I should see that the member's shareholding has reduced accordingly
 
-  @javascript
   Scenario: Secretary waives the notice period for a new share withdrawal application
     Given there is a share withdrawal application which is not yet due
     When I go to the Shares page

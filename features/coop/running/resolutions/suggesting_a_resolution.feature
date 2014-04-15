@@ -3,7 +3,6 @@ Feature: Suggesting a resolution
   As a member
   I want to suggest a resolution for consideration
 
-  @javascript
   Scenario: Member suggests a resolution
     Given there is a co-op
     And I am a Member of the co-op

@@ -3,7 +3,6 @@ Feature: Stepping down officer
   As the secretary
   I want to record the stepping down of an officer
 
-  @javascript
   Scenario: Secretary records the stepping down of an officer
     Given there is a co-op
     And I am the Secretary of the co-op

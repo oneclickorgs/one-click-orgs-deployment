@@ -72,7 +72,6 @@ Feature: Entering minutes for a meeting
     And I open the "Outcomes" tab
     Then I should see the resolutions marked as passed
 
-  @javascript
   Scenario: Secretary edits minutes of a general meeting
     Given I am the Secretary of the co-op
     And there has been a past meeting
@@ -134,7 +133,6 @@ Feature: Entering minutes for a meeting
     And I open the "Outcomes" tab
     Then I should see the resolutions marked as passed
 
-  @javascript
   Scenario: Director edits minutes of a general meeting
     Given I am a Director of the co-op
     And there has been a past meeting

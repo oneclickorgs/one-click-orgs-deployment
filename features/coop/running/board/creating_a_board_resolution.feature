@@ -7,7 +7,6 @@ Feature: Creating a board resolution
     Given there is a co-op
     And I am a Director of the co-op
 
-  @javascript
   Scenario: Director creates a board resolution to be voted on electronically
     When I go to the Board page
     And I press "Create a new Board Resolution"
@@ -18,7 +17,6 @@ Feature: Creating a board resolution
     And I should see the new resolution in the list of currently-open resolutions
     And the new resolution should have voting buttons
 
-  @javascript
   Scenario: Director creates a board resolution to be be considered at a future meeting
     When I go to the Board page
     And I press "Create a new Board Resolution"
