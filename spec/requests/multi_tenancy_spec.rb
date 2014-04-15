@@ -41,8 +41,8 @@ describe "Multi-tenancy" do
         Setting[:signup_domain].should == 'signup.oneclickorgs.com'
       end
       
-      it "should redirect to the organisation types setup page" do
-        response.should redirect_to 'http://oneclickorgs.com/setup/organisation_types'
+      it "should redirect to the administrator setup page" do
+        response.should redirect_to 'http://oneclickorgs.com/setup/administrator'
       end
     end
   end

@@ -24,10 +24,24 @@ class SetupController < ApplicationController
     if @base_domain.present? && @signup_domain.present?
       Setting[:base_domain] = @base_domain
       Setting[:signup_domain] = @signup_domain
-      redirect_to(action: :organisation_types)
+      redirect_to(action: :administrator)
     else
       flash.now[:error] = "You must choose both a base domain and a sign-up domain."
       render(:action => :domains)
+    end
+  end
+
+  def administrator
+    @administrator = Administrator.new
+  end
+
+  def create_administrator
+    @administrator = Administrator.new(params[:administrator])
+    if @administrator.save
+      redirect_to(action: :organisation_types)
+    else
+      flash[:error] = 'There was a problem with the new administrator details.'
+      render(action: :administrator)
     end
   end
 

@@ -116,6 +116,8 @@ module NavigationHelpers
       new_resolution_path
     when /^minute the (General Meeting|meeting)$/
       edit_general_meeting_path(@general_meeting)
+    when /^the administrator setup page$/
+      '/setup/administrator'
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
