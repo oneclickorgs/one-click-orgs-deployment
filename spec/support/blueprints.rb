@@ -155,6 +155,10 @@ Association.blueprint do
   objectives { Faker::Company.bs }
 end
 
+Association.blueprint(:pending) do
+  state { 'pending' }
+end
+
 Company.blueprint do
 end
 
