@@ -112,6 +112,12 @@ When(/^I confirm the termination of their membership$/) do
   click_button("Terminate membership")
 end
 
+When(/^I terminate the member$/) do
+  visit(member_path(@member))
+  click_link('Terminate membership')
+  click_button('Terminate membership')
+end
+
 Then(/^I should see a list of the members$/) do
   page.should have_css('.members', :text => @user.name)
 end
