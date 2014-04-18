@@ -109,7 +109,7 @@
         - @members.each do |member|
           = content_tag_for(:tr, member) do
             %td= link_to(member.name, member_path(member))
-            %td= member.find_or_build_share_account.balance
+            %td.balance= member.find_or_build_share_account.balance
 
 - if can?(:update, co)
   .section
