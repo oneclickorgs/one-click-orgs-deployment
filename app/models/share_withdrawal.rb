@@ -5,6 +5,8 @@ require 'one_click_orgs/model_wrapper'
 class ShareWithdrawal < OneClickOrgs::ModelWrapper
   attr_accessor :amount, :member, :share_transaction, :certification
 
+  delegate :approve!, to: :share_transaction
+
   def initialize(new_attributes={})
     new_attributes = new_attributes.with_indifferent_access
 
