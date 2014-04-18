@@ -8,7 +8,8 @@ describe 'shares/coop/index' do
     :name => "Test",
     :share_value_in_pounds => 0.7,
     :minimum_shareholding => 2,
-    :interest_rate => 1.34
+    :interest_rate => 1.34,
+    :share_account => mock_model(ShareAccount, :balance => -34)
   )}
 
   let(:user) {mock_model(Member, :shares_count => nil)}
@@ -99,6 +100,11 @@ describe 'shares/coop/index' do
           tr.should have_content("4")
         end
       end
+    end
+
+    it "renders the current organisation share balance" do
+      render
+      expect(rendered).to have_selector('.organisation_share_account .balance', content: '34')
     end
   end
 
