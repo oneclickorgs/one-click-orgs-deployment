@@ -4,7 +4,7 @@
 %p
   = co.name
   was formed as an Association 
-  = co.created_at.to_s(:at_on) + "."
+  = co.found_association_proposals.last.close_date.to_s(:at_on) + "."
 
 %p
   These are the Founding Members: 
