@@ -11,7 +11,6 @@ Feature: Recording minutes
     And the subdomain is the organisation's subdomain
     And I have logged in
   
-  @javascript
   Scenario: Director records minutes
     Given I am on the Votes & Minutes page
     When I press "Record minutes"

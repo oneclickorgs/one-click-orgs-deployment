@@ -3,7 +3,6 @@ Feature: Forcing a resolution
   As a member
   I want to collaborate with other members to force a resolution to be opened for voting
 
-  @javascript
   Scenario: Member forces a resolution to be opened for voting
     Given there is a co-op
     And I am a Member of the co-op

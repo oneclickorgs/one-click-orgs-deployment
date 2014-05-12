@@ -1,0 +1,14 @@
+%h2 Create an administrator account
+
+= form_for(@administrator, url: {controller: :setup, action: :create_administrator}, method: :post) do |administrator_form|
+  %p
+    = administrator_form.label :email
+    = administrator_form.text_field :email
+  %p
+    = administrator_form.label :password, 'Choose a password'
+    = administrator_form.password_field :password
+  %p
+    = administrator_form.label :password_confirmation, 'Confirm password'
+    = administrator_form.password_field :password_confirmation
+  %p
+    = administrator_form.submit 'Save administrator account'

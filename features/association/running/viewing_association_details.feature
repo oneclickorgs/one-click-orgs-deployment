@@ -16,10 +16,6 @@ Feature: Viewing association details
     Then I should see a list of votes in progress
     And I should see a list of recent activity
   
-  Scenario: Viewing the constitution
-    When I go to the constitution page
-    Then I should see the constitution
-  
   Scenario: Viewing the list of members
     Given there are active members
     And there are pending members

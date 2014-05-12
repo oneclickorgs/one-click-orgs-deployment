@@ -7,7 +7,6 @@ Feature: Entering minutes for a board meeting
     Given there is a co-op
     And there has been a past board meeting
 
-  @javascript
   Scenario: Secretary enters minutes for a past board meeting already in the system
     Given I am the Secretary of the co-op
     And no minutes for the past board meeting have been entered yet
@@ -22,7 +21,6 @@ Feature: Entering minutes for a board meeting
     Then I should see the minutes I entered
     And I should see the participants I chose
 
-  @javascript
   Scenario: Secretary edits minutes of a board meeting
     Given I am the Secretary of the co-op
     And minutes have been entered for the meeting
@@ -34,7 +32,6 @@ Feature: Entering minutes for a board meeting
     And I follow "View minutes" for the board meeting
     Then I should see the edited minutes
 
-  @javascript
   Scenario: Director enters minutes for a past board meeting already in the system
     Given I am a Director of the co-op
     And no minutes for the past board meeting have been entered yet
@@ -49,7 +46,6 @@ Feature: Entering minutes for a board meeting
     Then I should see the minutes I entered
     And I should see the participants I chose
 
-  @javascript
   Scenario: Director edits minutes of a board meeting
     Given I am a Director of the co-op
     And minutes have been entered for the meeting

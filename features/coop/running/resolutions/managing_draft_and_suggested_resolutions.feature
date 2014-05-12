@@ -18,7 +18,6 @@ Feature: Managing draft and suggested resolutions
     And I press "Start an electronic vote" for the draft resolution
     Then I should see the resolution in the list of currently-open resolutions
 
-  @javascript
   Scenario: Secretary adds a draft resolution to a meeting
     Given there is a draft resolution
     When I go to the Resolutions page
@@ -26,7 +25,6 @@ Feature: Managing draft and suggested resolutions
     Then I should be on the "Convene a General Meeting" page
     And I should see the resolution in the list of resolutions to be considered at the meeting
 
-  @javascript
   Scenario: Secretary edits a suggested resolution
     Given there is a suggested resolution
     When I go to the Resolutions page

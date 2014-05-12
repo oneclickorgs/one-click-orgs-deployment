@@ -21,6 +21,10 @@ class Directorship < ActiveRecord::Base
     @certification = cast_to_boolean(new_certification)
   end
 
+  def ended?
+    ended_on.present?
+  end
+
   before_validation :set_director_organisation
   def set_director_organisation
     if director && director.new_record? && !director.organisation
@@ -46,6 +50,13 @@ class Directorship < ActiveRecord::Base
       director.member_class = director_member_class if director_member_class
     end
     director.save!
+  end
+
+  after_save :end_officership_if_directorship_ended
+  def end_officership_if_directorship_ended
+    return unless ended_on && ended_on_changed?
+    return unless director && director.officership
+    director.officership.end!
   end
 
   def self.most_recent

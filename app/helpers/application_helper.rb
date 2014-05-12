@@ -74,24 +74,20 @@ module ApplicationHelper
   end
 
   def link_button(label, options={})
-    options = options.with_indifferent_access
+    input_options = options.with_indifferent_access
+    form_options = {}
 
-    url = options.delete(:url)
+    url = input_options.delete(:url)
     raise RuntimeError, "must specify url" if url.blank?
-    options['data-url'] = url
+    form_options[:action] = url
 
-    css_class = if options[:class].present?
-      options[:class] + ' button-form'
-    else
-      'button-form'
-    end
-    options[:class] = css_class
+    input_options[:value] = label
+    input_options[:type] = 'submit'
 
-    options[:value] = label
+    form_options[:method] = 'get'
+    form_options[:class] = 'button_to'
 
-    options[:type] = 'button'
-
-    tag(:input, options)
+    content_tag(:form, form_options){tag(:input, input_options)}
   end
 
   def new_child_fields_template(form_builder, association, options={})

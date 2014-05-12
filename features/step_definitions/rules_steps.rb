@@ -3,6 +3,13 @@ Given(/^we have customised the Rules$/) do
   @organisation.save!
 end
 
+Given(/^the objects were changed (\d+) months ago$/) do |months_ago|
+  months_ago = months_ago.to_i
+  @organisation.objectives = Faker::Lorem.sentence
+  @organisation.save!
+  @organisation.clauses.get_current(:organisation_objectives).update_attribute(:started_at, months_ago.months.ago)
+end
+
 When(/^I change the Name to "(.*?)"$/) do |name|
   fill_in('change_name_resolution[organisation_name]', :with => name)
 end
@@ -107,4 +114,9 @@ Then(/^I should see the custom fields in the Rules filled in appropriately$/) do
   ].each do |field|
     page.should have_content(constitution.send(field))
   end
+end
+
+Then(/^I should see that the Rules were last changed (\d+) months ago$/) do |months_ago|
+  months_ago = months_ago.to_i
+  expect(page).to have_content("last changed on #{months_ago.months.ago.to_s(:long_date)}")
 end

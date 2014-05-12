@@ -3,7 +3,6 @@ Feature: Dismissing tasks
   As the Secretary
   I want to dismiss non-essential tasks from the Dashboard
 
-  @javascript
   Scenario: Secretary dismisses a task
     Given there is a co-op
     And I am the Secretary of the co-op

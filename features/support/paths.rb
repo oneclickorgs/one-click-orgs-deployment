@@ -69,7 +69,7 @@ module NavigationHelpers
       member_path(@member)
     when /^convene a General Meeting$/
       new_general_meeting_path
-    when /^the Rules page$/
+    when /^the (R|r)ules page$/
       constitution_path
     when /^convene an AGM$/
       new_general_meeting_path
@@ -112,6 +112,12 @@ module NavigationHelpers
       '/setup/organisation_types'
     when /^the co\-op intro page$/
       intro_coops_path
+    when /^create a new resolution$/
+      new_resolution_path
+    when /^minute the (General Meeting|meeting)$/
+      edit_general_meeting_path(@general_meeting)
+    when /^the administrator setup page$/
+      '/setup/administrator'
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

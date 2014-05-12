@@ -27,7 +27,7 @@ end
 Given(/^a proposal "([^"]*)" has been made$/) do |proposal_title|
   @organisation.proposals.make!(
     :title => proposal_title,
-    :proposer => @organisation.members.active.first
+    :proposer => (@organisation.members.active - [@user]).first
   )
 end
 

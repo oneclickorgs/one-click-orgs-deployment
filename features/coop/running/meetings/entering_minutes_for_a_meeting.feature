@@ -72,7 +72,6 @@ Feature: Entering minutes for a meeting
     And I open the "Outcomes" tab
     Then I should see the resolutions marked as passed
 
-  @javascript
   Scenario: Secretary edits minutes of a general meeting
     Given I am the Secretary of the co-op
     And there has been a past meeting
@@ -134,7 +133,6 @@ Feature: Entering minutes for a meeting
     And I open the "Outcomes" tab
     Then I should see the resolutions marked as passed
 
-  @javascript
   Scenario: Director edits minutes of a general meeting
     Given I am a Director of the co-op
     And there has been a past meeting
@@ -146,3 +144,12 @@ Feature: Entering minutes for a meeting
     And I press "Save these minutes"
     And I follow "View minutes" for the meeting
     Then I should see the edited minutes
+
+  @javascript
+  Scenario: Secretary adds all members as participants in a meeting
+    Given I am the Secretary of the co-op
+    And there has been a past meeting
+    And no minutes for the past meeting have been entered yet
+    When I go to minute the meeting
+    And I click "Add all members"
+    Then I should see that all the members have been added as participants

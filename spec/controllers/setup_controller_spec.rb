@@ -21,9 +21,71 @@ describe SetupController do
       post :create_domains, base_domain: 'example.com', signup_domain: 'create.example.com'
     end
 
-    it 'redirects to the organisation_types action' do
+    it 'redirects to the administrator action' do
       post_create_domains
+      expect(response).to redirect_to('/setup/administrator')
+    end
+  end
+
+  describe 'GET administrator' do
+    let(:administrator) {mock_model(Administrator)}
+
+    before(:each) do
+      allow(Administrator).to receive(:new).and_return(administrator)
+    end
+
+    def get_administrator
+      get :administrator
+    end
+
+    it 'assigns the new administrator' do
+      get_administrator
+      expect(assigns[:administrator]).to eq(administrator)
+    end
+
+    it 'is successful' do
+      get_administrator
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'POST create_administrator' do
+    let(:administrator_attributes) {{}}
+    let(:administrator) {mock_model(Administrator, save: true)}
+
+    before(:each) do
+      allow(Administrator).to receive(:new).and_return(administrator)
+    end
+
+    def post_create_administrator
+      post :create_administrator, administrator: administrator_attributes
+    end
+
+    it 'creates the administrator' do
+      expect(Administrator).to receive(:new).with(administrator_attributes).and_return(administrator)
+      expect(administrator).to receive(:save).and_return(false)
+      post_create_administrator
+    end
+
+    it 'redirects to the organisation types setup action' do
+      post_create_administrator
       expect(response).to redirect_to('/setup/organisation_types')
+    end
+
+    context 'when creating the Administrator fails' do
+      before(:each) do
+        allow(administrator).to receive(:save).and_return(false)
+      end
+
+      it 'sets an error flash' do
+        post_create_administrator
+        expect(flash[:error]).to be_present
+      end
+
+      it 'renders the administrator action' do
+        post_create_administrator
+        expect(response).to render_template('setup/administrator')
+      end
     end
   end
 

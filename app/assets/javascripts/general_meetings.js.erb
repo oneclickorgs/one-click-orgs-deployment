@@ -96,9 +96,13 @@ $(document).ready(function () {
       addParticipant(autoParticipantsList, formObjectName, memberId, memberName);
     });
 
+    // Create a link that adds all the members to the list
+    var autoAddAllMembersLink = $('<a href="javascript:void(0)">Add all members</a>');
+
     $(this).before(autocompleteLabel)
       .before(autocompleteField)
-      .before(autoParticipantsList);
+      .before(autoParticipantsList)
+      .before(autoAddAllMembersLink);
 
     autocompleteField.autocomplete({
       // The view is responsible for populating this variable.
@@ -114,6 +118,15 @@ $(document).ready(function () {
 
         return addParticipant(autoParticipantsList, formObjectName, item.id, item.value);
       }
+    });
+
+    autoAddAllMembersLink.click(function(event)
+    {
+      var membersLength = OneClickOrgs.members.length;
+      for (var membersIndex = 0; membersIndex < membersLength; membersIndex++) {
+        addParticipant(autoParticipantsList, formObjectName, OneClickOrgs.members[membersIndex].id, OneClickOrgs.members[membersIndex].value);
+      }
+      event.preventDefault();
     });
 
     // As well as not showing the checkboxes to the user,

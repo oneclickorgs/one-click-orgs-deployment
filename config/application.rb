@@ -42,6 +42,7 @@ module OneClickOrgs
         :meeting_mailer_observer,
         :member_observer,
         :member_mailer_observer,
+        :member_share_account_observer,
         :member_task_observer,
         :member_timestamp_observer,
         :officership_mailer_observer,

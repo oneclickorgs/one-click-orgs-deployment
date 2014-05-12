@@ -31,7 +31,7 @@ describe 'meetings/coop/index' do
 
     it "renders a button link to the new general meeting page" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/general_meetings/new')
+      rendered.should have_selector(:form, :action => '/general_meetings/new')
     end
   end
 

@@ -24,6 +24,11 @@
     %p
       The rate of interest on share capital is
       = "#{co.interest_rate}%."
+  - if can?(:read, ShareAccount)
+    %p.organisation_share_account
+      The total number of issued shares is
+      = succeed '.' do
+        %span.balance= -co.share_account.balance
 
 - if @user_share_withdrawals_pending.present?
   .section
@@ -104,7 +109,7 @@
         - @members.each do |member|
           = content_tag_for(:tr, member) do
             %td= link_to(member.name, member_path(member))
-            %td= member.find_or_build_share_account.balance
+            %td.balance= member.find_or_build_share_account.balance
 
 - if can?(:update, co)
   .section

@@ -1,7 +1,8 @@
 class ResolutionsController < ApplicationController
   HANDLED_RESOLUTION_TYPES = [
     :change_meeting_notice_period_resolution,
-    :change_quorum_resolution
+    :change_quorum_resolution,
+    :terminate_directorship_resolution
   ]
   HANDLED_RESOLUTION_WRAPPERS = [
     :change_board_composition_resolution,

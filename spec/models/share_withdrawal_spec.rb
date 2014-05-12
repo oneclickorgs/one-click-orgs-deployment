@@ -71,4 +71,17 @@ describe ShareWithdrawal do
     end
   end
 
+  describe "approving" do
+    let(:share_withdrawal) {ShareWithdrawal.new(:member => member, :amount => 3)}
+
+    before(:each) do
+      share_withdrawal.save!
+    end
+
+    it "approves the share transaction" do
+      expect(share_transaction).to receive(:approve!)
+      share_withdrawal.approve!
+    end
+  end
+
 end

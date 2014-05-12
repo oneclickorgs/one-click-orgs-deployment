@@ -28,12 +28,25 @@ Given(/^there are enough members to start the founding vote$/) do
 end
 
 Given(/^an association is active$/) do
-  @organisation = @association = Association.make!(:state => 'active')
-  3.times do
-    @organisation.members.make!(
-      :member_class => @organisation.member_classes.find_by_name("Member")
+  @organisation = @association = Association.make!(:state => 'pending')
+  @organisation.members.make!(:pending, member_class: @organisation.member_classes.find_by_name("Founder"))
+  2.times do
+    @organisation.members.make!(:pending,
+      :member_class => @organisation.member_classes.find_by_name("Founding Member")
     )
   end
+  fap = @organisation.found_association_proposals.make!
+  @organisation.propose!
+  @organisation.members.each{|m| m.cast_vote(:for, fap)}
+  fap.close!
+  expect(fap.state).to eq('accepted')
+  @organisation.reload
+  expect(@organisation).to be_active
+end
+
+Given(/^the association was founded a week ago$/) do
+  @association.found_association_proposals.last.update_attribute(:close_date, 1.week.ago)
+  @association.clauses.where(ended_at: nil).update_all(started_at: 1.week.ago)
 end
 
 When(/^I create an association$/) do
@@ -49,5 +62,5 @@ Then(/^I should see the One Click Orgs terms and conditions$/) do
 end
 
 Then(/^I should see One Click Orgs' warnings for Founding Members$/) do
-expect(page).to have_content('If you are founding an Association you should read the following warnings')
+  expect(page).to have_content('If you are founding an Association you should read the following warnings')
 end

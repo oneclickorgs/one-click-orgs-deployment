@@ -3,7 +3,6 @@ Feature: Appointing external Director
   As a Secretary
   I want to appoint an external Director
 
-  @javascript
   Scenario: Secretary appoints an external Director
     Given there is a co-op
     And I am the Secretary of the co-op

@@ -69,6 +69,16 @@ Given(/^I hold only the minimum shareholding$/) do
   share_account.save!
 end
 
+Given(/^the member has several shares$/) do
+  st = ShareTransaction.new(
+    to_account: @member.find_or_build_share_account,
+    from_account: @organisation.share_account,
+    :amount => @organisation.minimum_shareholding + rand(9) + 1
+  )
+  st.save!
+  st.approve!
+end
+
 When(/^I enter a new share value$/) do
   fill_in("New share value", :with => "0.70")
 end
@@ -119,6 +129,18 @@ When(/^I mark the share application as paid$/) do
   within('#' + ActionController::RecordIdentifier.dom_id(@share_transaction)) do
     click_button('Mark as paid, and allot shares')
   end
+end
+
+When(/^I note the total number of shares currently issued$/) do
+  visit shares_path
+  balance_node = page.find(:css, '.organisation_share_account .balance')
+  @previous_organisation_share_account_balance = balance_node.text.to_i
+end
+
+When(/^I note the number of shares the member has$/) do
+  visit shares_path
+  balance_node = page.find(:css, '#' + ActionController::RecordIdentifier.dom_id(@member) + ' .balance')
+  @previous_member_share_account_balance = balance_node.text.to_i
 end
 
 Then(/^I should see the new share value$/) do
@@ -192,4 +214,11 @@ end
 
 Then(/^I should no longer see a notification about the member's share application$/) do
   page.should have_no_content("#{@member.name} applied")
+end
+
+Then(/^I should see that the total number of issued shares has reduced by the number of shares the member had$/) do
+  visit shares_path
+  balance_node = page.find(:css, '.organisation_share_account .balance')
+  current_organisation_share_account_balance = balance_node.text.to_i
+  expect(@previous_organisation_share_account_balance - current_organisation_share_account_balance).to eq(@previous_member_share_account_balance)
 end

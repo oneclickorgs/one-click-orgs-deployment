@@ -25,12 +25,12 @@ describe "boards/show" do
 
   it "renders a button to create a new board meeting" do
     render
-    rendered.should have_selector(:input, 'data-url' => '/board_meetings/new')
+    rendered.should have_selector(:form, :action => '/board_meetings/new')
   end
 
   it "renders a button to create a new board resolution" do
     render
-    rendered.should have_selector(:input, 'data-url' => '/board_resolutions/new')
+    rendered.should have_selector(:form, :action => '/board_resolutions/new')
   end
 
   it "renders a list of upcoming board meetings" do

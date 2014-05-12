@@ -3,7 +3,6 @@ Feature: Amending membership settings
   As the Secretary
   I want to adjust settings to do with membership
 
-  @javascript
   Scenario: Secretary amends the membership application form
     Given there is a co-op
     And I am the Secretary of the co-op

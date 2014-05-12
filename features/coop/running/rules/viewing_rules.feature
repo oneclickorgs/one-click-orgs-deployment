@@ -19,3 +19,9 @@ Feature: Viewing rules
     When I go to the Rules page
     And I follow "PDF"
     Then I should get a ".pdf" download with the name of the organisation
+
+  Scenario: Member views the date the Rules were last changed
+    Given the co-op was founded a year ago
+    And the objects were changed 6 months ago
+    When I go to the rules page
+    Then I should see that the Rules were last changed 6 months ago

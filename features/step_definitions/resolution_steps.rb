@@ -51,6 +51,17 @@ Given(/^I have voted to support the resolution$/) do
   @user.cast_vote(:for, @resolution)
 end
 
+Given(/^a resolution to terminate the directorship of "(.*?)" has been attached to a past General Meeting$/) do |director_name|
+  @director = @organisation.directors.find_by_name(director_name)
+  raise "Cannot find a Director with the name #{director_name}" unless @director
+
+  @resolution = @organisation.terminate_directorship_resolutions.make!(directorship: @director.directorship)
+
+  @general_meeting = @organisation.general_meetings.make!(:past)
+  @general_meeting.resolutions << @resolution
+  @general_meeting.save!
+end
+
 When(/^I enter the text (?:for|of) the (?:|new )resolution$/) do
   if page.has_field?('Title of the resolution') || page.has_field?('Text of the resolution')
     if page.has_field?('Title of the resolution')

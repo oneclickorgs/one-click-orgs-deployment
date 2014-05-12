@@ -7,7 +7,6 @@ Feature: Adjusting shares settings
     Given there is a co-op
     And I am the Secretary of the co-op
 
-  @javascript
   Scenario: Secretary adjusts the share value
     When I go to the Shares page
     And I press "Adjust share value"
@@ -16,7 +15,6 @@ Feature: Adjusting shares settings
     Then I should be on the Shares page
     And I should see the new share value
 
-  @javascript
   Scenario: Secretary adjusts the minimum shareholding
     When I go to the Shares page
     And I press "Adjust minimum shareholding"
@@ -25,7 +23,6 @@ Feature: Adjusting shares settings
     Then I should be on the Shares page
     And I should see the new minimum shareholding
 
-  @javascript
   Scenario: Secretary adjusts the interest rate on share capital
     When I go to the Shares page
     And I press "Adjust interest rate"

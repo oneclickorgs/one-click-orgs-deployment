@@ -2,6 +2,19 @@ require 'spec_helper'
 
 describe Constitution do
 
+  describe "updated_at" do
+    let(:constitution) { Constitution.new(organisation) }
+    let(:organisation) { mock_model(Organisation, constitution_clause_names: [:organisation_name, :organisation_objectives], clauses: clauses_association) }
+    let(:clauses_association) { double('clauses association')}
+
+    it "returns the start_date of the most recently started constitution clause" do
+      allow(clauses_association).to receive(:get_current).with(:organisation_name).and_return(mock_model(Clause, started_at: Time.new(2014, 2, 1)))
+      allow(clauses_association).to receive(:get_current).with(:organisation_objectives).and_return(mock_model(Clause, started_at: Time.new(2014, 1, 1)))
+
+      expect(constitution.updated_at).to eq(Time.new(2014, 2, 1))
+    end
+  end
+
   describe "for an Association" do
     before(:each) do
       @organisation = Association.make!(:name => 'abc', :objectives => 'def')

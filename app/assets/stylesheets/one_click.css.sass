@@ -328,6 +328,14 @@ ul.tasks li
   :padding 1em
   :width 150px
 
+p#loading
+  :display none
+  :text-align center
+  :font-weight bold
+  :margin 0 auto 1em
+  img
+    :margin 0 1em 0 0
+
 /* Set up a new organisation */
 
 body.setup
@@ -363,13 +371,6 @@ body.setup
         :margin 1em auto 0
         :padding 0.8em 0
         :width 16em
-      p#loading
-        :display none
-        :text-align center
-        :font-weight bold
-        :margin 0 auto 1em
-        img
-          :margin 0 1em 0 0
     #subdomain_wrapper
       :border 1px solid $input-border
       :margin 0 4px 10px 20px
@@ -752,8 +753,9 @@ table.past_meetings
       :margin-right 1em
     p.name
       :font-weight bold
-    p.action
-      :float right
+    p, div
+      &.action
+        :float right
 ul.offices
   input.button-form
     :float none
@@ -791,11 +793,14 @@ ul.checklist
 /* Dashboard */
 #bd
   .dashboard
-    p
+    p, div
       &.left
         :float left
       &.right
         :float right
+        :text-align right
+        form.button_to input
+          :float right
     .section
       :padding-left 24px
       h3
@@ -842,6 +847,15 @@ div.participants
   a.delete img
     :margin-left 10px
     :vertical-align 0
+
+form.edit_general_meeting
+  .resolution
+    p
+      :clear left
+    input[type="checkbox"]
+      :float none
+    input[type="text"]
+      :width 5em
 
 /* Share withdrawals */
 #terminate_membership

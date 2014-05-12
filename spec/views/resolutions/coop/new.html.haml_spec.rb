@@ -23,6 +23,7 @@ describe "resolutions/coop/new" do
     rendered.should have_selector(:a, :href => '/change_board_composition_resolutions/new')
     rendered.should have_selector(:a, :href => '/change_single_shareholding_resolutions/new')
     rendered.should have_selector(:a, :href => '/change_common_ownership_resolutions/new')
+    rendered.should have_selector(:a, :href => '/terminate_directorship_resolutions/new')
     rendered.should have_selector(:a, :href => '/generic_resolutions/new')
   end
 

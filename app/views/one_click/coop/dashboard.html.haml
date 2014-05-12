@@ -53,7 +53,7 @@
           %br
           = link_to("See minutes", meeting_path(@last_meeting))
     - if can?(:create, GeneralMeeting)
-      %p.left= link_button("Create new", :url => new_general_meeting_path)
+      .left= link_button("Create new", :url => new_general_meeting_path)
     %p.right= link_to("See all meetings", meetings_path)
     %br.clear
 
@@ -78,15 +78,15 @@
             %h4 New proposal
             %p.title.left= proposal.title
             - if proposal.is_a?(BoardResolution)
-              %p.action.right= link_button("Vote", :url => board_resolution_path(proposal))
+              .action.right= link_button("Vote", :url => board_resolution_path(proposal))
             - else
-              %p.action.right= link_button("Vote", :url => resolution_path(proposal))
+              .action.right= link_button("Vote", :url => resolution_path(proposal))
             %br.clear
     - else
       %p No proposals currently open for voting.
     - if can?(:create, Resolution)
-      %p.left= link_button("Create new", :url => new_resolution_path)
+      .left= link_button("Create new", :url => new_resolution_path)
     - elsif can?(:create, ResolutionProposal)
-      %p.left= link_button("Suggest new", :url => new_resolution_proposal_path)
+      .left= link_button("Suggest new", :url => new_resolution_proposal_path)
     %p.right= link_to("See all proposals", proposals_path)
     %br.clear

@@ -95,6 +95,19 @@ describe Member do
     it "should toggle active flag after ejection" do
       lambda { @member.eject! }.should change(@member, :active?).from(true).to(false)
     end
+
+    context 'when the member has a share account' do
+      let(:share_account) {mock_model(ShareAccount)}
+
+      before(:each) do
+        allow(@member).to receive(:share_account).and_return(share_account)
+      end
+
+      it 'should empty their share account' do
+        expect(share_account).to receive(:empty!)
+        @member.eject!
+      end
+    end
   end
 
   describe "finders" do

@@ -15,7 +15,7 @@ Then(/^I should see that a proposal is open for voting$/) do
   @resolution ||= @organisation.proposals.last
 
   page.should have_content(@resolution.title)
-  page.should have_css("input[data-url='/resolutions/#{@resolution.to_param}']")
+  page.should have_css("form[action='/resolutions/#{@resolution.to_param}']")
 end
 
 Then(/^I should see a task in the Membership and Shares widget$/) do

@@ -35,20 +35,22 @@
                 Appointed:
                 = director.directorship.elected_on.to_s(:long)
             - if can?(:edit, director.directorship)
-              %p.action
+              .action
                 = link_button("Retire", :url => edit_directorship_path(director.directorship))
             .clear
           .officership
             - if director.officership
               %p.title= director.officership.office_title
               - if can?(:edit, director.officership)
-                %p.action
+                .action
                   = link_button("Step down", :url => edit_officership_path(director.officership))
             - else
               %p.title No office
               - if can?(:create, Officership)
-                %p.action
-                  = link_button("Appoint", :url => new_officership_path(:officer_id => director.id))
+                .action
+                  = form_tag(new_officership_path, {:method => :get, :class => 'button_to'}) do
+                    = hidden_field_tag('officer_id', director.id)
+                    = submit_tag('Appoint')
             .clear
           .clear
 

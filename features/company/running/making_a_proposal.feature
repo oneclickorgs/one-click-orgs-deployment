@@ -10,7 +10,6 @@ Feature: Making a proposal
     And the subdomain is the organisation's subdomain
     And I have logged in
   
-  @javascript
   Scenario: Making a proposal
     When I go to the Votes & Minutes page
     And I press "Propose a vote"

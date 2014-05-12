@@ -10,7 +10,6 @@ Feature: Proposing a new member
     And the subdomain is the organisation's subdomain
     And I have logged in
   
-  @javascript
   Scenario: Proposing a new member
     When I go to the voting and proposals page
     And I press "Propose a new member"

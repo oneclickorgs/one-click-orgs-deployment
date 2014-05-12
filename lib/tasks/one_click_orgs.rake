@@ -50,44 +50,92 @@ namespace :oco do
   end
 
   namespace :dev do
-    desc "Create an active association, for development/testing purposes"
-    task :create_association => :environment do
-      unless OneClickOrgs::Setup.complete?
-        STDERR.puts <<-EOE
+    namespace :association do
+      desc "Create an active association, for development/testing purposes"
+      task :create_active => :environment do
+        unless OneClickOrgs::Setup.complete?
+          STDERR.puts <<-EOE
 
-You must go through the application setup process before creating an
-association.
+  You must go through the application setup process before creating an
+  association.
 
-Start the application server (e.g. 'bundle exec rails server')
-and visit the site in your browser (usually at http://localhost:3000 ).
-        EOE
-        exit
+  Start the application server (e.g. 'bundle exec rails server')
+  and visit the site in your browser (usually at http://localhost:3000 ).
+          EOE
+          exit
+        end
+
+        password = ENV['PASSWORD'] || "password"
+
+        require 'spec/support/blueprints'
+
+        association = Association.make!(
+          :subdomain => Faker::Internet.domain_word
+        )
+        association.active!
+
+        member_class = association.member_classes.find_by_name("Member")
+        members = association.members.make!(3,
+          :member_class => member_class,
+          :password => password,
+          :password_confirmation => password
+        )
+
+        # TODO Should we make a passed FoundAssociationProposal as well,
+        # for total authenticity?
+
+        STDOUT.puts "Association '#{association.name}' created:"
+        STDOUT.puts "  #{association.domain}"
+        STDOUT.puts "Log in with:"
+        STDOUT.puts "  Email: #{members.first.email}"
+        STDOUT.puts "  Password: #{password}"
       end
 
-      password = ENV['PASSWORD'] || "password"
+      desc "Create a pending association, for development/testing purposes"
+      task :create_pending => :environment do
+        unless OneClickOrgs::Setup.complete?
+          STDERR.puts <<-EOE
 
-      require 'spec/support/blueprints'
+  You must go through the application setup process before creating an
+  association.
 
-      association = Association.make!(
-        :subdomain => Faker::Internet.domain_word
-      )
-      association.active!
+  Start the application server (e.g. 'bundle exec rails server')
+  and visit the site in your browser (usually at http://localhost:3000 ).
+          EOE
+          exit
+        end
 
-      member_class = association.member_classes.find_by_name("Member")
-      members = association.members.make!(3,
-        :member_class => member_class,
-        :password => password,
-        :password_confirmation => password
-      )
+        password = ENV['PASSWORD'] || "password"
 
-      # TODO Should we make a passed FoundAssociationProposal as well,
-      # for total authenticity?
+        require 'spec/support/blueprints'
 
-      STDOUT.puts "Association '#{organisation.name}' created:"
-      STDOUT.puts "  #{organisation.domain}"
-      STDOUT.puts "Log in with:"
-      STDOUT.puts "  Email: #{members.first.email}"
-      STDOUT.puts "  Password: #{password}"
+        association = Association.make!(:pending,
+          :subdomain => Faker::Internet.domain_word
+        )
+
+        founder_member_class = association.member_classes.find_by_name("Founder")
+        founder = association.members.make!(
+          :member_class => founder_member_class,
+          :password => password,
+          :password_confirmation => password
+        )
+
+        founding_member_member_class = association.member_classes.find_by_name("Founding Member")
+        founding_member = association.members.make!(2,
+          :member_class => founding_member_member_class,
+          :password => password,
+          :password_confirmation => password
+        )
+
+        STDOUT.puts "Pending association '#{association.name}' created:"
+        STDOUT.puts "  #{association.domain}"
+        STDOUT.puts "Login for the founder"
+        STDOUT.puts "  Email: #{founder.email}"
+        STDOUT.puts "  Password: #{password}"
+        STDOUT.puts "Login for a founding member"
+        STDOUT.puts "  Email: #{founding_member.first.email}"
+        STDOUT.puts "  Password: #{password}"
+      end
     end
 
     namespace :coop do

@@ -28,6 +28,11 @@ class Constitution
   
   alias_method :organisation_name, :name
 
+  # Returns the timestamp of the most recent edit to the constitution.
+  def updated_at
+    organisation.constitution_clause_names.map{|name| organisation.clauses.get_current(name)}.compact.map(&:started_at).sort[-1]
+  end
+
   def document
     # TODO Make this work for Organisation subclasses other than Coop.
     if document_id = Setting[:coop_constitution_document_id]

@@ -89,6 +89,11 @@ FoundAssociationProposal.blueprint do
   proposer { Member.make }
 end
 
+FoundAssociationProposal.blueprint(:accepted) do
+  state { 'accepted' }
+  decision { Decision.make }
+end
+
 ChangeVotingPeriodProposal.blueprint do
 end
 
@@ -148,6 +153,10 @@ end
 
 Association.blueprint do
   objectives { Faker::Company.bs }
+end
+
+Association.blueprint(:pending) do
+  state { 'pending' }
 end
 
 Company.blueprint do
@@ -259,4 +268,8 @@ end
 Vote.blueprint do
   member
   self.send(:assign_attribute, :for, true)
+end
+
+TerminateDirectorshipResolution.blueprint do
+  title {nil}
 end

@@ -74,6 +74,19 @@ When(/^I enter a passing number of votes in favour for every resolution$/) do
   end
 end
 
+When(/^I mark that the resolution "(.*?)" was passed$/) do |resolution_title|
+  resolution = @organisation.resolutions.find_by_title(resolution_title)
+  raise "Could not find resolution with title '#{resolution_title}'" unless resolution
+
+  within('#' + ActionController::RecordIdentifier.dom_id(resolution)) do
+    check('Resolution was passed')
+  end
+end
+
+When(/^I save the minutes$/) do
+  click_button('Save these minutes')
+end
+
 Then(/^I should see the resolution in the list of resolutions to be considered at the meeting$/) do
   @resolution ||= @organisation.resolutions.last
   page.should have_css(".resolutions", :text => @resolution.title)

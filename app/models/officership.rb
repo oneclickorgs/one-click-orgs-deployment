@@ -65,4 +65,8 @@ class Officership < ActiveRecord::Base
   def self.most_recent
     order('elected_on DESC').first
   end
+
+  def end!
+    update_attribute(:ended_on, Time.now.utc)
+  end
 end

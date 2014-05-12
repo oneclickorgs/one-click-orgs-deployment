@@ -24,4 +24,9 @@
     by making
     = succeed '.' do
       = link_to 'amendments', edit_constitution_path
+
+  %p.updated_at
+    The constitution was last changed on
+    = @constitution.updated_at.to_s(:long_date)
+
 = render :partial => 'shared/constitution'

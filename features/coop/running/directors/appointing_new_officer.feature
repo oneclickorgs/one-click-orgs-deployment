@@ -3,7 +3,6 @@ Feature: Appointing new officer
   As the secretary
   I want to record the appointment of a new officer
 
-  @javascript
   Scenario: Secretary appoints new officer to a new office
     Given there is a co-op
     And I am the Secretary of the co-op
@@ -19,7 +18,6 @@ Feature: Appointing new officer
     Then I should be on the Directors page
     And I should see "Claire Simmons" listed as the "Treasurer"
 
-  @javascript
   Scenario: Secretary appoints a new officer to an existing office
     Given there is a co-op
     And I am the Secretary of the co-op

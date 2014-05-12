@@ -8,7 +8,8 @@ describe 'shares/coop/index' do
     :name => "Test",
     :share_value_in_pounds => 0.7,
     :minimum_shareholding => 2,
-    :interest_rate => 1.34
+    :interest_rate => 1.34,
+    :share_account => mock_model(ShareAccount, :balance => -34)
   )}
 
   let(:user) {mock_model(Member, :shares_count => nil)}
@@ -70,7 +71,7 @@ describe 'shares/coop/index' do
 
       it "renders a button to apply for more shares" do
         render
-        rendered.should have_selector(:input, 'data-url' => '/share_applications/new')
+        rendered.should have_selector(:form, :action => '/share_applications/new')
       end
     end
 
@@ -81,7 +82,7 @@ describe 'shares/coop/index' do
 
       it "renders a button to withdraw shares" do
         render
-        rendered.should have_selector(:input, 'data-url' => '/share_withdrawals/new')
+        rendered.should have_selector(:form, :action => '/share_withdrawals/new')
       end
     end
   end
@@ -99,6 +100,11 @@ describe 'shares/coop/index' do
           tr.should have_content("4")
         end
       end
+    end
+
+    it "renders the current organisation share balance" do
+      render
+      expect(rendered).to have_selector('.organisation_share_account .balance', content: '34')
     end
   end
 
@@ -138,7 +144,7 @@ describe 'shares/coop/index' do
     it "renders a 'waive notice period' button for share withdrawals which are not due yet" do
       render
       rendered.should have_selector('ul.organisation_share_withdrawals') do |ul|
-        ul.should have_selector(:input, 'data-url' => '/share_transactions/3000/confirm_approve')
+        ul.should have_selector(:form, :action => '/share_transactions/3000/confirm_approve')
       end
     end
 
@@ -158,17 +164,17 @@ describe 'shares/coop/index' do
 
     it "renders a link button to adjust the share value" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/shares/edit_share_value')
+      rendered.should have_selector(:form, :action => '/shares/edit_share_value')
     end
 
     it "renders a link button to adjust the minimum shareholding" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/shares/edit_minimum_shareholding')
+      rendered.should have_selector(:form, :action => '/shares/edit_minimum_shareholding')
     end
 
     it "renders a link button to adjust the interest rate" do
       render
-      rendered.should have_selector(:input, 'data-url' => '/shares/edit_interest_rate')
+      rendered.should have_selector(:form, :action => '/shares/edit_interest_rate')
     end
   end
 

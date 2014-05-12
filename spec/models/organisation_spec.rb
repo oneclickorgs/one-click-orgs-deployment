@@ -80,5 +80,9 @@ describe Organisation do
       end
     end
   end
+
+  it "has a 'constitution_clause_names' method" do
+    expect{Organisation.new.constitution_clause_names}.to_not raise_error
+  end
   
 end
