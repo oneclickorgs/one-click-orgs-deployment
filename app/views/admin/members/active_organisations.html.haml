@@ -1,11 +1,11 @@
 %p
-  All users
+  = link_to("All users", admin_members_path)
   |
-  = link_to("Active organisations", active_organisations_admin_members_path)
+  Active organisations
   |
   = link_to("Organisations awaiting registration", proposed_organisations_admin_members_path)
 
-%h2 All users
+%h2 Users from active organisations
 %table.users
   %thead
     %tr
@@ -19,4 +19,3 @@
       %td= member.email
       %td= member.organisation_name
       %td= member.last_logged_in_at
-  
