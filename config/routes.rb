@@ -236,7 +236,12 @@ OneClickOrgs::Application.routes.draw do
 
     resources :constitutions
     resources :registration_forms
-    resources :members
+    resources :members do
+      collection do
+        get :active_organisations
+        get :proposed_organisations
+      end
+    end
   end
 
   get '/i/:id' => 'invitations#edit', :as => 'short_invitation'

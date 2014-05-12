@@ -17,4 +17,14 @@ describe 'admin/members/index' do
     expect(rendered).to have_content('Jane Baker')
   end
 
+  it "renders an 'active organisations' link" do
+    render
+    expect(rendered).to have_selector("a[href='/admin/members/active_organisations']")
+  end
+
+  it "renders a 'proposed organisations' link" do
+    render
+    expect(rendered).to have_selector("a[href='/admin/members/proposed_organisations']")
+  end
+
 end

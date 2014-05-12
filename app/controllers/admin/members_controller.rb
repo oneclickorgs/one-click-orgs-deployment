@@ -3,6 +3,14 @@ class Admin::MembersController < AdminController
     @members = Member.all
   end
 
+  def proposed_organisations
+    @members = Coop.proposed.map{|o| o.members}.flatten
+  end
+
+  def active_organisations
+    @members = Coop.active.map{|o| o.members}.flatten
+  end
+
   def edit
     @member = Member.find(params[:id])
   end
