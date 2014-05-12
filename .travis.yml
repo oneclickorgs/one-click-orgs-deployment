@@ -14,8 +14,7 @@ script: bundle exec rake spec cucumber
 branches:
   only:
     - master
-    - coop
-    - v1.x
+    - v1.3.x
 notifications:
   recipients:
     - alerts@oneclickorgs.com
