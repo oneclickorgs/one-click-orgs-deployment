@@ -60,20 +60,32 @@ class RegistrationForm
       form_data['year_end_year_4'] = ''
     else
       day, month, year = year_end.split('/').map(&:to_i)
-      # Ensure each segment is formatted to the correct number of digits
-      day = "%02d" % day
-      month = "%02d" % month
-      year = "%04d" % year
 
-      # Use ranges for character access, for Ruby 1.8 and Ruby 1.9 compatibility.
-      form_data['year_end_day_1'] = day[0..0]
-      form_data['year_end_day_2'] = day[1..1]
-      form_data['year_end_month_1'] = month[0..0]
-      form_data['year_end_month_2'] = month[1..1]
-      form_data['year_end_year_1'] = year[0..0]
-      form_data['year_end_year_2'] = year[1..1]
-      form_data['year_end_year_3'] = year[2..2]
-      form_data['year_end_year_4'] = year[3..3]
+      if day && month && year
+        # Ensure each segment is formatted to the correct number of digits
+        day = "%02d" % day
+        month = "%02d" % month
+        year = "%04d" % year
+
+        # Use ranges for character access, for Ruby 1.8 and Ruby 1.9 compatibility.
+        form_data['year_end_day_1'] = day[0..0]
+        form_data['year_end_day_2'] = day[1..1]
+        form_data['year_end_month_1'] = month[0..0]
+        form_data['year_end_month_2'] = month[1..1]
+        form_data['year_end_year_1'] = year[0..0]
+        form_data['year_end_year_2'] = year[1..1]
+        form_data['year_end_year_3'] = year[2..2]
+        form_data['year_end_year_4'] = year[3..3]
+      else
+        form_data['year_end_day_1'] = ''
+        form_data['year_end_day_2'] = ''
+        form_data['year_end_month_1'] = ''
+        form_data['year_end_month_2'] = ''
+        form_data['year_end_year_1'] = ''
+        form_data['year_end_year_2'] = ''
+        form_data['year_end_year_3'] = ''
+        form_data['year_end_year_4'] = ''
+      end
     end
 
     form_data['membership_required_yes'] = true
