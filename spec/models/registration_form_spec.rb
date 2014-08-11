@@ -8,7 +8,13 @@ describe RegistrationForm do
     constitution: constitution,
     reg_form_close_links: nil,
     signatories: [],
-    secretary: nil
+    secretary: nil,
+    reg_form_business_carried_out: nil,
+    reg_form_funding: nil,
+    reg_form_members_benefit: nil,
+    reg_form_members_participate: nil,
+    reg_form_members_control: nil,
+    reg_form_profit_use: nil
   )}
   let(:registration_form) {RegistrationForm.new(organisation)}
   let(:constitution) {double('constitution', document: document)}
