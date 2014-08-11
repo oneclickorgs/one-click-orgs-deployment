@@ -21,7 +21,13 @@ class Coop < Organisation
     :reg_form_money_laundering_1_address,
     :reg_form_money_laundering_1_postcode,
     :reg_form_money_laundering_1_residency_length,
-    :reg_form_money_laundering_agreement
+    :reg_form_money_laundering_agreement,
+    :reg_form_business_carried_out,
+    :reg_form_funding,
+    :reg_form_members_benefit,
+    :reg_form_members_participate,
+    :reg_form_members_control,
+    :reg_form_profit_use
 
   state_machine :initial => :pending do
     event :propose do
@@ -535,6 +541,66 @@ class Coop < Organisation
     signatories = signatory_ids.map{|id| members.find(id)}
 
     self.signatories = signatories
+  end
+
+  def reg_form_business_carried_out
+    @reg_form_business_carried_out ||= clauses.get_text('reg_form_business_carried_out')
+  end
+
+  def reg_form_business_carried_out=(new_reg_form_business_carried_out)
+    new_reg_form_business_carried_out = ' ' if new_reg_form_business_carried_out.blank?
+    clauses.build(:name => 'reg_form_business_carried_out', :text_value => new_reg_form_business_carried_out)
+    @reg_form_business_carried_out = new_reg_form_business_carried_out
+  end
+
+  def reg_form_funding
+    @reg_form_funding ||= clauses.get_text('reg_form_funding')
+  end
+
+  def reg_form_funding=(new_reg_form_funding)
+    new_reg_form_funding = ' ' if new_reg_form_funding.blank?
+    clauses.build(:name => 'reg_form_funding', :text_value => new_reg_form_funding)
+    @reg_form_funding = new_reg_form_funding
+  end
+
+  def reg_form_members_benefit
+    @reg_form_members_benefit ||= clauses.get_text('reg_form_members_benefit')
+  end
+
+  def reg_form_members_benefit=(new_reg_form_members_benefit)
+    new_reg_form_members_benefit = ' ' if new_reg_form_members_benefit.blank?
+    clauses.build(:name => 'reg_form_members_benefit', :text_value => new_reg_form_members_benefit)
+    @reg_form_members_benefit = new_reg_form_members_benefit
+  end
+
+  def reg_form_members_participate
+    @reg_form_members_participate ||= clauses.get_text('reg_form_members_participate')
+  end
+
+  def reg_form_members_participate=(new_reg_form_members_participate)
+    new_reg_form_members_participate = ' ' if new_reg_form_members_participate.blank?
+    clauses.build(:name => 'reg_form_members_participate', :text_value => new_reg_form_members_participate)
+    @reg_form_members_participate = new_reg_form_members_participate
+  end
+
+  def reg_form_members_control
+    @reg_form_members_control ||= clauses.get_text('reg_form_members_control')
+  end
+
+  def reg_form_members_control=(new_reg_form_members_control)
+    new_reg_form_members_control = ' ' if new_reg_form_members_control.blank?
+    clauses.build(:name => 'reg_form_members_control', :text_value => new_reg_form_members_control)
+    @reg_form_members_control = new_reg_form_members_control
+  end
+
+  def reg_form_profit_use
+    @reg_form_profit_use ||= clauses.get_text('reg_form_profit_use')
+  end
+
+  def reg_form_profit_use=(new_reg_form_profit_use)
+    new_reg_form_profit_use = ' ' if new_reg_form_profit_use.blank?
+    clauses.build(:name => 'reg_form_profit_use', :text_value => new_reg_form_profit_use)
+    @reg_form_profit_use = new_reg_form_profit_use
   end
 
   def signatories
