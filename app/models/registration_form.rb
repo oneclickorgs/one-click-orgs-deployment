@@ -6,14 +6,15 @@ class RegistrationForm
   end
 
   def to_pdf
-    template = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca', 'mutuals-new-ip-form.pdf'))
-    definition = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca', 'mutuals-new-ip-form.yml'))
+    template = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca_2014', 'mutuals-new-ip-form.pdf'))
+    definition = File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca_2014', 'mutuals-new-ip-form.yml'))
 
     # Load default filled-in data for form
-    form_data = YAML.load_file(File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca', 'mutuals-new-ip-form_data.yml')))
+    form_data = YAML.load_file(File.expand_path(File.join(Rails.root, 'data', 'pdf_form_filler', 'fca_2014', 'mutuals-new-ip-form_data.yml')))
 
     # Customise the form data with this organisation's details
-    form_data['organisation_name'] = "#{@organisation.name} Limited"
+
+    form_data['organisation_name'] = form_data['full_organisation_name'] = "#{@organisation.name} Limited"
 
     form_data['contact_name'] = Setting[:coop_contact_name]
     form_data['contact_position'] = Setting[:coop_contact_position]
@@ -22,6 +23,13 @@ class RegistrationForm
     form_data['contact_email'] = Setting[:coop_contact_email]
 
     form_data['timing_factors'] = @organisation.reg_form_timing_factors
+
+    form_data['business_carried_out'] = @organisation.reg_form_business_carried_out
+    form_data['funding'] = @organisation.reg_form_funding
+    form_data['members_benefit'] = @organisation.reg_form_members_benefit
+    form_data['members_participate'] = @organisation.reg_form_members_participate
+    form_data['members_control'] = @organisation.reg_form_members_control
+    form_data['profit_use'] = @organisation.reg_form_profit_use
 
     constitution_document = organisation.constitution.document
 
@@ -60,20 +68,32 @@ class RegistrationForm
       form_data['year_end_year_4'] = ''
     else
       day, month, year = year_end.split('/').map(&:to_i)
-      # Ensure each segment is formatted to the correct number of digits
-      day = "%02d" % day
-      month = "%02d" % month
-      year = "%04d" % year
 
-      # Use ranges for character access, for Ruby 1.8 and Ruby 1.9 compatibility.
-      form_data['year_end_day_1'] = day[0..0]
-      form_data['year_end_day_2'] = day[1..1]
-      form_data['year_end_month_1'] = month[0..0]
-      form_data['year_end_month_2'] = month[1..1]
-      form_data['year_end_year_1'] = year[0..0]
-      form_data['year_end_year_2'] = year[1..1]
-      form_data['year_end_year_3'] = year[2..2]
-      form_data['year_end_year_4'] = year[3..3]
+      if day && month && year
+        # Ensure each segment is formatted to the correct number of digits
+        day = "%02d" % day
+        month = "%02d" % month
+        year = "%04d" % year
+
+        # Use ranges for character access, for Ruby 1.8 and Ruby 1.9 compatibility.
+        form_data['year_end_day_1'] = day[0..0]
+        form_data['year_end_day_2'] = day[1..1]
+        form_data['year_end_month_1'] = month[0..0]
+        form_data['year_end_month_2'] = month[1..1]
+        form_data['year_end_year_1'] = year[0..0]
+        form_data['year_end_year_2'] = year[1..1]
+        form_data['year_end_year_3'] = year[2..2]
+        form_data['year_end_year_4'] = year[3..3]
+      else
+        form_data['year_end_day_1'] = ''
+        form_data['year_end_day_2'] = ''
+        form_data['year_end_month_1'] = ''
+        form_data['year_end_month_2'] = ''
+        form_data['year_end_year_1'] = ''
+        form_data['year_end_year_2'] = ''
+        form_data['year_end_year_3'] = ''
+        form_data['year_end_year_4'] = ''
+      end
     end
 
     form_data['membership_required_yes'] = true

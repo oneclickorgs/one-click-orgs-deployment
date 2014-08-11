@@ -34,7 +34,7 @@ group :assets do
 end
 
 gem "jquery-rails", "~>3.0.4"
-gem "jquery-ui-rails", "~>4.2.0"
+gem "jquery-ui-rails", "~>5.0.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.1.6"
 gem "pdfkit", "~>0.6.1"
@@ -72,12 +72,12 @@ group :development, :test do
   gem "rspec-rails", "~>2.14.0"
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
-  gem "faker", '~>1.3.0'
+  gem "faker", '~>1.4.2'
   gem "simplecov", :platforms => :ruby_19
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
     :branch => "oco", :require => false
   gem "cucumber-rails", "~>1.4.0", :require => nil
-  gem "capybara", '~>2.2.0'
+  gem "capybara", '~>2.4.1'
   gem "database_cleaner"
   gem "launchy"
   gem "cucumber-relizy", "~>0.0.2"
