@@ -36,7 +36,7 @@ after  "deploy:restart", "worker:restart"
 
 namespace :worker do
   task :restart, :roles => :app do
-    run "for service in #{shared_path}/sv/*; do #{sv} restart $service || #{sv} kill $service; done"
+    run "#{sv} restart /home/oneclickorgs/service/dev.oneclickorgs.com/"
   end
 end
 
