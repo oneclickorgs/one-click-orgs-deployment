@@ -1,4 +1,7 @@
 - content_for(:head) do
+  = javascript_tag do
+    OneClickOrgs.currentShareholding = #{current_user.shares_count.to_json};
+    OneClickOrgs.maximumShareholding = #{co.maximum_shareholding.to_json};
   = javascript_include_tag 'share_applications_new'
 
 %h2 Apply for more shares
@@ -13,5 +16,7 @@
     = form.text_field :amount
   %p.share_payment{:style => 'display: none;'}
     A payment of £<span>0</span> will be due.
+  %p.maximum_shareholding{style: 'display: none;'}
+    You cannot apply for this many shares, as it would take you above the maximum legal shareholding.
   %p
     = form.submit "Apply for more shares"
