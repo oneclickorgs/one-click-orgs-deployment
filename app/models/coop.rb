@@ -1,6 +1,9 @@
 require 'one_click_orgs/cast_to_boolean'
 
 class Coop < Organisation
+  # http://www.legislation.gov.uk/ukpga/2014/14/part/2/crossheading/maximum-shareholding/enacted
+  MAXIMUM_SHAREHOLDING_IN_POUNDS = 100_000
+
   include OneClickOrgs::CastToBoolean
 
   attr_accessible :reg_form_timing_factors, :reg_form_close_links,
@@ -317,6 +320,10 @@ class Coop < Organisation
 
   def minimum_shareholding
     @minimum_shareholding ||= (clauses.get_integer('minimum_shareholding') || 1)
+  end
+
+  def maximum_shareholding
+    (MAXIMUM_SHAREHOLDING_IN_POUNDS / (share_value / 100.0)).floor
   end
 
   def interest_rate

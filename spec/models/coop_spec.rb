@@ -266,6 +266,20 @@ describe Coop do
       end
     end
 
+    describe "'maximum_shareholding' attribute" do
+      let(:coop) { Coop.make }
+
+      it "returns a number greater than 0" do
+        expect(coop.maximum_shareholding).to be > 0
+      end
+
+      it "adjusts based on the share value" do
+        original_maximum_shareholding = coop.maximum_shareholding
+        coop.share_value = coop.share_value * 2
+        expect(coop.maximum_shareholding).to eq(original_maximum_shareholding / 2)
+      end
+    end
+
     describe "'interest_rate' attribute" do
       before(:each) do
         @coop = Coop.make
