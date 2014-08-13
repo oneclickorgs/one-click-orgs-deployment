@@ -8,6 +8,12 @@ class ShareApplication < OneClickOrgs::ModelWrapper
 
   delegate :amount, :amount=, :to => :share_transaction
 
+  validates_each :amount do |record, attr, value|
+    if (record.member.shares_count + value) > (record.member.organisation.maximum_shareholding)
+      record.errors.add(attr, 'must not take the member above the maximum shareholding')
+    end
+  end
+
   def before_initialize(attributes)
     self.share_transaction = attributes.delete(:share_transaction) || ShareTransaction.new
   end
