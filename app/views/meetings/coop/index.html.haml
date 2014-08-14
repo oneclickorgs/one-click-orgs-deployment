@@ -55,6 +55,11 @@
     %p
       = link_to("Enter minutes for a meeting not shown here", new_minute_path)
 
+- unless can?(:create, Meeting)
+  %p
+    = link_to('Apply to convene a General Meeting', new_general_meeting_proposal_path)
+    by agreement with other members.
+
 - if can?(:read, BoardMeeting)
   %p
     Board Meetings can be found via the

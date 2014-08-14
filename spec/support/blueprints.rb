@@ -273,3 +273,7 @@ end
 TerminateDirectorshipResolution.blueprint do
   title {nil}
 end
+
+GeneralMeetingProposal.blueprint do
+  organisation { Coop.make! }
+end

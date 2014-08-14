@@ -33,6 +33,22 @@ describe 'meetings/coop/index' do
       render
       rendered.should have_selector(:form, :action => '/general_meetings/new')
     end
+
+    it "renders a link to enter minutes for a meeting not yet in the system" do
+      render
+      rendered.should have_selector(:a, :href => '/minutes/new')
+    end
+  end
+
+  context "when user cannot create Meetings" do
+    before(:each) do
+      allow(view).to receive(:can?).with(:create, Meeting).and_return(false)
+    end
+
+    it "renders a link to create a new GeneralMeetingProposal" do
+      render
+      expect(rendered).to have_selector(:a, href: '/general_meeting_proposals/new')
+    end
   end
 
   it "renders a list of the upcoming meetings" do
@@ -74,17 +90,6 @@ describe 'meetings/coop/index' do
     it "renders a link to show the meeting" do
       render
       rendered.should have_selector(:a, :href => '/general_meetings/2')
-    end
-  end
-
-  context "when user can create meetings" do
-    before(:each) do
-      view.stub(:can?).with(:create, Meeting).and_return(true)
-    end
-
-    it "renders a link to enter minutes for a meeting not yet in the system" do
-      render
-      rendered.should have_selector(:a, :href => '/minutes/new')
     end
   end
 

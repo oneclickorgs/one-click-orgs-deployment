@@ -72,6 +72,7 @@ class Coop < Organisation
   has_many :terminate_directorship_resolutions, :foreign_key => 'organisation_id'
 
   has_many :resolution_proposals, :foreign_key => 'organisation_id'
+  has_many :general_meeting_proposals, foreign_key: 'organisation_id'
 
   has_many :offices, :foreign_key => 'organisation_id'
   has_many :officerships, :through => :offices
