@@ -1,0 +1,22 @@
+%div#member_info
+
+  = image_tag(@member.gravatar_url(64), :alt => @member.name, :width => '64', :height => '64')
+
+  %h2
+    = @member.name
+
+  %p
+    = mail_to(@member.email)
+
+.section
+  %h3
+    Timeline for
+    = @member.name
+  %table.timeline
+    %tr
+      %th Event
+      %th Date
+    - for event in @member_presenter.timeline
+      %tr{:class => cycle('odd', 'even')}
+        = render :partial => "one_click/#{event[:kind]}", :locals => {:event => event}
+        %td.timestamp= event[:timestamp].to_s(:long)
