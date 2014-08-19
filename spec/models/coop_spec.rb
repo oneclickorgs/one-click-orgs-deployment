@@ -9,6 +9,8 @@ describe Coop do
   end
 
   describe "associations" do
+    let(:coop) { Coop.make! }
+
     it "has many board meetings" do
       @coop = Coop.make!
       @board_meeting = BoardMeeting.make!
@@ -150,6 +152,14 @@ describe Coop do
 
       @coop.founder_members.should include(@founder_member)
     end
+
+    it 'has many general_meeting_proposals' do
+      general_meeting_proposal = GeneralMeetingProposal.make!
+      expect{ coop.general_meeting_proposals << general_meeting_proposal }.to_not raise_error
+      coop.reload
+      coop.general_meeting_proposals.reload
+      expect(coop.general_meeting_proposals).to include(general_meeting_proposal)
+    end
   end
 
   describe "defaults" do
@@ -263,6 +273,20 @@ describe Coop do
       it "accepts a string" do
         @coop.minimum_shareholding = "3"
         @coop.minimum_shareholding.should == 3
+      end
+    end
+
+    describe "'maximum_shareholding' attribute" do
+      let(:coop) { Coop.make }
+
+      it "returns a number greater than 0" do
+        expect(coop.maximum_shareholding).to be > 0
+      end
+
+      it "adjusts based on the share value" do
+        original_maximum_shareholding = coop.maximum_shareholding
+        coop.share_value = coop.share_value * 2
+        expect(coop.maximum_shareholding).to eq(original_maximum_shareholding / 2)
       end
     end
 

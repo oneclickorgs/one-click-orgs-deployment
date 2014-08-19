@@ -143,6 +143,12 @@ When(/^I note the number of shares the member has$/) do
   @previous_member_share_account_balance = balance_node.text.to_i
 end
 
+When(/^I enter a number of additional shares that would take me over the maximum legal shareholding$/) do
+  maximum_shareholding = @coop.maximum_shareholding
+  shares_to_apply_for = maximum_shareholding + 1
+  fill_in('share_application[amount]', with: shares_to_apply_for.to_s)
+end
+
 Then(/^I should see the new share value$/) do
   page.should have_content("0.70")
 end
@@ -221,4 +227,8 @@ Then(/^I should see that the total number of issued shares has reduced by the nu
   balance_node = page.find(:css, '.organisation_share_account .balance')
   current_organisation_share_account_balance = balance_node.text.to_i
   expect(@previous_organisation_share_account_balance - current_organisation_share_account_balance).to eq(@previous_member_share_account_balance)
+end
+
+Then(/^I should see a message telling me that I cannot apply for this number of shares$/) do
+  page.should have_content("take you above the maximum legal shareholding")
 end

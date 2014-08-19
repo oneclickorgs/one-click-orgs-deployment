@@ -1,0 +1,10 @@
+%h2 Apply to convene a General Meeting
+
+.section
+  = form_for(@general_meeting_proposal) do |general_meeting_proposal_form|
+    %p
+      = general_meeting_proposal_form.label(:description, 'Purpose of the meeting')
+      %br
+      = general_meeting_proposal_form.text_area(:description)
+    %p
+      = general_meeting_proposal_form.submit('Next')

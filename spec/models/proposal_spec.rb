@@ -39,6 +39,14 @@ describe Proposal do
         expect{proposal.destroy}.to change{Vote.count}.by(-4)
       end
     end
+
+    describe 'voters_for' do
+      it 'returns members who cast "for" votes' do
+        proposal = @organisation.proposals.make!
+        proposal.votes.make!(2)
+        expect(proposal.voters_for).to eq(proposal.votes.map(&:member))
+      end
+    end
   end
   
   it "should close early proposals" do

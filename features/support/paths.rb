@@ -67,6 +67,9 @@ module NavigationHelpers
     when /^another member's profile page$/
       @member = (@organisation.members - [@user]).first
       member_path(@member)
+    when /^another director's profile page$/
+      @director = (@organisation.members - [@user]).first
+      member_path(@director)
     when /^convene a General Meeting$/
       new_general_meeting_path
     when /^the (R|r)ules page$/

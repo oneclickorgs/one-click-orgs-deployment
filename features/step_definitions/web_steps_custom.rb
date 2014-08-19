@@ -53,3 +53,7 @@ Then(/^I should get a "([^"]*)" download with the name of the organisation$/) do
   @organisation ||= Organisation.last
   page.response_headers['Content-Disposition'].should =~ Regexp.new("filename=\"#{Regexp.escape(@organisation.name)}.*#{Regexp.escape(extension)}\"")
 end
+
+Then(/^I should not be able to press "([^"]*)"$/) do |button|
+  expect(find_button(button, disabled: true)).to be_disabled
+end
