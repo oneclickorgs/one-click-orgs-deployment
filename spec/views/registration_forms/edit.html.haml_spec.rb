@@ -26,7 +26,12 @@ describe "registration_forms/edit.html.haml" do
     :reg_form_money_laundering_1_date_of_birth => nil,
     :reg_form_money_laundering_1_address => nil,
     :reg_form_money_laundering_1_postcode => nil,
-    :reg_form_money_laundering_1_residency_length => nil
+    :reg_form_money_laundering_1_residency_length => nil,
+    :reg_form_funding => nil,
+    :reg_form_members_benefit => nil,
+    :reg_form_members_participate => nil,
+    :reg_form_members_control => nil,
+    :reg_form_profit_use => nil
   )}
   let(:members) {[
     mock_model(Member, :id => 111, :name => 'Angie', :selected => nil),

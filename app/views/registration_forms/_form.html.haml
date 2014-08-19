@@ -25,6 +25,23 @@
   = form.label :reg_form_financial_year_end, "Date of society's financial year end (dd/mm/yyyy) (optional)"
   If the society proposes to use a date other than the last day of the month in which the anniversary of its registration falls as its financial year end please indicate this date below, otherwise leave blank.
   = form.text_field :reg_form_financial_year_end
+%p{style: 'margin-bottom: 0;'}
+  = form.label :reg_form_funding, "How will the society fund its activities?"
+  If the society proposes to issue withdrawable share capital please state whether the society intends to pay interest on the share capital and, if so, how the society will determine the rate of interest to be offered.
+  = form.text_area :reg_form_funding
+%p
+  = form.label :reg_form_members_benefit, "How will members benefit from the business industry or trade of the society?"
+  = form.text_area :reg_form_members_benefit
+%p
+  = form.label :reg_form_members_participate, "In what way will members participate in an ongoing basis in the society's primary business?"
+  = form.text_area :reg_form_members_participate
+%p
+  = form.label :reg_form_members_control, "How will members democratically control the society?"
+  = form.text_area :reg_form_members_control
+%p{style: 'margin-bottom: 0;'}
+  = form.label :reg_form_profit_use, "How will the society use any surplus/profit?"
+  If the society intends to distribute the surplus/profit to members please explain how this is to be done.
+  = form.text_area :reg_form_profit_use
 
 %h3 Co-operatives UK Letter of Engagement and Anti-Money Laundering Form
 %p The following additional information is required to engage Co-operative's UK, and satisfy anti-money laundering regulations.
