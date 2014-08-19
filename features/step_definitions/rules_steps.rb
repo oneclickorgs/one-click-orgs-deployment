@@ -1,3 +1,7 @@
+# encoding: UTF-8
+
+require 'rticles'
+
 Given(/^we have customised the Rules$/) do
   @organisation.objectives = "Change the world"
   @organisation.save!
@@ -8,6 +12,20 @@ Given(/^the objects were changed (\d+) months ago$/) do |months_ago|
   @organisation.objectives = Faker::Lorem.sentence
   @organisation.save!
   @organisation.clauses.get_current(:organisation_objectives).update_attribute(:started_at, months_ago.months.ago)
+end
+
+Given(/^there is an alternative model Rules document$/) do
+  File.open(File.join(Rails.root, 'spec', 'fixtures', 'alternative_rules.yml'), 'r') do |alternative_document_file|
+    alternative_document = Rticles::Document.from_yaml(alternative_document_file)
+    expect(alternative_document).to be_persisted
+    alternative_document.update_attribute(:title, 'alternative_rules')
+  end
+end
+
+Given(/^the Coop "(.*?)" is set to use the alternative model Rules document$/) do |name|
+  coop = Coop.find_by_name(name)
+  coop.constitution.document_template = Rticles::Document.find_by_title('alternative_rules')
+  coop.save!
 end
 
 When(/^I change the Name to "(.*?)"$/) do |name|
@@ -62,6 +80,11 @@ end
 
 When(/^I save the changes$/) do
   click_button("Save changes")
+end
+
+When(/^the Coop is set to use the alternative model Rules document$/) do
+  @coop.constitution.document_template = Rticles::Document.find_by_title('alternative_rules')
+  @coop.save!
 end
 
 Then(/^I should see the changes I made$/) do
@@ -119,4 +142,12 @@ end
 Then(/^I should see that the Rules were last changed (\d+) months ago$/) do |months_ago|
   months_ago = months_ago.to_i
   expect(page).to have_content("last changed on #{months_ago.months.ago.to_s(:long_date)}")
+end
+
+Then(/^I should see the alternative Rules$/) do
+  expect(page).to have_content('These are the alternative rules.')
+end
+
+Then(/^I should see the default Rules$/) do
+  expect(page).to have_content('The purpose of the Co‑operative is to carry out its function as a Co‑operative')
 end

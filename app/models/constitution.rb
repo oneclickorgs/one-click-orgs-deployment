@@ -33,9 +33,24 @@ class Constitution
     organisation.constitution_clause_names.map{|name| organisation.clauses.get_current(name)}.compact.map(&:started_at).sort[-1]
   end
 
+  def document_template
+    document_template_title = organisation.clauses.get_text('document_template_title')
+    if document_template_title.present?
+      Rticles::Document.find_by_title(document_template_title)
+    else
+      nil
+    end
+  end
+
+  def document_template=(new_document_template)
+    organisation.clauses.set_text!('document_template_title', new_document_template.title)
+  end
+
   def document
     # TODO Make this work for Organisation subclasses other than Coop.
-    if document_id = Setting[:coop_constitution_document_id]
+    if document_template
+      document = document_template
+    elsif document_id = Setting[:coop_constitution_document_id]
       document = Rticles::Document.find(document_id)
     else
       document = Rticles::Document.where(:title => 'coop_constitution').order('updated_at DESC').first

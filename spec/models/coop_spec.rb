@@ -312,6 +312,15 @@ describe Coop do
     end
   end
 
+  describe '#find_by_name' do
+    it 'returns a Coop with the name given' do
+      coop_a = Coop.make!(name: 'aaaaaa')
+      Coop.make!(name: 'bbbbbb')
+
+      expect(Coop.find_by_name('aaaaaa')).to eq(coop_a)
+    end
+  end
+
   describe "#member_eligible_to_vote?" do
     it "makes the appropriate checks about voting eligibility"
   end

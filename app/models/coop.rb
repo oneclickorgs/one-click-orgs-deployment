@@ -86,6 +86,10 @@ class Coop < Organisation
   has_many :withdrawals, :through => :share_account
   has_many :deposits, :through => :share_account
 
+  def self.find_by_name(name)
+    includes(:clauses).where(["clauses.name = 'organisation_name' AND clauses.text_value = ?", name]).first
+  end
+
   # Returns true if the requirements for moving to the 'proposed' state
   # have been fulfilled.
   def can_propose?

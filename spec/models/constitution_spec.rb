@@ -116,6 +116,18 @@ describe Constitution do
     end
 
     describe "document" do
+      it 'uses the custom document template if it is set' do
+        document_template = Rticles::Document.from_yaml(File.open(File.join(Rails.root, 'spec', 'fixtures', 'alternative_rules.yml')))
+        document_template.update_attribute(:title, 'alternative_rules')
+
+        @constitution.document_template = document_template
+        @organisation.save!
+
+        document = @constitution.document
+
+        expect(document).to eq(document_template)
+      end
+
       it "sets the 'meeting_notice_period' insertion" do
         document = @constitution.document
         document.insertions[:meeting_notice_period].should == 14
@@ -142,6 +154,21 @@ describe Constitution do
         @constitution.stub(:consumer_members).and_return(false)
         document = @constitution.document
         expect(document.choices[:multiple_board_classes]).to be_false
+      end
+    end
+
+    describe 'document_template' do
+      let(:document) { Rticles::Document.first }
+
+      it 'can be set' do
+        expect{ @constitution.document_template = document }.to_not raise_error
+      end
+
+      it 'saves' do
+        @constitution.document_template = document
+        @organisation.save!
+        @organisation.reload
+        expect(Constitution.new(@organisation).document_template).to eq(document)
       end
     end
   end

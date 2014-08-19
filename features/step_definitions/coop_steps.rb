@@ -1,14 +1,4 @@
-Given(/^there is a draft co\-op$/) do
-  set_up_application_if_necessary
-
-  @coop = @organisation = Coop.make!(:pending)
-
-  founder = @coop.members.make!(:founder_member)
-
-  set_subdomain_to_organisation
-end
-
-Given(/^there is a co\-op$/) do
+def there_is_a_coop
   set_up_application_if_necessary
 
   @coop = @organisation = Coop.make!
@@ -20,6 +10,30 @@ Given(/^there is a co\-op$/) do
   @coop.members.make!(:director)
 
   set_subdomain_to_organisation
+end
+
+Given(/^there is a draft co\-op$/) do
+  set_up_application_if_necessary
+
+  @coop = @organisation = Coop.make!(:pending)
+
+  founder = @coop.members.make!(:founder_member)
+
+  set_subdomain_to_organisation
+end
+
+Given(/^there is a co\-op$/) do
+  there_is_a_coop
+end
+
+Given(/^there is a Coop$/) do
+  there_is_a_coop
+end
+
+Given(/^there is a Coop "(.*?)"$/) do |name|
+  there_is_a_coop
+  @coop.name = name
+  @coop.save!
 end
 
 Given(/^our co\-op has been submitted for approval$/) do
