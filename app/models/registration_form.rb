@@ -24,7 +24,16 @@ class RegistrationForm
 
     form_data['timing_factors'] = @organisation.reg_form_timing_factors
 
-    form_data['business_carried_out'] = (@organisation.objectives.respond_to?(:capitalize) ? @organisation.objectives.capitalize : '')
+    # The business_carried_out question is automatically filled with the 'objects' from the Rules,
+    # unless an administrator has manually entered some alternative text for this (which is stored
+    # in the 'reg_form_business_carried_out' attribute of the Coop).
+    form_data['business_carried_out'] = if organisation.reg_form_business_carried_out.present?
+      organisation.reg_form_business_carried_out
+    else
+      (@organisation.objectives.respond_to?(:capitalize) ? @organisation.objectives.capitalize : '')
+    end
+
+
     form_data['funding'] = @organisation.reg_form_funding
     form_data['members_benefit'] = @organisation.reg_form_members_benefit
     form_data['members_participate'] = @organisation.reg_form_members_participate
