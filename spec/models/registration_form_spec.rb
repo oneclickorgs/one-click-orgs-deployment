@@ -49,6 +49,20 @@ describe RegistrationForm do
       expect(form).to receive(:fill_form).with(hash_including('business_carried_out' => 'Raise pigs.'))
       registration_form.to_pdf
     end
+
+    context 'when the "reg_form_business_carried_out" attribute of Coop is present' do
+      before(:each) do
+        allow(organisation).to receive(:reg_form_business_carried_out).and_return('A more detailed set of business to be carried out.')
+      end
+
+      it 'uses that attribute instead' do
+        allow(PdfFormFiller::Form).to receive(:new).and_return(form)
+        allow(organisation).to receive(:objectives).and_return('Default objectives.')
+        expect(form).to receive(:fill_form).with(hash_including('business_carried_out' => 'A more detailed set of business to be carried out.'))
+        registration_form.to_pdf
+      end
+    end
+
   end
 
 end
