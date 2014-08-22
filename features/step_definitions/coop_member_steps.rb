@@ -1,3 +1,9 @@
+def i_am_a_member_of_the_coop
+  @organisation ||= Coop.last
+  @user = @organisation.members.make!(:member)
+  user_logs_in
+end
+
 Given(/^I am the founder of the draft co\-op$/) do
   @organisation ||= Coop.pending.last
   if @organisation.members.founder_members(@organisation).first
@@ -35,9 +41,17 @@ Given(/^I am the (?:S|s)ecretary of the co\-op$/) do
 end
 
 Given(/^I am a (?:M|m)ember of the co\-op$/) do
-  @organisation ||= Coop.last
-  @user = @organisation.members.make!(:member)
-  user_logs_in
+  i_am_a_member_of_the_coop
+end
+
+Given(/^I am a Member of the Coop$/) do
+  i_am_a_member_of_the_coop
+end
+
+Given(/^I am a Member of the coop "(.*?)"$/) do |name|
+  @organisation = Coop.find_by_name(name)
+  set_subdomain_to_organisation
+  i_am_a_member_of_the_coop
 end
 
 Given(/^I am a Director of the co\-op$/) do

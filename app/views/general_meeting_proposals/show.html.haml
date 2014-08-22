@@ -1,0 +1,40 @@
+%h2 Application to convene a General Meeting
+
+%p
+  Proposed by
+  = @general_meeting_proposal.proposer.name + '.'
+
+%p
+  Purpose of the meeting:
+  %br
+  = @general_meeting_proposal.description
+
+%h3
+  Supporters
+%ul
+  - @general_meeting_proposal.voters_for.each do |member|
+    %li= member.name
+
+- if current_user == @general_meeting_proposal.proposer
+  - if @general_meeting_proposal.open?
+    .section
+      %p
+        To bring this application to the Secretary, and cause a General Meeting to be convened, you will need the support of
+        = pluralize(co.members_required_to_force_resolution, "member") + '.'
+      %p
+        Members can indicate their support by visiting this special link:
+        %br
+        = link_to(general_meeting_proposal_url(@general_meeting_proposal), general_meeting_proposal_url(@general_meeting_proposal))
+  - elsif @general_meeting_proposal.accepted?
+    .section
+      %p
+        Your application to convene a General Meeting has been supported by
+        = pluralize(@general_meeting_proposal.votes_for, "member")
+        and has now been passed to the Secretary, who must convene the meeting.
+
+- unless current_user == @general_meeting_proposal.proposer
+  - if @general_meeting_proposal.vote_by(current_user)
+    %p You have already supported this application.
+  -else
+    = form_tag(vote_for_path(id: @general_meeting_proposal.id, return_to: request.path)) do
+      %p= submit_tag "I support this application to convene a general meeting"

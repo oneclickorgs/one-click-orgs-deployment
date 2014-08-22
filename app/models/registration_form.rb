@@ -24,7 +24,7 @@ class RegistrationForm
 
     form_data['timing_factors'] = @organisation.reg_form_timing_factors
 
-    form_data['business_carried_out'] = @organisation.reg_form_business_carried_out
+    form_data['business_carried_out'] = (@organisation.objectives.respond_to?(:capitalize) ? @organisation.objectives.capitalize : '')
     form_data['funding'] = @organisation.reg_form_funding
     form_data['members_benefit'] = @organisation.reg_form_members_benefit
     form_data['members_participate'] = @organisation.reg_form_members_participate

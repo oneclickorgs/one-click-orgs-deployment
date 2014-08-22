@@ -81,6 +81,8 @@ OneClickOrgs::Application.routes.draw do
   resources :change_member_class_proposals
   resources :found_association_proposals
 
+  resources :general_meeting_proposals
+
   resources :resolution_proposals do
     member do
       get :support

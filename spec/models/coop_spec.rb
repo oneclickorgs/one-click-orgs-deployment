@@ -9,6 +9,8 @@ describe Coop do
   end
 
   describe "associations" do
+    let(:coop) { Coop.make! }
+
     it "has many board meetings" do
       @coop = Coop.make!
       @board_meeting = BoardMeeting.make!
@@ -150,6 +152,14 @@ describe Coop do
 
       @coop.founder_members.should include(@founder_member)
     end
+
+    it 'has many general_meeting_proposals' do
+      general_meeting_proposal = GeneralMeetingProposal.make!
+      expect{ coop.general_meeting_proposals << general_meeting_proposal }.to_not raise_error
+      coop.reload
+      coop.general_meeting_proposals.reload
+      expect(coop.general_meeting_proposals).to include(general_meeting_proposal)
+    end
   end
 
   describe "defaults" do
@@ -266,6 +276,20 @@ describe Coop do
       end
     end
 
+    describe "'maximum_shareholding' attribute" do
+      let(:coop) { Coop.make }
+
+      it "returns a number greater than 0" do
+        expect(coop.maximum_shareholding).to be > 0
+      end
+
+      it "adjusts based on the share value" do
+        original_maximum_shareholding = coop.maximum_shareholding
+        coop.share_value = coop.share_value * 2
+        expect(coop.maximum_shareholding).to eq(original_maximum_shareholding / 2)
+      end
+    end
+
     describe "'interest_rate' attribute" do
       before(:each) do
         @coop = Coop.make
@@ -285,6 +309,15 @@ describe Coop do
       @coop = Coop.make
       expect {@coop.membership_application_text = "Custom text."}.to_not raise_error
       @coop.membership_application_text.should == "Custom text."
+    end
+  end
+
+  describe '#find_by_name' do
+    it 'returns a Coop with the name given' do
+      coop_a = Coop.make!(name: 'aaaaaa')
+      Coop.make!(name: 'bbbbbb')
+
+      expect(Coop.find_by_name('aaaaaa')).to eq(coop_a)
     end
   end
 
