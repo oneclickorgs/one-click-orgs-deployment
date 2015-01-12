@@ -12,7 +12,7 @@ describe Meeting do
       meeting.save
       meeting.reload
 
-      meeting.organisation.should == organisation
+      expect(meeting.organisation).to eq(organisation)
     end
 
     it "has many participants" do
@@ -21,7 +21,7 @@ describe Meeting do
 
       expect {meeting.participants << member}.to_not raise_error
 
-      meeting.reload.participants.should == [member]
+      expect(meeting.reload.participants).to eq([member])
     end
 
     it "has many comments" do
@@ -30,7 +30,7 @@ describe Meeting do
 
       expect{meeting.comments << comment}.to_not raise_error
 
-      meeting.reload.comments.should == [comment]
+      expect(meeting.reload.comments).to eq([comment])
     end
 
     it "belongs to a creator" do
@@ -42,7 +42,7 @@ describe Meeting do
       meeting.save!
       meeting = Meeting.find(meeting.id)
 
-      meeting.creator.should == creator
+      expect(meeting.creator).to eq(creator)
     end
 
     it "has many agenda items" do
@@ -51,14 +51,14 @@ describe Meeting do
 
       expect {meeting.agenda_items << agenda_item}.to_not raise_error
 
-      meeting.agenda_items(true).should include(agenda_item)
+      expect(meeting.agenda_items(true)).to include(agenda_item)
     end
   end
 
   it "accepts nested attributes for agenda items" do
     meeting = Meeting.make
     expect {meeting.agenda_items_attributes = [{:title => 'Any Other Business'}]}.to_not raise_error
-    meeting.agenda_items.map(&:title).should == ["Any Other Business"]
+    expect(meeting.agenda_items.map(&:title)).to eq(["Any Other Business"])
   end
 
   describe "scopes" do
@@ -70,24 +70,24 @@ describe Meeting do
     describe "upcoming" do
       it "includes a meeting that happens today" do
         meeting = Meeting.make!(:happened_on => @today)
-        Meeting.upcoming.should include(meeting)
+        expect(Meeting.upcoming).to include(meeting)
       end
 
       it "does not include a meeting that happened yesterday" do
         meeting = Meeting.make!(:happened_on => @yesterday)
-        Meeting.upcoming.should_not include(meeting)
+        expect(Meeting.upcoming).not_to include(meeting)
       end
     end
 
     describe "past" do
       it "includes a meeting that happened yesterday" do
         meeting = Meeting.make!(:happened_on => @yesterday)
-        Meeting.past.should include(meeting)
+        expect(Meeting.past).to include(meeting)
       end
 
       it "does not include a meeting that happens today" do
         meeting = Meeting.make!(:happened_on => @today)
-        Meeting.past.should_not include(meeting)
+        expect(Meeting.past).not_to include(meeting)
       end
     end
   end
@@ -97,17 +97,17 @@ describe Meeting do
     let(:yesterday) {Time.now.utc.advance(:days => -1)}
 
     it "is true when meeting happened yesterday" do
-      Meeting.new(:happened_on => yesterday).past?.should be true
+      expect(Meeting.new(:happened_on => yesterday).past?).to be true
     end
 
     it "is false when the meeting is happening today" do
-      Meeting.new(:happened_on => today).past?.should be false
+      expect(Meeting.new(:happened_on => today).past?).to be false
     end
   end
 
   describe "validations" do
     it "requires an organisation" do
-      Meeting.make(:organisation => nil).should_not be_valid
+      expect(Meeting.make(:organisation => nil)).not_to be_valid
     end
   end
 
@@ -116,9 +116,9 @@ describe Meeting do
       meeting = Meeting.make!
       event = meeting.to_event
 
-      event[:timestamp].should == meeting.created_at
-      event[:object].should == meeting
-      event[:kind].should == :meeting
+      expect(event[:timestamp]).to eq(meeting.created_at)
+      expect(event[:object]).to eq(meeting)
+      expect(event[:kind]).to eq(:meeting)
     end
   end
 
@@ -134,9 +134,9 @@ describe Meeting do
         @directors[1].id.to_s => '1'
       })
 
-      meeting.participants.length.should == 2
-      meeting.participants.should include(@directors[0])
-      meeting.participants.should include(@directors[1])
+      expect(meeting.participants.length).to eq(2)
+      expect(meeting.participants).to include(@directors[0])
+      expect(meeting.participants).to include(@directors[1])
     end
 
     it "does not allow setting participants that are not in the same organisation as the meeting" do
@@ -148,9 +148,9 @@ describe Meeting do
         other_director.id.to_s => '1'
       })
 
-      meeting.participants.length.should == 1
-      meeting.participants.should include(@directors[0])
-      meeting.participants.should_not include(other_director)
+      expect(meeting.participants.length).to eq(1)
+      expect(meeting.participants).to include(@directors[0])
+      expect(meeting.participants).not_to include(other_director)
     end
 
     it "ignores participant_ids with a value of '0'" do
@@ -159,7 +159,7 @@ describe Meeting do
         0 => '1'
       })
 
-      meeting.participants.length.should == 1
+      expect(meeting.participants.length).to eq(1)
     end
   end
 
@@ -172,7 +172,7 @@ describe Meeting do
       @meeting = @company.meetings.make
 
       @members.each do |member|
-        MeetingMailer.should_receive(:notify_creation).with(member, @meeting).and_return(@mail)
+        expect(MeetingMailer).to receive(:notify_creation).with(member, @meeting).and_return(@mail)
       end
 
       @meeting.save!

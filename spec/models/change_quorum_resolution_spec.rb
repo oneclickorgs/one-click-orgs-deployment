@@ -6,13 +6,13 @@ describe ChangeQuorumResolution do
     it "has a 'quorum_number' attribute" do
       @change_quorum_resolution = ChangeQuorumResolution.make
       expect {@change_quorum_resolution.quorum_number = 3}.to_not raise_error
-      @change_quorum_resolution.quorum_number.should == 3
+      expect(@change_quorum_resolution.quorum_number).to eq(3)
     end
 
     it "has a 'quorum_percentage' attribute" do
       @change_quorum_resolution = ChangeQuorumResolution.make
       expect {@change_quorum_resolution.quorum_percentage = 3}.to_not raise_error
-      @change_quorum_resolution.quorum_percentage.should == 3
+      expect(@change_quorum_resolution.quorum_percentage).to eq(3)
     end
   end
 
@@ -33,8 +33,8 @@ describe ChangeQuorumResolution do
   it "sets a default title" do
     @resolution = ChangeQuorumResolution.make(:title => nil, :description => nil, :quorum_number => 5, :quorum_percentage => 25)
     @resolution.save!
-    @resolution.title.should be_present
-    @resolution.title.should include('the greater of 5 members or 25% of the membership')
+    expect(@resolution.title).to be_present
+    expect(@resolution.title).to include('the greater of 5 members or 25% of the membership')
   end
 
   describe "enacting" do
@@ -44,12 +44,12 @@ describe ChangeQuorumResolution do
     end
 
     it "changes the quorum number" do
-      @resolution.organisation.should_receive(:quorum_number=).with(10)
+      expect(@resolution.organisation).to receive(:quorum_number=).with(10)
       @resolution.close!
     end
 
     it "changes the quorum percentage" do
-      @resolution.organisation.should_receive(:quorum_percentage=).with(20)
+      expect(@resolution.organisation).to receive(:quorum_percentage=).with(20)
       @resolution.close!
     end
   end

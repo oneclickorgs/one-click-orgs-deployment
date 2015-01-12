@@ -10,7 +10,7 @@ describe OrganisationsController do
   
   describe "GET 'new'" do
     before(:each) do
-      Setting.stub(:[]).with(:theme).and_return(nil)
+      allow(Setting).to receive(:[]).with(:theme).and_return(nil)
 
       allow(Setting).to receive(:[]).with(:association_enabled).and_return('true')
       allow(Setting).to receive(:[]).with(:company_enabled).and_return('true')
@@ -19,7 +19,7 @@ describe OrganisationsController do
 
     it "returns http success" do
       get 'new'
-      response.should be_success
+      expect(response).to be_success
     end
 
     context 'when only one organisation type is enabled' do

@@ -19,8 +19,8 @@ describe "/one_click" do
         @organisation.proposals.make!.create_decision
 
         get url_for(:controller => 'one_click', :action => 'dashboard')
-        @response.should be_successful
-        @response.should have_xpath("//table[@class='timeline']")
+        expect(@response).to be_successful
+        expect(@response).to have_xpath("//table[@class='timeline']")
       end
     end
   end

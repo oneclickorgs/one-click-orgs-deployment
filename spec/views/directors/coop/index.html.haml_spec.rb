@@ -28,56 +28,56 @@ describe 'directors/coop/index' do
     assign(:tasks, [task])
     stub_template('tasks/_task_election_view_result' => 'task template')
 
-    view.stub(:can?).and_return(false)
+    allow(view).to receive(:can?).and_return(false)
   end
 
   it "displays a list of director-related tasks for the current user" do
     render
-    rendered.should render_template('tasks/_task_election_view_result')
+    expect(rendered).to render_template('tasks/_task_election_view_result')
   end
 
   context "when user can edit the Officerships" do
     before(:each) do
-      view.stub(:can?).with(:edit, @officership).and_return(true)
+      allow(view).to receive(:can?).with(:edit, @officership).and_return(true)
     end
 
     it "renders a 'Step down' button for each officer" do
       render
-      rendered.should have_selector(:form, :action => '/officerships/3/edit')
+      expect(rendered).to have_selector(:form, :action => '/officerships/3/edit')
     end
   end
 
   context "when user can edit the Directorships" do
     before(:each) do
-      view.stub(:can?).with(:edit, @directorship).and_return(true)
+      allow(view).to receive(:can?).with(:edit, @directorship).and_return(true)
     end
 
     it "renders a 'Retire' button for each director" do
       render
-      rendered.should have_selector(:form, :action => '/directorships/5/edit')
+      expect(rendered).to have_selector(:form, :action => '/directorships/5/edit')
     end
   end
 
 
   context "when user can create a Director" do
     before(:each) do
-      view.stub(:can?).with(:create, Directorship).and_return(true)
+      allow(view).to receive(:can?).with(:create, Directorship).and_return(true)
     end
 
     it "renders an 'Appoint new Director' button" do
       render
-      rendered.should have_selector("form[action='/directorships/new'] input[type='submit'][value='Appoint new Director']")
+      expect(rendered).to have_selector("form[action='/directorships/new'] input[type='submit'][value='Appoint new Director']")
     end
   end
 
   context "when user can create an Officership" do
     before(:each) do
-      view.stub(:can?).with(:create, Officership).and_return(true)
+      allow(view).to receive(:can?).with(:create, Officership).and_return(true)
     end
 
     it "renders an 'Appoint a new Officer' button" do
       render
-      rendered.should have_selector("form[action='/officerships/new'] input[type='hidden'][name='officer_id'][value='4']")
+      expect(rendered).to have_selector("form[action='/officerships/new'] input[type='hidden'][name='officer_id'][value='4']")
     end
   end
 

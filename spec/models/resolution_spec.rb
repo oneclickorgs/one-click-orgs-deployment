@@ -6,12 +6,12 @@ describe Resolution do
     describe "being set on creation" do
       it "sets its state to 'draft'" do
         @resolution = Resolution.make!(:draft => true)
-        @resolution[:state].should == 'draft'
+        expect(@resolution[:state]).to eq('draft')
       end
 
       it "does not set the close date" do
         @resolution = Resolution.make!(:draft => true)
-        @resolution.close_date.should be_nil
+        expect(@resolution.close_date).to be_nil
       end
     end
 
@@ -19,7 +19,7 @@ describe Resolution do
       it "sets the close date" do
         @resolution = Resolution.make!(:draft => true)
         @resolution.start!
-        @resolution.close_date.should be_present
+        expect(@resolution.close_date).to be_present
       end
     end
 
@@ -27,20 +27,20 @@ describe Resolution do
       @resolution = Resolution.make
 
       @resolution.draft = '1'
-      @resolution.draft.should eq true
+      expect(@resolution.draft).to eq true
 
       @resolution.draft = '0'
-      @resolution.draft.should == false
+      expect(@resolution.draft).to eq(false)
     end
 
     it "understands 'true' and 'false' as boolean values" do
       @resolution = Resolution.make
 
       @resolution.draft = 'true'
-      @resolution.draft.should eq true
+      expect(@resolution.draft).to eq true
 
       @resolution.draft = 'false'
-      @resolution.draft.should == false
+      expect(@resolution.draft).to eq(false)
     end
   end
 
@@ -48,14 +48,14 @@ describe Resolution do
     it "can be reached from 'draft' state" do
       @resolution = Resolution.make!(:draft)
       @resolution.attach!
-      @resolution.should be_attached
+      expect(@resolution).to be_attached
     end
   end
 
   describe "scopes" do
     it "has a draft scope" do
       @draft_resolution = Resolution.make!(:draft => true)
-      Resolution.draft.should include @draft_resolution
+      expect(Resolution.draft).to include @draft_resolution
     end
   end
 
@@ -63,7 +63,7 @@ describe Resolution do
     it "automatically sets the title based on the description upon creation" do
       @resolution = Resolution.make(:title => nil, :description => "A description of the resolution")
       @resolution.save!
-      @resolution.title.should be_present
+      expect(@resolution.title).to be_present
     end
 
     it "automatically updates the title based on the description upon updating"
@@ -94,18 +94,18 @@ describe Resolution do
     end
 
     it "triggers enactment" do
-      @resolution.should_receive(:enact!)
+      expect(@resolution).to receive(:enact!)
       @resolution.save!
     end
 
     it "marks the resolution as accepted" do
       @resolution.save!
-      @resolution.should be_accepted
+      expect(@resolution).to be_accepted
     end
   end
 
   it "has an 'attached' attribute" do
-    Resolution.new.attached.should be_nil
+    expect(Resolution.new.attached).to be_nil
   end
 
   describe "resolution attached to meeting with electronic voting" do
@@ -119,20 +119,20 @@ describe Resolution do
 
     it "is automatically paused on the day of the meeting" do
       Resolution.run_daily_job
-      resolution.reload.should be_paused
+      expect(resolution.reload).to be_paused
     end
 
     describe "being closed" do
       it "includes the vote counts from the meeting in calculating the result" do
         # Organisation has 10 members. The resolution requires 6 'for' votes to pass.
         # We begin with 3 electronic 'for' votes, and add 3 additional 'for' votes in the meeting.
-        resolution.stub(:member_count).and_return(10)
+        allow(resolution).to receive(:member_count).and_return(10)
 
         resolution.votes << Vote.make!(3, :for => 1)
         resolution.additional_votes_for = 3
 
         resolution.close!
-        resolution.should be_accepted
+        expect(resolution).to be_accepted
       end
 
       it "does not count electronic votes by people who were in attendance at the meeting" do
@@ -140,7 +140,7 @@ describe Resolution do
         # We begin with 3 electronic 'for' votes, and add 3 additional 'for' votes in the meeting.
         # However, one of the three people who cast an electronic 'for' vote also attended the
         # meeting. So only 5 'for' votes should be counted, resulting in the resolution failing.
-        resolution.stub(:member_count).and_return(10)
+        allow(resolution).to receive(:member_count).and_return(10)
 
         resolution.votes << Vote.make!(3, :for => 1)
         resolution.additional_votes_for = 3
@@ -148,7 +148,7 @@ describe Resolution do
         resolution.meeting.participants << resolution.votes.first.member
 
         resolution.close!
-        resolution.should be_rejected
+        expect(resolution).to be_rejected
       end
     end
   end

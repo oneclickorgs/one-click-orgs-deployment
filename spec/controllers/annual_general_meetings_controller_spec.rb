@@ -14,7 +14,7 @@ describe AnnualGeneralMeetingsController do
     stub_coop
     stub_login
 
-    @organisation.stub(:annual_general_meetings).and_return(annual_general_meetings)
+    allow(@organisation).to receive(:annual_general_meetings).and_return(annual_general_meetings)
   end
 
   describe "GET 'show'" do
@@ -27,26 +27,26 @@ describe AnnualGeneralMeetingsController do
 
     it "succeeds" do
       get_show
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "GET 'new'" do
     before(:each) do
       @organisation.stub_chain(:resolutions, :draft)
-      @organisation.stub(:directors_retiring)
+      allow(@organisation).to receive(:directors_retiring)
     end
 
     it "returns http success" do
       get 'new'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "POST 'create'" do
     it "returns http redirect" do
       get 'create'
-      response.should be_redirect
+      expect(response).to be_redirect
     end
   end
 
@@ -60,18 +60,18 @@ describe AnnualGeneralMeetingsController do
     end
 
     it "finds the AGM" do
-      annual_general_meetings.should_receive(:find).with('1').and_return(annual_general_meeting)
+      expect(annual_general_meetings).to receive(:find).with('1').and_return(annual_general_meeting)
       put_update
     end
 
     it "updates the AGM" do
-      annual_general_meeting.should_receive(:update_attributes).with(annual_general_meeting_attributes).and_return(true)
+      expect(annual_general_meeting).to receive(:update_attributes).with(annual_general_meeting_attributes).and_return(true)
       put_update
     end
 
     it "redirects to the Meetings page" do
       put_update
-      response.should redirect_to('/meetings')
+      expect(response).to redirect_to('/meetings')
     end
 
     context "when updating the AGM fails" do

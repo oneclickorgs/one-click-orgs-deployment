@@ -18,7 +18,7 @@ describe GeneralMeeting do
       @general_meeting.reload
       @general_meeting.resolutions.reload
 
-      @general_meeting.resolutions.should include(@resolution)
+      expect(@general_meeting.resolutions).to include(@resolution)
     end
   end
 
@@ -42,21 +42,21 @@ describe GeneralMeeting do
 
       @meeting = GeneralMeeting.new
 
-      Resolution.stub(:find_by_id).with(7).and_return(@resolution_7 = mock_model(Resolution, :draft? => true, :attach! => nil, :id => 7))
-      Resolution.stub(:find_by_id).with(9).and_return(@resolution_9 = mock_model(Resolution, :draft? => true, :attach! => nil, :id => 9))
+      allow(Resolution).to receive(:find_by_id).with(7).and_return(@resolution_7 = mock_model(Resolution, :draft? => true, :attach! => nil, :id => 7))
+      allow(Resolution).to receive(:find_by_id).with(9).and_return(@resolution_9 = mock_model(Resolution, :draft? => true, :attach! => nil, :id => 9))
     end
 
     it "adds the attached resolutions to the 'resolutions' association" do
       @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
 
-      @meeting.resolutions.length.should eq 1
-      @meeting.resolutions.should include(@resolution_7)
-      @meeting.resolutions.should_not include(@resolution_9)
+      expect(@meeting.resolutions.length).to eq 1
+      expect(@meeting.resolutions).to include(@resolution_7)
+      expect(@meeting.resolutions).not_to include(@resolution_9)
     end
 
     it "moves the resolutions to the 'attached' state" do
-      @resolution_7.should_receive(:attach!)
-      @resolution_9.should_not_receive(:attach!)
+      expect(@resolution_7).to receive(:attach!)
+      expect(@resolution_9).not_to receive(:attach!)
 
       @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
     end
@@ -70,8 +70,8 @@ describe GeneralMeeting do
       end
 
       it "moves the resolution to the 'open' state" do
-        @resolution_7.should_receive(:start!)
-        @resolution_7.should_not_receive(:attach!)
+        expect(@resolution_7).to receive(:start!)
+        expect(@resolution_7).not_to receive(:attach!)
 
         @meeting.existing_resolutions_attributes = @existing_resolutions_attributes
       end
@@ -86,17 +86,17 @@ describe GeneralMeeting do
     ]}
 
     before(:each) do
-      meeting.stub(:resolutions).and_return(resolutions)
-      resolutions.stub(:find_by_id).with(7).and_return(resolutions[0])
-      resolutions.stub(:find_by_id).with(9).and_return(resolutions[1])
+      allow(meeting).to receive(:resolutions).and_return(resolutions)
+      allow(resolutions).to receive(:find_by_id).with(7).and_return(resolutions[0])
+      allow(resolutions).to receive(:find_by_id).with(9).and_return(resolutions[1])
     end
 
     it "it forces the passed resolutions to pass" do
-      resolutions[0].should_receive(:force_passed=).with(true)
+      expect(resolutions[0]).to receive(:force_passed=).with(true)
 
       meeting.passed_resolutions_attributes = {"0"=>{"passed"=>"1", "id"=>"7"}, "1"=>{"passed"=>"0", "id"=>"9"}}
 
-      resolutions[0].should_receive(:close!)
+      expect(resolutions[0]).to receive(:close!)
 
       meeting.save!
     end
@@ -117,20 +117,20 @@ describe GeneralMeeting do
     let(:resolutions) {double("resolutions", :find_by_id => resolution)}
 
     before(:each) do
-      meeting.stub(:resolutions).and_return(resolutions)
+      allow(meeting).to receive(:resolutions).and_return(resolutions)
     end
 
     it "updates the vote counts in the resolution records" do
-      resolution.should_receive(:additional_votes_for=).with(3)
-      resolution.should_receive(:additional_votes_against=).with(1)
-      resolution.should_receive(:save!)
+      expect(resolution).to receive(:additional_votes_for=).with(3)
+      expect(resolution).to receive(:additional_votes_against=).with(1)
+      expect(resolution).to receive(:save!)
 
       meeting.passed_resolutions_attributes = passed_resolutions_attributes
       meeting.save!
     end
 
     it "it closes the proposals" do
-      resolution.should_receive(:close!)
+      expect(resolution).to receive(:close!)
 
       meeting.passed_resolutions_attributes = passed_resolutions_attributes
       meeting.save!
@@ -146,12 +146,12 @@ describe GeneralMeeting do
         meeting = GeneralMeeting.make(:happened_on => meeting_date, :minutes => nil)
 
         secretary = mock_model(Member)
-        meeting.organisation.stub(:secretary).and_return(secretary)
+        allow(meeting.organisation).to receive(:secretary).and_return(secretary)
 
         tasks_association = double("tasks association")
-        secretary.stub(:tasks).and_return(tasks_association)
+        allow(secretary).to receive(:tasks).and_return(tasks_association)
 
-        tasks_association.should_receive(:create).with(hash_including(
+        expect(tasks_association).to receive(:create).with(hash_including(
           :subject => meeting,
           :action => :minute,
           :starts_on => meeting_date
@@ -166,7 +166,7 @@ describe GeneralMeeting do
     context "when building a new GeneralMeeting" do
       it "builds defaults" do
         meeting = GeneralMeeting.new
-        meeting.agenda_items.map(&:title).should eq [
+        expect(meeting.agenda_items.map(&:title)).to eq [
           "Apologies for Absence",
           "Minutes of Previous Meeting",
           "Any Other Business",
@@ -187,7 +187,7 @@ describe GeneralMeeting do
         'start_time_proxy(4i)' => '16',
         'start_time_proxy(5i)' => '45'
       }
-      meeting.start_time.should == '16:45'
+      expect(meeting.start_time).to eq('16:45')
     rescue ActiveRecord::MultiparameterAssignmentErrors => mae
       raise mae.errors.map{|e| "#{e.attribute}: #{e.exception}"}.inspect + mae.backtrace.inspect
     end

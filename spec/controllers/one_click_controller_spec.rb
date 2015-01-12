@@ -3,7 +3,7 @@ require 'spec_helper'
 module OneClickControllerSpecHelper
   def mock_event
     double("event").tap do |event|
-      event.stub(:[]).with(:timestamp) do
+      allow(event).to receive(:[]).with(:timestamp) do
         rand(5).days.ago
       end
     end
@@ -31,16 +31,16 @@ describe OneClickController do
     describe "GET dashboard" do
       before(:each) do
         @meeting = mock_model(Meeting)
-        Meeting.stub(:new).and_return(@meeting)
+        allow(Meeting).to receive(:new).and_return(@meeting)
 
         @members_association = double("members association")
-        @company.stub(:members).and_return(@members_association)
+        allow(@company).to receive(:members).and_return(@members_association)
         @member_classes_association = double("member classes association")
-        @company.stub(:member_classes).and_return(@member_classes_association)
+        allow(@company).to receive(:member_classes).and_return(@member_classes_association)
         @director_member_class = mock_model(MemberClass)
-        @member_classes_association.stub(:find_by_name).and_return(@director_member_class)
+        allow(@member_classes_association).to receive(:find_by_name).and_return(@director_member_class)
         @directors = double("directors")
-        @members_association.stub(:where).and_return(@directors)
+        allow(@members_association).to receive(:where).and_return(@directors)
 
         @proposals = [
           mock_model(Proposal, :to_event => mock_event),
@@ -52,43 +52,43 @@ describe OneClickController do
         ]
         @company.stub_chain(:meetings, :all).and_return(@meetings)
 
-        @company.stub(:proposals).and_return(@proposals)
+        allow(@company).to receive(:proposals).and_return(@proposals)
         @company.stub_chain(:decisions, :all).and_return([])
 
-        @proposals.stub(:all).and_return(@proposals)
-        @proposals.stub(:currently_open).and_return(@proposals)
+        allow(@proposals).to receive(:all).and_return(@proposals)
+        allow(@proposals).to receive(:currently_open).and_return(@proposals)
 
-        @proposals.stub(:new).and_return(mock_model(Proposal))
+        allow(@proposals).to receive(:new).and_return(mock_model(Proposal))
       end
 
       it "builds a new meeting" do
-        Meeting.should_receive(:new).and_return(@meeting)
+        expect(Meeting).to receive(:new).and_return(@meeting)
         get_dashboard
       end
 
       it "assigns the new meeting" do
         get_dashboard
-        assigns(:meeting).should == @meeting
+        expect(assigns(:meeting)).to eq(@meeting)
       end
 
       it "finds the directors" do
-        @member_classes_association.should_receive(:find_by_name).with('Director').and_return(@director_member_class)
-        @members_association.should_receive(:where).with(:member_class_id => @director_member_class.id).and_return(@directors)
+        expect(@member_classes_association).to receive(:find_by_name).with('Director').and_return(@director_member_class)
+        expect(@members_association).to receive(:where).with(:member_class_id => @director_member_class.id).and_return(@directors)
         get_dashboard
       end
 
       it "assigns the directors" do
         get_dashboard
-        assigns(:directors).should == @directors
+        expect(assigns(:directors)).to eq(@directors)
       end
 
       describe "timeline" do
         it "assigns the timeline" do
           get_dashboard
           timeline = assigns(:timeline)
-          timeline.should respond_to(:each)
+          expect(timeline).to respond_to(:each)
           timeline.each do |event|
-            event[:timestamp].should be_present
+            expect(event[:timestamp]).to be_present
           end
         end
       end
@@ -107,7 +107,7 @@ describe OneClickController do
         @association.stub_chain(:proposals, :currently_open).and_return([])
         @association.stub_chain(:proposals, :new).and_return(mock_model(Proposal))
         @association.stub_chain(:members, :new).and_return(mock_model(Member))
-        @association.stub(:default_member_class).and_return(mock_model(MemberClass))
+        allow(@association).to receive(:default_member_class).and_return(mock_model(MemberClass))
 
         @association.stub_chain(:members, :all).and_return([])
         @association.stub_chain(:proposals, :all).and_return([])
@@ -122,7 +122,7 @@ describe OneClickController do
           ))
 
           get_dashboard
-          assigns[:timeline].should include(@resignation_event)
+          expect(assigns[:timeline]).to include(@resignation_event)
         end
       end
     end
@@ -138,10 +138,10 @@ describe OneClickController do
       stub_login
 
       @proposals_association = double("proposals association")
-      @organisation.stub(:proposals).and_return(@proposals_association)
+      allow(@organisation).to receive(:proposals).and_return(@proposals_association)
 
       @proposals_association.stub_chain(:currently_open, :reject)
-      @proposals_association.stub(:new)
+      allow(@proposals_association).to receive(:new)
 
       @organisation.stub_chain(:members, :all).and_return([])
 
@@ -150,35 +150,35 @@ describe OneClickController do
       @organisation.stub_chain(:general_meetings, :upcoming, :count).and_return(0)
       @organisation.stub_chain(:general_meetings, :past, :order, :first)
 
-      @organisation.stub(:resolutions).and_return(double("resolutions", :currently_open => []))
-      @organisation.stub(:resolution_proposals).and_return([])
-      @organisation.stub(:decisions).and_return([])
+      allow(@organisation).to receive(:resolutions).and_return(double("resolutions", :currently_open => []))
+      allow(@organisation).to receive(:resolution_proposals).and_return([])
+      allow(@organisation).to receive(:decisions).and_return([])
 
       @tasks_association = double("tasks association")
-      @user.stub(:tasks).and_return(@tasks_association)
+      allow(@user).to receive(:tasks).and_return(@tasks_association)
 
       @current_tasks_association = double("current tasks association")
-      @tasks_association.stub(:current).and_return(@current_tasks_association)
+      allow(@tasks_association).to receive(:current).and_return(@current_tasks_association)
 
-      @current_tasks_association.stub(:undismissed).and_return(@undismissed_tasks)
+      allow(@current_tasks_association).to receive(:undismissed).and_return(@undismissed_tasks)
 
-      @current_tasks_association.stub(:members_or_shares_related)
+      allow(@current_tasks_association).to receive(:members_or_shares_related)
 
-      @organisation.stub(:active?).and_return(true)
+      allow(@organisation).to receive(:active?).and_return(true)
 
-      @user.stub(:has_permission)
-      @user.stub(:organisation).and_return(@organisation)
-      @organisation.stub(:pending?).and_return(false)
+      allow(@user).to receive(:has_permission)
+      allow(@user).to receive(:organisation).and_return(@organisation)
+      allow(@organisation).to receive(:pending?).and_return(false)
     end
 
     it "finds the current user's current undismissed tasks" do
-      @current_tasks_association.should_receive(:undismissed).and_return(@undismissed_tasks)
+      expect(@current_tasks_association).to receive(:undismissed).and_return(@undismissed_tasks)
       get_dashboard
     end
 
     it "assigns the current user's current tasks" do
       get_dashboard
-      assigns[:tasks].should == @undismissed_tasks
+      expect(assigns[:tasks]).to eq(@undismissed_tasks)
     end
   end
 

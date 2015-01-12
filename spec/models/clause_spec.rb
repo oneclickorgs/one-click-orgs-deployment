@@ -25,7 +25,7 @@ describe Clause do
   
   describe "get_current" do
     it "should find the current objectives" do
-      @organisation.clauses.get_current('objectives').should == @current_objectives
+      expect(@organisation.clauses.get_current('objectives')).to eq(@current_objectives)
     end
   end
   
@@ -36,12 +36,12 @@ describe Clause do
     end
     
     it "should set the started_at timestamp automatically" do
-      @c.started_at.should_not be_nil
+      expect(@c.started_at).not_to be_nil
     end
     
     it "should end the clause that is being replaced" do
       @current_objectives.reload
-      @current_objectives.ended_at.should_not be_nil
+      expect(@current_objectives.ended_at).not_to be_nil
     end
   end
 end

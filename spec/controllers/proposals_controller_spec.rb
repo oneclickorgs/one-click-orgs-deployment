@@ -25,7 +25,7 @@ describe ProposalsController do
         @organisation.stub_chain(:resolutions, :accepted).and_return([])
         @organisation.stub_chain(:resolutions, :rejected).and_return([])
 
-        @organisation.stub(:resolution_proposals).and_return(
+        allow(@organisation).to receive(:resolution_proposals).and_return(
           @resolution_proposals_association = double("resolution proposals association",
             :currently_open => [],
             :where => []
@@ -41,23 +41,23 @@ describe ProposalsController do
           :accepted => [],
           :rejected => []
         )
-        @organisation.stub(:resolutions).and_return(@resolutions_association)
+        allow(@organisation).to receive(:resolutions).and_return(@resolutions_association)
 
         @draft_resolutions_association = double("draft resolutions association")
-        @resolutions_association.stub(:draft).and_return(@draft_resolutions_association)
+        allow(@resolutions_association).to receive(:draft).and_return(@draft_resolutions_association)
 
         get :index
 
-        assigns[:draft_proposals].should == @draft_resolutions_association
+        expect(assigns[:draft_proposals]).to eq(@draft_resolutions_association)
       end
 
       it "looks up and assigns the resolution proposals" do
         @currently_open_resolution_proposals = double("currently-open resolution proposals")
-        @resolution_proposals_association.should_receive(:currently_open).and_return(@currently_open_resolution_proposals)
+        expect(@resolution_proposals_association).to receive(:currently_open).and_return(@currently_open_resolution_proposals)
 
         get :index
 
-        assigns[:resolution_proposals].should == @currently_open_resolution_proposals
+        expect(assigns[:resolution_proposals]).to eq(@currently_open_resolution_proposals)
       end
     end
   end
@@ -65,10 +65,10 @@ describe ProposalsController do
   describe "PUT open" do
     before(:each) do
       @resolutions_association = double("resolutions association")
-      @organisation.stub(:resolutions).and_return(@resolutions_association)
+      allow(@organisation).to receive(:resolutions).and_return(@resolutions_association)
       @resolution = mock_model(Resolution)
-      @resolutions_association.stub(:find).and_return(@resolution)
-      @resolution.stub(:start!)
+      allow(@resolutions_association).to receive(:find).and_return(@resolution)
+      allow(@resolution).to receive(:start!)
     end
 
     def put_open
@@ -76,18 +76,18 @@ describe ProposalsController do
     end
 
     it "finds the resolution" do
-      @resolutions_association.should_receive(:find).with('1').and_return(@resolution)
+      expect(@resolutions_association).to receive(:find).with('1').and_return(@resolution)
       put_open
     end
 
     it "opens the resolution" do
-      @resolution.should_receive(:start!)
+      expect(@resolution).to receive(:start!)
       put_open
     end
 
     it "redirects to the proposals page" do
       put_open
-      response.should redirect_to('/proposals')
+      expect(response).to redirect_to('/proposals')
     end
 
     it "checks authorisation"

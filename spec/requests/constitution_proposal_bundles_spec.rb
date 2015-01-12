@@ -22,10 +22,10 @@ describe "constitution proposal bundles" do
       set_permission!(@user, :constitution_proposal, true)
       @proposal = mock_proposal
       
-      ChangeTextProposal.stub(:new).and_return(mock_proposal)
-      ChangeVotingSystemProposal.stub(:new).and_return(mock_proposal)
-      ChangeBooleanProposal.stub(:new).and_return(mock_proposal)
-      ChangeVotingPeriodProposal.stub(:new).and_return(mock_proposal)
+      allow(ChangeTextProposal).to receive(:new).and_return(mock_proposal)
+      allow(ChangeVotingSystemProposal).to receive(:new).and_return(mock_proposal)
+      allow(ChangeBooleanProposal).to receive(:new).and_return(mock_proposal)
+      allow(ChangeVotingPeriodProposal).to receive(:new).and_return(mock_proposal)
     end
     
     def post_create
@@ -42,78 +42,78 @@ describe "constitution proposal bundles" do
     end
     
     it "should create a proposal to change the organisation name" do
-      ChangeTextProposal.should_receive(:new).with({
+      expect(ChangeTextProposal).to receive(:new).with({
         :name => 'organisation_name',
         :value => 'New name'
       },{}).once.ordered.and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
     
     it "should create a proposal to change the objectives" do
-      ChangeTextProposal.should_receive(:new).with({
+      expect(ChangeTextProposal).to receive(:new).with({
           :name => 'organisation_objectives',
           :value => 'New objectives'
       },{}).and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
     
     it "should create a proposal to change the general voting system" do
-      ChangeVotingSystemProposal.should_receive(:new).with({
+      expect(ChangeVotingSystemProposal).to receive(:new).with({
         :proposal_type => 'general',
         :proposed_system => 'AbsoluteMajority'
       },{}).and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
     
     it "should create a proposal to change the membership voting system" do
-      ChangeVotingSystemProposal.should_receive(:new).with({
+      expect(ChangeVotingSystemProposal).to receive(:new).with({
         :proposal_type => 'membership',
         :proposed_system => 'AbsoluteTwoThirdsMajority'
       },{}).and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
     
     it "should create a proposal to change the constitution voting system" do
-      ChangeVotingSystemProposal.should_receive(:new).with({
+      expect(ChangeVotingSystemProposal).to receive(:new).with({
         :proposal_type => 'constitution',
         :proposed_system => 'Unanimous'
       },{}).and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
     
     it "should create a proposal to allow assets" do
-      ChangeBooleanProposal.should_receive(:new).with({
+      expect(ChangeBooleanProposal).to receive(:new).with({
         :name => 'assets',
         :value => true,
         :title => "Change the constitution to allow holding, transferral and disposal of material assets and intangible assets"
       },{}).and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
     
     it "should create a proposal to change the voting period" do
-      ChangeVotingPeriodProposal.should_receive(:new).with({
+      expect(ChangeVotingPeriodProposal).to receive(:new).with({
         :new_voting_period => "1209600"
       },{}).and_return(@proposal)
-      @proposal.should_receive(:proposer=).with(@user)
-      @proposal.should_receive(:save!).and_return(true)
+      expect(@proposal).to receive(:proposer=).with(@user)
+      expect(@proposal).to receive(:save!).and_return(true)
       
       post_create
     end
@@ -134,29 +134,29 @@ describe "constitution proposal bundles" do
       end
       
       it "should create a proposal to change the objectives" do
-        ChangeTextProposal.should_receive(:new).with({
+        expect(ChangeTextProposal).to receive(:new).with({
             :name => 'organisation_objectives',
             :value => 'New objectives'
         },{}).and_return(@proposal)
-        @proposal.should_receive(:proposer=).with(@user)
-        @proposal.should_receive(:save!).and_return(true)
+        expect(@proposal).to receive(:proposer=).with(@user)
+        expect(@proposal).to receive(:save!).and_return(true)
 
         post_create
       end
       
       it "should create a proposal to change the general voting system" do
-        ChangeVotingSystemProposal.should_receive(:new).with({
+        expect(ChangeVotingSystemProposal).to receive(:new).with({
           :proposal_type => 'general',
           :proposed_system => 'AbsoluteMajority'
         },{}).and_return(@proposal)
-        @proposal.should_receive(:proposer=).with(@user)
-        @proposal.should_receive(:save!).and_return(true)
+        expect(@proposal).to receive(:proposer=).with(@user)
+        expect(@proposal).to receive(:save!).and_return(true)
 
         post_create
       end
       
       it "should not create a proposal to change the organisation name" do
-        ChangeTextProposal.should_not_receive(:new).with(hash_including(
+        expect(ChangeTextProposal).not_to receive(:new).with(hash_including(
           :name => 'organisation_name'
         ))
 
@@ -164,7 +164,7 @@ describe "constitution proposal bundles" do
       end
       
       it "should not create a proposal to change the membership voting system" do
-        ChangeVotingSystemProposal.should_not_receive(:new).with(hash_including(
+        expect(ChangeVotingSystemProposal).not_to receive(:new).with(hash_including(
           :proposal_type => 'membership',
           :proposed_system => 'AbsoluteTwoThirdsMajority'
         ))
@@ -173,7 +173,7 @@ describe "constitution proposal bundles" do
       end
 
       it "should create a proposal to change the constitution voting system" do
-        ChangeVotingSystemProposal.should_not_receive(:new).with(hash_including(
+        expect(ChangeVotingSystemProposal).not_to receive(:new).with(hash_including(
           :proposal_type => 'constitution',
           :proposed_system => 'Unanimous'
         ))
@@ -182,7 +182,7 @@ describe "constitution proposal bundles" do
       end
 
       it "should create a proposal to allow assets" do
-        ChangeBooleanProposal.should_not_receive(:new).with(hash_including(
+        expect(ChangeBooleanProposal).not_to receive(:new).with(hash_including(
           :name => 'assets'
         ))
 
@@ -190,7 +190,7 @@ describe "constitution proposal bundles" do
       end
 
       it "should not create a proposal to change the voting period" do
-        ChangeVotingPeriodProposal.should_not_receive(:new)
+        expect(ChangeVotingPeriodProposal).not_to receive(:new)
 
         post_create
       end
@@ -203,19 +203,19 @@ describe "constitution proposal bundles" do
       
       it "redirects" do
         post_create
-        response.should be_redirect
+        expect(response).to be_redirect
       end
       
       it "sets an error flash" do
         post_create
-        flash[:error].should be_present
+        expect(flash[:error]).to be_present
       end
       
       it "does not create any proposals" do
-        ChangeTextProposal.should_not_receive(:new)
-        ChangeBooleanProposal.should_not_receive(:new)
-        ChangeVotingPeriodProposal.should_not_receive(:new)
-        ChangeVotingSystemProposal.should_not_receive(:new)
+        expect(ChangeTextProposal).not_to receive(:new)
+        expect(ChangeBooleanProposal).not_to receive(:new)
+        expect(ChangeVotingPeriodProposal).not_to receive(:new)
+        expect(ChangeVotingSystemProposal).not_to receive(:new)
         post_create
       end
     end

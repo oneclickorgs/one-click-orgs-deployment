@@ -11,12 +11,12 @@ describe "board_meetings/show" do
 
   before(:each) do
     assign(:board_meeting, board_meeting)
-    view.stub(:can?).and_return(false)
+    allow(view).to receive(:can?).and_return(false)
   end
 
   it "renders the minutes" do
     render
-    rendered.should have_content("We discussed things")
+    expect(rendered).to have_content("We discussed things")
   end
 
 end

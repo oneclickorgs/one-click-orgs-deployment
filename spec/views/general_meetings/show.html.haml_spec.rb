@@ -22,25 +22,25 @@ describe 'general_meetings/show' do
 
     before(:each) do
       assign(:general_meeting, general_meeting)
-      view.stub(:can?).and_return(false)
+      allow(view).to receive(:can?).and_return(false)
     end
 
     it "renders the minutes for each agenda item" do
       render
-      rendered.should have_content("Any Other Business")
-      rendered.should have_content("Thanks to John Smith for providing the refreshments.")
+      expect(rendered).to have_content("Any Other Business")
+      expect(rendered).to have_content("Thanks to John Smith for providing the refreshments.")
     end
 
     it "renders the general minutes" do
       render
-      rendered.should have_content("We discussed things.")
+      expect(rendered).to have_content("We discussed things.")
     end
 
     it "renders a list of participants" do
       render
-      rendered.should have_selector('.participants') do |participants|
-        participants.should have_content("John Smith")
-        participants.should have_content("Sally Baker")
+      expect(rendered).to have_selector('.participants') do |participants|
+        expect(participants).to have_content("John Smith")
+        expect(participants).to have_content("Sally Baker")
       end
     end
   end
@@ -60,14 +60,14 @@ describe 'general_meetings/show' do
 
     before(:each) do
       assign(:general_meeting, general_meeting)
-      view.stub(:can?).and_return(false)
+      allow(view).to receive(:can?).and_return(false)
     end
 
     it "renders the agenda items" do
       render
-      rendered.should have_selector("ol.agenda_items") do |ol|
-        ol.should have_selector(:li, :content => "Apologies for Absence")
-        ol.should have_selector(:li, :content => "Any Other Business")
+      expect(rendered).to have_selector("ol.agenda_items") do |ol|
+        expect(ol).to have_selector(:li, :content => "Apologies for Absence")
+        expect(ol).to have_selector(:li, :content => "Any Other Business")
       end
     end
   end

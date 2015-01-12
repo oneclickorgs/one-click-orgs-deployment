@@ -28,30 +28,30 @@ describe Constitution do
 
       describe "getting voting systems" do
         it "should get the voting system" do
-          @organisation.constitution.voting_system(:general).should ==(VotingSystems::RelativeMajority)
+          expect(@organisation.constitution.voting_system(:general)).to eq(VotingSystems::RelativeMajority)
         end
 
         it "should raise ArgumentError if invalid voting system is specified" do
-          lambda { @organisation.constitution.voting_system(:invalid) }.should raise_error(ArgumentError)
+          expect { @organisation.constitution.voting_system(:invalid) }.to raise_error(ArgumentError)
         end
       end
 
       describe "changing the voting system" do
         it "should change the voting system" do
           @organisation.constitution.change_voting_system(:general, 'Unanimous')
-          @organisation.constitution.voting_system(:general).should ==(VotingSystems::Unanimous)
+          expect(@organisation.constitution.voting_system(:general)).to eq(VotingSystems::Unanimous)
         end
 
         it "should keep track of the previous voting system after changing it" do
-          lambda {
+          expect {
             @organisation.constitution.change_voting_system(:general, 'Unanimous')
-          }.should change { @organisation.clauses.where(:name => 'general_voting_system').count }.by(1)
-          @organisation.clauses.where(:name => 'general_voting_system').order('id ASC')[-2].text_value.should == ('RelativeMajority')
+          }.to change { @organisation.clauses.where(:name => 'general_voting_system').count }.by(1)
+          expect(@organisation.clauses.where(:name => 'general_voting_system').order('id ASC')[-2].text_value).to eq('RelativeMajority')
         end
 
         it "should raise ArgumentError when invalid system is specified" do
-          lambda { @organisation.constitution.change_voting_system(:general, nil) }.should raise_error(ArgumentError)
-          lambda { @organisation.constitution.change_voting_system(:general, 'Invalid') }.should raise_error(ArgumentError)
+          expect { @organisation.constitution.change_voting_system(:general, nil) }.to raise_error(ArgumentError)
+          expect { @organisation.constitution.change_voting_system(:general, 'Invalid') }.to raise_error(ArgumentError)
         end
       end
     end
@@ -62,13 +62,13 @@ describe Constitution do
       end
 
       it "should get the current voting period" do
-        @organisation.constitution.voting_period.should be_an(Integer)
-        @organisation.constitution.voting_period.should >(0)
-        @organisation.constitution.voting_period.should ==(1000)
+        expect(@organisation.constitution.voting_period).to be_an(Integer)
+        expect(@organisation.constitution.voting_period).to be >(0)
+        expect(@organisation.constitution.voting_period).to eq(1000)
       end
 
       it "should change the current voting period" do
-        lambda { @organisation.constitution.change_voting_period(86400 * 2) }.should change(@organisation.constitution, :voting_period).from(1000).to(86400*2)
+        expect { @organisation.constitution.change_voting_period(86400 * 2) }.to change(@organisation.constitution, :voting_period).from(1000).to(86400*2)
       end
     end
   end
@@ -81,36 +81,36 @@ describe Constitution do
 
     describe "meeting notice period" do
       it "can be read" do
-        @organisation.should_receive(:meeting_notice_period).and_return(14)
-        @constitution.meeting_notice_period.should be_present
+        expect(@organisation).to receive(:meeting_notice_period).and_return(14)
+        expect(@constitution.meeting_notice_period).to be_present
       end
 
       it "can be set" do
-        @organisation.should_receive(:meeting_notice_period=).with(14)
+        expect(@organisation).to receive(:meeting_notice_period=).with(14)
         @constitution.meeting_notice_period = 14
       end
     end
 
     describe "quorum number" do
       it "can be read" do
-        @organisation.should_receive(:quorum_number).and_return(3)
-        @constitution.quorum_number.should be_present
+        expect(@organisation).to receive(:quorum_number).and_return(3)
+        expect(@constitution.quorum_number).to be_present
       end
 
       it "can be set" do
-        @organisation.should_receive(:quorum_number=).with(5)
+        expect(@organisation).to receive(:quorum_number=).with(5)
         @constitution.quorum_number = 5
       end
     end
 
     describe "quorum percentage" do
       it "can be read" do
-        @organisation.should_receive(:quorum_percentage).and_return(25)
-        @constitution.quorum_percentage.should be_present
+        expect(@organisation).to receive(:quorum_percentage).and_return(25)
+        expect(@constitution.quorum_percentage).to be_present
       end
 
       it "can be set" do
-        @organisation.should_receive(:quorum_percentage=).with(15)
+        expect(@organisation).to receive(:quorum_percentage=).with(15)
         @constitution.quorum_percentage = 15
       end
     end
@@ -130,28 +130,28 @@ describe Constitution do
 
       it "sets the 'meeting_notice_period' insertion" do
         document = @constitution.document
-        document.insertions[:meeting_notice_period].should == 14
+        expect(document.insertions[:meeting_notice_period]).to eq(14)
       end
 
       it "formats the registered office address into one line" do
-        @constitution.stub(:registered_office_address).and_return("1 High Street\nLondon\nN1 1AA")
+        allow(@constitution).to receive(:registered_office_address).and_return("1 High Street\nLondon\nN1 1AA")
         document = @constitution.document
         expect(document.insertions[:registered_office_address]).to eq("1 High Street, London, N1 1AA")
       end
 
       it "sets multiple_board_classes to true if there is more than one board class selected" do
-        @constitution.stub(:user_members).and_return(true)
-        @constitution.stub(:employee_members).and_return(true)
+        allow(@constitution).to receive(:user_members).and_return(true)
+        allow(@constitution).to receive(:employee_members).and_return(true)
         document = @constitution.document
         expect(document.choices[:multiple_board_classes]).to be true
       end
 
       it "sets multiple_board_classes to false if only one board class is selected" do
-        @constitution.stub(:user_members).and_return(true)
-        @constitution.stub(:employee_members).and_return(false)
-        @constitution.stub(:supporter_members).and_return(false)
-        @constitution.stub(:producer_members).and_return(false)
-        @constitution.stub(:consumer_members).and_return(false)
+        allow(@constitution).to receive(:user_members).and_return(true)
+        allow(@constitution).to receive(:employee_members).and_return(false)
+        allow(@constitution).to receive(:supporter_members).and_return(false)
+        allow(@constitution).to receive(:producer_members).and_return(false)
+        allow(@constitution).to receive(:consumer_members).and_return(false)
         document = @constitution.document
         expect(document.choices[:multiple_board_classes]).to be false
       end

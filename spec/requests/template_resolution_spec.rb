@@ -7,21 +7,21 @@ describe "template resolution" do
       default_association
       association_login
       get '/'
-      @rendered_templates.should include('one_click/association/dashboard.html.haml')
+      expect(@rendered_templates).to include('one_click/association/dashboard.html.haml')
     end
     
     it "picks a company subtemplate when the organisation is a company" do
       default_company
       company_login
       get '/'
-      @rendered_templates.should include('one_click/company/dashboard.html.haml')
+      expect(@rendered_templates).to include('one_click/company/dashboard.html.haml')
     end
     
     it "picks the default template when no subtemplate is available" do
       default_association
       association_login
       get '/proposals'
-      @rendered_templates.should include('proposals/index.html.haml')
+      expect(@rendered_templates).to include('proposals/index.html.haml')
     end
   end
   

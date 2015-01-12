@@ -5,7 +5,7 @@ describe Officership do
     it "has a certification attribute" do
       @officership = Officership.new
       expect {@officership.certification = '0'}.to_not raise_error
-      @officership.certification.should be false
+      expect(@officership.certification).to be false
     end
   end
 
@@ -21,7 +21,7 @@ describe Officership do
     expect {@officership.officer = @member}.to_not raise_error
     @officership.save
     @officership.reload
-    @officership.officer.should == @member
+    expect(@officership.officer).to eq(@member)
   end
 
   describe "creating from params" do
@@ -42,11 +42,11 @@ describe Officership do
       end
 
       it "sets the officer" do
-        @officership.officer.should == @member
+        expect(@officership.officer).to eq(@member)
       end
 
       it "sets the office" do
-        @officership.office.should == @office
+        expect(@officership.office).to eq(@office)
       end
     end
 
@@ -69,13 +69,13 @@ describe Officership do
       end
 
       it "builds a new office" do
-        @officership.office.should be_present
-        @officership.office.should be_new_record
+        expect(@officership.office).to be_present
+        expect(@officership.office).to be_new_record
       end
 
       it "sets the organisation of the new office to the officer's organisation" do
         @officership.save!
-        @officership.office.organisation.should == @organisation
+        expect(@officership.office.organisation).to eq(@organisation)
       end
 
       it "saves the new office" do
@@ -109,13 +109,13 @@ describe Officership do
         expect {
           @officership.save!
         }.to change{Office.count}.by(1)
-        @officership.office.title.should == "Secretary"
-        @officership.office_id.should_not == 2
+        expect(@officership.office.title).to eq("Secretary")
+        expect(@officership.office_id).not_to eq(2)
       end
 
       it "does not amend the existing office" do
         @office.reload
-        @office.title.should == "Treasurer"
+        expect(@office.title).to eq("Treasurer")
       end
     end
 
@@ -143,13 +143,13 @@ describe Officership do
         expect {
           @officership.save!
         }.to_not change{Office.count}
-        @officership.office.title.should == "Treasurer"
-        @officership.office_id.should == 2
+        expect(@officership.office.title).to eq("Treasurer")
+        expect(@officership.office_id).to eq(2)
       end
 
       it "does not amend the existing office" do
         @office.reload
-        @office.title.should == "Treasurer"
+        expect(@office.title).to eq("Treasurer")
       end
     end
   end
@@ -162,7 +162,7 @@ describe Officership do
 
     it "sets the officer's member class to 'Secretary'" do
       @officership = Officership.create!(:officer => @member, :office_attributes => {:title => 'Secretary'})
-      @member.member_class(true).name.should == "Secretary"
+      expect(@member.member_class(true).name).to eq("Secretary")
     end
   end
 

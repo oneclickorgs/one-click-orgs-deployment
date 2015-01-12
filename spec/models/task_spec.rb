@@ -19,7 +19,7 @@ describe Task do
       task.save!
       task.reload
 
-      task.subject(true).should == resolution
+      expect(task.subject(true)).to eq(resolution)
     end
   end
 
@@ -32,15 +32,15 @@ describe Task do
       end
 
       it "does not include completed tasks" do
-        Task.current.should_not include(@completed_task)
+        expect(Task.current).not_to include(@completed_task)
       end
 
       it "does not include future tasks" do
-        Task.current.should_not include(@future_task)
+        expect(Task.current).not_to include(@future_task)
       end
 
       it "includes other tasks" do
-        Task.current.should include(@task)
+        expect(Task.current).to include(@task)
       end
     end
 
@@ -51,11 +51,11 @@ describe Task do
       end
 
       it "includes tasks with a ShareTransaction as the subject" do
-        Task.shares_related.should include(@share_transaction_task)
+        expect(Task.shares_related).to include(@share_transaction_task)
       end
 
       it "does not include tasks with a Member as the subject" do
-        Task.shares_related.should_not include(@member_task)
+        expect(Task.shares_related).not_to include(@member_task)
       end
     end
 
@@ -66,11 +66,11 @@ describe Task do
       end
 
       it "includes tasks with an Election as the subject" do
-        Task.directors_related.should include(@election_task)
+        expect(Task.directors_related).to include(@election_task)
       end
 
       it "does not include tasks with a Member as the subject" do
-        Task.directors_related.should_not include(@member_task)
+        expect(Task.directors_related).not_to include(@member_task)
       end
     end
   end

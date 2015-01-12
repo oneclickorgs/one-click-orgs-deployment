@@ -9,12 +9,12 @@ describe 'resolution_proposals/edit' do
 
   it "renders a description field" do
     render
-    rendered.should have_selector(:textarea, :name => 'resolution_proposal[description]')
+    expect(rendered).to have_selector(:textarea, :name => 'resolution_proposal[description]')
   end
 
   it "renders a submit button" do
     render
-    rendered.should have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector(:input, :type => 'submit')
   end
 
 end

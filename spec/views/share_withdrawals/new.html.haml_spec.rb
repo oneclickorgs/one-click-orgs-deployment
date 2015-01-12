@@ -6,13 +6,13 @@ describe 'share_withdrawals/new' do
   let(:share_withdrawal) {mock_model(ShareWithdrawal, :amount => nil, :certification => nil).as_new_record}
 
   before(:each) do
-    view.stub(:current_user).and_return(user)
+    allow(view).to receive(:current_user).and_return(user)
     assign(:share_withdrawal, share_withdrawal)
   end
 
   it "renders a field for the amount" do
     render
-    rendered.should have_selector(:input, :name => 'share_withdrawal[amount]')
+    expect(rendered).to have_selector(:input, :name => 'share_withdrawal[amount]')
   end
 
 end

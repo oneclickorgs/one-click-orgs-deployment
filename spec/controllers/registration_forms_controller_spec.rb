@@ -14,7 +14,7 @@ describe RegistrationFormsController do
     let(:members) {double("members association")}
 
     before(:each) do
-      @organisation.stub(:members_with_signatories_selected).and_return(members)
+      allow(@organisation).to receive(:members_with_signatories_selected).and_return(members)
     end
 
     def get_edit
@@ -22,18 +22,18 @@ describe RegistrationFormsController do
     end
 
     it "finds the members" do
-      @organisation.should_receive(:members_with_signatories_selected)
+      expect(@organisation).to receive(:members_with_signatories_selected)
       get_edit
     end
 
     it "assigns the members" do
       get_edit
-      assigns[:members].should == members
+      expect(assigns[:members]).to eq(members)
     end
 
     it "returns http success" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -41,8 +41,8 @@ describe RegistrationFormsController do
     let(:registration_form_attributes) {"registration_form attributes"}
 
     before(:each) do
-      @organisation.stub(:attributes=)
-      @organisation.stub(:save).and_return(true)
+      allow(@organisation).to receive(:attributes=)
+      allow(@organisation).to receive(:save).and_return(true)
     end
 
     def put_update
@@ -62,7 +62,7 @@ describe RegistrationFormsController do
 
     it "redirects to the edit page" do
       put_update
-      response.should redirect_to('/registration_form/edit')
+      expect(response).to redirect_to('/registration_form/edit')
     end
   end
 

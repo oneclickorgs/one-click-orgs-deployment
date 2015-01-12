@@ -17,13 +17,13 @@ describe MembersController do
     describe "GET index" do
       before(:each) do
         @directors_association = double("directors association")
-        @company.stub(:directors).and_return(@directors_association)
+        allow(@company).to receive(:directors).and_return(@directors_association)
 
         @directors = double("directors")
-        @directors_association.stub(:active_and_pending).and_return(@directors)
+        allow(@directors_association).to receive(:active_and_pending).and_return(@directors)
 
         @director = mock_model(Director)
-        Director.stub(:new).and_return(@director)
+        allow(Director).to receive(:new).and_return(@director)
       end
 
       def get_index
@@ -31,23 +31,23 @@ describe MembersController do
       end
 
       it "finds the active and pending directors" do
-        @directors_association.should_receive(:active_and_pending).and_return(@directors)
+        expect(@directors_association).to receive(:active_and_pending).and_return(@directors)
         get_index
       end
 
       it "assigns the directors" do
         get_index
-        assigns(:members).should == @directors
+        expect(assigns(:members)).to eq(@directors)
       end
 
       it "builds a new director" do
-        Director.should_receive(:new).and_return(@director)
+        expect(Director).to receive(:new).and_return(@director)
         get_index
       end
 
       it "assigns the new director" do
         get_index
-        assigns(:director).should == @director
+        expect(assigns(:director)).to eq(@director)
       end
     end
   end
@@ -63,8 +63,8 @@ describe MembersController do
       let(:active_members){double("active members association")}
 
       before(:each) do
-        @organisation.stub(:members).and_return(members)
-        controller.stub(:can?).and_return(false)
+        allow(@organisation).to receive(:members).and_return(members)
+        allow(controller).to receive(:can?).and_return(false)
         @user.stub_chain(:tasks, :members_related, :current)
       end
 
@@ -73,13 +73,13 @@ describe MembersController do
       end
 
       it "finds the active members" do
-        members.should_receive(:active).and_return(active_members)
+        expect(members).to receive(:active).and_return(active_members)
         get_index
       end
 
       it "assigns the active members" do
         get_index
-        assigns[:members].should == active_members
+        expect(assigns[:members]).to eq(active_members)
       end
     end
 
@@ -127,9 +127,9 @@ describe MembersController do
       let(:share_transaction){mock_model(ShareTransaction, :save! => true, :approve! => nil).as_new_record}
 
       before(:each) do
-        @organisation.stub(:members).and_return(members)
-        @organisation.stub(:share_account).and_return(organisation_share_account)
-        ShareTransaction.stub(:create).and_return(share_transaction)
+        allow(@organisation).to receive(:members).and_return(members)
+        allow(@organisation).to receive(:share_account).and_return(organisation_share_account)
+        allow(ShareTransaction).to receive(:create).and_return(share_transaction)
       end
 
       def put_induct
@@ -137,18 +137,18 @@ describe MembersController do
       end
 
       it "finds the member" do
-        members.should_receive(:find).with('1').and_return(member)
+        expect(members).to receive(:find).with('1').and_return(member)
         put_induct
       end
 
       it "inducts the member" do
-        member.should_receive(:induct!)
+        expect(member).to receive(:induct!)
         put_induct
       end
 
       it "redirects" do
         put_induct
-        response.should be_redirect
+        expect(response).to be_redirect
       end
 
       describe "authorisation" do
@@ -161,7 +161,7 @@ describe MembersController do
       let(:members) {double("members association", :find => member)}
 
       before(:each) do
-        @organisation.stub(:members).and_return(members)
+        allow(@organisation).to receive(:members).and_return(members)
       end
 
       def get_confirm_eject
@@ -169,18 +169,18 @@ describe MembersController do
       end
 
       it "finds the member" do
-        members.should_receive(:find).with('3000').and_return(member)
+        expect(members).to receive(:find).with('3000').and_return(member)
         get_confirm_eject
       end
 
       it "assigns the member" do
         get_confirm_eject
-        assigns[:member].should == member
+        expect(assigns[:member]).to eq(member)
       end
 
       it "is successful" do
         get_confirm_eject
-        response.should be_successful
+        expect(response).to be_successful
       end
 
       describe "authorisation" do
@@ -193,7 +193,7 @@ describe MembersController do
       let(:members) {double("members association", :find => member)}
 
       before(:each) do
-        @organisation.stub(:members).and_return(members)
+        allow(@organisation).to receive(:members).and_return(members)
       end
 
       def put_eject
@@ -201,23 +201,23 @@ describe MembersController do
       end
 
       it "finds the member" do
-        members.should_receive(:find).with('3000').and_return(member)
+        expect(members).to receive(:find).with('3000').and_return(member)
         put_eject
       end
 
       it "ejects the member" do
-        member.should_receive(:eject!)
+        expect(member).to receive(:eject!)
         put_eject
       end
 
       it "sets a notice flash" do
         put_eject
-        flash[:notice].should be_present
+        expect(flash[:notice]).to be_present
       end
 
       it "redirects" do
         put_eject
-        response.should be_redirect
+        expect(response).to be_redirect
       end
 
       describe "authorisation" do

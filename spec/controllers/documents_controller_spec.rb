@@ -23,7 +23,7 @@ describe DocumentsController do
 
   describe "GET show" do
     before(:each) do
-      @organisation.stub(:name)
+      allow(@organisation).to receive(:name)
     end
 
     def get_show

@@ -13,25 +13,25 @@ describe ResolutionProposalsController do
   describe "GET new" do
     before(:each) do
       @resolution_proposals_association = double("resolution proposals association")
-      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+      allow(@organisation).to receive(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
-      @resolution_proposals_association.stub(:build).and_return(@resolution_proposal)
+      allow(@resolution_proposals_association).to receive(:build).and_return(@resolution_proposal)
     end
 
     it "builds a new resolution proposal" do
-      @resolution_proposals_association.should_receive(:build).and_return(@resolution_proposal)
+      expect(@resolution_proposals_association).to receive(:build).and_return(@resolution_proposal)
       get :new
     end
 
     it "assigns the new resolution proposal" do
       get :new
-      assigns[:resolution_proposal].should == @resolution_proposal
+      expect(assigns[:resolution_proposal]).to eq(@resolution_proposal)
     end
 
     it "succeeds" do
       get :new
-      response.should be_successful
+      expect(response).to be_successful
     end
   end
 
@@ -40,10 +40,10 @@ describe ResolutionProposalsController do
       @resolution_proposal_params = {'description' => 'Buy more sporks.'}
       @resolution_proposals_association = double("resolution proposals association")
       @resolution_proposal = mock_model(ResolutionProposal, :to_param => '50')
-      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
-      @resolution_proposals_association.stub(:build).and_return(@resolution_proposal)
-      @resolution_proposal.stub(:proposer=)
-      @resolution_proposal.stub(:save!)
+      allow(@organisation).to receive(:resolution_proposals).and_return(@resolution_proposals_association)
+      allow(@resolution_proposals_association).to receive(:build).and_return(@resolution_proposal)
+      allow(@resolution_proposal).to receive(:proposer=)
+      allow(@resolution_proposal).to receive(:save!)
     end
 
     def post_create
@@ -51,23 +51,23 @@ describe ResolutionProposalsController do
     end
 
     it "builds the new resolution proposal" do
-      @resolution_proposals_association.should_receive(:build).with(@resolution_proposal_params).and_return(@resolution_proposal)
+      expect(@resolution_proposals_association).to receive(:build).with(@resolution_proposal_params).and_return(@resolution_proposal)
       post_create
     end
 
     it "assigns the current user as the proposer" do
-      @resolution_proposal.should_receive(:proposer=).with(@user)
+      expect(@resolution_proposal).to receive(:proposer=).with(@user)
       post_create
     end
 
     it "saves the new resolution proposal" do
-      @resolution_proposal.should_receive(:save!)
+      expect(@resolution_proposal).to receive(:save!)
       post_create
     end
 
     it "redirects to the new proposal page" do
       post_create
-      response.should redirect_to('/resolution_proposals/50')
+      expect(response).to redirect_to('/resolution_proposals/50')
     end
 
     context "when the new resolution proposal cannot be saved" do
@@ -78,10 +78,10 @@ describe ResolutionProposalsController do
   describe "GET edit" do
     before(:each) do
       @resolution_proposals_association = double("resolution proposals association")
-      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+      allow(@organisation).to receive(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
-      @resolution_proposals_association.stub(:find).and_return(@resolution_proposal)
+      allow(@resolution_proposals_association).to receive(:find).and_return(@resolution_proposal)
     end
 
     def get_edit
@@ -89,18 +89,18 @@ describe ResolutionProposalsController do
     end
 
     it "finds the resolution proposal" do
-      @resolution_proposals_association.should_receive(:find).with('1').and_return(@resolution_proposal)
+      expect(@resolution_proposals_association).to receive(:find).with('1').and_return(@resolution_proposal)
       get_edit
     end
 
     it "assigns the resolution proposal" do
       get_edit
-      assigns[:resolution_proposal].should == @resolution_proposal
+      expect(assigns[:resolution_proposal]).to eq(@resolution_proposal)
     end
 
     it "is successful" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -109,12 +109,12 @@ describe ResolutionProposalsController do
       @resolution_proposal_params = {'description' => 'New description.'}
 
       @resolution_proposals_association = double("resolution proposals association")
-      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+      allow(@organisation).to receive(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
-      @resolution_proposals_association.stub(:find).and_return(@resolution_proposal)
+      allow(@resolution_proposals_association).to receive(:find).and_return(@resolution_proposal)
 
-      @resolution_proposal.stub(:update_attributes)
+      allow(@resolution_proposal).to receive(:update_attributes)
     end
 
     def put_update
@@ -122,18 +122,18 @@ describe ResolutionProposalsController do
     end
 
     it "finds the resolution proposal" do
-      @resolution_proposals_association.should_receive(:find).with('1').and_return(@resolution_proposal)
+      expect(@resolution_proposals_association).to receive(:find).with('1').and_return(@resolution_proposal)
       put_update
     end
 
     it "updates the resolution proposal's attributes" do
-      @resolution_proposal.should_receive(:update_attributes).with(@resolution_proposal_params)
+      expect(@resolution_proposal).to receive(:update_attributes).with(@resolution_proposal_params)
       put_update
     end
 
     it "redirects to the proposals page" do
       put_update
-      response.should redirect_to('/proposals')
+      expect(response).to redirect_to('/proposals')
     end
 
     context "when the resolution proposal cannot be updated" do
@@ -144,13 +144,13 @@ describe ResolutionProposalsController do
   describe "PUT pass" do
     before(:each) do
       @resolution_proposals_association = double("resolution proposals association")
-      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+      allow(@organisation).to receive(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
-      @resolution_proposals_association.stub(:find).and_return(@resolution_proposal)
+      allow(@resolution_proposals_association).to receive(:find).and_return(@resolution_proposal)
 
-      @resolution_proposal.stub(:force_passed=)
-      @resolution_proposal.stub(:close!)
+      allow(@resolution_proposal).to receive(:force_passed=)
+      allow(@resolution_proposal).to receive(:close!)
     end
 
     def put_pass
@@ -158,23 +158,23 @@ describe ResolutionProposalsController do
     end
 
     it "finds the resolution proposal" do
-      @resolution_proposals_association.should_receive(:find).with('1').and_return(@resolution_proposal)
+      expect(@resolution_proposals_association).to receive(:find).with('1').and_return(@resolution_proposal)
       put_pass
     end
 
     it "forces the resolution proposal to pass" do
-      @resolution_proposal.should_receive(:force_passed=).with(true)
+      expect(@resolution_proposal).to receive(:force_passed=).with(true)
       put_pass
     end
 
     it "closes the resolution proposal" do
-      @resolution_proposal.should_receive(:close!)
+      expect(@resolution_proposal).to receive(:close!)
       put_pass
     end
 
     it "redirects to the proposals page" do
       put_pass
-      response.should redirect_to('/proposals')
+      expect(response).to redirect_to('/proposals')
     end
 
     it "checks authorisation"
@@ -183,17 +183,17 @@ describe ResolutionProposalsController do
   describe "PUT pass_to_meeting" do
     before(:each) do
       @resolution_proposals_association = double("resolution proposals association")
-      @organisation.stub(:resolution_proposals).and_return(@resolution_proposals_association)
+      allow(@organisation).to receive(:resolution_proposals).and_return(@resolution_proposals_association)
 
       @resolution_proposal = mock_model(ResolutionProposal)
-      @resolution_proposals_association.stub(:find).and_return(@resolution_proposal)
+      allow(@resolution_proposals_association).to receive(:find).and_return(@resolution_proposal)
 
       @resolution = mock_model(Resolution, :to_param => '2')
 
-      @resolution_proposal.stub(:force_passed=)
-      @resolution_proposal.stub(:create_draft_resolution=)
-      @resolution_proposal.stub(:close!)
-      @resolution_proposal.stub(:new_resolution).and_return(@resolution)
+      allow(@resolution_proposal).to receive(:force_passed=)
+      allow(@resolution_proposal).to receive(:create_draft_resolution=)
+      allow(@resolution_proposal).to receive(:close!)
+      allow(@resolution_proposal).to receive(:new_resolution).and_return(@resolution)
     end
 
     def put_pass_to_meeting
@@ -201,33 +201,33 @@ describe ResolutionProposalsController do
     end
 
     it "finds the resolution proposal" do
-      @resolution_proposals_association.should_receive(:find).with('1').and_return(@resolution_proposal)
+      expect(@resolution_proposals_association).to receive(:find).with('1').and_return(@resolution_proposal)
       put_pass_to_meeting
     end
 
     it "forces the resolution proposal to pass" do
-      @resolution_proposal.should_receive(:force_passed=).with(true)
+      expect(@resolution_proposal).to receive(:force_passed=).with(true)
       put_pass_to_meeting
     end
 
     it "instructs the resolution proposal to create a draft proposal" do
-      @resolution_proposal.should_receive(:create_draft_resolution=).with(true)
+      expect(@resolution_proposal).to receive(:create_draft_resolution=).with(true)
       put_pass_to_meeting
     end
 
     it "closes the resolution proposal" do
-      @resolution_proposal.should_receive(:close!)
+      expect(@resolution_proposal).to receive(:close!)
       put_pass_to_meeting
     end
 
     it "fetches the new resolution" do
-      @resolution_proposal.should_receive(:new_resolution).and_return(@resolution)
+      expect(@resolution_proposal).to receive(:new_resolution).and_return(@resolution)
       put_pass_to_meeting
     end
 
     it "redirects to the new general meeting page with the new resolution ID" do
       put_pass_to_meeting
-      response.should redirect_to('/general_meetings/new?resolution_id=2')
+      expect(response).to redirect_to('/general_meetings/new?resolution_id=2')
     end
   end
 

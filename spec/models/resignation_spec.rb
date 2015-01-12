@@ -12,7 +12,7 @@ describe Resignation do
       @resignation.save!
       @resignation.reload
       
-      @resignation.member.should == @member
+      expect(@resignation.member).to eq(@member)
     end
   end
   
@@ -23,15 +23,15 @@ describe Resignation do
     end
     
     it "sets the object field" do
-      @event[:object].should == @resignation
+      expect(@event[:object]).to eq(@resignation)
     end
     
     it "sets the timestamp field" do
-      @event[:timestamp].should == @resignation.created_at
+      expect(@event[:timestamp]).to eq(@resignation.created_at)
     end
     
     it "sets the kind field" do
-      @event[:kind].should == :resignation
+      expect(@event[:kind]).to eq(:resignation)
     end
   end
   

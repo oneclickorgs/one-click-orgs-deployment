@@ -4,36 +4,36 @@ describe VotingSystems do
 
   def make_proposal(v_for, v_against, total_m=v_for+v_against)
     p = mock_model(Proposal)
-    p.stub(:votes_for).and_return(v_for)
-    p.stub(:votes_against).and_return(v_against)
-    p.stub(:member_count).and_return(total_m)
-    p.stub(:total_votes).and_return(v_for + v_against)
+    allow(p).to receive(:votes_for).and_return(v_for)
+    allow(p).to receive(:votes_against).and_return(v_against)
+    allow(p).to receive(:member_count).and_return(total_m)
+    allow(p).to receive(:total_votes).and_return(v_for + v_against)
     p
   end
 
   def _should_have_description
-    @system.description.should_not be_blank
+    expect(@system.description).not_to be_blank
   end
   
   def should_pass(proposal)
-     @system.passed?(proposal).should be true
+     expect(@system.passed?(proposal)).to be true
   end
 
   def should_not_pass(proposal)
-     @system.passed?(proposal).should be false
+     expect(@system.passed?(proposal)).to be false
   end
   
   def should_close_early(proposal)
-     @system.can_be_closed_early?(proposal).should be true
+     expect(@system.can_be_closed_early?(proposal)).to be true
   end
 
   def should_not_close_early(proposal)
-     @system.can_be_closed_early?(proposal).should be false
+     expect(@system.can_be_closed_early?(proposal)).to be false
   end
 
   describe VotingSystems do
     it "should return all voting systems" do
-      VotingSystems.all.map {|s|s.name.split('::')[-1] }.should == ["RelativeMajority", "AbsoluteMajority", "AbsoluteTwoThirdsMajority", "Unanimous", "Veto"]
+      expect(VotingSystems.all.map {|s|s.name.split('::')[-1] }).to eq(["RelativeMajority", "AbsoluteMajority", "AbsoluteTwoThirdsMajority", "Unanimous", "Veto"])
     end
   end
   

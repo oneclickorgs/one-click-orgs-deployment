@@ -7,23 +7,23 @@ describe Setting do
   
   describe "when getting" do
     it "should return the value for an existing key" do
-      Setting[:base_domain].should == "oneclickorgs.com"
+      expect(Setting[:base_domain]).to eq("oneclickorgs.com")
     end
     
     it "should return nil for a non-existent key" do
-      Setting[:kwyjibo].should be_nil
+      expect(Setting[:kwyjibo]).to be_nil
     end
   end
   
   describe "when setting" do
     it "should create a new setting for a new key" do
-      lambda{Setting[:new_key] = "new_value"}.should change(Setting, :count).by(1)
-      Setting[:new_key].should == "new_value"
+      expect{Setting[:new_key] = "new_value"}.to change(Setting, :count).by(1)
+      expect(Setting[:new_key]).to eq("new_value")
     end
     
     it "should update an existing setting for an existing key" do
-      lambda{Setting[:base_domain] = "google.com"}.should_not change(Setting, :count)
-      Setting[:base_domain].should == "google.com"
+      expect{Setting[:base_domain] = "google.com"}.not_to change(Setting, :count)
+      expect(Setting[:base_domain]).to eq("google.com")
     end
   end
 end

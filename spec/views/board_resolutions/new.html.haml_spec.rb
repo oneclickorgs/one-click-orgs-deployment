@@ -11,22 +11,22 @@ describe 'board_resolutions/new' do
   
   it "renders a text area for the description" do
     render
-    rendered.should have_selector("textarea[name='board_resolution[description]']")
+    expect(rendered).to have_selector("textarea[name='board_resolution[description]']")
   end
   
   it "renders a radio button to set 'draft' to false" do
     render
-    rendered.should have_selector("input[type=radio][name='board_resolution[draft]'][value=false]")
+    expect(rendered).to have_selector("input[type=radio][name='board_resolution[draft]'][value=false]")
   end
   
   it "renders a radio button to set 'draft' to true" do
     render
-    rendered.should have_selector("input[type=radio][name='board_resolution[draft]'][value=true]")
+    expect(rendered).to have_selector("input[type=radio][name='board_resolution[draft]'][value=true]")
   end
   
   it "renders a submit button" do
     render
-    rendered.should have_selector("input[type=submit]")
+    expect(rendered).to have_selector("input[type=submit]")
   end
   
 end

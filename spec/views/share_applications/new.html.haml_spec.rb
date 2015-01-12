@@ -9,19 +9,19 @@ describe 'share_applications/new' do
   let(:organisation) {mock_model(Organisation, maximum_shareholding: 100_000)}
 
   before(:each) do
-    view.stub(:current_user).and_return(user)
+    allow(view).to receive(:current_user).and_return(user)
     allow(view).to receive(:co).and_return(organisation)
     assign(:share_application, share_application)
   end
 
   it "renders an 'amount' field" do
     render
-    rendered.should have_selector(:input, :name => 'share_application[amount]')
+    expect(rendered).to have_selector(:input, :name => 'share_application[amount]')
   end
 
   it "renders a submit button" do
     render
-    rendered.should have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector(:input, :type => 'submit')
   end
 
 end

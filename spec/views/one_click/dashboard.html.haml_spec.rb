@@ -6,8 +6,8 @@ describe "one_click/dashboard" do
     before(:each) do
       @organisation = mock_model(Company, :name => "Grapes Ltd")
       assign(:current_organisation, @organisation)
-      view.stub(:current_organisation).and_return(@organisation)
-      view.stub(:co).and_return(@organisation)
+      allow(view).to receive(:current_organisation).and_return(@organisation)
+      allow(view).to receive(:co).and_return(@organisation)
       install_organisation_resolver(@organisation)
 
       @meeting = mock_model(Meeting,
@@ -37,29 +37,29 @@ describe "one_click/dashboard" do
 
       assign(:proposals, [])
 
-      view.stub(:can?).with(:create, Proposal).and_return(false)
+      allow(view).to receive(:can?).with(:create, Proposal).and_return(false)
     end
 
     describe "new meeting form" do
       it "renders a form-reveal button 'Record minutes'" do
         render
-        rendered.should have_selector(:input, :type => 'button', :value => 'Record minutes', :class => 'button-form-show')
+        expect(rendered).to have_selector(:input, :type => 'button', :value => 'Record minutes', :class => 'button-form-show')
       end
 
       it "renders a new meeting form" do
         render
-        rendered.should have_selector(:form, :action => '/meetings') do |form|
-          form.should have_selector(:select, :name => 'meeting[happened_on(1i)]')
-          form.should have_selector(:select, :name => 'meeting[happened_on(2i)]')
-          form.should have_selector(:select, :name => 'meeting[happened_on(3i)]')
+        expect(rendered).to have_selector(:form, :action => '/meetings') do |form|
+          expect(form).to have_selector(:select, :name => 'meeting[happened_on(1i)]')
+          expect(form).to have_selector(:select, :name => 'meeting[happened_on(2i)]')
+          expect(form).to have_selector(:select, :name => 'meeting[happened_on(3i)]')
 
-          form.should have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][1]', :value => '1')
-          form.should have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][2]', :value => '1')
-          form.should have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][3]', :value => '1')
+          expect(form).to have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][1]', :value => '1')
+          expect(form).to have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][2]', :value => '1')
+          expect(form).to have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][3]', :value => '1')
 
-          form.should have_selector(:textarea, :name => 'meeting[minutes]')
+          expect(form).to have_selector(:textarea, :name => 'meeting[minutes]')
 
-          form.should have_selector(:input, :type => 'submit')
+          expect(form).to have_selector(:input, :type => 'submit')
         end
       end
     end
@@ -67,12 +67,12 @@ describe "one_click/dashboard" do
     describe "timeline" do
       it "renders a timeline" do
         render
-        rendered.should have_selector('table.timeline')
+        expect(rendered).to have_selector('table.timeline')
       end
 
       it "renders a meeting event" do
         render
-        rendered.should have_selector('table.timeline td', :content => "Old discussions")
+        expect(rendered).to have_selector('table.timeline td', :content => "Old discussions")
       end
     end
 
@@ -85,7 +85,7 @@ describe "one_click/dashboard" do
 
       assign(:timeline, [])
 
-      view.stub(:can?).and_return(false)
+      allow(view).to receive(:can?).and_return(false)
 
       view.stub_chain(:co, :elections, :where).and_return([])
     end

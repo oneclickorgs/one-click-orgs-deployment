@@ -17,13 +17,13 @@ describe Ballot do
       it "ignores blank rankings" do
         @ballot = Ballot.new
         @ballot.ranking_30 = ''
-        @ballot.ranking.should == []
+        expect(@ballot.ranking).to eq([])
       end
 
       it "constructs a rankings array using rankings passed in by nomination ID" do
         @ballot = Ballot.new
         @ballot.ranking_30 = '1'
-        @ballot.ranking.should == [30]
+        expect(@ballot.ranking).to eq([30])
       end
 
       it "allows mass-assignment of rankings named by nomination ID" do
@@ -37,7 +37,7 @@ describe Ballot do
       @ballot.ranking = [34, 35, 36]
       @ballot.save!
       @ballot = Ballot.find(@ballot.id)
-      @ballot.ranking.should == [34, 35, 36]
+      expect(@ballot.ranking).to eq([34, 35, 36])
     end
   end
 
@@ -57,7 +57,7 @@ describe Ballot do
       @ballot.save!
       @ballot.reload
 
-      @ballot.member(true).should == @member
+      expect(@ballot.member(true)).to eq(@member)
     end
   end
 

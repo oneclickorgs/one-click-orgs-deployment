@@ -34,19 +34,19 @@ describe "general_meetings/new" do
 
   it "renders time select fields for the start_time attribute" do
     render
-    rendered.should have_selector(:select, :name => 'general_meeting[start_time_proxy(4i)]')
-    rendered.should have_selector(:select, :name => 'general_meeting[start_time_proxy(5i)]')
+    expect(rendered).to have_selector(:select, :name => 'general_meeting[start_time_proxy(4i)]')
+    expect(rendered).to have_selector(:select, :name => 'general_meeting[start_time_proxy(5i)]')
   end
 
   it "renders the agenda items as text fields" do
     render
-    rendered.should have_selector(:input, :value => "Apologies for Absence")
-    rendered.should have_selector(:input, :value => "Minutes of Previous Meeting")
+    expect(rendered).to have_selector(:input, :value => "Apologies for Absence")
+    expect(rendered).to have_selector(:input, :value => "Minutes of Previous Meeting")
   end
 
   it "renders check boxes to attach draft resolutions to the new meeting" do
     render
-    rendered.should have_selector(:input,
+    expect(rendered).to have_selector(:input,
       :name => 'general_meeting[existing_resolutions_attributes][0][attached]',
       :type => 'checkbox',
       :value => '1'
@@ -55,7 +55,7 @@ describe "general_meetings/new" do
 
   it "renders check boxes to mark attached draft resolutions as open for electronic voting" do
     render
-    rendered.should have_selector(:input,
+    expect(rendered).to have_selector(:input,
       :name => 'general_meeting[existing_resolutions_attributes][0][open]',
       :type => 'checkbox',
       :value => '1'
@@ -64,7 +64,7 @@ describe "general_meetings/new" do
 
   it "renders a hidden field with the ID of each draft resolution" do
     render
-    rendered.should have_selector(:input,
+    expect(rendered).to have_selector(:input,
       :name => 'general_meeting[existing_resolutions_attributes][0][id]',
       :value => '111',
       :type => 'hidden'

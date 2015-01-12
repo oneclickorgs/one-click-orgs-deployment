@@ -18,9 +18,9 @@ describe "found association proposals" do
     it "should add the proposal" do
       post(found_association_proposals_path)
 
-      FoundAssociationProposal.count.should == 1
-      FoundAssociationProposal.first.title.should =~ Regexp.new(@organisation.name)
-      FoundAssociationProposal.first.description.should be_present
+      expect(FoundAssociationProposal.count).to eq(1)
+      expect(FoundAssociationProposal.first.title).to match(Regexp.new(@organisation.name))
+      expect(FoundAssociationProposal.first.description).to be_present
     end
   end
 

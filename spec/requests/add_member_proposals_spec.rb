@@ -14,11 +14,11 @@ describe "add-member proposals" do
     end
     
     it "redirects to root" do
-      @response.should redirect_to(root_path)
+      expect(@response).to redirect_to(root_path)
     end
     
     it "should set a notice flash" do
-      flash[:notice].should_not be_blank
+      expect(flash[:notice]).not_to be_blank
     end
     
     context "when validation fails" do
@@ -28,19 +28,19 @@ describe "add-member proposals" do
       end
       
       it "renders the new add-member proposal form" do
-        response.should render_template('add_member_proposals/new')
+        expect(response).to render_template('add_member_proposals/new')
       end
       
       it "sets an error flash" do
-        flash[:error].should be_present
+        expect(flash[:error]).to be_present
       end
       
       it "displays the errors" do
-        response.should have_selector('ul.errors li', :content => "Email can't be blank")
+        expect(response).to have_selector('ul.errors li', :content => "Email can't be blank")
       end
       
       it "retains the contents of the new member form" do
-        response.should have_selector('input', :name => 'add_member_proposal[first_name]', :value => 'Bob')
+        expect(response).to have_selector('input', :name => 'add_member_proposal[first_name]', :value => 'Bob')
       end
     end
   end

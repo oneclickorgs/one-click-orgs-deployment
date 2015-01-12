@@ -10,12 +10,12 @@ describe ChangeVotingSystemProposal do
   it "should change voting system after successful proposal" do
     @p = @organisation.change_voting_system_proposals.new
 
-    Clause.should_receive(:set_text!).with('constitution_voting_system', 'Unanimous')
+    expect(Clause).to receive(:set_text!).with('constitution_voting_system', 'Unanimous')
     passed_proposal(@p, 'proposal_type'=>'constitution', 'proposed_system'=>@proposed_system).call
   end
   
   it "has a decision notification message" do
-    ChangeVotingSystemProposal.new.decision_notification_message.should be_present
+    expect(ChangeVotingSystemProposal.new.decision_notification_message).to be_present
   end
   
 end

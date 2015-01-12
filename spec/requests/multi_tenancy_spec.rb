@@ -4,27 +4,27 @@ describe "Multi-tenancy" do
   describe "when the app is newly installed" do
     it "should redirect all requests to the setup page" do
       get 'http://oneclickorgs.com/'
-      response.should redirect_to('http://oneclickorgs.com/setup')
+      expect(response).to redirect_to('http://oneclickorgs.com/setup')
     end
     
     describe "visiting the domains setup page" do
       it "should show a form to set the base domain and the signup domain" do
         get 'http://oneclickorgs.com/setup/domains'
-        response.should have_selector("form[action='/setup/create_domains']") do |form|
-          form.should have_selector("input[name='base_domain']")
-          form.should have_selector("input[name='signup_domain']")
-          form.should have_selector("input[type=submit]")
+        expect(response).to have_selector("form[action='/setup/create_domains']") do |form|
+          expect(form).to have_selector("input[name='base_domain']")
+          expect(form).to have_selector("input[name='signup_domain']")
+          expect(form).to have_selector("input[type=submit]")
         end
       end
       
       it "should auto-detect the base domain" do
         get 'http://oneclickorgs.com/setup/domains'
-        response.should have_selector("input[name='base_domain'][value='oneclickorgs.com']")
+        expect(response).to have_selector("input[name='base_domain'][value='oneclickorgs.com']")
       end
       
       it "should auto-suggest the setup domain" do
         get 'http://oneclickorgs.com/setup/domains'
-        response.should have_selector("input[name='signup_domain'][value='oneclickorgs.com']")
+        expect(response).to have_selector("input[name='signup_domain'][value='oneclickorgs.com']")
       end
     end
     
@@ -34,15 +34,15 @@ describe "Multi-tenancy" do
       end
       
       it "should save the base domain setting" do
-        Setting[:base_domain].should == 'oneclickorgs.com'
+        expect(Setting[:base_domain]).to eq('oneclickorgs.com')
       end
       
       it "should save the signup domain setting" do
-        Setting[:signup_domain].should == 'signup.oneclickorgs.com'
+        expect(Setting[:signup_domain]).to eq('signup.oneclickorgs.com')
       end
       
       it "should redirect to the administrator setup page" do
-        response.should redirect_to 'http://oneclickorgs.com/setup/administrator'
+        expect(response).to redirect_to 'http://oneclickorgs.com/setup/administrator'
       end
     end
   end
@@ -58,24 +58,24 @@ describe "Multi-tenancy" do
     
     it "should redirect all setup requests to the homepage" do
       get 'http://oneclickorgs.com/setup'
-      response.should redirect_to 'http://oneclickorgs.com/'
+      expect(response).to redirect_to 'http://oneclickorgs.com/'
     end
     
     it "should redirect all unrecognised subdomain requests back to the new organisation page" do
       get 'http://nonexistent.oneclickorgs.com/'
-      response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+      expect(response).to redirect_to 'http://signup.oneclickorgs.com/organisations/new'
     end
     
     it "should redirect requests to the root of the signup-domain to the new organisation page" do
       get 'http://signup.oneclickorgs.com/'
-      response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+      expect(response).to redirect_to 'http://signup.oneclickorgs.com/organisations/new'
     end
     
     describe "visiting the new organisation page" do
       it "shows a list of links to create different organisation types" do
         get "http://signup.oneclickorgs.com/organisations/new"
-        response.should have_selector('ul.organisations') do |ul|
-          ul.should have_selector("a[href='/associations/new']")
+        expect(response).to have_selector('ul.organisations') do |ul|
+          expect(ul).to have_selector("a[href='/associations/new']")
         end
       end
     end
@@ -83,16 +83,16 @@ describe "Multi-tenancy" do
     describe "visiting the new association page" do
       it "should show a form to set details for the new association" do
         get 'http://signup.oneclickorgs.com/associations/new'
-        response.should have_selector("form[action='/associations']") do |form|
-          form.should have_selector("input[name='founder[first_name]']")
-          form.should have_selector("input[name='founder[last_name]']")
-          form.should have_selector("input[name='founder[email]']")
-          form.should have_selector("input[name='founder[password]']")
-          form.should have_selector("input[name='founder[password_confirmation]']")
-          form.should have_selector("input[name='association[name]']")
-          form.should have_selector("input[name='association[subdomain]']")
-          form.should have_selector("textarea[name='association[objectives]']")
-          form.should have_selector("input[type=submit]")
+        expect(response).to have_selector("form[action='/associations']") do |form|
+          expect(form).to have_selector("input[name='founder[first_name]']")
+          expect(form).to have_selector("input[name='founder[last_name]']")
+          expect(form).to have_selector("input[name='founder[email]']")
+          expect(form).to have_selector("input[name='founder[password]']")
+          expect(form).to have_selector("input[name='founder[password_confirmation]']")
+          expect(form).to have_selector("input[name='association[name]']")
+          expect(form).to have_selector("input[name='association[subdomain]']")
+          expect(form).to have_selector("textarea[name='association[objectives]']")
+          expect(form).to have_selector("input[type=submit]")
         end
       end
     end
@@ -114,12 +114,12 @@ describe "Multi-tenancy" do
       }
       it "should create the association record" do
         post 'http://signup.oneclickorgs.com/associations', org_parameters
-        Association.where(:subdomain => 'newassociation').first.should_not be_nil
+        expect(Association.where(:subdomain => 'newassociation').first).not_to be_nil
       end
       
       it "should redirect to the induction process for that domain" do
         post 'http://signup.oneclickorgs.com/associations', org_parameters
-        response.should redirect_to 'http://newassociation.oneclickorgs.com/constitution'
+        expect(response).to redirect_to 'http://newassociation.oneclickorgs.com/constitution'
       end
     end
   end
@@ -148,27 +148,27 @@ describe "Multi-tenancy" do
     describe "logging in to a subdomain with a correct user" do
       it "should succeed" do
         get 'http://beavers.oneclickorgs.com/'
-        response.should redirect_to 'http://beavers.oneclickorgs.com/login'
+        expect(response).to redirect_to 'http://beavers.oneclickorgs.com/login'
         post 'http://beavers.oneclickorgs.com/member_session', :email => 'betty@example.com', :password => 'password'
-        response.should redirect_to 'http://beavers.oneclickorgs.com/'
+        expect(response).to redirect_to 'http://beavers.oneclickorgs.com/'
         follow_redirect!
-        response.body.should =~ /Welcome back, Betty/
+        expect(response.body).to match(/Welcome back, Betty/)
       end
     end
     
     describe "logging into a subdomain with a user from a different subdomain" do
       it "should fail" do
         get 'http://aardvarks.oneclickorgs.com/'
-        response.should redirect_to 'http://aardvarks.oneclickorgs.com/login'
+        expect(response).to redirect_to 'http://aardvarks.oneclickorgs.com/login'
         post 'http://aardvarks.oneclickorgs.com/member_session', :email => 'consuela@example.com', :password => 'password'
-        response.body.should =~ /The email address or password entered were incorrect/
+        expect(response.body).to match(/The email address or password entered were incorrect/)
       end
     end
     
     describe "accessing a nonexistent subdomain" do
       it "should redirect to the base domain" do
         get 'http://nonexistent.oneclickorgs.com/'
-        response.should redirect_to 'http://signup.oneclickorgs.com/organisations/new'
+        expect(response).to redirect_to 'http://signup.oneclickorgs.com/organisations/new'
       end
     end
   end

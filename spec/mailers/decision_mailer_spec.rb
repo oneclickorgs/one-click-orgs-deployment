@@ -13,15 +13,15 @@ describe DecisionMailer do
     
     it "should include welcome phrase and proposal information in email text" do
       mail = DecisionMailer.notify_new_decision(@member, @decision)
-      mail.body.should =~ /Dear #{@member.name}/
-      mail.body.should =~ /a new decision has been made/
-      mail.body.should =~ /#{@proposal.title}/
-      mail.body.should =~ /#{@proposal.description}/           
+      expect(mail.body).to match(/Dear #{@member.name}/)
+      expect(mail.body).to match(/a new decision has been made/)
+      expect(mail.body).to match(/#{@proposal.title}/)
+      expect(mail.body).to match(/#{@proposal.description}/)
     end
 
     it "should include correct decision link in email text" do
       mail = DecisionMailer.notify_new_decision(@member, @decision)
-      mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/decisions/\\d+")
+      expect(mail.body).to match(Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/decisions/\\d+"))
     end
     
     context "when proposal has a decision notification message" do
@@ -32,7 +32,7 @@ describe DecisionMailer do
 
       it "is included in the email" do
         mail = DecisionMailer.notify_new_decision(@member, @decision)
-        mail.body.should =~ %r{this prior copy is now out of date}
+        expect(mail.body).to match(%r{this prior copy is now out of date})
       end
     end
   end
@@ -44,13 +44,13 @@ describe DecisionMailer do
       @ejected_member = mock_model(Member, :name => "Elizabeth Ejected")
       
       @organisation = mock_model(Organisation, :domain => 'test', :name => nil)
-      @organisation.stub(:members).and_return(@members_association = [
+      allow(@organisation).to receive(:members).and_return(@members_association = [
         @active_member,
         @pending_member,
         @ejected_member
       ])
-      @members_association.stub(:active).and_return([@active_member])
-      @members_association.stub(:pending).and_return([@pending_member])
+      allow(@members_association).to receive(:active).and_return([@active_member])
+      allow(@members_association).to receive(:pending).and_return([@pending_member])
       
       @user = mock_model(Member, :organisation => @organisation, :votes => [])
       @proposal = mock_model(Proposal,
@@ -68,15 +68,15 @@ describe DecisionMailer do
     
     describe "generating list of members" do
       it "includes the active members" do
-        @mail.body.should include(@active_member.name)
+        expect(@mail.body).to include(@active_member.name)
       end
       
       it "includes the pending members" do
-        @mail.body.should include(@pending_member.name)
+        expect(@mail.body).to include(@pending_member.name)
       end
       
       it "does not include the ejected members" do
-        @mail.body.should_not include(@ejected_member.name)
+        expect(@mail.body).not_to include(@ejected_member.name)
       end
     end
   end

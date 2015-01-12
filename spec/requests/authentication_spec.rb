@@ -8,7 +8,7 @@ describe "authentication" do
   describe "getting login form" do
     it "should display a login form" do
       get '/login'
-      response.should have_selector("form[action='/member_session']")
+      expect(response).to have_selector("form[action='/member_session']")
     end
   end
   
@@ -18,11 +18,11 @@ describe "authentication" do
     end
     
     it "should log in the user" do
-      session[:user].should == (Member.last.id)
+      expect(session[:user]).to eq(Member.last.id)
     end
     
     it "should redirect to the home page" do
-      response.should redirect_to('/')
+      expect(response).to redirect_to('/')
     end
   end
   
@@ -32,15 +32,15 @@ describe "authentication" do
     end
     
     it "should not log in the user" do
-      session[:user].should be_nil
+      expect(session[:user]).to be_nil
     end
     
     it "should render the login form" do
-      response.should have_selector("form[action='/member_session']")
+      expect(response).to have_selector("form[action='/member_session']")
     end
     
     it "should set an error flash" do
-      flash[:error].should_not be_blank
+      expect(flash[:error]).not_to be_blank
     end
   end
   
@@ -51,11 +51,11 @@ describe "authentication" do
     end
     
     it "should log out the user" do
-      session[:user].should be_nil
+      expect(session[:user]).to be_nil
     end
     
     it "should redirect to the home page" do
-      response.should redirect_to('/')
+      expect(response).to redirect_to('/')
     end
   end
 end

@@ -9,7 +9,7 @@ describe "resolution_proposals/new" do
   
   it "renders a description field" do
     render
-    rendered.should have_selector("textarea[name='resolution_proposal[description]']")
+    expect(rendered).to have_selector("textarea[name='resolution_proposal[description]']")
   end
   
 end

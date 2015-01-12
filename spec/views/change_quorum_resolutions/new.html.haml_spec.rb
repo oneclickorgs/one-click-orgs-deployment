@@ -20,12 +20,12 @@ describe 'change_quorum_resolutions/new' do
 
   it "renders a quorum_number field" do
     render
-    rendered.should have_selector(:input, :name => 'change_quorum_resolution[quorum_number]')
+    expect(rendered).to have_selector(:input, :name => 'change_quorum_resolution[quorum_number]')
   end
 
   it "renders a quorum_percentage field" do
     render
-    rendered.should have_selector(:input, :name => 'change_quorum_resolution[quorum_percentage]')
+    expect(rendered).to have_selector(:input, :name => 'change_quorum_resolution[quorum_percentage]')
   end
 
 end

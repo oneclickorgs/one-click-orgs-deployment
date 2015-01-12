@@ -10,7 +10,7 @@ describe AnnualGeneralMeeting do
       expect {@agm.election = @election}.to_not raise_error
 
       @agm.reload
-      @agm.election(true).should == @election
+      expect(@agm.election(true)).to eq(@election)
     end
   end
 
@@ -24,28 +24,28 @@ describe AnnualGeneralMeeting do
       @agm.electronic_nominations = true
       @agm.save!
 
-      @agm.election.should be_present
-      @agm.election.should be_persisted
+      expect(@agm.election).to be_present
+      expect(@agm.election).to be_persisted
     end
 
     it "is done if 'electronic_voting' is true" do
       @agm.electronic_voting = true
       @agm.save!
 
-      @agm.election.should be_present
-      @agm.election.should be_persisted
+      expect(@agm.election).to be_present
+      expect(@agm.election).to be_persisted
     end
 
     it "is not done if 'electronic_nominations' and 'electronic_voting' are false" do
       @agm.save!
 
-      @agm.election.should_not be_present
+      expect(@agm.election).not_to be_present
     end
 
     it "sets the organisation attribute" do
       @agm.electronic_voting = true
       @agm.save!
-      @agm.election.organisation.should == @organisation
+      expect(@agm.election.organisation).to eq(@organisation)
     end
 
     it "sets the nominations_closing_date attribute" do
@@ -53,8 +53,8 @@ describe AnnualGeneralMeeting do
       @agm.nominations_closing_date = @nominations_closing_date = 2.weeks.from_now.to_date
       @agm.save!
 
-      @agm.election.nominations_closing_date.should be_present
-      @agm.election.nominations_closing_date.should == @nominations_closing_date
+      expect(@agm.election.nominations_closing_date).to be_present
+      expect(@agm.election.nominations_closing_date).to eq(@nominations_closing_date)
     end
 
     it "sets the voting_closing_date attribute" do
@@ -62,8 +62,8 @@ describe AnnualGeneralMeeting do
       @agm.voting_closing_date = @voting_closing_date = 2.weeks.from_now.to_date
       @agm.save!
 
-      @agm.election.voting_closing_date.should be_present
-      @agm.election.voting_closing_date.should == @voting_closing_date
+      expect(@agm.election.voting_closing_date).to be_present
+      expect(@agm.election.voting_closing_date).to eq(@voting_closing_date)
     end
   end
 

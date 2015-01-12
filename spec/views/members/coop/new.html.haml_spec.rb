@@ -11,18 +11,18 @@ describe 'members/coop/new' do
   ).as_new_record}
 
   before(:each) do
-    view.stub(:co).and_return(organisation)
+    allow(view).to receive(:co).and_return(organisation)
     assign(:member, member)
   end
 
   context "when there exists custom text for the membership application form" do
     before(:each) do
-      organisation.stub(:membership_application_text).and_return("Custom text.")
+      allow(organisation).to receive(:membership_application_text).and_return("Custom text.")
     end
 
     it "renders the custom text" do
       render
-      rendered.should have_content("Custom text.")
+      expect(rendered).to have_content("Custom text.")
     end
   end
 

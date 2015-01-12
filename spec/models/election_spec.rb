@@ -45,12 +45,12 @@ describe Election do
     it "elects the correct nominees" do
       elected_names = @election.elected_nominees.map(&:first_name)
 
-      elected_names.should include('Castor')
-      elected_names.should include('Helen')
+      expect(elected_names).to include('Castor')
+      expect(elected_names).to include('Helen')
     end
 
     it "defeats the correct nominees" do
-      @election.defeated_nominees.map(&:first_name).should == ['Pollux']
+      expect(@election.defeated_nominees.map(&:first_name)).to eq(['Pollux'])
     end
   end
 
@@ -64,26 +64,26 @@ describe Election do
     )}
 
     before(:each) do
-      election.stub(:nominations).and_return(nominations)
+      allow(election).to receive(:nominations).and_return(nominations)
     end
 
     describe "elected_nominees" do
       it "returns the nominees who were elected" do
-        election.elected_nominees.should include(elected_nominee)
+        expect(election.elected_nominees).to include(elected_nominee)
       end
 
       it "does not return the nominees who were defeated" do
-        election.elected_nominees.should_not include(defeated_nominee)
+        expect(election.elected_nominees).not_to include(defeated_nominee)
       end
     end
 
     describe "defeated_nominees" do
       it "returns the nominees who were defeated" do
-        election.defeated_nominees.should include(defeated_nominee)
+        expect(election.defeated_nominees).to include(defeated_nominee)
       end
 
       it "does not return the nominees who were elected" do
-        election.defeated_nominees.should_not include(elected_nominee)
+        expect(election.defeated_nominees).not_to include(elected_nominee)
       end
     end
   end
@@ -98,7 +98,7 @@ describe Election do
       @election.reload
       @election.nominees.reload
 
-      @election.nominees.should include(@nominee)
+      expect(@election.nominees).to include(@nominee)
     end
 
     it "has many ballots" do
@@ -110,7 +110,7 @@ describe Election do
       @election.reload
       @election.ballots.reload
 
-      @election.ballots.should include(@ballot)
+      expect(@election.ballots).to include(@ballot)
     end
 
     it "has many nominations" do
@@ -122,7 +122,7 @@ describe Election do
       @election.reload
       @election.nominations.reload
 
-      @election.nominations.should include(@nomination)
+      expect(@election.nominations).to include(@nomination)
     end
 
     it "belongs to an organisation" do
@@ -134,27 +134,27 @@ describe Election do
       @election.save!
       @election.reload
 
-      @election.organisation(true).should == @organisation
+      expect(@election.organisation(true)).to eq(@organisation)
     end
   end
 
   describe "states" do
     it "is in the draft state upon creation" do
       @election = Election.new
-      @election.state.should == 'draft'
+      expect(@election.state).to eq('draft')
     end
 
     it "moves to the open state when it is started" do
       @election = Election.make
       @election.start!
-      @election.state.should == 'open'
+      expect(@election.state).to eq('open')
     end
 
     it "moves to the closed state when it is closed" do
       @election = Election.make
       @election.state = 'open'
       @election.close!
-      @election.state.should == 'closed'
+      expect(@election.state).to eq('closed')
     end
   end
 
@@ -175,7 +175,7 @@ describe Election do
       end
 
       it "creates a 'view result' task for each member" do
-        tasks.should_receive(:create).with(hash_including(:subject => election, :action => :view_result))
+        expect(tasks).to receive(:create).with(hash_including(:subject => election, :action => :view_result))
         election.close!
       end
     end
@@ -189,12 +189,12 @@ describe Election do
 
     it "closes elections with a close date in the past" do
       Election.close_elections
-      @past_election.reload.should be_closed
+      expect(@past_election.reload).to be_closed
     end
 
     it "does not close elections with a close date in the future" do
       Election.close_elections
-      @future_election.reload.should be_open
+      expect(@future_election.reload).to be_open
     end
   end
 

@@ -15,9 +15,9 @@ describe OfficershipsController do
       @officership = mock_model(Officership).as_new_record
       @officerships_association = double("officerships association")
 
-      @organisation.stub(:officerships).and_return(@officerships_association)
-      @officerships_association.stub(:build).and_return(@officership)
-      @officership.stub(:build_office)
+      allow(@organisation).to receive(:officerships).and_return(@officerships_association)
+      allow(@officerships_association).to receive(:build).and_return(@officership)
+      allow(@officership).to receive(:build_office)
     end
 
     def get_new
@@ -25,33 +25,33 @@ describe OfficershipsController do
     end
 
     it "respects the officer_id parameter" do
-      @officerships_association.should_receive(:build).with(hash_including(:officer_id => '1'))
+      expect(@officerships_association).to receive(:build).with(hash_including(:officer_id => '1'))
       get :new, :officer_id => '1'
     end
 
     it "handles the office_id parameter" do
-      @officerships_association.should_receive(:build).with(hash_including(:office_id => '1'))
+      expect(@officerships_association).to receive(:build).with(hash_including(:office_id => '1'))
       get :new, :office_id => '1'
     end
 
     it "builds a new officership" do
-      @officerships_association.should_receive(:build).and_return(@officership)
+      expect(@officerships_association).to receive(:build).and_return(@officership)
       get_new
     end
 
     it "builds a new office on the officership" do
-      @officership.should_receive(:build_office)
+      expect(@officership).to receive(:build_office)
       get_new
     end
 
     it "assigns the new officership" do
       get_new
-      assigns[:officership].should == @officership
+      expect(assigns[:officership]).to eq(@officership)
     end
 
     it "is successful" do
       get_new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -61,9 +61,9 @@ describe OfficershipsController do
       @officerships_association = double("officerships association")
       @officership = mock_model(Officership).as_new_record
 
-      @organisation.stub(:officerships).and_return(@officerships_association)
-      @officerships_association.stub(:build).and_return(@officership)
-      @officership.stub(:save!)
+      allow(@organisation).to receive(:officerships).and_return(@officerships_association)
+      allow(@officerships_association).to receive(:build).and_return(@officership)
+      allow(@officership).to receive(:save!)
     end
 
     def post_create
@@ -71,18 +71,18 @@ describe OfficershipsController do
     end
 
     it "builds the new officership" do
-      @officerships_association.should_receive(:build).with(@officership_params).and_return(@officership)
+      expect(@officerships_association).to receive(:build).with(@officership_params).and_return(@officership)
       post_create
     end
 
     it "saves the new officership" do
-      @officership.should_receive(:save!)
+      expect(@officership).to receive(:save!)
       post_create
     end
 
     it "redirects to the directors page" do
       post_create
-      response.should redirect_to(directors_path)
+      expect(response).to redirect_to(directors_path)
     end
   end
 
@@ -91,8 +91,8 @@ describe OfficershipsController do
       @officership = mock_model(Officership)
       @officerships_association = double("officerships association")
 
-      @organisation.stub(:officerships).and_return(@officerships_association)
-      @officerships_association.stub(:find).and_return(@officership)
+      allow(@organisation).to receive(:officerships).and_return(@officerships_association)
+      allow(@officerships_association).to receive(:find).and_return(@officership)
     end
 
     def get_edit
@@ -100,18 +100,18 @@ describe OfficershipsController do
     end
 
     it "finds the officership" do
-      @officerships_association.should_receive(:find).with('1').and_return(@officership)
+      expect(@officerships_association).to receive(:find).with('1').and_return(@officership)
       get_edit
     end
 
     it "assigns the officership" do
       get_edit
-      assigns[:officership].should == @officership
+      expect(assigns[:officership]).to eq(@officership)
     end
 
     it "is successful" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -121,9 +121,9 @@ describe OfficershipsController do
       @officership = mock_model(Officership)
       @officerships_association = double("officerships association")
 
-      @organisation.stub(:officerships).and_return(@officerships_association)
-      @officerships_association.stub(:find).and_return(@officership)
-      @officership.stub(:update_attributes)
+      allow(@organisation).to receive(:officerships).and_return(@officerships_association)
+      allow(@officerships_association).to receive(:find).and_return(@officership)
+      allow(@officership).to receive(:update_attributes)
     end
 
     def put_update
@@ -131,18 +131,18 @@ describe OfficershipsController do
     end
 
     it "finds the officership" do
-      @officerships_association.should_receive(:find).with('1').and_return(@officership)
+      expect(@officerships_association).to receive(:find).with('1').and_return(@officership)
       put_update
     end
 
     it "updates the officership's attributes" do
-      @officership.should_receive(:update_attributes).with(@officership_params)
+      expect(@officership).to receive(:update_attributes).with(@officership_params)
       put_update
     end
 
     it "redirects to the directors page" do
       put_update
-      response.should redirect_to('/directors')
+      expect(response).to redirect_to('/directors')
     end
 
     context "when the officership cannot be updated" do

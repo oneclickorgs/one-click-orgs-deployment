@@ -14,7 +14,7 @@ describe Admin::CoopsController do
     let(:coop) {mock_model(Coop)}
 
     before(:each) do
-      Coop.stub(:find).and_return(coop)
+      allow(Coop).to receive(:find).and_return(coop)
     end
 
     def get_show
@@ -22,18 +22,18 @@ describe Admin::CoopsController do
     end
 
     it "finds the coop" do
-      Coop.should_receive(:find).with('1').and_return(coop)
+      expect(Coop).to receive(:find).with('1').and_return(coop)
       get_show
     end
 
     it "assigns the coop" do
       get_show
-      assigns[:coop].should == coop
+      expect(assigns[:coop]).to eq(coop)
     end
 
     it "is successful" do
       get_show
-      response.should be_success
+      expect(response).to be_success
     end
   end
 

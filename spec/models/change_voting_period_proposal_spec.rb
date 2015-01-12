@@ -9,12 +9,12 @@ describe ChangeVotingPeriodProposal do
   
   it "should change voting period after successful proposal" do
     @p = @organisation.change_voting_period_proposals.new
-    Clause.should_receive(:set_integer!).with('voting_period', 86400)
+    expect(Clause).to receive(:set_integer!).with('voting_period', 86400)
     passed_proposal(@p, 'new_voting_period'=>86400).call
   end
   
   it "has a decision notification message" do
-    ChangeVotingPeriodProposal.new.decision_notification_message.should be_present
+    expect(ChangeVotingPeriodProposal.new.decision_notification_message).to be_present
   end
   
 end

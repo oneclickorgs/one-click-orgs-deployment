@@ -8,11 +8,11 @@ describe "miscellaneous requests" do
     end
     
     it "should render the public/404.html file" do
-      response.body.should =~ /The page you were looking for/
+      expect(response.body).to match(/The page you were looking for/)
     end
     
     it "should not render using the application layout" do
-      response.should_not have_selector "div.control_bar"
+      expect(response).not_to have_selector "div.control_bar"
     end
   end
 end

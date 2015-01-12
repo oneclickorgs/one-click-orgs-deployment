@@ -14,12 +14,12 @@ describe 'officerships/edit' do
 
   it "renders a certification check box" do
     render
-    rendered.should have_selector(:input, :name => 'officership[certification]')
+    expect(rendered).to have_selector(:input, :name => 'officership[certification]')
   end
 
   it "renders a submit button" do
     render
-    rendered.should have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector(:input, :type => 'submit')
   end
 
 end

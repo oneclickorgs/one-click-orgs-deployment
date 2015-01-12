@@ -13,20 +13,20 @@ describe Office do
 
     @office.reload
 
-    @office.officer.should == @member
+    expect(@office.officer).to eq(@member)
   end
 
   describe "officership association" do
     it "ignores officerships elected in the future" do
       @office = Office.make!
       @officership = Officership.make!(:office => @office, :elected_on => 1.day.from_now)
-      @office.officership.should be_nil
+      expect(@office.officership).to be_nil
     end
 
     it "ignores officerships ended in the past" do
       @office = Office.make!
       @officership = Officership.make!(:office => @office, :ended_on => 1.day.ago)
-      @office.officership.should be_nil
+      expect(@office.officership).to be_nil
     end
   end
 
@@ -36,7 +36,7 @@ describe Office do
 
     expect {@office.organisation = @coop}.to_not raise_error
 
-    @office.organisation.should == @coop
+    expect(@office.organisation).to eq(@coop)
   end
 
   after(:all) do

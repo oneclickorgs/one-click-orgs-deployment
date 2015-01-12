@@ -43,7 +43,7 @@ describe "Association founding process" do
 
       @affirmative_members.each do |m|
         # TODO recipients.should.include(m.email) ought to work, but doesn't for some reason
-        recipients.include?(m.email).should be true
+        expect(recipients.include?(m.email)).to be true
       end
     end
 
@@ -53,7 +53,7 @@ describe "Association founding process" do
       recipients = ActionMailer::Base.deliveries.map{|email| email.to.first}
 
       @negative_members.each do |m|
-        recipients.include?(m.email).should be true
+        expect(recipients.include?(m.email)).to be true
       end
     end
   end

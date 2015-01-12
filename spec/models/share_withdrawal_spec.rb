@@ -14,31 +14,31 @@ describe ShareWithdrawal do
   let(:organisation_share_account) {mock_model(ShareAccount)}
 
   before(:each) do
-    ShareTransaction.stub(:new).and_return(share_transaction)
+    allow(ShareTransaction).to receive(:new).and_return(share_transaction)
   end
 
   it "has an 'amount' attribute" do
     share_withdrawal = ShareWithdrawal.new
     share_withdrawal.amount = 3
-    share_withdrawal.amount.should eq 3
+    expect(share_withdrawal.amount).to eq 3
   end
 
   it "has a 'member' attribute" do
     share_withdrawal = ShareWithdrawal.new
     share_withdrawal.member = member
-    share_withdrawal.member.should eq member
+    expect(share_withdrawal.member).to eq member
   end
 
   it "has a 'share_transaction' attribute" do
     share_withdrawal = ShareWithdrawal.new
-    share_withdrawal.share_transaction.should eq share_transaction
+    expect(share_withdrawal.share_transaction).to eq share_transaction
   end
 
   describe "initializing" do
     it "builds a share transaction" do
-      ShareTransaction.should_receive(:new).and_return(share_transaction)
+      expect(ShareTransaction).to receive(:new).and_return(share_transaction)
       share_withdrawal = ShareWithdrawal.new
-      share_withdrawal.share_transaction.should == share_transaction
+      expect(share_withdrawal.share_transaction).to eq(share_transaction)
     end
   end
 
@@ -46,13 +46,13 @@ describe ShareWithdrawal do
     let(:share_withdrawal) {ShareWithdrawal.new}
 
     it "uses the member attribute to assign the accounts on the share transaction" do
-      share_transaction.should_receive(:to_account=).with(organisation_share_account)
-      share_transaction.should_receive(:from_account=).with(member_share_account)
+      expect(share_transaction).to receive(:to_account=).with(organisation_share_account)
+      expect(share_transaction).to receive(:from_account=).with(member_share_account)
       share_withdrawal.member = member
     end
 
     it "uses the amount attribute to assign the amount on the share transaction" do
-      share_transaction.should_receive(:amount=).with(3)
+      expect(share_transaction).to receive(:amount=).with(3)
       share_withdrawal.amount = 3
     end
   end
@@ -62,11 +62,11 @@ describe ShareWithdrawal do
 
     it "saves" do
       share_withdrawal.save!
-      share_withdrawal.should be_persisted
+      expect(share_withdrawal).to be_persisted
     end
 
     it "saves the new share transaction" do
-      share_transaction.should_receive(:save).and_return(true)
+      expect(share_transaction).to receive(:save).and_return(true)
       share_withdrawal.save!
     end
   end

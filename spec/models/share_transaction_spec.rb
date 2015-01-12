@@ -7,20 +7,20 @@ describe ShareTransaction do
   describe "withdrawal due dates" do
     it "calculates the withdrawal due date as three months after the creation date" do
       share_transaction = ShareTransaction.make(:created_at => Time.utc(2011, 11, 30))
-      share_transaction.withdrawal_due_date.should eq Date.new(2012, 2, 29)
+      expect(share_transaction.withdrawal_due_date).to eq Date.new(2012, 2, 29)
     end
 
     describe "#withdrawal_due?" do
       it "returns false when the withdrawal due date is in the future" do
         share_transaction = ShareTransaction.make
-        share_transaction.stub(:withdrawal_due_date).and_return(Date.today.advance(:days => 1))
-        share_transaction.withdrawal_due?.should eq false
+        allow(share_transaction).to receive(:withdrawal_due_date).and_return(Date.today.advance(:days => 1))
+        expect(share_transaction.withdrawal_due?).to eq false
       end
 
       it "returns true when the withdrawal due date is today" do
         share_transaction = ShareTransaction.make
-        share_transaction.stub(:withdrawal_due_date).and_return(Date.today)
-        share_transaction.withdrawal_due?.should eq true
+        allow(share_transaction).to receive(:withdrawal_due_date).and_return(Date.today)
+        expect(share_transaction.withdrawal_due?).to eq true
       end
     end
   end
@@ -41,12 +41,12 @@ describe ShareTransaction do
       let(:member) {mock_model(Member, :tasks => member_tasks, :organisation => coop, :name => "Bob Smith")}
 
       it "creates a task for the member to make the payment" do
-        member_tasks.should_receive(:create).with(:subject => share_transaction, :action => :make_payment)
+        expect(member_tasks).to receive(:create).with(:subject => share_transaction, :action => :make_payment)
         share_transaction.save!
       end
 
       it "creates a task for the secretary to mark the payment received" do
-        secretary_tasks.should_receive(:create).with(:subject => share_transaction, :action => :mark_payment_received)
+        expect(secretary_tasks).to receive(:create).with(:subject => share_transaction, :action => :mark_payment_received)
         share_transaction.save!
       end
     end

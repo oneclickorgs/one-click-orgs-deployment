@@ -15,33 +15,33 @@ describe Member do
 
   describe "defaults" do
     it "should be active" do
-      @member.should be_active
+      expect(@member).to be_active
     end
   end
 
   describe "validation" do
     it "requires a email address" do
       @member = Member.make(:email => "")
-      @member.should_not be_valid
-      @member.errors[:email].should be_present
+      expect(@member).not_to be_valid
+      expect(@member.errors[:email]).to be_present
     end
 
     it "requires a reasonable email address" do
       @member = Member.make(:email => "bob")
-      @member.should_not be_valid
-      @member.errors[:email].should be_present
+      expect(@member).not_to be_valid
+      expect(@member.errors[:email]).to be_present
 
       @member.email = "bob@example"
-      @member.should_not be_valid
-      @member.errors[:email].should be_present
+      expect(@member).not_to be_valid
+      expect(@member.errors[:email]).to be_present
 
       # (Invalid) double-quote character in local part
       @member.email = "bob\"@example.com"
-      @member.should_not be_valid
-      @member.errors[:email].should be_present
+      expect(@member).not_to be_valid
+      expect(@member.errors[:email]).to be_present
 
       @member.email = "bob@example.com"
-      @member.should be_valid
+      expect(@member).to be_valid
     end
 
     it "requires a unique email address within the organisation" do
@@ -51,11 +51,11 @@ describe Member do
       @fellow_member = @organisation.members.make!(:email => "fellow@example.com")
 
       @member = @organisation.members.make(:email => "other@example.com")
-      @member.should be_valid
+      expect(@member).to be_valid
 
       @member.email = "fellow@example.com"
-      @member.should_not be_valid
-      @member.errors[:email].should be_present
+      expect(@member).not_to be_valid
+      expect(@member.errors[:email]).to be_present
     end
   end
 
@@ -66,21 +66,21 @@ describe Member do
 
     it "should not allow votes on members inducted after proposal was made" do
       new_member = @organisation.members.make!(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
-      lambda {
+      expect {
         new_member.cast_vote(:for, @proposal)
-      }.should raise_error(VoteError)
+      }.to raise_error(VoteError)
     end
 
     it "should not allow additional votes" do
-      lambda {
+      expect {
         @member.cast_vote(:against, @proposal)
-      }.should raise_error(VoteError)
+      }.to raise_error(VoteError)
     end
   end
 
   describe "creation" do
     it "should send a welcome email" do
-      MembersMailer.should_receive(:welcome_new_member).and_return(double('mail', :deliver => nil))
+      expect(MembersMailer).to receive(:welcome_new_member).and_return(double('mail', :deliver => nil))
       @organisation.members.create({
         :email=>'foo@example.com',
         :first_name=>'Klaus',
@@ -93,7 +93,7 @@ describe Member do
 
   describe "ejection" do
     it "should toggle active flag after ejection" do
-      lambda { @member.eject! }.should change(@member, :active?).from(true).to(false)
+      expect { @member.eject! }.to change(@member, :active?).from(true).to(false)
     end
 
     context 'when the member has a share account' do
@@ -112,9 +112,9 @@ describe Member do
 
   describe "finders" do
     it "should return only active members" do
-      @organisation.members.active.should == @organisation.members.all
+      expect(@organisation.members.active).to eq(@organisation.members.all)
       disabled = @organisation.members.make!(:state => 'inactive')
-      @organisation.members.active.should == @organisation.members.all - [disabled]
+      expect(@organisation.members.active).to eq(@organisation.members.all - [disabled])
     end
   end
 
@@ -123,27 +123,27 @@ describe Member do
       active = @organisation.members.make!(:state => 'active')
       inactive = @organisation.members.make!(:state => 'inactive')
       pending = @organisation.members.make!(:state => 'pending')
-      @organisation.members.active_and_pending.should include(active)
-      @organisation.members.active_and_pending.should include(pending)
-      @organisation.members.active_and_pending.should_not include(inactive)
+      expect(@organisation.members.active_and_pending).to include(active)
+      expect(@organisation.members.active_and_pending).to include(pending)
+      expect(@organisation.members.active_and_pending).not_to include(inactive)
     end
   end
 
   describe "name" do
     it "returns the full name for a member with first name and last name" do
-      Member.new(:first_name => "Bob", :last_name => "Smith").name.should == "Bob Smith"
+      expect(Member.new(:first_name => "Bob", :last_name => "Smith").name).to eq("Bob Smith")
     end
 
     it "returns the first name for a member with a first name only" do
-      Member.new(:first_name => "Bob").name.should == "Bob"
+      expect(Member.new(:first_name => "Bob").name).to eq("Bob")
     end
 
     it "returns the last name for a member with a last name only" do
-      Member.new(:last_name => "Smith").name.should == "Smith"
+      expect(Member.new(:last_name => "Smith").name).to eq("Smith")
     end
 
     it "returns nil for a member with no first name and no last name" do
-      Member.new.name.should be_nil
+      expect(Member.new.name).to be_nil
     end
   end
 
@@ -155,19 +155,19 @@ describe Member do
 
       it "saves a timestamp when terms are accepted" do
         @member.terms_and_conditions = '1'
-        @member.save.should be true
-        @member.terms_accepted_at.should_not be_nil
+        expect(@member.save).to be true
+        expect(@member.terms_accepted_at).not_to be_nil
       end
 
       it "fails validation when terms are not accepted" do
         @member.terms_and_conditions = '0'
-        @member.save.should be false
+        expect(@member.save).to be false
       end
 
       it "does not save a timestamp when terms_and_conditions is not passed" do
         @member.terms_and_conditions = nil
-        @member.save.should be true
-        @member.terms_accepted_at.should be_nil
+        expect(@member.save).to be true
+        expect(@member.terms_accepted_at).to be_nil
       end
     end
 
@@ -179,19 +179,19 @@ describe Member do
 
       it "does not alter the timestamp when terms_and_conditions is nil" do
         @member.terms_and_conditions = nil
-        @member.save.should be true
-        @member.terms_accepted_at.should == @original_timestamp
+        expect(@member.save).to be true
+        expect(@member.terms_accepted_at).to eq(@original_timestamp)
       end
 
       it "does not alter an existing timestamp when terms are accepted again" do
         @member.terms_and_conditions = '1'
-        @member.save.should be true
-        @member.terms_accepted_at.should == @original_timestamp
+        expect(@member.save).to be true
+        expect(@member.terms_accepted_at).to eq(@original_timestamp)
       end
 
       it "fails validation when terms are not accepted" do
         @member.terms_and_conditions = '0'
-        @member.save.should be false
+        expect(@member.save).to be false
       end
     end
   end
@@ -206,8 +206,8 @@ describe Member do
 
     describe "pending" do
       it "should list the pending members" do
-        Member.pending.count.should == 1
-        Member.pending.first.id.should == @pending_member.id
+        expect(Member.pending.count).to eq(1)
+        expect(Member.pending.first.id).to eq(@pending_member.id)
       end
     end
   end
@@ -220,14 +220,14 @@ describe Member do
     it "creates a resignation record" do
       previous_resignation_count = @member.resignations.count
       @member.resign!
-      @member.resignations.count.should == previous_resignation_count + 1
+      expect(@member.resignations.count).to eq(previous_resignation_count + 1)
     end
 
     it "sends a notification email to the other members" do
       other_members = @organisation.members.make!(3)
 
       other_members.each do |other_member|
-        MembersMailer.should_receive(:notify_resignation).with(other_member, @member).and_return(mock_email)
+        expect(MembersMailer).to receive(:notify_resignation).with(other_member, @member).and_return(mock_email)
       end
 
       @member.resign!
@@ -244,7 +244,7 @@ describe Member do
       @member.reload
       @member.ballots.reload
 
-      @member.ballots.should include(@ballot)
+      expect(@member.ballots).to include(@ballot)
     end
 
     it "has many tasks" do
@@ -256,7 +256,7 @@ describe Member do
       @member.reload
       @member.tasks.reload
 
-      @member.tasks.should include(@task)
+      expect(@member.tasks).to include(@task)
     end
 
     it "has one directorship" do
@@ -268,7 +268,7 @@ describe Member do
       @member.save!
       @member.reload
 
-      @member.directorship(true).should == @directorship
+      expect(@member.directorship(true)).to eq(@directorship)
     end
   end
 
@@ -281,7 +281,7 @@ describe Member do
       it "creates a task for the secretary" do
         @secretary = @organisation.members.make!(:secretary)
         expect {@member = @organisation.members.make!(:pending)}.to change{@secretary.tasks.count}.by(1)
-        @secretary.tasks.last.subject.should == @member
+        expect(@secretary.tasks.last.subject).to eq(@member)
       end
     end
   end
@@ -289,18 +289,18 @@ describe Member do
   it "records when induction happened" do
     member = Member.make!(:pending)
     member.induct!
-    member.inducted_at.should be_present
+    expect(member.inducted_at).to be_present
   end
 
   it "returns the count of shares owned by this member" do
     member = Member.make!
-    member.shares_count.should == 0
+    expect(member.shares_count).to eq(0)
   end
 
   it "has an organisation_name attribute" do
     member = Member.make
     organisation = mock_model(Organisation, :name => 'Test org')
-    member.stub(:organisation).and_return(organisation)
+    allow(member).to receive(:organisation).and_return(organisation)
     expect(member.organisation_name).to eq('Test org')
   end
 

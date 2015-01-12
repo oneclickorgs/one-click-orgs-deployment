@@ -11,7 +11,7 @@ def default_organisation(attributes={})
   
   unless @organisation
     @organisation = Organisation.make!({:state => 'active'}.merge(attributes))
-    Organisation.stub(:find_by_host).and_return(@organisation)
+    allow(Organisation).to receive(:find_by_host).and_return(@organisation)
   end
   @organisation
 end
@@ -21,7 +21,7 @@ def default_association(attributes={})
   
   unless @organisation
     @organisation = Association.make!({:state => 'active'}.merge(attributes))
-    Organisation.stub(:find_by_host).and_return(@organisation)
+    allow(Organisation).to receive(:find_by_host).and_return(@organisation)
   end
   @organisation
 end
@@ -31,7 +31,7 @@ def default_company(attributes={})
   
   unless @organisation
     @organisation = Company.make!({:state => 'active'}.merge(attributes))
-    Organisation.stub(:find_by_host).and_return(@organisation)
+    allow(Organisation).to receive(:find_by_host).and_return(@organisation)
   end
   @organisation
 end
@@ -86,7 +86,7 @@ def set_permission!(user, perm, value)
 end
 
 def passed_proposal(p, args={})
-  p.stub(:passed?).and_return(true)
+  allow(p).to receive(:passed?).and_return(true)
   p.parameters = args
   lambda { p.enact! }
 end

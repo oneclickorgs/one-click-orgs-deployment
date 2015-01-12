@@ -23,34 +23,34 @@ describe "annual_general_meetings/new" do
 
   it "renders a list of directors to retire" do
     render
-    rendered.should have_selector('ul.directors') do |ul|
-      ul.should contain("Sally Baker")
-      ul.should contain("John Smith")
+    expect(rendered).to have_selector('ul.directors') do |ul|
+      expect(ul).to contain("Sally Baker")
+      expect(ul).to contain("John Smith")
     end
   end
 
   it "renders an 'electronic_nominations' field" do
     render
-    rendered.should have_selector(:input, :name => 'annual_general_meeting[electronic_nominations]')
+    expect(rendered).to have_selector(:input, :name => 'annual_general_meeting[electronic_nominations]')
   end
 
   it "renders a date select for nominations_closing_date" do
     render
-    rendered.should have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(1i)]')
-    rendered.should have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(2i)]')
-    rendered.should have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(3i)]')
+    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(1i)]')
+    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(2i)]')
+    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(3i)]')
   end
 
   it "renders an 'electronic_voting' field" do
     render
-    rendered.should have_selector(:input, :name => 'annual_general_meeting[electronic_voting]')
+    expect(rendered).to have_selector(:input, :name => 'annual_general_meeting[electronic_voting]')
   end
 
   it "renders a date select for voting_closing_date" do
     render
-    rendered.should have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(1i)]')
-    rendered.should have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(2i)]')
-    rendered.should have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(3i)]')
+    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(1i)]')
+    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(2i)]')
+    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(3i)]')
   end
 
 end

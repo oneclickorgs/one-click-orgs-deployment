@@ -15,68 +15,68 @@ describe "layouts/application" do
         )
 
         assign(:current_organisation, @organisation)
-        view.stub(:current_organisation).and_return(@organisation)
-        view.stub(:co).and_return(@organisation)
+        allow(view).to receive(:current_organisation).and_return(@organisation)
+        allow(view).to receive(:co).and_return(@organisation)
         install_organisation_resolver(@organisation)
 
         @user = mock_model(Member, :name => "Lucy Baker", :inducted_at => 2.days.ago)
-        view.stub(:current_user).and_return(@user)
-        controller.stub(:current_user).and_return(@user)
+        allow(view).to receive(:current_user).and_return(@user)
+        allow(controller).to receive(:current_user).and_return(@user)
 
-        @user.stub(:has_permission).with(:freeform_proposal).and_return(false)
-        @user.stub(:has_permission).with(:membership_proposal).and_return(false)
-        @user.stub(:has_permission).with(:constitution_proposal).and_return(false)
-        @user.stub(:has_permission).with(:found_association_proposal).and_return(false)
-        @user.stub(:has_permission).with(:vote).and_return(false)
-        @user.stub(:organisation).and_return(@organisation)
+        allow(@user).to receive(:has_permission).with(:freeform_proposal).and_return(false)
+        allow(@user).to receive(:has_permission).with(:membership_proposal).and_return(false)
+        allow(@user).to receive(:has_permission).with(:constitution_proposal).and_return(false)
+        allow(@user).to receive(:has_permission).with(:found_association_proposal).and_return(false)
+        allow(@user).to receive(:has_permission).with(:vote).and_return(false)
+        allow(@user).to receive(:organisation).and_return(@organisation)
       end
 
       it "should show a link to let users log out" do
         render
-        rendered.should have_selector('a[href="/logout"]')
+        expect(rendered).to have_selector('a[href="/logout"]')
       end
 
       context "when assocation is pending" do
         before(:each) do
-          @organisation.stub(:pending?).and_return(true)
-          @organisation.stub(:can_hold_founding_vote?).and_return(true)
+          allow(@organisation).to receive(:pending?).and_return(true)
+          allow(@organisation).to receive(:can_hold_founding_vote?).and_return(true)
         end
 
         context "when user is the founder" do
           before(:each) do
-            @members_association.stub(:first).and_return(@user)
-            @user.stub(:has_permission).with(:member_proposal).and_return(true)
-            @user.stub(:has_permission).with(:found_association_proposal).and_return(true)
+            allow(@members_association).to receive(:first).and_return(@user)
+            allow(@user).to receive(:has_permission).with(:member_proposal).and_return(true)
+            allow(@user).to receive(:has_permission).with(:found_association_proposal).and_return(true)
           end
 
           it "displays a button to hold the founding vote" do
             render
-            rendered.should have_selector('form', :action => '/found_association_proposals', :id => 'start_founding_vote_form') do |form|
-              form.should have_selector('input', :type => 'submit')
+            expect(rendered).to have_selector('form', :action => '/found_association_proposals', :id => 'start_founding_vote_form') do |form|
+              expect(form).to have_selector('input', :type => 'submit')
             end
           end
 
           context "when association is ready to hold founding vote" do
             before(:each) do
-              @organisation.stub(:can_hold_founding_vote?).and_return(true)
+              allow(@organisation).to receive(:can_hold_founding_vote?).and_return(true)
             end
 
             it "sets up a lightbox for the start_founding_vote_confirmation message" do
               render
-              rendered.should have_selector("script[src*='start_founding_vote_confirmation.js']")
-              rendered.should have_selector('#start_founding_vote_confirmation_lightbox')
+              expect(rendered).to have_selector("script[src*='start_founding_vote_confirmation.js']")
+              expect(rendered).to have_selector('#start_founding_vote_confirmation_lightbox')
             end
           end
 
           context "when association is not yet ready to hold founding vote" do
             before(:each) do
-              @organisation.stub(:can_hold_founding_vote?).and_return(false)
+              allow(@organisation).to receive(:can_hold_founding_vote?).and_return(false)
             end
 
             it "sets up a lightbox for the start_founding_vote_alert message" do
               render
-              rendered.should have_selector("script[src*='start_founding_vote_alert.js']")
-              rendered.should have_selector('#start_founding_vote_alert_lightbox')
+              expect(rendered).to have_selector("script[src*='start_founding_vote_alert.js']")
+              expect(rendered).to have_selector('#start_founding_vote_alert_lightbox')
             end
           end
         end
@@ -84,8 +84,8 @@ describe "layouts/application" do
 
       context "when association is proposed" do
         before(:each) do
-          @organisation.stub(:proposed?).and_return(true)
-          @organisation.stub(:pending?).and_return(false)
+          allow(@organisation).to receive(:proposed?).and_return(true)
+          allow(@organisation).to receive(:pending?).and_return(false)
 
           @found_association_proposal = mock_model(FoundAssociationProposal,
             :close_date => 3.days.from_now,
@@ -94,37 +94,37 @@ describe "layouts/application" do
           )
 
           @found_association_proposals_association = double('found association proposals association')
-          @organisation.stub(:found_association_proposals).and_return(@found_association_proposals_association)
-          @found_association_proposals_association.stub(:last).and_return(@found_association_proposal)
+          allow(@organisation).to receive(:found_association_proposals).and_return(@found_association_proposals_association)
+          allow(@found_association_proposals_association).to receive(:last).and_return(@found_association_proposal)
 
-          @user.stub(:eligible_to_vote?).and_return(true)
-          @user.stub(:has_permission).with(:vote).and_return(true)
+          allow(@user).to receive(:eligible_to_vote?).and_return(true)
+          allow(@user).to receive(:has_permission).with(:vote).and_return(true)
         end
 
         context "when user has not voted yet" do
           before(:each) do
-            @found_association_proposal.stub(:vote_by).and_return(false)
+            allow(@found_association_proposal).to receive(:vote_by).and_return(false)
           end
 
           it "displays support and oppose buttons in the overlay" do
             render
-            rendered.should have_selector('#overlay') do |overlay|
-              overlay.should have_selector("form[action*='/votes/vote_for/#{@found_association_proposal.id}']")
-              overlay.should have_selector("form[action*='/votes/vote_against/#{@found_association_proposal.id}']")
+            expect(rendered).to have_selector('#overlay') do |overlay|
+              expect(overlay).to have_selector("form[action*='/votes/vote_for/#{@found_association_proposal.id}']")
+              expect(overlay).to have_selector("form[action*='/votes/vote_against/#{@found_association_proposal.id}']")
             end
           end
         end
 
         context "when user has voted already" do
           before(:each) do
-            @found_association_proposal.stub(:vote_by).and_return(true)
+            allow(@found_association_proposal).to receive(:vote_by).and_return(true)
           end
 
           it "does not display support and oppose buttons in the overlay" do
             render
-            rendered.should have_selector('#overlay') do |overlay|
-              overlay.should_not have_selector("form[action*='/votes/vote_for']")
-              overlay.should_not have_selector("form[action*='/votes/vote_against']")
+            expect(rendered).to have_selector('#overlay') do |overlay|
+              expect(overlay).not_to have_selector("form[action*='/votes/vote_for']")
+              expect(overlay).not_to have_selector("form[action*='/votes/vote_against']")
             end
           end
         end

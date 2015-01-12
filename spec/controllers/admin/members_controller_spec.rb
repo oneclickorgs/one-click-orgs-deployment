@@ -27,7 +27,7 @@ describe Admin::MembersController do
     let (:member) {mock_model(Member)}
 
     before(:each) do
-      Member.stub(:find).and_return(member)
+      allow(Member).to receive(:find).and_return(member)
     end
 
     def get_edit
@@ -36,7 +36,7 @@ describe Admin::MembersController do
 
     it "is successful" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
