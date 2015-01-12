@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Association founding process" do
   describe "Found Association Proposal decision email" do

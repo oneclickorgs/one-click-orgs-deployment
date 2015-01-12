@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "proposal_mailer/notify_creation" do
   before(:each) do

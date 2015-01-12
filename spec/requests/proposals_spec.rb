@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module ProposalsSpecHelper
   def a_proposal_exists

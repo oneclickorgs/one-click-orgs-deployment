@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FoundAssociationProposal do
   it "uses the Founding voting system" do

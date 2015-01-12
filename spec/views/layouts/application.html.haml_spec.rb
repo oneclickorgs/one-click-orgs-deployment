@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "layouts/application" do
   context "when current organisation is an association" do

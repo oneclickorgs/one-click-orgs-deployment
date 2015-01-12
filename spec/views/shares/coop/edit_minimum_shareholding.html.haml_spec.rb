@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'shares/coop/edit_minimum_shareholding' do
   it "renders a text field for the new minimum shareholding" do

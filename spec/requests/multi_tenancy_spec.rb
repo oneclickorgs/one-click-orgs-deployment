@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Multi-tenancy" do
   describe "when the app is newly installed" do

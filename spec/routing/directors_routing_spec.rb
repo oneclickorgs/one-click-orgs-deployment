@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "routing to directors" do
   it "routes POST /directors/1/stand_down to directors#stand_down" do

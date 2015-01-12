@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "miscellaneous requests" do
   describe "internally-generated 404" do

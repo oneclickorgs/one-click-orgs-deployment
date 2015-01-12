@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'change_meeting_notice_period_resolutions/new' do
 

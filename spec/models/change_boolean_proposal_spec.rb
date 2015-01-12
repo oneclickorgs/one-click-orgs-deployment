@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ChangeBooleanProposal do
   it "has a decision notification message" do

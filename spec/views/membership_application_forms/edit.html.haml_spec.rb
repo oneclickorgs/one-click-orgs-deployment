@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'membership_application_forms/edit' do
   it "renders a field for the membership application form's custom text" do
