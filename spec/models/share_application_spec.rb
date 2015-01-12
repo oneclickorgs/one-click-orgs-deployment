@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ShareApplication do
 
   it "implements #persisted?" do
-    ShareApplication.new.persisted?.should be_false
+    ShareApplication.new.persisted?.should be false
   end
 
   it "builds a share transaction if not given one" do

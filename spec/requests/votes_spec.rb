@@ -11,13 +11,13 @@ describe "everything" do
     it "should cast a 'for' vote" do
       post(vote_for_path(:id => @proposal.id), {:return_to => '/foo'})
       response.should redirect_to '/foo'
-      @proposal.vote_by(@user).for?.should be_true
+      @proposal.vote_by(@user).for?.should be true
     end
   
     it "should cast an 'against' vote" do
       post(vote_against_path(:id => @proposal.id), {:return_to => '/foo'})
       response.should redirect_to '/foo'
-      @proposal.vote_by(@user).for?.should be_false
+      @proposal.vote_by(@user).for?.should be false
     end
   end
   

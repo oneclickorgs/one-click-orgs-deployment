@@ -155,18 +155,18 @@ describe Member do
 
       it "saves a timestamp when terms are accepted" do
         @member.terms_and_conditions = '1'
-        @member.save.should be_true
+        @member.save.should be true
         @member.terms_accepted_at.should_not be_nil
       end
 
       it "fails validation when terms are not accepted" do
         @member.terms_and_conditions = '0'
-        @member.save.should be_false
+        @member.save.should be false
       end
 
       it "does not save a timestamp when terms_and_conditions is not passed" do
         @member.terms_and_conditions = nil
-        @member.save.should be_true
+        @member.save.should be true
         @member.terms_accepted_at.should be_nil
       end
     end
@@ -179,19 +179,19 @@ describe Member do
 
       it "does not alter the timestamp when terms_and_conditions is nil" do
         @member.terms_and_conditions = nil
-        @member.save.should be_true
+        @member.save.should be true
         @member.terms_accepted_at.should == @original_timestamp
       end
 
       it "does not alter an existing timestamp when terms are accepted again" do
         @member.terms_and_conditions = '1'
-        @member.save.should be_true
+        @member.save.should be true
         @member.terms_accepted_at.should == @original_timestamp
       end
 
       it "fails validation when terms are not accepted" do
         @member.terms_and_conditions = '0'
-        @member.save.should be_false
+        @member.save.should be false
       end
     end
   end
@@ -308,22 +308,22 @@ describe Member do
     let(:member) {Member.new(:email => "bob@example.com", :address => "1 High Street", :phone => "01234 567 890")}
 
     it "returns true when all contacts details are present" do
-      expect(member.contact_details_present?).to be_true
+      expect(member.contact_details_present?).to be true
     end
 
     it "returns false if the email address is missing" do
       member.email = ''
-      expect(member.contact_details_present?).to be_false
+      expect(member.contact_details_present?).to be false
     end
 
     it "returns false if the address is missing" do
       member.address = ''
-      expect(member.contact_details_present?).to be_false
+      expect(member.contact_details_present?).to be false
     end
 
     it "returns false if the phone is missing" do
       member.phone = ''
-      expect(member.contact_details_present?).to be_false
+      expect(member.contact_details_present?).to be false
     end
   end
 end

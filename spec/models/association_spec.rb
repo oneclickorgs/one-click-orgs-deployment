@@ -36,23 +36,23 @@ describe Association do
     end
     
     it "returns false unless the organisation is pending" do
-      @association.can_hold_founding_vote?.should be_true
+      @association.can_hold_founding_vote?.should be true
       @association.propose!
-      @association.can_hold_founding_vote?.should be_false
+      @association.can_hold_founding_vote?.should be false
     end
     
     it "returns true when there are at least three members" do
       @association.members.destroy_all
       @association.members.make!(3)
-      @association.reload.can_hold_founding_vote?.should be_true
+      @association.reload.can_hold_founding_vote?.should be true
       
       @association.members.destroy_all
       @association.members.make!(2)
-      @association.reload.can_hold_founding_vote?.should be_false
+      @association.reload.can_hold_founding_vote?.should be false
       
       @association.members.destroy_all
       @association.members.make!(5)
-      @association.reload.can_hold_founding_vote?.should be_true
+      @association.reload.can_hold_founding_vote?.should be true
     end
   end
   

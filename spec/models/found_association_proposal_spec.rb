@@ -16,12 +16,12 @@ describe FoundAssociationProposal do
 
     it "fails on create if the association is not ready for a founding vote" do
       @organisation.should_receive(:can_hold_founding_vote?).and_return(false)
-      @proposal.save.should be_false
+      @proposal.save.should be false
     end
 
     it "succeeds on create if the association is ready for a founding vote" do
       @organisation.should_receive(:can_hold_founding_vote?).and_return(true)
-      @proposal.save.should be_true
+      @proposal.save.should be true
     end
 
     it "succeeds on update regardless of readiness of association" do
@@ -29,7 +29,7 @@ describe FoundAssociationProposal do
       @proposal.save!
 
       @organisation.stub(:can_hold_founding_vote?).and_return(false)
-      @proposal.save.should be_true
+      @proposal.save.should be true
     end
   end
 

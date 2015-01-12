@@ -5,7 +5,7 @@ describe Officership do
     it "has a certification attribute" do
       @officership = Officership.new
       expect {@officership.certification = '0'}.to_not raise_error
-      @officership.certification.should be_false
+      @officership.certification.should be false
     end
   end
 

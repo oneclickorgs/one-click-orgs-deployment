@@ -38,7 +38,7 @@ describe ConstitutionProposalBundle do
       end
 
       it "saves successfully" do
-        cpb.save.should be_true
+        cpb.save.should be true
       end
 
       it "builds draft resolutions" do
@@ -105,7 +105,7 @@ describe ConstitutionProposalBundle do
       end
 
       it "saves successfully" do
-        cpb.save.should be_true
+        cpb.save.should be true
       end
 
       it "builds resolution proposals" do

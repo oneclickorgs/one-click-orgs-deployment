@@ -97,11 +97,11 @@ describe Meeting do
     let(:yesterday) {Time.now.utc.advance(:days => -1)}
 
     it "is true when meeting happened yesterday" do
-      Meeting.new(:happened_on => yesterday).past?.should be_true
+      Meeting.new(:happened_on => yesterday).past?.should be true
     end
 
     it "is false when the meeting is happening today" do
-      Meeting.new(:happened_on => today).past?.should be_false
+      Meeting.new(:happened_on => today).past?.should be false
     end
   end
 

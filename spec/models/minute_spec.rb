@@ -13,11 +13,11 @@ describe Minute do
     let(:minute) {Minute.new(:meeting => meeting)}
 
     it "delegates #persisted? to the meeting" do
-      minute.persisted?.should be_false
+      minute.persisted?.should be false
 
       meeting.stub(:persisted?).and_return(true)
 
-      minute.persisted?.should be_true
+      minute.persisted?.should be true
     end
 
     it "delegates happened_on to the meeting" do

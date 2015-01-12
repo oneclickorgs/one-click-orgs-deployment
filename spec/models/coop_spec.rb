@@ -530,7 +530,7 @@ describe Coop do
       coop.clauses.set_integer!(:reg_form_signatories_1, 2)
       coop.clauses.where(:name => 'reg_form_signatories_2').destroy_all
 
-      coop.registration_form_filled?.should be_false
+      coop.registration_form_filled?.should be_falsey
     end
 
     it "returns true when three signatories have been chosen" do
@@ -538,7 +538,7 @@ describe Coop do
       coop.clauses.set_integer!(:reg_form_signatories_1, 2)
       coop.clauses.set_integer!(:reg_form_signatories_2, 3)
 
-      coop.registration_form_filled?.should be_true
+      coop.registration_form_filled?.should be true
     end
   end
 
@@ -549,7 +549,7 @@ describe Coop do
       expect{coop.reg_form_money_laundering_agreement = 1}.to_not raise_error
       coop.save!
       coop.reload
-      expect(coop.reg_form_money_laundering_agreement).to be_true
+      expect(coop.reg_form_money_laundering_agreement).to be true
     end
 
     it "has attributes for the main contact" do
@@ -682,7 +682,7 @@ describe Coop do
 
     it "returns false if the signatories' and secretary's contact details are not present" do
       coop.stub(:signatories_and_secretary_contact_details_present?).and_return(false)
-      expect(coop.can_propose?).to be_false
+      expect(coop.can_propose?).to be false
     end
   end
 
@@ -702,17 +702,17 @@ describe Coop do
 
     describe "#signatories_and_secretary_contact_details_present?" do
       it "returns true if all the contact details are present" do
-        expect(coop.signatories_and_secretary_contact_details_present?).to be_true
+        expect(coop.signatories_and_secretary_contact_details_present?).to be true
       end
 
       it "returns false if the secretary's contact details are missing" do
         secretary.stub(:contact_details_present?).and_return(false)
-        expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+        expect(coop.signatories_and_secretary_contact_details_present?).to be false
       end
 
       it "returns false if any one of the signatories' contact details are missing" do
         signatories[1].stub(:contact_details_present?).and_return(false)
-        expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+        expect(coop.signatories_and_secretary_contact_details_present?).to be false
       end
     end
 

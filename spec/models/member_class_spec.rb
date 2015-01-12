@@ -9,20 +9,20 @@ describe MemberClass do
     
     describe "checking permissions" do
       it "returns false when the permission clause does not exist" do
-        @member_class.has_permission(:whatever).should be_false
+        @member_class.has_permission(:whatever).should be false
       end
       
       it "looks up the correct permissions clause" do
         @organisation.clauses.create(:name => 'permission_clown_cartwheel', :boolean_value => true)
         
-        @member_class.has_permission(:cartwheel).should be_true
+        @member_class.has_permission(:cartwheel).should be true
       end
     end
     
     describe "setting permissions" do
       it "sets the correct permissions clause" do
         @member_class.set_permission!(:juggle, true)
-        @organisation.clauses.get_boolean(:permission_clown_juggle).should be_true
+        @organisation.clauses.get_boolean(:permission_clown_juggle).should be true
       end
     end
     

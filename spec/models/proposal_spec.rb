@@ -116,7 +116,7 @@ describe Proposal do
     
     it "should list closed, rejected proposals as 'failed proposal's" do
       proposal = @organisation.proposals.make!(:state => 'rejected')
-      proposal.open?.should be_false
+      proposal.open?.should be false
       
       proposal.to_event[:kind].should == :failed_proposal
     end

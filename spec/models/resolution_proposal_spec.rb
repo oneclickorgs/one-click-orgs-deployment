@@ -116,7 +116,7 @@ describe ResolutionProposal do
   end
 
   it "does not cast an automatic support vote for the proposer" do
-    ResolutionProposal.new.automatic_proposer_support_vote?.should be_false
+    ResolutionProposal.new.automatic_proposer_support_vote?.should be false
   end
 
   describe "tasks" do

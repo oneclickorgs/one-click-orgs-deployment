@@ -50,12 +50,12 @@ describe ChangeMeetingNoticePeriodResolution do
 
     it "returns true when the notice period is being increased" do
       @change_meeting_notice_period_resolution.meeting_notice_period = 15
-      @change_meeting_notice_period_resolution.notice_period_increased?.should be_true
+      @change_meeting_notice_period_resolution.notice_period_increased?.should be true
     end
 
     it "returns false when the notice period is being decreased" do
       @change_meeting_notice_period_resolution.meeting_notice_period = 13
-      @change_meeting_notice_period_resolution.notice_period_increased?.should be_false
+      @change_meeting_notice_period_resolution.notice_period_increased?.should be false
     end
   end
 

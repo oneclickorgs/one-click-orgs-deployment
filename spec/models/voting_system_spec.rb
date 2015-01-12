@@ -16,19 +16,19 @@ describe VotingSystems do
   end
   
   def should_pass(proposal)
-     @system.passed?(proposal).should be_true
+     @system.passed?(proposal).should be true
   end
 
   def should_not_pass(proposal)
-     @system.passed?(proposal).should be_false
+     @system.passed?(proposal).should be false
   end
   
   def should_close_early(proposal)
-     @system.can_be_closed_early?(proposal).should be_true
+     @system.can_be_closed_early?(proposal).should be true
   end
 
   def should_not_close_early(proposal)
-     @system.can_be_closed_early?(proposal).should be_false
+     @system.can_be_closed_early?(proposal).should be false
   end
 
   describe VotingSystems do

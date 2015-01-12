@@ -36,7 +36,7 @@ describe ConstitutionsController do
           @organisation.stub(:constitution).and_return(constitution)
 
           get_edit
-          assigns[:allow_editing].should be_true
+          assigns[:allow_editing].should be true
         end
       end
 
@@ -49,7 +49,7 @@ describe ConstitutionsController do
 
         it "allows editing" do
           get_edit
-          assigns[:allow_editing].should be_true
+          assigns[:allow_editing].should be true
         end
 
         it "builds a constitution_proposal_bundle" do

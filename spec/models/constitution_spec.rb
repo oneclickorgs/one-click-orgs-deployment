@@ -143,7 +143,7 @@ describe Constitution do
         @constitution.stub(:user_members).and_return(true)
         @constitution.stub(:employee_members).and_return(true)
         document = @constitution.document
-        expect(document.choices[:multiple_board_classes]).to be_true
+        expect(document.choices[:multiple_board_classes]).to be true
       end
 
       it "sets multiple_board_classes to false if only one board class is selected" do
@@ -153,7 +153,7 @@ describe Constitution do
         @constitution.stub(:producer_members).and_return(false)
         @constitution.stub(:consumer_members).and_return(false)
         document = @constitution.document
-        expect(document.choices[:multiple_board_classes]).to be_false
+        expect(document.choices[:multiple_board_classes]).to be false
       end
     end
 
