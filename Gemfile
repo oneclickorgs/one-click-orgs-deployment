@@ -70,6 +70,7 @@ end
 
 group :development, :test do
   gem "rspec-rails", "~>2.99.0"
+  gem 'rspec-activemodel-mocks'
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
   gem "faker", '~>1.4.2'
