@@ -14,12 +14,12 @@ describe "one_click/_resignation" do
   
   it "displays the name of the member" do
     render
-    expect(rendered).to contain(@member_name)
+    expect(rendered).to include(@member_name)
   end
   
   it "displays the word 'resigned'" do
     render
-    expect(rendered).to contain('resigned')
+    expect(rendered).to include('resigned')
   end
   
 end

@@ -11,7 +11,7 @@ describe "directorships/new" do
 
   it "renders the form partial" do
     render
-    expect(rendered).to contain("directorship form partial")
+    expect(rendered).to include("directorship form partial")
   end
 
 end

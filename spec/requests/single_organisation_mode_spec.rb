@@ -74,7 +74,7 @@ describe "Single-organisation mode" do
 
       get 'http://oneclickorgs.com/'
       expect(response).to be_successful
-      expect(response.body).to contain "Voting & proposals"
+      expect(response.body).to include "Voting & proposals"
     end
 
     # TODO: More tests needed here?

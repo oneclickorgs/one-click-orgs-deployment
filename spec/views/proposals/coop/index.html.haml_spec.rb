@@ -33,7 +33,7 @@ describe "proposals/coop/index" do
 
     it "renders the voting partial for each open proposal" do
       render
-      expect(rendered).to contain("vote partial")
+      expect(rendered).to include("vote partial")
     end
   end
 
@@ -50,7 +50,7 @@ describe "proposals/coop/index" do
 
     it "includes the description in the list of draft resolutions" do
       render
-      expect(rendered).to contain('Draft proposal description')
+      expect(rendered).to include('Draft proposal description')
     end
 
     it "renders a button to create a resolution" do

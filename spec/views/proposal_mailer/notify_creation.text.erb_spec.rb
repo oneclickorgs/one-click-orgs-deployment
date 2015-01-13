@@ -11,6 +11,6 @@ describe "proposal_mailer/notify_creation" do
   
   it "should not HTML-escape the proposal details" do
     render
-    expect(rendered).to contain "We're running low & they're cheap."
+    expect(rendered).to include "We're running low & they're cheap."
   end
 end

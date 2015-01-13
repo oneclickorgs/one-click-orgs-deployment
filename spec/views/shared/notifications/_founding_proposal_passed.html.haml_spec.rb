@@ -25,7 +25,7 @@ describe 'shared/notifications/_founding_proposal_passed' do
 
   it "should not list ejected members" do
     render
-    expect(rendered).not_to contain(ejected_member.name)
+    expect(rendered).not_to include(ejected_member.name)
   end
 
   it "renders the date the founding vote closed" do

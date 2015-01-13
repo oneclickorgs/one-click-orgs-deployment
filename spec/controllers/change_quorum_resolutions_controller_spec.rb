@@ -85,7 +85,7 @@ describe ChangeQuorumResolutionsController do
     it "sets a notice flash mentioning the resolution" do
       post_create
       expect(flash[:notice]).to be_present
-      expect(flash[:notice]).to contain('resolution')
+      expect(flash[:notice]).to include('resolution')
     end
   end
 
