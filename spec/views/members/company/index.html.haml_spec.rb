@@ -51,21 +51,21 @@ describe "members/company/index" do
 
   it "renders a form-reveal button 'Add a new director'" do
     render
-    expect(rendered).to have_selector(:input, :type => 'button', :value => 'Add a new director', :class => 'button-form-show')
+    expect(rendered).to have_selector("input[type='button'][value='Add a new director'][class='button-form-show']")
   end
 
   it "renders a new director form" do
     render
-    expect(rendered).to have_selector(:form, :action => '/directors') do |form|
-      expect(form).to have_selector(:input, :type => 'email', :name => 'director[email]')
-      expect(form).to have_selector(:input, :type => 'text', :name => 'director[first_name]')
-      expect(form).to have_selector(:input, :type => 'text', :name => 'director[last_name]')
-      expect(form).to have_selector(:select, :name => 'director[elected_on(1i)]')
-      expect(form).to have_selector(:select, :name => 'director[elected_on(2i)]')
-      expect(form).to have_selector(:select, :name => 'director[elected_on(3i)]')
-      expect(form).to have_selector(:input, :type => 'checkbox', :name => 'director[certification]')
-      expect(form).to have_selector(:input, :type => 'checkbox', :name => 'director[age_certification]')
-      expect(form).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("form[action='/directors']") do |form|
+      expect(form).to have_selector("input[type='email'][name='director[email]']")
+      expect(form).to have_selector("input[type='text'][name='director[first_name]']")
+      expect(form).to have_selector("input[type='text'][name='director[last_name]']")
+      expect(form).to have_selector("select[name='director[elected_on(1i)]']")
+      expect(form).to have_selector("select[name='director[elected_on(2i)]']")
+      expect(form).to have_selector("select[name='director[elected_on(3i)]']")
+      expect(form).to have_selector("input[type='checkbox'][name='director[certification]']")
+      expect(form).to have_selector("input[type='checkbox'][name='director[age_certification]']")
+      expect(form).to have_selector("input[type='submit']")
     end
   end
 

@@ -10,13 +10,13 @@ describe 'organisations/new' do
 
   it 'renders links to the new action for each enabled organisation type' do
     render
-    expect(rendered).to have_selector(:a, href: '/associations/new')
-    expect(rendered).to have_selector(:a, href: '/coops/new')
+    expect(rendered).to have_selector("a[href='/associations/new']")
+    expect(rendered).to have_selector("a[href='/coops/new']")
   end
 
   it 'does not render links to the new actions for disabled organisation types' do
     render
-    expect(rendered).to_not have_selector(:a, href: '/companies/new')
+    expect(rendered).to_not have_selector("a[href='/companies/new']")
   end
 
 end

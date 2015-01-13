@@ -26,38 +26,38 @@ describe 'minutes/new' do
 
   it "renders a select field for the type of minute" do
     render
-    expect(rendered).to have_selector(:select, :name => 'minute[meeting_class]') do |select|
-      expect(select).to have_selector(:option, :content => "General Meeting", :value => "GeneralMeeting")
-      expect(select).to have_selector(:option, :content => "Annual General Meeting", :value => "AnnualGeneralMeeting")
-      expect(select).to have_selector(:option, :content => "Board Meeting", :value => "BoardMeeting")
+    expect(rendered).to have_selector("select[name='minute[meeting_class]']") do |select|
+      expect(select).to have_selector("option[value='GeneralMeeting']", text: "General Meeting")
+      expect(select).to have_selector("option[value='AnnualGeneralMeeting']", text: "Annual General Meeting")
+      expect(select).to have_selector("option[value='BoardMeeting']", text: "Board Meeting")
     end
   end
 
   it "renders a field to select the date of the minute" do
     render
-    expect(rendered).to have_selector(:select, :name => 'minute[happened_on(1i)]')
-    expect(rendered).to have_selector(:select, :name => 'minute[happened_on(2i)]')
-    expect(rendered).to have_selector(:select, :name => 'minute[happened_on(3i)]')
+    expect(rendered).to have_selector("select[name='minute[happened_on(1i)]']")
+    expect(rendered).to have_selector("select[name='minute[happened_on(2i)]']")
+    expect(rendered).to have_selector("select[name='minute[happened_on(3i)]']")
   end
 
   it "renders a minutes field" do
     render
-    expect(rendered).to have_selector(:textarea, :name => 'minute[minutes]')
+    expect(rendered).to have_selector("textarea[name='minute[minutes]']")
   end
 
   it "renders a checkbox for each member" do
     render
 
-    expect(rendered).to have_selector(:input, :type => 'checkbox', :name => 'minute[participant_ids][1]')
-    expect(rendered).to have_selector(:label, :for => 'minute_participant_ids_1', :content => "John Smith")
+    expect(rendered).to have_selector("input[type='checkbox'][name='minute[participant_ids][1]']")
+    expect(rendered).to have_selector("label[for='minute_participant_ids_1']", :text => "John Smith")
 
-    expect(rendered).to have_selector(:input, :type => 'checkbox', :name => 'minute[participant_ids][2]')
-    expect(rendered).to have_selector(:label, :for => 'minute_participant_ids_2', :content => "Sally Baker")
+    expect(rendered).to have_selector("input[type='checkbox'][name='minute[participant_ids][2]']")
+    expect(rendered).to have_selector("label[for='minute_participant_ids_2']", :text => "Sally Baker")
   end
 
   it "renders a submit button" do
     render
-    expect(rendered).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
 end

@@ -43,23 +43,23 @@ describe "one_click/dashboard" do
     describe "new meeting form" do
       it "renders a form-reveal button 'Record minutes'" do
         render
-        expect(rendered).to have_selector(:input, :type => 'button', :value => 'Record minutes', :class => 'button-form-show')
+        expect(rendered).to have_selector("input[type='button'][value='Record minutes'][class='button-form-show']")
       end
 
       it "renders a new meeting form" do
         render
-        expect(rendered).to have_selector(:form, :action => '/meetings') do |form|
-          expect(form).to have_selector(:select, :name => 'meeting[happened_on(1i)]')
-          expect(form).to have_selector(:select, :name => 'meeting[happened_on(2i)]')
-          expect(form).to have_selector(:select, :name => 'meeting[happened_on(3i)]')
+        expect(rendered).to have_selector("form[action='/meetings']") do |form|
+          expect(form).to have_selector("select[name='meeting[happened_on(1i)]']")
+          expect(form).to have_selector("select[name='meeting[happened_on(2i)]']")
+          expect(form).to have_selector("select[name='meeting[happened_on(3i)]']")
 
-          expect(form).to have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][1]', :value => '1')
-          expect(form).to have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][2]', :value => '1')
-          expect(form).to have_selector(:input, :type => 'checkbox', :name => 'meeting[participant_ids][3]', :value => '1')
+          expect(form).to have_selector("input[type='checkbox'][name='meeting[participant_ids][1]', :value => '1']")
+          expect(form).to have_selector("input[type='checkbox'][name='meeting[participant_ids][2]', :value => '1']")
+          expect(form).to have_selector("input[type='checkbox'][name='meeting[participant_ids][3]', :value => '1']")
 
-          expect(form).to have_selector(:textarea, :name => 'meeting[minutes]')
+          expect(form).to have_selector("textarea[name='meeting[minutes]']")
 
-          expect(form).to have_selector(:input, :type => 'submit')
+          expect(form).to have_selector("input[type='submit']")
         end
       end
     end
@@ -72,7 +72,7 @@ describe "one_click/dashboard" do
 
       it "renders a meeting event" do
         render
-        expect(rendered).to have_selector('table.timeline td', :content => "Old discussions")
+        expect(rendered).to have_selector('table.timeline td', :text => "Old discussions")
       end
     end
 

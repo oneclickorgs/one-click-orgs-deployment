@@ -16,7 +16,7 @@ describe 'members/coop/index' do
 
     it "renders a button to edit the membership application form" do
       render
-      expect(rendered).to have_selector(:form, :action => '/membership_application_form/edit')
+      expect(rendered).to have_selector("form[action='/membership_application_form/edit']")
     end
   end
 

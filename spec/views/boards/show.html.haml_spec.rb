@@ -25,12 +25,12 @@ describe "boards/show" do
 
   it "renders a button to create a new board meeting" do
     render
-    expect(rendered).to have_selector(:form, :action => '/board_meetings/new')
+    expect(rendered).to have_selector("form[action='/board_meetings/new']")
   end
 
   it "renders a button to create a new board resolution" do
     render
-    expect(rendered).to have_selector(:form, :action => '/board_resolutions/new')
+    expect(rendered).to have_selector("form[action='/board_resolutions/new']")
   end
 
   it "renders a list of upcoming board meetings" do
@@ -76,7 +76,7 @@ describe "boards/show" do
 
       it "renders a link to edit the meeting" do
         render
-        expect(rendered).to have_selector(:a, :href => '/board_meetings/2/edit')
+        expect(rendered).to have_selector("a[href='/board_meetings/2/edit']")
       end
     end
   end
@@ -91,7 +91,7 @@ describe "boards/show" do
 
     it "renderes a link to view the meeting's minutes" do
       render
-      expect(rendered).to have_selector(:a, :href => "/board_meetings/2")
+      expect(rendered).to have_selector("a[href='/board_meetings/2']")
     end
   end
 

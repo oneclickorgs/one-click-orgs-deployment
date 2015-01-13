@@ -28,33 +28,33 @@ describe 'officerships/new' do
 
   it "renders a select field listing the directors" do
     render
-    expect(rendered).to have_selector(:select, :name => 'officership[officer_id]') do |select|
+    expect(rendered).to have_selector("select[name='officership[officer_id]']") do |select|
       expect(select).to have_selector(:option, :value => '1', :content => "Claire Simmons")
     end
   end
 
   it "renders a certification check box" do
     render
-    expect(rendered).to have_selector(:input, :name => 'officership[certification]')
+    expect(rendered).to have_selector("input[name='officership[certification]']")
   end
 
   it "renders a select field for existing offices" do
     render
-    expect(rendered).to have_selector(:select, :name => 'officership[office_id]') do |select|
+    expect(rendered).to have_selector("select[name='officership[office_id]']") do |select|
       expect(select).to have_selector(:option, :value => '2', :content => 'Treasurer')
     end
   end
 
   it "renders a date select for the date elected on" do
     render
-    expect(rendered).to have_selector(:select, :name => 'officership[elected_on(1i)]')
-    expect(rendered).to have_selector(:select, :name => 'officership[elected_on(2i)]')
-    expect(rendered).to have_selector(:select, :name => 'officership[elected_on(3i)]')
+    expect(rendered).to have_selector("select[name='officership[elected_on(1i)]']")
+    expect(rendered).to have_selector("select[name='officership[elected_on(2i)]']")
+    expect(rendered).to have_selector("select[name='officership[elected_on(3i)]']")
   end
 
   it "renders a submit button" do
     render
-    expect(rendered).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
   context "when the officership has been pre-filled with an officer" do
@@ -64,7 +64,7 @@ describe 'officerships/new' do
 
     it "pre-selects the correct officer" do
       render
-      expect(rendered).to have_selector(:select, :name => 'officership[officer_id]') do |select|
+      expect(rendered).to have_selector("select[name='officership[officer_id]']") do |select|
         expect(select).to have_selector(:option, :value => '3', :content => 'Bob Smith', :selected => 'selected')
       end
     end

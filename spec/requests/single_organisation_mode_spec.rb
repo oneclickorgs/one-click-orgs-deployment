@@ -29,8 +29,8 @@ describe "Single-organisation mode" do
   describe "instance setup" do
     it "shows a button to run the app in single-organisation mode" do
       get 'http://oneclickorgs.com/setup/domains'
-      expect(page).to have_selector("form", :action => '/setup/set_single_organisation_mode') do |form|
-        expect(form).to have_selector('input', :type => 'submit')
+      expect(page).to have_selector("form[action='/setup/set_single_organisation_mode']") do |form|
+        expect(form).to have_selector("input[type='submit']")
       end
     end
 

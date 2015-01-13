@@ -23,7 +23,7 @@ describe 'members/coop/show' do
 
     it "renders a button terminate the membership" do
       render
-      expect(rendered).to have_selector(:a, :href => '/members/11/confirm_eject')
+      expect(rendered).to have_selector("a[href='/members/11/confirm_eject']")
     end
 
     context "when member is pending" do
@@ -34,9 +34,9 @@ describe 'members/coop/show' do
 
       it "renders a button to accept the membership application" do
         render
-        expect(rendered).to have_selector(:form, :action => "/members/11/induct") do |form|
-          expect(form).to have_selector(:input, :name => '_method', :value => 'put')
-          expect(form).to have_selector(:input, :type => 'submit')
+        expect(rendered).to have_selector("form[action='/members/11/induct']") do |form|
+          expect(form).to have_selector("input[name='_method'][value='put']")
+          expect(form).to have_selector("input[type='submit']")
         end
       end
     end

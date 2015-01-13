@@ -43,7 +43,7 @@ describe 'directors/coop/index' do
 
     it "renders a 'Step down' button for each officer" do
       render
-      expect(rendered).to have_selector(:form, :action => '/officerships/3/edit')
+      expect(rendered).to have_selector("form[action='/officerships/3/edit']")
     end
   end
 
@@ -54,7 +54,7 @@ describe 'directors/coop/index' do
 
     it "renders a 'Retire' button for each director" do
       render
-      expect(rendered).to have_selector(:form, :action => '/directorships/5/edit')
+      expect(rendered).to have_selector("form[action='/directorships/5/edit']")
     end
   end
 

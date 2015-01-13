@@ -31,26 +31,26 @@ describe "annual_general_meetings/new" do
 
   it "renders an 'electronic_nominations' field" do
     render
-    expect(rendered).to have_selector(:input, :name => 'annual_general_meeting[electronic_nominations]')
+    expect(rendered).to have_selector("input[name='annual_general_meeting[electronic_nominations]']")
   end
 
   it "renders a date select for nominations_closing_date" do
     render
-    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(1i)]')
-    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(2i)]')
-    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[nominations_closing_date(3i)]')
+    expect(rendered).to have_selector("select[name='annual_general_meeting[nominations_closing_date(1i)]']", visible: false)
+    expect(rendered).to have_selector("select[name='annual_general_meeting[nominations_closing_date(2i)]']", visible: false)
+    expect(rendered).to have_selector("select[name='annual_general_meeting[nominations_closing_date(3i)]']", visible: false)
   end
 
   it "renders an 'electronic_voting' field" do
     render
-    expect(rendered).to have_selector(:input, :name => 'annual_general_meeting[electronic_voting]')
+    expect(rendered).to have_selector("input[name='annual_general_meeting[electronic_voting]']")
   end
 
   it "renders a date select for voting_closing_date" do
     render
-    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(1i)]')
-    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(2i)]')
-    expect(rendered).to have_selector(:select, :name => 'annual_general_meeting[voting_closing_date(3i)]')
+    expect(rendered).to have_selector("select[name='annual_general_meeting[voting_closing_date(1i)]']", visible: false)
+    expect(rendered).to have_selector("select[name='annual_general_meeting[voting_closing_date(2i)]']", visible: false)
+    expect(rendered).to have_selector("select[name='annual_general_meeting[voting_closing_date(3i)]']", visible: false)
   end
 
 end

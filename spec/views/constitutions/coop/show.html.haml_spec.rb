@@ -16,7 +16,7 @@ describe 'constitutions/coop/show' do
 
   it "renders a link to download a PDF" do
     render
-    expect(rendered).to have_selector(:a, :href => '/constitution.pdf')
+    expect(rendered).to have_selector("a[href='/constitution.pdf']")
   end
 
   it "renders the date the constitution was last changed" do

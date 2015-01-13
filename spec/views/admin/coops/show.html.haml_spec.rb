@@ -28,37 +28,37 @@ describe "admin/coops/show" do
 
   it "renders a link to edit each member" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/members/222/edit')
+    expect(rendered).to have_selector("a[href='/admin/members/222/edit']")
   end
 
   it "renders a link to the rules PDF" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/constitutions/111.pdf')
+    expect(rendered).to have_selector("a[href='/admin/constitutions/111.pdf']")
   end
 
   it "renders a link to edit the rules" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/constitutions/111/edit')
+    expect(rendered).to have_selector("a[href='/admin/constitutions/111/edit']")
   end
 
   it "renders a link to the registration form PDF" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/registration_forms/111.pdf')
+    expect(rendered).to have_selector("a[href='/admin/registration_forms/111.pdf']")
   end
 
   it "renders a link to the anti-money laundering form" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/coops/111/documents/money_laundering')
+    expect(rendered).to have_selector("a[href='/admin/coops/111/documents/money_laundering']")
   end
 
   it "renders a link to the anti-money laundering form PDF" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/coops/111/documents/money_laundering.pdf')
+    expect(rendered).to have_selector("a[href='/admin/coops/111/documents/money_laundering.pdf']")
   end
 
   it "renders a link to edit the registration details" do
     render
-    expect(rendered).to have_selector(:a, :href => '/admin/registration_forms/111/edit')
+    expect(rendered).to have_selector("a[href='/admin/registration_forms/111/edit']")
   end
 
   context "when coop is active" do

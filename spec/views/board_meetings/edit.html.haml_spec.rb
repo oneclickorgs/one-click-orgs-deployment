@@ -18,14 +18,14 @@ describe "board_meetings/edit" do
 
   it "renders a minutes text box" do
     render
-    expect(rendered).to have_selector(:textarea, :name => 'board_meeting[minutes]')
+    expect(rendered).to have_selector("textarea[name='board_meeting[minutes]']")
   end
 
   it "renders a participant checkbox for each director" do
     render
     directors.each do |director|
-      expect(rendered).to have_selector(:input, :name => "board_meeting[participant_ids][#{director.id}]")
-      expect(rendered).to have_selector(:label, :for => "board_meeting_participant_ids_#{director.id}", :content => director.name)
+      expect(rendered).to have_selector("input[name='board_meeting[participant_ids][#{director.id}]']")
+      expect(rendered).to have_selector("label[for='board_meeting_participant_ids_#{director.id}']", text: director.name)
     end
   end
 

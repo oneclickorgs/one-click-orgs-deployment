@@ -15,27 +15,27 @@ describe 'directorships/external' do
 
   it "renders a 'first name' field" do
     render
-    expect(rendered).to have_selector(:input, :name => "directorship[director_attributes][first_name]")
+    expect(rendered).to have_selector("input[name='directorship[director_attributes][first_name]']")
   end
 
   it "renders a 'last name' field" do
     render
-    expect(rendered).to have_selector(:input, :name => "directorship[director_attributes][last_name]")
+    expect(rendered).to have_selector("input[name='directorship[director_attributes][last_name]']")
   end
 
   it "renders an 'email' field" do
     render
-    expect(rendered).to have_selector(:input, :name => "directorship[director_attributes][email]")
+    expect(rendered).to have_selector("input[name='directorship[director_attributes][email]']")
   end
 
   it "renders a hidden field for the director's member_class_id" do
     render
-    expect(rendered).to have_selector(:input, :name => "directorship[director_attributes][member_class_id]", :value => "999")
+    expect(rendered).to have_selector("input[name='directorship[director_attributes][member_class_id]'][value='999']")
   end
 
   it "renders a submit button" do
     render
-    expect(rendered).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
 end

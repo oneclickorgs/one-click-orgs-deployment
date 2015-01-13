@@ -71,7 +71,7 @@ describe 'shares/coop/index' do
 
       it "renders a button to apply for more shares" do
         render
-        expect(rendered).to have_selector(:form, :action => '/share_applications/new')
+        expect(rendered).to have_selector("form[action='/share_applications/new']")
       end
     end
 
@@ -82,7 +82,7 @@ describe 'shares/coop/index' do
 
       it "renders a button to withdraw shares" do
         render
-        expect(rendered).to have_selector(:form, :action => '/share_withdrawals/new')
+        expect(rendered).to have_selector("form[action='/share_withdrawals/new']")
       end
     end
   end
@@ -104,7 +104,7 @@ describe 'shares/coop/index' do
 
     it "renders the current organisation share balance" do
       render
-      expect(rendered).to have_selector('.organisation_share_account .balance', content: '34')
+      expect(rendered).to have_selector('.organisation_share_account .balance', text: '34')
     end
   end
 
@@ -144,7 +144,7 @@ describe 'shares/coop/index' do
     it "renders a 'waive notice period' button for share withdrawals which are not due yet" do
       render
       expect(rendered).to have_selector('ul.organisation_share_withdrawals') do |ul|
-        expect(ul).to have_selector(:form, :action => '/share_transactions/3000/confirm_approve')
+        expect(ul).to have_selector("form[action='/share_transactions/3000/confirm_approve']")
       end
     end
 
@@ -164,17 +164,17 @@ describe 'shares/coop/index' do
 
     it "renders a link button to adjust the share value" do
       render
-      expect(rendered).to have_selector(:form, :action => '/shares/edit_share_value')
+      expect(rendered).to have_selector("form[action='/shares/edit_share_value']")
     end
 
     it "renders a link button to adjust the minimum shareholding" do
       render
-      expect(rendered).to have_selector(:form, :action => '/shares/edit_minimum_shareholding')
+      expect(rendered).to have_selector("form[action='/shares/edit_minimum_shareholding']")
     end
 
     it "renders a link button to adjust the interest rate" do
       render
-      expect(rendered).to have_selector(:form, :action => '/shares/edit_interest_rate')
+      expect(rendered).to have_selector("form[action='/shares/edit_interest_rate']")
     end
   end
 

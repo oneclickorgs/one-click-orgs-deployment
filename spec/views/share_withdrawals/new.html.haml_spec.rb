@@ -12,7 +12,7 @@ describe 'share_withdrawals/new' do
 
   it "renders a field for the amount" do
     render
-    expect(rendered).to have_selector(:input, :name => 'share_withdrawal[amount]')
+    expect(rendered).to have_selector("input[name='share_withdrawal[amount]']")
   end
 
 end

@@ -31,12 +31,12 @@ describe 'meetings/coop/index' do
 
     it "renders a button link to the new general meeting page" do
       render
-      expect(rendered).to have_selector(:form, :action => '/general_meetings/new')
+      expect(rendered).to have_selector("form[action='/general_meetings/new']")
     end
 
     it "renders a link to enter minutes for a meeting not yet in the system" do
       render
-      expect(rendered).to have_selector(:a, :href => '/minutes/new')
+      expect(rendered).to have_selector("a[href='/minutes/new']")
     end
   end
 
@@ -47,7 +47,7 @@ describe 'meetings/coop/index' do
 
     it "renders a link to create a new GeneralMeetingProposal" do
       render
-      expect(rendered).to have_selector(:a, href: '/general_meeting_proposals/new')
+      expect(rendered).to have_selector("a[href='/general_meeting_proposals/new']")
     end
   end
 
@@ -76,7 +76,7 @@ describe 'meetings/coop/index' do
 
       it "renders a link to edit the meeting" do
         render
-        expect(rendered).to have_selector(:a, :href => '/general_meetings/2/edit')
+        expect(rendered).to have_selector("a[href='/general_meetings/2/edit']")
       end
     end
   end
@@ -89,7 +89,7 @@ describe 'meetings/coop/index' do
 
     it "renders a link to show the meeting" do
       render
-      expect(rendered).to have_selector(:a, :href => '/general_meetings/2')
+      expect(rendered).to have_selector("a[href='/general_meetings/2']")
     end
   end
 

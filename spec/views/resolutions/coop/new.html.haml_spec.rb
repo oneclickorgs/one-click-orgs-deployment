@@ -14,17 +14,17 @@ describe "resolutions/coop/new" do
 
   it "renders a list of links to different types of proposal" do
     render
-    expect(rendered).to have_selector(:a, :href => '/change_meeting_notice_period_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_quorum_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_name_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_registered_office_address_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_objectives_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_membership_criteria_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_board_composition_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_single_shareholding_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/change_common_ownership_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/terminate_directorship_resolutions/new')
-    expect(rendered).to have_selector(:a, :href => '/generic_resolutions/new')
+    expect(rendered).to have_selector("a[href='/change_meeting_notice_period_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_quorum_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_name_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_registered_office_address_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_objectives_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_membership_criteria_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_board_composition_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_single_shareholding_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/change_common_ownership_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/terminate_directorship_resolutions/new']")
+    expect(rendered).to have_selector("a[href='/generic_resolutions/new']")
   end
 
 end

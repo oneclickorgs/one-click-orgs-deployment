@@ -17,7 +17,7 @@ describe 'shared/association/_main_menu' do
 
     it 'renders a link to the warnings for founder members' do
       render
-      expect(rendered).to have_selector(:a, href: '/associations/warnings')
+      expect(rendered).to have_selector("a[href='/associations/warnings']")
     end
   end
 

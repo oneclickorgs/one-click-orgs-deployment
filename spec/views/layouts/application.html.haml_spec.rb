@@ -51,8 +51,8 @@ describe "layouts/application" do
 
           it "displays a button to hold the founding vote" do
             render
-            expect(rendered).to have_selector('form', :action => '/found_association_proposals', :id => 'start_founding_vote_form') do |form|
-              expect(form).to have_selector('input', :type => 'submit')
+            expect(rendered).to have_selector("form[action='/found_association_proposals'][id='start_founding_vote_form']") do |form|
+              expect(form).to have_selector("input[type='submit']")
             end
           end
 
@@ -63,8 +63,8 @@ describe "layouts/application" do
 
             it "sets up a lightbox for the start_founding_vote_confirmation message" do
               render
-              expect(rendered).to have_selector("script[src*='start_founding_vote_confirmation.js']")
-              expect(rendered).to have_selector('#start_founding_vote_confirmation_lightbox')
+              expect(rendered).to have_selector("script[src*='start_founding_vote_confirmation.js']", visible: false)
+              expect(rendered).to have_selector('#start_founding_vote_confirmation_lightbox', visible: false)
             end
           end
 
@@ -75,8 +75,8 @@ describe "layouts/application" do
 
             it "sets up a lightbox for the start_founding_vote_alert message" do
               render
-              expect(rendered).to have_selector("script[src*='start_founding_vote_alert.js']")
-              expect(rendered).to have_selector('#start_founding_vote_alert_lightbox')
+              expect(rendered).to have_selector("script[src*='start_founding_vote_alert.js']", visible:false)
+              expect(rendered).to have_selector('#start_founding_vote_alert_lightbox', visible: false)
             end
           end
         end

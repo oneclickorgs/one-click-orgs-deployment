@@ -26,14 +26,14 @@ describe 'ballots/new' do
 
   it "renders a ranking field for each of the nominations" do
     render
-    expect(rendered).to have_selector(:input, :name => 'ballot[ranking_30]')
-    expect(rendered).to have_selector(:input, :name => 'ballot[ranking_31]')
-    expect(rendered).to have_selector(:input, :name => 'ballot[ranking_32]')
+    expect(rendered).to have_selector("input[name='ballot[ranking_30]']")
+    expect(rendered).to have_selector("input[name='ballot[ranking_31]']")
+    expect(rendered).to have_selector("input[name='ballot[ranking_32]']")
   end
 
   it "renders a submit button" do
     render
-    expect(rendered).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
 end

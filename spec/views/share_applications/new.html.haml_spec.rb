@@ -16,12 +16,12 @@ describe 'share_applications/new' do
 
   it "renders an 'amount' field" do
     render
-    expect(rendered).to have_selector(:input, :name => 'share_application[amount]')
+    expect(rendered).to have_selector("input[name='share_application[amount]']")
   end
 
   it "renders a submit button" do
     render
-    expect(rendered).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
 end

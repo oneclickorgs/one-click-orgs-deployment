@@ -43,7 +43,7 @@ describe "founding members" do
       end
       
       it "displays the errors" do
-        expect(page).to have_selector('ul.errors li', :content => "Email can't be blank")
+        expect(page).to have_selector('ul.errors li', :text => "Email can't be blank")
       end
       
       it "renders the new member page" do
@@ -51,7 +51,7 @@ describe "founding members" do
       end
       
       it "retains the contents of the new member form" do
-        expect(page).to have_selector('input', :name => 'founding_member[first_name]', :value => 'Bob')
+        expect(page).to have_selector("input[name='founding_member[first_name]'][value='Bob']")
       end
     end
   end

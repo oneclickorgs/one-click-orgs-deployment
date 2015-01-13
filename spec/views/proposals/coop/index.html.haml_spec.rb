@@ -22,7 +22,7 @@ describe "proposals/coop/index" do
 
   it "renders a list of currently-open proposals" do
     render
-    expect(rendered).to have_selector('.proposals', :content => "Open proposal description")
+    expect(rendered).to have_selector('.proposals', :text => "Open proposal description")
   end
 
   context "when user can vote on an open proposal" do
@@ -45,7 +45,7 @@ describe "proposals/coop/index" do
 
     it "renders a list of draft resolutions" do
       render
-      expect(rendered).to have_selector('.draft_proposals', :content => "Draft proposal description")
+      expect(rendered).to have_selector('.draft_proposals', :text => "Draft proposal description")
     end
 
     it "includes the description in the list of draft resolutions" do
@@ -76,7 +76,7 @@ describe "proposals/coop/index" do
 
     it "renders a list of suggested resolutions" do
       render
-      expect(rendered).to have_selector('.resolution_proposals', :content => "Suggested resolution description")
+      expect(rendered).to have_selector('.resolution_proposals', :text => "Suggested resolution description")
     end
 
     it "renders an edit button for each suggested resolution" do

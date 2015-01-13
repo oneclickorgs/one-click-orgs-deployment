@@ -22,12 +22,12 @@ describe 'change_meeting_notice_period_resolutions/new' do
 
   it "renders a check box to immediately pass the resolution" do
     render
-    expect(rendered).to have_selector(:input, :name => 'change_meeting_notice_period_resolution[pass_immediately]')
+    expect(rendered).to have_selector("input[name='change_meeting_notice_period_resolution[pass_immediately]']")
   end
 
   it "renders a submit button" do
     render
-    expect(rendered).to have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
 end
