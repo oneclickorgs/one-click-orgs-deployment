@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "everything" do
   before(:each) do 
@@ -10,14 +10,14 @@ describe "everything" do
   describe "vote casting" do
     it "should cast a 'for' vote" do
       post(vote_for_path(:id => @proposal.id), {:return_to => '/foo'})
-      response.should redirect_to '/foo'
-      @proposal.vote_by(@user).for?.should be_true
+      expect(response).to redirect_to '/foo'
+      expect(@proposal.vote_by(@user).for?).to be true
     end
   
     it "should cast an 'against' vote" do
       post(vote_against_path(:id => @proposal.id), {:return_to => '/foo'})
-      response.should redirect_to '/foo'
-      @proposal.vote_by(@user).for?.should be_false
+      expect(response).to redirect_to '/foo'
+      expect(@proposal.vote_by(@user).for?).to be false
     end
   end
   
@@ -28,15 +28,15 @@ describe "everything" do
 
     it "should fail to cast a vote" do
       post(vote_for_path(:id => @proposal.id), {:return_to => '/foo'})
-      response.should redirect_to '/'
-      @proposal.vote_by(@user).should be_nil
+      expect(response).to redirect_to '/'
+      expect(@proposal.vote_by(@user)).to be_nil
     end
   end
   
   describe "security" do
     it "does not redirect to an external URL if one is passed in the return_to parameter" do
       post(vote_for_path(:id => @proposal.id), {:return_to => 'http://www.evil.com/'})
-      response.should redirect_to '/'
+      expect(response).to redirect_to '/'
     end
   end
 end

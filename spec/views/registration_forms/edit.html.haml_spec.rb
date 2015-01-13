@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "registration_forms/edit.html.haml" do
 
@@ -47,56 +47,56 @@ describe "registration_forms/edit.html.haml" do
   it "renders checkboxes to select signatories from the founder members" do
     render
 
-    rendered.should have_selector(:input, :type => 'checkbox', :name => 'registration_form[reg_form_signatories_attributes][0][selected]')
-    rendered.should have_selector(:label, :for => 'registration_form_reg_form_signatories_attributes_0_selected')
-    rendered.should have_selector(:input, :type => 'hidden', :name => 'registration_form[reg_form_signatories_attributes][0][id]', :value => '111')
+    expect(rendered).to have_selector("input[type='checkbox'][name='registration_form[reg_form_signatories_attributes][0][selected]']")
+    expect(rendered).to have_selector("label[for='registration_form_reg_form_signatories_attributes_0_selected']")
+    expect(rendered).to have_selector("input[type='hidden'][name='registration_form[reg_form_signatories_attributes][0][id]'][value='111']")
 
-    rendered.should have_selector(:input, :type => 'checkbox', :name => 'registration_form[reg_form_signatories_attributes][1][selected]')
-    rendered.should have_selector(:label, :for => 'registration_form_reg_form_signatories_attributes_1_selected')
-    rendered.should have_selector(:input, :type => 'hidden', :name => 'registration_form[reg_form_signatories_attributes][1][id]', :value => '222')
+    expect(rendered).to have_selector("input[type='checkbox'][name='registration_form[reg_form_signatories_attributes][1][selected]']")
+    expect(rendered).to have_selector("label[for='registration_form_reg_form_signatories_attributes_1_selected']")
+    expect(rendered).to have_selector("input[type='hidden'][name='registration_form[reg_form_signatories_attributes][1][id]'][value='222']")
 
-    rendered.should have_selector(:input, :type => 'checkbox', :name => 'registration_form[reg_form_signatories_attributes][2][selected]')
-    rendered.should have_selector(:label, :for => 'registration_form_reg_form_signatories_attributes_2_selected')
-    rendered.should have_selector(:input, :type => 'hidden', :name => 'registration_form[reg_form_signatories_attributes][2][id]', :value => '333')
+    expect(rendered).to have_selector("input[type='checkbox'][name='registration_form[reg_form_signatories_attributes][2][selected]']")
+    expect(rendered).to have_selector("label[for='registration_form_reg_form_signatories_attributes_2_selected']")
+    expect(rendered).to have_selector("input[type='hidden'][name='registration_form[reg_form_signatories_attributes][2][id]'][value='333']")
   end
 
   it "renders text fields for the main Co-operatives UK contact" do
     render
 
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_main_contact_organisation_name]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_main_contact_name]')
-    expect(rendered).to have_selector(:textarea, :name => 'registration_form[reg_form_main_contact_address]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_main_contact_phone]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_main_contact_email]')
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_main_contact_organisation_name]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_main_contact_name]']")
+    expect(rendered).to have_selector("textarea[name='registration_form[reg_form_main_contact_address]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_main_contact_phone]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_main_contact_email]']")
   end
 
   it "renders text fields for the financial Co-operatives UK contact" do
     render
 
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_financial_contact_name]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_financial_contact_phone]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_financial_contact_email]')
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_financial_contact_name]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_financial_contact_phone]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_financial_contact_email]']")
   end
 
   it "renders text fields for the money laundering contacts' information" do
     render
 
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_name]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_date_of_birth]')
-    expect(rendered).to have_selector(:textarea, :name => 'registration_form[reg_form_money_laundering_0_address]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_postcode]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_0_residency_length]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_name]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_date_of_birth]')
-    expect(rendered).to have_selector(:textarea, :name => 'registration_form[reg_form_money_laundering_1_address]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_postcode]')
-    expect(rendered).to have_selector(:input, :type => 'text', :name => 'registration_form[reg_form_money_laundering_1_residency_length]')
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_0_name]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_0_date_of_birth]']")
+    expect(rendered).to have_selector("textarea[name='registration_form[reg_form_money_laundering_0_address]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_0_postcode]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_0_residency_length]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_1_name]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_1_date_of_birth]']")
+    expect(rendered).to have_selector("textarea[name='registration_form[reg_form_money_laundering_1_address]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_1_postcode]']")
+    expect(rendered).to have_selector("input[type='text'][name='registration_form[reg_form_money_laundering_1_residency_length]']")
   end
 
   it "renders a checkbox to agree with the money laundering form" do
     render
 
-    rendered.should have_selector(:input, :type => 'checkbox', :name => 'registration_form[reg_form_money_laundering_agreement]')
+    expect(rendered).to have_selector("input[type='checkbox'][name='registration_form[reg_form_money_laundering_agreement]']")
   end
 
 end

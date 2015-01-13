@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Nomination do
 
@@ -13,7 +13,7 @@ describe Nomination do
       @nomination.reload
 
       # Passing true forces a reload of the association
-      @nomination.nominee(true).should == @nominee
+      expect(@nomination.nominee(true)).to eq(@nominee)
     end
   end
 
@@ -24,20 +24,20 @@ describe Nomination do
     end
 
     it "has an elected scope" do
-      Nomination.elected.should include(@elected_nomination)
-      Nomination.elected.should_not include(@defeated_nomination)
+      expect(Nomination.elected).to include(@elected_nomination)
+      expect(Nomination.elected).not_to include(@defeated_nomination)
     end
 
     it "has a defeated scope" do
-      Nomination.defeated.should include(@defeated_nomination)
-      Nomination.defeated.should_not include(@elected_nomination)
+      expect(Nomination.defeated).to include(@defeated_nomination)
+      expect(Nomination.defeated).not_to include(@elected_nomination)
     end
   end
 
   describe "getters" do
     it "gets 'name' from the nominee" do
       @nomination = Nomination.new(:nominee => mock_model(Member, :name => "John Smith"))
-      @nomination.name.should == "John Smith"
+      expect(@nomination.name).to eq("John Smith")
     end
   end
 

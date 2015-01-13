@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "one_click/_resignation" do
   
@@ -9,17 +9,17 @@ describe "one_click/_resignation" do
         :name => @member_name
       )
     )}
-    view.stub(:event).and_return(@event)
+    allow(view).to receive(:event).and_return(@event)
   end
   
   it "displays the name of the member" do
     render
-    rendered.should contain(@member_name)
+    expect(rendered).to include(@member_name)
   end
   
   it "displays the word 'resigned'" do
     render
-    rendered.should contain('resigned')
+    expect(rendered).to include('resigned')
   end
   
 end

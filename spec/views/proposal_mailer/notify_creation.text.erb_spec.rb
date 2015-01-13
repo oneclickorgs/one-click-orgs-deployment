@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "proposal_mailer/notify_creation" do
   before(:each) do
@@ -11,6 +11,6 @@ describe "proposal_mailer/notify_creation" do
   
   it "should not HTML-escape the proposal details" do
     render
-    rendered.should contain "We're running low & they're cheap."
+    expect(rendered).to include "We're running low & they're cheap."
   end
 end

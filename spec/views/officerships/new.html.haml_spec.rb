@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'officerships/new' do
 
@@ -10,62 +10,62 @@ describe 'officerships/new' do
     assign(:officership, @officership)
 
     @office = mock_model(Office).as_new_record
-    @officership.stub(:office).and_return(@office)
+    allow(@officership).to receive(:office).and_return(@office)
 
     @organisation = mock_model(Coop)
-    view.stub(:co).and_return(@organisation)
+    allow(view).to receive(:co).and_return(@organisation)
 
-    @organisation.stub(:directors).and_return([
+    allow(@organisation).to receive(:directors).and_return([
       mock_model(Director, :id => 1, :name => "Claire Simmons"),
       mock_model(Director, :id => 3, :name => "Bob Smith")
     ])
-    @organisation.stub(:offices).and_return([
+    allow(@organisation).to receive(:offices).and_return([
       mock_model(Office, :id => 2, :title => "Treasurer")
     ])
 
-    @organisation.stub(:active?).and_return(true)
+    allow(@organisation).to receive(:active?).and_return(true)
   end
 
   it "renders a select field listing the directors" do
     render
-    rendered.should have_selector(:select, :name => 'officership[officer_id]') do |select|
-      select.should have_selector(:option, :value => '1', :content => "Claire Simmons")
+    expect(rendered).to have_selector("select[name='officership[officer_id]']") do |select|
+      expect(select).to have_selector(:option, :value => '1', :content => "Claire Simmons")
     end
   end
 
   it "renders a certification check box" do
     render
-    rendered.should have_selector(:input, :name => 'officership[certification]')
+    expect(rendered).to have_selector("input[name='officership[certification]']")
   end
 
   it "renders a select field for existing offices" do
     render
-    rendered.should have_selector(:select, :name => 'officership[office_id]') do |select|
-      select.should have_selector(:option, :value => '2', :content => 'Treasurer')
+    expect(rendered).to have_selector("select[name='officership[office_id]']") do |select|
+      expect(select).to have_selector(:option, :value => '2', :content => 'Treasurer')
     end
   end
 
   it "renders a date select for the date elected on" do
     render
-    rendered.should have_selector(:select, :name => 'officership[elected_on(1i)]')
-    rendered.should have_selector(:select, :name => 'officership[elected_on(2i)]')
-    rendered.should have_selector(:select, :name => 'officership[elected_on(3i)]')
+    expect(rendered).to have_selector("select[name='officership[elected_on(1i)]']")
+    expect(rendered).to have_selector("select[name='officership[elected_on(2i)]']")
+    expect(rendered).to have_selector("select[name='officership[elected_on(3i)]']")
   end
 
   it "renders a submit button" do
     render
-    rendered.should have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
   context "when the officership has been pre-filled with an officer" do
     before(:each) do
-      @officership.stub(:officer_id).and_return(3)
+      allow(@officership).to receive(:officer_id).and_return(3)
     end
 
     it "pre-selects the correct officer" do
       render
-      rendered.should have_selector(:select, :name => 'officership[officer_id]') do |select|
-        select.should have_selector(:option, :value => '3', :content => 'Bob Smith', :selected => 'selected')
+      expect(rendered).to have_selector("select[name='officership[officer_id]']") do |select|
+        expect(select).to have_selector(:option, :value => '3', :content => 'Bob Smith', :selected => 'selected')
       end
     end
   end

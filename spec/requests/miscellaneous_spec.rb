@@ -1,6 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "miscellaneous requests" do
+
+  include RequestSpecHelper
+
   describe "internally-generated 404" do
     before(:each) do
       association_login
@@ -8,11 +11,11 @@ describe "miscellaneous requests" do
     end
     
     it "should render the public/404.html file" do
-      response.body.should =~ /The page you were looking for/
+      expect(response.body).to match(/The page you were looking for/)
     end
     
     it "should not render using the application layout" do
-      response.should_not have_selector "div.control_bar"
+      expect(page).not_to have_selector "div.control_bar"
     end
   end
 end

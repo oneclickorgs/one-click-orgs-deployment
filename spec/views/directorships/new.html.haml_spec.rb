@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "directorships/new" do
 
@@ -11,7 +11,7 @@ describe "directorships/new" do
 
   it "renders the form partial" do
     render
-    rendered.should contain("directorship form partial")
+    expect(rendered).to include("directorship form partial")
   end
 
 end

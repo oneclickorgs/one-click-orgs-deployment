@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # Specs in this file have access to a helper object that includes
 # the GeneralMeetingsHelper. For example:
@@ -11,5 +11,5 @@ require 'spec_helper'
 #   end
 # end
 describe GeneralMeetingsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  skip "add some examples to (or delete) #{__FILE__}"
 end

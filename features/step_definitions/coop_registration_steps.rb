@@ -168,6 +168,6 @@ Then(/^I should see the three signatories I chose$/) do
   @signatories ||= @coop.founder_members.all[0..2]
 
   @signatories.each do |signatory|
-    expect(find_field(signatory.name)['checked']).to be_true
+    expect(find_field(signatory.name)['checked']).to be true
   end
 end

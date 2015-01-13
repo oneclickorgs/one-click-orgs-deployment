@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "meetings/show" do
   
@@ -13,7 +13,7 @@ describe "meetings/show" do
       mock_model(Member, :name => "Bob Smith"),
       mock_model(Member, :name => "Sue Baker")
     ]
-    @meeting.stub(:participants).and_return(participants)
+    allow(@meeting).to receive(:participants).and_return(participants)
     
     assign(:meeting, @meeting)
     
@@ -26,26 +26,26 @@ describe "meetings/show" do
   
   it "renders the participants' names" do
     render
-    rendered.should have_selector("ul.participants li", :content => "Bob Smith")
-    rendered.should have_selector("ul.participants li", :content => "Sue Baker")
+    expect(rendered).to have_selector("ul.participants li", :text => "Bob Smith")
+    expect(rendered).to have_selector("ul.participants li", :text => "Sue Baker")
   end
   
   it "renders the minutes" do
     render
-    rendered.should have_selector("p", :content => "Here is what happened.")
+    expect(rendered).to have_selector("p", :text => "Here is what happened.")
   end
   
   it "renders the date the meeting happened on" do
     render
-    rendered.should include("January 1st, 2011")
+    expect(rendered).to include("January 1st, 2011")
   end
   
   describe "comments" do
     it "renders a comment form" do
       render
-      rendered.should have_selector(:form, :action => '/meetings/1/comments') do |form|
-        form.should have_selector(:textarea, :name => 'comment[body]')
-        form.should have_selector(:input, :type => 'submit')
+      expect(rendered).to have_selector("form[action='/meetings/1/comments']") do |form|
+        expect(form).to have_selector("textarea[name='comment[body]']")
+        expect(form).to have_selector("input[type='submit']")
       end
     end
   end

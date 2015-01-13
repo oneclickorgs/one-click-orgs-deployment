@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ChangeTextProposal do
   before(:each) do
@@ -9,25 +9,25 @@ describe ChangeTextProposal do
   
   it "should use the constitution voting system" do
     @organisation.clauses.set_text!('constitution_voting_system', 'Veto')
-    @organisation.change_text_proposals.new.voting_system.should == VotingSystems::Veto
+    expect(@organisation.change_text_proposals.new.voting_system).to eq(VotingSystems::Veto)
   end
   
   it "should change the objectives after successful proposal" do
     @p = @organisation.change_text_proposals.new
     
-    passed_proposal(@p, 'name'=>'objectives', 'value'=>'make all the yoghurt').
-      should change(@organisation.clauses, :count).by(1)
+    expect(passed_proposal(@p, 'name'=>'objectives', 'value'=>'make all the yoghurt')).
+      to change(@organisation.clauses, :count).by(1)
     
-    @organisation.clauses.get_text('objectives').should == 'make all the yoghurt'
+    expect(@organisation.clauses.get_text('objectives')).to eq('make all the yoghurt')
   end
   
   it "should not validate if text has not been changed" do
     @p = ChangeTextProposal.new(:title => "change objectives to eat all the cheese", :parameters => {'name' => 'objectives', 'value' => 'eat all the cheese'})
     @p.proposer = Member.make
-    @p.should_not be_valid
+    expect(@p).not_to be_valid
   end
   
   it "has a decision notification message" do
-    ChangeTextProposal.new.decision_notification_message.should be_present
+    expect(ChangeTextProposal.new.decision_notification_message).to be_present
   end
 end

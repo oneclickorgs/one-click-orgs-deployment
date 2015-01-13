@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ChangeMeetingNoticePeriodResolution do
 
@@ -8,7 +8,7 @@ describe ChangeMeetingNoticePeriodResolution do
 
   it "has a 'meeting_notice_period' attribute" do
     expect {@change_meeting_notice_period_resolution.meeting_notice_period = 32}.to_not raise_error
-    @change_meeting_notice_period_resolution.meeting_notice_period.should == 32
+    expect(@change_meeting_notice_period_resolution.meeting_notice_period).to eq(32)
   end
 
   describe "mass-assignment" do
@@ -24,15 +24,15 @@ describe ChangeMeetingNoticePeriodResolution do
   it "sets a default title" do
     @resolution = ChangeMeetingNoticePeriodResolution.make(:title => nil, :description => nil, :meeting_notice_period => 32)
     @resolution.save!
-    @resolution.title.should be_present
-    @resolution.title.should include('32 clear days')
+    expect(@resolution.title).to be_present
+    expect(@resolution.title).to include('32 clear days')
   end
 
   describe "enacting" do
     it "changes the meeting notice period" do
       @resolution = ChangeMeetingNoticePeriodResolution.make!(:meeting_notice_period => 32)
 
-      @resolution.organisation.should_receive(:meeting_notice_period=).with(32)
+      expect(@resolution.organisation).to receive(:meeting_notice_period=).with(32)
 
       @resolution.force_passed = true
       @resolution.close!
@@ -50,12 +50,12 @@ describe ChangeMeetingNoticePeriodResolution do
 
     it "returns true when the notice period is being increased" do
       @change_meeting_notice_period_resolution.meeting_notice_period = 15
-      @change_meeting_notice_period_resolution.notice_period_increased?.should be_true
+      expect(@change_meeting_notice_period_resolution.notice_period_increased?).to be true
     end
 
     it "returns false when the notice period is being decreased" do
       @change_meeting_notice_period_resolution.meeting_notice_period = 13
-      @change_meeting_notice_period_resolution.notice_period_increased?.should be_false
+      expect(@change_meeting_notice_period_resolution.notice_period_increased?).to be false
     end
   end
 

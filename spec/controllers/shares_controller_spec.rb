@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SharesController do
 
@@ -9,7 +9,7 @@ describe SharesController do
     stub_coop
     stub_login
 
-    controller.stub(:authorize!).and_raise(CanCan::AccessDenied)
+    allow(controller).to receive(:authorize!).and_raise(CanCan::AccessDenied)
   end
 
   describe "GET index" do
@@ -29,9 +29,9 @@ describe SharesController do
     before(:each) do
       @user.stub_chain(:tasks, :current, :shares_related).and_return(tasks)
       @organisation.stub_chain(:members, :order).and_return(members)
-      @organisation.stub(:deposits).and_return(organisation_deposits)
-      @organisation.stub(:withdrawals).and_return(organisation_withdrawals)
-      controller.stub(:can?).with(:read, ShareTransaction).and_return(true)
+      allow(@organisation).to receive(:deposits).and_return(organisation_deposits)
+      allow(@organisation).to receive(:withdrawals).and_return(organisation_withdrawals)
+      allow(controller).to receive(:can?).with(:read, ShareTransaction).and_return(true)
       @user.stub_chain(:find_or_build_share_account, :withdrawals, :pending).and_return([])
     end
 
@@ -41,30 +41,30 @@ describe SharesController do
 
     it "assigns the currently-open, shares-related tasks for the current user" do
       get_index
-      assigns[:tasks].should == tasks
+      expect(assigns[:tasks]).to eq(tasks)
     end
 
     it "assigns the members" do
       get_index
-      assigns[:members].should == members
+      expect(assigns[:members]).to eq(members)
     end
 
     it "finds pending share withdrawals" do
-      organisation_deposits.should_receive(:pending).and_return(organisation_pending_deposits)
+      expect(organisation_deposits).to receive(:pending).and_return(organisation_pending_deposits)
       get_index
-      assigns[:organisation_share_withdrawals].should eq organisation_pending_deposits
+      expect(assigns[:organisation_share_withdrawals]).to eq organisation_pending_deposits
     end
 
     it "finds pending share applications" do
-      organisation_withdrawals.should_receive(:pending).and_return(organisation_pending_withdrawals)
+      expect(organisation_withdrawals).to receive(:pending).and_return(organisation_pending_withdrawals)
       get_index
-      assigns[:organisation_share_applications].should == organisation_pending_withdrawals
+      expect(assigns[:organisation_share_applications]).to eq(organisation_pending_withdrawals)
     end
   end
 
   describe "GET edit_share_value" do
     before(:each) do
-      controller.stub(:authorize!).with(:update, @organisation)
+      allow(controller).to receive(:authorize!).with(:update, @organisation)
     end
 
     def get_edit_share_value
@@ -73,16 +73,16 @@ describe SharesController do
 
     it "is successful" do
       get_edit_share_value
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "PUT update_share_value" do
     before(:each) do
-      controller.stub(:authorize!).with(:update, @organisation)
+      allow(controller).to receive(:authorize!).with(:update, @organisation)
 
-      @organisation.stub(:share_value_in_pounds=)
-      @organisation.stub(:save!)
+      allow(@organisation).to receive(:share_value_in_pounds=)
+      allow(@organisation).to receive(:save!)
     end
 
     def put_update_share_value
@@ -90,20 +90,20 @@ describe SharesController do
     end
 
     it "updates the share value" do
-      @organisation.should_receive(:share_value_in_pounds=).with('0.70')
-      @organisation.should_receive(:save!)
+      expect(@organisation).to receive(:share_value_in_pounds=).with('0.70')
+      expect(@organisation).to receive(:save!)
       put_update_share_value
     end
 
     it "redirects to the shares page" do
       put_update_share_value
-      response.should redirect_to('/shares')
+      expect(response).to redirect_to('/shares')
     end
   end
 
   describe "GET edit_minimum_shareholding" do
     before(:each) do
-      controller.stub(:authorize!).with(:update, @organisation)
+      allow(controller).to receive(:authorize!).with(:update, @organisation)
     end
 
     def get_edit_minimum_shareholding
@@ -112,16 +112,16 @@ describe SharesController do
 
     it "is successful" do
       get_edit_minimum_shareholding
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "PUT update_minimum_shareholding" do
     before(:each) do
-      controller.stub(:authorize!).with(:update, @organisation)
+      allow(controller).to receive(:authorize!).with(:update, @organisation)
 
-      @organisation.stub(:minimum_shareholding=)
-      @organisation.stub(:save!)
+      allow(@organisation).to receive(:minimum_shareholding=)
+      allow(@organisation).to receive(:save!)
     end
 
     def put_update_minimum_shareholding
@@ -129,20 +129,20 @@ describe SharesController do
     end
 
     it "updates the minimum shareholding" do
-      @organisation.should_receive(:minimum_shareholding=).with('3')
-      @organisation.should_receive(:save!)
+      expect(@organisation).to receive(:minimum_shareholding=).with('3')
+      expect(@organisation).to receive(:save!)
       put_update_minimum_shareholding
     end
 
     it "redirects to the shares page" do
       put_update_minimum_shareholding
-      response.should redirect_to('/shares')
+      expect(response).to redirect_to('/shares')
     end
   end
 
   describe "GET edit_interest_rate" do
     before(:each) do
-      controller.stub(:authorize!).with(:update, @organisation)
+      allow(controller).to receive(:authorize!).with(:update, @organisation)
     end
 
     def get_edit_interest_rate
@@ -151,16 +151,16 @@ describe SharesController do
 
     it "is successful" do
       get_edit_interest_rate
-      response.should be_successful
+      expect(response).to be_successful
     end
   end
 
   describe "PUT update_interest_rate" do
     before(:each) do
-      controller.stub(:authorize!).with(:update, @organisation)
+      allow(controller).to receive(:authorize!).with(:update, @organisation)
 
-      @organisation.stub(:interest_rate=)
-      @organisation.stub(:save!)
+      allow(@organisation).to receive(:interest_rate=)
+      allow(@organisation).to receive(:save!)
     end
 
     def put_update_interest_rate
@@ -168,14 +168,14 @@ describe SharesController do
     end
 
     it "updates the interest rate" do
-      @organisation.should_receive(:interest_rate=).with('1.34')
-      @organisation.should_receive(:save!)
+      expect(@organisation).to receive(:interest_rate=).with('1.34')
+      expect(@organisation).to receive(:save!)
       put_update_interest_rate
     end
 
     it "redirects to the shares page" do
       put_update_interest_rate
-      response.should redirect_to('/shares')
+      expect(response).to redirect_to('/shares')
     end
   end
 

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Coop do
 
@@ -19,7 +19,7 @@ describe Coop do
 
       @coop.reload
 
-      @coop.board_meetings.should include(@board_meeting)
+      expect(@coop.board_meetings).to include(@board_meeting)
     end
 
     it "has many general meetings" do
@@ -30,7 +30,7 @@ describe Coop do
 
       @coop.reload
 
-      @coop.general_meetings.should include(@general_meeting)
+      expect(@coop.general_meetings).to include(@general_meeting)
     end
 
     it "has many board resolutions" do
@@ -41,7 +41,7 @@ describe Coop do
 
       @coop.reload
 
-      @coop.board_resolutions.should include(@board_resolution)
+      expect(@coop.board_resolutions).to include(@board_resolution)
     end
 
     it "has many resolution proposals" do
@@ -52,7 +52,7 @@ describe Coop do
 
       @coop.reload
 
-      @coop.resolution_proposals.should include(@resolution_proposal)
+      expect(@coop.resolution_proposals).to include(@resolution_proposal)
     end
 
     it "has many change-meeting-notice-period resolutions" do
@@ -63,7 +63,7 @@ describe Coop do
 
       @coop.reload
 
-      @coop.change_meeting_notice_period_resolutions.should include(@change_meeting_notice_period_resolution)
+      expect(@coop.change_meeting_notice_period_resolutions).to include(@change_meeting_notice_period_resolution)
     end
 
     it "has many change-quorum resolutions" do
@@ -71,7 +71,7 @@ describe Coop do
       @change_quorum_resolution = ChangeQuorumResolution.make!
       expect {@coop.change_quorum_resolutions << @change_quorum_resolution}.to_not raise_error
       @coop.reload
-      @coop.change_quorum_resolutions.should include(@change_quorum_resolution)
+      expect(@coop.change_quorum_resolutions).to include(@change_quorum_resolution)
     end
 
     it "has many terminate-directorship resolutions" do
@@ -94,19 +94,19 @@ describe Coop do
       end
 
       it "includes members who have the member class of 'Director'" do
-        @coop.directors.should include(@director)
+        expect(@coop.directors).to include(@director)
       end
 
       it "includes members who have the member class of 'Secretary'" do
-        @coop.directors.should include(@secretary)
+        expect(@coop.directors).to include(@secretary)
       end
 
       it "includes members who have the member class of 'External Director'" do
-        @coop.directors.should include(@external_director)
+        expect(@coop.directors).to include(@external_director)
       end
 
       it "does not include ordinary members" do
-        @coop.directors.should_not include(@members)
+        expect(@coop.directors).not_to include(@members)
       end
     end
 
@@ -120,7 +120,7 @@ describe Coop do
         @office = Office.make!
         expect {@coop.offices << @office}.to_not raise_error
         @coop.reload
-        @coop.offices.should include(@office)
+        expect(@coop.offices).to include(@office)
       end
 
       it "can create a new officership on an existing office" do
@@ -130,7 +130,7 @@ describe Coop do
         expect {@office.officership = @officership}.to_not raise_error
 
         @coop.reload
-        @coop.officerships.should include(@officership)
+        expect(@coop.officerships).to include(@officership)
       end
     end
 
@@ -143,14 +143,14 @@ describe Coop do
       @coop.reload
       @coop.elections.reload
 
-      @coop.elections.should include(@election)
+      expect(@coop.elections).to include(@election)
     end
 
     it "has many founder members" do
       @coop = Coop.make!
       @founder_member = @coop.members.make!(:founder_member)
 
-      @coop.founder_members.should include(@founder_member)
+      expect(@coop.founder_members).to include(@founder_member)
     end
 
     it 'has many general_meeting_proposals' do
@@ -169,33 +169,33 @@ describe Coop do
       end
 
       it "creates a 'Director' member class" do
-        @coop.member_classes.find_by_name('Director').should be_present
+        expect(@coop.member_classes.find_by_name('Director')).to be_present
       end
 
       it "creates a 'Founder Member' member class" do
-        @coop.member_classes.find_by_name('Founder Member').should be_present
+        expect(@coop.member_classes.find_by_name('Founder Member')).to be_present
       end
 
       it "creates a 'Member' member class" do
-        @coop.member_classes.find_by_name('Member').should be_present
+        expect(@coop.member_classes.find_by_name('Member')).to be_present
       end
 
       describe "Secretary member class" do
         it "creates a 'Secretary' member class" do
-          @coop.member_classes.find_by_name('Secretary').should be_present
+          expect(@coop.member_classes.find_by_name('Secretary')).to be_present
         end
 
         it "sets the 'organisation' permission" do
-          @coop.member_classes.find_by_name('Secretary').should have_permission(:organisation)
+          expect(@coop.member_classes.find_by_name('Secretary')).to have_permission(:organisation)
         end
 
         it "sets the 'share_account' permission" do
-          @coop.member_classes.find_by_name('Secretary').should have_permission(:share_account)
+          expect(@coop.member_classes.find_by_name('Secretary')).to have_permission(:share_account)
         end
       end
 
       it "creates an 'External Director' member class" do
-        @coop.member_classes.find_by_name("External Director").should be_present
+        expect(@coop.member_classes.find_by_name("External Director")).to be_present
       end
     end
   end
@@ -205,28 +205,28 @@ describe Coop do
       @coop = Coop.new
 
       @coop.name = "Coffee"
-      @coop.name.should == "Coffee"
+      expect(@coop.name).to eq("Coffee")
     end
 
     it "has a 'meeting_notice_period' attribute" do
       @coop = Coop.make!
       @coop.meeting_notice_period = 32
       @coop.reload
-      @coop.meeting_notice_period.should == 32
+      expect(@coop.meeting_notice_period).to eq(32)
     end
 
     it "has a 'quorum_number' attribute" do
       @coop = Coop.make!
       @coop.quorum_number = 20
       @coop.reload
-      @coop.quorum_number.should == 20
+      expect(@coop.quorum_number).to eq(20)
     end
 
     it "has a 'quorum_percentage' attribute" do
       @coop = Coop.make!
       @coop.quorum_percentage = 15
       @coop.reload
-      @coop.quorum_percentage.should == 15
+      expect(@coop.quorum_percentage).to eq(15)
     end
 
     it "has an 'objectives' attribute" do
@@ -234,7 +234,7 @@ describe Coop do
       @coop.objectives = "Make things"
       @coop.save!
       @coop.reload
-      @coop.objectives.should == "Make things"
+      expect(@coop.objectives).to eq("Make things")
     end
 
     describe "'share_value' attribute" do
@@ -243,21 +243,21 @@ describe Coop do
       end
 
       it "defaults to 100" do
-        @coop.share_value.should == 100
+        expect(@coop.share_value).to eq(100)
       end
 
       it "is an integer value of pennies" do
         @coop.share_value = 123.45
-        @coop.share_value.should == 123
+        expect(@coop.share_value).to eq(123)
       end
 
       it "can handle a value given in pounds" do
         @coop.share_value_in_pounds = "0.88"
-        @coop.share_value.should == 88
+        expect(@coop.share_value).to eq(88)
       end
 
       it "can return a value in pounds" do
-        @coop.share_value_in_pounds.should == 1.0
+        expect(@coop.share_value_in_pounds).to eq(1.0)
       end
     end
 
@@ -267,12 +267,12 @@ describe Coop do
       end
 
       it "defaults to 1" do
-        @coop.minimum_shareholding.should == 1
+        expect(@coop.minimum_shareholding).to eq(1)
       end
 
       it "accepts a string" do
         @coop.minimum_shareholding = "3"
-        @coop.minimum_shareholding.should == 3
+        expect(@coop.minimum_shareholding).to eq(3)
       end
     end
 
@@ -296,19 +296,19 @@ describe Coop do
       end
 
       it "defaults to nil" do
-        @coop.interest_rate.should be_nil
+        expect(@coop.interest_rate).to be_nil
       end
 
       it "accepts a string" do
         @coop.interest_rate = "1.34"
-        @coop.interest_rate.should == 1.34
+        expect(@coop.interest_rate).to eq(1.34)
       end
     end
 
     it "has a 'membership_application_text' attribute" do
       @coop = Coop.make
       expect {@coop.membership_application_text = "Custom text."}.to_not raise_error
-      @coop.membership_application_text.should == "Custom text."
+      expect(@coop.membership_application_text).to eq("Custom text.")
     end
   end
 
@@ -329,7 +329,7 @@ describe Coop do
     it "finds the Secretary" do
       @coop = Coop.make!
       @secretary = @coop.members.make!(:secretary)
-      @coop.secretary.should == @secretary
+      expect(@coop.secretary).to eq(@secretary)
     end
   end
 
@@ -339,12 +339,12 @@ describe Coop do
     end
 
     it "instantiates the directorship" do
-      Directorship.should_receive(:new)
+      expect(Directorship).to receive(:new)
       @coop.build_directorship
     end
 
     it "sets the directorship's organisation to itself" do
-      Directorship.should_receive(:new).with(hash_including(:organisation => @coop))
+      expect(Directorship).to receive(:new).with(hash_including(:organisation => @coop))
       @coop.build_directorship
     end
   end
@@ -357,7 +357,7 @@ describe Coop do
       end
 
       it "retires all the directors" do
-        @coop.directors_retiring.should == @coop.directors
+        expect(@coop.directors_retiring).to eq(@coop.directors)
       end
     end
 
@@ -405,19 +405,19 @@ describe Coop do
 
     it "creates a GeneralMeeting" do
       meeting = @coop.build_general_meeting_or_annual_general_meeting
-      meeting.should be_a(GeneralMeeting)
-      meeting.should_not be_a(AnnualGeneralMeeting)
+      expect(meeting).to be_a(GeneralMeeting)
+      expect(meeting).not_to be_a(AnnualGeneralMeeting)
     end
 
     it "creates an AnnualGeneralMeeting" do
       meeting = @coop.build_general_meeting_or_annual_general_meeting('annual_general_meeting' => '1')
-      meeting.should be_a(AnnualGeneralMeeting)
+      expect(meeting).to be_a(AnnualGeneralMeeting)
     end
   end
 
   describe "#meeting_classes" do
     it "returns the classes of meeting used by this type of organisation" do
-      Coop.new.meeting_classes.should == [GeneralMeeting, AnnualGeneralMeeting, BoardMeeting]
+      expect(Coop.new.meeting_classes).to eq([GeneralMeeting, AnnualGeneralMeeting, BoardMeeting])
     end
   end
 
@@ -425,8 +425,8 @@ describe Coop do
     it "builds a Minute" do
       coop = Coop.new
       minute = coop.build_minute
-      minute.should be_a(Minute)
-      minute.organisation.should == coop
+      expect(minute).to be_a(Minute)
+      expect(minute.organisation).to eq(coop)
     end
   end
 
@@ -443,15 +443,15 @@ describe Coop do
       it "adds a task for the member" do
         Coop.run_daily_job
         task = member.tasks.last
-        task.subject.should == member
-        task.action.should == 'minimum_shareholding_missed'
+        expect(task.subject).to eq(member)
+        expect(task.action).to eq('minimum_shareholding_missed')
       end
 
       it "adds a task for the secretary about the member" do
         Coop.run_daily_job
         task = coop.secretary.tasks.last
-        task.subject.should == member
-        task.action.should == 'minimum_shareholding_missed'
+        expect(task.subject).to eq(member)
+        expect(task.action).to eq('minimum_shareholding_missed')
       end
     end
   end
@@ -462,13 +462,13 @@ describe Coop do
 
     before(:each) do
       set_up_app
-      Administrator.stub(:all).and_return(administrators)
+      allow(Administrator).to receive(:all).and_return(administrators)
     end
 
     describe "for pending Coop creation" do
       it "is sent to all Administrators" do
         administrators.each do |administrator|
-          CoopMailer.should_receive(:notify_creation).with(administrator, anything).and_return(email)
+          expect(CoopMailer).to receive(:notify_creation).with(administrator, anything).and_return(email)
         end
         Coop.make!(:pending)
       end
@@ -479,7 +479,7 @@ describe Coop do
 
       it "is sent to all Administrators" do
         administrators.each do |administrator|
-          CoopMailer.should_receive(:notify_proposed).with(administrator, coop).and_return(email)
+          expect(CoopMailer).to receive(:notify_proposed).with(administrator, coop).and_return(email)
         end
         coop.propose!
       end
@@ -491,7 +491,7 @@ describe Coop do
 
       it "is sent to all founder members" do
         founder_members.each do |founder_member|
-          CoopMailer.should_receive(:notify_founded).with(founder_member, coop).and_return(email)
+          expect(CoopMailer).to receive(:notify_founded).with(founder_member, coop).and_return(email)
         end
 
         coop.found!
@@ -530,7 +530,7 @@ describe Coop do
       coop.clauses.set_integer!(:reg_form_signatories_1, 2)
       coop.clauses.where(:name => 'reg_form_signatories_2').destroy_all
 
-      coop.registration_form_filled?.should be_false
+      expect(coop.registration_form_filled?).to be_falsey
     end
 
     it "returns true when three signatories have been chosen" do
@@ -538,7 +538,7 @@ describe Coop do
       coop.clauses.set_integer!(:reg_form_signatories_1, 2)
       coop.clauses.set_integer!(:reg_form_signatories_2, 3)
 
-      coop.registration_form_filled?.should be_true
+      expect(coop.registration_form_filled?).to be true
     end
   end
 
@@ -549,7 +549,7 @@ describe Coop do
       expect{coop.reg_form_money_laundering_agreement = 1}.to_not raise_error
       coop.save!
       coop.reload
-      expect(coop.reg_form_money_laundering_agreement).to be_true
+      expect(coop.reg_form_money_laundering_agreement).to be true
     end
 
     it "has attributes for the main contact" do
@@ -631,15 +631,15 @@ describe Coop do
       let(:members) {double("members association")}
 
       before(:each) do
-        coop.stub(:members).and_return(members)
+        allow(coop).to receive(:members).and_return(members)
 
-        members.stub(:find).with(111).and_return(member_111)
-        members.stub(:find).with(333).and_return(member_333)
-        members.stub(:find).with(444).and_return(member_444)
+        allow(members).to receive(:find).with(111).and_return(member_111)
+        allow(members).to receive(:find).with(333).and_return(member_333)
+        allow(members).to receive(:find).with(444).and_return(member_444)
       end
 
       it "saves the first three selected signatories" do
-        coop.should_receive(:signatories=).with([member_111, member_333, member_444])
+        expect(coop).to receive(:signatories=).with([member_111, member_333, member_444])
 
         coop.reg_form_signatories_attributes = {
           '0' => {'selected' => '1', 'id' => '111'},
@@ -655,13 +655,13 @@ describe Coop do
       let(:clauses) {double("clauses association")}
 
       before(:each) do
-        coop.stub(:clauses).and_return(clauses)
+        allow(coop).to receive(:clauses).and_return(clauses)
       end
 
       it "writes the new signatories to the clauses" do
-        clauses.should_receive(:set_integer!).with(:reg_form_signatories_0, 111)
-        clauses.should_receive(:set_integer!).with(:reg_form_signatories_1, 333)
-        clauses.should_receive(:set_integer!).with(:reg_form_signatories_2, 444)
+        expect(clauses).to receive(:set_integer!).with(:reg_form_signatories_0, 111)
+        expect(clauses).to receive(:set_integer!).with(:reg_form_signatories_1, 333)
+        expect(clauses).to receive(:set_integer!).with(:reg_form_signatories_2, 444)
 
         coop.signatories = [member_111, member_333, member_444]
       end
@@ -674,15 +674,15 @@ describe Coop do
     before(:each) do
       coop.stub_chain(:members, :active, :count).and_return(3)
       coop.stub_chain(:directors, :count).and_return(3)
-      coop.stub(:secretary).and_return(mock_model(Member))
-      coop.stub(:rules_filled?).and_return(true)
-      coop.stub(:registration_form_filled?).and_return(true)
-      coop.stub(:signatories_and_secretary_contact_details_present?).and_return(true)
+      allow(coop).to receive(:secretary).and_return(mock_model(Member))
+      allow(coop).to receive(:rules_filled?).and_return(true)
+      allow(coop).to receive(:registration_form_filled?).and_return(true)
+      allow(coop).to receive(:signatories_and_secretary_contact_details_present?).and_return(true)
     end
 
     it "returns false if the signatories' and secretary's contact details are not present" do
-      coop.stub(:signatories_and_secretary_contact_details_present?).and_return(false)
-      expect(coop.can_propose?).to be_false
+      allow(coop).to receive(:signatories_and_secretary_contact_details_present?).and_return(false)
+      expect(coop.can_propose?).to be false
     end
   end
 
@@ -696,29 +696,29 @@ describe Coop do
     let(:secretary) {mock_model(Member, :contact_details_present? => true)}
 
     before(:each) do
-      coop.stub(:signatories).and_return(signatories)
-      coop.stub(:secretary).and_return(secretary)
+      allow(coop).to receive(:signatories).and_return(signatories)
+      allow(coop).to receive(:secretary).and_return(secretary)
     end
 
     describe "#signatories_and_secretary_contact_details_present?" do
       it "returns true if all the contact details are present" do
-        expect(coop.signatories_and_secretary_contact_details_present?).to be_true
+        expect(coop.signatories_and_secretary_contact_details_present?).to be true
       end
 
       it "returns false if the secretary's contact details are missing" do
-        secretary.stub(:contact_details_present?).and_return(false)
-        expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+        allow(secretary).to receive(:contact_details_present?).and_return(false)
+        expect(coop.signatories_and_secretary_contact_details_present?).to be false
       end
 
       it "returns false if any one of the signatories' contact details are missing" do
-        signatories[1].stub(:contact_details_present?).and_return(false)
-        expect(coop.signatories_and_secretary_contact_details_present?).to be_false
+        allow(signatories[1]).to receive(:contact_details_present?).and_return(false)
+        expect(coop.signatories_and_secretary_contact_details_present?).to be false
       end
     end
 
     describe "signatories_and_secretary_without_contact_details" do
       it "does not error if the secretary is not set yet" do
-        coop.stub(:secretary).and_return(nil)
+        allow(coop).to receive(:secretary).and_return(nil)
         expect{coop.signatories_and_secretary_without_contact_details}.to_not raise_error
       end
     end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'general_meeting_proposals/show' do
 
@@ -40,7 +40,7 @@ describe 'general_meeting_proposals/show' do
 
     it 'renders a link to the general meeting proposal' do
       render
-      expect(rendered).to have_selector(:a, href: general_meeting_proposal_url(general_meeting_proposal))
+      expect(rendered).to have_selector("a[href='#{general_meeting_proposal_url(general_meeting_proposal)}']")
     end
   end
 

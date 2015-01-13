@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'share_transactions/confirm_approve' do
 
@@ -17,8 +17,8 @@ describe 'share_transactions/confirm_approve' do
 
   it "renders a submit button for the approval form" do
     render
-    rendered.should have_selector(:form, :action => '/share_transactions/3000/approve') do |form|
-      form.should have_selector(:input, :type => 'submit')
+    expect(rendered).to have_selector("form[action='/share_transactions/3000/approve']") do |form|
+      expect(form).to have_selector("input[type='submit']")
     end
   end
 

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe BoardMeetingsController do
 
@@ -15,7 +15,7 @@ describe BoardMeetingsController do
     let(:board_meetings) {double("board meetings", :find => board_meeting)}
 
     before(:each) do
-      @organisation.stub(:board_meetings).and_return(board_meetings)
+      allow(@organisation).to receive(:board_meetings).and_return(board_meetings)
     end
 
     def get_show
@@ -23,18 +23,18 @@ describe BoardMeetingsController do
     end
 
     it "finds the board meeting" do
-      board_meetings.should_receive(:find).with('1').and_return(board_meeting)
+      expect(board_meetings).to receive(:find).with('1').and_return(board_meeting)
       get_show
     end
 
     it "assigns the board meeting" do
       get_show
-      assigns[:board_meeting].should == board_meeting
+      expect(assigns[:board_meeting]).to eq(board_meeting)
     end
 
     it "is successful" do
       get_show
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -43,8 +43,8 @@ describe BoardMeetingsController do
       @board_meeting = mock_model(BoardMeeting).as_new_record
       @board_meetings_association = double("board meetings association")
 
-      @organisation.stub(:board_meetings).and_return(@board_meetings_association)
-      @board_meetings_association.stub(:build).and_return(@board_meeting)
+      allow(@organisation).to receive(:board_meetings).and_return(@board_meetings_association)
+      allow(@board_meetings_association).to receive(:build).and_return(@board_meeting)
     end
 
     def get_new
@@ -52,18 +52,18 @@ describe BoardMeetingsController do
     end
 
     it "builds a new board meeting" do
-      @board_meetings_association.should_receive(:build).and_return(@board_meeting)
+      expect(@board_meetings_association).to receive(:build).and_return(@board_meeting)
       get_new
     end
 
     it "assigns the board meeting" do
       get_new
-      assigns[:board_meeting].should == @board_meeting
+      expect(assigns[:board_meeting]).to eq(@board_meeting)
     end
 
     it "is successful" do
       get_new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -76,8 +76,8 @@ describe BoardMeetingsController do
         :save! => nil
       ).as_new_record
 
-      @organisation.stub(:board_meetings).and_return(@board_meetings_association)
-      @board_meetings_association.stub(:build).and_return(@board_meeting)
+      allow(@organisation).to receive(:board_meetings).and_return(@board_meetings_association)
+      allow(@board_meetings_association).to receive(:build).and_return(@board_meeting)
     end
 
     def post_create
@@ -85,23 +85,23 @@ describe BoardMeetingsController do
     end
 
     it "builds the board meeting" do
-      @board_meetings_association.should_receive(:build).with(@board_meeting_params).and_return(@board_meeting)
+      expect(@board_meetings_association).to receive(:build).with(@board_meeting_params).and_return(@board_meeting)
       post_create
     end
 
     it "assigns the creator to the current user" do
-      @board_meeting.should_receive(:creator=).with(@user)
+      expect(@board_meeting).to receive(:creator=).with(@user)
       post_create
     end
 
     it "saves the board meeting" do
-      @board_meeting.should_receive(:save!)
+      expect(@board_meeting).to receive(:save!)
       post_create
     end
 
     it "redirects to the Board page" do
       post_create
-      response.should redirect_to('/board')
+      expect(response).to redirect_to('/board')
     end
   end
 
@@ -113,8 +113,8 @@ describe BoardMeetingsController do
     let(:directors) {double("directors")}
 
     before(:each) do
-      @organisation.stub(:board_meetings).and_return(board_meetings)
-      @organisation.stub(:directors).and_return(directors)
+      allow(@organisation).to receive(:board_meetings).and_return(board_meetings)
+      allow(@organisation).to receive(:directors).and_return(directors)
     end
 
     def get_edit
@@ -122,28 +122,28 @@ describe BoardMeetingsController do
     end
 
     it "finds the board meeting" do
-      board_meetings.should_receive(:find).with('1').and_return(board_meeting)
+      expect(board_meetings).to receive(:find).with('1').and_return(board_meeting)
       get_edit
     end
 
     it "assigns the board meeting" do
       get_edit
-      assigns[:board_meeting].should == board_meeting
+      expect(assigns[:board_meeting]).to eq(board_meeting)
     end
 
     it "finds the directors" do
-      @organisation.should_receive(:directors).and_return(directors)
+      expect(@organisation).to receive(:directors).and_return(directors)
       get_edit
     end
 
     it "assigns the directors" do
       get_edit
-      assigns(:directors).should == directors
+      expect(assigns(:directors)).to eq(directors)
     end
 
     it "is successful" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -153,7 +153,7 @@ describe BoardMeetingsController do
     let(:board_meeting_attributes) {{'foo' => 'bar'}}
 
     before(:each) do
-      @organisation.stub(:board_meetings).and_return(board_meetings)
+      allow(@organisation).to receive(:board_meetings).and_return(board_meetings)
     end
 
     def put_update
@@ -161,18 +161,18 @@ describe BoardMeetingsController do
     end
 
     it "finds the board meeting" do
-      board_meetings.should_receive(:find).with('1').and_return(board_meeting)
+      expect(board_meetings).to receive(:find).with('1').and_return(board_meeting)
       put_update
     end
 
     it "updates the board meeting" do
-      board_meeting.should_receive(:update_attributes).with(board_meeting_attributes).and_return(true)
+      expect(board_meeting).to receive(:update_attributes).with(board_meeting_attributes).and_return(true)
       put_update
     end
 
     it "redirects to the board index" do
       put_update
-      response.should redirect_to('/board')
+      expect(response).to redirect_to('/board')
     end
 
     context "when updating the board meeting fails" do

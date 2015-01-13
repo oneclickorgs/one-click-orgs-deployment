@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'terminate_directorship_resolutions/new' do
 
@@ -16,9 +16,9 @@ describe 'terminate_directorship_resolutions/new' do
 
   it 'renders a select field of directors' do
     render
-    expect(rendered).to have_selector(:select, name: 'terminate_directorship_resolution[director_id]') do |select|
-      expect(select).to have_selector(:option, value: '1', content: 'Ann Ackerman')
-      expect(select).to have_selector(:option, value: '2', content: 'Bob Baker')
+    expect(rendered).to have_selector("select[name='terminate_directorship_resolution[director_id]']") do |select|
+      expect(select).to have_selector("option[value='1'][content='Ann Ackerman']")
+      expect(select).to have_selector("option[value='2'][content='Bob Baker']")
     end
   end
 

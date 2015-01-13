@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ShareApplicationsController do
 
@@ -14,7 +14,7 @@ describe ShareApplicationsController do
     let(:share_application) {mock_model(ShareApplication).as_new_record}
 
     before(:each) do
-      ShareApplication.stub(:new).and_return(share_application)
+      allow(ShareApplication).to receive(:new).and_return(share_application)
     end
 
     def get_new
@@ -22,18 +22,18 @@ describe ShareApplicationsController do
     end
 
     it "builds a share transaction" do
-      ShareApplication.should_receive(:new).and_return(share_application)
+      expect(ShareApplication).to receive(:new).and_return(share_application)
       get_new
     end
 
     it "assigns the share transaction" do
       get_new
-      assigns[:share_application].should == share_application
+      expect(assigns[:share_application]).to eq(share_application)
     end
 
     it "is successful" do
       get_new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -45,7 +45,7 @@ describe ShareApplicationsController do
     ).as_new_record}
 
     before(:each) do
-      ShareApplication.stub(:new).and_return(share_application)
+      allow(ShareApplication).to receive(:new).and_return(share_application)
     end
 
     def post_create
@@ -53,23 +53,23 @@ describe ShareApplicationsController do
     end
 
     it "builds the share application" do
-      ShareApplication.should_receive(:new).with(share_application_params).and_return(share_application)
+      expect(ShareApplication).to receive(:new).with(share_application_params).and_return(share_application)
       post_create
     end
 
     it "assigns the current user" do
-      share_application.should_receive(:member=).with(@user)
+      expect(share_application).to receive(:member=).with(@user)
       post_create
     end
 
     it "saves the share application" do
-      share_application.should_receive(:save!)
+      expect(share_application).to receive(:save!)
       post_create
     end
 
     it "redirects to the shares page" do
       post_create
-      response.should redirect_to('/shares')
+      expect(response).to redirect_to('/shares')
     end
   end
 

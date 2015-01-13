@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::ConstitutionsController do
 
@@ -11,7 +11,7 @@ describe Admin::ConstitutionsController do
     stub_app_setup
     stub_administrator_login
 
-    Organisation.stub(:find).and_return(organisation)
+    allow(Organisation).to receive(:find).and_return(organisation)
   end
 
   describe "GET show" do
@@ -21,7 +21,7 @@ describe Admin::ConstitutionsController do
       end
 
       it "calls generate_pdf" do
-        controller.should_receive(:generate_pdf)
+        expect(controller).to receive(:generate_pdf)
         get_show
       end
     end

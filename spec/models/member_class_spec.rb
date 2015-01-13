@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MemberClass do
   describe "permissions" do
@@ -9,20 +9,20 @@ describe MemberClass do
     
     describe "checking permissions" do
       it "returns false when the permission clause does not exist" do
-        @member_class.has_permission(:whatever).should be_false
+        expect(@member_class.has_permission(:whatever)).to be false
       end
       
       it "looks up the correct permissions clause" do
         @organisation.clauses.create(:name => 'permission_clown_cartwheel', :boolean_value => true)
         
-        @member_class.has_permission(:cartwheel).should be_true
+        expect(@member_class.has_permission(:cartwheel)).to be true
       end
     end
     
     describe "setting permissions" do
       it "sets the correct permissions clause" do
         @member_class.set_permission!(:juggle, true)
-        @organisation.clauses.get_boolean(:permission_clown_juggle).should be_true
+        expect(@organisation.clauses.get_boolean(:permission_clown_juggle)).to be true
       end
     end
     
@@ -31,13 +31,13 @@ describe MemberClass do
         @member_class.set_permission!(:cartwheel, true)
         @member_class.set_permission!(:lion_tame, false)
         
-        @organisation.clauses.where(:name => 'permission_clown_cartwheel').should_not be_empty
-        @organisation.clauses.where(:name => 'permission_clown_lion_tame').should_not be_empty
+        expect(@organisation.clauses.where(:name => 'permission_clown_cartwheel')).not_to be_empty
+        expect(@organisation.clauses.where(:name => 'permission_clown_lion_tame')).not_to be_empty
         
         @member_class.destroy
         
-        @organisation.clauses.where(:name => 'permission_clown_cartwheel').should be_empty
-        @organisation.clauses.where(:name => 'permission_clown_lion_tame').should be_empty
+        expect(@organisation.clauses.where(:name => 'permission_clown_cartwheel')).to be_empty
+        expect(@organisation.clauses.where(:name => 'permission_clown_lion_tame')).to be_empty
       end
     end
   end

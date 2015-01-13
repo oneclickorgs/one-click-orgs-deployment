@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'shared/notifications/_founding_proposal_passed' do
 
@@ -25,7 +25,7 @@ describe 'shared/notifications/_founding_proposal_passed' do
 
   it "should not list ejected members" do
     render
-    rendered.should_not contain(ejected_member.name)
+    expect(rendered).not_to include(ejected_member.name)
   end
 
   it "renders the date the founding vote closed" do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ChangeQuorumResolutionsController do
 
@@ -15,9 +15,9 @@ describe ChangeQuorumResolutionsController do
       @change_quorum_resolution = mock_model(ChangeQuorumResolution)
 
       @change_quorum_resolutions_association = double("change-quorum resolutions association")
-      @change_quorum_resolutions_association.stub(:build).and_return(@change_quorum_resolution)
+      allow(@change_quorum_resolutions_association).to receive(:build).and_return(@change_quorum_resolution)
 
-      @organisation.stub(:change_quorum_resolutions).and_return(@change_quorum_resolutions_association)
+      allow(@organisation).to receive(:change_quorum_resolutions).and_return(@change_quorum_resolutions_association)
     end
 
     def get_new
@@ -25,18 +25,18 @@ describe ChangeQuorumResolutionsController do
     end
 
     it "builds a new change-quorum resolution" do
-      @change_quorum_resolutions_association.should_receive(:build).and_return(@change_quorum_resolution)
+      expect(@change_quorum_resolutions_association).to receive(:build).and_return(@change_quorum_resolution)
       get_new
     end
 
     it "assigns the change-quorum resolution" do
       get_new
-      assigns[:change_quorum_resolution].should == @change_quorum_resolution
+      expect(assigns[:change_quorum_resolution]).to eq(@change_quorum_resolution)
     end
 
     it "is successful" do
       get_new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -49,8 +49,8 @@ describe ChangeQuorumResolutionsController do
         :draft= => nil,
         :save! => true
       )
-      @organisation.stub(:change_quorum_resolutions).and_return(@change_quorum_resolutions_association)
-      @change_quorum_resolutions_association.stub(:build).and_return(@change_quorum_resolution)
+      allow(@organisation).to receive(:change_quorum_resolutions).and_return(@change_quorum_resolutions_association)
+      allow(@change_quorum_resolutions_association).to receive(:build).and_return(@change_quorum_resolution)
     end
 
     def post_create
@@ -58,34 +58,34 @@ describe ChangeQuorumResolutionsController do
     end
 
     it "builds the resolution" do
-      @change_quorum_resolutions_association.should_receive(:build).with(@change_quorum_resolution_params).and_return(@change_quorum_resolution)
+      expect(@change_quorum_resolutions_association).to receive(:build).with(@change_quorum_resolution_params).and_return(@change_quorum_resolution)
       post_create
     end
 
     it "sets the proposer to the current user" do
-      @change_quorum_resolution.should_receive(:proposer=).with(@user)
+      expect(@change_quorum_resolution).to receive(:proposer=).with(@user)
       post_create
     end
 
     it "sets the resolution as a draft" do
-      @change_quorum_resolution.should_receive(:draft=).with(true)
+      expect(@change_quorum_resolution).to receive(:draft=).with(true)
       post_create
     end
 
     it "saves the resolution" do
-      @change_quorum_resolution.should_receive(:save!)
+      expect(@change_quorum_resolution).to receive(:save!)
       post_create
     end
 
     it "redirects to the meetings page" do
       post_create
-      response.should redirect_to('/meetings')
+      expect(response).to redirect_to('/meetings')
     end
 
     it "sets a notice flash mentioning the resolution" do
       post_create
-      flash[:notice].should be_present
-      flash[:notice].should contain('resolution')
+      expect(flash[:notice]).to be_present
+      expect(flash[:notice]).to include('resolution')
     end
   end
 

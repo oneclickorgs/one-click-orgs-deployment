@@ -1,8 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 require 'active_model/mass_assignment_security/sanitizer'
 
 describe "members" do
+
+  include RequestSpecHelper
   
   before(:each) do
     default_association_constitution
@@ -18,11 +20,11 @@ describe "members" do
       end
     
       it "responds successfully" do
-        @response.should be_successful
+        expect(@response).to be_successful
       end
 
       it "contains a list of members" do
-        @response.should have_selector("table.members")
+        expect(page).to have_selector("table.members")
       end
     end
   
@@ -33,7 +35,7 @@ describe "members" do
       end
     
       it "has a list of members" do
-        @response.should have_selector("table.members tr")
+        expect(page).to have_selector("table.members tr")
       end
     end
   end
@@ -45,12 +47,12 @@ describe "members" do
   
     it "responds successfully if resource == current_user" do
       get(edit_member_path(default_association_user))
-      @response.should be_successful
+      expect(@response).to be_successful
     end
 
     it "responds unauthorized if resource != current_user" do
       get(edit_member_path(@member), {}, {'HTTP_REFERER' => 'http://www.example.com/'})
-      response.should redirect_to '/'
+      expect(response).to redirect_to '/'
     end  
   end
 
@@ -68,12 +70,12 @@ describe "members" do
       end
       
       it "responds successfully" do
-        @response.should be_successful
+        expect(@response).to be_successful
       end
       
       it "should display a form to eject the member" do
-        @response.should have_selector("form[action='/eject_member_proposals']") do |form|
-          form.should have_selector "input[name='eject_member_proposal[member_id]'][value='#{@member.id}']"
+        expect(page).to have_selector("form[action='/eject_member_proposals']") do |form|
+          expect(form).to have_selector "input[name='eject_member_proposal[member_id]'][value='#{@member.id}']"
         end
       end
     end
@@ -84,7 +86,7 @@ describe "members" do
       end
   
       it "redirects to the member show action" do
-        @response.should redirect_to(member_path(@member))
+        expect(@response).to redirect_to(member_path(@member))
       end
       
       context "when attempting to update restricted attributes" do
