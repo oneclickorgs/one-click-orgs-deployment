@@ -107,7 +107,7 @@ describe MeetingsController do
         # This is to avoid trying to set the participants before
         # setting the organisation, since Meeting has to validate
         # the participants' membership of the organisation.
-        expect(@meetings_association).to receive(:build).with().and_return(@meeting)
+        expect(@meetings_association).to receive(:build).with(no_args).and_return(@meeting)
         post_create
       end
 
