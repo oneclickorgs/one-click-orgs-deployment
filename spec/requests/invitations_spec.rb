@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe "invitations" do
+
+  include RequestSpecHelper
+
   before(:each) do
     default_association(:state => 'pending')
     @member = @organisation.members.make!(:inducted_at => nil, :password => nil, :password_confirmation => nil, :state => 'pending')
@@ -18,26 +21,26 @@ describe "invitations" do
     
     it "renders a form to update the invitation" do
       get_edit
-      expect(response).to have_selector :form, :action => "/invitations/#{@member.invitation_code}" do |form|
+      expect(page).to have_selector :form, :action => "/invitations/#{@member.invitation_code}" do |form|
         expect(form).to have_selector :input, :name => '_method', :value => 'put'
       end
     end
     
     it "shows fields to choose a password" do
       get_edit
-      expect(response).to have_selector(:input, :name => 'invitation[password]')
-      expect(response).to have_selector(:input, :name => 'invitation[password_confirmation]')
+      expect(page).to have_selector(:input, :name => 'invitation[password]')
+      expect(page).to have_selector(:input, :name => 'invitation[password_confirmation]')
     end
     
     describe "rendering a hidden terms and conditions field" do
       it "renders a hidden terms and conditions field" do
         get_edit
-        expect(response).to have_selector(:input, :name => 'invitation[terms_and_conditions]', :type => 'hidden')
+        expect(page).to have_selector(:input, :name => 'invitation[terms_and_conditions]', :type => 'hidden')
       end
       
       it "sets the value to '0'" do
         get_edit
-        expect(response).to have_selector(:input, :name => 'invitation[terms_and_conditions]', :value => '0')
+        expect(page).to have_selector(:input, :name => 'invitation[terms_and_conditions]', :value => '0')
       end
     end
   end

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe "Multi-tenancy" do
+
+  include RequestSpecHelper
+
   describe "when the app is newly installed" do
     it "should redirect all requests to the setup page" do
       get 'http://oneclickorgs.com/'
@@ -10,7 +13,7 @@ describe "Multi-tenancy" do
     describe "visiting the domains setup page" do
       it "should show a form to set the base domain and the signup domain" do
         get 'http://oneclickorgs.com/setup/domains'
-        expect(response).to have_selector("form[action='/setup/create_domains']") do |form|
+        expect(page).to have_selector("form[action='/setup/create_domains']") do |form|
           expect(form).to have_selector("input[name='base_domain']")
           expect(form).to have_selector("input[name='signup_domain']")
           expect(form).to have_selector("input[type=submit]")
@@ -19,12 +22,12 @@ describe "Multi-tenancy" do
       
       it "should auto-detect the base domain" do
         get 'http://oneclickorgs.com/setup/domains'
-        expect(response).to have_selector("input[name='base_domain'][value='oneclickorgs.com']")
+        expect(page).to have_selector("input[name='base_domain'][value='oneclickorgs.com']")
       end
       
       it "should auto-suggest the setup domain" do
         get 'http://oneclickorgs.com/setup/domains'
-        expect(response).to have_selector("input[name='signup_domain'][value='oneclickorgs.com']")
+        expect(page).to have_selector("input[name='signup_domain'][value='oneclickorgs.com']")
       end
     end
     
@@ -74,7 +77,7 @@ describe "Multi-tenancy" do
     describe "visiting the new organisation page" do
       it "shows a list of links to create different organisation types" do
         get "http://signup.oneclickorgs.com/organisations/new"
-        expect(response).to have_selector('ul.organisations') do |ul|
+        expect(page).to have_selector('ul.organisations') do |ul|
           expect(ul).to have_selector("a[href='/associations/new']")
         end
       end
@@ -83,7 +86,7 @@ describe "Multi-tenancy" do
     describe "visiting the new association page" do
       it "should show a form to set details for the new association" do
         get 'http://signup.oneclickorgs.com/associations/new'
-        expect(response).to have_selector("form[action='/associations']") do |form|
+        expect(page).to have_selector("form[action='/associations']") do |form|
           expect(form).to have_selector("input[name='founder[first_name]']")
           expect(form).to have_selector("input[name='founder[last_name]']")
           expect(form).to have_selector("input[name='founder[email]']")

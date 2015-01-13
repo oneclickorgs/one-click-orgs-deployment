@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe "authentication" do
+
+  include RequestSpecHelper
+
   before(:each) do
     default_association_user
   end
@@ -8,7 +11,7 @@ describe "authentication" do
   describe "getting login form" do
     it "should display a login form" do
       get '/login'
-      expect(response).to have_selector("form[action='/member_session']")
+      expect(page).to have_selector("form[action='/member_session']")
     end
   end
   
@@ -36,7 +39,7 @@ describe "authentication" do
     end
     
     it "should render the login form" do
-      expect(response).to have_selector("form[action='/member_session']")
+      expect(page).to have_selector("form[action='/member_session']")
     end
     
     it "should set an error flash" do

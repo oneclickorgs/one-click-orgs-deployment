@@ -12,6 +12,8 @@ module ProposalsSpecHelper
 end
 
 describe "Proposals" do
+
+  include RequestSpecHelper
   include ProposalsSpecHelper
   
   before(:each) do 
@@ -63,7 +65,7 @@ describe "Proposals" do
 
        it "contains a list of proposals" do
          # pending
-         expect(@response).to have_xpath("//ul")
+         expect(page).to have_xpath("//ul")
        end
      end
   end

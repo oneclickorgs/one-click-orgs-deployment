@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe "founding members" do
+
+  include RequestSpecHelper
   
   before(:each) do
     default_association(:state => 'pending')
@@ -41,7 +43,7 @@ describe "founding members" do
       end
       
       it "displays the errors" do
-        expect(response).to have_selector('ul.errors li', :content => "Email can't be blank")
+        expect(page).to have_selector('ul.errors li', :content => "Email can't be blank")
       end
       
       it "renders the new member page" do
@@ -49,7 +51,7 @@ describe "founding members" do
       end
       
       it "retains the contents of the new member form" do
-        expect(response).to have_selector('input', :name => 'founding_member[first_name]', :value => 'Bob')
+        expect(page).to have_selector('input', :name => 'founding_member[first_name]', :value => 'Bob')
       end
     end
   end

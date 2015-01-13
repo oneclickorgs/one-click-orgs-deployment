@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe "add-member proposals" do
+
+  include RequestSpecHelper
+
   before(:each) do
     default_association_constitution
     default_association
@@ -36,11 +39,11 @@ describe "add-member proposals" do
       end
       
       it "displays the errors" do
-        expect(response).to have_selector('ul.errors li', :content => "Email can't be blank")
+        expect(page).to have_selector('ul.errors li', :content => "Email can't be blank")
       end
       
       it "retains the contents of the new member form" do
-        expect(response).to have_selector('input', :name => 'add_member_proposal[first_name]', :value => 'Bob')
+        expect(page).to have_selector('input', :name => 'add_member_proposal[first_name]', :value => 'Bob')
       end
     end
   end

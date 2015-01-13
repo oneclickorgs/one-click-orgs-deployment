@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe "Single-organisation mode" do
 
+  include RequestSpecHelper
+
   # convenience method to create a mock association, ready to send out invites
   # to other co-founders
   def create_mock_association
@@ -27,7 +29,7 @@ describe "Single-organisation mode" do
   describe "instance setup" do
     it "shows a button to run the app in single-organisation mode" do
       get 'http://oneclickorgs.com/setup/domains'
-      expect(response).to have_selector("form", :action => '/setup/set_single_organisation_mode') do |form|
+      expect(page).to have_selector("form", :action => '/setup/set_single_organisation_mode') do |form|
         expect(form).to have_selector('input', :type => 'submit')
       end
     end

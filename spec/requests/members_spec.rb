@@ -3,6 +3,8 @@ require 'rails_helper'
 require 'active_model/mass_assignment_security/sanitizer'
 
 describe "members" do
+
+  include RequestSpecHelper
   
   before(:each) do
     default_association_constitution
@@ -22,7 +24,7 @@ describe "members" do
       end
 
       it "contains a list of members" do
-        expect(@response).to have_selector("table.members")
+        expect(page).to have_selector("table.members")
       end
     end
   
@@ -33,7 +35,7 @@ describe "members" do
       end
     
       it "has a list of members" do
-        expect(@response).to have_selector("table.members tr")
+        expect(page).to have_selector("table.members tr")
       end
     end
   end
@@ -72,7 +74,7 @@ describe "members" do
       end
       
       it "should display a form to eject the member" do
-        expect(@response).to have_selector("form[action='/eject_member_proposals']") do |form|
+        expect(page).to have_selector("form[action='/eject_member_proposals']") do |form|
           expect(form).to have_selector "input[name='eject_member_proposal[member_id]'][value='#{@member.id}']"
         end
       end

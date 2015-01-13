@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe "/one_click" do
+
+  include RequestSpecHelper
   
   context "when current organisation is an association" do
     before(:each) do
@@ -20,7 +22,7 @@ describe "/one_click" do
 
         get url_for(:controller => 'one_click', :action => 'dashboard')
         expect(@response).to be_successful
-        expect(@response).to have_xpath("//table[@class='timeline']")
+        expect(page).to have_xpath("//table[@class='timeline']")
       end
     end
   end
