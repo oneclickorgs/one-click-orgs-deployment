@@ -30,7 +30,7 @@ gem "mysql2", "~>0.3.11"
 group :assets do
   gem 'sass-rails', '~>3.2.5' # sass-rails 4 requires rails 4
   gem 'uglifier', '~>2.5.0'
-  gem 'therubyracer', '~>0.11.2'
+  gem 'therubyracer', '~>0.12.1'
 end
 
 gem "jquery-rails", "~>3.0.4"

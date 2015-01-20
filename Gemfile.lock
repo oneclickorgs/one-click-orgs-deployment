@@ -132,7 +132,7 @@ GEM
     json (1.8.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.11.8.17)
+    libv8 (3.16.14.7)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     mail (2.5.4)
@@ -267,8 +267,8 @@ GEM
     state_machine-audit_trail (0.1.8)
       state_machine
     syntax (1.0.0)
-    therubyracer (0.11.4)
-      libv8 (~> 3.11.8.12)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
     tilt (1.4.1)
@@ -334,6 +334,6 @@ DEPENDENCIES
   state_machine (~> 1.2.0)
   state_machine-audit_trail (~> 0.1.2)
   syntax (~> 1.0.0)
-  therubyracer (~> 0.11.2)
+  therubyracer (~> 0.12.1)
   uglifier (~> 2.5.0)
   webrat
