@@ -277,7 +277,7 @@ GEM
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
     tzinfo (0.3.42)
-    uglifier (2.5.3)
+    uglifier (2.7.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     webrat (0.7.3)
@@ -335,5 +335,5 @@ DEPENDENCIES
   state_machine-audit_trail (~> 0.1.2)
   syntax (~> 1.0.0)
   therubyracer (~> 0.12.1)
-  uglifier (~> 2.5.0)
+  uglifier (~> 2.7.0)
   webrat
