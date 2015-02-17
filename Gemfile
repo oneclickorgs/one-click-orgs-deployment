@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.6.2"
+gem "bundler", "~>1.8.2"
 
-gem "rails", "3.2.19"
+gem "rails", "3.2.21"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -14,7 +14,7 @@ group :assets do
   gem 'sass-rails', '~>3.2.3'
   gem 'coffee-rails', '~>3.2.1'
   gem 'uglifier',     ">= 2.0.1"
-  gem 'therubyracer'
+  gem 'therubyracer', '~>0.12.1'
 end
  
 # jQuery is the default JavaScript library in Rails 3.1
@@ -75,5 +75,5 @@ group :development, :test do
   gem "capybara", "~>1.1.2"
   gem "database_cleaner"
   gem "launchy"
-  gem "selenium-webdriver", "~>2.41.0"
+  gem "selenium-webdriver"
 end
