@@ -229,7 +229,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.6.2)
+  bundler (~> 1.8.2)
   capistrano (~> 2.14.2)
   capybara (~> 1.1.2)
   coffee-rails (~> 3.2.1)
