@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "layouts/welcome" do
   
@@ -15,12 +15,12 @@ describe "layouts/welcome" do
       )
       
       assign(:current_organisation, @organisation)
-      view.stub(:current_organisation).and_return(@organisation)
-      view.stub(:co).and_return(@organisation)
+      allow(view).to receive(:current_organisation).and_return(@organisation)
+      allow(view).to receive(:co).and_return(@organisation)
       
       install_organisation_resolver(@organisation)
       
-      view.stub(:current_user).and_return(@user = mock_model(Member,
+      allow(view).to receive(:current_user).and_return(@user = mock_model(Member,
                                                               :name => "Lucy Baker",
                                                               :inducted_at => 2.days.ago
                                                              ))
@@ -28,7 +28,7 @@ describe "layouts/welcome" do
 
     it "should show a link to let users log out on the join organisation page" do
       render
-      rendered.should have_selector('a[href="/logout"]')
+      expect(rendered).to have_selector('a[href="/logout"]')
     end
   end
 

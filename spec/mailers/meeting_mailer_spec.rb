@@ -17,15 +17,15 @@ describe MeetingMailer do
     end
     
     it "has an appropriate subject" do
-      @mail.subject.should include("minutes")
+      expect(@mail.subject).to include("minutes")
     end
     
     it "includes the meeting's minutes in the email body" do
-      @mail.body.should include(@meeting.minutes)
+      expect(@mail.body).to include(@meeting.minutes)
     end
   
     it "includes a link to the meeting in the email body" do
-      @mail.body.should include("http://#{@company.subdomain}.oneclickorgs.com/meetings/#{@meeting.id}")
+      expect(@mail.body).to include("http://#{@company.subdomain}.oneclickorgs.com/meetings/#{@meeting.id}")
     end
   end
 

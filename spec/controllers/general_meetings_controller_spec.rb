@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe GeneralMeetingsController do
 
@@ -16,12 +16,12 @@ describe GeneralMeetingsController do
       @resolutions_association = double("resolutions association")
       @draft_resolutions_association = double("draft resolutions association")
 
-      @organisation.stub(:general_meetings).and_return(@general_meetings_association)
-      @general_meetings_association.stub(:build)
-      @organisation.stub(:resolutions).and_return(@resolutions_association)
-      @resolutions_association.stub(:draft).and_return(@draft_resolutions_association)
+      allow(@organisation).to receive(:general_meetings).and_return(@general_meetings_association)
+      allow(@general_meetings_association).to receive(:build)
+      allow(@organisation).to receive(:resolutions).and_return(@resolutions_association)
+      allow(@resolutions_association).to receive(:draft).and_return(@draft_resolutions_association)
 
-      @organisation.stub(:directors_retiring)
+      allow(@organisation).to receive(:directors_retiring)
     end
 
     def get_new
@@ -29,23 +29,23 @@ describe GeneralMeetingsController do
     end
 
     it "finds the draft resolutions" do
-      @resolutions_association.should_receive(:draft).and_return(@draft_resolutions_association)
+      expect(@resolutions_association).to receive(:draft).and_return(@draft_resolutions_association)
       get_new
     end
 
     it "assigns the draft resolutions" do
       get_new
-      assigns[:draft_resolutions].should == @draft_resolutions_association
+      expect(assigns[:draft_resolutions]).to eq(@draft_resolutions_association)
     end
 
     it "finds the directors due to retire" do
-      @organisation.should_receive(:directors_retiring).and_return(@directors_retiring)
+      expect(@organisation).to receive(:directors_retiring).and_return(@directors_retiring)
       get_new
     end
 
     it "assigns the directors due to retire" do
       get_new
-      assigns[:directors_retiring].should == @directors_retiring
+      expect(assigns[:directors_retiring]).to eq(@directors_retiring)
     end
   end
 
@@ -56,9 +56,9 @@ describe GeneralMeetingsController do
       @general_meeting = mock_model(GeneralMeeting)
       @general_meeting_params = {'venue' => 'Meeting Hall'}
 
-      @general_meeting.stub(:save!)
-      @organisation.stub(:general_meetings).and_return(general_meetings)
-      general_meetings.stub(:build).and_return(@general_meeting)
+      allow(@general_meeting).to receive(:save!)
+      allow(@organisation).to receive(:general_meetings).and_return(general_meetings)
+      allow(general_meetings).to receive(:build).and_return(@general_meeting)
     end
 
     def post_create
@@ -66,18 +66,18 @@ describe GeneralMeetingsController do
     end
 
     it "builds a new General Meeting or Annual General Meeting" do
-      general_meetings.should_receive(:build).with(@general_meeting_params).and_return(@general_meeting)
+      expect(general_meetings).to receive(:build).with(@general_meeting_params).and_return(@general_meeting)
       post_create
     end
 
     it "saves the new meeting" do
-      @general_meeting.should_receive(:save!)
+      expect(@general_meeting).to receive(:save!)
       post_create
     end
 
     it "redirects to the meetings page" do
       post_create
-      response.should redirect_to('/meetings')
+      expect(response).to redirect_to('/meetings')
     end
 
     context "when the new meeting cannot be saved" do
@@ -90,7 +90,7 @@ describe GeneralMeetingsController do
     let(:general_meeting) {mock_model("GeneralMeeting")}
 
     before(:each) do
-      @organisation.stub(:general_meetings).and_return(general_meetings)
+      allow(@organisation).to receive(:general_meetings).and_return(general_meetings)
     end
 
     def get_show
@@ -98,18 +98,18 @@ describe GeneralMeetingsController do
     end
 
     it "finds the general meeting" do
-      general_meetings.should_receive(:find).with('1').and_return(general_meeting)
+      expect(general_meetings).to receive(:find).with('1').and_return(general_meeting)
       get_show
     end
 
     it "assigns the general meeting" do
       get_show
-      assigns[:general_meeting].should == general_meeting
+      expect(assigns[:general_meeting]).to eq(general_meeting)
     end
 
     it "is successful" do
       get_show
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -119,8 +119,8 @@ describe GeneralMeetingsController do
     let(:members){double("members association", :map => nil)}
 
     before(:each) do
-      @organisation.stub(:general_meetings).and_return(general_meetings)
-      @organisation.stub(:members).and_return(members)
+      allow(@organisation).to receive(:general_meetings).and_return(general_meetings)
+      allow(@organisation).to receive(:members).and_return(members)
     end
 
     def get_edit
@@ -128,23 +128,23 @@ describe GeneralMeetingsController do
     end
 
     it "finds the general meeting" do
-      general_meetings.should_receive(:find).with('1').and_return(general_meeting)
+      expect(general_meetings).to receive(:find).with('1').and_return(general_meeting)
       get_edit
     end
 
     it "assigns the general meeting" do
       get_edit
-      assigns[:general_meeting].should == general_meeting
+      expect(assigns[:general_meeting]).to eq(general_meeting)
     end
 
     it "assigns the members" do
       get_edit
-      assigns[:members].should == members
+      expect(assigns[:members]).to eq(members)
     end
 
     it "is successful" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -154,7 +154,7 @@ describe GeneralMeetingsController do
     let(:general_meeting_params){{'minutes' => 'We discussed things.'}}
 
     before(:each) do
-      @organisation.stub(:general_meetings).and_return(general_meetings)
+      allow(@organisation).to receive(:general_meetings).and_return(general_meetings)
     end
 
     def put_update
@@ -162,18 +162,18 @@ describe GeneralMeetingsController do
     end
 
     it "finds the general meeting" do
-      general_meetings.should_receive(:find).with('1').and_return(general_meeting)
+      expect(general_meetings).to receive(:find).with('1').and_return(general_meeting)
       put_update
     end
 
     it "updates the general meeting's attributes" do
-      general_meeting.should_receive(:update_attributes).with(general_meeting_params).and_return(true)
+      expect(general_meeting).to receive(:update_attributes).with(general_meeting_params).and_return(true)
       put_update
     end
 
     it "redirects" do
       put_update
-      response.should be_redirect
+      expect(response).to be_redirect
     end
 
     context "when updating the general meeting's attributes fails" do

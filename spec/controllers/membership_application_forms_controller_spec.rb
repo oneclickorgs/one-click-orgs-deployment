@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MembershipApplicationFormsController do
 
@@ -9,7 +9,7 @@ describe MembershipApplicationFormsController do
     stub_coop
     stub_login
 
-    controller.stub(:authorize!).with(:update, @organisation)
+    allow(controller).to receive(:authorize!).with(:update, @organisation)
   end
 
   describe "GET edit" do
@@ -19,14 +19,14 @@ describe MembershipApplicationFormsController do
 
     it "is successful" do
       get_edit
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "PUT update" do
     before(:each) do
-      @organisation.stub(:membership_application_text=)
-      @organisation.stub(:save!)
+      allow(@organisation).to receive(:membership_application_text=)
+      allow(@organisation).to receive(:save!)
     end
 
     def put_update
@@ -34,19 +34,19 @@ describe MembershipApplicationFormsController do
     end
 
     it "updates the membership application text" do
-      @organisation.should_receive(:membership_application_text=).with('New custom text.')
-      @organisation.should_receive(:save!)
+      expect(@organisation).to receive(:membership_application_text=).with('New custom text.')
+      expect(@organisation).to receive(:save!)
       put_update
     end
 
     it "sets a notice flash" do
       put_update
-      flash[:notice].should be_present
+      expect(flash[:notice]).to be_present
     end
 
     it "redirects to the members page" do
       put_update
-      response.should redirect_to('/members')
+      expect(response).to redirect_to('/members')
     end
   end
 

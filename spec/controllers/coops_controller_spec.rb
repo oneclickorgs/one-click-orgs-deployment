@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CoopsController do
 
@@ -11,10 +11,10 @@ describe CoopsController do
   describe "GET new" do
     before(:each) do
       @member = mock_model(Member)
-      Member.stub(:new).and_return(@member)
+      allow(Member).to receive(:new).and_return(@member)
 
       @coop = mock_model(Coop)
-      Coop.stub(:new).and_return(@coop)
+      allow(Coop).to receive(:new).and_return(@coop)
     end
 
     def get_new
@@ -22,23 +22,23 @@ describe CoopsController do
     end
 
     it "builds a new member" do
-      Member.should_receive(:new).and_return(@member)
+      expect(Member).to receive(:new).and_return(@member)
       get_new
     end
 
     it "assigns the new member" do
       get_new
-      assigns(:member).should == @member
+      expect(assigns(:member)).to eq(@member)
     end
 
     it "builds a new coop" do
-      Coop.should_receive(:new).and_return(@coop)
+      expect(Coop).to receive(:new).and_return(@coop)
       get_new
     end
 
     it "assigns the new coop" do
       get_new
-      assigns(:coop).should == @coop
+      expect(assigns(:coop)).to eq(@coop)
     end
   end
 
@@ -59,32 +59,32 @@ describe CoopsController do
       @coop = mock_model(Coop,
         :host => 'coffee.oneclickorgs.com'
       )
-      Coop.stub(:new).and_return(@coop)
+      allow(Coop).to receive(:new).and_return(@coop)
 
       @members_association = double('members association')
-      @coop.stub(:members).and_return(@members_association)
+      allow(@coop).to receive(:members).and_return(@members_association)
 
       @member = mock_model(Member)
-      @members_association.stub(:build).and_return(@member)
+      allow(@members_association).to receive(:build).and_return(@member)
 
-      @coop.stub(:save!).and_return(true)
-      @member.stub(:save!).and_return(true)
+      allow(@coop).to receive(:save!).and_return(true)
+      allow(@member).to receive(:save!).and_return(true)
 
-      @member.stub(:induct!)
+      allow(@member).to receive(:induct!)
 
-      controller.stub(:log_in)
+      allow(controller).to receive(:log_in)
 
       @founder_member_member_class = mock_model(MemberClass)
       @member_classes_association = double("member_classes association")
-      @coop.stub(:member_classes).and_return(@member_classes_association)
-      @member_classes_association.stub(:find_by_name).with('Founder Member').and_return(@founder_member_member_class)
-      @member.stub(:member_class=)
+      allow(@coop).to receive(:member_classes).and_return(@member_classes_association)
+      allow(@member_classes_association).to receive(:find_by_name).with('Founder Member').and_return(@founder_member_member_class)
+      allow(@member).to receive(:member_class=)
 
-      @member.stub(:find_or_create_share_account)
-      @coop.stub(:share_account)
+      allow(@member).to receive(:find_or_create_share_account)
+      allow(@coop).to receive(:share_account)
 
       @share_transaction = mock_model(ShareTransaction, :save! => true)
-      ShareTransaction.stub(:create).and_return(@share_transaction)
+      allow(ShareTransaction).to receive(:create).and_return(@share_transaction)
     end
 
     def post_create
@@ -92,38 +92,38 @@ describe CoopsController do
     end
 
     it "builds the co-op" do
-      Coop.should_receive(:new).with(@coop_attributes).and_return(@coop)
+      expect(Coop).to receive(:new).with(@coop_attributes).and_return(@coop)
       post_create
     end
 
     it "builds the member on the co-op" do
-      @members_association.should_receive(:build).with(@member_attributes).and_return(@member)
+      expect(@members_association).to receive(:build).with(@member_attributes).and_return(@member)
       post_create
     end
 
     it "saves the co-op" do
-      @coop.should_receive(:save!).and_return(true)
+      expect(@coop).to receive(:save!).and_return(true)
       post_create
     end
 
     it "saves the member" do
-      @member.should_receive(:save!).and_return(true)
+      expect(@member).to receive(:save!).and_return(true)
       post_create
     end
 
     it "sets the member class of the member to 'Founder Member'" do
-      @member.should_receive(:member_class=).with(@founder_member_member_class)
+      expect(@member).to receive(:member_class=).with(@founder_member_member_class)
       post_create
     end
 
     it "logs the member in" do
-      controller.should_receive(:log_in).with(@member)
+      expect(controller).to receive(:log_in).with(@member)
       post_create
     end
 
     it "redirects to the dashboard for the new co-op" do
       post_create
-      response.should redirect_to 'http://coffee.oneclickorgs.com/'
+      expect(response).to redirect_to 'http://coffee.oneclickorgs.com/'
     end
 
     describe "when the coop attributes are invalid" do

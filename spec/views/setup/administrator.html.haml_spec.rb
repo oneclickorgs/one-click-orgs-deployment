@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'setup/administrator' do
 
@@ -10,22 +10,22 @@ describe 'setup/administrator' do
 
   it "renders an email field" do
     render
-    expect(rendered).to have_selector(:input, name: 'administrator[email]')
+    expect(rendered).to have_selector("input[name='administrator[email]']")
   end
 
   it 'renders a password field' do
     render
-    expect(rendered).to have_selector(:input, name: 'administrator[password]')
+    expect(rendered).to have_selector("input[name='administrator[password]']")
   end
 
   it 'renders a password confirmation field' do
     render
-    expect(rendered).to have_selector(:input, name: 'administrator[password_confirmation]')
+    expect(rendered).to have_selector("input[name='administrator[password_confirmation]']")
   end
 
   it 'renders a submit button' do
     render
-    expect(rendered).to have_selector(:input, type: 'submit')
+    expect(rendered).to have_selector("input[type='submit']")
   end
 
 end

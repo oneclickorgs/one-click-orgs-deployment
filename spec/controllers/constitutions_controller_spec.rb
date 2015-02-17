@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ConstitutionsController do
 
@@ -19,8 +19,8 @@ describe ConstitutionsController do
       let(:cpb) {mock_model(ConstitutionProposalBundle)}
 
       before(:each) do
-        controller.stub(:can?).and_return(false)
-        @organisation.stub(:build_constitution_proposal_bundle).and_return(cpb)
+        allow(controller).to receive(:can?).and_return(false)
+        allow(@organisation).to receive(:build_constitution_proposal_bundle).and_return(cpb)
       end
 
       def get_edit
@@ -29,37 +29,37 @@ describe ConstitutionsController do
 
       context "when current user can create resolutions" do
         before(:each) do
-          controller.stub(:can?).with(:create, Resolution).and_return(true)
+          allow(controller).to receive(:can?).with(:create, Resolution).and_return(true)
         end
 
         it "allows editing" do
-          @organisation.stub(:constitution).and_return(constitution)
+          allow(@organisation).to receive(:constitution).and_return(constitution)
 
           get_edit
-          assigns[:allow_editing].should be_true
+          expect(assigns[:allow_editing]).to be true
         end
       end
 
       context "when current user can create resolution proposals" do
         before(:each) do
-          controller.stub(:can?).with(:create, ResolutionProposal).and_return(true)
+          allow(controller).to receive(:can?).with(:create, ResolutionProposal).and_return(true)
 
-          @organisation.stub(:constitution).and_return(constitution)
+          allow(@organisation).to receive(:constitution).and_return(constitution)
         end
 
         it "allows editing" do
           get_edit
-          assigns[:allow_editing].should be_true
+          expect(assigns[:allow_editing]).to be true
         end
 
         it "builds a constitution_proposal_bundle" do
-          @organisation.should_receive(:build_constitution_proposal_bundle).and_return(cpb)
+          expect(@organisation).to receive(:build_constitution_proposal_bundle).and_return(cpb)
           get_edit
         end
 
         it "assigns the constitution proposal bundle" do
           get_edit
-          assigns[:constitution_proposal_bundle].should == cpb
+          expect(assigns[:constitution_proposal_bundle]).to eq(cpb)
         end
       end
     end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MinutesController do
 
@@ -15,9 +15,9 @@ describe MinutesController do
     let(:members) {double("members association", :map => nil)}
 
     before(:each) do
-      @organisation.stub(:build_minute).and_return(minute)
-      @organisation.stub(:meeting_classes).and_return([GeneralMeeting, AnnualGeneralMeeting, BoardMeeting])
-      @organisation.stub(:members).and_return(members)
+      allow(@organisation).to receive(:build_minute).and_return(minute)
+      allow(@organisation).to receive(:meeting_classes).and_return([GeneralMeeting, AnnualGeneralMeeting, BoardMeeting])
+      allow(@organisation).to receive(:members).and_return(members)
     end
 
     def get_new
@@ -25,42 +25,42 @@ describe MinutesController do
     end
 
     it "builds a new minute" do
-      @organisation.should_receive(:build_minute).and_return(minute)
+      expect(@organisation).to receive(:build_minute).and_return(minute)
       get_new
     end
 
     it "assigns the new minute" do
       get_new
-      assigns[:minute].should == minute
+      expect(assigns[:minute]).to eq(minute)
     end
 
     it "builds a collection of minute class options for a select" do
-      @organisation.should_receive(:meeting_classes).and_return([GeneralMeeting, AnnualGeneralMeeting, BoardMeeting])
+      expect(@organisation).to receive(:meeting_classes).and_return([GeneralMeeting, AnnualGeneralMeeting, BoardMeeting])
       get_new
     end
 
     it "assigns the collection of minute class options" do
       get_new
-      assigns[:meeting_class_options_for_select].should == [
+      expect(assigns[:meeting_class_options_for_select]).to eq([
         ['General Meeting', 'GeneralMeeting'],
         ['Annual General Meeting', 'AnnualGeneralMeeting'],
         ['Board Meeting', 'BoardMeeting']
-      ]
+      ])
     end
 
     it "looks up the members" do
-      @organisation.should_receive(:members).and_return(members)
+      expect(@organisation).to receive(:members).and_return(members)
       get_new
     end
 
     it "assigns the members" do
       get_new
-      assigns[:members].should == members
+      expect(assigns[:members]).to eq(members)
     end
 
     it "is successful" do
       get_new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -69,7 +69,7 @@ describe MinutesController do
     let(:minute) {mock_model(Minute, :save => true).as_new_record}
 
     before(:each) do
-      @organisation.stub(:build_minute).and_return(minute)
+      allow(@organisation).to receive(:build_minute).and_return(minute)
     end
 
     def post_create
@@ -77,18 +77,18 @@ describe MinutesController do
     end
 
     it "builds the minute" do
-      @organisation.should_receive(:build_minute).with(minute_params).and_return(minute)
+      expect(@organisation).to receive(:build_minute).with(minute_params).and_return(minute)
       post_create
     end
 
     it "saves the minute" do
-      minute.should_receive(:save)
+      expect(minute).to receive(:save)
       post_create
     end
 
     it "redirects to the meetings page" do
       post_create
-      response.should redirect_to('/meetings')
+      expect(response).to redirect_to('/meetings')
     end
   end
 

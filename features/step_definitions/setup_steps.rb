@@ -101,5 +101,5 @@ Then(/^I should not see a link to make a new co\-operative$/) do
 end
 
 Then(/^there should be an administrator$/) do
-  expect(Administrator.any?).to be_true
+  expect(Administrator.any?).to be true
 end

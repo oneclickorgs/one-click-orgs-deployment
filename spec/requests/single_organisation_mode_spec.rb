@@ -1,6 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Single-organisation mode" do
+
+  include RequestSpecHelper
 
   # convenience method to create a mock association, ready to send out invites
   # to other co-founders
@@ -27,38 +29,38 @@ describe "Single-organisation mode" do
   describe "instance setup" do
     it "shows a button to run the app in single-organisation mode" do
       get 'http://oneclickorgs.com/setup/domains'
-      response.should have_selector("form", :action => '/setup/set_single_organisation_mode') do |form|
-        form.should have_selector('input', :type => 'submit')
+      expect(page).to have_selector("form[action='/setup/set_single_organisation_mode']") do |form|
+        expect(form).to have_selector("input[type='submit']")
       end
     end
 
     it "puts the app into single-organisation mode" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
-      Setting[:single_organisation_mode].should == 'true'
+      expect(Setting[:single_organisation_mode]).to eq('true')
     end
 
     it "sets the base domain the app into single-organisation mode" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
-      Setting[:single_organisation_mode].should == 'true'
+      expect(Setting[:single_organisation_mode]).to eq('true')
     end
 
     it "redirects to New Organisation page" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
       post 'http://oneclickorgs.com/setup/set_organisation_types', association: '1'
-      response.should redirect_to('http://oneclickorgs.com/organisations/new')
+      expect(response).to redirect_to('http://oneclickorgs.com/organisations/new')
     end
 
     it "allows creation of a single association in single organisation mode" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
       post 'http://oneclickorgs.com/setup/set_organisation_types', association: '1'
       get 'http://oneclickorgs.com/associations/new'
-      response.should render_template 'associations/new'
+      expect(response).to render_template 'associations/new'
     end
 
     it "should not allow the creation of duplicate organisations in single organisation mode" do
       create_mock_association
       get 'http://oneclickorgs.com/associations/new'
-      response.should_not render_template 'associations/new'
+      expect(response).not_to render_template 'associations/new'
     end
 
   end
@@ -70,11 +72,11 @@ describe "Single-organisation mode" do
 
     it "allows login" do
       post "http://oneclickorgs.com/member_session", :email => @member.email, :password => 'password'
-      response.should redirect_to('/')
+      expect(response).to redirect_to('/')
 
       get 'http://oneclickorgs.com/'
-      response.should be_successful
-      response.body.should contain "Voting & proposals"
+      expect(response).to be_successful
+      expect(response.body).to include "Voting & proposals"
     end
 
     # TODO: More tests needed here?

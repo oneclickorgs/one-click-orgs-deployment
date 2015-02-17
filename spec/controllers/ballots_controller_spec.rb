@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe BallotsController do
 
@@ -13,22 +13,22 @@ describe BallotsController do
   describe "GET new" do
     before(:each) do
       @elections_association = double("elections association")
-      @organisation.stub(:elections).and_return(@elections_association)
+      allow(@organisation).to receive(:elections).and_return(@elections_association)
 
       @election = mock_model(Election)
-      @elections_association.stub(:find).and_return(@election)
+      allow(@elections_association).to receive(:find).and_return(@election)
 
       @ballots_association = double("ballots_association")
-      @election.stub(:ballots).and_return(@ballots_association)
+      allow(@election).to receive(:ballots).and_return(@ballots_association)
 
       @ballot = mock_model(Ballot).as_new_record
-      @ballots_association.stub(:build).and_return(@ballot)
+      allow(@ballots_association).to receive(:build).and_return(@ballot)
 
       @nominations_association = double("nominations association")
-      @election.stub(:nominations).and_return(@nominations_association)
+      allow(@election).to receive(:nominations).and_return(@nominations_association)
 
       @agm = mock_model(AnnualGeneralMeeting)
-      @election.stub(:meeting).and_return(@agm)
+      allow(@election).to receive(:meeting).and_return(@agm)
     end
 
     def get_new
@@ -36,33 +36,33 @@ describe BallotsController do
     end
 
     it "finds the election" do
-      @elections_association.should_receive(:find).with('1').and_return(@election)
+      expect(@elections_association).to receive(:find).with('1').and_return(@election)
       get_new
     end
 
     it "assigns the election" do
       get_new
-      assigns[:election].should == @election
+      expect(assigns[:election]).to eq(@election)
     end
 
     it "builds a new ballot" do
-      @ballots_association.should_receive(:build).and_return(@ballot)
+      expect(@ballots_association).to receive(:build).and_return(@ballot)
       get_new
     end
 
     it "assigns the new ballot" do
       get_new
-      assigns[:ballot].should == @ballot
+      expect(assigns[:ballot]).to eq(@ballot)
     end
 
     it "assigns the nominations" do
       get_new
-      assigns[:nominations].should == @nominations_association
+      expect(assigns[:nominations]).to eq(@nominations_association)
     end
 
     it "should be successful" do
       get_new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -70,15 +70,15 @@ describe BallotsController do
     before(:each) do
       @ballot_params = {'ranking_30' => '1'}  
       @elections_association = double("elections association")
-      @organisation.stub(:elections).and_return(@elections_association)
+      allow(@organisation).to receive(:elections).and_return(@elections_association)
       @election = mock_model(Election)
-      @elections_association.stub(:find).and_return(@election)
+      allow(@elections_association).to receive(:find).and_return(@election)
       @ballots_association = double("ballots association")
-      @election.stub(:ballots).and_return(@ballots_association)
+      allow(@election).to receive(:ballots).and_return(@ballots_association)
       @ballot = mock_model(Ballot).as_new_record
-      @ballots_association.stub(:build).and_return(@ballot)
-      @ballot.stub(:member=)
-      @ballot.stub(:save!)
+      allow(@ballots_association).to receive(:build).and_return(@ballot)
+      allow(@ballot).to receive(:member=)
+      allow(@ballot).to receive(:save!)
     end
 
     def post_create
@@ -86,28 +86,28 @@ describe BallotsController do
     end
 
     it "finds the election" do
-      @elections_association.should_receive(:find).with('1').and_return(@election)
+      expect(@elections_association).to receive(:find).with('1').and_return(@election)
       post_create
     end
 
     it "builds a new ballot" do
-      @ballots_association.should_receive(:build).with(@ballot_params).and_return(@ballot)
+      expect(@ballots_association).to receive(:build).with(@ballot_params).and_return(@ballot)
       post_create
     end
 
     it "sets the owner of the ballot to the current user" do
-      @ballot.should_receive(:member=).with(@user)
+      expect(@ballot).to receive(:member=).with(@user)
       post_create
     end
 
     it "saves the ballot" do
-      @ballot.should_receive(:save!)
+      expect(@ballot).to receive(:save!)
       post_create
     end
 
     it "redirects to the dashboard" do
       post_create
-      response.should redirect_to('/')
+      expect(response).to redirect_to('/')
     end
 
     context "when ballot cannot be saved" do

@@ -1,6 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "/one_click" do
+
+  include RequestSpecHelper
   
   context "when current organisation is an association" do
     before(:each) do
@@ -19,8 +21,8 @@ describe "/one_click" do
         @organisation.proposals.make!.create_decision
 
         get url_for(:controller => 'one_click', :action => 'dashboard')
-        @response.should be_successful
-        @response.should have_xpath("//table[@class='timeline']")
+        expect(@response).to be_successful
+        expect(page).to have_xpath("//table[@class='timeline']")
       end
     end
   end

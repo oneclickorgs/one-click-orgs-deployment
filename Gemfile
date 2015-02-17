@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.7.0"
 
-gem "rails", "3.2.19"
+gem "rails", "3.2.21"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -29,8 +29,8 @@ gem "mysql2", "~>0.3.11"
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~>3.2.5' # sass-rails 4 requires rails 4
-  gem 'uglifier', '~>2.5.0'
-  gem 'therubyracer', '~>0.11.2'
+  gem 'uglifier', '~>2.7.0'
+  gem 'therubyracer', '~>0.12.1'
 end
 
 gem "jquery-rails", "~>3.0.4"
@@ -69,7 +69,8 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>2.14.0"
+  gem "rspec-rails", "~>3.1.0"
+  gem 'rspec-activemodel-mocks'
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
   gem "faker", '~>1.4.2'

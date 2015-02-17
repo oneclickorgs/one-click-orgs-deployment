@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module ProposalsSpecHelper
   def a_proposal_exists
@@ -12,6 +12,8 @@ module ProposalsSpecHelper
 end
 
 describe "Proposals" do
+
+  include RequestSpecHelper
   include ProposalsSpecHelper
   
   before(:each) do 
@@ -42,7 +44,7 @@ describe "Proposals" do
       end
   
       it "responds successfully" do
-        @response.should be_successful
+        expect(@response).to be_successful
       end
     end
   end
@@ -58,12 +60,12 @@ describe "Proposals" do
        end
 
        it "responds successfully" do
-         @response.should be_successful
+         expect(@response).to be_successful
        end
 
        it "contains a list of proposals" do
          # pending
-         @response.should have_xpath("//ul")
+         expect(page).to have_xpath("//ul")
        end
      end
   end

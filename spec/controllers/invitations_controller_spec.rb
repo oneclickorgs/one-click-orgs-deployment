@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe InvitationsController do
   
@@ -9,17 +9,17 @@ describe InvitationsController do
   before(:each) do
     controller.class.skip_before_filter :prepare_notifications
     
-    controller.stub(:ensure_set_up).and_return(true)
-    controller.stub(:ensure_organisation_exists).and_return(true)
-    controller.stub(:ensure_member_inducted).and_return(true)
+    allow(controller).to receive(:ensure_set_up).and_return(true)
+    allow(controller).to receive(:ensure_organisation_exists).and_return(true)
+    allow(controller).to receive(:ensure_member_inducted).and_return(true)
     
-    controller.stub(:co).and_return(organisation)
+    allow(controller).to receive(:co).and_return(organisation)
   end
   
   describe "GET edit" do
     context "when given an invalid invitation code" do
       before(:each) do
-        Member.stub(:find_by_invitation_code).and_return(nil)
+        allow(Member).to receive(:find_by_invitation_code).and_return(nil)
       end
     
       it "should raise a NotFound exception" do
@@ -32,12 +32,12 @@ describe InvitationsController do
   describe "POST update" do
     context "when given an invalid invitation code" do
       before(:each) do
-        Invitation.stub(:find).and_raise(ActiveRecord::RecordNotFound)
+        allow(Invitation).to receive(:find).and_raise(ActiveRecord::RecordNotFound)
       end
       
       it "should render a 404" do
         post :update, :id => 'invalid'
-        response.code.should == '404'
+        expect(response.code).to eq('404')
       end
     end
   end

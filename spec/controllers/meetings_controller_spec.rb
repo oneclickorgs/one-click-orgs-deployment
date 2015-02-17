@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MeetingsController do
   include ControllerSpecHelper
@@ -18,17 +18,17 @@ describe MeetingsController do
         @meeting = mock_model(Meeting)
 
         @meetings_association = double("meetings association")
-        @meetings_association.stub(:find).and_return(@meeting)
+        allow(@meetings_association).to receive(:find).and_return(@meeting)
 
-        @company.stub(:meetings).and_return(@meetings_association)
+        allow(@company).to receive(:meetings).and_return(@meetings_association)
 
         @comments_association = double("comments association")
-        @meeting.stub(:comments).and_return(@comments_association)
+        allow(@meeting).to receive(:comments).and_return(@comments_association)
 
         @comment = mock_model(Comment).as_new_record
-        Comment.stub(:new).and_return(@comment)
+        allow(Comment).to receive(:new).and_return(@comment)
 
-        controller.stub(:can?).with(:read, @meeting).and_return(true)
+        allow(controller).to receive(:can?).with(:read, @meeting).and_return(true)
       end
 
       def get_show
@@ -36,43 +36,43 @@ describe MeetingsController do
       end
 
       it "finds the meeting" do
-        @meetings_association.should_receive(:find).with('1').and_return(@meeting)
+        expect(@meetings_association).to receive(:find).with('1').and_return(@meeting)
         get_show
       end
 
       it "assigns the meeting" do
         get_show
-        assigns(:meeting).should == @meeting
+        expect(assigns(:meeting)).to eq(@meeting)
       end
 
       it "assigns the meeting's comments" do
         get_show
-        assigns(:comments).should == @comments_association
+        expect(assigns(:comments)).to eq(@comments_association)
       end
 
       it "builds a new comment" do
-        Comment.should_receive(:new).and_return(@comment)
+        expect(Comment).to receive(:new).and_return(@comment)
         get_show
       end
 
       it "assigns the new comment" do
         get_show
-        assigns(:comment).should == @comment
+        expect(assigns(:comment)).to eq(@comment)
       end
 
       it "renders the meetings/show template" do
         get_show
-        response.should render_template('meetings/show')
+        expect(response).to render_template('meetings/show')
       end
 
       context "when user is not permitted to view the meeting" do
         before(:each) do
-          controller.stub(:can?).with(:read, @meeting).and_return(false)
+          allow(controller).to receive(:can?).with(:read, @meeting).and_return(false)
         end
 
         it "redirects to the dashboard" do
           get_show
-          response.should redirect_to root_path
+          expect(response).to redirect_to root_path
         end
       end
     end
@@ -88,15 +88,15 @@ describe MeetingsController do
         }
 
         @meetings_association = double("meetings association")
-        @company.stub(:meetings).and_return(@meetings_association)
+        allow(@company).to receive(:meetings).and_return(@meetings_association)
 
         @meeting = mock_model(Meeting, :creator= => nil).as_new_record
-        @meetings_association.stub(:build).and_return(@meeting)
+        allow(@meetings_association).to receive(:build).and_return(@meeting)
 
-        @meeting.stub(:attributes=)
-        @meeting.stub(:save).and_return(true)
+        allow(@meeting).to receive(:attributes=)
+        allow(@meeting).to receive(:save).and_return(true)
 
-        controller.stub(:can?).with(:create, Meeting).and_return(true)
+        allow(controller).to receive(:can?).with(:create, Meeting).and_return(true)
       end
 
       def post_create
@@ -107,76 +107,76 @@ describe MeetingsController do
         # This is to avoid trying to set the participants before
         # setting the organisation, since Meeting has to validate
         # the participants' membership of the organisation.
-        @meetings_association.should_receive(:build).with().and_return(@meeting)
+        expect(@meetings_association).to receive(:build).with(no_args).and_return(@meeting)
         post_create
       end
 
       it "sets the meeting's attributes" do
-        @meeting.should_receive(:attributes=).with(@meeting_parameters)
+        expect(@meeting).to receive(:attributes=).with(@meeting_parameters)
         post_create
       end
 
       it "saves the meeting" do
-        @meeting.should_receive(:save).and_return(true)
+        expect(@meeting).to receive(:save).and_return(true)
         post_create
       end
 
       it "logs that the current user created the meeting" do
-        @meeting.should_receive(:creator=).with(@user)
+        expect(@meeting).to receive(:creator=).with(@user)
         post_create
       end
 
       it "redirects to the dashboard" do
         post_create
-        response.should redirect_to '/'
+        expect(response).to redirect_to '/'
       end
 
       context "when saving the meeting fails" do
         before(:each) do
-          @meeting.stub(:save).and_return(false)
+          allow(@meeting).to receive(:save).and_return(false)
 
           @member_classes_association = double("member classes association")
-          @company.stub(:member_classes).and_return(@member_classes_association)
+          allow(@company).to receive(:member_classes).and_return(@member_classes_association)
 
           @director_member_class = mock_model(Director)
-          @member_classes_association.stub(:find_by_name).and_return(@director_member_class)
+          allow(@member_classes_association).to receive(:find_by_name).and_return(@director_member_class)
 
           @members_association = double("members association")
-          @company.stub(:members).and_return(@members_association)
+          allow(@company).to receive(:members).and_return(@members_association)
 
           @directors = double("directors")
-          @members_association.stub(:where).and_return(@directors)
+          allow(@members_association).to receive(:where).and_return(@directors)
         end
 
         it "finds the directors" do
-          @member_classes_association.should_receive(:find_by_name).with('Director').and_return(@director_member_class)
-          @members_association.should_receive(:where).with(:member_class_id => @director_member_class.id).and_return(@directors)
+          expect(@member_classes_association).to receive(:find_by_name).with('Director').and_return(@director_member_class)
+          expect(@members_association).to receive(:where).with(:member_class_id => @director_member_class.id).and_return(@directors)
           post_create
         end
 
         it "assigns the directors" do
           post_create
-          assigns(:directors).should == @directors
+          expect(assigns(:directors)).to eq(@directors)
         end
 
         it "renders the 'new' template" do
           post_create
-          response.should render_template 'meetings/new'
+          expect(response).to render_template 'meetings/new'
         end
 
         it "sets an error flash" do
           post_create
-          flash[:error].should be_present
+          expect(flash[:error]).to be_present
         end
       end
 
       context "when the user is not permitted to create a meeting" do
         before(:each) do
-          controller.stub(:can?).with(:create, Meeting).and_return(false)
+          allow(controller).to receive(:can?).with(:create, Meeting).and_return(false)
         end
 
         it "does not save the meeting" do
-          @meeting.should_not_receive(:save)
+          expect(@meeting).not_to receive(:save)
           post_create
         end
       end
@@ -195,26 +195,26 @@ describe MeetingsController do
         @upcoming_meetings = double("upcoming general meetings association")
         @past_meetings = double("past general meetings association")
 
-        @organisation.stub(:general_meetings).and_return(@general_meetings_association)
-        @general_meetings_association.stub(:upcoming).and_return(@upcoming_meetings)
-        @general_meetings_association.stub(:past).and_return(@past_meetings)
+        allow(@organisation).to receive(:general_meetings).and_return(@general_meetings_association)
+        allow(@general_meetings_association).to receive(:upcoming).and_return(@upcoming_meetings)
+        allow(@general_meetings_association).to receive(:past).and_return(@past_meetings)
       end
 
       it "finds and assigns the upcoming general meetings" do
-        @general_meetings_association.should_receive(:upcoming).and_return(@upcoming_meetings)
+        expect(@general_meetings_association).to receive(:upcoming).and_return(@upcoming_meetings)
         get :index
-        assigns[:upcoming_meetings].should == @upcoming_meetings
+        expect(assigns[:upcoming_meetings]).to eq(@upcoming_meetings)
       end
 
       it "finds and assigns the past general meetings" do
-        @general_meetings_association.should_receive(:past).and_return(@past_meetings)
+        expect(@general_meetings_association).to receive(:past).and_return(@past_meetings)
         get :index
-        assigns[:past_meetings].should == @past_meetings
+        expect(assigns[:past_meetings]).to eq(@past_meetings)
       end
 
       it "is successful" do
         get :index
-        response.should be_success
+        expect(response).to be_success
       end
     end
   end

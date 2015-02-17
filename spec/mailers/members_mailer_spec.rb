@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MembersMailer do
   before :each do
@@ -16,11 +16,11 @@ describe MembersMailer do
     end
       
     it "should include welcome phrase in email text" do    
-      @mail.body.should =~ /Dear #{@member.name}/
+      expect(@mail.body).to match(/Dear #{@member.name}/)
     end
   
     it "should include reset password link in email text" do
-      @mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/r/abcdef")
+      expect(@mail.body).to match(Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/r/abcdef"))
     end
   end
   
@@ -31,11 +31,11 @@ describe MembersMailer do
     end
     
     it "should include welcome phrase in email text" do          
-      @mail.body.should =~ /Dear #{@member.name}/
+      expect(@mail.body).to match(/Dear #{@member.name}/)
     end
   
     it "should include invitation link in email text" do
-      @mail.body.should =~ Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/i/abcdef")
+      expect(@mail.body).to match(Regexp.new("http://#{@organisation.subdomain}.oneclickorgs.com/i/abcdef"))
     end
   end
   
@@ -48,15 +48,15 @@ describe MembersMailer do
     end
     
     it "addresses the email to the recipient" do
-      @mail.to.should == [@recipient.email]
+      expect(@mail.to).to eq([@recipient.email])
     end
     
     it "includes the name of the resignee in the subject" do
-      @mail.subject.should =~ Regexp.new(@resignee.name)
+      expect(@mail.subject).to match(Regexp.new(@resignee.name))
     end
     
     it "includes the name of the resignee in the body" do
-      @mail.body.should =~ Regexp.new(@resignee.name)
+      expect(@mail.body).to match(Regexp.new(@resignee.name))
     end
   end
 end

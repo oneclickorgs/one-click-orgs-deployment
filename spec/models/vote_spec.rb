@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Vote do
   before(:each) do
@@ -7,17 +7,17 @@ describe Vote do
   end
   
   it "should store booleans as an integer" do
-    @for_vote.for.should == 1
-    @against_vote.for.should == 0
+    expect(@for_vote.for).to eq(1)
+    expect(@against_vote.for).to eq(0)
   end
   
   describe "for_or_against" do
     it "should return 'Support' for a 'for' vote" do
-      @for_vote.for_or_against.should == "Support"
+      expect(@for_vote.for_or_against).to eq("Support")
     end
     
     it "should return 'Oppose' for an 'against' vote" do
-      @against_vote.for_or_against.should == "Oppose"
+      expect(@against_vote.for_or_against).to eq("Oppose")
     end
   end
 end

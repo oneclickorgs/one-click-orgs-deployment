@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe AddMemberProposal do
   before do
@@ -8,13 +8,13 @@ describe AddMemberProposal do
 
   it "should persist type information" do    
     @proposal = @organisation.add_member_proposals.make!
-    @organisation.add_member_proposals.find(@proposal.id).should be_kind_of(AddMemberProposal)
+    expect(@organisation.add_member_proposals.find(@proposal.id)).to be_kind_of(AddMemberProposal)
   end
   
   it "should send an email to the new member if proposal passes" do
     @proposal = @organisation.add_member_proposals.new
     
-    MembersMailer.should_receive(:welcome_new_member).and_return(double('mail', :deliver => nil))
+    expect(MembersMailer).to receive(:welcome_new_member).and_return(double('mail', :deliver => nil))
     @proposal.parameters = {:first_name=>"Paul", :last_name => "Smith", :email => "paul@example.com"}
     @proposal.enact!
   end
@@ -28,7 +28,7 @@ describe AddMemberProposal do
     it "should not validate when proposed new member is already active" do
       @existing_member = @organisation.members.make!
       @proposal.parameters = {'email' => @existing_member.email, 'first_name' => @existing_member.first_name, 'last_name' => @existing_member.last_name}
-      @proposal.should_not be_valid
+      expect(@proposal).not_to be_valid
     end
   
     it "should validate when proposed new member exists but is not active" do
@@ -36,7 +36,7 @@ describe AddMemberProposal do
       @existing_member.eject!
     
       @proposal.parameters = {'email' => @existing_member.email, 'first_name' => @existing_member.first_name, 'last_name' => @existing_member.last_name}
-      @proposal.should be_valid
+      expect(@proposal).to be_valid
     end
   end
   
@@ -49,8 +49,8 @@ describe AddMemberProposal do
       it "should create a new member" do
         old_member_count = @organisation.members.count
         @proposal.enact!
-        @organisation.members.count.should == old_member_count + 1
-        @organisation.members.last.email.should == 'new@example.com'
+        expect(@organisation.members.count).to eq(old_member_count + 1)
+        expect(@organisation.members.last.email).to eq('new@example.com')
       end
     end
     
@@ -65,14 +65,14 @@ describe AddMemberProposal do
       it "should reactivate the ex-member" do
         old_member_count = @organisation.members.count
         @proposal.enact!
-        @organisation.members.count.should == old_member_count
+        expect(@organisation.members.count).to eq(old_member_count)
         @ex_member.reload
-        @ex_member.should be_active
+        expect(@ex_member).to be_active
       end
     end
   end
   
   it "has a decision notification message" do
-    AddMemberProposal.new.decision_notification_message.should be_present
+    expect(AddMemberProposal.new.decision_notification_message).to be_present
   end
 end

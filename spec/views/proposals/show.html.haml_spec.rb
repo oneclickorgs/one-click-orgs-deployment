@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "proposals/show" do
   
@@ -37,7 +37,7 @@ describe "proposals/show" do
     )
     
     render
-    rendered.should include('&lt;a href=&quot;something&quot;&gt;Text&lt;/a&gt;')
+    expect(rendered).to include('&lt;a href=&quot;something&quot;&gt;Text&lt;/a&gt;')
   end
   
 end

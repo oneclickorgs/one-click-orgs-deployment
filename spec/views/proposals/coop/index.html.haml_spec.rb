@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "proposals/coop/index" do
 
   before(:each) do
-    view.stub(:can?).and_return(false)
+    allow(view).to receive(:can?).and_return(false)
 
     @proposals = [mock_model(Resolution, :description => "Open proposal description", :end_date => 14.days.from_now)]
     assign(:proposals, @proposals)
@@ -22,91 +22,91 @@ describe "proposals/coop/index" do
 
   it "renders a list of currently-open proposals" do
     render
-    rendered.should have_selector('.proposals', :content => "Open proposal description")
+    expect(rendered).to have_selector('.proposals', :text => "Open proposal description")
   end
 
   context "when user can vote on an open proposal" do
     before(:each) do
       @proposal = @proposals.first
-      view.stub(:can?).with(:vote_on, @proposal).and_return(true)
+      allow(view).to receive(:can?).with(:vote_on, @proposal).and_return(true)
     end
 
     it "renders the voting partial for each open proposal" do
       render
-      rendered.should contain("vote partial")
+      expect(rendered).to include("vote partial")
     end
   end
 
   context "when user can create a resolution" do
     before(:each) do
-      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
-      view.stub(:can?).with(:create, Resolution).and_return(true)
+      allow(view).to receive(:can?).with(:edit, ResolutionProposal).and_return(true)
+      allow(view).to receive(:can?).with(:create, Resolution).and_return(true)
     end
 
     it "renders a list of draft resolutions" do
       render
-      rendered.should have_selector('.draft_proposals', :content => "Draft proposal description")
+      expect(rendered).to have_selector('.draft_proposals', :text => "Draft proposal description")
     end
 
     it "includes the description in the list of draft resolutions" do
       render
-      rendered.should contain('Draft proposal description')
+      expect(rendered).to include('Draft proposal description')
     end
 
     it "renders a button to create a resolution" do
       render
-      rendered.should have_css("form[action='/resolutions/new']")
+      expect(rendered).to have_css("form[action='/resolutions/new']")
     end
 
     it "renders a 'Start an electronic vote' button for each draft resolution" do
       render
-      rendered.should have_selector(".draft_proposals form[action='/proposals/#{@draft_proposals[0].to_param}/open']")
+      expect(rendered).to have_selector(".draft_proposals form[action='/proposals/#{@draft_proposals[0].to_param}/open']")
     end
 
     it "renders a 'Start an electronic vote' button for each suggested resolution" do
       render
-      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass']")
+      expect(rendered).to have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass']")
     end
   end
 
   context "when user can edit a resolution proposal" do
     before(:each) do
-      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
+      allow(view).to receive(:can?).with(:edit, ResolutionProposal).and_return(true)
     end
 
     it "renders a list of suggested resolutions" do
       render
-      rendered.should have_selector('.resolution_proposals', :content => "Suggested resolution description")
+      expect(rendered).to have_selector('.resolution_proposals', :text => "Suggested resolution description")
     end
 
     it "renders an edit button for each suggested resolution" do
       render
-      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
+      expect(rendered).to have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/edit']")
     end
   end
 
   context "when user can create a meeting" do
     before(:each) do
-      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
-      view.stub(:can?).with(:create, Meeting).and_return(true)
+      allow(view).to receive(:can?).with(:edit, ResolutionProposal).and_return(true)
+      allow(view).to receive(:can?).with(:create, Meeting).and_return(true)
     end
 
     it "renders an 'Add to a meeting' button for each draft resolution" do
       render
-      rendered.should have_selector(".draft_proposals form[action='/general_meetings/new?resolution_id=#{@draft_proposals[0].to_param}']")
+      expect(rendered).to have_selector(".draft_proposals form[action='/general_meetings/new?resolution_id=#{@draft_proposals[0].to_param}']")
     end
   end
 
   context "when user can create a meeting and can create a resolution" do
     before(:each) do
-      view.stub(:can?).with(:edit, ResolutionProposal).and_return(true)
-      view.stub(:can?).with(:create, Meeting).and_return(true)
-      view.stub(:can?).with(:create, Resolution).and_return(true)
+      allow(view).to receive(:can?).with(:edit, ResolutionProposal).and_return(true)
+      allow(view).to receive(:can?).with(:create, Meeting).and_return(true)
+      allow(view).to receive(:can?).with(:create, Resolution).and_return(true)
     end
 
     it "renders an 'Add to a meeting' button for each suggested resolution" do
       render
-      rendered.should have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass_to_meeting']")
+      expect(rendered).to have_selector(".resolution_proposals form[action='/resolution_proposals/#{@resolution_proposals[0].to_param}/pass_to_meeting']")
     end
   end
 
@@ -117,12 +117,12 @@ describe "proposals/coop/index" do
 
   context "when user can suggest a resolution" do
     before(:each) do
-      view.stub(:can?).with(:create, ResolutionProposal).and_return(true)
+      allow(view).to receive(:can?).with(:create, ResolutionProposal).and_return(true)
     end
 
     it "renders a button to create a suggested resolution" do
       render
-      rendered.should have_css("form[action='/resolution_proposals/new']")
+      expect(rendered).to have_css("form[action='/resolution_proposals/new']")
     end
   end
 end

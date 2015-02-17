@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Organisation do
   before(:each) do
@@ -14,7 +14,7 @@ describe Organisation do
       @organisation.members << @member
       @member.resignations << @resignation
       
-      @organisation.resignations.should include(@resignation)
+      expect(@organisation.resignations).to include(@resignation)
     end
   end
   
@@ -22,19 +22,19 @@ describe Organisation do
     it "should not allow multiple organisations with the same subdomain" do
       @first = Organisation.make!(:name => 'abc', :subdomain => "apples")
 
-      lambda do
+      expect do
         @second = Organisation.make!(:name => 'def', :subdomain => "apples")
-      end.should raise_error(ActiveRecord::RecordInvalid)
+      end.to raise_error(ActiveRecord::RecordInvalid)
     end
     
     it "does not allow subdomains with invalid characters" do
       @organisation.subdomain = "abcdef-190"
-      @organisation.should be_valid
+      expect(@organisation).to be_valid
       
       # Null byte
       @organisation.subdomain = "\0abcdef-190"
-      @organisation.should_not be_valid
-      @organisation.errors[:subdomain].should be_present
+      expect(@organisation).not_to be_valid
+      expect(@organisation.errors[:subdomain]).to be_present
     end
   end
   
@@ -46,27 +46,27 @@ describe Organisation do
     end
     
     it "should get the name of the organisation" do
-      @organisation.name.should == ("The Cheese Collective")
+      expect(@organisation.name).to eq("The Cheese Collective")
     end
 
     it "should change the name of the organisation" do
-      lambda {
+      expect {
         @organisation.name = "The Yoghurt Yurt"
         @organisation.save!
         @organisation.reload
-      }.should change(Clause, :count).by(1)
-      @organisation.name.should == "The Yoghurt Yurt"
+      }.to change(Clause, :count).by(1)
+      expect(@organisation.name).to eq("The Yoghurt Yurt")
     end
   end
   
   describe "domain" do
     it "should return the root URL for this organisation" do
-      @organisation.domain.should == "http://fromage.oneclickorgs.com"
+      expect(@organisation.domain).to eq("http://fromage.oneclickorgs.com")
     end
     
     context "with only_host option true" do
       it "should remove the http://" do
-        @organisation.domain(:only_host => true).should == "fromage.oneclickorgs.com"
+        expect(@organisation.domain(:only_host => true)).to eq("fromage.oneclickorgs.com")
       end
     end
     
@@ -76,7 +76,7 @@ describe Organisation do
       end
       
       it "returns the base domain" do
-        @organisation.domain.should == "http://oneclickorgs.com"
+        expect(@organisation.domain).to eq("http://oneclickorgs.com")
       end
     end
   end

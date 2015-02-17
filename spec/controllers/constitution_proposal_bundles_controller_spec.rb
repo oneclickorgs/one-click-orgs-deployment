@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ConstitutionProposalBundlesController do
 
@@ -21,9 +21,9 @@ describe ConstitutionProposalBundlesController do
       )}
 
       before(:each) do
-        controller.stub(:authorize!).with(:create, ConstitutionProposalBundle).and_return(true)
-        @organisation.stub(:build_constitution_proposal_bundle).and_return(constitution_proposal_bundle)
-        controller.stub(:can?).with(:create, Resolution).and_return(true)
+        allow(controller).to receive(:authorize!).with(:create, ConstitutionProposalBundle).and_return(true)
+        allow(@organisation).to receive(:build_constitution_proposal_bundle).and_return(constitution_proposal_bundle)
+        allow(controller).to receive(:can?).with(:create, Resolution).and_return(true)
       end
 
       def post_create
@@ -32,7 +32,7 @@ describe ConstitutionProposalBundlesController do
 
       it "redirects to the proposals index" do
         post_create
-        response.should redirect_to('/proposals')
+        expect(response).to redirect_to('/proposals')
       end
     end
   end

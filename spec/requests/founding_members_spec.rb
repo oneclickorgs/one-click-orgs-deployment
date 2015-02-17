@@ -1,6 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "founding members" do
+
+  include RequestSpecHelper
   
   before(:each) do
     default_association(:state => 'pending')
@@ -18,15 +20,15 @@ describe "founding members" do
       end
       
       it "creates a new member" do
-        @organisation.members.last.email.should == "bob@example.com"
+        expect(@organisation.members.last.email).to eq("bob@example.com")
       end
       
       it "sets the correct member class" do
-        @organisation.members.last.member_class.name.should == "Founding Member"
+        expect(@organisation.members.last.member_class.name).to eq("Founding Member")
       end
       
       it "redirect to members/index" do
-        response.should redirect_to('/members')
+        expect(response).to redirect_to('/members')
       end
     end
     
@@ -37,19 +39,19 @@ describe "founding members" do
       end
       
       it "sets an error flash" do
-        flash[:error].should be_present
+        expect(flash[:error]).to be_present
       end
       
       it "displays the errors" do
-        response.should have_selector('ul.errors li', :content => "Email can't be blank")
+        expect(page).to have_selector('ul.errors li', :text => "Email can't be blank")
       end
       
       it "renders the new member page" do
-        response.should render_template('founding_members/new')
+        expect(response).to render_template('founding_members/new')
       end
       
       it "retains the contents of the new member form" do
-        response.should have_selector('input', :name => 'founding_member[first_name]', :value => 'Bob')
+        expect(page).to have_selector("input[name='founding_member[first_name]'][value='Bob']")
       end
     end
   end

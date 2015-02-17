@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "eject-member proposals" do
   
@@ -21,15 +21,15 @@ describe "eject-member proposals" do
     it "should create the proposal to eject the member" do
       expect{post_create}.to change{@organisation.eject_member_proposals.count}.by(1)
       proposal = @organisation.eject_member_proposals.last
-      proposal.member_id.should == @member.id
-      proposal.title.should == "Eject #{@member.name} from #{@organisation.name}"
-      proposal.description.should == "Power grab!"
-      proposal.proposer.should == @user
+      expect(proposal.member_id).to eq(@member.id)
+      expect(proposal.title).to eq("Eject #{@member.name} from #{@organisation.name}")
+      expect(proposal.description).to eq("Power grab!")
+      expect(proposal.proposer).to eq(@user)
     end
 
     it "should redirect to root" do
       post_create
-      @response.should redirect_to('/')
+      expect(@response).to redirect_to('/')
     end
   end
 

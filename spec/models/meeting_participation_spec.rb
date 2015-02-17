@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MeetingParticipation do
   describe "associations" do
@@ -11,7 +11,7 @@ describe MeetingParticipation do
       meeting_participation.save
       meeting_participation.reload
       
-      meeting_participation.meeting.should == meeting
+      expect(meeting_participation.meeting).to eq(meeting)
     end
     
     it "belongs to a participant which is a Member" do
@@ -23,7 +23,7 @@ describe MeetingParticipation do
       meeting_participation.save
       meeting_participation.reload
       
-      meeting_participation.participant.should == member
+      expect(meeting_participation.participant).to eq(member)
     end
   end
 end

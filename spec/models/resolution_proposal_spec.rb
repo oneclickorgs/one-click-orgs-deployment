@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ResolutionProposal do
 
@@ -6,7 +6,7 @@ describe ResolutionProposal do
     it "automatically sets the title based on the description" do
       @resolution_proposal = ResolutionProposal.make(:title => nil, :description => "A description of the resolution")
       @resolution_proposal.save!
-      @resolution_proposal.title.should be_present
+      expect(@resolution_proposal.title).to be_present
     end
   end
 
@@ -18,11 +18,11 @@ describe ResolutionProposal do
     end
 
     it "is sent to the Secretary" do
-      @resolution_proposal.members_to_notify.should == [@secretary]
+      expect(@resolution_proposal.members_to_notify).to eq([@secretary])
     end
 
     it "is customised for resolution proposals" do
-      @resolution_proposal.notification_email_action.should == :notify_resolution_proposal
+      expect(@resolution_proposal.notification_email_action).to eq(:notify_resolution_proposal)
     end
   end
 
@@ -41,26 +41,26 @@ describe ResolutionProposal do
       before(:each) do
         @resolution_proposal = ResolutionProposal.make!
 
-        Resolution.stub(:new).and_return(@resolution)
+        allow(Resolution).to receive(:new).and_return(@resolution)
       end
 
       it "builds a new resolution" do
-        Resolution.should_receive(:new).and_return(@resolution)
+        expect(Resolution).to receive(:new).and_return(@resolution)
         @resolution_proposal.enact!
       end
 
       it "sets the new resolution's proposer to the existing proposer" do
-        @resolution.should_receive(:proposer=).with(@resolution_proposal.proposer)
+        expect(@resolution).to receive(:proposer=).with(@resolution_proposal.proposer)
         @resolution_proposal.enact!
       end
 
       it "sets the new resolution's description" do
-        @resolution.should_receive(:description=).with(@resolution_proposal.description)
+        expect(@resolution).to receive(:description=).with(@resolution_proposal.description)
         @resolution_proposal.enact!
       end
 
       it "saves the new resolution" do
-        @resolution.should_receive(:save!)
+        expect(@resolution).to receive(:save!)
         @resolution_proposal.enact!
       end
 
@@ -70,7 +70,7 @@ describe ResolutionProposal do
         end
 
         it "sets the draft attribute on the new resolution" do
-          @resolution.should_receive(:draft=).with(true)
+          expect(@resolution).to receive(:draft=).with(true)
           @resolution_proposal.enact!
         end
       end
@@ -83,21 +83,21 @@ describe ResolutionProposal do
         @resolution_proposal.resolution_class = 'ChangeTextResolution'
         @resolution_proposal.save!
 
-        @resolution.stub(:name=)
-        @resolution.stub(:value=)
+        allow(@resolution).to receive(:name=)
+        allow(@resolution).to receive(:value=)
 
-        ChangeTextResolution.stub(:new).and_return(@resolution)
+        allow(ChangeTextResolution).to receive(:new).and_return(@resolution)
       end
 
       it "passes the resolution parameters to the new resolution" do
-        @resolution.should_receive(:name=).with('organisation_name')
-        @resolution.should_receive(:value=).with('The Tea IPS')
+        expect(@resolution).to receive(:name=).with('organisation_name')
+        expect(@resolution).to receive(:value=).with('The Tea IPS')
         @resolution_proposal.enact!
       end
 
       context "with a resolution class" do
         it "builds a resolution of the class specified in the parameters" do
-          ChangeTextResolution.should_receive(:new).and_return(@resolution)
+          expect(ChangeTextResolution).to receive(:new).and_return(@resolution)
           @resolution_proposal.enact!
         end
       end
@@ -111,12 +111,12 @@ describe ResolutionProposal do
     end
 
     it "returns the new resolution" do
-      @resolution_proposal.new_resolution.should be_a(Resolution)
+      expect(@resolution_proposal.new_resolution).to be_a(Resolution)
     end
   end
 
   it "does not cast an automatic support vote for the proposer" do
-    ResolutionProposal.new.automatic_proposer_support_vote?.should be_false
+    expect(ResolutionProposal.new.automatic_proposer_support_vote?).to be false
   end
 
   describe "tasks" do
@@ -125,12 +125,12 @@ describe ResolutionProposal do
         resolution_proposal = ResolutionProposal.make
 
         secretary = mock_model(Member, :has_permission => false)
-        resolution_proposal.organisation.stub(:secretary).and_return(secretary)
+        allow(resolution_proposal.organisation).to receive(:secretary).and_return(secretary)
 
         tasks_association = double("tasks association")
-        secretary.stub(:tasks).and_return(tasks_association)
+        allow(secretary).to receive(:tasks).and_return(tasks_association)
 
-        tasks_association.should_receive(:create).with(hash_including(:subject => resolution_proposal))
+        expect(tasks_association).to receive(:create).with(hash_including(:subject => resolution_proposal))
 
         resolution_proposal.save!
       end
@@ -144,14 +144,14 @@ describe ResolutionProposal do
       expect{resolution_proposal.resolution_class = 'ChangeBooleanResolution'}.to_not raise_error
       resolution_proposal.save!
       resolution_proposal.reload
-      resolution_proposal.resolution_class.should == 'ChangeBooleanResolution'
+      expect(resolution_proposal.resolution_class).to eq('ChangeBooleanResolution')
     end
 
     it "has a 'resolution_parameters' attribute" do
       expect{resolution_proposal.resolution_parameters = {:name => 'objectives', :value => 'Win'}}.to_not raise_error
       resolution_proposal.save!
       resolution_proposal.reload
-      resolution_proposal.resolution_parameters.should == {'name' => 'objectives', 'value' => 'Win'}
+      expect(resolution_proposal.resolution_parameters).to eq({'name' => 'objectives', 'value' => 'Win'})
     end
   end
 
