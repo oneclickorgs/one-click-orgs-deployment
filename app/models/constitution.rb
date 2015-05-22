@@ -94,6 +94,17 @@ class Constitution
     }
     document
   end
+
+  # Returns a string to be used in the footer of the constitution, describing the
+  # authority by which the constitution has legal standing.
+  def acceptance
+    case document.title
+    when 'coop_constitution'
+      'Accepted as a model by the Financial Services Authority 2011 v.1'
+    else
+      'Accepted as a model by the Financial Conduct Authority 2014 v.1'
+    end
+  end
   
   # VOTING SYSTEMS
   
