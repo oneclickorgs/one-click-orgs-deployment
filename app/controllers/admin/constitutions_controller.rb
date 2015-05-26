@@ -13,6 +13,8 @@ class Admin::ConstitutionsController < AdminController
 
       @signatories = @organisation.signatories
       @secretary = @organisation.secretary
+
+      @acceptance = @constitution.acceptance
     else
       @page_title = "Constitution"
     end

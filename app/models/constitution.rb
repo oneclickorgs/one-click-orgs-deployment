@@ -53,7 +53,7 @@ class Constitution
     elsif document_id = Setting[:coop_constitution_document_id]
       document = Rticles::Document.find(document_id)
     else
-      document = Rticles::Document.where(:title => 'coop_constitution').order('updated_at DESC').first
+      document = Rticles::Document.where(:title => 'coop_constitution_2014').order('updated_at DESC').first
     end
 
     raise ActiveRecord::RecordNotFound unless document
@@ -93,6 +93,17 @@ class Constitution
       :consumer_directors => (consumer_members && max_consumer_directors > 0),
     }
     document
+  end
+
+  # Returns a string to be used in the footer of the constitution, describing the
+  # authority by which the constitution has legal standing.
+  def acceptance
+    case document.title
+    when 'coop_constitution'
+      'Accepted as a model by the Financial Services Authority 2011 v.1'
+    else
+      'Accepted as a model by the Financial Conduct Authority 2014 v.1'
+    end
   end
   
   # VOTING SYSTEMS

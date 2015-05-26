@@ -103,7 +103,7 @@ Then(/^I should see the changes I made$/) do
 end
 
 Then(/^I should see the rules of the co\-op$/) do
-  page.should have_content("Industrial and Provident Societies Act 1965")
+  page.should have_content("Co-operative and Community Benefit Societies Act 2014")
 end
 
 Then(/^I should see the customisations we have made to the rules$/) do
@@ -149,5 +149,5 @@ Then(/^I should see the alternative Rules$/) do
 end
 
 Then(/^I should see the default Rules$/) do
-  expect(page).to have_content('The purpose of the Co‑operative is to carry out its function as a Co‑operative')
+  expect(page).to have_content('The purpose of the Co‑operative is to carry out its function as a co‑operative')
 end

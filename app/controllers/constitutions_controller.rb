@@ -11,6 +11,7 @@ class ConstitutionsController < ApplicationController
 
       @signatories = co.signatories
       @secretary = co.secretary
+      @acceptance = @constitution.acceptance
     else
       @page_title = "Constitution"
     end
