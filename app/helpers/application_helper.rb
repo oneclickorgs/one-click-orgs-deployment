@@ -1,4 +1,20 @@
 module ApplicationHelper
+  def current_organisation
+    controller.current_organisation
+  end
+
+  def co
+    controller.co
+  end
+
+  def current_user
+    controller.current_user
+  end
+
+  def current_administrator
+    controller.current_administrator
+  end
+
   def get_satisfaction_widget
     return unless Rails.env.production?
     raw <<-EOC

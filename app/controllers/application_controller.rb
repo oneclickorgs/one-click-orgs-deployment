@@ -34,11 +34,8 @@ class ApplicationController < ActionController::Base
   end
   alias :co :current_organisation
 
-  helper_method :current_organisation, :co
-
   # USER LOGIN
 
-  helper_method :current_user
   def current_user
     @current_user if user_logged_in?
   end
@@ -64,7 +61,6 @@ class ApplicationController < ActionController::Base
 
   # ADMINISTRATOR LOGIN
 
-  helper_method :current_administrator
   def current_administrator
     @current_administrator if administrator_logged_in?
   end
