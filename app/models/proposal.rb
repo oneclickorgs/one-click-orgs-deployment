@@ -141,7 +141,7 @@ class Proposal < ActiveRecord::Base
 
   # BEHAVIOUR REDEFINED BY SUBCLASSES
 
-  def enact!
+  def enact!(transition=nil)
   end
 
   def after_reject
