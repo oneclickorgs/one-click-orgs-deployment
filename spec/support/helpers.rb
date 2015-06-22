@@ -8,7 +8,7 @@ end
 
 def default_organisation(attributes={})
   set_up_app
-  
+
   unless @organisation
     @organisation = Organisation.make!({:state => 'active'}.merge(attributes))
     allow(Organisation).to receive(:find_by_host).and_return(@organisation)
@@ -18,7 +18,7 @@ end
 
 def default_association(attributes={})
   set_up_app
-  
+
   unless @organisation
     @organisation = Association.make!({:state => 'active'}.merge(attributes))
     allow(Organisation).to receive(:find_by_host).and_return(@organisation)
@@ -28,7 +28,7 @@ end
 
 def default_company(attributes={})
   set_up_app
-  
+
   unless @organisation
     @organisation = Company.make!({:state => 'active'}.merge(attributes))
     allow(Organisation).to receive(:find_by_host).and_return(@organisation)

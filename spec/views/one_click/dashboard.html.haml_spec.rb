@@ -87,7 +87,7 @@ describe "one_click/dashboard" do
 
       allow(view).to receive(:can?).and_return(false)
 
-      view.stub_chain(:co, :elections, :where).and_return([])
+      allow(view).to receive_message_chain(:co, :elections, :where).and_return([])
     end
 
     it "renders" do

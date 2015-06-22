@@ -42,23 +42,20 @@ describe OneClickController do
         @directors = double("directors")
         allow(@members_association).to receive(:where).and_return(@directors)
 
-        @proposals = [
-          mock_model(Proposal, :to_event => mock_event),
-          mock_model(Proposal, :to_event => mock_event)
-        ]
-        @meetings = [
-          mock_model(Meeting, :to_event => mock_event),
-          mock_model(Meeting, :to_event => mock_event)
-        ]
-        @company.stub_chain(:meetings, :all).and_return(@meetings)
+        @proposals_association = class_double(Proposal)
+        @all_proposals = object_double(Company.new.proposals.all, to_ary: [mock_model(Proposal, to_event: mock_event)])
+        @currently_open_proposals = object_double(Company.new.proposals.currently_open)
 
-        allow(@company).to receive(:proposals).and_return(@proposals)
-        @company.stub_chain(:decisions, :all).and_return([])
+        @meetings = double('meetings', to_ary: [])
+        allow(@company).to receive_message_chain(:meetings, :all).and_return(@meetings)
 
-        allow(@proposals).to receive(:all).and_return(@proposals)
-        allow(@proposals).to receive(:currently_open).and_return(@proposals)
+        allow(@company).to receive(:proposals).and_return(@proposals_association)
+        allow(@company).to receive_message_chain(:decisions, :all).and_return(double('decisions', to_ary: []))
 
-        allow(@proposals).to receive(:new).and_return(mock_model(Proposal))
+        allow(@proposals_association).to receive(:all).and_return(@all_proposals)
+        allow(@proposals_association).to receive(:currently_open).and_return(@currently_open_proposals)
+
+        allow(@proposals_association).to receive(:new).and_return(mock_model(Proposal).as_new_record)
       end
 
       it "builds a new meeting" do
@@ -103,21 +100,21 @@ describe OneClickController do
 
     describe "GET dashboard" do
       before(:each) do
-        @association.stub_chain(:add_member_proposals, :build).and_return(mock_model(AddMemberProposal))
-        @association.stub_chain(:proposals, :currently_open).and_return([])
-        @association.stub_chain(:proposals, :new).and_return(mock_model(Proposal))
-        @association.stub_chain(:members, :new).and_return(mock_model(Member))
+        allow(@association).to receive_message_chain(:add_member_proposals, :build).and_return(mock_model(AddMemberProposal))
+        allow(@association).to receive_message_chain(:proposals, :currently_open).and_return([])
+        allow(@association).to receive_message_chain(:proposals, :new).and_return(mock_model(Proposal))
+        allow(@association).to receive_message_chain(:members, :new).and_return(mock_model(Member))
         allow(@association).to receive(:default_member_class).and_return(mock_model(MemberClass))
 
-        @association.stub_chain(:members, :all).and_return([])
-        @association.stub_chain(:proposals, :all).and_return([])
-        @association.stub_chain(:decisions, :all).and_return([])
+        allow(@association).to receive_message_chain(:members, :all).and_return([])
+        allow(@association).to receive_message_chain(:proposals, :all).and_return([])
+        allow(@association).to receive_message_chain(:decisions, :all).and_return([])
       end
 
       describe "timeline" do
         it "includes Resignation events" do
           @resignation_event = double('resignation event')
-          @association.stub_chain(:resignations, :all).and_return(mock_model(Resignation,
+          allow(@association).to receive_message_chain(:resignations, :all).and_return(mock_model(Resignation,
             :to_event => @resignation_event
           ))
 
@@ -140,15 +137,15 @@ describe OneClickController do
       @proposals_association = double("proposals association")
       allow(@organisation).to receive(:proposals).and_return(@proposals_association)
 
-      @proposals_association.stub_chain(:currently_open, :reject)
+      allow(@proposals_association).to receive_message_chain(:currently_open, :reject)
       allow(@proposals_association).to receive(:new)
 
-      @organisation.stub_chain(:members, :all).and_return([])
+      allow(@organisation).to receive_message_chain(:members, :all).and_return([])
 
-      @organisation.stub_chain(:general_meetings, :all).and_return([])
-      @organisation.stub_chain(:general_meetings, :upcoming, :order, :first)
-      @organisation.stub_chain(:general_meetings, :upcoming, :count).and_return(0)
-      @organisation.stub_chain(:general_meetings, :past, :order, :first)
+      allow(@organisation).to receive_message_chain(:general_meetings, :all).and_return([])
+      allow(@organisation).to receive_message_chain(:general_meetings, :upcoming, :order, :first)
+      allow(@organisation).to receive_message_chain(:general_meetings, :upcoming, :count).and_return(0)
+      allow(@organisation).to receive_message_chain(:general_meetings, :past, :order, :first)
 
       allow(@organisation).to receive(:resolutions).and_return(double("resolutions", :currently_open => []))
       allow(@organisation).to receive(:resolution_proposals).and_return([])

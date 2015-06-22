@@ -80,23 +80,22 @@ describe GeneralMeeting do
 
   describe "setting passed resolutions" do
     let(:meeting) {GeneralMeeting.make}
-    let(:resolutions) {[
-      mock_model(Resolution),
-      mock_model(Resolution)
-    ]}
+    let(:resolutions) {object_double(GeneralMeeting.new.resolutions)}
+    let(:resolution_7) {mock_model(Resolution)}
+    let(:resolution_9) {mock_model(Resolution)}
 
     before(:each) do
       allow(meeting).to receive(:resolutions).and_return(resolutions)
-      allow(resolutions).to receive(:find_by_id).with(7).and_return(resolutions[0])
-      allow(resolutions).to receive(:find_by_id).with(9).and_return(resolutions[1])
+      allow(resolutions).to receive(:find_by_id).with(7).and_return(resolution_7)
+      allow(resolutions).to receive(:find_by_id).with(9).and_return(resolution_9)
     end
 
     it "it forces the passed resolutions to pass" do
-      expect(resolutions[0]).to receive(:force_passed=).with(true)
+      expect(resolution_7).to receive(:force_passed=).with(true)
 
       meeting.passed_resolutions_attributes = {"0"=>{"passed"=>"1", "id"=>"7"}, "1"=>{"passed"=>"0", "id"=>"9"}}
 
-      expect(resolutions[0]).to receive(:close!)
+      expect(resolution_7).to receive(:close!)
 
       meeting.save!
     end
