@@ -9,7 +9,6 @@ describe CommentsController do
     allow(controller).to receive(:ensure_organisation_exists).and_return(true)
     allow(controller).to receive(:ensure_authenticated).and_return(true)
     allow(controller).to receive(:ensure_member_active_or_pending).and_return(true)
-    allow(controller).to receive(:ensure_organisation_active).and_return(true)
     allow(controller).to receive(:ensure_member_inducted).and_return(true)
   end
 
