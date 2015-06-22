@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.7"
+gem "bundler", "~>1.10"
 
 gem "rails", "3.2.21"
 
