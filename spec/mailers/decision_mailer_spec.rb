@@ -42,13 +42,14 @@ describe DecisionMailer do
       @active_member = mock_model(Member, :name => "Anna Active")
       @pending_member = mock_model(Member, :name => "Peter Pending")
       @ejected_member = mock_model(Member, :name => "Elizabeth Ejected")
-      
-      @organisation = mock_model(Organisation, :domain => 'test', :name => nil)
-      allow(@organisation).to receive(:members).and_return(@members_association = [
+
+      @members_association = object_double(Organisation.new.members, to_ary: [
         @active_member,
         @pending_member,
         @ejected_member
       ])
+      @organisation = mock_model(Organisation, :domain => 'test', :name => nil)
+      allow(@organisation).to receive(:members).and_return(@members_association)
       allow(@members_association).to receive(:active).and_return([@active_member])
       allow(@members_association).to receive(:pending).and_return([@pending_member])
 

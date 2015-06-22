@@ -42,23 +42,20 @@ describe OneClickController do
         @directors = double("directors")
         allow(@members_association).to receive(:where).and_return(@directors)
 
-        @proposals = [
-          mock_model(Proposal, :to_event => mock_event),
-          mock_model(Proposal, :to_event => mock_event)
-        ]
-        @meetings = [
-          mock_model(Meeting, :to_event => mock_event),
-          mock_model(Meeting, :to_event => mock_event)
-        ]
-        @company.stub_chain(:meetings, :all).and_return(@meetings)
+        @proposals_association = class_double(Proposal)
+        @all_proposals = object_double(Company.new.proposals.all, to_ary: [mock_model(Proposal, to_event: mock_event)])
+        @currently_open_proposals = object_double(Company.new.proposals.currently_open)
 
-        allow(@company).to receive(:proposals).and_return(@proposals)
-        @company.stub_chain(:decisions, :all).and_return([])
+        @meetings = double('meetings', to_ary: [])
+        allow(@company).to receive_message_chain(:meetings, :all).and_return(@meetings)
 
-        allow(@proposals).to receive(:all).and_return(@proposals)
-        allow(@proposals).to receive(:currently_open).and_return(@proposals)
+        allow(@company).to receive(:proposals).and_return(@proposals_association)
+        allow(@company).to receive_message_chain(:decisions, :all).and_return(double('decisions', to_ary: []))
 
-        allow(@proposals).to receive(:new).and_return(mock_model(Proposal))
+        allow(@proposals_association).to receive(:all).and_return(@all_proposals)
+        allow(@proposals_association).to receive(:currently_open).and_return(@currently_open_proposals)
+
+        allow(@proposals_association).to receive(:new).and_return(mock_model(Proposal).as_new_record)
       end
 
       it "builds a new meeting" do

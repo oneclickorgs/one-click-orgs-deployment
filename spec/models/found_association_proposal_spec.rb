@@ -9,9 +9,11 @@ describe FoundAssociationProposal do
     before(:each) do
       @proposal = FoundAssociationProposal.new(:title => "Title")
       @proposal.proposer = mock_model(Member)
-      @proposal.organisation = @organisation = mock_model(Association, :members => (@members_association = []), :name => "Test association")
+      @members_association = object_double(Association.new.members)
+      @proposal.organisation = @organisation = mock_model(Association, :members => @members_association, :name => "Test association")
       allow(@organisation).to receive(:can_hold_founding_vote?).and_return(false)
-      allow(@members_association).to receive(:active).and_return([])
+      allow(@members_association).to receive(:active).and_return(object_double(Association.new.members.active))
+      allow_any_instance_of(ProposalMailerObserver).to receive(:send_notification_email)
     end
 
     it "fails on create if the association is not ready for a founding vote" do
