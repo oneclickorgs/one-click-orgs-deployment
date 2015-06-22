@@ -7,7 +7,7 @@ describe 'change_quorum_resolutions/new' do
       :quorum_number => 3,
       :quorum_percentage => 25
     )
-    view.stub_chain(:co, :constitution).and_return(@constitution)
+    allow(view).to receive_message_chain(:co, :constitution).and_return(@constitution)
 
     @change_quorum_resolution = mock_model(ChangeQuorumResolution,
       :quorum_number => nil,

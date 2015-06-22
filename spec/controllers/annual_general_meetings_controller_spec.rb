@@ -33,7 +33,7 @@ describe AnnualGeneralMeetingsController do
 
   describe "GET 'new'" do
     before(:each) do
-      @organisation.stub_chain(:resolutions, :draft)
+      allow(@organisation).to receive_message_chain(:resolutions, :draft)
       allow(@organisation).to receive(:directors_retiring)
     end
 
