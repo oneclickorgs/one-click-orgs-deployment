@@ -33,7 +33,7 @@ group :assets do
   gem 'therubyracer', '~>0.12.1'
 end
 
-gem "jquery-rails", "~>3.1"
+gem "jquery-rails", "~>3.1" # jquery-rails 4.0 requires rails 4
 gem "jquery-ui-rails", "~>5.0.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.1.6"
