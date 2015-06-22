@@ -229,7 +229,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.8.2)
+  bundler (~> 1.10)
   capistrano (~> 2.14.2)
   capybara (~> 1.1.2)
   coffee-rails (~> 3.2.1)
@@ -262,3 +262,6 @@ DEPENDENCIES
   therubyracer (~> 0.12.1)
   uglifier (>= 2.0.1)
   webrat
+
+BUNDLED WITH
+   1.10.4

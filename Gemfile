@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.8.2"
+gem "bundler", "~>1.10"
 
 gem "rails", "3.2.21"
 
@@ -16,7 +16,7 @@ group :assets do
   gem 'uglifier',     ">= 2.0.1"
   gem 'therubyracer', '~>0.12.1'
 end
- 
+
 # jQuery is the default JavaScript library in Rails 3.1
 gem 'jquery-rails'
 
