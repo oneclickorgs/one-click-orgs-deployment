@@ -3,6 +3,9 @@ require 'rails_helper'
 describe 'proposals/_description' do
 
   before(:each) do
+    # Define locals that we expect to be passed to our partial.
+    def view.proposal; super; end
+
     @proposal = mock_model(Proposal, :description => "A description", :description? => true)
     allow(view).to receive(:proposal).and_return(@proposal)
   end

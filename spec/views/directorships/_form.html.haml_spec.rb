@@ -5,6 +5,9 @@ require 'action_view/helpers/form_helper'
 describe 'directorships/_form' do
 
   before(:each) do
+    # Define locals we expect to have been passed to our partial
+    def view.form; super; end
+
     @form = ActionView::Helpers::FormBuilder.new('directorship', @directorship, view, {}, nil)
     allow(view).to receive(:form).and_return(@form)
 
