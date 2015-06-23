@@ -1,3 +1,15 @@
+2015-02-17 One Click Orgs 1.3.10
+
+* Rails is upgraded to version 3.2.21.
+
+2014-07-02 One Click Orgs 1.3.9
+
+* Rails is upgraded to version 3.2.19.
+
+2014-05-12 One Click Orgs 1.3.8
+
+* Rails is upgraded to version 3.2.18.
+
 2014-02-19 One Click Orgs 1.3.7
 
 * FIX: When viewing the members list, the date of last login now includes
