@@ -8,7 +8,7 @@ describe 'shared/notifications/_founding_proposal_passed' do
     members: members_association,
     found_association_proposals: found_association_proposals_association
   )}
-  let(:members_association) {[@ejected_member]}
+  let(:members_association) {object_double(Organisation.new.members, to_ary: [ejected_member])}
   let(:ejected_member) {mock_model(Member, name: 'Edward Ejected')}
   let(:found_association_proposals_association) {double(
     last: found_association_proposal

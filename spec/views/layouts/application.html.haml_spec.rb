@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe "layouts/application" do
+  before(:each) do
+    controller.class_eval{include(ApplicationHelper)}
+  end
+
   context "when current organisation is an association" do
     context "when user is logged in" do
       before(:each) do

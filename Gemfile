@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.7"
+gem "bundler", "~>1.10"
 
-gem "rails", "3.2.21"
+gem "rails", "3.2.22"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -33,7 +33,7 @@ group :assets do
   gem 'therubyracer', '~>0.12.1'
 end
 
-gem "jquery-rails", "~>3.0.4"
+gem "jquery-rails", "~>3.1.3" # jquery-rails 4.0 requires rails 4
 gem "jquery-ui-rails", "~>5.0.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.1.6"
@@ -69,7 +69,7 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>3.1.0"
+  gem "rspec-rails", "~>3.3"
   gem 'rspec-activemodel-mocks'
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"

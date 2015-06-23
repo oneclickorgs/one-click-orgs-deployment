@@ -21,7 +21,7 @@ class Proposal < ActiveRecord::Base
 
   belongs_to :organisation
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
-  
+
   has_many :votes, :dependent => :destroy
   has_many :voters_for, through: :votes, source: :member, conditions: ['votes.for = ?', true]
 
@@ -141,7 +141,7 @@ class Proposal < ActiveRecord::Base
 
   # BEHAVIOUR REDEFINED BY SUBCLASSES
 
-  def enact!
+  def enact!(transition=nil)
   end
 
   def after_reject

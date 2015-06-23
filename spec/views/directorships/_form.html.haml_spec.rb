@@ -5,16 +5,19 @@ require 'action_view/helpers/form_helper'
 describe 'directorships/_form' do
 
   before(:each) do
+    # Define locals we expect to have been passed to our partial
+    def view.form; super; end
+
     @form = ActionView::Helpers::FormBuilder.new('directorship', @directorship, view, {}, nil)
     allow(view).to receive(:form).and_return(@form)
 
     @members = [
       mock_model(Member, :name => "John Smith", :id => 1)
     ]
-    view.stub_chain(:co, :members).and_return(@members)
-    view.stub_chain(:co, :directors).and_return([])
+    allow(view).to receive_message_chain(:co, :members).and_return(@members)
+    allow(view).to receive_message_chain(:co, :directors).and_return([])
 
-    view.stub_chain(:co, :active?).and_return(true)
+    allow(view).to receive_message_chain(:co, :active?).and_return(true)
   end
 
   it "renders a select field populated with the members" do
