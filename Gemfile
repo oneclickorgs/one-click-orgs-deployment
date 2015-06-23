@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem "bundler", "~>1.8.2"
+gem "bundler", "~>1.10"
 
-gem "rails", "3.2.21"
+gem "rails", "3.2.22"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -16,9 +16,9 @@ group :assets do
   gem 'uglifier',     ">= 2.0.1"
   gem 'therubyracer', '~>0.12.1'
 end
- 
+
 # jQuery is the default JavaScript library in Rails 3.1
-gem 'jquery-rails'
+gem 'jquery-rails', '~>3.1.3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
