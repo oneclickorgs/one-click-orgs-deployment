@@ -1,3 +1,15 @@
+2015-06-23 One Click Orgs 1.3.12
+
+* FIX: Add a missing dependency on nokogiri, needed for security fix added in
+  1.3.11.
+
+2015-06-23 One Click Orgs 1.3.11
+
+* SECURITY FIX: Upgraded our dependencies to fix CVE-2015-1840 in jquery-rails.
+* SECURITY FIX: Applied a workaround for CVE-2015-3226 in ActiveSupport.
+* SECURITY FIX: Applied a workaround for CVE-2015-3227 in ActiveSupport.
+* Rails is upgraded to version 3.2.22.
+
 2015-02-17 One Click Orgs 1.3.10
 
 * Rails is upgraded to version 3.2.21.
