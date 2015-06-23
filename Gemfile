@@ -18,7 +18,7 @@ group :assets do
 end
 
 # jQuery is the default JavaScript library in Rails 3.1
-gem 'jquery-rails'
+gem 'jquery-rails', '~>3.1.3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
