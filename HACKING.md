@@ -9,7 +9,7 @@
 
 ### Optional libraries
 
-* [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/)
+* [wkhtmltopdf](http://wkhtmltopdf.org)
   N.B. One Click Orgs is not compatible with the wkhtmltopdf in Debian/Ubuntu's packages.
 
 ## Setup
