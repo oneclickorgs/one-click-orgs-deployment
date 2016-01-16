@@ -37,7 +37,7 @@ gem "jquery-rails", "~>3.1.3" # jquery-rails 4.0 requires rails 4
 gem "jquery-ui-rails", "~>5.0.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.1.6"
-gem "pdfkit", "~>0.6.1"
+gem "pdfkit", "~>0.8.2"
 gem "daemons", "~>1.1.9"
 gem "delayed_job", "~>4.0.0"
 gem "delayed_job_active_record", "~>4.0.0"
