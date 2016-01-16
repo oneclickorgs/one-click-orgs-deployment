@@ -62,6 +62,7 @@ gem 'mail', '~>2.5.4'
 
 group :development do
   gem "capistrano", "~>2.14.2"
+  gem 'net-ssh', '<3'
   gem "railroad"
   gem "ruby-debug19", :platforms => :ruby_19
   gem 'pry'
@@ -85,4 +86,5 @@ group :development, :test do
   gem "syntax", "~>1.0.0"
   gem "pdf-reader"
   gem "selenium-webdriver"
+  gem 'test-unit', '~> 3.0', platform: :ruby_22
 end
