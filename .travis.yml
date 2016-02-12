@@ -4,6 +4,8 @@ rvm:
   - 2.0.0
   - 2.1.0
 bundler_args: --without development
+before_install:
+  - gem update bundler
 before_script:
   - "mysql -e 'create database one_click_test;' > /dev/null"
   - "bundle exec rake oco:generate_config db:migrate"
