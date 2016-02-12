@@ -80,7 +80,7 @@ group :development, :test do
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
     :branch => "oco", :require => false
   gem "cucumber-rails", "~>1.4.0", :require => nil
-  gem "capybara", '~>2.4.1'
+  gem "capybara", '~>2.6'
   gem "database_cleaner"
   gem "launchy"
   gem "cucumber-relizy", "~>0.0.2"
