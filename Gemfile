@@ -2,13 +2,15 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.10"
 
-gem "rails", "3.2.22.1"
+gem 'rails', '3.2.22.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql2", "~>0.3.11"
+
+# mysql2 0.3.17 adds compatibility with MySQL 5.7.
+gem "mysql2", "~>0.3.17"
 
 # Use unicorn as the web server
 # gem 'unicorn'
