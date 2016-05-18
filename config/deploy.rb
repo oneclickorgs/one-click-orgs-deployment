@@ -13,9 +13,9 @@ set :default_environment, {
   'PATH' => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
 }
 
-role :web, "oneclick.uk.coop"                          # Your HTTP server, Apache/etc
-role :app, "oneclick.uk.coop"                          # This may be the same as your `Web` server
-role :db,  "oneclick.uk.coop", :primary => true # This is where Rails migrations will run
+role :web, "184.72.251.15"                   # Your HTTP server, Apache/etc
+role :app, "184.72.251.15"                   # This may be the same as your `Web` server
+role :db,  "184.72.251.15", :primary => true # This is where Rails migrations will run
 
 set :deploy_to, "/var/www/oneclick.uk.coop"
 set :branch,    "oneclick-uk-coop"
