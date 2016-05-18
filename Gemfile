@@ -2,13 +2,15 @@ source 'http://rubygems.org'
 
 gem "bundler", "~>1.10"
 
-gem "rails", "3.2.22"
+gem 'rails', '3.2.22.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "mysql2", "~>0.3.11"
+
+# mysql2 0.3.17 adds compatibility with MySQL 5.7.
+gem "mysql2", "~>0.3.17"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -37,7 +39,7 @@ gem "jquery-rails", "~>3.1.3" # jquery-rails 4.0 requires rails 4
 gem "jquery-ui-rails", "~>5.0.0"
 gem "haml", "~>4.0.0"
 gem "rdiscount", "~>2.1.6"
-gem "pdfkit", "~>0.6.1"
+gem "pdfkit", "~>0.8.2"
 gem "daemons", "~>1.1.9"
 gem "delayed_job", "~>4.0.0"
 gem "delayed_job_active_record", "~>4.0.0"
@@ -62,14 +64,18 @@ gem 'mail', '~>2.5.4'
 
 group :development do
   gem "capistrano", "~>2.14.2"
+  gem 'net-ssh', '<3'
   gem "railroad"
   gem "ruby-debug19", :platforms => :ruby_19
+  gem 'byebug', platforms: [:ruby_20, :ruby_21, :ruby_22, :ruby_23]
   gem 'pry'
   gem 'parallel_tests'
 end
 
 group :development, :test do
-  gem "rspec-rails", "~>3.3"
+  # rspec-rails 3.4 introduces changes to the path resolver which are
+  # incompatible with our path resolver test hooks.
+  gem "rspec-rails", "~>3.3", "<3.4"
   gem 'rspec-activemodel-mocks'
   gem "webrat"
   gem "machinist", :git => "git://github.com/chrismear/machinist.git", :branch => "make_on_has_many"
@@ -78,11 +84,12 @@ group :development, :test do
   gem "coveralls", :git => "git://github.com/chrismear/coveralls-ruby.git",
     :branch => "oco", :require => false
   gem "cucumber-rails", "~>1.4.0", :require => nil
-  gem "capybara", '~>2.4.1'
+  gem "capybara", '~>2.6'
   gem "database_cleaner"
   gem "launchy"
   gem "cucumber-relizy", "~>0.0.2"
   gem "syntax", "~>1.0.0"
   gem "pdf-reader"
   gem "selenium-webdriver"
+  gem 'test-unit', '~> 3.0', platform: :ruby_22
 end

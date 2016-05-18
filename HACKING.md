@@ -9,7 +9,7 @@
 
 ### Optional libraries
 
-* [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/)
+* [wkhtmltopdf](http://wkhtmltopdf.org)
   N.B. One Click Orgs is not compatible with the wkhtmltopdf in Debian/Ubuntu's packages.
 
 ## Setup
@@ -21,7 +21,7 @@
 
 2.  If you want to work on the version 1 branch (the associations platform),
     check it out:
-        
+
         $ git branch v1.x origin/v1.x
         $ git checkout v1.x
 

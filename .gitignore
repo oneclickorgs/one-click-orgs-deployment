@@ -25,3 +25,5 @@ tmp/features.relizy.html
 
 # Cucumber Parallel logs
 tmp/parallel_runtime_cucumber.log
+
+.byebug_history
