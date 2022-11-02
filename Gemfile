@@ -37,7 +37,7 @@ gem 'jquery-rails', '~>3.1.3'
 
 gem "haml", "~>3.1"
 gem "rdiscount", "~>2.1.6"
-gem "pdfkit", "~>0.5.2"
+gem "pdfkit", "~>0.8.7"
 
 gem "daemons", "~>1.0.10"
 
